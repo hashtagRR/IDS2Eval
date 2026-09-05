@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ids2eval"
+version = "0.1.0"
+description = "Config-driven data-quality-audit and benchmarking toolkit for NIDS datasets"
+readme = "README.md"
+license = { text = "AGPL-3.0-only" }
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "scipy",
+    "imbalanced-learn",
+    "xgboost",
+    "pyarrow",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+ids2eval = "ids2eval.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ids2eval*"]

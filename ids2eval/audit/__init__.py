@@ -1,4 +1,8 @@
-"""v1 data-quality audit checks — Paper 1's methodology as reusable code.
+"""Data-quality audit checks — Paper 1's methodology as reusable code.
+
+v1 checks need no external reference data; v2 checks (synthetic_realism_check,
+cross_dataset_drift_check) need audit.reference_dataset, and known_issue_lookup
+is a curated per-dataset lookup table needing neither.
 
 Each check function returns a Finding dict: {check, status, summary, details}.
 status is one of "ok" (nothing notable), "warning" (worth a human look), or
@@ -9,18 +13,9 @@ from __future__ import annotations
 
 import pandas as pd
 
-from . import class_distribution, dedup, homogeneity, identity_columns, leakage, resplit, schema_fingerprint
-
-CHECK_MODULES = {
-    "dedup_check": dedup,
-    "leakage_screen": leakage,
-    "identity_column_flag": identity_columns,
-    "homogeneity_test": homogeneity,
-    "resplit_falsification": resplit,
-    "class_distribution_report": class_distribution,
-    "low_cardinality_warning": identity_columns,
-    "schema_fingerprint_check": schema_fingerprint,
-}
+from . import (class_distribution, cross_dataset_drift, dedup, homogeneity,
+               identity_columns, known_issues, leakage, resplit,
+               schema_fingerprint, synthetic_realism)
 
 
 def run_audit(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> list[dict]:
@@ -48,4 +43,10 @@ def run_audit(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> list[
         findings.append(identity_columns.check_cardinality(train_df, cfg))
     if audit_cfg["schema_fingerprint_check"]:
         findings.append(schema_fingerprint.check(train_df, cfg))
+    if audit_cfg["synthetic_realism_check"]:
+        findings.append(synthetic_realism.check(train_df, cfg))
+    if audit_cfg["cross_dataset_drift_check"]:
+        findings.append(cross_dataset_drift.check(train_df, test_df, cfg))
+    if audit_cfg["known_issue_lookup"]:
+        findings.append(known_issues.check(train_df, cfg))
     return findings

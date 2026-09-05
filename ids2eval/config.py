@@ -134,10 +134,12 @@ def validate_config(cfg: dict[str, Any]) -> None:
             )
 
     audit = cfg["audit"]
-    v2_checks = ["synthetic_realism_check", "cross_dataset_drift_check", "known_issue_lookup"]
-    if any(audit[check] for check in v2_checks) and not audit["reference_dataset"]:
+    # known_issue_lookup is a pure curated-table lookup keyed on dataset.name —
+    # unlike the other two v2 checks, it needs no second dataset to compare against.
+    reference_needing_checks = ["synthetic_realism_check", "cross_dataset_drift_check"]
+    if any(audit[check] for check in reference_needing_checks) and not audit["reference_dataset"]:
         errors.append(
-            f"audit.reference_dataset is required when any of {v2_checks} is true"
+            f"audit.reference_dataset is required when any of {reference_needing_checks} is true"
         )
     if audit["resplit_falsification"] and not (has_raw and dataset["group_columns"]):
         errors.append(

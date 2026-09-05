@@ -1,4 +1,4 @@
-# ids-audit-toolkit config schema (v1)
+# IDS2Eval config schema (v1)
 #
 # This file documents every field the loader accepts, with its default
 # value and valid options. Copy this file, fill in `dataset`/`schema`

@@ -1,4 +1,4 @@
-"""Load and validate ids-audit-toolkit YAML configs against configs/schema.yaml."""
+"""Load and validate IDS2Eval YAML configs against configs/schema.yaml."""
 
 from __future__ import annotations
 

@@ -12,14 +12,16 @@ Implemented and tested:
 - Dataset loading (raw files or pre-split train/test), with both a plain random split and a session/time-grouped split (`ids2eval/dataset.py`)
 - Chunked reading for large files (`dataset.chunk_size`) with an optional reservoir-sampled row cap (`dataset.max_rows`) so a dataset larger than RAM can still be used — see `configs/schema.yaml` for the tradeoff each one actually controls (`ids2eval/chunked_io.py`)
 - Feature-space exact-duplicate removal, within and across splits
-- All 8 v1 audit checks (`ids2eval/audit/`) — see below
+- All 11 audit checks — 8 v1 + 3 v2 (`ids2eval/audit/`) — see below
 - Config schema + validating loader (`ids2eval/config.py`, `configs/schema.yaml`)
 - Preprocessing: scaling (standard/minmax/robust) and class balancing (SMOTE/SMOTEENN/ENN/random undersampling), fit on train only (`ids2eval/preprocessing.py`)
 - Classifier benchmarking across the 14 supported classifiers, with optional GridSearchCV tuning and calibration (`ids2eval/benchmark.py`, `ids2eval/classifiers.py`)
 - A CLI entrypoint wiring all of the above together (`python -m ids2eval`)
 
 Not yet implemented:
-- The v2 audit checks (synthetic-vs-real realism, cross-dataset drift, known-issue lookup)
+- Automated tests (validation so far is manual smoke-testing against synthetic data)
+- A run against real UNSW-NB15/CIC-IDS2018 data (synthetic data only so far)
+- Packaging (`pyproject.toml`) for pip installability
 
 ## Audit checks
 
@@ -33,8 +35,11 @@ Not yet implemented:
 | `resplit_falsification` | Compares accuracy under a random split vs. a session-grouped split, where session-correlated leakage is structurally impossible |
 | `class_distribution_report` | Per-class counts, shares, and imbalance ratio |
 | `schema_fingerprint_check` | Matches known feature-extractor signatures (e.g. CICFlowMeter) and surfaces that extractor's documented bugs |
+| `synthetic_realism_check` *(v2, off by default)* | Domain-classifier AUC distinguishing this dataset from `audit.reference_dataset`, plus per-feature KS-divergence ranking |
+| `cross_dataset_drift_check` *(v2, off by default)* | Train-here/test-on-`reference_dataset` accuracy drop in a unified feature space |
+| `known_issue_lookup` *(v2, off by default)* | Curated per-dataset documented problems, matched on `dataset.name` — no reference dataset needed |
 
-Three further checks (synthetic-vs-real realism, cross-dataset drift, a curated known-issue lookup table) are scoped for a later v2 — they need a second reference dataset or heavier compute and are off by default.
+The two reference-data checks require `audit.reference_dataset` (a second dataset in the same schema — a real-traffic sample for realism, or an independent dataset for drift). `known_issue_lookup` needs neither, just a `dataset.name` match against the curated table in `ids2eval/audit/known_issues.py`.
 
 ## Config
 

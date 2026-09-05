@@ -144,3 +144,47 @@ def dedup(
         "test_duplicates_dropped": n_test_dupe,
     }
     return train_df, test_df, stats
+
+
+def validate_loaded(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> None:
+    """Hard-fail checks on structurally broken input, raised before anything
+    downstream (caching, audit, benchmarking) runs against it.
+
+    Distinct from audit checks: these aren't "worth a human's attention",
+    they're "nothing else in this pipeline will produce a meaningful
+    result," so they raise instead of returning a flagged finding.
+    """
+    errors: list[str] = []
+    schema = cfg["schema"]
+
+    for name, df in [("train", train_df), ("test", test_df)]:
+        dupes = df.columns[df.columns.duplicated()].tolist()
+        if dupes:
+            errors.append(f"{name} data has duplicate column names: {sorted(set(dupes))}")
+
+    label_col = schema["label_column"]
+    if label_col not in train_df.columns:
+        errors.append(f"schema.label_column '{label_col}' not found in the loaded train data")
+    if label_col not in test_df.columns:
+        errors.append(f"schema.label_column '{label_col}' not found in the loaded test data")
+
+    attack_col = schema["attack_category_column"]
+    if attack_col:
+        if attack_col not in train_df.columns:
+            errors.append(f"schema.attack_category_column '{attack_col}' not found in the loaded train data")
+        if attack_col not in test_df.columns:
+            errors.append(f"schema.attack_category_column '{attack_col}' not found in the loaded test data")
+
+    if not errors:  # only meaningful to check once the columns above exist
+        common = set(train_df.columns) & set(test_df.columns)
+        ignore = set(schema["drop_columns"]) | {label_col}
+        if attack_col:
+            ignore.add(attack_col)
+        if not (common - ignore):
+            errors.append(
+                "train and test data share no feature columns after excluding "
+                "label/attack_category/drop_columns — nothing left to train or evaluate on"
+            )
+
+    if errors:
+        raise ValueError("Loaded dataset failed validation:\n" + "\n".join(f"  - {e}" for e in errors))

@@ -62,3 +62,30 @@ def test_dedup_ignores_label_when_comparing_features(base_cfg):
     _, deduped_test, stats = dataset.dedup(train_df, test_df, base_cfg)
     assert stats["test_leakage_dropped"] == 1
     assert len(deduped_test) == 0
+
+
+def test_validate_loaded_raises_on_duplicate_columns(base_cfg):
+    train_df = pd.DataFrame([[1, 2, "A"]], columns=pd.Index(["F", "F", "Label"]))
+    test_df = pd.DataFrame({"F": [1], "Label": ["A"]})
+    with pytest.raises(ValueError, match="duplicate column names"):
+        dataset.validate_loaded(train_df, test_df, base_cfg)
+
+
+def test_validate_loaded_raises_when_label_column_missing(base_cfg):
+    train_df = pd.DataFrame({"F": [1], "NotLabel": ["A"]})
+    test_df = pd.DataFrame({"F": [1], "Label": ["A"]})
+    with pytest.raises(ValueError, match="not found in the loaded train data"):
+        dataset.validate_loaded(train_df, test_df, base_cfg)
+
+
+def test_validate_loaded_raises_on_disjoint_schemas(base_cfg):
+    train_df = pd.DataFrame({"F1": [1], "Label": ["A"]})
+    test_df = pd.DataFrame({"F2": [1], "Label": ["A"]})
+    with pytest.raises(ValueError, match="share no feature columns"):
+        dataset.validate_loaded(train_df, test_df, base_cfg)
+
+
+def test_validate_loaded_passes_on_healthy_data(base_cfg):
+    train_df = pd.DataFrame({"F1": [1], "Label": ["A"]})
+    test_df = pd.DataFrame({"F1": [2], "Label": ["B"]})
+    dataset.validate_loaded(train_df, test_df, base_cfg)  # should not raise

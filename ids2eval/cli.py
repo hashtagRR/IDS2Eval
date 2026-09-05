@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from . import cache, dataset
+from . import cache, dataset, run_manager
 from .audit import run_audit
 from .benchmark import run_benchmark
 from .config import load_config
@@ -31,6 +31,13 @@ def _json_default(obj):
     if isinstance(obj, np.ndarray):
         return obj.tolist()
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+
+def _write_findings(path: Path, findings: list[dict]) -> None:
+    path.write_text(json.dumps(findings, indent=2, default=_json_default))
+    logger.info("Audit report written to %s", path)
+    for f in findings:
+        logger.info("[%s] %s: %s", f["status"].upper(), f["check"], f["summary"])
 
 
 def parse_args(argv=None) -> argparse.Namespace:
@@ -58,27 +65,39 @@ def main(argv=None) -> None:
         # Applied before audit/benchmarking so both see the collapsed
         # categories consistently, not just the final benchmark stage.
         train_df, test_df = apply_attack_type_mapping(train_df, test_df, cfg)
+        dataset.validate_loaded(train_df, test_df, cfg)
         cache.save(train_df, test_df, cfg)
     logger.info("Split: train=%d rows, test=%d rows", len(train_df), len(test_df))
+
+    run_dir = run_manager.create_run_dir(output_dir)
+    run_manager.write_environment_info(run_dir)
+    run_manager.write_resolved_config(run_dir, cfg)
+    logger.info("Run artifacts: %s", run_dir)
 
     if not args.skip_audit:
         # Must run before dedup — dedup_check reports duplication already
         # present in the split, and dataset.dedup() would remove it first.
-        findings = run_audit(train_df, test_df, cfg)
-        report_path = output_dir / "audit_report.json"
-        report_path.write_text(json.dumps(findings, indent=2, default=_json_default))
-        logger.info("Audit report written to %s", report_path)
-        for f in findings:
-            logger.info("[%s] %s: %s", f["status"].upper(), f["check"], f["summary"])
+        findings_before = run_audit(train_df, test_df, cfg)
+        _write_findings(run_dir / "audit_report_before.json", findings_before)
 
     if cfg["preprocessing"]["dedup"]:
         train_df, test_df, dedup_stats = dataset.dedup(train_df, test_df, cfg)
         logger.info("Dedup: %s", dedup_stats)
 
+        if not args.skip_audit:
+            # Full suite again on the cleaned data, by explicit choice, so a
+            # claim like "12% duplicate leakage before, 0% after" is backed
+            # by two real runs rather than assumed from the dedup stats alone.
+            # Note: resplit_falsification reloads raw data itself and never
+            # looks at train_df/test_df, so its result here is guaranteed
+            # identical to the "before" run — real, if modest, wasted compute.
+            findings_after = run_audit(train_df, test_df, cfg)
+            _write_findings(run_dir / "audit_report_after.json", findings_after)
+
     if cfg["output"]["save_preprocessed"]:
         fmt = cfg["output"]["format"]
         for name, df in [("train", train_df), ("test", test_df)]:
-            path = output_dir / f"{name}.{fmt}"
+            path = run_dir / f"{name}.{fmt}"
             if fmt == "parquet":
                 df.to_parquet(path, index=False)
             else:
@@ -86,11 +105,17 @@ def main(argv=None) -> None:
             logger.info("Wrote %s", path)
 
     if not args.skip_benchmark:
-        results_df = run_benchmark(train_df, test_df, cfg)
-        results_path = output_dir / "benchmark_results.csv"
+        results_df, extras = run_benchmark(train_df, test_df, cfg)
+        results_path = run_dir / "benchmark_results.csv"
         results_df.to_csv(results_path, index=False)
+        details_path = run_dir / "benchmark_details.json"
+        details_path.write_text(json.dumps(extras, indent=2, default=_json_default))
         logger.info("Benchmark results written to %s", results_path)
+        logger.info("Per-classifier detail (confusion matrix, per-class report, "
+                    "feature importance, best params) written to %s", details_path)
         logger.info("\n%s", results_df.to_string(index=False))
+
+    run_manager.cleanup_old_runs(output_dir, cfg["output"]["keep_runs"])
 
 
 if __name__ == "__main__":

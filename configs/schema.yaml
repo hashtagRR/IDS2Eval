@@ -48,8 +48,15 @@ schema:
                                   # and low-cardinality audit checks, not dropped automatically
 
 label_grouping:
-  attack_type_mapping: {}        # optional dict collapsing raw attack labels into coarser
-                                  # categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
+  attack_type_mapping: {}        # optional dict collapsing raw attack_category_column values
+                                  # into coarser categories, e.g. {"DoS Hulk": "DoS",
+                                  # "DoS GoldenEye": "DoS"} merges just those two into "DoS" —
+                                  # a PARTIAL mapping, not exhaustive: any category not named
+                                  # as a key (e.g. "PortScan") passes through unchanged, so you
+                                  # don't have to enumerate every class that should stay as-is.
+                                  # Applied right after the split, before both audit checks and
+                                  # benchmarking, so every downstream stage sees the same
+                                  # collapsed categories. Requires schema.attack_category_column.
 
 preprocessing:
   dedup: true                    # exact + feature-only dedup pass before splitting

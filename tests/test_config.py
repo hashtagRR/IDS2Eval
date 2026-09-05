@@ -73,6 +73,14 @@ def test_v2_reference_checks_require_reference_dataset(base_cfg):
         validate_config(base_cfg)
 
 
+def test_attack_type_mapping_requires_attack_category_column(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["label_grouping"]["attack_type_mapping"] = {"DoS Hulk": "DoS"}
+    with pytest.raises(ValueError, match="attack_type_mapping requires schema.attack_category_column"):
+        validate_config(base_cfg)
+
+
 def test_known_issue_lookup_does_not_require_reference_dataset(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["audit"]["resplit_falsification"] = False

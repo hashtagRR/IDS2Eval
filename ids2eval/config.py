@@ -123,6 +123,11 @@ def validate_config(cfg: dict[str, Any]) -> None:
 
     if not cfg["schema"]["label_column"]:
         errors.append("schema.label_column is required")
+    if cfg["label_grouping"]["attack_type_mapping"] and not cfg["schema"]["attack_category_column"]:
+        errors.append(
+            "label_grouping.attack_type_mapping requires schema.attack_category_column "
+            "to be set — otherwise there's no column for it to apply to"
+        )
 
     scaling = cfg["preprocessing"]["scaling"]
     if scaling not in VALID_SCALING:

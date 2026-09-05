@@ -16,6 +16,7 @@ from . import dataset
 from .audit import run_audit
 from .benchmark import run_benchmark
 from .config import load_config
+from .label_grouping import apply_attack_type_mapping
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +52,10 @@ def main(argv=None) -> None:
     logger.info("Loading dataset '%s'", cfg["dataset"]["name"])
     train_df, test_df = dataset.load_split(cfg)
     logger.info("Split: train=%d rows, test=%d rows", len(train_df), len(test_df))
+
+    # Applied before audit/benchmarking so both see the collapsed
+    # categories consistently, not just the final benchmark stage.
+    train_df, test_df = apply_attack_type_mapping(train_df, test_df, cfg)
 
     if not args.skip_audit:
         # Must run before dedup — dedup_check reports duplication already

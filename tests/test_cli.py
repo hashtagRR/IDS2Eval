@@ -6,6 +6,11 @@ import yaml
 from ids2eval.cli import main
 
 
+def _latest_run_dir(output_dir):
+    runs = sorted((output_dir / "runs").iterdir())
+    return runs[-1]
+
+
 def test_cli_end_to_end(tmp_path, synth_data):
     data_path = tmp_path / "data.csv"
     synth_data.to_csv(data_path, index=False)
@@ -22,14 +27,23 @@ def test_cli_end_to_end(tmp_path, synth_data):
     config_path.write_text(yaml.dump(config))
 
     main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
 
-    assert (output_dir / "audit_report.json").exists()
-    assert (output_dir / "train.parquet").exists()
-    assert (output_dir / "test.parquet").exists()
-    assert (output_dir / "benchmark_results.csv").exists()
+    assert (run_dir / "audit_report_before.json").exists()
+    assert (run_dir / "audit_report_after.json").exists()  # preprocessing.dedup defaults true
+    assert (run_dir / "train.parquet").exists()
+    assert (run_dir / "test.parquet").exists()
+    assert (run_dir / "benchmark_results.csv").exists()
+    assert (run_dir / "benchmark_details.json").exists()
+    assert (run_dir / "environment.json").exists()
+    assert (run_dir / "resolved_config.json").exists()
 
-    findings = json.loads((output_dir / "audit_report.json").read_text())
-    assert len(findings) == 8  # all v1 checks, v2 checks off by default
+    findings = json.loads((run_dir / "audit_report_before.json").read_text())
+    assert len(findings) == 9  # all v1 checks (incl. data_integrity_check), v2 off by default
+
+    after = json.loads((run_dir / "audit_report_after.json").read_text())
+    dedup_after = next(f for f in after if f["check"] == "dedup_check")
+    assert dedup_after["details"]["train_duplicates_dropped"] == 0  # already deduped by this point
 
 
 def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, monkeypatch):
@@ -58,6 +72,7 @@ def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, mon
 
     monkeypatch.setattr(dataset_module, "load_split", _boom)
     main(["--config", str(config_path)])  # second run: must not touch raw_files
+    assert len(list((output_dir / "runs").iterdir())) == 2  # two distinct run dirs, cache reused for both
 
 
 def test_cli_applies_attack_type_mapping_before_audit_and_benchmark(tmp_path):
@@ -87,16 +102,17 @@ def test_cli_applies_attack_type_mapping_before_audit_and_benchmark(tmp_path):
     config_path.write_text(yaml.dump(config))
 
     main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
 
-    train_out = pd.read_parquet(output_dir / "train.parquet")
+    train_out = pd.read_parquet(run_dir / "train.parquet")
     assert set(train_out["AttackType"].unique()) <= {"Benign", "DoS", "PortScan"}
     assert "DoS-Hulk" not in set(train_out["AttackType"].unique())
 
-    findings = json.loads((output_dir / "audit_report.json").read_text())
+    findings = json.loads((run_dir / "audit_report_before.json").read_text())
     dist = next(f for f in findings if f["check"] == "class_distribution_report")
     assert set(dist["details"]["train"]["counts"]) <= {"Benign", "Attack"}  # binary stage's own column, unaffected
 
-    results_df = pd.read_csv(output_dir / "benchmark_results.csv")
+    results_df = pd.read_csv(run_dir / "benchmark_results.csv")
     assert "type" in set(results_df["stage"])
 
 
@@ -115,7 +131,55 @@ def test_cli_skip_flags(tmp_path, synth_data):
     config_path.write_text(yaml.dump(config))
 
     main(["--config", str(config_path), "--skip-audit", "--skip-benchmark"])
+    run_dir = _latest_run_dir(output_dir)
 
-    assert not (output_dir / "audit_report.json").exists()
-    assert not (output_dir / "benchmark_results.csv").exists()
-    assert not (output_dir / "train.parquet").exists()
+    assert not (run_dir / "audit_report_before.json").exists()
+    assert not (run_dir / "benchmark_results.csv").exists()
+    assert not (run_dir / "train.parquet").exists()
+
+
+def test_cli_hard_fails_on_disjoint_train_test_schema(tmp_path):
+    # A reachable real-world case, unlike duplicate column names (pandas'
+    # read_csv already auto-mangles those to F/F.1 before this code ever
+    # sees the frame - see test_dataset.py for a direct unit test of that
+    # branch instead). Disjoint schemas are real: e.g. two datasets
+    # accidentally paired as train/test.
+    train_path, test_path = tmp_path / "train.csv", tmp_path / "test.csv"
+    train_path.write_text("Label,F1\nA,1\nB,2\n")
+    test_path.write_text("Label,CompletelyDifferentColumn\nA,9\n")
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "train_file": str(train_path), "test_file": str(test_path)},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    import pytest
+    with pytest.raises(ValueError, match="share no feature columns"):
+        main(["--config", str(config_path)])
+
+
+def test_cli_keep_runs_prunes_old_run_directories(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": []},
+        "output": {"dir": str(output_dir), "keep_runs": 2, "save_preprocessed": False},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    for _ in range(4):
+        main(["--config", str(config_path)])
+
+    assert len(list((output_dir / "runs").iterdir())) == 2

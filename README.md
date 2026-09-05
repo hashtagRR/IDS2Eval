@@ -13,11 +13,12 @@ Implemented and tested:
 - Feature-space exact-duplicate removal, within and across splits
 - All 8 v1 audit checks (`ids2eval/audit/`) — see below
 - Config schema + validating loader (`ids2eval/config.py`, `configs/schema.yaml`)
+- Preprocessing: scaling (standard/minmax/robust) and class balancing (SMOTE/SMOTEENN/ENN/random undersampling), fit on train only (`ids2eval/preprocessing.py`)
+- Classifier benchmarking across the 14 supported classifiers, with optional GridSearchCV tuning and calibration (`ids2eval/benchmark.py`, `ids2eval/classifiers.py`)
+- A CLI entrypoint wiring all of the above together (`python -m ids2eval`)
 
 Not yet implemented:
-- The preprocessing pipeline's scaling/sampling steps (schema exists, code doesn't yet)
-- Classifier benchmarking across the 14 supported classifiers
-- A CLI entrypoint tying the pieces together
+- The v2 audit checks (synthetic-vs-real realism, cross-dataset drift, known-issue lookup)
 
 ## Audit checks
 
@@ -48,14 +49,25 @@ schema:
 
 ## Usage
 
+```bash
+python -m ids2eval --config my_config.yaml
+```
+
+Writes `audit_report.json`, the preprocessed `train`/`test` files (parquet by default), and `benchmark_results.csv` to `output.dir`. Use `--skip-audit` or `--skip-benchmark` to run only part of the pipeline.
+
+Or drive it programmatically:
+
 ```python
 from ids2eval.config import load_config
 from ids2eval import dataset
 from ids2eval.audit import run_audit
+from ids2eval.benchmark import run_benchmark
 
 cfg = load_config("my_config.yaml")
 train_df, test_df = dataset.load_split(cfg)
 findings = run_audit(train_df, test_df, cfg)  # call before dataset.dedup()
+train_df, test_df, _ = dataset.dedup(train_df, test_df, cfg)
+results_df = run_benchmark(train_df, test_df, cfg)
 ```
 
 ## Setup

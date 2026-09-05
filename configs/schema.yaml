@@ -60,9 +60,15 @@ label_grouping:
 
 preprocessing:
   dedup: true                    # exact + feature-only dedup pass before splitting
-  scaling: standard              # none | standard | minmax | robust
+  scaling: standard              # none | standard | minmax | robust — applied inside each
+                                  # classifier's own pipeline (see classifiers.tuning below),
+                                  # never fit once and reused across CV folds
   sampling:
-    binary: none                 # none | smote | smoteenn | enn | random_undersample
+    binary: none                 # none | smote | smoteenn | enn | random_undersample —
+                                  # or a LIST of any of these, e.g. [none, smote, smoteenn],
+                                  # to benchmark every classifier under each strategy and
+                                  # compare results (see benchmark_results.csv's "sampling"
+                                  # column and benchmark_details.json's class_distributions)
     type: none                   # same options, applied to the multi-class stage
 
 audit:
@@ -75,6 +81,17 @@ audit:
   class_distribution_report: true
   low_cardinality_warning: true  # flags topology-overfitting risk on id_like_columns
   schema_fingerprint_check: true # detects known extractor bugs via column-name fingerprinting
+  data_integrity_check: true     # missing label values, missing/constant features, +-inf values —
+                                  # complements leakage_screen by catching features with too
+                                  # LITTLE signal, not too much
+
+  # Run twice when preprocessing.dedup is true: once before, once after — so a
+  # claim like "12% duplicate leakage before, 0% after" is backed by two real
+  # audit runs, not assumed. Written to audit_report_before.json /
+  # audit_report_after.json. Structural problems severe enough to make the
+  # dataset unusable (duplicate column names, no shared feature columns
+  # between train/test) are NOT audit findings — they raise immediately via
+  # dataset.validate_loaded(), before this section even runs.
 
   # v2 checks — opt-in, need a second dataset (reference_dataset) or heavier compute
   synthetic_realism_check: false     # synthetic-vs-real distributional realism
@@ -106,7 +123,13 @@ classifiers:
                                   # default search space
 
 output:
-  dir: ./output
+  dir: ./output                  # stable across runs — output.dir/.cache/ (the load-cache)
+                                  # lives here permanently; each invocation's own results go in
+                                  # a fresh output.dir/runs/<timestamp>/ so nothing gets
+                                  # silently overwritten
   format: parquet                # parquet | csv
   save_preprocessed: true        # write out the preprocessed train/test data, not just reports
+  keep_runs: 10                  # delete all but the most recent N run directories after each
+                                  # run completes; null keeps every run forever. Never touches
+                                  # output.dir/.cache/ — only output.dir/runs/*
 

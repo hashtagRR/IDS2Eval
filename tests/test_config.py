@@ -105,3 +105,41 @@ def test_invalid_enum_rejected(base_cfg, field, value, pattern):
     base_cfg["preprocessing"][field] = value
     with pytest.raises(ValueError, match=pattern):
         validate_config(base_cfg)
+
+
+def test_sampling_accepts_a_list_of_strategies(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["sampling"]["binary"] = ["none", "smote", "smoteenn"]
+    validate_config(base_cfg)  # should not raise
+
+
+def test_sampling_list_rejects_invalid_entries(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["sampling"]["binary"] = ["smote", "bogus"]
+    with pytest.raises(ValueError, match="invalid entries"):
+        validate_config(base_cfg)
+
+
+def test_sampling_rejects_empty_list(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["sampling"]["binary"] = []
+    with pytest.raises(ValueError, match="must not be an empty list"):
+        validate_config(base_cfg)
+
+
+def test_keep_runs_rejects_non_positive(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["output"]["keep_runs"] = 0
+    with pytest.raises(ValueError, match="keep_runs must be a positive integer"):
+        validate_config(base_cfg)
+
+
+def test_keep_runs_null_means_keep_all(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["output"]["keep_runs"] = None
+    validate_config(base_cfg)  # should not raise

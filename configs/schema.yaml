@@ -22,6 +22,23 @@ dataset:
                                   # protocol) so StratifiedGroupKFold keeps every group's
                                   # rows on one side of the split. Dataset-specific: there
                                   # is no universal set of column names across IDS datasets.
+  chunk_size: null                # rows read at a time per file (raw_files, or each of
+                                  # train_file/test_file). Bounds memory during the read/
+                                  # downcast (float64->float32) phase only — null reads each
+                                  # file whole, the previous default behavior. On its own this
+                                  # does NOT prevent OOM on a dataset bigger than RAM, since
+                                  # every downstream step (audit checks, sklearn/imblearn
+                                  # fitting) still needs one consolidated in-memory array —
+                                  # pair with max_rows below for that.
+  max_rows: null                  # optional cap on total rows kept in memory — a uniform
+                                  # reservoir sample across all chunks/files (per file for
+                                  # train_file/test_file, combined across raw_files), not the
+                                  # exact full dataset. This is what actually keeps a dataset
+                                  # larger than RAM usable at all. Requires chunk_size to be
+                                  # set (sampling still has to read the file to sample it).
+                                  # Row-level, not group-aware: if split_mode is "grouped",
+                                  # sampling may fragment session groups across the sample
+                                  # boundary — a documented limitation, not a bug.
 
 schema:
   label_column: null             # required — column holding the binary/attack label

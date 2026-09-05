@@ -10,6 +10,7 @@ Unlike general-purpose AutoML tools (PyCaret, AutoGluon, TPOT), IDS2Eval's focus
 
 Implemented and tested:
 - Dataset loading (raw files or pre-split train/test), with both a plain random split and a session/time-grouped split (`ids2eval/dataset.py`)
+- Chunked reading for large files (`dataset.chunk_size`) with an optional reservoir-sampled row cap (`dataset.max_rows`) so a dataset larger than RAM can still be used — see `configs/schema.yaml` for the tradeoff each one actually controls (`ids2eval/chunked_io.py`)
 - Feature-space exact-duplicate removal, within and across splits
 - All 8 v1 audit checks (`ids2eval/audit/`) — see below
 - Config schema + validating loader (`ids2eval/config.py`, `configs/schema.yaml`)

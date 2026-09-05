@@ -45,10 +45,11 @@ def scale_features(
     return x_train, x_test, cols
 
 
-def apply_sampling(x_train: np.ndarray, y_train: pd.Series, cfg: dict, stage: str) -> tuple[np.ndarray, np.ndarray]:
+def apply_sampling(x_train: np.ndarray, y_train, cfg: dict, stage: str) -> tuple[np.ndarray, np.ndarray]:
     algo = cfg["preprocessing"]["sampling"][stage]
+    y_train = np.asarray(y_train)
     if algo == "none":
-        return x_train, y_train.to_numpy()
+        return x_train, y_train
 
     sampler = SAMPLERS[algo]()
     try:
@@ -59,4 +60,4 @@ def apply_sampling(x_train: np.ndarray, y_train: pd.Series, cfg: dict, stage: st
             "for this sampler's neighbor count. Falling back to unsampled data.",
             algo, stage, e,
         )
-        return x_train, y_train.to_numpy()
+        return x_train, y_train

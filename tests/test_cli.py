@@ -32,6 +32,34 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert len(findings) == 8  # all v1 checks, v2 checks off by default
 
 
+def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, monkeypatch):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])  # first run: populates the cache
+    assert (output_dir / ".cache" / "manifest.json").exists()
+
+    from ids2eval import dataset as dataset_module
+
+    def _boom(cfg):
+        raise AssertionError("load_split should not be called on a cache hit")
+
+    monkeypatch.setattr(dataset_module, "load_split", _boom)
+    main(["--config", str(config_path)])  # second run: must not touch raw_files
+
+
 def test_cli_applies_attack_type_mapping_before_audit_and_benchmark(tmp_path):
     import numpy as np
     rng = np.random.RandomState(0)

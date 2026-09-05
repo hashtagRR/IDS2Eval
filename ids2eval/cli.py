@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from . import dataset
+from . import cache, dataset
 from .audit import run_audit
 from .benchmark import run_benchmark
 from .config import load_config
@@ -50,12 +50,16 @@ def main(argv=None) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     logger.info("Loading dataset '%s'", cfg["dataset"]["name"])
-    train_df, test_df = dataset.load_split(cfg)
+    cached = cache.try_load(cfg)
+    if cached is not None:
+        train_df, test_df = cached
+    else:
+        train_df, test_df = dataset.load_split(cfg)
+        # Applied before audit/benchmarking so both see the collapsed
+        # categories consistently, not just the final benchmark stage.
+        train_df, test_df = apply_attack_type_mapping(train_df, test_df, cfg)
+        cache.save(train_df, test_df, cfg)
     logger.info("Split: train=%d rows, test=%d rows", len(train_df), len(test_df))
-
-    # Applied before audit/benchmarking so both see the collapsed
-    # categories consistently, not just the final benchmark stage.
-    train_df, test_df = apply_attack_type_mapping(train_df, test_df, cfg)
 
     if not args.skip_audit:
         # Must run before dedup — dedup_check reports duplication already

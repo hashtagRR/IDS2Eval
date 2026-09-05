@@ -17,6 +17,7 @@ Implemented and tested:
 - Preprocessing: scaling (standard/minmax/robust) and class balancing (SMOTE/SMOTEENN/ENN/random undersampling), fit on train only (`ids2eval/preprocessing.py`)
 - Classifier benchmarking across the 14 supported classifiers, with optional GridSearchCV tuning and calibration (`ids2eval/benchmark.py`, `ids2eval/classifiers.py`)
 - A CLI entrypoint wiring all of the above together (`python -m ids2eval`)
+- Caches the load+split+label-grouping result under `output.dir/.cache/` (`ids2eval/cache.py`) — the expensive step for large datasets, per measurement on real CIC-IDS2018 data. A fingerprint of the input files and the config fields that affect this step auto-invalidates the cache; scaling/sampling always run fresh since they're cheap and the settings people iterate on most
 - A 71-test pytest suite (`tests/`) and pip-installable packaging (`pyproject.toml`, `ids2eval` console script)
 
 Validated against real data, not just synthetic fixtures:

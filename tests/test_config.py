@@ -1,0 +1,99 @@
+import pytest
+
+from ids2eval.config import load_config, validate_config
+
+
+def test_defaults_merge(tmp_path):
+    path = tmp_path / "cfg.yaml"
+    path.write_text(
+        "dataset:\n  name: x\n  raw_files: [a.csv]\n  group_columns: [g]\n"
+        "schema:\n  label_column: Label\n"
+    )
+    cfg = load_config(path)
+    assert cfg["preprocessing"]["scaling"] == "standard"  # default preserved
+    assert cfg["classifiers"]["list"] == "all"
+
+
+def test_requires_dataset_name(base_cfg):
+    base_cfg["dataset"]["name"] = None
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    with pytest.raises(ValueError, match="dataset.name is required"):
+        validate_config(base_cfg)
+
+
+def test_requires_exactly_one_data_source(base_cfg):
+    base_cfg["dataset"]["raw_files"] = []
+    base_cfg["dataset"]["train_file"] = None
+    with pytest.raises(ValueError, match="exactly one of raw_files"):
+        validate_config(base_cfg)
+
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["train_file"] = "train.csv"
+    base_cfg["dataset"]["test_file"] = "test.csv"
+    with pytest.raises(ValueError, match="exactly one of raw_files"):
+        validate_config(base_cfg)
+
+
+def test_grouped_split_requires_group_columns(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["split_mode"] = "grouped"
+    base_cfg["audit"]["resplit_falsification"] = False
+    with pytest.raises(ValueError, match="group_columns is required"):
+        validate_config(base_cfg)
+
+
+def test_max_rows_requires_chunk_size(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["max_rows"] = 1000
+    base_cfg["audit"]["resplit_falsification"] = False
+    with pytest.raises(ValueError, match="max_rows requires dataset.chunk_size"):
+        validate_config(base_cfg)
+
+
+def test_chunk_size_and_max_rows_valid_together(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["chunk_size"] = 500
+    base_cfg["dataset"]["max_rows"] = 1000
+    base_cfg["audit"]["resplit_falsification"] = False
+    validate_config(base_cfg)  # should not raise
+
+
+def test_resplit_falsification_requires_raw_and_groups(base_cfg):
+    base_cfg["dataset"]["train_file"] = "train.csv"
+    base_cfg["dataset"]["test_file"] = "test.csv"
+    with pytest.raises(ValueError, match="resplit_falsification requires"):
+        validate_config(base_cfg)
+
+
+def test_v2_reference_checks_require_reference_dataset(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["audit"]["synthetic_realism_check"] = True
+    with pytest.raises(ValueError, match="reference_dataset is required"):
+        validate_config(base_cfg)
+
+
+def test_known_issue_lookup_does_not_require_reference_dataset(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["audit"]["known_issue_lookup"] = True
+    validate_config(base_cfg)  # should not raise
+
+
+def test_unknown_classifier_rejected(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["classifiers"]["list"] = ["NotAClassifier"]
+    with pytest.raises(ValueError, match="unknown entries"):
+        validate_config(base_cfg)
+
+
+@pytest.mark.parametrize("field,value,pattern", [
+    ("scaling", "bogus", "scaling must be one of"),
+])
+def test_invalid_enum_rejected(base_cfg, field, value, pattern):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"][field] = value
+    with pytest.raises(ValueError, match=pattern):
+        validate_config(base_cfg)

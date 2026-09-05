@@ -17,11 +17,15 @@ Implemented and tested:
 - Preprocessing: scaling (standard/minmax/robust) and class balancing (SMOTE/SMOTEENN/ENN/random undersampling), fit on train only (`ids2eval/preprocessing.py`)
 - Classifier benchmarking across the 14 supported classifiers, with optional GridSearchCV tuning and calibration (`ids2eval/benchmark.py`, `ids2eval/classifiers.py`)
 - A CLI entrypoint wiring all of the above together (`python -m ids2eval`)
+- A 71-test pytest suite (`tests/`) and pip-installable packaging (`pyproject.toml`, `ids2eval` console script)
+
+Validated against real data, not just synthetic fixtures:
+- UNSW-NB15 (full dataset, both files) — audit checks and all 5 tested classifiers ran cleanly end to end
+- CIC-IDS2018 (official 10-file, 16.2M-row distribution) — `chunk_size`/`max_rows` kept peak memory at 3.0GB on a 7.8GB-RAM machine; `identity_column_flag` independently reproduced the published `Dst Port` leakage finding
 
 Not yet implemented:
-- Automated tests (validation so far is manual smoke-testing against synthetic data)
-- A run against real UNSW-NB15/CIC-IDS2018 data (synthetic data only so far)
-- Packaging (`pyproject.toml`) for pip installability
+- CI/lint automation
+- A curated `known_issue_lookup` table beyond its current two seed entries
 
 ## Audit checks
 

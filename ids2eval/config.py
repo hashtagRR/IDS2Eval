@@ -56,6 +56,7 @@ DEFAULTS: dict[str, Any] = {
         "class_distribution_report": True,
         "low_cardinality_warning": True,
         "schema_fingerprint_check": True,
+        "data_integrity_check": True,
         "synthetic_realism_check": False,
         "cross_dataset_drift_check": False,
         "known_issue_lookup": False,
@@ -72,6 +73,7 @@ DEFAULTS: dict[str, Any] = {
         "dir": "./output",
         "format": "parquet",
         "save_preprocessed": True,
+        "keep_runs": 10,
     },
 }
 
@@ -133,10 +135,15 @@ def validate_config(cfg: dict[str, Any]) -> None:
     if scaling not in VALID_SCALING:
         errors.append(f"preprocessing.scaling must be one of {sorted(VALID_SCALING)}")
     for stage, algo in cfg["preprocessing"]["sampling"].items():
-        if algo not in VALID_SAMPLING:
+        algos = algo if isinstance(algo, list) else [algo]
+        invalid = [a for a in algos if a not in VALID_SAMPLING]
+        if invalid:
             errors.append(
-                f"preprocessing.sampling.{stage} must be one of {sorted(VALID_SAMPLING)}"
+                f"preprocessing.sampling.{stage} has invalid entries {invalid}; "
+                f"each must be one of {sorted(VALID_SAMPLING)}"
             )
+        if not algos:
+            errors.append(f"preprocessing.sampling.{stage} must not be an empty list")
 
     audit = cfg["audit"]
     # known_issue_lookup is a pure curated-table lookup keyed on dataset.name —
@@ -173,6 +180,9 @@ def validate_config(cfg: dict[str, Any]) -> None:
 
     if cfg["output"]["format"] not in VALID_OUTPUT_FORMAT:
         errors.append(f"output.format must be one of {sorted(VALID_OUTPUT_FORMAT)}")
+    keep_runs = cfg["output"]["keep_runs"]
+    if keep_runs is not None and keep_runs <= 0:
+        errors.append("output.keep_runs must be a positive integer, or null to keep all runs")
 
     if errors:
         raise ValueError("Invalid config:\n" + "\n".join(f"  - {e}" for e in errors))

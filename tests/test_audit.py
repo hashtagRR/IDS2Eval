@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-from ids2eval.audit import (class_distribution, cross_dataset_drift, dedup,
-                             homogeneity, identity_columns, known_issues,
-                             leakage, resplit, schema_fingerprint,
-                             synthetic_realism)
+from ids2eval.audit import (class_distribution, cross_dataset_drift,
+                             data_integrity, dedup, homogeneity,
+                             identity_columns, known_issues, leakage, resplit,
+                             schema_fingerprint, synthetic_realism)
 
 
 def _add_id_like_column(cfg):
@@ -151,3 +151,40 @@ def test_cross_dataset_drift_warns_on_missing_label_column(base_cfg, tmp_path, s
 
     result = cross_dataset_drift.check(train_df, test_df, base_cfg)
     assert result["status"] == "warning"
+
+
+# -- data_integrity_check ---------------------------------------------------
+
+def test_data_integrity_flags_missing_label(base_cfg):
+    df = pd.DataFrame({"F1": [1, 2, 3], "Label": ["A", None, "B"]})
+    result = data_integrity.check(df, base_cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["missing_label_count"] == 1
+
+
+def test_data_integrity_warns_on_missing_feature_values(base_cfg):
+    df = pd.DataFrame({"F1": [1, None, 3], "Label": ["A", "B", "A"]})
+    result = data_integrity.check(df, base_cfg)
+    assert result["status"] == "warning"
+    assert result["details"]["missing_by_feature"] == {"F1": 1}
+
+
+def test_data_integrity_warns_on_inf_values(base_cfg):
+    df = pd.DataFrame({"F1": [1.0, np.inf, -np.inf], "Label": ["A", "B", "A"]})
+    result = data_integrity.check(df, base_cfg)
+    assert result["status"] == "warning"
+    assert result["details"]["inf_by_feature"] == {"F1": 2}
+
+
+def test_data_integrity_warns_on_constant_feature(base_cfg):
+    df = pd.DataFrame({"F1": [5, 5, 5], "F2": [1, 2, 3], "Label": ["A", "B", "A"]})
+    result = data_integrity.check(df, base_cfg)
+    assert result["status"] == "warning"
+    assert "F1" in result["details"]["constant_features"]
+    assert "F2" not in result["details"]["constant_features"]
+
+
+def test_data_integrity_ok_on_healthy_data(base_cfg):
+    df = pd.DataFrame({"F1": [1, 2, 3, 4], "F2": [4, 3, 2, 1], "Label": ["A", "B", "A", "B"]})
+    result = data_integrity.check(df, base_cfg)
+    assert result["status"] == "ok"

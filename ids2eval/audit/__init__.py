@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import pandas as pd
 
-from . import (class_distribution, cross_dataset_drift, dedup, homogeneity,
-               identity_columns, known_issues, leakage, resplit,
+from . import (class_distribution, cross_dataset_drift, data_integrity, dedup,
+               homogeneity, identity_columns, known_issues, leakage, resplit,
                schema_fingerprint, synthetic_realism)
 
 
@@ -43,6 +43,8 @@ def run_audit(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> list[
         findings.append(identity_columns.check_cardinality(train_df, cfg))
     if audit_cfg["schema_fingerprint_check"]:
         findings.append(schema_fingerprint.check(train_df, cfg))
+    if audit_cfg["data_integrity_check"]:
+        findings.append(data_integrity.check(train_df, cfg))
     if audit_cfg["synthetic_realism_check"]:
         findings.append(synthetic_realism.check(train_df, cfg))
     if audit_cfg["cross_dataset_drift_check"]:

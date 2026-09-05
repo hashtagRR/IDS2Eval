@@ -65,7 +65,3 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-
-## Scope
-
-Explicitly out of scope: a confidence-routed, multi-stage classification cascade, and anomaly detection (IsolationForest/LOF) as standalone benchmark targets. This tool audits and benchmarks flat classifiers against dataset quality — it isn't a full IDS system architecture.

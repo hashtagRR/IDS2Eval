@@ -30,6 +30,8 @@ DEFAULTS: dict[str, Any] = {
         "split_ratio": 0.8,
         "split_mode": "random",
         "group_columns": [],
+        "chunk_size": None,
+        "max_rows": None,
     },
     "schema": {
         "label_column": None,
@@ -108,6 +110,16 @@ def validate_config(cfg: dict[str, Any]) -> None:
         errors.append(f"dataset.split_mode must be one of {sorted(VALID_SPLIT_MODE)}")
     if dataset["split_mode"] == "grouped" and not dataset["group_columns"]:
         errors.append("dataset.group_columns is required when split_mode is 'grouped'")
+    if dataset["chunk_size"] is not None and dataset["chunk_size"] <= 0:
+        errors.append("dataset.chunk_size must be a positive integer")
+    if dataset["max_rows"] is not None:
+        if dataset["max_rows"] <= 0:
+            errors.append("dataset.max_rows must be a positive integer")
+        if not dataset["chunk_size"]:
+            errors.append(
+                "dataset.max_rows requires dataset.chunk_size to be set — reservoir "
+                "sampling still has to read the file in chunks to sample it"
+            )
 
     if not cfg["schema"]["label_column"]:
         errors.append("schema.label_column is required")

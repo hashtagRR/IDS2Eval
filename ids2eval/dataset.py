@@ -13,23 +13,35 @@ import logging
 import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold, train_test_split
 
+from . import chunked_io
+
 logger = logging.getLogger(__name__)
 
 
 def load_raw_combined(dataset_cfg: dict) -> pd.DataFrame:
-    """Load and concatenate dataset.raw_files, before any split is applied."""
-    frames = [pd.read_csv(path) for path in dataset_cfg["raw_files"]]
-    for df in frames:
-        df.columns = df.columns.str.strip()
-    return pd.concat(frames, ignore_index=True, copy=False)
+    """Load and concatenate dataset.raw_files, before any split is applied.
+
+    Honors dataset.chunk_size/max_rows — see chunked_io module docstring
+    for what each actually bounds.
+    """
+    if dataset_cfg["max_rows"] and dataset_cfg["group_columns"]:
+        logger.warning(
+            "dataset.max_rows reservoir sampling is row-level, not group-aware — "
+            "session groups (dataset.group_columns) may be fragmented across the "
+            "sample boundary before any grouped split is applied."
+        )
+    return chunked_io.load_files_combined(
+        dataset_cfg["raw_files"], dataset_cfg["chunk_size"], dataset_cfg["max_rows"]
+    )
 
 
 def load_split(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return (train_df, test_df), pre-split if configured, else loaded+split."""
     dataset_cfg = cfg["dataset"]
     if dataset_cfg["train_file"] and dataset_cfg["test_file"]:
-        train_df = pd.read_csv(dataset_cfg["train_file"])
-        test_df = pd.read_csv(dataset_cfg["test_file"])
+        chunk_size, max_rows = dataset_cfg["chunk_size"], dataset_cfg["max_rows"]
+        train_df = chunked_io.load_file(dataset_cfg["train_file"], chunk_size, max_rows)
+        test_df = chunked_io.load_file(dataset_cfg["test_file"], chunk_size, max_rows)
         return train_df, test_df
 
     combined = load_raw_combined(dataset_cfg)

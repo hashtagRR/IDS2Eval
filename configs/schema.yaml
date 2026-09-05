@@ -1,0 +1,90 @@
+# ids-audit-toolkit config schema (v1)
+#
+# This file documents every field the loader accepts, with its default
+# value and valid options. Copy this file, fill in `dataset`/`schema`
+# for your data, and pass it to the tool. Any field you omit falls back
+# to the default shown here.
+
+dataset:
+  name: null                     # required — fingerprint key used by schema-fingerprint
+                                  # and known-issue-lookup audit checks (e.g. "cic-ids2018")
+  raw_files: []                  # list of raw file paths — tool splits them itself
+  train_file: null               # OR: pre-split train file
+  test_file: null                #     pre-split test file (both required together)
+  split_ratio: 0.8               # used only when raw_files is given
+  split_mode: random             # random | grouped
+                                  #   random  — plain random split
+                                  #   grouped — session/time-grouped, prevents
+                                  #             session-correlated leakage across
+                                  #             the train/test boundary
+  group_columns: []              # required when split_mode: grouped — columns combined
+                                  # into a session-grouping key (e.g. src/dst IP+port,
+                                  # protocol) so StratifiedGroupKFold keeps every group's
+                                  # rows on one side of the split. Dataset-specific: there
+                                  # is no universal set of column names across IDS datasets.
+
+schema:
+  label_column: null             # required — column holding the binary/attack label
+  attack_category_column: null   # optional — multi-class attack-type column, if separate
+  drop_columns: []               # columns to drop before training (e.g. flow IDs, timestamps)
+  id_like_columns: []            # IP/port/MAC-pattern columns — feeds the identity-column
+                                  # and low-cardinality audit checks, not dropped automatically
+
+label_grouping:
+  attack_type_mapping: {}        # optional dict collapsing raw attack labels into coarser
+                                  # categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
+
+preprocessing:
+  dedup: true                    # exact + feature-only dedup pass before splitting
+  scaling: standard              # none | standard | minmax | robust
+  sampling:
+    binary: none                 # none | smote | smoteenn | enn | random_undersample
+    type: none                   # same options, applied to the multi-class stage
+
+audit:
+  # v1 checks — generalizable, automatable, need no external reference data
+  dedup_check: true
+  leakage_screen: true           # single-feature / feature-pair leakage via feature_importances_
+  identity_column_flag: true     # standalone AUC/importance + suggested-drop for id_like_columns
+  homogeneity_test: true         # nearest-neighbor homogeneity test (model-agnostic)
+  resplit_falsification: true    # session/time-grouped resplit falsification test
+  class_distribution_report: true
+  low_cardinality_warning: true  # flags topology-overfitting risk on id_like_columns
+  schema_fingerprint_check: true # detects known extractor bugs via column-name fingerprinting
+
+  # v2 checks — opt-in, need a second dataset (reference_dataset) or heavier compute
+  synthetic_realism_check: false     # synthetic-vs-real distributional realism
+  cross_dataset_drift_check: false   # train-on-A/test-on-B in a unified feature space
+  known_issue_lookup: false          # curated per-dataset documented-problem lookup table
+  reference_dataset: null            # required if any v2 check above is true
+
+classifiers:
+  list: all                      # "all", or an explicit list drawn from:
+                                  #   RandomForest, XGBoost, DecisionTree, NaiveBayes,
+                                  #   LogisticRegression, KNN, SVM, LDA, Stacking, Voting,
+                                  #   ExtraTrees, HistGradientBoosting, AdaBoost, MLP
+                                  # (Stacking/Voting/NaiveBayes are fixed no-tune candidates —
+                                  # `tuning: true` has no effect on them)
+  tuning: false                  # false — train each classifier once, using `hyperparameters`
+                                  # true  — run a hyperparameter search per classifier, using
+                                  #         `search_space` (falls back to the tool's built-in
+                                  #         default grid for any classifier left unspecified)
+  calibration: none              # none | platt | isotonic
+
+  hyperparameters: {}            # per-classifier fixed param overrides, used when tuning: false
+                                  # e.g. RandomForest: {n_estimators: 200, max_depth: 20}
+                                  # any classifier not listed here uses the tool's built-in
+                                  # validated defaults
+
+  search_space: {}               # per-classifier grid/range overrides, used when tuning: true
+                                  # e.g. XGBoost: {learning_rate: [0.01, 0.05, 0.1]}
+                                  # any classifier not listed here uses the tool's built-in
+                                  # default search space
+
+output:
+  dir: ./output
+  format: parquet                # parquet | csv
+  save_preprocessed: true        # write out the preprocessed train/test data, not just reports
+
+# Anomaly detection (IsolationForest / LOF as standalone benchmark targets) and any
+# confidence-routed multi-stage cascade are explicitly out of scope for v1.

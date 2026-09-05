@@ -15,6 +15,7 @@ import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import LabelEncoder
 
 from . import classifiers as clf_registry
 from . import preprocessing
@@ -35,12 +36,21 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> p
 
     rows = []
     for stage, label_col in stages:
-        y_train_full = train_df[label_col]
-        y_test = test_df[label_col]
+        # Label-encode once per stage (not per classifier): XGBoost's sklearn
+        # API requires integer classes 0..N-1 for multi-class fit and raises
+        # otherwise (real failure hit against UNSW-NB15's string attack_cat
+        # labels) - encoding for every classifier, not just XGBoost, keeps
+        # y consistent across the whole stage and avoids a separate
+        # encode/decode path (and its CalibratedClassifierCV-compatibility
+        # complications) for just one classifier. accuracy/F1/AUC are
+        # unaffected by a relabeling as long as y_true and y_pred agree.
+        label_encoder = LabelEncoder()
+        y_train_full = label_encoder.fit_transform(train_df[label_col])
+        y_test = label_encoder.transform(test_df[label_col])
 
         if len(x_train_full) > MAX_FIT_ROWS:
             idx = np.random.RandomState(0).choice(len(x_train_full), size=MAX_FIT_ROWS, replace=False)
-            x_train, y_train = x_train_full[idx], y_train_full.iloc[idx]
+            x_train, y_train = x_train_full[idx], y_train_full[idx]
         else:
             x_train, y_train = x_train_full, y_train_full
 

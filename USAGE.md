@@ -54,7 +54,7 @@ every run — nothing gets silently overwritten):
 | `audit_report_before.json` | All enabled audit findings, computed before dedup |
 | `audit_report_after.json` | Same, after dedup (only if `preprocessing.dedup` is on) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
-| `benchmark_results.csv` | One row per (stage, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |
+| `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |
 | `benchmark_details.json` | Per-row confusion matrix, per-class precision/recall/F1, feature importance (where the classifier supports it), winning hyperparameters (if `classifiers.tuning` ran), and each stage's class distribution before/after sampling |
 | `environment.json` | Python version, platform, `ids2eval`'s own version/git commit, key package versions |
 | `resolved_config.json` | The fully resolved config (your YAML merged onto defaults) — one of the three things (with the dataset fingerprint and the seed) needed to reproduce a run |

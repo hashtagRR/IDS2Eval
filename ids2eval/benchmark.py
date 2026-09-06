@@ -4,9 +4,10 @@ Runs a "binary" stage against schema.label_column always, and a "type"
 stage against schema.attack_category_column if one is configured — two
 independent flat benchmarks, not a chained/routed cascade (that
 architecture is explicitly out of scope for this tool). Each stage can
-run under one or more sampling strategies (preprocessing.sampling.<stage>
-accepts a string or a list), producing one row per (stage, sampling,
-classifier) combination.
+run under one or more scaling methods and one or more sampling
+strategies (preprocessing.scaling and preprocessing.sampling.<stage>
+each accept a string or a list), producing one row per
+(stage, scaling, sampling, classifier) combination.
 
 Scaling and sampling run INSIDE an imblearn Pipeline together with the
 classifier, not once up front - this is a fixed leakage bug, not a
@@ -51,12 +52,13 @@ TUNING_CV_FOLDS = 3
 def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> tuple[pd.DataFrame, dict]:
     """Returns (summary_df, extras).
 
-    summary_df has one row per (stage, sampling, classifier) with the
-    scalar metrics. extras holds the heavier per-row detail (confusion
-    matrix, per-class report, feature importance, best hyperparameters)
-    keyed by "{stage}|{sampling}|{classifier}", plus a
-    "class_distributions" entry recording each stage's original and
-    post-sampling class counts.
+    summary_df has one row per (stage, scaling, sampling, classifier)
+    with the scalar metrics. extras holds the heavier per-row detail
+    (confusion matrix, per-class report, feature importance, best
+    hyperparameters) keyed by "{stage}|{scaling}|{sampling}|{classifier}",
+    plus a "class_distributions" entry recording each stage's original
+    and post-sampling class counts (scaling doesn't change class counts,
+    so it isn't part of that key).
     """
     schema = cfg["schema"]
     stages = [("binary", schema["label_column"])]
@@ -87,25 +89,26 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
                 x_train, y_train, sampling_algo, label_encoder, cfg["random_seed"]
             )
 
-            for name in _resolve_classifier_list(cfg):
-                try:
-                    model, fit_time, best_params = _fit_classifier(
-                        name, x_train, y_train, cfg, sampling_algo
-                    )
-                except Exception as e:
-                    logger.warning(
-                        "Classifier '%s' failed on stage '%s' (sampling=%s): %s",
-                        name, stage, sampling_algo, e,
-                    )
-                    continue
+            for scaling_algo in _scaling_strategies(cfg):
+                for name in _resolve_classifier_list(cfg):
+                    try:
+                        model, fit_time, best_params = _fit_classifier(
+                            name, x_train, y_train, cfg, sampling_algo, scaling_algo
+                        )
+                    except Exception as e:
+                        logger.warning(
+                            "Classifier '%s' failed on stage '%s' (scaling=%s, sampling=%s): %s",
+                            name, stage, scaling_algo, sampling_algo, e,
+                        )
+                        continue
 
-                metrics, infer_time, detail = _evaluate(model, x_test, y_test, label_encoder, cols)
-                rows.append({
-                    "stage": stage, "sampling": sampling_algo, "classifier": name,
-                    "train_time_s": round(fit_time, 4), "infer_time_s": round(infer_time, 4),
-                    **metrics,
-                })
-                extras[f"{stage}|{sampling_algo}|{name}"] = {"best_params": best_params, **detail}
+                    metrics, infer_time, detail = _evaluate(model, x_test, y_test, label_encoder, cols)
+                    rows.append({
+                        "stage": stage, "scaling": scaling_algo, "sampling": sampling_algo, "classifier": name,
+                        "train_time_s": round(fit_time, 4), "infer_time_s": round(infer_time, 4),
+                        **metrics,
+                    })
+                    extras[f"{stage}|{scaling_algo}|{sampling_algo}|{name}"] = {"best_params": best_params, **detail}
 
         extras["class_distributions"][stage] = stage_distributions
 
@@ -115,6 +118,11 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
 def _sampling_strategies(cfg: dict, stage: str) -> list[str]:
     algo = cfg["preprocessing"]["sampling"][stage]
     return algo if isinstance(algo, list) else [algo]
+
+
+def _scaling_strategies(cfg: dict) -> list[str]:
+    scaling = cfg["preprocessing"]["scaling"]
+    return scaling if isinstance(scaling, list) else [scaling]
 
 
 def _distribution(y_encoded: np.ndarray, label_encoder: LabelEncoder) -> dict:
@@ -143,10 +151,9 @@ def _resolve_classifier_list(cfg: dict) -> list[str]:
     return list(clf_registry.REGISTRY) if clf_list == "all" else clf_list
 
 
-def _build_pipeline(name: str, cfg: dict, overrides: dict, sampling_algo: str) -> ImbPipeline:
+def _build_pipeline(name: str, cfg: dict, overrides: dict, sampling_algo: str, scaling_algo: str) -> ImbPipeline:
     seed = cfg["random_seed"]
-    scaling = cfg["preprocessing"]["scaling"]
-    scaler = SCALERS[scaling]() if scaling != "none" else "passthrough"
+    scaler = SCALERS[scaling_algo]() if scaling_algo != "none" else "passthrough"
     sampler = SAMPLERS[sampling_algo](seed) if sampling_algo != "none" else "passthrough"
     clf = clf_registry.build_estimator(name, overrides, seed=seed)
     return ImbPipeline([("scaler", scaler), ("sampler", sampler), ("clf", clf)])
@@ -156,11 +163,11 @@ def _prefix_grid(grid: dict) -> dict:
     return {f"clf__{k}": v for k, v in grid.items()}
 
 
-def _fit_classifier(name: str, x_train, y_train, cfg: dict, sampling_algo: str):
+def _fit_classifier(name: str, x_train, y_train, cfg: dict, sampling_algo: str, scaling_algo: str):
     classifiers_cfg = cfg["classifiers"]
     spec = clf_registry.REGISTRY[name]
     overrides = classifiers_cfg["hyperparameters"].get(name, {})
-    pipe = _build_pipeline(name, cfg, overrides, sampling_algo)
+    pipe = _build_pipeline(name, cfg, overrides, sampling_algo, scaling_algo)
 
     best_params = None
     start = time.perf_counter()

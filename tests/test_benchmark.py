@@ -26,7 +26,7 @@ def test_run_benchmark_tuning_path(base_cfg, synth_train_test):
     base_cfg["classifiers"]["tuning"] = True
     results, extras = run_benchmark(train_df, test_df, base_cfg)
     assert len(results) == 1
-    detail = extras["binary|none|DecisionTree"]
+    detail = extras["binary|standard|none|DecisionTree"]
     assert detail["best_params"] is not None  # GridSearchCV ran, so a winner was picked
 
 
@@ -51,9 +51,9 @@ def test_run_benchmark_result_has_richer_columns(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     base_cfg["classifiers"]["list"] = ["DecisionTree"]
     results, extras = run_benchmark(train_df, test_df, base_cfg)
-    assert {"train_time_s", "infer_time_s", "sampling"} <= set(results.columns)
+    assert {"train_time_s", "infer_time_s", "scaling", "sampling"} <= set(results.columns)
 
-    detail = extras["binary|none|DecisionTree"]
+    detail = extras["binary|standard|none|DecisionTree"]
     assert "confusion_matrix" in detail
     assert "per_class_report" in detail
     assert "feature_importance" in detail
@@ -71,6 +71,17 @@ def test_run_benchmark_multiple_sampling_strategies_produce_separate_rows(base_c
     assert "none" in dist and "smote" in dist
     # SMOTE should have balanced the classes; the untouched original shouldn't be
     assert len(set(dist["smote"].values())) == 1
+
+
+def test_run_benchmark_multiple_scaling_strategies_produce_separate_rows(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    base_cfg["preprocessing"]["scaling"] = ["none", "standard"]
+    results, extras = run_benchmark(train_df, test_df, base_cfg)
+    assert set(results["scaling"]) == {"none", "standard"}
+    assert len(results) == 2
+    assert "binary|none|none|DecisionTree" in extras
+    assert "binary|standard|none|DecisionTree" in extras
 
 
 def test_run_benchmark_scaling_and_sampling_are_fold_safe_under_tuning(base_cfg):
@@ -122,8 +133,8 @@ def test_different_random_seed_changes_smote_output(base_cfg):
     base_cfg["random_seed"] = 999
     _, extras_b = run_benchmark(train_df, test_df, base_cfg)
 
-    fi_a = extras_a["binary|smote|DecisionTree"]["feature_importance"]
-    fi_b = extras_b["binary|smote|DecisionTree"]["feature_importance"]
+    fi_a = extras_a["binary|standard|smote|DecisionTree"]["feature_importance"]
+    fi_b = extras_b["binary|standard|smote|DecisionTree"]["feature_importance"]
     assert fi_a != fi_b  # different synthetic SMOTE points -> different fitted tree
 
 
@@ -136,5 +147,5 @@ def test_same_random_seed_is_fully_reproducible(base_cfg, synth_train_test):
     results_b, extras_b = run_benchmark(train_df.copy(), test_df.copy(), base_cfg)
 
     assert results_a["accuracy"].tolist() == results_b["accuracy"].tolist()
-    assert extras_a["binary|smote|DecisionTree"]["feature_importance"] == \
-        extras_b["binary|smote|DecisionTree"]["feature_importance"]
+    assert extras_a["binary|standard|smote|DecisionTree"]["feature_importance"] == \
+        extras_b["binary|standard|smote|DecisionTree"]["feature_importance"]

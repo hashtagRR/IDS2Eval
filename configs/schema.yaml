@@ -33,6 +33,7 @@ label_grouping:
 preprocessing:
   dedup: true                  # remove exact duplicate rows before splitting
   scaling: standard            # none | standard | minmax | robust
+                                # or a list to compare several, e.g. [none, standard, robust]
   sampling:
     binary: none                # none | smote | smoteenn | enn | random_undersample
                                  # or a list to compare several, e.g. [none, smote, smoteenn]

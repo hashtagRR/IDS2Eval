@@ -139,8 +139,15 @@ def validate_config(cfg: dict[str, Any]) -> None:
         )
 
     scaling = cfg["preprocessing"]["scaling"]
-    if scaling not in VALID_SCALING:
-        errors.append(f"preprocessing.scaling must be one of {sorted(VALID_SCALING)}")
+    scalings = scaling if isinstance(scaling, list) else [scaling]
+    invalid_scaling = [s for s in scalings if s not in VALID_SCALING]
+    if invalid_scaling:
+        errors.append(
+            f"preprocessing.scaling has invalid entries {invalid_scaling}; "
+            f"each must be one of {sorted(VALID_SCALING)}"
+        )
+    if not scalings:
+        errors.append("preprocessing.scaling must not be an empty list")
     for stage, algo in cfg["preprocessing"]["sampling"].items():
         algos = algo if isinstance(algo, list) else [algo]
         invalid = [a for a in algos if a not in VALID_SAMPLING]

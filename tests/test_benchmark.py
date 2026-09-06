@@ -37,10 +37,10 @@ def test_run_benchmark_skips_failing_classifier_without_crashing(base_cfg, synth
     from ids2eval import classifiers as clf_registry
     original_build = clf_registry.build_estimator
 
-    def _boom(name, overrides=None):
+    def _boom(name, overrides=None, seed=None):
         if name == "NaiveBayes":
             raise RuntimeError("simulated failure")
-        return original_build(name, overrides)
+        return original_build(name, overrides, seed=seed)
 
     monkeypatch.setattr("ids2eval.benchmark.clf_registry.build_estimator", _boom)
     results, extras = run_benchmark(train_df, test_df, base_cfg)
@@ -100,3 +100,41 @@ def test_run_benchmark_scaling_and_sampling_are_fold_safe_under_tuning(base_cfg)
     results, extras = run_benchmark(train_df, test_df, base_cfg)
     assert len(results) == 1
     assert results["accuracy"].iloc[0] is not None
+
+
+def test_different_random_seed_changes_smote_output(base_cfg):
+    # Proves random_seed actually reaches the sampler inside the pipeline,
+    # not just that it's accepted as a config field.
+    import numpy as np
+    import pandas as pd
+    rng = np.random.RandomState(1)
+    n = 300
+    df = pd.DataFrame({
+        "F1": rng.normal(0, 1, n), "F2": rng.normal(0, 1, n),
+        "Label": rng.choice(["A", "B"], n, p=[0.8, 0.2]),
+    })
+    train_df, test_df = df.iloc[:200].reset_index(drop=True), df.iloc[200:].reset_index(drop=True)
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    base_cfg["preprocessing"]["sampling"]["binary"] = "smote"
+
+    base_cfg["random_seed"] = 0
+    _, extras_a = run_benchmark(train_df, test_df, base_cfg)
+    base_cfg["random_seed"] = 999
+    _, extras_b = run_benchmark(train_df, test_df, base_cfg)
+
+    fi_a = extras_a["binary|smote|DecisionTree"]["feature_importance"]
+    fi_b = extras_b["binary|smote|DecisionTree"]["feature_importance"]
+    assert fi_a != fi_b  # different synthetic SMOTE points -> different fitted tree
+
+
+def test_same_random_seed_is_fully_reproducible(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    base_cfg["preprocessing"]["sampling"]["binary"] = "smote"
+
+    results_a, extras_a = run_benchmark(train_df.copy(), test_df.copy(), base_cfg)
+    results_b, extras_b = run_benchmark(train_df.copy(), test_df.copy(), base_cfg)
+
+    assert results_a["accuracy"].tolist() == results_b["accuracy"].tolist()
+    assert extras_a["binary|smote|DecisionTree"]["feature_importance"] == \
+        extras_b["binary|smote|DecisionTree"]["feature_importance"]

@@ -18,11 +18,12 @@ from . import chunked_io
 logger = logging.getLogger(__name__)
 
 
-def load_raw_combined(dataset_cfg: dict) -> pd.DataFrame:
+def load_raw_combined(dataset_cfg: dict, seed: int = 0) -> pd.DataFrame:
     """Load and concatenate dataset.raw_files, before any split is applied.
 
     Honors dataset.chunk_size/max_rows — see chunked_io module docstring
-    for what each actually bounds.
+    for what each actually bounds. seed drives reservoir_sample's
+    randomness when max_rows is set.
     """
     if dataset_cfg["max_rows"] and dataset_cfg["group_columns"]:
         logger.warning(
@@ -31,40 +32,41 @@ def load_raw_combined(dataset_cfg: dict) -> pd.DataFrame:
             "sample boundary before any grouped split is applied."
         )
     return chunked_io.load_files_combined(
-        dataset_cfg["raw_files"], dataset_cfg["chunk_size"], dataset_cfg["max_rows"]
+        dataset_cfg["raw_files"], dataset_cfg["chunk_size"], dataset_cfg["max_rows"], seed
     )
 
 
 def load_split(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return (train_df, test_df), pre-split if configured, else loaded+split."""
     dataset_cfg = cfg["dataset"]
+    seed = cfg["random_seed"]
     if dataset_cfg["train_file"] and dataset_cfg["test_file"]:
         chunk_size, max_rows = dataset_cfg["chunk_size"], dataset_cfg["max_rows"]
-        train_df = chunked_io.load_file(dataset_cfg["train_file"], chunk_size, max_rows)
-        test_df = chunked_io.load_file(dataset_cfg["test_file"], chunk_size, max_rows)
+        train_df = chunked_io.load_file(dataset_cfg["train_file"], chunk_size, max_rows, seed)
+        test_df = chunked_io.load_file(dataset_cfg["test_file"], chunk_size, max_rows, seed)
         return train_df, test_df
 
-    combined = load_raw_combined(dataset_cfg)
+    combined = load_raw_combined(dataset_cfg, seed)
     label_col = cfg["schema"]["label_column"]
     if dataset_cfg["split_mode"] == "grouped":
-        return _grouped_split(combined, label_col, dataset_cfg)
-    return _random_split(combined, label_col, dataset_cfg)
+        return _grouped_split(combined, label_col, dataset_cfg, seed)
+    return _random_split(combined, label_col, dataset_cfg, seed)
 
 
 def _random_split(
-    df: pd.DataFrame, label_col: str, dataset_cfg: dict
+    df: pd.DataFrame, label_col: str, dataset_cfg: dict, seed: int = 0
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     train, test = train_test_split(
         df,
         test_size=1.0 - dataset_cfg["split_ratio"],
-        random_state=0,
+        random_state=seed,
         stratify=df[label_col],
     )
     return train.reset_index(drop=True), test.reset_index(drop=True)
 
 
 def _grouped_split(
-    df: pd.DataFrame, label_col: str, dataset_cfg: dict
+    df: pd.DataFrame, label_col: str, dataset_cfg: dict, seed: int = 0
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Session/time-grouped split via StratifiedGroupKFold.
 
@@ -82,7 +84,7 @@ def _grouped_split(
     groups = df[group_cols].astype(str).agg("|".join, axis=1)
 
     n_splits = round(1.0 / (1.0 - dataset_cfg["split_ratio"]))
-    sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=0)
+    sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)
     train_idx, test_idx = next(sgkf.split(df, df[label_col], groups))
     train = df.iloc[train_idx].reset_index(drop=True)
     test = df.iloc[test_idx].reset_index(drop=True)
@@ -158,6 +160,8 @@ def validate_loaded(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) ->
     schema = cfg["schema"]
 
     for name, df in [("train", train_df), ("test", test_df)]:
+        if len(df) == 0:
+            errors.append(f"{name} data has zero rows after loading/splitting")
         dupes = df.columns[df.columns.duplicated()].tolist()
         if dupes:
             errors.append(f"{name} data has duplicate column names: {sorted(set(dupes))}")

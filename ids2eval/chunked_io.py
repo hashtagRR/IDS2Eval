@@ -159,19 +159,19 @@ def reservoir_sample(chunks: Iterator[pd.DataFrame], max_rows: int, seed: int = 
     return reservoir, n_seen
 
 
-def load_file(path: str, chunk_size: int | None, max_rows: int | None) -> pd.DataFrame:
+def load_file(path: str, chunk_size: int | None, max_rows: int | None, seed: int = 0) -> pd.DataFrame:
     chunks = iter_chunks([path], chunk_size)
     if max_rows:
-        df, n_seen = reservoir_sample(chunks, max_rows)
+        df, n_seen = reservoir_sample(chunks, max_rows, seed)
         logger.info("Reservoir-sampled %s: %d rows seen -> %d kept (dataset.max_rows)", path, n_seen, len(df))
         return df
     return pd.concat(list(chunks), ignore_index=True)
 
 
-def load_files_combined(paths: list[str], chunk_size: int | None, max_rows: int | None) -> pd.DataFrame:
+def load_files_combined(paths: list[str], chunk_size: int | None, max_rows: int | None, seed: int = 0) -> pd.DataFrame:
     chunks = iter_chunks(paths, chunk_size)
     if max_rows:
-        df, n_seen = reservoir_sample(chunks, max_rows)
+        df, n_seen = reservoir_sample(chunks, max_rows, seed)
         logger.info("Reservoir-sampled %d files: %d rows seen -> %d kept (dataset.max_rows)", len(paths), n_seen, len(df))
         return df
     return pd.concat(list(chunks), ignore_index=True)

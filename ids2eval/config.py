@@ -22,6 +22,10 @@ VALID_CALIBRATION = {"none", "platt", "isotonic"}
 VALID_OUTPUT_FORMAT = {"parquet", "csv"}
 
 DEFAULTS: dict[str, Any] = {
+    "random_seed": 0,      # every random_state/seed in the pipeline (split, reservoir
+                            # sampling, SMOTE/etc., classifier init, benchmark subsampling)
+                            # derives from this one value, so a run is reproducible from
+                            # resolved_config.json alone rather than 6 scattered constants
     "dataset": {
         "name": None,
         "raw_files": [],
@@ -98,6 +102,9 @@ def load_config(path: str | Path) -> dict[str, Any]:
 
 def validate_config(cfg: dict[str, Any]) -> None:
     errors: list[str] = []
+
+    if not isinstance(cfg["random_seed"], int) or isinstance(cfg["random_seed"], bool):
+        errors.append("random_seed must be an integer")
 
     dataset = cfg["dataset"]
     has_raw = bool(dataset["raw_files"])

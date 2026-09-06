@@ -123,7 +123,18 @@ REGISTRY: dict[str, ClassifierSpec] = {
 }
 
 
-def build_estimator(name: str, overrides: dict | None = None):
+def build_estimator(name: str, overrides: dict | None = None, seed: int | None = None):
+    """Build an unfitted estimator. seed, when given, overrides random_state
+    for any classifier that has one in its default_params - but never an
+    explicit classifiers.hyperparameters override, which wins on purpose.
+
+    Known simplification: doesn't reach into nested sub-estimators
+    (AdaBoost's fixed depth-1 stump, Stacking/Voting's base learners) -
+    those keep their own fixed defaults regardless of seed.
+    """
     spec = REGISTRY[name]
-    params = {**spec.default_params, **(overrides or {})}
+    overrides = overrides or {}
+    params = {**spec.default_params, **overrides}
+    if seed is not None and "random_state" in spec.default_params and "random_state" not in overrides:
+        params["random_state"] = seed
     return spec.factory(params)

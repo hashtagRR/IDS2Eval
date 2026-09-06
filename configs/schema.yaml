@@ -5,6 +5,18 @@
 # for your data, and pass it to the tool. Any field you omit falls back
 # to the default shown here.
 
+random_seed: 0                   # every random_state/seed in the data and benchmark pipeline
+                                  # (train/test split, grouped-split fold assignment, reservoir
+                                  # sampling, SMOTE/SMOTEENN/ENN/random-undersample, classifier
+                                  # init, the >200k-row benchmark subsample) derives from this
+                                  # one value, so a run is reproducible from resolved_config.json
+                                  # alone instead of 6 scattered hardcoded constants. Also folded
+                                  # into the load-cache's invalidation fingerprint. Does NOT
+                                  # affect audit checks' own internal sampling (diagnostic, not
+                                  # part of the reported experimental result) or a few nested
+                                  # sub-estimators (AdaBoost's fixed depth-1 stump, Stacking/
+                                  # Voting's base learners), which keep fixed defaults.
+
 dataset:
   name: null                     # required — fingerprint key used by schema-fingerprint
                                   # and known-issue-lookup audit checks (e.g. "cic-ids2018")

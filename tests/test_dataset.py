@@ -89,3 +89,17 @@ def test_validate_loaded_passes_on_healthy_data(base_cfg):
     train_df = pd.DataFrame({"F1": [1], "Label": ["A"]})
     test_df = pd.DataFrame({"F1": [2], "Label": ["B"]})
     dataset.validate_loaded(train_df, test_df, base_cfg)  # should not raise
+
+
+def test_validate_loaded_raises_on_empty_train_data(base_cfg):
+    train_df = pd.DataFrame(columns=["F1", "Label"])
+    test_df = pd.DataFrame({"F1": [1], "Label": ["A"]})
+    with pytest.raises(ValueError, match="train data has zero rows"):
+        dataset.validate_loaded(train_df, test_df, base_cfg)
+
+
+def test_validate_loaded_raises_on_empty_test_data(base_cfg):
+    train_df = pd.DataFrame({"F1": [1], "Label": ["A"]})
+    test_df = pd.DataFrame(columns=["F1", "Label"])
+    with pytest.raises(ValueError, match="test data has zero rows"):
+        dataset.validate_loaded(train_df, test_df, base_cfg)

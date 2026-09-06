@@ -76,7 +76,7 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
         y_test = label_encoder.transform(test_df[label_col])
 
         if len(x_train_all) > MAX_FIT_ROWS:
-            idx = np.random.RandomState(0).choice(len(x_train_all), size=MAX_FIT_ROWS, replace=False)
+            idx = np.random.RandomState(cfg["random_seed"]).choice(len(x_train_all), size=MAX_FIT_ROWS, replace=False)
             x_train, y_train = x_train_all[idx], y_train_all[idx]
         else:
             x_train, y_train = x_train_all, y_train_all
@@ -85,7 +85,7 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
 
         for sampling_algo in _sampling_strategies(cfg, stage):
             stage_distributions[sampling_algo] = _resampled_distribution(
-                x_train, y_train, sampling_algo, label_encoder
+                x_train, y_train, sampling_algo, label_encoder, cfg["random_seed"]
             )
 
             for name in _resolve_classifier_list(cfg):
@@ -124,15 +124,15 @@ def _distribution(y_encoded: np.ndarray, label_encoder: LabelEncoder) -> dict:
     return {str(k): int(v) for k, v in counts.items()}
 
 
-def _resampled_distribution(x_train, y_train, sampling_algo: str, label_encoder: LabelEncoder) -> dict:
+def _resampled_distribution(x_train, y_train, sampling_algo: str, label_encoder: LabelEncoder, seed: int) -> dict:
     """A standalone probe resample purely for reporting — decoupled from
     what each classifier's own pipeline does internally, but deterministic
-    (fixed random_state) so it matches what they'll actually see.
+    (same seed) so it matches what they'll actually see.
     """
     if sampling_algo == "none":
         return _distribution(y_train, label_encoder)
     try:
-        _, y_res = SAMPLERS[sampling_algo]().fit_resample(x_train, y_train)
+        _, y_res = SAMPLERS[sampling_algo](seed).fit_resample(x_train, y_train)
     except ValueError as e:
         logger.warning("Could not compute resampled distribution for '%s': %s", sampling_algo, e)
         return {}
@@ -145,10 +145,11 @@ def _resolve_classifier_list(cfg: dict) -> list[str]:
 
 
 def _build_pipeline(name: str, cfg: dict, overrides: dict, sampling_algo: str) -> ImbPipeline:
+    seed = cfg["random_seed"]
     scaling = cfg["preprocessing"]["scaling"]
     scaler = SCALERS[scaling]() if scaling != "none" else "passthrough"
-    sampler = SAMPLERS[sampling_algo]() if sampling_algo != "none" else "passthrough"
-    clf = clf_registry.build_estimator(name, overrides)
+    sampler = SAMPLERS[sampling_algo](seed) if sampling_algo != "none" else "passthrough"
+    clf = clf_registry.build_estimator(name, overrides, seed=seed)
     return ImbPipeline([("scaler", scaler), ("sampler", sampler), ("clf", clf)])
 
 

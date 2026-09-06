@@ -22,10 +22,10 @@ logger = logging.getLogger(__name__)
 
 SCALERS = {"standard": StandardScaler, "minmax": MinMaxScaler, "robust": RobustScaler}
 SAMPLERS = {
-    "smote": lambda: SMOTE(random_state=0),
-    "smoteenn": lambda: SMOTEENN(random_state=0),
-    "enn": lambda: EditedNearestNeighbours(),
-    "random_undersample": lambda: RandomUnderSampler(random_state=0),
+    "smote": lambda seed: SMOTE(random_state=seed),
+    "smoteenn": lambda seed: SMOTEENN(random_state=seed),
+    "enn": lambda seed: EditedNearestNeighbours(),  # deterministic, no randomness to seed
+    "random_undersample": lambda seed: RandomUnderSampler(random_state=seed),
 }
 
 
@@ -47,11 +47,16 @@ def scale_features(
 
 def apply_sampling(x_train: np.ndarray, y_train, cfg: dict, stage: str) -> tuple[np.ndarray, np.ndarray]:
     algo = cfg["preprocessing"]["sampling"][stage]
+    if isinstance(algo, list):
+        raise ValueError(
+            f"preprocessing.sampling.{stage} is a list ({algo}) - apply_sampling takes a "
+            "single strategy; use run_benchmark for multi-strategy comparison"
+        )
     y_train = np.asarray(y_train)
     if algo == "none":
         return x_train, y_train
 
-    sampler = SAMPLERS[algo]()
+    sampler = SAMPLERS[algo](cfg["random_seed"])
     try:
         return sampler.fit_resample(x_train, y_train)
     except ValueError as e:

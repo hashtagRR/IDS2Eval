@@ -143,3 +143,26 @@ def test_keep_runs_null_means_keep_all(base_cfg):
     base_cfg["audit"]["resplit_falsification"] = False
     base_cfg["output"]["keep_runs"] = None
     validate_config(base_cfg)  # should not raise
+
+
+def test_random_seed_must_be_an_integer(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["random_seed"] = "not-an-int"
+    with pytest.raises(ValueError, match="random_seed must be an integer"):
+        validate_config(base_cfg)
+
+
+def test_random_seed_rejects_bool(base_cfg):
+    # bool is technically an int subclass in Python - guard against it explicitly
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["random_seed"] = True
+    with pytest.raises(ValueError, match="random_seed must be an integer"):
+        validate_config(base_cfg)
+
+
+def test_random_seed_default_is_valid(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    validate_config(base_cfg)  # should not raise

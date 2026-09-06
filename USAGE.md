@@ -1,4 +1,4 @@
-# Using IDS2Eval
+# Using IDS<sup>2</sup>Eval
 
 ## CLI
 

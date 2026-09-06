@@ -1,4 +1,4 @@
-# Configuring IDS2Eval
+# Configuring IDS<sup>2</sup>Eval
 
 Every field, its default, and its valid options is documented directly
 in [`configs/schema.yaml`](configs/schema.yaml) — that file is the
@@ -18,7 +18,7 @@ schema:
 
 Everything else falls back to a documented default. `dataset.name` is
 required (it's the key `known_issue_lookup`/`schema_fingerprint_check`
-match against), and you need either `raw_files` (IDS2Eval splits it
+match against), and you need either `raw_files` (IDS<sup>2</sup>Eval splits it
 itself) or a `train_file`+`test_file` pair (already split).
 
 ## Config sections, at a glance

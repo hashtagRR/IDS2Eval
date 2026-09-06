@@ -1,8 +1,0 @@
-pyyaml
-pandas
-numpy
-scikit-learn
-scipy
-imbalanced-learn
-xgboost
-pyarrow

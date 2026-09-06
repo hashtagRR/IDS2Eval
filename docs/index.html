@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDS2Eval — dataset quality, checked, not assumed</title>
+<meta name="description" content="A config-driven data-quality-audit and benchmarking toolkit for network intrusion detection datasets.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f172a%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22%2314b8a6%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f2ec;
+    --surface: #ffffff;
+    --surface-2: #ebe8df;
+    --ink: #16181c;
+    --muted: #5b5f6a;
+    --line: #d9d5c9;
+    --accent: #0d8f82;
+    --accent-soft: #d9f0ec;
+    --ok: #1a7f4e;
+    --warning: #a15c00;
+    --flag: #b3261e;
+    --code-bg: #14181c;
+    --code-fg: #d7dbdf;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101317;
+      --surface: #171a1f;
+      --surface-2: #1d2126;
+      --ink: #e8e9ea;
+      --muted: #9aa0aa;
+      --line: #2b2f36;
+      --accent: #2dd4c4;
+      --accent-soft: #123531;
+      --ok: #4ade80;
+      --warning: #f2b84b;
+      --flag: #f2726b;
+      --code-bg: #0b0d10;
+      --code-fg: #d7dbdf;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101317;
+    --surface: #171a1f;
+    --surface-2: #1d2126;
+    --ink: #e8e9ea;
+    --muted: #9aa0aa;
+    --line: #2b2f36;
+    --accent: #2dd4c4;
+    --accent-soft: #123531;
+    --ok: #4ade80;
+    --warning: #f2b84b;
+    --flag: #f2726b;
+    --code-bg: #0b0d10;
+    --code-fg: #d7dbdf;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  a { color: var(--accent); }
+  code, .mono { font-family: "IBM Plex Mono", monospace; }
+
+  /* topbar */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.02rem; text-decoration: none; color: var(--ink); }
+  .brand .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); display: inline-block; flex: none; }
+  nav.links { display: flex; gap: 26px; }
+  nav.links a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 500; }
+  nav.links a:hover { color: var(--accent); }
+  @media (max-width: 720px) { nav.links { display: none; } }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: .76rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--accent); }
+
+  section { padding: 78px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  /* hero */
+  .hero { padding-top: 60px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.2rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p.lede { font-size: 1.08rem; color: var(--muted); max-width: 48ch; margin-top: 18px; }
+  .hero-facts { display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
+  .fact .num { font-weight: 800; font-size: 1.9rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .fact .label { font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+
+  .cta-row { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px;
+    border: 1px solid var(--line); border-radius: 4px; text-decoration: none;
+    font-size: .9rem; font-weight: 600; color: var(--ink); background: var(--surface);
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.primary:hover { opacity: .9; color: #fff; }
+
+  .term {
+    background: var(--code-bg); color: var(--code-fg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 20px 22px; font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+    overflow-x: auto; white-space: pre;
+  }
+  .term .head { display: flex; gap: 6px; margin-bottom: 14px; }
+  .term .head span { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: #3a3f45; }
+  .term .dim { color: #7d838c; }
+  .term .ok { color: #4ade80; }
+  .term .warn { color: #f2b84b; }
+  .term .flag { color: #f2726b; }
+  .term .rule { color: #3a3f45; }
+
+  /* contrast grid */
+  .contrib-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 38px; }
+  @media (max-width: 900px) { .contrib-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .contrib-grid { grid-template-columns: 1fr; } }
+  .contrib { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px 22px; display: flex; flex-direction: column; gap: 9px; }
+  .contrib.is-us { border-color: var(--accent); }
+  .contrib .tag { font-family: "IBM Plex Mono", monospace; font-size: .66rem; letter-spacing: .07em; color: var(--muted); text-transform: uppercase; }
+  .contrib.is-us .tag { color: var(--accent); }
+  .contrib h3 { font-size: 1.02rem; font-weight: 700; }
+  .contrib p { color: var(--muted); font-size: .91rem; margin: 0; }
+
+  /* pipeline */
+  .pipeline { display: flex; flex-direction: column; gap: 0; margin-top: 38px; }
+  .step { display: grid; grid-template-columns: 40px 1fr; gap: 20px; position: relative; padding-bottom: 30px; }
+  .step:last-child { padding-bottom: 0; }
+  .step .idx {
+    font-weight: 800; font-size: 1rem;
+    color: #fff; background: var(--accent); width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; z-index: 1; flex: none;
+  }
+  .step::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: -10px; width: 2px; background: var(--line); }
+  .step:last-child::before { display: none; }
+  .step h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 5px; }
+  .step p { color: var(--muted); margin: 0; max-width: 64ch; font-size: .95rem; }
+  .step code { color: var(--accent); background: var(--accent-soft); padding: .1em .4em; border-radius: 3px; }
+
+  /* check cards */
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 38px; }
+  @media (max-width: 780px) { .check-grid { grid-template-columns: 1fr; } }
+  .check-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px 24px; }
+  .check-card .status { display: inline-flex; align-items: center; gap: 7px; font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+  .check-card .status i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .status.ok i { background: var(--ok); } .status.ok { color: var(--ok); }
+  .status.warning i { background: var(--warning); } .status.warning { color: var(--warning); }
+  .status.flag i { background: var(--flag); } .status.flag { color: var(--flag); }
+  .check-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .check-card code.name { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; }
+  .check-card p { color: var(--muted); font-size: .92rem; margin: 0; }
+
+  /* spec tables */
+  .spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 38px; }
+  @media (max-width: 780px) { .spec-cols { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; font-size: .89rem; }
+  caption { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; }
+  th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child, th:first-child { padding-left: 0; }
+  tr:last-child td { border-bottom: none; }
+  .tablewrap { overflow-x: auto; }
+
+  /* config */
+  pre.code-block {
+    background: var(--code-bg); color: var(--code-fg); border-radius: 6px;
+    padding: 20px 22px; font-family: "IBM Plex Mono", monospace; font-size: .82rem;
+    overflow-x: auto; margin-top: 30px; line-height: 1.6;
+  }
+  pre.code-block .k { color: #7dd3fc; }
+  pre.code-block .s { color: #86efac; }
+  pre.code-block .c { color: #7d838c; }
+
+  /* scope disclosure */
+  .disclosure {
+    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--warning);
+    border-radius: 6px; padding: 26px 28px; margin-top: 34px;
+  }
+  .disclosure h3 { font-family: "IBM Plex Mono", monospace; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; color: var(--warning); font-weight: 600; margin-bottom: 16px; }
+  .disclosure ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .disclosure li { padding-left: 20px; position: relative; color: var(--muted); font-size: .93rem; }
+  .disclosure li::before { content: "◇"; position: absolute; left: 0; color: var(--warning); font-size: .78rem; top: .2em; }
+  .disclosure li b { color: var(--ink); font-weight: 600; }
+  .disclosure li code { color: var(--ink); background: var(--surface-2); padding: .05em .35em; border-radius: 3px; }
+
+  /* footer */
+  footer { padding: 60px 0 52px; }
+  .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
+  @media (max-width: 780px) { .footer-grid { grid-template-columns: 1fr; gap: 30px; } }
+  footer h4 { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  footer .install {
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px;
+    font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink);
+    white-space: pre-line; line-height: 1.8;
+  }
+  footer .install .prompt { color: var(--accent); }
+  footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  footer a { color: var(--muted); text-decoration: none; font-size: .91rem; }
+  footer a:hover { color: var(--accent); }
+  .foot-bottom { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--muted); }
+
+  h2.h { font-size: 1.7rem; font-weight: 800; margin-top: 10px; letter-spacing: -.01em; }
+  p.sub { color: var(--muted); font-size: 1.02rem; max-width: 62ch; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>IDS2Eval</a>
+    <nav class="links">
+      <a href="#why">Why</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#checks">Checks</a>
+      <a href="#proof">Proof</a>
+      <a href="#config">Config</a>
+      <a href="#scope">Scope</a>
+      <a href="https://github.com/hashtagRR/IDS2Eval">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div id="top" class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Data-quality audit for NIDS datasets</div>
+      <h1>Dataset quality, <span class="accent">checked</span> — not assumed.</h1>
+      <p class="lede">
+        Most published NIDS results are evaluated on benchmark datasets
+        whose quality is taken on faith. IDS2Eval runs 12 specific,
+        checkable audit checks and a 14-classifier benchmark from one
+        YAML config — reproducible, not a one-off notebook.
+      </p>
+      <div class="hero-facts">
+        <div class="fact"><div class="num">12</div><div class="label">Audit checks</div></div>
+        <div class="fact"><div class="num">14</div><div class="label">Classifiers</div></div>
+        <div class="fact"><div class="num">121</div><div class="label">Tests, CI-gated</div></div>
+        <div class="fact"><div class="num">16.2M</div><div class="label">Rows validated on</div></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">View on GitHub</a>
+        <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/main/INSTALL.md">Install</a>
+        <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md">Read the checks</a>
+      </div>
+    </div>
+    <div class="term">
+<span class="head"><span></span><span></span><span></span></span><span class="dim">$</span> ids2eval --config unsw-nb15.yaml
+<span class="rule">────────────────────────────────────────</span>
+<span class="dim">[audit:before]</span> dedup_check              <span class="flag">flag</span>    42.1% train/test feature-duplication
+<span class="dim">[audit:before]</span> leakage_screen           <span class="flag">flag</span>    'sttl' carries 61% of split importance
+<span class="dim">[audit:before]</span> class_distribution_report <span class="dim">ok</span>      imbalance ratio 2.03:1
+<span class="dim">[dedup]</span> removed 42.1% of train as exact duplicates
+<span class="dim">[audit:after]</span>  dedup_check              <span class="ok">ok</span>      0.0% feature-duplication remaining
+<span class="dim">[audit:after]</span>  class_distribution_report <span class="warning">warning</span> imbalance ratio shifted to 1.04:1
+<span class="dim">[audit:after]</span>  resplit_falsification    <span class="ok">ok</span>      grouped resplit within 0.003pp of baseline
+<span class="rule">────────────────────────────────────────</span>
+<span class="dim">[benchmark]</span> 5 classifiers × 1 strategy — <span class="ok">done</span> in 41.2s
+<span class="dim">writing</span> runs/2026-01-14T09-22-03/benchmark_results.csv</div>
+  </div>
+</div>
+
+<section id="why" class="wrap">
+  <div class="eyebrow">01 · why this exists</div>
+  <h2 class="h">Every published NIDS paper does this differently — or not at all.</h2>
+  <p class="sub">
+    Feature-importance leakage, class-homogeneity artifacts, resplit
+    falsification — each has been demonstrated in isolation, in
+    one-off research notebooks tied to one dataset. IDS2Eval turns the
+    methodology into config-driven software you run on your own data.
+  </p>
+  <div class="contrib-grid">
+    <div class="contrib">
+      <div class="tag">Status quo</div>
+      <h3>A one-off analysis notebook</h3>
+      <p>Re-derived per paper, per dataset. Findings aren't reusable, and rarely open-sourced in a runnable form.</p>
+    </div>
+    <div class="contrib">
+      <div class="tag">Generic tools</div>
+      <h3>AutoML (PyCaret, AutoGluon, TPOT)</h3>
+      <p>Breadth of algorithms, but no IDS-specific data-quality checks — leakage and homogeneity aren't in scope.</p>
+    </div>
+    <div class="contrib is-us">
+      <div class="tag">IDS2Eval</div>
+      <h3>Config-driven, IDS-specific, reusable</h3>
+      <p>12 checks + 14-classifier benchmark from one YAML file. Point it at a CSV, get a finding with a status and a number.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pipeline" class="wrap">
+  <div class="eyebrow">02 · what actually runs</div>
+  <h2 class="h">Load → audit → dedup → audit again → benchmark.</h2>
+  <p class="sub">
+    Traced directly from <code>cli.py</code>'s <code>main()</code> — nothing
+    hidden behind an opaque "run everything" call.
+  </p>
+  <div class="pipeline">
+    <div class="step"><div class="idx">1</div><div><h3>Load + split</h3><p>From cache if a fingerprint match exists, otherwise from <code>raw_files</code> or a pre-split <code>train_file</code>/<code>test_file</code> pair. Chunked reading + reservoir sampling bound memory on datasets larger than RAM.</p></div></div>
+    <div class="step"><div class="idx">2</div><div><h3>Hard-fail validation</h3><p>Duplicate column names, zero shared feature columns, an empty split — these raise immediately, before caching or auditing even start.</p></div></div>
+    <div class="step"><div class="idx">3</div><div><h3>Audit (before)</h3><p>All enabled checks run against the raw split, writing <code>audit_report_before.json</code>.</p></div></div>
+    <div class="step"><div class="idx">4</div><div><h3>Dedup, then audit again</h3><p>If <code>preprocessing.dedup</code> is on, exact duplicates are removed and every check reruns, writing <code>audit_report_after.json</code> — a before/after claim backed by two real runs.</p></div></div>
+    <div class="step"><div class="idx">5</div><div><h3>Benchmark + track</h3><p>Scaling and sampling run <em>inside</em> the same pipeline as each classifier — never fit once up front — then results, environment, resolved config, and a dataset fingerprint are all written to a fresh run directory.</p></div></div>
+  </div>
+  <p style="margin-top:28px;"><a href="https://claude.ai/code/artifact/29d9adfe-444b-4606-9899-93df9ddf529e">Full interactive pipeline diagram →</a></p>
+</section>
+
+<section id="checks" class="wrap">
+  <div class="eyebrow">03 · the checks</div>
+  <h2 class="h">Twelve checks. Each returns a status and a number.</h2>
+  <p class="sub">
+    Not a vague quality score — <code>{check, status, summary, details}</code>,
+    where a flag or warning names the specific, checkable signature behind it.
+    Full writeup for all 12: <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md">AUDIT_CHECKS.md</a>.
+  </p>
+  <div class="check-grid">
+    <div class="check-card">
+      <div class="status flag"><i></i>flag — real finding</div>
+      <h3><code class="name">leakage_screen</code></h3>
+      <p>Fits a fast RandomForest and inspects its own feature importances. Independently reproduced Flood et al. 2024's finding that Destination Port alone hits near-perfect accuracy across CIC-IDS2018 — confirmed on the real, official distribution.</p>
+    </div>
+    <div class="check-card">
+      <div class="status ok"><i></i>ok — settled by experiment</div>
+      <h3><code class="name">resplit_falsification</code></h3>
+      <p>A session-grouped resplit that makes session-correlated leakage structurally impossible. On CIC-IDS2018's near-saturation accuracy, the grouped resplit reproduced the random split's accuracy to within 0.003 percentage points.</p>
+    </div>
+    <div class="check-card">
+      <div class="status flag"><i></i>flag → ok after dedup</div>
+      <h3><code class="name">dedup_check</code></h3>
+      <p>Exact feature-space duplicates between train and test. On real UNSW-NB15 data: 42% train duplication before cleanup, correctly dropped to 0% after — measured twice, not assumed.</p>
+    </div>
+    <div class="check-card">
+      <div class="status warning"><i></i>warning — real shift</div>
+      <h3><code class="name">class_distribution_report</code></h3>
+      <p>Per-class counts and imbalance ratio, before and after dedup. On UNSW-NB15 the ratio shifted from 2:1 to roughly 1:1 after deduplication — duplicated rows were disproportionately one class.</p>
+    </div>
+  </div>
+</section>
+
+<section id="proof" class="wrap">
+  <div class="eyebrow">04 · proven on real data</div>
+  <h2 class="h">Not just synthetic fixtures.</h2>
+  <p class="sub">121 tests pass in CI on Python 3.10–3.12, and the full pipeline has been run end to end against two real, published NIDS datasets.</p>
+  <div class="spec-cols">
+    <div class="tablewrap">
+      <table>
+        <caption>UNSW-NB15 — full dataset</caption>
+        <tr><th>Run</th><th>Result</th></tr>
+        <tr><td>Audit + 5 classifiers</td><td>Ran cleanly end to end, including <code>tuning: true</code></td></tr>
+        <tr><td>Sampling comparison</td><td>Multi-strategy (none/SMOTE/SMOTEENN) in one run</td></tr>
+        <tr><td>Feature importance</td><td>Reproduced published <code>sttl</code> TTL-topology bias</td></tr>
+        <tr><td>Before/after dedup</td><td>Class balance 2:1 → ~1:1 (a real finding)</td></tr>
+      </table>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <caption>CIC-IDS2018 — official 10-file distribution</caption>
+        <tr><th>Run</th><th>Result</th></tr>
+        <tr><td>Scale</td><td>16.2M rows, 10 files, chunked + reservoir-sampled</td></tr>
+        <tr><td>Peak memory</td><td>3.0GB on a 7.8GB-RAM machine</td></tr>
+        <tr><td><code>identity_column_flag</code></td><td>Reproduced the published <code>Dst Port</code> leakage finding</td></tr>
+        <tr><td>Resplit falsification</td><td>Within 0.003pp of the random-split baseline</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="config" class="wrap">
+  <div class="eyebrow">05 · configure it</div>
+  <h2 class="h">One YAML file. No code required for the common case.</h2>
+  <p class="sub">Every field is documented in <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/configs/schema.yaml">configs/schema.yaml</a>; worked examples in <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/CONFIGURATION.md">CONFIGURATION.md</a>.</p>
+  <pre class="code-block"><span class="c"># my_config.yaml</span>
+<span class="k">dataset</span>:
+  <span class="k">name</span>: my-dataset
+  <span class="k">raw_files</span>: [<span class="s">"data.csv"</span>]
+<span class="k">schema</span>:
+  <span class="k">label_column</span>: Label
+<span class="k">preprocessing</span>:
+  <span class="k">dedup</span>: true
+  <span class="k">sampling</span>:
+    <span class="k">binary</span>: [<span class="s">none</span>, <span class="s">smote</span>, <span class="s">smoteenn</span>]
+<span class="k">classifiers</span>:
+  <span class="k">list</span>: [RandomForest, XGBoost]
+  <span class="k">tuning</span>: true
+<span class="k">random_seed</span>: 42</pre>
+</section>
+
+<section id="scope" class="wrap">
+  <div class="eyebrow">06 · scope</div>
+  <h2 class="h">What this deliberately doesn't do.</h2>
+  <p class="sub">A working-baseline prototype with disclosed tradeoffs, not a hidden limitations paragraph.</p>
+  <div class="disclosure">
+    <h3>Out of scope, on purpose</h3>
+    <ul>
+      <li><b>Feature engineering</b> — imputation, feature selection, dimensionality reduction. IDS2Eval audits and benchmarks the features you give it; it doesn't invent new ones.</li>
+      <li><b>The staged-cascade detection architecture</b> from this project's companion research paper is intentionally excluded here — this tool ships the reusable audit/benchmark methodology, not the novel architecture.</li>
+      <li><b>Scaling comparison</b> — <code>preprocessing.sampling</code> supports comparing multiple strategies in one run; scaling is still single-valued.</li>
+      <li><b><code>known_issue_lookup</code></b> ships with two seed entries. Extending the curated table is open-ended, ongoing work.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="footer-grid">
+    <div>
+      <h4>Get started</h4>
+      <div class="install"><span class="prompt">$</span> git clone https://github.com/hashtagRR/IDS2Eval.git
+<span class="prompt">$</span> cd IDS2Eval &amp;&amp; python3 -m venv venv
+<span class="prompt">$</span> venv/bin/pip install -e .
+<span class="prompt">$</span> venv/bin/ids2eval --config my_config.yaml</div>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/INSTALL.md">Installation</a></li>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/USAGE.md">Usage &amp; CLI</a></li>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/CONFIGURATION.md">Configuration</a></li>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md">Audit checks</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval">GitHub repository</a></li>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/issues">Issues</a></li>
+        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/LICENSE">License (AGPL-3.0)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>IDS2Eval</span>
+    <span>AGPL-3.0</span>
+  </div>
+</footer>
+
+</body>
+</html>

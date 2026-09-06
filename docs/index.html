@@ -211,6 +211,14 @@
   tr:last-child td { border-bottom: none; }
   .tablewrap { overflow-x: auto; }
 
+  /* real scorecard showcase */
+  .scorecard-showcase {
+    margin-top: 34px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--surface); padding: 22px; text-align: center;
+  }
+  .scorecard-showcase img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px; }
+  .scorecard-showcase figcaption { margin-top: 14px; color: var(--muted); font-size: .88rem; }
+
   /* config */
   pre.code-block {
     background: var(--code-bg); color: var(--code-fg); border-radius: 6px;
@@ -298,18 +306,17 @@
       </div>
     </div>
     <div class="term">
-<span class="head"><span></span><span></span><span></span></span><span class="dim">$</span> ids2eval --config unsw-nb15.yaml
+<span class="head"><span></span><span></span><span></span></span><span class="dim">$</span> ids2eval --config unsw-nb15.yaml --skip-benchmark
 <span class="rule">────────────────────────────────────────</span>
-<span class="dim">[audit:before]</span> dedup_check              <span class="flag">flag</span>    42.1% train/test feature-duplication
-<span class="dim">[audit:before]</span> leakage_screen           <span class="flag">flag</span>    'sttl' carries 61% of split importance
-<span class="dim">[audit:before]</span> class_distribution_report <span class="dim">ok</span>      imbalance ratio 2.03:1
-<span class="dim">[dedup]</span> removed 42.1% of train as exact duplicates
-<span class="dim">[audit:after]</span>  dedup_check              <span class="ok">ok</span>      0.0% feature-duplication remaining
-<span class="dim">[audit:after]</span>  class_distribution_report <span class="warning">warning</span> imbalance ratio shifted to 1.04:1
-<span class="dim">[audit:after]</span>  resplit_falsification    <span class="ok">ok</span>      grouped resplit within 0.003pp of baseline
+<span class="dim">[audit:before]</span> dedup_check              <span class="flag">flag</span>    42.38% train feature-duplication
+<span class="dim">[audit:before]</span> leakage_screen           <span class="dim">ok</span>      top feature 'sttl' = 17.8% importance
+<span class="dim">[audit:before]</span> known_issue_lookup       <span class="warning">warning</span> file-naming inversion (curated, not auto-fixed)
+<span class="dim">[dedup]</span> removed 42.38% of train as exact duplicates
+<span class="dim">[audit:after]</span>  dedup_check              <span class="ok">ok</span>      0.00% feature-duplication remaining
+<span class="dim">[audit:after]</span>  class_distribution_report <span class="dim">ok</span>     imbalance ratio 1:1 (was 2:1)
 <span class="rule">────────────────────────────────────────</span>
-<span class="dim">[benchmark]</span> 5 classifiers × 1 strategy — <span class="ok">done</span> in 41.2s
-<span class="dim">writing</span> runs/2026-01-14T09-22-03/benchmark_results.csv</div>
+<span class="dim">[scorecard]</span> <span class="warning">passed with warnings</span> — 8 ok, 1 warning, 0 flags
+<span class="dim">writing</span> examples/unsw-nb15-scorecard/scorecard.{json,pdf,png}</div>
   </div>
 </div>
 
@@ -406,9 +413,11 @@
     <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">data_integrity_check</code><p>Missing labels, missing or constant/near-constant features, and ±infinity values.</p></div>
     <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">synthetic_realism_check</code><p>Trains a domain classifier to distinguish this dataset from a reference real-traffic sample.</p></div>
     <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">cross_dataset_drift_check</code><p>Trains on this dataset, evaluates on a reference dataset in a unified feature space.</p></div>
-    <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">known_issue_lookup</code><p>A curated table of documented per-dataset problems, matched on <code>dataset.name</code>.</p></div>
+    <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">known_issue_lookup</code><p>A curated table of documented per-dataset problems, matched on <code>dataset.name</code> — surfaces the issue, doesn't fix it for you.</p></div>
   </div>
-  <h3 style="margin-top:48px; font-size:1.05rem; font-weight:700;">Selected findings, on real data</h3>
+  <h3 style="margin-top:48px; font-size:1.05rem; font-weight:700;">Selected findings, on real data
+    <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard" style="font-size:.62em; font-weight:500; margin-left:8px;">→ full real scorecard, every artifact</a>
+  </h3>
   <div class="check-grid">
     <div class="check-card">
       <div class="status flag"><i></i>flag — real finding</div>
@@ -423,12 +432,12 @@
     <div class="check-card">
       <div class="status flag"><i></i>flag → ok after dedup</div>
       <h3><code class="name">dedup_check</code></h3>
-      <p>Exact feature-space duplicates between train and test. On real UNSW-NB15 data: 42% train duplication before cleanup, correctly dropped to 0% after — measured twice, not assumed.</p>
+      <p>Exact feature-space duplicates between train and test. On real UNSW-NB15 data: 42.38% train duplication before cleanup, correctly dropped to 0% after — measured twice, not assumed. <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">See the real run →</a></p>
     </div>
     <div class="check-card">
       <div class="status warning"><i></i>warning — real shift</div>
       <h3><code class="name">class_distribution_report</code></h3>
-      <p>Per-class counts and imbalance ratio, before and after dedup. On UNSW-NB15 the ratio shifted from 2:1 to roughly 1:1 after deduplication — duplicated rows were disproportionately one class.</p>
+      <p>Per-class counts and imbalance ratio, before and after dedup. On UNSW-NB15 the ratio shifted from 2:1 to roughly 1:1 after deduplication — duplicated rows were disproportionately one class. <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">See the real run →</a></p>
     </div>
   </div>
 </section>
@@ -459,6 +468,14 @@
       </table>
     </div>
   </div>
+  <figure class="scorecard-showcase">
+    <img src="https://raw.githubusercontent.com/hashtagRR/IDS2Eval/main/examples/unsw-nb15-scorecard/scorecard.png" alt="Real IDS2Eval scorecard for the UNSW-NB15 dataset: passed with warnings, 8 ok, 1 warning, 0 flags, with the full per-check breakdown and diagnostic charts.">
+    <figcaption>
+      Not a mockup — this is the actual <code>scorecard.png</code> from the run above,
+      checked into the repo as-is.
+      <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">Every artifact behind it →</a>
+    </figcaption>
+  </figure>
 </section>
 
 <section id="config" class="wrap">

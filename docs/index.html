@@ -111,6 +111,11 @@
   .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.2rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; }
   .hero h1 .accent { color: var(--accent); }
   .hero p.lede { font-size: 1.08rem; color: var(--muted); max-width: 48ch; margin-top: 18px; }
+  .hero p.name-note {
+    font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--muted);
+    margin-top: 12px; max-width: 48ch;
+  }
+  .hero p.name-note b { color: var(--ink); font-weight: 600; }
   .hero-facts { display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
   .fact .num { font-weight: 800; font-size: 1.9rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
   .fact .label { font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
@@ -252,7 +257,7 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="dot"></span>IDS2Eval</a>
+    <a class="brand" href="#top" title="IDS² — Intrusion Detection Systems, Intrusion Data Sets"><span class="dot"></span>IDS<sup>2</sup>Eval</a>
     <nav class="links">
       <a href="#why">Why</a>
       <a href="#pipeline">Pipeline</a>
@@ -272,9 +277,13 @@
       <h1>Dataset quality, <span class="accent">checked</span> — not assumed.</h1>
       <p class="lede">
         Most published NIDS results are evaluated on benchmark datasets
-        whose quality is taken on faith. IDS2Eval runs 12 specific,
+        whose quality is taken on faith. IDS<sup>2</sup>Eval runs 12 specific,
         checkable audit checks and a 14-classifier benchmark from one
         YAML config — reproducible, not a one-off notebook.
+      </p>
+      <p class="name-note">
+        IDS<sup>2</sup> — the name works both ways: <b>I</b>ntrusion <b>D</b>etection <b>S</b>ystems,
+        and <b>I</b>ntrusion <b>D</b>ata <b>S</b>ets.
       </p>
       <div class="hero-facts">
         <div class="fact"><div class="num">12</div><div class="label">Audit checks</div></div>
@@ -325,7 +334,7 @@
       <p>Breadth of algorithms, but no IDS-specific data-quality checks — leakage and homogeneity aren't in scope.</p>
     </div>
     <div class="contrib is-us">
-      <div class="tag">IDS2Eval</div>
+      <div class="tag">IDS<sup>2</sup>Eval</div>
       <h3>Config-driven, IDS-specific, reusable</h3>
       <p>12 checks + 14-classifier benchmark from one YAML file. Point it at a CSV, get a finding with a status and a number.</p>
     </div>
@@ -510,7 +519,7 @@
     </div>
   </div>
   <div class="foot-bottom">
-    <span>IDS2Eval</span>
+    <span>IDS<sup>2</sup>Eval</span>
     <span>AGPL-3.0</span>
   </div>
 </footer>

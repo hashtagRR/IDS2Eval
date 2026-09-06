@@ -1,6 +1,10 @@
-# IDS2Eval
+# IDS<sup>2</sup>Eval
 
 **[hashtagRR.github.io/IDS2Eval](https://hashtagRR.github.io/IDS2Eval)**
+
+*IDS<sup>2</sup> — the name works both ways: **I**ntrusion **D**etection
+**S**ystems, and **I**ntrusion **D**ata **S**ets. (GitHub repo names
+can't do superscripts, hence `IDS2Eval`.)*
 
 A config-driven data-quality-audit and benchmarking toolkit for
 network intrusion detection (NIDS) datasets.

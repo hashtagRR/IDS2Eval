@@ -14,8 +14,10 @@ Most published NIDS results are evaluated on datasets whose quality is
 taken on faith: duplicate rows, leaked features, near-identical
 train/test splits. IDS<sup>2</sup>Eval runs 12 checks that catch these
 problems automatically, instead of a one-off notebook redone by hand
-for every paper. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what each
-check does.
+for every paper, and rolls the result into a citable `SCORECARD.md` —
+"this result was obtained on a dataset that passed the following
+checks." See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what each check
+does and the scorecard's pass/fail rule.
 
 It's narrower than general-purpose AutoML tools (PyCaret, AutoGluon,
 TPOT) on purpose: no feature engineering, no algorithm-search breadth —

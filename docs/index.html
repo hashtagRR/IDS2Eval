@@ -387,7 +387,10 @@
   <p class="sub">
     Not a vague quality score — <code>{check, status, summary, details}</code>,
     where a flag or warning names the specific, checkable signature behind it.
-    Full writeup for all 12: <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md">AUDIT_CHECKS.md</a>.
+    Every run rolls these into a citable <code>SCORECARD.md</code> — pass,
+    passed with warnings, or failed. Full writeup for all 12, and the
+    scorecard's pass/fail rule:
+    <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md#the-scorecard">AUDIT_CHECKS.md</a>.
   </p>
   <div class="check-banner-grid">
     <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">dedup_check</code><p>Exact feature-space duplicates within and across train/test — memorization, not generalization.</p></div>

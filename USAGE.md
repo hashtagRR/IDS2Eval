@@ -38,11 +38,13 @@ Traced from `ids2eval/cli.py`'s `main()`, in order:
 5. **Audit** (unless `--skip-audit`) — writes `audit_report_before.json`
 6. **Dedup** (if `preprocessing.dedup`) — then **audit again**, writing
    `audit_report_after.json`
-7. **Write preprocessed data** (if `output.save_preprocessed`) —
+7. **Scorecard** (unless `--skip-audit`) — rolls the final audit pass up
+   into `scorecard.json`/`SCORECARD.md`
+8. **Write preprocessed data** (if `output.save_preprocessed`) —
    `train.<fmt>`/`test.<fmt>`
-8. **Benchmark** (unless `--skip-benchmark`) — writes
+9. **Benchmark** (unless `--skip-benchmark`) — writes
    `benchmark_results.csv` and `benchmark_details.json`
-9. **Prune old runs** beyond `output.keep_runs` (never touches the cache)
+10. **Prune old runs** beyond `output.keep_runs` (never touches the cache)
 
 ## Output files
 
@@ -53,6 +55,7 @@ every run — nothing gets silently overwritten):
 |---|---|
 | `audit_report_before.json` | All enabled audit findings, computed before dedup |
 | `audit_report_after.json` | Same, after dedup (only if `preprocessing.dedup` is on) |
+| `scorecard.json` / `SCORECARD.md` | A citable pass/fail rollup of the findings above — see [AUDIT_CHECKS.md](AUDIT_CHECKS.md#the-scorecard) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
 | `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |
 | `benchmark_details.json` | Per-row confusion matrix, per-class precision/recall/F1, feature importance (where the classifier supports it), winning hyperparameters (if `classifiers.tuning` ran), and each stage's class distribution before/after sampling |

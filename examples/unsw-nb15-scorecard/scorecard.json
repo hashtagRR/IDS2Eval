@@ -1,0 +1,62 @@
+{
+  "scorecard_schema_version": "1.0",
+  "generated_at": "2026-09-06T18:06:52.387935+00:00",
+  "dataset_name": "unsw-nb15",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "924fb799baec6d1fc96aaf5b05f0325b04602847",
+  "audit_stage": "after",
+  "overall_status": "passed_with_warnings",
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "ok",
+      "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "ok",
+      "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "ok",
+      "summary": "no missing labels, constant features, or +-inf values found"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "warning",
+      "summary": "1 known issue(s) curated for dataset 'unsw-nb15'"
+    }
+  ],
+  "dataset_fingerprint": {
+    "train_rows": 175341,
+    "test_rows": 82332,
+    "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
+    "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
+  }
+}

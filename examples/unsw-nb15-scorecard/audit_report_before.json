@@ -1,0 +1,172 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "flag",
+    "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147",
+    "details": {
+      "train_rows_raw": 175341,
+      "train_rows_deduped": 101040,
+      "train_duplicates_dropped": 74301,
+      "test_rows_raw": 82332,
+      "test_rows_deduped": 52644,
+      "test_leakage_dropped": 8541,
+      "test_duplicates_dropped": 21147
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)",
+    "details": {
+      "top_features": {
+        "sttl": 0.17770435469711204,
+        "ct_state_ttl": 0.13203967798512553,
+        "dload": 0.06442086279231135,
+        "rate": 0.05460666834734506,
+        "dttl": 0.049063509640429374
+      },
+      "top1_share": 0.17770435469711204,
+      "top2_share": 0.3097440326822376
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "details": {
+      "per_class": {
+        "Normal": {
+          "test_near_zero_rate": 0.034,
+          "control_near_zero_rate": 0.144,
+          "p_value": 0.9999999999999984,
+          "leakage_signature": false
+        },
+        "Generic": {
+          "test_near_zero_rate": 0.09,
+          "control_near_zero_rate": 0.98,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Exploits": {
+          "test_near_zero_rate": 0.168,
+          "control_near_zero_rate": 0.506,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Fuzzers": {
+          "test_near_zero_rate": 0.032,
+          "control_near_zero_rate": 0.214,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "DoS": {
+          "test_near_zero_rate": 0.464,
+          "control_near_zero_rate": 0.806,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Reconnaissance": {
+          "test_near_zero_rate": 0.352,
+          "control_near_zero_rate": 0.47,
+          "p_value": 0.9984507729321201,
+          "leakage_signature": false
+        },
+        "Analysis": {
+          "test_near_zero_rate": 0.17,
+          "control_near_zero_rate": 0.85,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Backdoor": {
+          "test_near_zero_rate": 0.006,
+          "control_near_zero_rate": 0.774,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Shellcode": {
+          "test_near_zero_rate": 0.03439153439153439,
+          "control_near_zero_rate": 0.094,
+          "p_value": 0.9587398745501322,
+          "leakage_signature": false
+        },
+        "Worms": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.1,
+          "p_value": 0.806218033884419,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "ok",
+    "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1",
+    "details": {
+      "train": {
+        "counts": {
+          "1.0": 119341,
+          "0.0": 56000
+        },
+        "shares": {
+          "1.0": 0.6806223302022916,
+          "0.0": 0.3193776697977085
+        }
+      },
+      "test": {
+        "counts": {
+          "1.0": 45332,
+          "0.0": 37000
+        },
+        "shares": {
+          "1.0": 0.5506000097167566,
+          "0.0": 0.44939999028324346
+        }
+      },
+      "imbalance_ratio": 2.131089285714286,
+      "rare_classes": []
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "ok",
+    "summary": "no missing labels, constant features, or +-inf values found",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": []
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "1 known issue(s) curated for dataset 'unsw-nb15'",
+    "details": {
+      "matches": [
+        {
+          "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows) \u2014 verify against the published per-attack-category counts before trusting file names.",
+          "citation": "Independently verified in this project's own audit methodology"
+        }
+      ]
+    }
+  }
+]

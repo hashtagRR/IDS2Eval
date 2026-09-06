@@ -1,147 +1,68 @@
 # IDS2Eval config schema (v1)
 #
-# This file documents every field the loader accepts, with its default
-# value and valid options. Copy this file, fill in `dataset`/`schema`
-# for your data, and pass it to the tool. Any field you omit falls back
-# to the default shown here.
+# Copy this file, fill in `dataset` and `schema` for your data, and pass
+# it with --config. Anything you leave out uses the default shown here.
+# For the reasoning behind a field and worked examples, see CONFIGURATION.md.
 
-random_seed: 0                   # every random_state/seed in the data and benchmark pipeline
-                                  # (train/test split, grouped-split fold assignment, reservoir
-                                  # sampling, SMOTE/SMOTEENN/ENN/random-undersample, classifier
-                                  # init, the >200k-row benchmark subsample) derives from this
-                                  # one value, so a run is reproducible from resolved_config.json
-                                  # alone instead of 6 scattered hardcoded constants. Also folded
-                                  # into the load-cache's invalidation fingerprint. Does NOT
-                                  # affect audit checks' own internal sampling (diagnostic, not
-                                  # part of the reported experimental result) or a few nested
-                                  # sub-estimators (AdaBoost's fixed depth-1 stump, Stacking/
-                                  # Voting's base learners), which keep fixed defaults.
+random_seed: 0                 # seed for every random step (splitting, sampling, classifiers)
 
 dataset:
-  name: null                     # required — fingerprint key used by schema-fingerprint
-                                  # and known-issue-lookup audit checks (e.g. "cic-ids2018")
-  raw_files: []                  # list of raw file paths — tool splits them itself
-  train_file: null               # OR: pre-split train file
-  test_file: null                #     pre-split test file (both required together)
-  split_ratio: 0.8               # used only when raw_files is given
-  split_mode: random             # random | grouped
-                                  #   random  — plain random split
-                                  #   grouped — session/time-grouped, prevents
-                                  #             session-correlated leakage across
-                                  #             the train/test boundary
-  group_columns: []              # required when split_mode: grouped — columns combined
-                                  # into a session-grouping key (e.g. src/dst IP+port,
-                                  # protocol) so StratifiedGroupKFold keeps every group's
-                                  # rows on one side of the split. Dataset-specific: there
-                                  # is no universal set of column names across IDS datasets.
-  chunk_size: null                # rows read at a time per file (raw_files, or each of
-                                  # train_file/test_file). Bounds memory during the read/
-                                  # downcast (float64->float32) phase only — null reads each
-                                  # file whole, the previous default behavior. On its own this
-                                  # does NOT prevent OOM on a dataset bigger than RAM, since
-                                  # every downstream step (audit checks, sklearn/imblearn
-                                  # fitting) still needs one consolidated in-memory array —
-                                  # pair with max_rows below for that.
-  max_rows: null                  # optional cap on total rows kept in memory — a uniform
-                                  # reservoir sample across all chunks/files (per file for
-                                  # train_file/test_file, combined across raw_files), not the
-                                  # exact full dataset. This is what actually keeps a dataset
-                                  # larger than RAM usable at all. Requires chunk_size to be
-                                  # set (sampling still has to read the file to sample it).
-                                  # Row-level, not group-aware: if split_mode is "grouped",
-                                  # sampling may fragment session groups across the sample
-                                  # boundary — a documented limitation, not a bug.
+  name: null                   # required — short id for your dataset, e.g. "cic-ids2018"
+  raw_files: []                # your data file(s) — IDS2Eval splits them into train/test
+  train_file: null             # OR: an already-split train file
+  test_file: null              #     an already-split test file (use together with train_file)
+  split_ratio: 0.8             # train share, only used with raw_files
+  split_mode: random           # random | grouped — grouped avoids splitting a session across train/test
+  group_columns: []            # columns that define a "session" — required if split_mode: grouped
+  chunk_size: null             # rows read at a time, for files too big to load whole
+  max_rows: null               # cap total rows via reservoir sampling — needs chunk_size set
 
 schema:
-  label_column: null             # required — column holding the binary/attack label
-  attack_category_column: null   # optional — multi-class attack-type column, if separate
-  drop_columns: []               # columns to drop before training (e.g. flow IDs, timestamps)
-  id_like_columns: []            # IP/port/MAC-pattern columns — feeds the identity-column
-                                  # and low-cardinality audit checks, not dropped automatically
+  label_column: null           # required — column with the binary/attack label
+  attack_category_column: null # optional — multi-class attack-type column, if you have one
+  drop_columns: []             # columns to drop before training (flow IDs, timestamps, etc.)
+  id_like_columns: []          # IP/port/MAC-like columns — checked for leakage, not auto-dropped
 
 label_grouping:
-  attack_type_mapping: {}        # optional dict collapsing raw attack_category_column values
-                                  # into coarser categories, e.g. {"DoS Hulk": "DoS",
-                                  # "DoS GoldenEye": "DoS"} merges just those two into "DoS" —
-                                  # a PARTIAL mapping, not exhaustive: any category not named
-                                  # as a key (e.g. "PortScan") passes through unchanged, so you
-                                  # don't have to enumerate every class that should stay as-is.
-                                  # Applied right after the split, before both audit checks and
-                                  # benchmarking, so every downstream stage sees the same
-                                  # collapsed categories. Requires schema.attack_category_column.
+  attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS"}
 
 preprocessing:
-  dedup: true                    # exact + feature-only dedup pass before splitting
-  scaling: standard              # none | standard | minmax | robust — applied inside each
-                                  # classifier's own pipeline (see classifiers.tuning below),
-                                  # never fit once and reused across CV folds
+  dedup: true                  # remove exact duplicate rows before splitting
+  scaling: standard            # none | standard | minmax | robust
   sampling:
-    binary: none                 # none | smote | smoteenn | enn | random_undersample —
-                                  # or a LIST of any of these, e.g. [none, smote, smoteenn],
-                                  # to benchmark every classifier under each strategy and
-                                  # compare results (see benchmark_results.csv's "sampling"
-                                  # column and benchmark_details.json's class_distributions)
-    type: none                   # same options, applied to the multi-class stage
+    binary: none                # none | smote | smoteenn | enn | random_undersample (or a list, to compare)
+    type: none                  # same options, for the multi-class stage
 
 audit:
-  # v1 checks — generalizable, automatable, need no external reference data
+  # v1 — on by default, no extra setup needed
   dedup_check: true
-  leakage_screen: true           # single-feature / feature-pair leakage via feature_importances_
-  identity_column_flag: true     # standalone AUC/importance + suggested-drop for id_like_columns
-  homogeneity_test: true         # nearest-neighbor homogeneity test (model-agnostic)
-  resplit_falsification: true    # session/time-grouped resplit falsification test
+  leakage_screen: true
+  identity_column_flag: true
+  homogeneity_test: true
+  resplit_falsification: true
   class_distribution_report: true
-  low_cardinality_warning: true  # flags topology-overfitting risk on id_like_columns
-  schema_fingerprint_check: true # detects known extractor bugs via column-name fingerprinting
-  data_integrity_check: true     # missing label values, missing/constant features, +-inf values —
-                                  # complements leakage_screen by catching features with too
-                                  # LITTLE signal, not too much
+  low_cardinality_warning: true
+  schema_fingerprint_check: true
+  data_integrity_check: true
 
-  # Run twice when preprocessing.dedup is true: once before, once after — so a
-  # claim like "12% duplicate leakage before, 0% after" is backed by two real
-  # audit runs, not assumed. Written to audit_report_before.json /
-  # audit_report_after.json. Structural problems severe enough to make the
-  # dataset unusable (duplicate column names, no shared feature columns
-  # between train/test) are NOT audit findings — they raise immediately via
-  # dataset.validate_loaded(), before this section even runs.
-
-  # v2 checks — opt-in, need a second dataset (reference_dataset) or heavier compute
-  synthetic_realism_check: false     # synthetic-vs-real distributional realism
-  cross_dataset_drift_check: false   # train-on-A/test-on-B in a unified feature space
-  known_issue_lookup: false          # curated per-dataset documented-problem lookup table
-  reference_dataset: null            # required if any v2 check above is true
+  # v2 — opt-in, need a second dataset or heavier compute
+  synthetic_realism_check: false
+  cross_dataset_drift_check: false
+  known_issue_lookup: false
+  reference_dataset: null      # required if any v2 check above is enabled
 
 classifiers:
-  list: all                      # "all", or an explicit list drawn from:
-                                  #   RandomForest, XGBoost, DecisionTree, NaiveBayes,
-                                  #   LogisticRegression, KNN, SVM, LDA, Stacking, Voting,
-                                  #   ExtraTrees, HistGradientBoosting, AdaBoost, MLP
-                                  # (Stacking/Voting/NaiveBayes are fixed no-tune candidates —
-                                  # `tuning: true` has no effect on them)
-  tuning: false                  # false — train each classifier once, using `hyperparameters`
-                                  # true  — run a hyperparameter search per classifier, using
-                                  #         `search_space` (falls back to the tool's built-in
-                                  #         default grid for any classifier left unspecified)
-  calibration: none              # none | platt | isotonic
-
-  hyperparameters: {}            # per-classifier fixed param overrides, used when tuning: false
-                                  # e.g. RandomForest: {n_estimators: 200, max_depth: 20}
-                                  # any classifier not listed here uses the tool's built-in
-                                  # validated defaults
-
-  search_space: {}               # per-classifier grid/range overrides, used when tuning: true
-                                  # e.g. XGBoost: {learning_rate: [0.01, 0.05, 0.1]}
-                                  # any classifier not listed here uses the tool's built-in
-                                  # default search space
+  list: all                    # "all", or pick from: RandomForest, XGBoost, DecisionTree,
+                                # NaiveBayes, LogisticRegression, KNN, SVM, LDA, Stacking,
+                                # Voting, ExtraTrees, HistGradientBoosting, AdaBoost, MLP
+  tuning: false                # true runs a hyperparameter search — see search_space
+  calibration: none            # none | platt | isotonic
+  hyperparameters: {}          # fixed params per classifier, used when tuning: false
+  search_space: {}             # grid per classifier, used when tuning: true
 
 output:
-  dir: ./output                  # stable across runs — output.dir/.cache/ (the load-cache)
-                                  # lives here permanently; each invocation's own results go in
-                                  # a fresh output.dir/runs/<timestamp>/ so nothing gets
-                                  # silently overwritten
-  format: parquet                # parquet | csv
-  save_preprocessed: true        # write out the preprocessed train/test data, not just reports
-  keep_runs: 10                  # delete all but the most recent N run directories after each
-                                  # run completes; null keeps every run forever. Never touches
-                                  # output.dir/.cache/ — only output.dir/runs/*
+  dir: ./output                 # where results (and the load-cache) are written
+  format: parquet               # parquet | csv
+  save_preprocessed: true       # also write out the cleaned train/test data
+  keep_runs: 10                 # keep only the N most recent runs — null keeps every run
 

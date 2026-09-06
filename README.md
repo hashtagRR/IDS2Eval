@@ -6,24 +6,21 @@
 **S**ystems, and **I**ntrusion **D**ata **S**ets. (GitHub repo names
 can't do superscripts, hence `IDS2Eval`.)*
 
-A config-driven data-quality-audit and benchmarking toolkit for
-network intrusion detection (NIDS) datasets.
+A config-driven toolkit that checks a network intrusion detection
+(NIDS) dataset for quality problems, then benchmarks classifiers on
+it — no code required, just a YAML file.
 
-Most published NIDS results are evaluated on benchmark datasets
-(UNSW-NB15, CIC-IDS2018, and others) whose quality is largely taken on
-faith. IDS<sup>2</sup>Eval operationalizes a systematic audit methodology —
-feature-importance-driven leakage screening, a nearest-neighbor
-class-homogeneity test, a resplit falsification test, and 9 more — as
-reusable, config-driven software, rather than a one-off analysis
-notebook per dataset. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what
-each of the 12 checks actually does and the published findings behind
-them.
+Most published NIDS results are evaluated on datasets whose quality is
+taken on faith: duplicate rows, leaked features, near-identical
+train/test splits. IDS<sup>2</sup>Eval runs 12 checks that catch these
+problems automatically, instead of a one-off notebook redone by hand
+for every paper. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what each
+check does.
 
-Unlike general-purpose AutoML tools (PyCaret, AutoGluon, TPOT),
-IDS<sup>2</sup>Eval's focus is IDS-specific, already-validated data-quality
-checks rather than breadth of ML algorithms — feature engineering
-(imputation, feature selection, dimensionality reduction) is
-deliberately out of scope for the same reason.
+It's narrower than general-purpose AutoML tools (PyCaret, AutoGluon,
+TPOT) on purpose: no feature engineering, no algorithm-search breadth —
+just the IDS-specific data-quality checks and a benchmark to compare
+classifiers once the data is clean.
 
 ## Quick start
 
@@ -44,8 +41,8 @@ schema:
 
 See [INSTALL.md](INSTALL.md) for full setup, [USAGE.md](USAGE.md) for
 the CLI/output files/programmatic API, and
-[CONFIGURATION.md](CONFIGURATION.md) for the config surface
-(exhaustive field reference: [`configs/schema.yaml`](configs/schema.yaml)).
+[CONFIGURATION.md](CONFIGURATION.md) for how to customize a config
+(field list: [`configs/schema.yaml`](configs/schema.yaml)).
 
 ## Documentation
 
@@ -55,7 +52,7 @@ the CLI/output files/programmatic API, and
 | [USAGE.md](USAGE.md) | CLI, output files, caching, reproducing a run, programmatic API |
 | [CONFIGURATION.md](CONFIGURATION.md) | Config walkthrough with worked examples |
 | [AUDIT_CHECKS.md](AUDIT_CHECKS.md) | What each of the 12 checks does, and the research behind it |
-| [configs/schema.yaml](configs/schema.yaml) | Exhaustive, commented field-by-field reference |
+| [configs/schema.yaml](configs/schema.yaml) | Every field, one line each — copy it as your starting point |
 
 ## Status
 
@@ -74,23 +71,14 @@ validated against real data — not just synthetic fixtures:
   7.8GB-RAM machine; `identity_column_flag` independently reproduced
   the published `Dst Port` leakage finding
 
-**Correctness note — scaling/sampling and cross-validation.** Both run
-inside the same `imblearn` pipeline as the classifier, not once up
-front, so `classifiers.tuning`'s internal CV folds and
-`classifiers.calibration`'s internal folds each redo scaling/sampling
-independently. Fitting a scaler or a sampler like SMOTE once on the
-whole training set and only then handing the result to
-`GridSearchCV`/`CalibratedClassifierCV` lets their internal folds see
-data transformed using information from other, supposedly-held-out
-folds — SMOTE's synthetic points are the sharpest version of this,
-since a fold's synthetic rows can be interpolated from real neighbors
-that landed in a different fold.
+Scaling and class-balancing always run inside cross-validation, never
+fit once beforehand — see
+[CONFIGURATION.md](CONFIGURATION.md#tuning-and-hyperparameters) for
+why that matters.
 
-Not yet implemented: a `known_issue_lookup` table beyond its current
-two seed entries (open-ended curation, see
-[AUDIT_CHECKS.md](AUDIT_CHECKS.md)), and automatic comparison across
-*scaling* strategies the way sampling already supports (see
-[CONFIGURATION.md](CONFIGURATION.md)).
+Not yet implemented: comparing *scaling* strategies the way sampling
+already supports, and growing `known_issue_lookup` past its two seed
+entries.
 
 ## License
 

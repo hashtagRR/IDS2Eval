@@ -2,12 +2,12 @@
 
 **Dataset:** unsw-nb15
 **Overall status:** ⚠️ Passed with warnings
-**Generated:** 2026-09-06T18:06:52.387935+00:00
-**IDS2Eval version:** 0.1.0 (git 924fb79)
+**Generated:** 2026-09-06T18:25:30.160353+00:00
+**IDS2Eval version:** 0.1.0 (git 786dd90)
 **Scorecard schema version:** 1.0
 **Audit stage:** after dedup
 
-![IDS2Eval Scorecard](scorecard.png)
+<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 

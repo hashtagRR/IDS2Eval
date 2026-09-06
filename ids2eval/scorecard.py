@@ -73,7 +73,10 @@ def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
         f"**Audit stage:** {scorecard['audit_stage']} dedup",
     ]
     if has_plot:
-        lines += ["", "![IDS2Eval Scorecard](scorecard.png)"]
+        # An explicit width, not bare markdown ![]() syntax - GitHub renders
+        # an embedded image at full native size otherwise, which dwarfs the
+        # rest of the page for a figure this tall.
+        lines += ["", '<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">']
     lines += [
         "",
         "## Checks",

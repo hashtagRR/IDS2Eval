@@ -69,53 +69,68 @@ def main(argv=None) -> None:
         cache.save(train_df, test_df, cfg)
     logger.info("Split: train=%d rows, test=%d rows", len(train_df), len(test_df))
 
+    # A load-phase crash has no run_dir to report status into - there's no
+    # run to speak of yet, not even a failed one, until loading succeeds.
     run_dir = run_manager.create_run_dir(output_dir)
     run_manager.write_environment_info(run_dir)
     run_manager.write_resolved_config(run_dir, cfg)
+    run_manager.write_dataset_fingerprint(run_dir, train_df, test_df, cfg)
     logger.info("Run artifacts: %s", run_dir)
 
-    if not args.skip_audit:
-        # Must run before dedup — dedup_check reports duplication already
-        # present in the split, and dataset.dedup() would remove it first.
-        findings_before = run_audit(train_df, test_df, cfg)
-        _write_findings(run_dir / "audit_report_before.json", findings_before)
-
-    if cfg["preprocessing"]["dedup"]:
-        train_df, test_df, dedup_stats = dataset.dedup(train_df, test_df, cfg)
-        logger.info("Dedup: %s", dedup_stats)
-
+    stage = "audit_before"
+    try:
         if not args.skip_audit:
-            # Full suite again on the cleaned data, by explicit choice, so a
-            # claim like "12% duplicate leakage before, 0% after" is backed
-            # by two real runs rather than assumed from the dedup stats alone.
-            # Note: resplit_falsification reloads raw data itself and never
-            # looks at train_df/test_df, so its result here is guaranteed
-            # identical to the "before" run — real, if modest, wasted compute.
-            findings_after = run_audit(train_df, test_df, cfg)
-            _write_findings(run_dir / "audit_report_after.json", findings_after)
+            # Must run before dedup — dedup_check reports duplication already
+            # present in the split, and dataset.dedup() would remove it first.
+            stage = "audit_before"
+            findings_before = run_audit(train_df, test_df, cfg)
+            _write_findings(run_dir / "audit_report_before.json", findings_before)
 
-    if cfg["output"]["save_preprocessed"]:
-        fmt = cfg["output"]["format"]
-        for name, df in [("train", train_df), ("test", test_df)]:
-            path = run_dir / f"{name}.{fmt}"
-            if fmt == "parquet":
-                df.to_parquet(path, index=False)
-            else:
-                df.to_csv(path, index=False)
-            logger.info("Wrote %s", path)
+        if cfg["preprocessing"]["dedup"]:
+            stage = "dedup"
+            train_df, test_df, dedup_stats = dataset.dedup(train_df, test_df, cfg)
+            logger.info("Dedup: %s", dedup_stats)
 
-    if not args.skip_benchmark:
-        results_df, extras = run_benchmark(train_df, test_df, cfg)
-        results_path = run_dir / "benchmark_results.csv"
-        results_df.to_csv(results_path, index=False)
-        details_path = run_dir / "benchmark_details.json"
-        details_path.write_text(json.dumps(extras, indent=2, default=_json_default))
-        logger.info("Benchmark results written to %s", results_path)
-        logger.info("Per-classifier detail (confusion matrix, per-class report, "
-                    "feature importance, best params) written to %s", details_path)
-        logger.info("\n%s", results_df.to_string(index=False))
+            if not args.skip_audit:
+                # Full suite again on the cleaned data, by explicit choice, so a
+                # claim like "12% duplicate leakage before, 0% after" is backed
+                # by two real runs rather than assumed from the dedup stats alone.
+                # Note: resplit_falsification reloads raw data itself and never
+                # looks at train_df/test_df, so its result here is guaranteed
+                # identical to the "before" run — real, if modest, wasted compute.
+                stage = "audit_after"
+                findings_after = run_audit(train_df, test_df, cfg)
+                _write_findings(run_dir / "audit_report_after.json", findings_after)
 
-    run_manager.cleanup_old_runs(output_dir, cfg["output"]["keep_runs"])
+        if cfg["output"]["save_preprocessed"]:
+            stage = "save_preprocessed"
+            fmt = cfg["output"]["format"]
+            for name, df in [("train", train_df), ("test", test_df)]:
+                path = run_dir / f"{name}.{fmt}"
+                if fmt == "parquet":
+                    df.to_parquet(path, index=False)
+                else:
+                    df.to_csv(path, index=False)
+                logger.info("Wrote %s", path)
+
+        if not args.skip_benchmark:
+            stage = "benchmark"
+            results_df, extras = run_benchmark(train_df, test_df, cfg)
+            results_path = run_dir / "benchmark_results.csv"
+            results_df.to_csv(results_path, index=False)
+            details_path = run_dir / "benchmark_details.json"
+            details_path.write_text(json.dumps(extras, indent=2, default=_json_default))
+            logger.info("Benchmark results written to %s", results_path)
+            logger.info("Per-classifier detail (confusion matrix, per-class report, "
+                        "feature importance, best params) written to %s", details_path)
+            logger.info("\n%s", results_df.to_string(index=False))
+
+        run_manager.write_run_status(run_dir, status="completed")
+    except Exception as e:
+        run_manager.write_run_status(run_dir, status="failed", failed_stage=stage, error=str(e))
+        raise
+    finally:
+        run_manager.cleanup_old_runs(output_dir, cfg["output"]["keep_runs"])
 
 
 if __name__ == "__main__":

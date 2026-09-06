@@ -183,3 +183,63 @@ def test_cli_keep_runs_prunes_old_run_directories(tmp_path, synth_data):
         main(["--config", str(config_path)])
 
     assert len(list((output_dir / "runs").iterdir())) == 2
+
+
+def test_cli_writes_dataset_fingerprint_and_completed_status(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+
+    assert (run_dir / "dataset_fingerprint.json").exists()
+    status = json.loads((run_dir / "run_status.json").read_text())
+    assert status["status"] == "completed"
+    assert status["failed_stage"] is None
+
+
+def test_cli_writes_failed_status_on_crash(tmp_path, synth_data, monkeypatch):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    def _boom(*a, **kw):
+        raise RuntimeError("simulated benchmark crash")
+
+    # cli.py does `from .benchmark import run_benchmark` - patch its own
+    # bound name, not the source module's attribute, which wouldn't affect
+    # the reference cli.py already holds.
+    monkeypatch.setattr("ids2eval.cli.run_benchmark", _boom)
+
+    import pytest
+    with pytest.raises(RuntimeError, match="simulated benchmark crash"):
+        main(["--config", str(config_path)])
+
+    run_dir = _latest_run_dir(output_dir)
+    status = json.loads((run_dir / "run_status.json").read_text())
+    assert status["status"] == "failed"
+    assert status["failed_stage"] == "benchmark"
+    assert "simulated benchmark crash" in status["error"]

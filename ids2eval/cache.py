@@ -25,6 +25,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from . import version_info
+
 logger = logging.getLogger(__name__)
 
 CACHE_DIRNAME = ".cache"
@@ -48,6 +50,7 @@ def compute_fingerprint(cfg: dict) -> str:
 
     fingerprint_input = {
         "input_files": _input_file_stats(sorted(p for p in input_paths if p)),
+        "random_seed": cfg["random_seed"],
         "split_ratio": dataset_cfg["split_ratio"],
         "split_mode": dataset_cfg["split_mode"],
         "group_columns": dataset_cfg["group_columns"],
@@ -57,6 +60,7 @@ def compute_fingerprint(cfg: dict) -> str:
         "attack_category_column": cfg["schema"]["attack_category_column"],
         "drop_columns": cfg["schema"]["drop_columns"],
         "attack_type_mapping": cfg["label_grouping"]["attack_type_mapping"],
+        "ids2eval_version": version_info.get_version_info(),
     }
     encoded = json.dumps(fingerprint_input, sort_keys=True, default=str).encode()
     return hashlib.sha256(encoded).hexdigest()

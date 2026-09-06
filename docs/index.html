@@ -149,26 +149,23 @@
   .contrib h3 { font-size: 1.02rem; font-weight: 700; }
   .contrib p { color: var(--muted); font-size: .91rem; margin: 0; }
 
-  /* pipeline */
-  .pipeline { display: flex; flex-direction: column; gap: 0; margin-top: 38px; }
-  .step { display: grid; grid-template-columns: 40px 1fr; gap: 20px; position: relative; padding-bottom: 30px; }
-  .step:last-child { padding-bottom: 0; }
-  .step .idx {
-    font-weight: 800; font-size: 1rem;
-    color: #fff; background: var(--accent); width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; z-index: 1; flex: none;
+  /* pipeline flow */
+  .flow { display: flex; align-items: stretch; gap: 10px; margin-top: 38px; flex-wrap: wrap; }
+  .flow-step {
+    flex: 1 1 160px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 20px 18px; display: flex; flex-direction: column; gap: 8px;
   }
-  .step::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: -10px; width: 2px; background: var(--line); }
-  .step:last-child::before { display: none; }
-  .step h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 5px; }
-  .step p { color: var(--muted); margin: 0; max-width: 64ch; font-size: .95rem; }
-  .step code { color: var(--accent); background: var(--accent-soft); padding: .1em .4em; border-radius: 3px; }
-
-  .diagram-frame {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
-    padding: 18px clamp(6px, 3vw, 24px); margin-top: 38px; overflow-x: auto;
+  .flow-icon {
+    font-weight: 800; font-size: .95rem; color: #fff; background: var(--accent);
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
   }
-  .diagram-frame img { display: block; width: 100%; height: auto; max-width: 900px; margin: 0 auto; border-radius: 4px; }
+  .flow-step h3 { font-size: 1rem; font-weight: 700; margin: 0; }
+  .flow-step p { color: var(--muted); margin: 0; font-size: .87rem; line-height: 1.45; }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.2rem; flex: 0 0 auto; }
+  @media (max-width: 820px) {
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); padding: 2px 0; }
+  }
 
   /* check banners (all 12, compact) */
   .check-banner-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 38px; }
@@ -337,20 +334,41 @@
 
 <section id="pipeline" class="wrap">
   <div class="eyebrow">02 · what actually runs</div>
-  <h2 class="h">Load → audit → dedup → audit again → benchmark.</h2>
+  <h2 class="h">One command, five stages.</h2>
   <p class="sub">
-    Traced directly from <code>cli.py</code>'s <code>main()</code> — nothing
-    hidden behind an opaque "run everything" call.
+    Point it at a config file. Everything from loading the data to a
+    finished benchmark report happens automatically.
   </p>
-  <div class="pipeline">
-    <div class="step"><div class="idx">1</div><div><h3>Load + split</h3><p>From cache if a fingerprint match exists, otherwise from <code>raw_files</code> or a pre-split <code>train_file</code>/<code>test_file</code> pair. Chunked reading + reservoir sampling bound memory on datasets larger than RAM.</p></div></div>
-    <div class="step"><div class="idx">2</div><div><h3>Hard-fail validation</h3><p>Duplicate column names, zero shared feature columns, an empty split — these raise immediately, before caching or auditing even start.</p></div></div>
-    <div class="step"><div class="idx">3</div><div><h3>Audit (before)</h3><p>All enabled checks run against the raw split, writing <code>audit_report_before.json</code>.</p></div></div>
-    <div class="step"><div class="idx">4</div><div><h3>Dedup, then audit again</h3><p>If <code>preprocessing.dedup</code> is on, exact duplicates are removed and every check reruns, writing <code>audit_report_after.json</code> — a before/after claim backed by two real runs.</p></div></div>
-    <div class="step"><div class="idx">5</div><div><h3>Benchmark + track</h3><p>Scaling and sampling run <em>inside</em> the same pipeline as each classifier — never fit once up front — then results, environment, resolved config, and a dataset fingerprint are all written to a fresh run directory.</p></div></div>
-  </div>
-  <div class="diagram-frame">
-    <img src="assets/pipeline-diagram.png" alt="Flowchart of the IDS2Eval pipeline: Config, Load + Split, Run Directory, Audit (before dedup), Dedup, Write preprocessed data, Benchmark, Cleanup — traced from cli.py's main().">
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-icon">1</div>
+      <h3>Load data</h3>
+      <p>Read your dataset and split it into training and test sets.</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">2</div>
+      <h3>Audit</h3>
+      <p>Check for duplicates, data leakage, class imbalance, and more.</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">3</div>
+      <h3>Clean</h3>
+      <p>Remove duplicates and rebalance classes, then re-check.</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">4</div>
+      <h3>Benchmark</h3>
+      <p>Train and compare classifiers on the cleaned data.</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">5</div>
+      <h3>Report</h3>
+      <p>Save results and a record that can reproduce the run exactly.</p>
+    </div>
   </div>
 </section>
 

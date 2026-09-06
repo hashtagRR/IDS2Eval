@@ -44,10 +44,6 @@ Traced from `ids2eval/cli.py`'s `main()`, in order:
    `benchmark_results.csv` and `benchmark_details.json`
 9. **Prune old runs** beyond `output.keep_runs` (never touches the cache)
 
-See the [pipeline diagram](https://claude.ai/code/artifact/29d9adfe-444b-4606-9899-93df9ddf529e)
-for the visual version of this, including which steps are
-config-gated vs. always-on.
-
 ## Output files
 
 All written under `output.dir/runs/<timestamp>/` (a fresh directory

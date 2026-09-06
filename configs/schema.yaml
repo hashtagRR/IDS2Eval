@@ -74,6 +74,7 @@ output:
   format: parquet               # parquet | csv
   save_preprocessed: true       # also write out the cleaned train/test data
   keep_runs: 10                  # keep only the N most recent runs — null keeps every run
+  write_scorecard_plot: false   # also render scorecard.pdf/.png — needs `pip install "ids2eval[plots]"`
 
 # Not supported: feature engineering (imputation, feature selection, dimensionality
 # reduction), hyperparameter search deeper than classifiers.tuning, and multi-stage

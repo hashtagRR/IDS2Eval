@@ -14,7 +14,10 @@ venv/bin/pip install -e ".[dev]"
 ```
 
 The `[dev]` extra adds `pytest` and `ruff`, used for the test suite and
-linting — skip it (`pip install -e .`) for a runtime-only install.
+linting — skip it (`pip install -e .`) for a runtime-only install. A
+separate `[plots]` extra (`pip install -e ".[dev,plots]"`) adds
+`matplotlib`, needed only if you turn on
+`output.write_scorecard_plot` — see [USAGE.md](USAGE.md).
 
 This installs the `ids2eval` console script into the venv:
 
@@ -38,7 +41,9 @@ Declared in `pyproject.toml` (the single source of truth — there's no
 separate `requirements.txt` to drift out of sync with it): `pyyaml`,
 `pandas`, `numpy`, `scikit-learn`, `scipy`, `imbalanced-learn`,
 `xgboost`, `pyarrow`. All install from prebuilt wheels on Linux/macOS/
-Windows for Python 3.10–3.12 — no compiler toolchain needed.
+Windows for Python 3.10–3.12 — no compiler toolchain needed. `matplotlib`
+is not in this list on purpose — it's the `[plots]` extra above, only
+needed for `scorecard.pdf`/`scorecard.png`.
 
 ## Real datasets used in validation
 

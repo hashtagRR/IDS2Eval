@@ -167,6 +167,23 @@ def test_keep_runs_null_means_keep_all(base_cfg):
     validate_config(base_cfg)  # should not raise
 
 
+def test_write_scorecard_plot_passes_when_matplotlib_available(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["output"]["write_scorecard_plot"] = True
+    validate_config(base_cfg)  # should not raise - matplotlib is a dev/test dependency
+
+
+def test_write_scorecard_plot_fails_fast_without_matplotlib(base_cfg, monkeypatch):
+    import sys
+    monkeypatch.setitem(sys.modules, "matplotlib", None)  # simulate it not being installed
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["output"]["write_scorecard_plot"] = True
+    with pytest.raises(ValueError, match='pip install "ids2eval\\[plots\\]"'):
+        validate_config(base_cfg)
+
+
 def test_random_seed_must_be_an_integer(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["audit"]["resplit_falsification"] = False

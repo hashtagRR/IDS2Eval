@@ -64,3 +64,16 @@ def test_render_markdown_includes_verdict_and_every_check(base_cfg):
     assert "leak found" in md
     assert "Citing this result" in md
     assert "arxiv.org/abs/1803.09010" in md
+
+
+def test_render_markdown_omits_plot_image_by_default(base_cfg):
+    sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
+    md = scorecard.render_markdown(sc)
+    assert "scorecard.png" not in md
+
+
+def test_render_markdown_embeds_plot_image_when_has_plot(base_cfg):
+    sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
+    md = scorecard.render_markdown(sc, has_plot=True)
+    assert "![IDS2Eval Scorecard](scorecard.png)" in md
+    assert "scorecard.pdf" in md  # mentioned as the citable vector figure

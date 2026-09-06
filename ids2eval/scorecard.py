@@ -56,7 +56,7 @@ def build_scorecard(findings: list[dict], audit_stage: str, cfg: dict, fingerpri
     }
 
 
-def render_markdown(scorecard: dict) -> str:
+def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
     counts = {"ok": 0, "warning": 0, "flag": 0}
     for f in scorecard["findings"]:
         counts[f["status"]] += 1
@@ -71,6 +71,10 @@ def render_markdown(scorecard: dict) -> str:
         + (f" (git {scorecard['ids2eval_git_commit'][:7]})" if scorecard["ids2eval_git_commit"] else ""),
         f"**Scorecard schema version:** {scorecard['scorecard_schema_version']}",
         f"**Audit stage:** {scorecard['audit_stage']} dedup",
+    ]
+    if has_plot:
+        lines += ["", "![IDS2Eval Scorecard](scorecard.png)"]
+    lines += [
         "",
         "## Checks",
         "",
@@ -90,7 +94,8 @@ def render_markdown(scorecard: dict) -> str:
         f"**{scorecard['overall_status'].replace('_', ' ')}** — "
         f"{counts['ok']} ok, {counts['warning']} warning(s), {counts['flag']} flag(s) "
         f"across {len(scorecard['findings'])} checks. Full report: "
-        f"`audit_report_{scorecard['audit_stage']}.json`.",
+        f"`audit_report_{scorecard['audit_stage']}.json`."
+        + (" A vector figure of this chart is at `scorecard.pdf`, ready to cite directly." if has_plot else ""),
         "",
         "---",
         "*Scorecard format inspired by structured dataset-documentation "

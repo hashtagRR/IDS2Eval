@@ -54,6 +54,30 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert sc["dataset_fingerprint"]["train_content_hash"]
 
 
+def test_cli_writes_scorecard_plot_when_enabled(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir), "write_scorecard_plot": True},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+
+    assert (run_dir / "scorecard.pdf").exists()
+    assert (run_dir / "scorecard.png").exists()
+    assert (run_dir / "scorecard.pdf").read_bytes().startswith(b"%PDF")
+    assert "scorecard.png" in (run_dir / "SCORECARD.md").read_text()
+
+
 def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, monkeypatch):
     data_path = tmp_path / "data.csv"
     synth_data.to_csv(data_path, index=False)

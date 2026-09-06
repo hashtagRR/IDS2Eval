@@ -75,3 +75,6 @@ output:
   save_preprocessed: true       # also write out the cleaned train/test data
   keep_runs: 10                  # keep only the N most recent runs — null keeps every run
 
+# Not supported: feature engineering (imputation, feature selection, dimensionality
+# reduction), hyperparameter search deeper than classifiers.tuning, and multi-stage
+# cascades — see the "scope" section on the docs site for why.

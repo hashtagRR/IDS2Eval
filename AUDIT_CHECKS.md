@@ -123,6 +123,48 @@ largely superseded dataset (KDD99 being the obvious case: still widely
 cited, but generally considered deprecated by the research community)
 is worth an entry at all.
 
+## The scorecard
+
+Every run that audits a dataset also writes `scorecard.json` and
+`SCORECARD.md` — not a new check, but a citable rollup of the findings
+above plus the dataset fingerprint and tool version already computed
+elsewhere. The goal is a single artifact a paper can point to instead
+of "this dataset's quality was not independently verified": *"this
+result was obtained on a dataset that passed the following IDS2Eval
+checks."*
+
+**Pass/fail is an explicit, fixed rule**, since it becomes a citable
+claim: any `flag` → `failed`; no flags but any `warning` →
+`passed_with_warnings`; all `ok` → `passed`. The scorecard reflects
+whichever audit pass describes the data actually shipped in the run —
+after dedup if `preprocessing.dedup` ran, otherwise the only pass there
+was.
+
+A `scorecard_schema_version` field (independent of `ids2eval`'s own
+package version) means a citation naming a schema version stays
+parseable even after the tool itself moves on — the scorecard's shape
+is a stability commitment in a way an internal output format isn't.
+
+**Why this, and not an existing format.** Generic dataset-documentation
+templates — Datasheets for Datasets
+([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and Google's
+Data Cards — are manual, narrative forms an author fills in, not
+something a tool generates from actual checks. Generic automated
+data-quality tools (Great Expectations, whylogs, TFDV) run real checks
+and produce a report, but are generic-tabular, not IDS-aware or
+citation-shaped. The closest NIDS-specific prior art is Flood et al.
+2024's own audit heuristics (already the basis for `leakage_screen`
+above), but a 2025 survey of NIDS datasets ("Network Intrusion
+Datasets: A Survey, Limitations, and Recommendations",
+[arXiv:2502.06688](https://arxiv.org/abs/2502.06688)) describes current
+validation as still "heavily reliant on manual analysis" and calls for
+more formalized, automated methodologies — this scorecard is a direct
+answer to that gap, not a reinvention of something that already
+existed. The scorecard/verdict framing itself draws on "Scorecards for
+Synthetic Medical Data Evaluation and Reporting"
+([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)), which uses the
+same structural idea in a different data domain.
+
 ## What's *not* an audit finding
 
 Structural problems severe enough to make the dataset unusable —

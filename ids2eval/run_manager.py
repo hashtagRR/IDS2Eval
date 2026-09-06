@@ -79,13 +79,16 @@ def _content_hash(df: pd.DataFrame) -> str:
     return hashlib.sha256(pd.util.hash_pandas_object(df, index=False).values.tobytes()).hexdigest()
 
 
-def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> None:
+def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     """Real, content-based proof of what data this run used - distinct from
     cache.py's fingerprint (which exists to answer "can I skip reloading",
     keyed on cheap file stats) and dataset_cfg source-file stats. This one
     hashes the actual loaded DataFrame contents, so it also catches a
     resplit or a cache-invalidation edge case the file-stats check missed,
     not just "did the source CSV change".
+
+    Returns the fingerprint dict too, so callers (e.g. scorecard.py) can
+    reuse it without recomputing the content hashes.
     """
     label_col = cfg["schema"]["label_column"]
     fingerprint = {
@@ -98,6 +101,12 @@ def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd
         "test_content_hash": _content_hash(test_df),
     }
     (run_dir / "dataset_fingerprint.json").write_text(json.dumps(fingerprint, indent=2))
+    return fingerprint
+
+
+def write_scorecard(run_dir: Path, scorecard: dict, markdown: str) -> None:
+    (run_dir / "scorecard.json").write_text(json.dumps(scorecard, indent=2))
+    (run_dir / "SCORECARD.md").write_text(markdown)
 
 
 def write_run_status(run_dir: Path, status: str, failed_stage: str | None = None, error: str | None = None) -> None:

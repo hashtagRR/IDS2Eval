@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from . import cache, dataset, run_manager
+from . import cache, dataset, run_manager, scorecard
 from .audit import run_audit
 from .benchmark import run_benchmark
 from .config import load_config
@@ -74,7 +74,7 @@ def main(argv=None) -> None:
     run_dir = run_manager.create_run_dir(output_dir)
     run_manager.write_environment_info(run_dir)
     run_manager.write_resolved_config(run_dir, cfg)
-    run_manager.write_dataset_fingerprint(run_dir, train_df, test_df, cfg)
+    fingerprint = run_manager.write_dataset_fingerprint(run_dir, train_df, test_df, cfg)
     logger.info("Run artifacts: %s", run_dir)
 
     stage = "audit_before"
@@ -101,6 +101,17 @@ def main(argv=None) -> None:
                 stage = "audit_after"
                 findings_after = run_audit(train_df, test_df, cfg)
                 _write_findings(run_dir / "audit_report_after.json", findings_after)
+
+        if not args.skip_audit:
+            # Reflects whichever findings describe the data actually shipped
+            # in this run - the post-dedup pass if dedup ran, otherwise the
+            # only pass there was.
+            stage = "scorecard"
+            final_findings = findings_after if cfg["preprocessing"]["dedup"] else findings_before
+            final_audit_stage = "after" if cfg["preprocessing"]["dedup"] else "before"
+            sc = scorecard.build_scorecard(final_findings, final_audit_stage, cfg, fingerprint)
+            run_manager.write_scorecard(run_dir, sc, scorecard.render_markdown(sc))
+            logger.info("Scorecard: %s -> %s", sc["overall_status"], run_dir / "scorecard.json")
 
         if cfg["output"]["save_preprocessed"]:
             stage = "save_preprocessed"

@@ -37,6 +37,8 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "benchmark_details.json").exists()
     assert (run_dir / "environment.json").exists()
     assert (run_dir / "resolved_config.json").exists()
+    assert (run_dir / "scorecard.json").exists()
+    assert (run_dir / "SCORECARD.md").exists()
 
     findings = json.loads((run_dir / "audit_report_before.json").read_text())
     assert len(findings) == 9  # all v1 checks (incl. data_integrity_check), v2 off by default
@@ -44,6 +46,12 @@ def test_cli_end_to_end(tmp_path, synth_data):
     after = json.loads((run_dir / "audit_report_after.json").read_text())
     dedup_after = next(f for f in after if f["check"] == "dedup_check")
     assert dedup_after["details"]["train_duplicates_dropped"] == 0  # already deduped by this point
+
+    sc = json.loads((run_dir / "scorecard.json").read_text())
+    assert sc["audit_stage"] == "after"  # preprocessing.dedup defaults true
+    assert sc["overall_status"] in {"passed", "passed_with_warnings", "failed"}
+    assert len(sc["findings"]) == len(after)
+    assert sc["dataset_fingerprint"]["train_content_hash"]
 
 
 def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, monkeypatch):
@@ -136,6 +144,7 @@ def test_cli_skip_flags(tmp_path, synth_data):
     assert not (run_dir / "audit_report_before.json").exists()
     assert not (run_dir / "benchmark_results.csv").exists()
     assert not (run_dir / "train.parquet").exists()
+    assert not (run_dir / "scorecard.json").exists()  # nothing to score without an audit
 
 
 def test_cli_hard_fails_on_disjoint_train_test_schema(tmp_path):

@@ -39,7 +39,8 @@ Traced from `ids2eval/cli.py`'s `main()`, in order:
 6. **Dedup** (if `preprocessing.dedup`) — then **audit again**, writing
    `audit_report_after.json`
 7. **Scorecard** (unless `--skip-audit`) — rolls the final audit pass up
-   into `scorecard.json`/`SCORECARD.md`
+   into `scorecard.json`/`SCORECARD.md`, plus `scorecard.pdf`/`.png` if
+   `output.write_scorecard_plot` is on
 8. **Write preprocessed data** (if `output.save_preprocessed`) —
    `train.<fmt>`/`test.<fmt>`
 9. **Benchmark** (unless `--skip-benchmark`) — writes
@@ -56,6 +57,7 @@ every run — nothing gets silently overwritten):
 | `audit_report_before.json` | All enabled audit findings, computed before dedup |
 | `audit_report_after.json` | Same, after dedup (only if `preprocessing.dedup` is on) |
 | `scorecard.json` / `SCORECARD.md` | A citable pass/fail rollup of the findings above — see [AUDIT_CHECKS.md](AUDIT_CHECKS.md#the-scorecard) |
+| `scorecard.pdf` / `scorecard.png` | A chart version of the scorecard — only if `output.write_scorecard_plot` is on (needs `pip install "ids2eval[plots]"`) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
 | `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |
 | `benchmark_details.json` | Per-row confusion matrix, per-class precision/recall/F1, feature importance (where the classifier supports it), winning hyperparameters (if `classifiers.tuning` ran), and each stage's class distribution before/after sampling |

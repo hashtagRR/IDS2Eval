@@ -78,6 +78,7 @@ DEFAULTS: dict[str, Any] = {
         "format": "parquet",
         "save_preprocessed": True,
         "keep_runs": 10,
+        "write_scorecard_plot": False,
     },
 }
 
@@ -197,6 +198,15 @@ def validate_config(cfg: dict[str, Any]) -> None:
     keep_runs = cfg["output"]["keep_runs"]
     if keep_runs is not None and keep_runs <= 0:
         errors.append("output.keep_runs must be a positive integer, or null to keep all runs")
+
+    if cfg["output"]["write_scorecard_plot"]:
+        try:
+            import matplotlib  # noqa: F401
+        except ImportError:
+            errors.append(
+                "output.write_scorecard_plot is true but matplotlib isn't installed — "
+                'run: pip install "ids2eval[plots]"'
+            )
 
     if errors:
         raise ValueError("Invalid config:\n" + "\n".join(f"  - {e}" for e in errors))

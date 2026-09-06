@@ -145,6 +145,27 @@ package version) means a citation naming a schema version stays
 parseable even after the tool itself moves on — the scorecard's shape
 is a stability commitment in a way an internal output format isn't.
 
+**A visual scorecard is opt-in** (`output.write_scorecard_plot`, off by
+default — see [CONFIGURATION.md](CONFIGURATION.md#rendering-the-scorecard-as-a-chart)),
+producing both `scorecard.pdf` and `scorecard.png` from one chart-only
+figure: the pass/fail verdict, a bar chart of check counts by status,
+and — only when those specific checks ran — a train-vs-test class
+distribution chart and a horizontal bar chart of `leakage_screen`'s top
+feature importances (a dominant bar *is* the leakage signature this
+file already describes in prose). PDF is the deliberate primary format
+here, not PNG: publication guidance (Enago's journal-figure-format
+guide; CASRAI's scientific-figure rules) is consistent that vector
+formats are what's actually recommended for charts and graphs, since
+they stay sharp at any print size, while raster formats like PNG are
+meant for photographs. PNG is generated anyway, for one practical
+reason vector format can't cover: PDFs don't render inline in GitHub's
+Markdown preview, so `SCORECARD.md` embeds the PNG to show the chart
+when skimmed on GitHub, while `scorecard.pdf` stays the one to actually
+cite or drop into a paper's figures. Needs `matplotlib` (`pip install
+"ids2eval[plots]"`) — an optional extra, not a core dependency, so
+turning this on is a deliberate choice, not something a run does
+silently.
+
 **Why this, and not an existing format.** Generic dataset-documentation
 templates — Datasheets for Datasets
 ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and Google's

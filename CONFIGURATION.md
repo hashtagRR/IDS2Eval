@@ -31,7 +31,7 @@ itself) or a `train_file`+`test_file` pair (already split).
 | `preprocessing` | Dedup, and scaling/class-balancing strategy — either can be a list, to compare |
 | `audit` | Which of the 12 checks run, and the reference dataset the two v2 checks need |
 | `classifiers` | Which of the 14 classifiers to benchmark, tuning, calibration, per-classifier hyperparameters/search spaces |
-| `output` | Where results go, output format, run retention |
+| `output` | Where results go, output format, run retention, optional scorecard chart |
 | `random_seed` | The single source for every seed in the pipeline |
 
 ## Large datasets
@@ -142,6 +142,23 @@ Both v2 checks need a second dataset in the same schema — a
 real-traffic sample for realism, or an independent dataset for drift.
 `known_issue_lookup` (the third v2 check) needs neither, just a
 `dataset.name` match.
+
+## Rendering the scorecard as a chart
+
+```yaml
+output:
+  write_scorecard_plot: true
+```
+
+Off by default — turning it on adds `scorecard.pdf` (vector, for citing
+directly in a paper) and `scorecard.png` (raster, embedded automatically
+in `SCORECARD.md` so the chart previews on GitHub) alongside the existing
+`scorecard.json`/`SCORECARD.md`. This needs `matplotlib`, which is **not**
+a core dependency — `pip install "ids2eval[plots]"` first, or config
+validation fails immediately with that same instruction rather than
+crashing partway through a run. See
+[AUDIT_CHECKS.md](AUDIT_CHECKS.md#the-scorecard) for what's actually
+plotted.
 
 ## Reproducibility
 

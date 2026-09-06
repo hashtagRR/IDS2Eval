@@ -110,7 +110,14 @@ def main(argv=None) -> None:
             final_findings = findings_after if cfg["preprocessing"]["dedup"] else findings_before
             final_audit_stage = "after" if cfg["preprocessing"]["dedup"] else "before"
             sc = scorecard.build_scorecard(final_findings, final_audit_stage, cfg, fingerprint)
-            run_manager.write_scorecard(run_dir, sc, scorecard.render_markdown(sc))
+
+            has_plot = cfg["output"]["write_scorecard_plot"]
+            if has_plot:
+                from . import scorecard_plot
+                scorecard_plot.render(sc, final_findings, run_dir / "scorecard.pdf", run_dir / "scorecard.png")
+                logger.info("Scorecard plot written to %s / .png", run_dir / "scorecard.pdf")
+
+            run_manager.write_scorecard(run_dir, sc, scorecard.render_markdown(sc, has_plot=has_plot))
             logger.info("Scorecard: %s -> %s", sc["overall_status"], run_dir / "scorecard.json")
 
         if cfg["output"]["save_preprocessed"]:

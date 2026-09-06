@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from ids2eval.config import load_config, validate_config
@@ -17,7 +19,7 @@ def test_defaults_merge(tmp_path):
 def test_requires_dataset_name(base_cfg):
     base_cfg["dataset"]["name"] = None
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
-    with pytest.raises(ValueError, match="dataset.name is required"):
+    with pytest.raises(ValueError, match=re.escape("dataset.name is required")):
         validate_config(base_cfg)
 
 
@@ -46,7 +48,7 @@ def test_max_rows_requires_chunk_size(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["dataset"]["max_rows"] = 1000
     base_cfg["audit"]["resplit_falsification"] = False
-    with pytest.raises(ValueError, match="max_rows requires dataset.chunk_size"):
+    with pytest.raises(ValueError, match=re.escape("max_rows requires dataset.chunk_size")):
         validate_config(base_cfg)
 
 
@@ -77,7 +79,7 @@ def test_attack_type_mapping_requires_attack_category_column(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["audit"]["resplit_falsification"] = False
     base_cfg["label_grouping"]["attack_type_mapping"] = {"DoS Hulk": "DoS"}
-    with pytest.raises(ValueError, match="attack_type_mapping requires schema.attack_category_column"):
+    with pytest.raises(ValueError, match=re.escape("attack_type_mapping requires schema.attack_category_column")):
         validate_config(base_cfg)
 
 

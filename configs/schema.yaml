@@ -4,33 +4,38 @@
 # it with --config. Anything you leave out uses the default shown here.
 # For the reasoning behind a field and worked examples, see CONFIGURATION.md.
 
-random_seed: 0                 # seed for every random step (splitting, sampling, classifiers)
+random_seed: 0                 # seed for every random step (splitting, sampling, classifiers) — e.g. 42
 
 dataset:
-  name: null                   # required — short id for your dataset, e.g. "cic-ids2018"
+  name: null                   # required — short id for your dataset — e.g. "cic-ids2018"
   raw_files: []                # your data file(s) — IDS2Eval splits them into train/test
-  train_file: null             # OR: an already-split train file
-  test_file: null              #     an already-split test file (use together with train_file)
-  split_ratio: 0.8             # train share, only used with raw_files
+                                # e.g. ["data.csv"], or ["day1.csv", "day2.csv"] for several files
+  train_file: null             # OR: an already-split train file — e.g. "train.csv"
+  test_file: null              #     an already-split test file — e.g. "test.csv" (use with train_file)
+  split_ratio: 0.8             # train share, only used with raw_files — e.g. 0.7 for a 70/30 split
   split_mode: random           # random | grouped — grouped avoids splitting a session across train/test
   group_columns: []            # columns that define a "session" — required if split_mode: grouped
-  chunk_size: null             # rows read at a time, for files too big to load whole
-  max_rows: null               # cap total rows via reservoir sampling — needs chunk_size set
+                                # e.g. [SrcIP, DstIP, DstPort, Protocol]
+  chunk_size: null             # rows read at a time, for files too big to load whole — e.g. 100000
+  max_rows: null                # cap total rows via reservoir sampling — e.g. 500000 (needs chunk_size set)
 
 schema:
-  label_column: null           # required — column with the binary/attack label
-  attack_category_column: null # optional — multi-class attack-type column, if you have one
-  drop_columns: []             # columns to drop before training (flow IDs, timestamps, etc.)
-  id_like_columns: []          # IP/port/MAC-like columns — checked for leakage, not auto-dropped
+  label_column: null           # required — column with the binary/attack label — e.g. "Label"
+  attack_category_column: null # optional — multi-class attack-type column — e.g. "AttackType"
+  drop_columns: []             # columns to drop before training — e.g. ["FlowID", "Timestamp"]
+  id_like_columns: []          # IP/port/MAC-like columns, checked for leakage but not auto-dropped
+                                # e.g. ["SrcIP", "DstIP", "SrcPort"]
 
 label_grouping:
-  attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS"}
+  attack_type_mapping: {}      # merge attack categories — e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
+                                # (anything not listed here, like "PortScan", passes through unchanged)
 
 preprocessing:
   dedup: true                  # remove exact duplicate rows before splitting
   scaling: standard            # none | standard | minmax | robust
   sampling:
-    binary: none                # none | smote | smoteenn | enn | random_undersample (or a list, to compare)
+    binary: none                # none | smote | smoteenn | enn | random_undersample
+                                 # or a list to compare several, e.g. [none, smote, smoteenn]
     type: none                  # same options, for the multi-class stage
 
 audit:
@@ -49,20 +54,23 @@ audit:
   synthetic_realism_check: false
   cross_dataset_drift_check: false
   known_issue_lookup: false
-  reference_dataset: null      # required if any v2 check above is enabled
+  reference_dataset: null      # required if any v2 check above is enabled — e.g. "/path/to/reference.csv"
 
 classifiers:
   list: all                    # "all", or pick from: RandomForest, XGBoost, DecisionTree,
                                 # NaiveBayes, LogisticRegression, KNN, SVM, LDA, Stacking,
                                 # Voting, ExtraTrees, HistGradientBoosting, AdaBoost, MLP
+                                # e.g. [RandomForest, XGBoost]
   tuning: false                # true runs a hyperparameter search — see search_space
   calibration: none            # none | platt | isotonic
   hyperparameters: {}          # fixed params per classifier, used when tuning: false
+                                # e.g. {RandomForest: {n_estimators: 200, max_depth: 20}}
   search_space: {}             # grid per classifier, used when tuning: true
+                                # e.g. {XGBoost: {learning_rate: [0.01, 0.05, 0.1]}}
 
 output:
-  dir: ./output                 # where results (and the load-cache) are written
+  dir: ./output                 # where results (and the load-cache) are written — e.g. ./results
   format: parquet               # parquet | csv
   save_preprocessed: true       # also write out the cleaned train/test data
-  keep_runs: 10                 # keep only the N most recent runs — null keeps every run
+  keep_runs: 10                  # keep only the N most recent runs — null keeps every run
 

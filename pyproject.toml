@@ -34,7 +34,7 @@ line-length = 125
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "C4", "RUF"]
+select = ["E", "F", "I", "UP", "B", "C4", "RUF", "S"]
 # BLE001 (blind except) and TRY004 (prefer TypeError) aren't selected:
 # this codebase deliberately catches bare Exception in a few best-effort,
 # never-crash-the-whole-run spots (benchmark.py's per-classifier loop,
@@ -42,3 +42,10 @@ select = ["E", "F", "I", "UP", "B", "C4", "RUF"]
 # for every user-facing validation error rather than TypeError, including
 # ones that happen to be about a value's type - consistent with
 # config.py's own validate_config() pattern.
+#
+# S = flake8-bandit (security lint). S101 (use of assert) is ignored in
+# tests/ below since pytest's own assertion mechanism IS bare assert -
+# that's not a security concern, it's how the test suite works.
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]

@@ -55,10 +55,11 @@ the CLI/output files/programmatic API, and
 | [CONFIGURATION.md](CONFIGURATION.md) | Config walkthrough with worked examples |
 | [AUDIT_CHECKS.md](AUDIT_CHECKS.md) | What each of the 12 checks does, and the research behind it |
 | [configs/schema.yaml](configs/schema.yaml) | Every field, one line each — copy it as your starting point |
+| [examples/unsw-nb15-scorecard](examples/unsw-nb15-scorecard) | A real scorecard, chart included, run against the actual UNSW-NB15 dataset |
 
 ## Status
 
-Implemented, tested (125 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (140 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data — not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) — audit + 5 classifiers, including
@@ -67,7 +68,8 @@ validated against real data — not just synthetic fixtures:
   published `sttl` TTL-topology bias; the before/after-dedup audit
   surfaced a real finding (class balance shifted from 2:1 to roughly
   1:1 after removing duplicates — they were disproportionately one
-  class)
+  class). Full real-data scorecard, checks, and chart:
+  [examples/unsw-nb15-scorecard](examples/unsw-nb15-scorecard)
 - **CIC-IDS2018** (official 10-file, 16.2M-row distribution) —
   chunked loading + reservoir sampling kept peak memory at 3.0GB on a
   7.8GB-RAM machine; `identity_column_flag` independently reproduced

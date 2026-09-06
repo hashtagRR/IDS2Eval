@@ -1,0 +1,25 @@
+# Config used to produce this example, run against the real, official
+# UNSW-NB15 pre-split CSVs (https://research.unsw.edu.au/projects/unsw-nb15-dataset).
+#
+# train_file/test_file are deliberately swapped relative to this
+# redistribution's own file names (UNSW_NB15_testing-set.csv has 175,341
+# rows and UNSW_NB15_training-set.csv has 82,332) - this redistribution's
+# file names are inverted relative to the dataset's documented convention,
+# exactly the issue known_issue_lookup surfaces below. Point these at
+# wherever you keep the two CSVs.
+dataset:
+  name: unsw-nb15
+  train_file: UNSW_NB15_testing-set.csv   # 175,341 rows - the real train split
+  test_file: UNSW_NB15_training-set.csv   # 82,332 rows - the real test split
+schema:
+  label_column: label
+  attack_category_column: attack_cat
+  drop_columns: [id]
+audit:
+  resplit_falsification: false   # no session/IP columns in this feature set to group by
+  known_issue_lookup: true
+preprocessing:
+  dedup: true
+output:
+  save_preprocessed: false
+  write_scorecard_plot: true

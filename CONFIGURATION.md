@@ -28,7 +28,7 @@ itself) or a `train_file`+`test_file` pair (already split).
 | `dataset` | Where the data comes from, how it's split, chunked reading/reservoir sampling for large files |
 | `schema` | Which columns are the label, the attack-category column, and which to drop or treat as identity columns |
 | `label_grouping` | Collapsing raw attack categories into coarser ones |
-| `preprocessing` | Dedup, scaling, class-balancing strategy (or strategies, to compare) |
+| `preprocessing` | Dedup, and scaling/class-balancing strategy — either can be a list, to compare |
 | `audit` | Which of the 12 checks run, and the reference dataset the two v2 checks need |
 | `classifiers` | Which of the 14 classifiers to benchmark, tuning, calibration, per-classifier hyperparameters/search spaces |
 | `output` | Where results go, output format, run retention |
@@ -81,19 +81,23 @@ A **partial** mapping: only the categories named as keys merge: every
 other category (e.g. `PortScan`) passes through unchanged, so you
 don't have to enumerate every class that should stay as-is.
 
-## Comparing sampling strategies
+## Comparing sampling and scaling strategies
 
 ```yaml
 preprocessing:
+  scaling: [none, standard, robust]
   sampling:
     binary: [none, smote, smoteenn]
 ```
 
-Benchmarks every selected classifier once per strategy, reporting
-each as its own row in `benchmark_results.csv` plus a class-
-distribution comparison (original vs. each strategy's result) in
-`benchmark_details.json`. Scaling doesn't support this yet — it's
-still single-valued.
+Either field accepts a single value (the default) or a list. Give both
+a list and every selected classifier is benchmarked once per
+`scaling` × `sampling` combination — 3 × 3 = 9 runs per classifier
+here — each its own row in `benchmark_results.csv` with `scaling` and
+`sampling` columns to tell them apart. `benchmark_details.json` adds a
+class-distribution comparison (original vs. each sampling strategy's
+result) — scaling doesn't change class counts, so it isn't part of
+that comparison.
 
 ## Tuning and hyperparameters
 

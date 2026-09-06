@@ -56,7 +56,7 @@ the CLI/output files/programmatic API, and
 
 ## Status
 
-Implemented, tested (121 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (125 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data — not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) — audit + 5 classifiers, including
@@ -76,10 +76,9 @@ fit once beforehand — see
 [CONFIGURATION.md](CONFIGURATION.md#tuning-and-hyperparameters) for
 why that matters.
 
-Not yet implemented: comparing *scaling* strategies the way sampling
-already supports. `known_issue_lookup`'s two seed entries demonstrate
-the mechanism — growing the curated table is a good area for
-contributors to help with (see [AUDIT_CHECKS.md](AUDIT_CHECKS.md)).
+`known_issue_lookup`'s two seed entries demonstrate the mechanism —
+growing the curated table is a good area for contributors to help with
+(see [AUDIT_CHECKS.md](AUDIT_CHECKS.md)).
 
 ## License
 

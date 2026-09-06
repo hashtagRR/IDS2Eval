@@ -36,6 +36,11 @@ def scale_features(
     x_train_raw, x_test_raw = features.encode_aligned(train_df, test_df, cols)
 
     method = cfg["preprocessing"]["scaling"]
+    if isinstance(method, list):
+        raise ValueError(
+            f"preprocessing.scaling is a list ({method}) - scale_features takes a "
+            "single strategy; use run_benchmark for multi-strategy comparison"
+        )
     if method == "none":
         return x_train_raw.to_numpy(), x_test_raw.to_numpy(), cols
 

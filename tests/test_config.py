@@ -98,14 +98,34 @@ def test_unknown_classifier_rejected(base_cfg):
         validate_config(base_cfg)
 
 
-@pytest.mark.parametrize("field,value,pattern", [
-    ("scaling", "bogus", "scaling must be one of"),
-])
-def test_invalid_enum_rejected(base_cfg, field, value, pattern):
+def test_invalid_scaling_rejected(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["audit"]["resplit_falsification"] = False
-    base_cfg["preprocessing"][field] = value
-    with pytest.raises(ValueError, match=pattern):
+    base_cfg["preprocessing"]["scaling"] = "bogus"
+    with pytest.raises(ValueError, match="invalid entries"):
+        validate_config(base_cfg)
+
+
+def test_scaling_accepts_a_list_of_strategies(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["scaling"] = ["none", "standard", "robust"]
+    validate_config(base_cfg)  # should not raise
+
+
+def test_scaling_list_rejects_invalid_entries(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["scaling"] = ["standard", "bogus"]
+    with pytest.raises(ValueError, match="invalid entries"):
+        validate_config(base_cfg)
+
+
+def test_scaling_rejects_empty_list(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["preprocessing"]["scaling"] = []
+    with pytest.raises(ValueError, match="must not be an empty list"):
         validate_config(base_cfg)
 
 

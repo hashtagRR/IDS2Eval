@@ -40,7 +40,7 @@ def test_grouped_split_raises_if_group_columns_missing(base_cfg, synth_data):
 def test_dedup_removes_train_internal_duplicates(base_cfg, synth_data):
     train_df = synth_data.copy()
     test_df = pd.DataFrame(columns=synth_data.columns)
-    deduped_train, deduped_test, stats = dataset.dedup(train_df, test_df, base_cfg)
+    deduped_train, _deduped_test, stats = dataset.dedup(train_df, test_df, base_cfg)
     assert stats["train_duplicates_dropped"] == 10  # planted in the synth_data fixture
     assert len(deduped_train) == len(train_df) - 10
 

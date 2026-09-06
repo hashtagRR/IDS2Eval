@@ -1,10 +1,19 @@
 import numpy as np
 import pandas as pd
 
-from ids2eval.audit import (class_distribution, cross_dataset_drift,
-                             data_integrity, dedup, homogeneity,
-                             identity_columns, known_issues, leakage, resplit,
-                             schema_fingerprint, synthetic_realism)
+from ids2eval.audit import (
+    class_distribution,
+    cross_dataset_drift,
+    data_integrity,
+    dedup,
+    homogeneity,
+    identity_columns,
+    known_issues,
+    leakage,
+    resplit,
+    schema_fingerprint,
+    synthetic_realism,
+)
 
 
 def _add_id_like_column(cfg):

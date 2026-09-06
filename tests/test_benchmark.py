@@ -16,7 +16,7 @@ def test_run_benchmark_adds_type_stage_when_attack_category_set(base_cfg, synth_
     train_df, test_df = synth_train_test
     base_cfg["schema"]["attack_category_column"] = "Label"  # reuse Label as a stand-in multi-class column
     base_cfg["classifiers"]["list"] = ["DecisionTree"]
-    results, extras = run_benchmark(train_df, test_df, base_cfg)
+    results, _extras = run_benchmark(train_df, test_df, base_cfg)
     assert set(results["stage"]) == {"binary", "type"}
 
 
@@ -43,7 +43,7 @@ def test_run_benchmark_skips_failing_classifier_without_crashing(base_cfg, synth
         return original_build(name, overrides, seed=seed)
 
     monkeypatch.setattr("ids2eval.benchmark.clf_registry.build_estimator", _boom)
-    results, extras = run_benchmark(train_df, test_df, base_cfg)
+    results, _extras = run_benchmark(train_df, test_df, base_cfg)
     assert set(results["classifier"]) == {"DecisionTree"}
 
 
@@ -97,7 +97,7 @@ def test_run_benchmark_scaling_and_sampling_are_fold_safe_under_tuning(base_cfg)
     base_cfg["classifiers"]["list"] = ["DecisionTree"]
     base_cfg["classifiers"]["tuning"] = True
     base_cfg["preprocessing"]["sampling"]["binary"] = "smote"
-    results, extras = run_benchmark(train_df, test_df, base_cfg)
+    results, _extras = run_benchmark(train_df, test_df, base_cfg)
     assert len(results) == 1
     assert results["accuracy"].iloc[0] is not None
 

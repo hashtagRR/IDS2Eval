@@ -13,9 +13,19 @@ from __future__ import annotations
 
 import pandas as pd
 
-from . import (class_distribution, cross_dataset_drift, data_integrity, dedup,
-               homogeneity, identity_columns, known_issues, leakage, resplit,
-               schema_fingerprint, synthetic_realism)
+from . import (
+    class_distribution,
+    cross_dataset_drift,
+    data_integrity,
+    dedup,
+    homogeneity,
+    identity_columns,
+    known_issues,
+    leakage,
+    resplit,
+    schema_fingerprint,
+    synthetic_realism,
+)
 
 
 def run_audit(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> list[dict]:

@@ -1,10 +1,10 @@
 # Configuring IDS<sup>2</sup>Eval
 
-Every field, its default, and its valid options is documented directly
-in [`configs/schema.yaml`](configs/schema.yaml) — that file is the
-exhaustive reference, kept in sync with `ids2eval/config.py`'s
-validation on purpose. This page is a walkthrough of the config
-surface and a few worked examples, not a duplicate of the schema.
+[`configs/schema.yaml`](configs/schema.yaml) lists every field, its
+default, and its valid options with a short one-line comment each —
+copy it as your starting point. This page is the reasoning behind the
+non-obvious fields, plus worked examples, for when the one-liner isn't
+enough.
 
 ## Minimal config
 
@@ -49,6 +49,22 @@ itself prevent OOM on a dataset bigger than RAM. `max_rows` is what
 actually does: a uniform reservoir sample across the whole row stream,
 verified on the real, official CIC-IDS2018 distribution (16.2M rows,
 10 files) to keep peak memory around 3GB on a 7.8GB-RAM machine.
+
+## Splitting on sessions, not randomly
+
+```yaml
+dataset:
+  split_mode: grouped
+  group_columns: [SrcIP, DstIP, DstPort, Protocol]
+```
+
+A plain random split can put two rows from the same
+session/conversation on opposite sides of train/test, which leaks
+information across the split. `grouped` keeps every row that shares a
+`group_columns` key on the same side. There's no universal set of
+column names for this across IDS datasets — pick whatever columns
+identify a session in yours (source/destination IP and port are a
+common choice for flow-based datasets).
 
 ## Collapsing attack categories
 
@@ -95,10 +111,19 @@ classifiers:
 `tuning: true` runs `GridSearchCV` per classifier (skipped for the
 three fixed no-tune candidates — NaiveBayes, Stacking, Voting);
 `hyperparameters` sets fixed values used when `tuning` is off.
-Scaling and sampling run *inside* the same pipeline as the classifier
-in both cases — see the correctness note in the main
-[README](README.md#correctness-note--scalingsampling-and-cross-validation)
-for why that isn't just an implementation detail.
+
+**Why scaling and sampling run inside the pipeline, not before it.**
+Both run inside the same `imblearn` pipeline as the classifier, every
+time — not fit once up front — so `tuning`'s and `calibration`'s
+internal cross-validation folds each redo scaling/sampling
+independently. Fitting a scaler or a sampler like SMOTE once on the
+whole training set, and only then handing the result to
+`GridSearchCV`/`CalibratedClassifierCV`, would let their internal
+folds see data transformed using information from other,
+supposedly-held-out folds. SMOTE makes this concrete: a fold's
+synthetic rows could be interpolated from real neighbors that landed
+in a *different* fold, so that fold's "held out" data was never truly
+unseen.
 
 ## Auditing against a reference dataset
 

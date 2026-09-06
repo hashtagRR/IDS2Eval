@@ -155,6 +155,27 @@
   .step p { color: var(--muted); margin: 0; max-width: 64ch; font-size: .95rem; }
   .step code { color: var(--accent); background: var(--accent-soft); padding: .1em .4em; border-radius: 3px; }
 
+  .diagram-frame {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 18px clamp(6px, 3vw, 24px); margin-top: 38px; overflow-x: auto;
+  }
+  .diagram-frame img { display: block; width: 100%; height: auto; max-width: 900px; margin: 0 auto; border-radius: 4px; }
+
+  /* check banners (all 12, compact) */
+  .check-banner-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 38px; }
+  @media (max-width: 900px) { .check-banner-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .check-banner-grid { grid-template-columns: 1fr; } }
+  .check-banner {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 16px 17px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .check-banner .v-tag {
+    font-family: "IBM Plex Mono", monospace; font-size: .62rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .check-banner code.name { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; font-size: .85rem; }
+  .check-banner p { color: var(--muted); font-size: .84rem; margin: 0; line-height: 1.45; }
+
   /* check cards */
   .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 38px; }
   @media (max-width: 780px) { .check-grid { grid-template-columns: 1fr; } }
@@ -319,7 +340,9 @@
     <div class="step"><div class="idx">4</div><div><h3>Dedup, then audit again</h3><p>If <code>preprocessing.dedup</code> is on, exact duplicates are removed and every check reruns, writing <code>audit_report_after.json</code> — a before/after claim backed by two real runs.</p></div></div>
     <div class="step"><div class="idx">5</div><div><h3>Benchmark + track</h3><p>Scaling and sampling run <em>inside</em> the same pipeline as each classifier — never fit once up front — then results, environment, resolved config, and a dataset fingerprint are all written to a fresh run directory.</p></div></div>
   </div>
-  <p style="margin-top:28px;"><a href="https://claude.ai/code/artifact/29d9adfe-444b-4606-9899-93df9ddf529e">Full interactive pipeline diagram →</a></p>
+  <div class="diagram-frame">
+    <img src="assets/pipeline-diagram.png" alt="Flowchart of the IDS2Eval pipeline: Config, Load + Split, Run Directory, Audit (before dedup), Dedup, Write preprocessed data, Benchmark, Cleanup — traced from cli.py's main().">
+  </div>
 </section>
 
 <section id="checks" class="wrap">
@@ -330,6 +353,21 @@
     where a flag or warning names the specific, checkable signature behind it.
     Full writeup for all 12: <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/AUDIT_CHECKS.md">AUDIT_CHECKS.md</a>.
   </p>
+  <div class="check-banner-grid">
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">dedup_check</code><p>Exact feature-space duplicates within and across train/test — memorization, not generalization.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">leakage_screen</code><p>Fits a fast RandomForest and inspects its own feature importances to catch shortcut learning.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">identity_column_flag</code><p>Standalone predictive power of IP/port/MAC-like columns you declare as identity columns.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">low_cardinality_warning</code><p>Flags identity-like columns with suspiciously few unique values relative to the split.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">homogeneity_test</code><p>Nearest-neighbor distance vs. a same-set control, to separate real leakage from inherent class homogeneity.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">resplit_falsification</code><p>A session/time-grouped resplit that makes session-correlated leakage structurally impossible, then compares accuracy.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">class_distribution_report</code><p>Per-class counts, shares, and imbalance ratio — before and after dedup.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">schema_fingerprint_check</code><p>Matches known feature-extractor signatures (e.g. CICFlowMeter) and surfaces that extractor's documented bugs.</p></div>
+    <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">data_integrity_check</code><p>Missing labels, missing or constant/near-constant features, and ±infinity values.</p></div>
+    <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">synthetic_realism_check</code><p>Trains a domain classifier to distinguish this dataset from a reference real-traffic sample.</p></div>
+    <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">cross_dataset_drift_check</code><p>Trains on this dataset, evaluates on a reference dataset in a unified feature space.</p></div>
+    <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">known_issue_lookup</code><p>A curated table of documented per-dataset problems, matched on <code>dataset.name</code>.</p></div>
+  </div>
+  <h3 style="margin-top:48px; font-size:1.05rem; font-weight:700;">Selected findings, on real data</h3>
   <div class="check-grid">
     <div class="check-card">
       <div class="status flag"><i></i>flag — real finding</div>

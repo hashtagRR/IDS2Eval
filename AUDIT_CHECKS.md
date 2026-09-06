@@ -116,9 +116,12 @@ Brute-Force-Web mislabeling (Liu et al. 2022, IEEE CNS) and UNSW-NB15's
 train/test file-naming inversion (independently verified in this
 project's own methodology — some redistributions' file names are
 swapped relative to the documented row-count convention). Needs no
-reference dataset — this is curation work, not a new algorithm, and
-the table is deliberately small so far; extending it is one of the
-more open-ended ways to contribute.
+reference dataset — this is curation work, not a new algorithm. The
+table is deliberately small so far, and growing it is a good place for
+contributors to help — including judgment calls like whether an older,
+largely superseded dataset (KDD99 being the obvious case: still widely
+cited, but generally considered deprecated by the research community)
+is worth an entry at all.
 
 ## What's *not* an audit finding
 

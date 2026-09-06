@@ -77,8 +77,9 @@ fit once beforehand — see
 why that matters.
 
 Not yet implemented: comparing *scaling* strategies the way sampling
-already supports, and growing `known_issue_lookup` past its two seed
-entries.
+already supports. `known_issue_lookup`'s two seed entries demonstrate
+the mechanism — growing the curated table is a good area for
+contributors to help with (see [AUDIT_CHECKS.md](AUDIT_CHECKS.md)).
 
 ## License
 

@@ -483,7 +483,8 @@
   <div class="disclosure">
     <h3>Out of scope, on purpose</h3>
     <ul>
-      <li><b>Feature engineering</b> — imputation, feature selection, dimensionality reduction. IDS2Eval audits and benchmarks the features you give it; it doesn't invent new ones.</li>
+      <li><b>Feature engineering</b> — imputation, feature selection (including techniques like RFE), dimensionality reduction. These are generic ML capabilities already well-served by mature, dedicated tools; IDS2Eval audits and benchmarks the features you give it, and adding another feature-engineering layer on top would dilute the IDS-specific focus rather than strengthen it.</li>
+      <li><b>Deeper hyperparameter search</b> — <code>classifiers.tuning</code> runs a fixed grid search only to keep benchmark comparisons fair across classifiers, not to compete as a general-purpose HPO tool. Bayesian search and similar are out of scope for the same reason as feature engineering above: dedicated tools already do this well.</li>
       <li><b>The staged-cascade detection architecture</b> from this project's companion research paper is intentionally excluded here — this tool ships the reusable audit/benchmark methodology, not the novel architecture.</li>
     </ul>
   </div>

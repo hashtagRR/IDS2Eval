@@ -3,7 +3,7 @@
   "platform": "Linux-6.1.0-52-cloud-amd64-x86_64-with-glibc2.36",
   "ids2eval": {
     "version": "0.1.0",
-    "git_commit": "924fb799baec6d1fc96aaf5b05f0325b04602847"
+    "git_commit": "786dd904da439b49c4731f926dbe36e56677c4ee"
   },
   "packages": {
     "pandas": "3.0.5",

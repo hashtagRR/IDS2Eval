@@ -75,5 +75,6 @@ def test_render_markdown_omits_plot_image_by_default(base_cfg):
 def test_render_markdown_embeds_plot_image_when_has_plot(base_cfg):
     sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
     md = scorecard.render_markdown(sc, has_plot=True)
-    assert "![IDS2Eval Scorecard](scorecard.png)" in md
+    assert 'src="scorecard.png"' in md
+    assert 'width="760"' in md  # explicit display width - not full native size
     assert "scorecard.pdf" in md  # mentioned as the citable vector figure

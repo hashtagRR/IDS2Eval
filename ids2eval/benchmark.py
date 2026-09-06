@@ -34,8 +34,7 @@ import numpy as np
 import pandas as pd
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.metrics import (accuracy_score, classification_report,
-                              confusion_matrix, f1_score, roc_auc_score)
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 
@@ -239,6 +238,6 @@ def _feature_importance(model, feature_names: list[str]) -> dict | None:
             values = coef[0] if coef.ndim > 1 else coef
         else:
             return None
-        return {name: float(v) for name, v in zip(feature_names, values)}
+        return {name: float(v) for name, v in zip(feature_names, values, strict=True)}
     except Exception:
         return None

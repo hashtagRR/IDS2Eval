@@ -28,7 +28,7 @@ def apply_attack_type_mapping(
     affected = sorted(set(mapping) & set(train_df[col].unique()))
     logger.info(
         "Applying attack_type_mapping to '%s': merging %s into %s",
-        col, affected, sorted(set(mapping[k] for k in affected)),
+        col, affected, sorted({mapping[k] for k in affected}),
     )
 
     train_df = train_df.copy()

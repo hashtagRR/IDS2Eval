@@ -20,8 +20,9 @@ Implemented and tested:
 - Classifier benchmarking across the 14 supported classifiers, with optional GridSearchCV tuning and calibration, reporting per-classifier training/inference time, a confusion matrix, per-class precision/recall/F1, feature importance where supported, and the winning hyperparameters (`ids2eval/benchmark.py`, `ids2eval/classifiers.py`)
 - A CLI entrypoint wiring all of the above together (`python -m ids2eval`)
 - Caches the load+split+label-grouping result under `output.dir/.cache/` (`ids2eval/cache.py`) — the expensive step for large datasets, per measurement on real CIC-IDS2018 data. A fingerprint of the input files and the config fields that affect this step auto-invalidates the cache
-- Every invocation gets its own `output.dir/runs/<timestamp>/` directory (config snapshot, environment info, both audit reports, benchmark results) so nothing is silently overwritten; `output.keep_runs` prunes old ones automatically without ever touching the cache
-- A 107-test pytest suite (`tests/`) and pip-installable packaging (`pyproject.toml`, `ids2eval` console script)
+- Every invocation gets its own `output.dir/runs/<timestamp>/` directory (config snapshot, environment info incl. `ids2eval`'s own version/git commit, both audit reports, benchmark results, a real content-hash `dataset_fingerprint.json`, and a `run_status.json` recording completion or which stage failed) so nothing is silently overwritten; `output.keep_runs` prunes old ones automatically without ever touching the cache
+- `random_seed` (default 0) is the single source for every split/sampling/classifier-init seed in the data and benchmark pipeline, replacing what used to be 6 scattered hardcoded constants — a run is fully reproducible from `resolved_config.json` alone, verified directly: identical seed reproduces identical accuracy/F1/AUC to the last digit on real data, a different seed changes the result, and changing it correctly invalidates the load-cache
+- A 121-test pytest suite (`tests/`) and pip-installable packaging (`pyproject.toml`, `ids2eval` console script)
 
 **Correctness note — scaling/sampling and cross-validation.** Both run inside the same `imblearn` pipeline as the classifier, not once up front, so `classifiers.tuning`'s internal CV folds and `classifiers.calibration`'s internal folds each redo scaling/sampling independently. Fitting a scaler or a sampler like SMOTE once on the whole training set and only then handing the result to `GridSearchCV`/`CalibratedClassifierCV` lets their internal folds see data transformed using information from other, supposedly-held-out folds — SMOTE's synthetic points are the sharpest version of this, since a fold's synthetic rows can be interpolated from real neighbors that landed in a different fold. A single plain fit with no tuning or calibration was never affected by this (no internal CV, nowhere for it to happen), but now shares the same code path rather than a separate one.
 
@@ -33,6 +34,7 @@ Not yet implemented:
 - CI/lint automation
 - A curated `known_issue_lookup` table beyond its current two seed entries
 - Automatic comparison across *scaling* strategies (sampling already supports a list; scaling is still single-valued)
+- `random_seed` doesn't reach audit checks' own internal sampling (deliberate — diagnostic, not part of the reported experimental result) or a few nested sub-estimators (AdaBoost's fixed depth-1 stump, Stacking/Voting's base learners)
 
 ## Audit checks
 
@@ -73,7 +75,7 @@ schema:
 python -m ids2eval --config my_config.yaml
 ```
 
-Writes to a fresh `output.dir/runs/<timestamp>/` directory each run: `audit_report_before.json` (and `audit_report_after.json` if `preprocessing.dedup` is on), the preprocessed `train`/`test` files (parquet by default), `benchmark_results.csv`, `benchmark_details.json` (confusion matrices, per-class reports, feature importance, best hyperparameters), `environment.json`, and `resolved_config.json`. `output.keep_runs` (default 10) prunes older run directories automatically; `output.dir/.cache/` is untouched by that pruning. Use `--skip-audit` or `--skip-benchmark` to run only part of the pipeline.
+Writes to a fresh `output.dir/runs/<timestamp>/` directory each run: `audit_report_before.json` (and `audit_report_after.json` if `preprocessing.dedup` is on), the preprocessed `train`/`test` files (parquet by default), `benchmark_results.csv`, `benchmark_details.json` (confusion matrices, per-class reports, feature importance, best hyperparameters), `environment.json`, `resolved_config.json`, `dataset_fingerprint.json` (row/feature counts, class distributions, content hashes — proof two runs used identical data), and `run_status.json` (`completed`, or `failed` with which stage and why). `output.keep_runs` (default 10) prunes older run directories automatically; `output.dir/.cache/` is untouched by that pruning. Use `--skip-audit` or `--skip-benchmark` to run only part of the pipeline.
 
 Or drive it programmatically:
 

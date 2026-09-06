@@ -11,7 +11,7 @@ network intrusion detection (NIDS) datasets.
 
 Most published NIDS results are evaluated on benchmark datasets
 (UNSW-NB15, CIC-IDS2018, and others) whose quality is largely taken on
-faith. IDS2Eval operationalizes a systematic audit methodology —
+faith. IDS<sup>2</sup>Eval operationalizes a systematic audit methodology —
 feature-importance-driven leakage screening, a nearest-neighbor
 class-homogeneity test, a resplit falsification test, and 9 more — as
 reusable, config-driven software, rather than a one-off analysis
@@ -20,7 +20,7 @@ each of the 12 checks actually does and the published findings behind
 them.
 
 Unlike general-purpose AutoML tools (PyCaret, AutoGluon, TPOT),
-IDS2Eval's focus is IDS-specific, already-validated data-quality
+IDS<sup>2</sup>Eval's focus is IDS-specific, already-validated data-quality
 checks rather than breadth of ML algorithms — feature engineering
 (imputation, feature selection, dimensionality reduction) is
 deliberately out of scope for the same reason.

@@ -1,4 +1,4 @@
-# Installing IDS2Eval
+# Installing IDS<sup>2</sup>Eval
 
 ## Prerequisites
 
@@ -42,7 +42,7 @@ Windows for Python 3.10–3.12 — no compiler toolchain needed.
 
 ## Real datasets used in validation
 
-Not part of the install — IDS2Eval doesn't ship or require any
+Not part of the install — IDS<sup>2</sup>Eval doesn't ship or require any
 dataset. The real-data validation referenced in the README used:
 
 - [UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset) — pre-split train/test CSVs

@@ -23,6 +23,7 @@ Implemented and tested:
 - Every invocation gets its own `output.dir/runs/<timestamp>/` directory (config snapshot, environment info incl. `ids2eval`'s own version/git commit, both audit reports, benchmark results, a real content-hash `dataset_fingerprint.json`, and a `run_status.json` recording completion or which stage failed) so nothing is silently overwritten; `output.keep_runs` prunes old ones automatically without ever touching the cache
 - `random_seed` (default 0) is the single source for every split/sampling/classifier-init seed in the data and benchmark pipeline, replacing what used to be 6 scattered hardcoded constants — a run is fully reproducible from `resolved_config.json` alone, verified directly: identical seed reproduces identical accuracy/F1/AUC to the last digit on real data, a different seed changes the result, and changing it correctly invalidates the load-cache
 - A 121-test pytest suite (`tests/`) and pip-installable packaging (`pyproject.toml`, `ids2eval` console script)
+- CI on every push/PR (tests across Python 3.10/3.11/3.12, ruff lint including security rules) plus CodeQL static analysis and scheduled Dependabot dependency updates (`.github/`)
 
 **Correctness note — scaling/sampling and cross-validation.** Both run inside the same `imblearn` pipeline as the classifier, not once up front, so `classifiers.tuning`'s internal CV folds and `classifiers.calibration`'s internal folds each redo scaling/sampling independently. Fitting a scaler or a sampler like SMOTE once on the whole training set and only then handing the result to `GridSearchCV`/`CalibratedClassifierCV` lets their internal folds see data transformed using information from other, supposedly-held-out folds — SMOTE's synthetic points are the sharpest version of this, since a fold's synthetic rows can be interpolated from real neighbors that landed in a different fold. A single plain fit with no tuning or calibration was never affected by this (no internal CV, nowhere for it to happen), but now shares the same code path rather than a separate one.
 
@@ -31,7 +32,6 @@ Validated against real data, not just synthetic fixtures:
 - CIC-IDS2018 (official 10-file, 16.2M-row distribution) — `chunk_size`/`max_rows` kept peak memory at 3.0GB on a 7.8GB-RAM machine; `identity_column_flag` independently reproduced the published `Dst Port` leakage finding
 
 Not yet implemented:
-- CI/lint automation
 - A curated `known_issue_lookup` table beyond its current two seed entries
 - Automatic comparison across *scaling* strategies (sampling already supports a list; scaling is still single-valued)
 - `random_seed` doesn't reach audit checks' own internal sampling (deliberate — diagnostic, not part of the reported experimental result) or a few nested sub-estimators (AdaBoost's fixed depth-1 stump, Stacking/Voting's base learners)

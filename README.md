@@ -84,6 +84,19 @@ why that matters.
 growing the curated table is a good area for contributors to help with
 (see [AUDIT_CHECKS.md](AUDIT_CHECKS.md)).
 
+## Provenance
+
+IDS2Eval grew out of the dataset evaluation and auditing code developed during research on machine-learning-based network intrusion detection. It generalizes portions of that research code into a dataset-independent toolkit for examining IDS datasets, evaluation pipelines, and classifier behaviour.
+
+The originating research is described in two related manuscripts currently in preparation:
+
+* "Auditing Network Intrusion Detection Benchmarks: A Falsification-Oriented Evaluation of UNSW-NB15 and CSE-CIC-IDS2018"
+* "Confidence-Routed Staged Detection for Network Intrusion Detection"
+
+The first manuscript develops and applies the dataset-auditing methodology from which much of IDS2Eval originated. The second evaluates a staged intrusion-detection architecture built within the broader research codebase. IDS2Eval does not implement that staged architecture.
+
+Links to the papers will be added when publicly available.
+
 ## License
 
 AGPL-3.0 - see [LICENSE](LICENSE).

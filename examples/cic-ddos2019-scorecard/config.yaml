@@ -1,0 +1,18 @@
+# CICDDoS2019 (dhoogla's cleaned Kaggle mirror, per-attack-type CSV/parquet subset
+# of the official release, not a sample of the full multi-GB pcap-derived data).
+# Pre-split as the original collection actually ran: the training day's 8 files
+# concatenated into train, the testing day's 12 files concatenated into test - see
+# known_issue_lookup below for why those two days aren't directly comparable.
+dataset:
+  name: cic-ddos2019
+  train_file: /home/tango/projects/IDS2Eval_data/cic-ddos2019/train.csv.gz
+  test_file: /home/tango/projects/IDS2Eval_data/cic-ddos2019/test.csv.gz
+schema:
+  label_column: Label
+audit:
+  resplit_falsification: false   # pre-split by collection day, not a groupable random split
+  known_issue_lookup: true
+output:
+  dir: /home/tango/projects/IDS2Eval_data/output/cic-ddos2019
+  save_preprocessed: false
+  write_scorecard_plot: false

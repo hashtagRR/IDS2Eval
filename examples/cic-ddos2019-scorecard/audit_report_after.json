@@ -1,0 +1,204 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 121087,
+      "train_rows_deduped": 121087,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 297029,
+      "test_rows_deduped": 297029,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=8.3%, top2=14.5%)",
+    "details": {
+      "top_features": {
+        "Avg Packet Size": 0.08270120338176627,
+        "Avg Fwd Segment Size": 0.062362492483445865,
+        "Packet Length Min": 0.06020834808335091,
+        "Packet Length Mean": 0.05687810919043321,
+        "Fwd Packet Length Mean": 0.0485072669031889
+      },
+      "top1_share": 0.08270120338176627,
+      "top2_share": 0.14506369586521214
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.5% test accuracy (68.1% train)",
+    "details": {
+      "rule": "Avg Packet Size <= 7.625",
+      "train_accuracy": 0.6810475112935328,
+      "test_accuracy": 0.11465883802591666
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "details": {
+      "per_class": {
+        "Syn": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.002,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "Benign": {
+          "test_near_zero_rate": 0.04,
+          "control_near_zero_rate": 0.032,
+          "p_value": 0.9999998465788278,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "8 classes, train imbalance ratio (majority:minority) = 1312:1; classes below 1% of train: ['NetBIOS', 'Portmap', 'UDPLag']",
+    "details": {
+      "train": {
+        "counts": {
+          "Syn": 47229,
+          "Benign": 45101,
+          "UDP": 17566,
+          "MSSQL": 8363,
+          "LDAP": 1881,
+          "NetBIOS": 474,
+          "Portmap": 437,
+          "UDPLag": 36
+        },
+        "shares": {
+          "Syn": 0.3900418707210518,
+          "Benign": 0.3724677298141006,
+          "UDP": 0.1450692477309703,
+          "MSSQL": 0.06906604342332373,
+          "LDAP": 0.015534285265965793,
+          "NetBIOS": 0.0039145407847250326,
+          "Portmap": 0.0036089753648203358,
+          "UDPLag": 0.00029730689504240754
+        }
+      },
+      "test": {
+        "counts": {
+          "DrDoS_NTP": 121327,
+          "TFTP": 98653,
+          "Benign": 49461,
+          "DrDoS_UDP": 9617,
+          "UDP-lag": 8400,
+          "DrDoS_MSSQL": 3332,
+          "DrDoS_DNS": 2827,
+          "DrDoS_SNMP": 1991,
+          "DrDoS_LDAP": 683,
+          "Syn": 533,
+          "DrDoS_NetBIOS": 156,
+          "WebDDoS": 49
+        },
+        "shares": {
+          "DrDoS_NTP": 0.40846853337552896,
+          "TFTP": 0.33213255271370806,
+          "Benign": 0.16651909409518936,
+          "DrDoS_UDP": 0.032377309959633574,
+          "UDP-lag": 0.028280066929491733,
+          "DrDoS_MSSQL": 0.011217759882031721,
+          "DrDoS_DNS": 0.009517589191627754,
+          "DrDoS_SNMP": 0.006703049197216433,
+          "DrDoS_LDAP": 0.002299438775338435,
+          "Syn": 0.0017944375801689397,
+          "DrDoS_NetBIOS": 0.000525201242976275,
+          "WebDDoS": 0.0001649670570887018
+        }
+      },
+      "imbalance_ratio": 1311.9166666666667,
+      "rare_classes": [
+        "NetBIOS",
+        "Portmap",
+        "UDPLag"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "warning",
+    "summary": "matched extractor signature(s): ['CICFlowMeter']",
+    "details": {
+      "CICFlowMeter": {
+        "match_share": 0.7777777777777778,
+        "warning": "CICFlowMeter is known to have miscalculated ~34 features in early releases (Rosay et al. 2021), motivating the corrected LYCOS-IDS2017 release. Verify which extractor version produced this data before trusting derived-rate/duration features."
+      }
+    }
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "12 constant/near-constant feature(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": [
+        "Bwd PSH Flags",
+        "Fwd URG Flags",
+        "Bwd URG Flags",
+        "FIN Flag Count",
+        "PSH Flag Count",
+        "ECE Flag Count",
+        "Fwd Avg Bytes/Bulk",
+        "Fwd Avg Packets/Bulk",
+        "Fwd Avg Bulk Rate",
+        "Bwd Avg Bytes/Bulk",
+        "Bwd Avg Packets/Bulk",
+        "Bwd Avg Bulk Rate"
+      ]
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)",
+    "details": {
+      "matches": [
+        {
+          "issue": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types.",
+          "citation": "Sharafaldin et al. 2019, IEEE ICCST"
+        },
+        {
+          "issue": "The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally.",
+          "citation": "Independently verified in this project's own audit methodology"
+        }
+      ]
+    }
+  }
+]

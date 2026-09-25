@@ -1,0 +1,238 @@
+{
+  "scorecard_schema_version": "1.1",
+  "generated_at": "2026-09-25T15:40:39.405627+00:00",
+  "dataset_name": "cic-ddos2019",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "d9d444d1e10cef9f8a7897d82e2ae5defb2c60a4",
+  "audit_stage": "after",
+  "overall_status": "passed_with_warnings",
+  "counts": {
+    "ok": 8,
+    "warning": 4,
+    "flag": 0
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=8.3%, top2=14.5%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.5% test accuracy (68.1% train)"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "ok",
+      "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "8 classes, train imbalance ratio (majority:minority) = 1312:1; classes below 1% of train: ['NetBIOS', 'Portmap', 'UDPLag']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "warning",
+      "summary": "matched extractor signature(s): ['CICFlowMeter']"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "12 constant/near-constant feature(s)"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "warning",
+      "summary": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 4,083 (3.26%); test rows leaking a train feature-match: 6,763 (2.21%); test-internal duplicates: 2,409"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "5,623 feature vector(s) (13,758 rows, 3.19%) map to more than one label. The ground truth contradicts itself for these rows; 4,853 of these span train and test"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=7.3%, top2=14.4%)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=8.3%, top2=14.5%)"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.4% test accuracy (68.0% train)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.5% test accuracy (68.1% train)"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "8 classes, train imbalance ratio (majority:minority) = 888:1; classes below 1% of train: ['Portmap', 'NetBIOS', 'UDPLag']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "8 classes, train imbalance ratio (majority:minority) = 1312:1; classes below 1% of train: ['NetBIOS', 'Portmap', 'UDPLag']"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "12 constant/near-constant feature(s)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "12 constant/near-constant feature(s)"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 125170,
+    "train_rows_deduped": 121087,
+    "train_duplicates_dropped": 4083,
+    "test_rows_raw": 306201,
+    "test_rows_deduped": 297029,
+    "test_leakage_dropped": 6763,
+    "test_duplicates_dropped": 2409
+  },
+  "dataset_fingerprint": {
+    "train_rows": 125170,
+    "test_rows": 306201,
+    "feature_count": 77,
+    "train_content_hash": "0d2aca1b3453d9b224be088b6e2000ab2181a32a14bd331d4349f1620148ec63",
+    "test_content_hash": "71b75ac9db06a3be8a7d6d0479191e6c40af349a3a5fca22402baa55c95df308"
+  }
+}

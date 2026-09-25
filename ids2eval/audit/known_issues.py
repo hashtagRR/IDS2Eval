@@ -23,6 +23,23 @@ KNOWN_ISSUES = {
             "citation": "Liu et al. 2022, IEEE CNS",
         },
     ],
+    "cic-ddos2019": [
+        {
+            "issue": "By design, the two collection days cover different attack sets: "
+                     "the testing day includes several DDoS types absent from the "
+                     "training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection "
+                     "attacks), so a classifier trained only on the training day has "
+                     "never seen those attack types.",
+            "citation": "Sharafaldin et al. 2019, IEEE ICCST",
+        },
+        {
+            "issue": "The same attack type is labeled inconsistently between the two "
+                     "days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/"
+                     "'DrDoS_MSSQL'), so label strings must be remapped before any "
+                     "train/test comparison, not matched literally.",
+            "citation": "Independently verified in this project's own audit methodology",
+        },
+    ],
     "unsw-nb15": [
         {
             "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/"

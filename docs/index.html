@@ -292,14 +292,14 @@
         from one YAML file.
       </p>
       <p class="name-note">
-        IDS<sup>2</sup> — the name works both ways: <b>I</b>ntrusion <b>D</b>etection <b>S</b>ystems,
+        IDS<sup>2</sup>, the name works both ways: <b>I</b>ntrusion <b>D</b>etection <b>S</b>ystems,
         and <b>I</b>ntrusion <b>D</b>ata <b>S</b>ets.
       </p>
       <div class="hero-facts">
         <div class="fact"><div class="num">16</div><div class="label">Audit checks</div></div>
-        <div class="fact"><div class="num">4</div><div class="label">Real IDS datasets validated</div></div>
-        <div class="fact"><div class="num">192</div><div class="label">Tests, CI-gated</div></div>
-        <div class="fact"><div class="num">19.5M</div><div class="label">Rows processed across all four</div></div>
+        <div class="fact"><div class="num">5</div><div class="label">Real IDS datasets validated</div></div>
+        <div class="fact"><div class="num">193</div><div class="label">Tests, CI-gated</div></div>
+        <div class="fact"><div class="num">19.9M</div><div class="label">Rows processed across all five</div></div>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">View on GitHub</a>
@@ -508,11 +508,11 @@
 <section id="proof" class="wrap">
   <div class="eyebrow">04 · proven on real data</div>
   <h2 class="h">Run against the actual datasets, not stand-ins.</h2>
-  <p class="sub">192 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against four real, published NIDS datasets, three of them found something worth fixing.</p>
+  <p class="sub">193 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against five real, published NIDS datasets, three of them found something worth fixing.</p>
   <div class="stat-row">
     <div class="fact"><div class="num">16.2M</div><div class="label">Rows chunk-loaded, 3GB peak memory</div></div>
     <div class="fact"><div class="num">2.83M</div><div class="label">CIC-IDS2017 flows audited in full</div></div>
-    <div class="fact"><div class="num">3 / 4</div><div class="label">Real datasets that failed the audit</div></div>
+    <div class="fact"><div class="num">3 / 5</div><div class="label">Real datasets that failed the audit</div></div>
     <div class="fact"><div class="num">0.003pp</div><div class="label">Resplit falsification's margin</div></div>
   </div>
   <div class="proof-grid">
@@ -532,13 +532,18 @@
       <h4>CIC-IDS2017</h4>
       <p>All 8 day-files, 2.83M flows, no sampling. <code>identity_column_flag</code>: Destination Port alone hits AUC 0.929.</p>
     </div>
+    <div class="proof-item">
+      <h4>CICDDoS2019</h4>
+      <p>Both collection days, 431K flows. <code>label_conflict_check</code> found 5,623 feature vectors mapping to more than one label, all resolved by dedup.</p>
+    </div>
   </div>
   <p class="sub" style="text-align:center; margin-top:28px">
     Real scorecards, checked into the repo as-is, not mockups:
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/unsw-nb15-scorecard/SCORECARD.html">UNSW-NB15</a>,
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/nsl-kdd-scorecard/SCORECARD.html">NSL-KDD</a>,
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2017-scorecard/SCORECARD.html">CIC-IDS2017</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2018-scorecard/SCORECARD.html">CSE-CIC-IDS2018</a>.
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2018-scorecard/SCORECARD.html">CSE-CIC-IDS2018</a>,
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ddos2019-scorecard/SCORECARD.html">CICDDoS2019</a>.
     <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples">Every artifact behind them →</a>
   </p>
 </section>

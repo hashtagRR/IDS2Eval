@@ -26,9 +26,14 @@ plots = ["matplotlib"]
 
 [project.scripts]
 ids2eval = "ids2eval.cli:main"
+ids2eval-dashboard = "ids2eval.dashboard.server:main"
+ids2eval-ui = "ids2eval.dashboard.server:main"   # older name, kept as an alias
 
 [tool.setuptools.packages.find]
 include = ["ids2eval*"]
+
+[tool.setuptools.package-data]
+"ids2eval.dashboard" = ["static/*"]
 
 [tool.ruff]
 line-length = 125
@@ -46,7 +51,9 @@ select = ["E", "F", "I", "UP", "B", "C4", "RUF", "S"]
 #
 # S = flake8-bandit (security lint). S101 (use of assert) is ignored in
 # tests/ below since pytest's own assertion mechanism IS bare assert -
-# that's not a security concern, it's how the test suite works.
+# that's not a security concern, it's how the test suite works. S310
+# (urlopen scheme audit) is ignored there too: test_dashboard.py only ever
+# opens http:// URLs to its own local test server.
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101"]
+"tests/*" = ["S101", "S310"]

@@ -1,0 +1,61 @@
+:root{--bg:#f6f7f9;--panel:#fff;--ink:#16181c;--muted:#6b6f7a;--line:#e6e8ec;--hover:#f0f2f5;--sel:#e8f3ee;
+--accent:#1a8a5a;--ok:#1a7f4e;--ok-bg:#e3f4ea;--warn:#a15c00;--warn-bg:#fdf0da;--flag:#b3261e;--flag-bg:#fbe3e1;
+--code:#16181c;--code-ink:#e8eaee;--on-accent:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--panel:#171a1f;--ink:#e8eaee;
+--muted:#9aa0ab;--line:#2a2e36;--hover:#1f232a;--sel:#15301f;--accent:#5cc98f;--ok:#5cc98f;--ok-bg:#15301f;
+--warn:#f0b35a;--warn-bg:#35270f;--flag:#f08a80;--flag-bg:#3a1916;--code:#0b0c0f;--code-ink:#e8eaee;--on-accent:#0b1a12}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",
+Helvetica,Arial,sans-serif;display:flex;flex-direction:column}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);
+background:var(--panel)}
+header h1{font-size:1rem;margin:0}
+header .sub{color:var(--muted)}
+header .spacer{flex:1}
+button{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;
+padding:6px 12px;cursor:pointer}
+button:hover{background:var(--hover)}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button:disabled{opacity:.5;cursor:default}
+.layout{flex:1;display:flex;min-height:0}
+aside{width:300px;flex-shrink:0;border-right:1px solid var(--line);background:var(--panel);overflow-y:auto}
+aside .empty{padding:16px;color:var(--muted)}
+.run{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;
+padding:10px 14px}
+.run.sel{background:var(--sel)}
+.run .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.run .ds{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.run .when{color:var(--muted);font-size:.8rem}
+main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.pane{flex:1;display:flex;flex-direction:column;min-height:0;padding:16px;gap:12px;overflow:auto}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.head h2{margin:0;font-size:1.2rem}
+.head .muted{color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;color:var(--muted)}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
+iframe{flex:1;width:100%;min-height:480px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.badge{display:inline-block;font:700 .72rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+padding:4px 8px;border-radius:999px;white-space:nowrap}
+.b-passed,.b-completed{color:var(--ok);background:var(--ok-bg)}
+.b-passed_with_warnings,.b-running{color:var(--warn);background:var(--warn-bg)}
+.b-failed{color:var(--flag);background:var(--flag-bg)}
+.b-none{color:var(--muted);background:var(--hover)}
+table{border-collapse:collapse;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.8rem}
+td.num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:right}
+.tablewrap{overflow-x:auto}
+.files a{display:block;padding:6px 0;color:var(--accent)}
+textarea{width:100%;min-height:260px;flex:1;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,
+Consolas,monospace;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.msg{font-size:.9rem}.msg.err{color:var(--flag)}.msg.ok{color:var(--ok)}
+pre.log{margin:0;background:var(--code);color:var(--code-ink);border-radius:8px;padding:12px;min-height:160px;
+max-height:40vh;overflow:auto;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.hint{color:var(--muted)}
+.error-box{border:1px solid var(--flag);background:var(--flag-bg);color:var(--flag);border-radius:8px;padding:10px 12px}
+@media (max-width:760px){.layout{flex-direction:column}aside{width:auto;max-height:34vh;border-right:0;
+border-bottom:1px solid var(--line)}header .sub{display:none}}

@@ -42,6 +42,7 @@ DEFAULTS: dict[str, Any] = {
         "attack_category_column": None,
         "drop_columns": [],
         "id_like_columns": [],
+        "timestamp_column": None,
     },
     "label_grouping": {
         "attack_type_mapping": {},
@@ -53,8 +54,11 @@ DEFAULTS: dict[str, Any] = {
     },
     "audit": {
         "dedup_check": True,
+        "label_conflict_check": True,
         "leakage_screen": True,
+        "one_rule_check": True,
         "identity_column_flag": True,
+        "temporal_leakage_check": True,
         "homogeneity_test": True,
         "resplit_falsification": True,
         "class_distribution_report": True,
@@ -64,6 +68,7 @@ DEFAULTS: dict[str, Any] = {
         "synthetic_realism_check": False,
         "cross_dataset_drift_check": False,
         "known_issue_lookup": False,
+        "seed_sensitivity_check": False,
         "reference_dataset": None,
     },
     "classifiers": {
@@ -127,7 +132,7 @@ def validate_config(cfg: dict[str, Any]) -> None:
             errors.append("dataset.max_rows must be a positive integer")
         if not dataset["chunk_size"]:
             errors.append(
-                "dataset.max_rows requires dataset.chunk_size to be set — reservoir "
+                "dataset.max_rows requires dataset.chunk_size to be set. Reservoir "
                 "sampling still has to read the file in chunks to sample it"
             )
 
@@ -136,7 +141,7 @@ def validate_config(cfg: dict[str, Any]) -> None:
     if cfg["label_grouping"]["attack_type_mapping"] and not cfg["schema"]["attack_category_column"]:
         errors.append(
             "label_grouping.attack_type_mapping requires schema.attack_category_column "
-            "to be set — otherwise there's no column for it to apply to"
+            "to be set, otherwise there's no column for it to apply to"
         )
 
     scaling = cfg["preprocessing"]["scaling"]
@@ -161,7 +166,7 @@ def validate_config(cfg: dict[str, Any]) -> None:
             errors.append(f"preprocessing.sampling.{stage} must not be an empty list")
 
     audit = cfg["audit"]
-    # known_issue_lookup is a pure curated-table lookup keyed on dataset.name —
+    # known_issue_lookup is a pure curated-table lookup keyed on dataset.name,
     # unlike the other two v2 checks, it needs no second dataset to compare against.
     reference_needing_checks = ["synthetic_realism_check", "cross_dataset_drift_check"]
     if any(audit[check] for check in reference_needing_checks) and not audit["reference_dataset"]:
@@ -172,7 +177,7 @@ def validate_config(cfg: dict[str, Any]) -> None:
         errors.append(
             "audit.resplit_falsification requires dataset.raw_files (it builds its "
             "own independent random-vs-grouped comparison split) and dataset.group_columns "
-            "— it cannot run against a pre-split train_file/test_file pair"
+            ". It cannot run against a pre-split train_file/test_file pair"
         )
 
     classifiers = cfg["classifiers"]
@@ -204,7 +209,7 @@ def validate_config(cfg: dict[str, Any]) -> None:
             import matplotlib  # noqa: F401
         except ImportError:
             errors.append(
-                "output.write_scorecard_plot is true but matplotlib isn't installed — "
+                "output.write_scorecard_plot is true but matplotlib isn't installed. "
                 'run: pip install "ids2eval[plots]"'
             )
 

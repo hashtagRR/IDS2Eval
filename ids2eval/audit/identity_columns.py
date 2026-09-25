@@ -5,7 +5,7 @@ columns) and Kostas et al. 2024/2025 (packet-level IP/port models hit
 near-100% in-dataset, lose >90% cross-dataset): id_like_columns (IP,
 port, MAC) are checked both for how well they predict the label alone
 (identity_column_flag) and for how few unique values they take relative
-to dataset size (low_cardinality_warning — generalizes N-BaIoT's
+to dataset size (low_cardinality_warning generalizes N-BaIoT's
 per-device overfitting finding to CIC/UNSW's limited attacker/victim IP
 pool).
 """
@@ -14,7 +14,8 @@ from __future__ import annotations
 
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score
+
+from ._auc import robust_auc
 
 # Standalone AUC above this on an identity column alone is a specific,
 # checkable topology-shortcut signature, not just "IPs are informative."
@@ -42,17 +43,15 @@ def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: d
 
         clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)
         clf.fit(x_train, train_df[label_col])
-        proba = clf.predict_proba(x_test)
-        auc = float(roc_auc_score(test_df[label_col], proba[:, 1])) if proba.shape[1] == 2 \
-            else float(roc_auc_score(test_df[label_col], proba, multi_class="ovr", average="weighted"))
+        auc = robust_auc(test_df[label_col], clf.predict_proba(x_test), clf.classes_)
         results[col] = auc
-        if auc > AUC_FLAG_THRESHOLD:
+        if auc is not None and auc > AUC_FLAG_THRESHOLD:
             flagged.append(col)
 
     status = "flag" if flagged else "ok"
-    summary = f"standalone AUC by column: { {c: round(a, 3) for c, a in results.items()} }"
+    summary = f"standalone AUC by column: { {c: None if a is None else round(a, 3) for c, a in results.items()} }"
     if flagged:
-        summary += f" — suggest dropping: {flagged}"
+        summary += f". Suggest dropping: {flagged}"
 
     return {
         "check": "identity_column_flag", "status": status, "summary": summary,
@@ -75,7 +74,7 @@ def check_cardinality(train_df: pd.DataFrame, cfg: dict) -> dict:
     summary = f"unique values by column: {cardinalities}"
     if flagged:
         summary += (
-            f" — {flagged} have fewer than {LOW_CARDINALITY_THRESHOLD} unique values, "
+            f". {flagged} have fewer than {LOW_CARDINALITY_THRESHOLD} unique values, "
             "risk of memorizing specific hosts rather than learning attack behavior"
         )
 

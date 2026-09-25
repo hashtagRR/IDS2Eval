@@ -1,7 +1,7 @@
 """Load raw or pre-split IDS data and produce a train/test split.
 
 Ported and generalized from the IDS project's data/loader.py and
-data/preprocessor.py._deduplicate — same session-grouped-split and
+data/preprocessor.py._deduplicate, same session-grouped-split and
 feature-space-dedup logic, but driven by config instead of hardcoded
 per-dataset column names.
 """
@@ -21,13 +21,13 @@ logger = logging.getLogger(__name__)
 def load_raw_combined(dataset_cfg: dict, seed: int = 0) -> pd.DataFrame:
     """Load and concatenate dataset.raw_files, before any split is applied.
 
-    Honors dataset.chunk_size/max_rows — see chunked_io module docstring
+    Honors dataset.chunk_size/max_rows, see chunked_io module docstring
     for what each actually bounds. seed drives reservoir_sample's
     randomness when max_rows is set.
     """
     if dataset_cfg["max_rows"] and dataset_cfg["group_columns"]:
         logger.warning(
-            "dataset.max_rows reservoir sampling is row-level, not group-aware — "
+            "dataset.max_rows reservoir sampling is row-level, not group-aware. "
             "session groups (dataset.group_columns) may be fragmented across the "
             "sample boundary before any grouped split is applied."
         )
@@ -72,7 +72,7 @@ def _grouped_split(
 
     Keeps every group_columns combination on one side of the split, so
     session-correlated leakage across the train/test boundary is
-    structurally impossible — see the resplit-falsification audit check,
+    structurally impossible. See the resplit-falsification audit check,
     which uses this same split as its counterfactual.
     """
     group_cols = [c for c in dataset_cfg["group_columns"] if c in df.columns]
@@ -95,7 +95,7 @@ def _grouped_split(
     if overlap:
         raise RuntimeError(
             f"Grouped split produced {len(overlap)} groups on both sides of "
-            "train/test — StratifiedGroupKFold invariant violated, refusing "
+            "train/test. StratifiedGroupKFold invariant violated, refusing "
             "to silently continue."
         )
     logger.info(
@@ -111,9 +111,14 @@ def dedup(
     """Drop exact feature-space duplicates within and across splits.
 
     Compares on every column except schema.drop_columns/label_column/
-    attack_category_column — a test row whose FEATURES exactly duplicate
+    attack_category_column. A test row whose FEATURES exactly duplicate
     a train row measures memorization, not generalization, regardless of
-    whether its label happens to match.
+    whether its label happens to match. Zero tolerance here is deliberately
+    stricter than general ML data-quality guidance, which treats under ~10%
+    train/test overlap as acceptable "Variety" (Zhou et al. 2024,
+    arXiv:2406.19614, Table II) - any leakage at all overstates a NIDS
+    classifier's real-world generalization, so this check flags on any
+    amount rather than only past a tolerance threshold.
     """
     schema = cfg["schema"]
     ignore = set(schema["drop_columns"]) | {schema["label_column"]}
@@ -187,7 +192,7 @@ def validate_loaded(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) ->
         if not (common - ignore):
             errors.append(
                 "train and test data share no feature columns after excluding "
-                "label/attack_category/drop_columns — nothing left to train or evaluate on"
+                "label/attack_category/drop_columns, nothing left to train or evaluate on"
             )
 
     if errors:

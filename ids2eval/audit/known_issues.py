@@ -1,8 +1,8 @@
-"""Known-issue lookup (v2, opt-in) — curated per-dataset documented problems.
+"""Known-issue lookup (v2, opt-in): curated per-dataset documented problems.
 
 Unlike schema_fingerprint_check (which matches the *extractor tool*'s
 column-naming signature regardless of dataset), this matches on
-dataset.name directly and surfaces problems specific to that dataset —
+dataset.name directly and surfaces problems specific to that dataset,
 curation work, not a new algorithm. Needs no reference_dataset.
 
 Extend KNOWN_ISSUES as more curated, citable findings are gathered.
@@ -27,7 +27,7 @@ KNOWN_ISSUES = {
         {
             "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/"
                      "testing-set.csv file-name-to-content mapping relative to the "
-                     "dataset's documented convention (82,332 vs. 175,341 rows) — "
+                     "dataset's documented convention (82,332 vs. 175,341 rows), "
                      "verify against the published per-attack-category counts before "
                      "trusting file names.",
             "citation": "Independently verified in this project's own audit methodology",
@@ -41,8 +41,10 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     matches = [issue for key, issues in KNOWN_ISSUES.items() if key in name for issue in issues]
 
     status = "warning" if matches else "ok"
+    # The issue text itself, not just a count - a scorecard reader shouldn't have to
+    # go open audit_report_*.json to find out what the curated problem actually is.
     summary = (
-        f"{len(matches)} known issue(s) curated for dataset '{name}'" if matches
+        "; ".join(f"{m['issue']} ({m['citation']})" for m in matches) if matches
         else f"no curated known issues for dataset '{name}'"
     )
     return {"check": "known_issue_lookup", "status": status, "summary": summary, "details": {"matches": matches}}

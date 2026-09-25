@@ -1,7 +1,7 @@
 """Class-distribution / imbalance report.
 
 Universal IDS-benchmark pattern (KDD99 U2R/R2L <1-2%, BoT-IoT 0.01%
-benign, TON_IoT 3.56% benign) — reported unconditionally, not just when
+benign, TON_IoT 3.56% benign). Reported unconditionally, not only when
 it crosses some threshold, since even a "known" imbalance shifts which
 metrics (accuracy vs. F1/AUC) are meaningful for a given dataset.
 """
@@ -13,6 +13,12 @@ import pandas as pd
 # A minority class below this share of a split is called out explicitly,
 # rather than just left to be read off the full per-class table.
 RARE_CLASS_THRESHOLD = 0.01
+
+# 100:1 sits at the boundary of what general ML data-quality literature calls
+# "moderate" imbalance (roughly 1:4-1:100), with "extreme" starting around
+# 1:1000-1:5000 (Zhou, Tu, Sha, Ding & Chen 2024, arXiv:2406.19614, Table II) -
+# not an arbitrary cutoff, though NIDS-specific imbalance can be far worse than
+# either range in practice (KDD99's U2R/R2L classes, BoT-IoT's 0.01% benign).
 
 
 def _distribution(series: pd.Series) -> dict:

@@ -247,7 +247,7 @@ is `"audit"` or `"known_issue"`, each side `{status, summary}` or `null`,
 and leaves every 1.0 key unchanged. `findings` is still the final pass.
 
 **A visual scorecard is opt-in** (`output.write_scorecard_plot`, off by
-default, see [CONFIGURATION.md](CONFIGURATION.md#rendering-the-scorecard-as-a-chart)),
+default, see [configuration.md](configuration.md#rendering-the-scorecard-as-a-chart)),
 producing both `scorecard.pdf` and `scorecard.png` from one figure: the
 pass/fail verdict, the full per-check breakdown (name, status, and the
 check's own summary for this run, since a bare "8 ok, 1 warning" count

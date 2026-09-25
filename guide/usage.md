@@ -7,7 +7,7 @@ ids2eval --config my_config.yaml
 ```
 
 (or `python -m ids2eval --config my_config.yaml` if you haven't
-installed the console script; see [INSTALL.md](INSTALL.md).)
+installed the console script; see [the README](../README.md#installation).)
 
 Flags:
 
@@ -45,13 +45,13 @@ It's meant for your own machine: it binds to localhost and refuses
 requests with a foreign `Host` or `Origin`. Anyone who can reach the
 port can run a config (and so read files the config points at), so
 don't bind it to a public interface. The dashboard's code, API and
-troubleshooting notes are in [ids2eval/dashboard/](ids2eval/dashboard/README.md).
+troubleshooting notes are in [ids2eval/dashboard/](../ids2eval/dashboard/README.md).
 
 ## Configuration
 
 Everything else is driven by the config file. See
-[CONFIGURATION.md](CONFIGURATION.md) for the full surface and
-[configs/schema.yaml](configs/schema.yaml) for the exhaustive,
+[configuration.md](configuration.md) for the full surface and
+[configs/schema.yaml](../configs/schema.yaml) for the exhaustive,
 commented reference.
 
 ## What actually runs
@@ -90,7 +90,7 @@ every run, nothing gets silently overwritten):
 |---|---|
 | `audit_report_before.json` | All enabled audit findings, computed before dedup |
 | `audit_report_after.json` | Same, after dedup (only if `preprocessing.dedup` is on) |
-| `SCORECARD.html` / `SCORECARD.md` / `scorecard.json` | A citable pass/fail rollup of the findings above, with before/after-dedup results side by side. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md#the-scorecard). The HTML is self-contained: open it from disk, or print it to PDF |
+| `SCORECARD.html` / `SCORECARD.md` / `scorecard.json` | A citable pass/fail rollup of the findings above, with before/after-dedup results side by side. See [checks.md](checks.md#the-scorecard). The HTML is self-contained: open it from disk, or print it to PDF |
 | `scorecard.pdf` / `scorecard.png` | A chart version of the scorecard, only if `output.write_scorecard_plot` is on (needs `pip install "ids2eval[plots]"`) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
 | `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |

@@ -20,7 +20,7 @@ Two things worth pointing out about what's actually in here:
   this is a known issue worth checking for regardless.
 - **`leakage_screen`'s top feature is `sttl`** - independently reproducing
   the published TTL-topology bias in UNSW-NB15 referenced in the main
-  [AUDIT_CHECKS.md](../../AUDIT_CHECKS.md).
+  [guide/checks.md](../../guide/checks.md).
 - **`one_rule_check` finds `sttl <= 61` alone reaches 68.0% test accuracy**
   (88.1% train) - the same feature `leakage_screen` flags, now as a literal
   rule; `label_conflict_check` and `temporal_leakage_check` both pass (no
@@ -41,4 +41,4 @@ Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /
 `environment.json` (provenance), `SCORECARD.html` / `scorecard.json` /
 `SCORECARD.md` / `scorecard.pdf` / `scorecard.png` (the citable rollup - see
-[AUDIT_CHECKS.md](../../AUDIT_CHECKS.md#the-scorecard) for the format).
+[guide/checks.md](../../guide/checks.md#the-scorecard) for the format).

@@ -1,6 +1,6 @@
 # Configuring IDS<sup>2</sup>Eval
 
-[`configs/schema.yaml`](configs/schema.yaml) lists every field, its
+[`configs/schema.yaml`](../configs/schema.yaml) lists every field, its
 default, and its valid options with a short one-line comment each.
 Copy it as your starting point. This page is the reasoning behind the
 non-obvious fields, plus worked examples, for when the one-liner isn't
@@ -143,7 +143,7 @@ sample for `synthetic_realism_check`, or an independent dataset for
 `cross_dataset_drift_check`, both in the same schema. `known_issue_lookup`
 needs neither, just a `dataset.name` match, and `seed_sensitivity_check`
 needs neither either, just re-fitting `leakage_screen`/`one_rule_check`
-across a few seeds. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what
+across a few seeds. See [checks.md](checks.md) for what
 each check does.
 
 ## Catching timestamp-driven shortcuts
@@ -175,7 +175,7 @@ in `SCORECARD.md` so the chart previews on GitHub) alongside the existing
 a core dependency. Run `pip install "ids2eval[plots]"` first, or config
 validation fails immediately with that same instruction rather than
 crashing partway through a run. See
-[AUDIT_CHECKS.md](AUDIT_CHECKS.md#the-scorecard) for what's actually
+[checks.md](checks.md#the-scorecard) for what's actually
 plotted.
 
 ## Reproducibility

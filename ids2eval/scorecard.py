@@ -3,7 +3,7 @@
 Not a new check. A rollup of the audit findings, dataset fingerprint, and
 tool version already computed elsewhere, into one stable, versioned artifact
 a paper can point to (e.g. "this result was obtained on a dataset that
-passed the following IDS2Eval checks"). See AUDIT_CHECKS.md's "The
+passed the following IDS2Eval checks"). See guide/checks.md's "The
 scorecard" section for the prior art this format draws on.
 
 SCHEMA_VERSION is independent of ids2eval's own package version: it only

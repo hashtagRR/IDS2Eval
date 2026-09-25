@@ -104,9 +104,10 @@ def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd
     return fingerprint
 
 
-def write_scorecard(run_dir: Path, scorecard: dict, markdown: str) -> None:
+def write_scorecard(run_dir: Path, scorecard: dict, markdown: str, html: str) -> None:
     (run_dir / "scorecard.json").write_text(json.dumps(scorecard, indent=2))
     (run_dir / "SCORECARD.md").write_text(markdown)
+    (run_dir / "SCORECARD.html").write_text(html)
 
 
 def write_run_status(run_dir: Path, status: str, failed_stage: str | None = None, error: str | None = None) -> None:

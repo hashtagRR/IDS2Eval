@@ -39,9 +39,10 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "resolved_config.json").exists()
     assert (run_dir / "scorecard.json").exists()
     assert (run_dir / "SCORECARD.md").exists()
+    assert (run_dir / "SCORECARD.html").exists()
 
     findings = json.loads((run_dir / "audit_report_before.json").read_text())
-    assert len(findings) == 9  # all v1 checks (incl. data_integrity_check), v2 off by default
+    assert len(findings) == 12  # all v1 checks, incl. the 3 new ones; v2 off by default
 
     after = json.loads((run_dir / "audit_report_after.json").read_text())
     dedup_after = next(f for f in after if f["check"] == "dedup_check")
@@ -49,9 +50,76 @@ def test_cli_end_to_end(tmp_path, synth_data):
 
     sc = json.loads((run_dir / "scorecard.json").read_text())
     assert sc["audit_stage"] == "after"  # preprocessing.dedup defaults true
+    assert sc["dedup_effect"]["train_duplicates_dropped"] > 0  # synth_data has 10 duplicate rows
+    assert all(set(r) == {"check", "category", "before", "after"} and r["after"] for r in sc["checks"])
     assert sc["overall_status"] in {"passed", "passed_with_warnings", "failed"}
     assert len(sc["findings"]) == len(after)
     assert sc["dataset_fingerprint"]["train_content_hash"]
+
+
+def test_cli_does_not_recompute_structural_checks_on_the_after_pass(tmp_path, synth_data, monkeypatch):
+    """resplit_falsification/schema_fingerprint_check/known_issue_lookup can't change between
+    the raw-data pass and the cleaned-data pass (see ids2eval.audit.STRUCTURAL_CHECKS) - the
+    after pass must reuse the before-pass result rather than rerun the check a second time.
+    """
+    from ids2eval.audit import resplit
+
+    calls = []
+    real_check = resplit.check
+    monkeypatch.setattr(resplit, "check", lambda cfg: (calls.append(1), real_check(cfg))[1])
+
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(tmp_path / "output")},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+
+    assert len(calls) == 1  # not 2, despite two audit passes (dedup defaults to on)
+    run_dir = _latest_run_dir(tmp_path / "output")
+    before = {f["check"]: f for f in json.loads((run_dir / "audit_report_before.json").read_text())}
+    after = {f["check"]: f for f in json.loads((run_dir / "audit_report_after.json").read_text())}
+    assert after["resplit_falsification"] == before["resplit_falsification"]
+    assert after["schema_fingerprint_check"] == before["schema_fingerprint_check"]
+    # a real (non-structural) check still legitimately reran and is free to differ
+    assert "dedup_check" in after
+
+
+def test_cli_second_run_records_a_comparison_to_the_first(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    first_run = _latest_run_dir(output_dir)
+    first_sc = json.loads((first_run / "scorecard.json").read_text())
+    assert "previous_run_comparison" not in first_sc  # nothing to compare to yet
+
+    main(["--config", str(config_path)])
+    second_run = _latest_run_dir(output_dir)
+    assert second_run != first_run
+    second_sc = json.loads((second_run / "scorecard.json").read_text())
+    comparison = second_sc["previous_run_comparison"]
+    assert comparison["previous_run"] == first_run.name
+    assert comparison["fingerprint_changed"] is False  # identical config, seed and source data
+    assert comparison["changed_checks"] == []  # a deterministic rerun changes nothing
+    assert "Compared to the previous run" in (second_run / "SCORECARD.md").read_text()
 
 
 def test_cli_writes_scorecard_plot_when_enabled(tmp_path, synth_data):

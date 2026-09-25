@@ -12,8 +12,8 @@ from pathlib import Path
 
 import numpy as np
 
-from . import cache, dataset, run_manager, scorecard
-from .audit import run_audit
+from . import cache, dataset, drift, run_manager, scorecard
+from .audit import STRUCTURAL_CHECKS, run_audit
 from .benchmark import run_benchmark
 from .config import load_config
 from .label_grouping import apply_attack_type_mapping
@@ -80,7 +80,7 @@ def main(argv=None) -> None:
     stage = "audit_before"
     try:
         if not args.skip_audit:
-            # Must run before dedup — dedup_check reports duplication already
+            # Must run before dedup. dedup_check reports duplication already
             # present in the split, and dataset.dedup() would remove it first.
             stage = "audit_before"
             findings_before = run_audit(train_df, test_df, cfg)
@@ -95,11 +95,17 @@ def main(argv=None) -> None:
                 # Full suite again on the cleaned data, by explicit choice, so a
                 # claim like "12% duplicate leakage before, 0% after" is backed
                 # by two real runs rather than assumed from the dedup stats alone.
-                # Note: resplit_falsification reloads raw data itself and never
-                # looks at train_df/test_df, so its result here is guaranteed
-                # identical to the "before" run — real, if modest, wasted compute.
+                # STRUCTURAL_CHECKS are skipped here and copied from the before-pass
+                # instead: their result can't depend on dedup (known_issue_lookup
+                # looks at dataset.name, schema_fingerprint_check at column names,
+                # resplit_falsification reloads the raw data itself), so recomputing
+                # them - resplit_falsification's two RandomForest fits included -
+                # would be pure wasted work, not a second real measurement.
                 stage = "audit_after"
-                findings_after = run_audit(train_df, test_df, cfg)
+                recomputed = {f["check"]: f for f in run_audit(train_df, test_df, cfg, skip=STRUCTURAL_CHECKS)}
+                reused = {f["check"]: f for f in findings_before if f["check"] in STRUCTURAL_CHECKS}
+                # dict order follows findings_before's schema order, not recompute order.
+                findings_after = [(recomputed | reused)[f["check"]] for f in findings_before]
                 _write_findings(run_dir / "audit_report_after.json", findings_after)
 
         if not args.skip_audit:
@@ -109,7 +115,21 @@ def main(argv=None) -> None:
             stage = "scorecard"
             final_findings = findings_after if cfg["preprocessing"]["dedup"] else findings_before
             final_audit_stage = "after" if cfg["preprocessing"]["dedup"] else "before"
-            sc = scorecard.build_scorecard(final_findings, final_audit_stage, cfg, fingerprint)
+            sc = scorecard.build_scorecard(
+                final_findings, final_audit_stage, cfg, fingerprint,
+                findings_before=findings_before if final_audit_stage == "after" else None,
+            )
+
+            previous_run_dir = drift.find_previous_run(output_dir, run_dir)
+            if previous_run_dir is not None:
+                comparison = drift.compare(sc, previous_run_dir)
+                if comparison is not None:
+                    sc["previous_run_comparison"] = comparison
+                    if comparison["changed_checks"]:
+                        logger.info(
+                            "Compared to %s: %d check(s) changed status",
+                            comparison["previous_run"], len(comparison["changed_checks"]),
+                        )
 
             has_plot = cfg["output"]["write_scorecard_plot"]
             if has_plot:
@@ -117,7 +137,9 @@ def main(argv=None) -> None:
                 scorecard_plot.render(sc, final_findings, run_dir / "scorecard.pdf", run_dir / "scorecard.png")
                 logger.info("Scorecard plot written to %s / .png", run_dir / "scorecard.pdf")
 
-            run_manager.write_scorecard(run_dir, sc, scorecard.render_markdown(sc, has_plot=has_plot))
+            run_manager.write_scorecard(
+                run_dir, sc, scorecard.render_markdown(sc, has_plot=has_plot), scorecard.render_html(sc)
+            )
             logger.info("Scorecard: %s -> %s", sc["overall_status"], run_dir / "scorecard.json")
 
         if cfg["output"]["save_preprocessed"]:

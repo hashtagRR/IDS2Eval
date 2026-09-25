@@ -184,32 +184,27 @@
   }
 
   /* check banners (all 12, compact) */
-  .two-lane { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px; }
-  @media (max-width: 780px) { .two-lane { grid-template-columns: 1fr; } }
-  .lane { border: 1px solid var(--line); border-radius: 10px; padding: 22px; background: var(--surface); }
-  .lane-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .lane-head h3 { font-size: 1.05rem; font-weight: 700; margin: 0; }
-  .lane-tag {
-    font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .04em;
-    text-transform: uppercase; padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+  .rtag {
+    display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: .66rem;
+    letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+    white-space: nowrap;
   }
-  .lane-tag-checks { background: var(--accent-soft); color: var(--accent); }
-  .lane-tag-known { background: var(--surface-2); color: var(--muted); }
-  .lane > p { color: var(--muted); font-size: .88rem; margin: 0 0 16px; }
-  .check-banner-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
-  @media (max-width: 900px) { .check-banner-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 620px) { .check-banner-grid { grid-template-columns: 1fr; } }
-  .lane-grid { grid-template-columns: 1fr !important; margin-top: 0; }
-  .check-banner {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
-    padding: 16px 17px; display: flex; flex-direction: column; gap: 6px;
+  .rtag-check { background: var(--accent-soft); color: var(--accent); }
+  .rtag-known { background: var(--surface-2); color: var(--muted); }
+  .rtag-v1 { background: var(--surface-2); color: var(--ink); }
+  .rtag-v2 { background: var(--surface-2); color: var(--muted); border: 1px dashed var(--line); }
+  .check-list { border: 1px solid var(--line); border-radius: 10px; margin-top: 28px; overflow: hidden; background: var(--surface); }
+  .check-row { display: flex; align-items: center; gap: 18px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
+  .check-row:last-child { border-bottom: none; }
+  .check-row .name { flex: 0 0 220px; font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; font-size: .85rem; }
+  .check-row .row-desc { flex: 1; color: var(--muted); font-size: .84rem; line-height: 1.4; }
+  .check-row .row-tags { flex: 0 0 auto; display: flex; gap: 6px; }
+  @media (max-width: 780px) {
+    .check-row { flex-wrap: wrap; }
+    .check-row .name { flex-basis: 100%; }
+    .check-row .row-desc { flex-basis: 100%; order: 3; }
+    .check-row .row-tags { order: 2; }
   }
-  .check-banner .v-tag {
-    font-family: "IBM Plex Mono", monospace; font-size: .62rem; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--muted);
-  }
-  .check-banner code.name { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; font-size: .85rem; }
-  .check-banner p { color: var(--muted); font-size: .84rem; margin: 0; line-height: 1.45; }
 
   /* check cards */
 
@@ -400,55 +395,114 @@
 
 <section id="checks" class="wrap">
   <div class="eyebrow">03 · the checks</div>
-  <h2 class="h">Sixteen checks. Two kinds of finding.</h2>
+  <h2 class="h">Sixteen checks. Two kinds of finding, two ways to run.</h2>
   <p class="sub">
     Every check returns <code>{check, status, summary, details}</code>, a flag or
     warning names the specific, checkable signature behind it, not a
     vague quality score. Every run rolls these into a citable
     <code>SCORECARD.html</code>: pass, passed with warnings, or failed.
-    Full writeup for all 16 and the scorecard's pass/fail rule:
+    Pass/fail rule and full writeup:
     <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">guide/checks.md</a>.
   </p>
-  <div class="two-lane">
-    <div class="lane">
-      <div class="lane-head">
-        <span class="lane-tag lane-tag-checks">14 checks</span>
-        <h3>Measure this run's data</h3>
-      </div>
-      <p>Each one can be reacted to: drop a column, resample, switch split
-        modes. The scorecard gives each a status for the raw data and a
-        status for the cleaned data, side by side, so a problem dedup
-        fixed is visible, not hidden.</p>
-      <div class="check-banner-grid lane-grid">
-        <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">dedup_check</code><p>Exact feature-space duplicates within and across train/test: memorization, not generalization.</p></div>
-        <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">label_conflict_check</code><p>Same features, different labels: the ground truth contradicting itself.</p></div>
-        <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">leakage_screen</code><p>One feature quietly carrying the whole classification problem.</p></div>
-      </div>
+  <div class="stat-row">
+    <div class="fact"><div class="num">12</div><div class="label">Always on, zero setup</div></div>
+    <div class="fact"><div class="num">4</div><div class="label">Opt-in, deeper analysis</div></div>
+    <div class="fact"><div class="num">14</div><div class="label">Measure this run's data</div></div>
+    <div class="fact"><div class="num">2</div><div class="label">Report a documented fact</div></div>
+  </div>
+  <p class="sub" style="margin-top:18px">
+    <span class="rtag rtag-check">Checks</span> measure this run's own data and can
+    be reacted to: drop a column, resample, switch split modes. The scorecard gives
+    each a status for the raw data and the cleaned data, side by side.
+    <span class="rtag rtag-known">Known issue</span> checks look only at the
+    dataset's name or column names, never the data, so a single status is all
+    they get: nothing in your config changes what they find.
+    <span class="rtag rtag-v1">Always on</span> runs by default, no extra setup.
+    <span class="rtag rtag-v2">Opt-in</span> needs a second dataset, a declared
+    timestamp column, or accepts heavier compute.
+  </p>
+  <div class="check-list">
+    <div class="check-row">
+      <code class="name">dedup_check</code>
+      <span class="row-desc">Exact feature-space duplicates within and across train/test: memorization, not generalization.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
     </div>
-    <div class="lane">
-      <div class="lane-head">
-        <span class="lane-tag lane-tag-known">2 checks</span>
-        <h3>Report a documented fact</h3>
-      </div>
-      <p>Look only at the dataset's name or its column names, never the
-        data itself, so cleaning can't change what they find. A single
-        status, no config of yours fixes these.</p>
-      <div class="check-banner-grid lane-grid">
-        <div class="check-banner"><div class="v-tag">v1 · always on</div><code class="name">schema_fingerprint_check</code><p>Column names match a flow extractor with a documented calculation bug.</p></div>
-        <div class="check-banner"><div class="v-tag">v2 · opt-in</div><code class="name">known_issue_lookup</code><p>A curated table of published problems for this exact dataset.</p></div>
-      </div>
+    <div class="check-row">
+      <code class="name">label_conflict_check</code>
+      <span class="row-desc">Groups rows by identical features and flags any group that maps to more than one label.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">leakage_screen</code>
+      <span class="row-desc">Fits a fast RandomForest and inspects its own feature importances to catch shortcut learning.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">one_rule_check</code>
+      <span class="row-desc">Fits a single depth-one decision tree and reports the winning rule in plain language.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">identity_column_flag</code>
+      <span class="row-desc">Standalone predictive power of IP/port/MAC-like columns you declare as identity columns.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">temporal_leakage_check</code>
+      <span class="row-desc">Tests whether a configured timestamp column alone predicts the label.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">homogeneity_test</code>
+      <span class="row-desc">Nearest-neighbor distance vs. a same-set control, to separate real leakage from class homogeneity.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">resplit_falsification</code>
+      <span class="row-desc">A session/time-grouped resplit that makes session-correlated leakage structurally impossible.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">class_distribution_report</code>
+      <span class="row-desc">Per-class counts, shares, and imbalance ratio, before and after dedup.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">low_cardinality_warning</code>
+      <span class="row-desc">Flags identity-like columns with suspiciously few unique values relative to the split.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">data_integrity_check</code>
+      <span class="row-desc">Missing labels, missing or constant features, and plus-or-minus-infinity values.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">schema_fingerprint_check</code>
+      <span class="row-desc">Column names match a flow extractor with a documented calculation bug.</span>
+      <span class="row-tags"><span class="rtag rtag-known">Known issue</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">synthetic_realism_check</code>
+      <span class="row-desc">Trains a domain classifier to distinguish this dataset from a reference real-traffic sample.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">cross_dataset_drift_check</code>
+      <span class="row-desc">Trains on this dataset, evaluates on a reference dataset in a unified feature space.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">known_issue_lookup</code>
+      <span class="row-desc">A curated table of documented, published problems for this exact dataset.</span>
+      <span class="row-tags"><span class="rtag rtag-known">Known issue</span><span class="rtag rtag-v2">Opt-in</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">seed_sensitivity_check</code>
+      <span class="row-desc">Re-fits leakage_screen and one_rule_check across five seeds and flags an unstable verdict.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
     </div>
   </div>
-  <p class="sub" style="margin-top:22px">
-    Plus 11 more: <code>one_rule_check</code>, <code>temporal_leakage_check</code>,
-    <code>identity_column_flag</code>, <code>homogeneity_test</code>,
-    <code>resplit_falsification</code>, <code>class_distribution_report</code>,
-    <code>low_cardinality_warning</code>, <code>data_integrity_check</code>,
-    <code>synthetic_realism_check</code>, <code>cross_dataset_drift_check</code>,
-    <code>seed_sensitivity_check</code>. All in
-    <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">guide/checks.md</a>.
-  </p>
-
 </section>
 
 <section id="proof" class="wrap">

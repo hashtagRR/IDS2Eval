@@ -148,11 +148,22 @@
   @media (max-width: 900px) { .contrib-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 620px) { .contrib-grid { grid-template-columns: 1fr; } }
   .contrib { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px 22px; display: flex; flex-direction: column; gap: 9px; }
-  .contrib.is-us { border-color: var(--accent); }
+  .contrib.is-us {
+    background: var(--accent-soft); border: 2px solid var(--accent); position: relative;
+    padding: 26px 22px 24px; box-shadow: 0 6px 20px rgb(13 143 130 / .18); transform: scale(1.03);
+  }
+  .contrib.is-us::before {
+    content: "This one"; position: absolute; top: -11px; left: 20px; background: var(--accent);
+    color: #fff; font-family: "IBM Plex Mono", monospace; font-size: .62rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px;
+  }
   .contrib .tag { font-family: "IBM Plex Mono", monospace; font-size: .66rem; letter-spacing: .07em; color: var(--muted); text-transform: uppercase; }
-  .contrib.is-us .tag { color: var(--accent); }
+  .contrib.is-us .tag { color: var(--accent); font-weight: 700; }
   .contrib h3 { font-size: 1.02rem; font-weight: 700; }
+  .contrib.is-us h3 { font-size: 1.08rem; }
   .contrib p { color: var(--muted); font-size: .91rem; margin: 0; }
+  .contrib.is-us p { color: var(--ink); }
+  @media (max-width: 900px) { .contrib.is-us { transform: none; } }
 
   /* pipeline flow */
   .flow { display: flex; align-items: stretch; gap: 10px; margin-top: 38px; flex-wrap: wrap; }
@@ -201,17 +212,6 @@
   .check-banner p { color: var(--muted); font-size: .84rem; margin: 0; line-height: 1.45; }
 
   /* check cards */
-  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 38px; }
-  @media (max-width: 780px) { .check-grid { grid-template-columns: 1fr; } }
-  .check-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px 24px; }
-  .check-card .status { display: inline-flex; align-items: center; gap: 7px; font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
-  .check-card .status i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-  .status.ok i { background: var(--ok); } .status.ok { color: var(--ok); }
-  .status.warning i { background: var(--warning); } .status.warning { color: var(--warning); }
-  .status.flag i { background: var(--flag); } .status.flag { color: var(--flag); }
-  .check-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-  .check-card code.name { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; }
-  .check-card p { color: var(--muted); font-size: .92rem; margin: 0; }
 
   /* proof stats */
   .stat-row { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 32px; }
@@ -302,9 +302,9 @@
       </p>
       <div class="hero-facts">
         <div class="fact"><div class="num">16</div><div class="label">Audit checks</div></div>
-        <div class="fact"><div class="num">4</div><div class="label">Real datasets audited</div></div>
+        <div class="fact"><div class="num">4</div><div class="label">Real IDS datasets validated</div></div>
         <div class="fact"><div class="num">192</div><div class="label">Tests, CI-gated</div></div>
-        <div class="fact"><div class="num">16.2M</div><div class="label">Rows validated on</div></div>
+        <div class="fact"><div class="num">19.5M</div><div class="label">Rows processed across all four</div></div>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">View on GitHub</a>
@@ -449,36 +449,6 @@
     <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">guide/checks.md</a>.
   </p>
 
-<h3 style="margin-top:48px; font-size:1.05rem; font-weight:700;">Selected findings, on real data
-    <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard" style="font-size:.62em; font-weight:500; margin-left:8px;">→ full real scorecard, every artifact</a>
-  </h3>
-  <div class="check-grid">
-    <div class="check-card">
-      <div class="status flag"><i></i>flag — real finding</div>
-      <h3><code class="name">leakage_screen</code></h3>
-      <p>Fits a fast RandomForest and inspects its own feature importances. Independently reproduced Flood et al. 2024's finding that Destination Port alone hits near-perfect accuracy across CIC-IDS2018 — confirmed on the real, official distribution.</p>
-    </div>
-    <div class="check-card">
-      <div class="status ok"><i></i>ok — settled by experiment</div>
-      <h3><code class="name">resplit_falsification</code></h3>
-      <p>A session-grouped resplit that makes session-correlated leakage structurally impossible. On CIC-IDS2018's near-saturation accuracy, the grouped resplit reproduced the random split's accuracy to within 0.003 percentage points.</p>
-    </div>
-    <div class="check-card">
-      <div class="status flag"><i></i>flag → ok after dedup</div>
-      <h3><code class="name">dedup_check</code></h3>
-      <p>Exact feature-space duplicates between train and test. On real UNSW-NB15 data: 42.38% train duplication before cleanup, correctly dropped to 0% after — measured twice, not assumed. <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">See the real run →</a></p>
-    </div>
-    <div class="check-card">
-      <div class="status warning"><i></i>warning — real shift</div>
-      <h3><code class="name">class_distribution_report</code></h3>
-      <p>Per-class counts and imbalance ratio, before and after dedup. On UNSW-NB15 the ratio shifted from 2:1 to roughly 1:1 after deduplication — duplicated rows were disproportionately one class. <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">See the real run →</a></p>
-    </div>
-    <div class="check-card">
-      <div class="status flag"><i></i>flag: real finding</div>
-      <h3><code class="name">label_conflict_check</code></h3>
-      <p>Groups rows by identical features and checks whether they share one label. On CSE-CIC-IDS2018, found that every one of FTP-BruteForce's 35 distinct feature vectors is also labelled DoS-SlowHTTPTest: identical flows, two labels. <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/cic-ids2018-scorecard">See the real run →</a></p>
-    </div>
-  </div>
 </section>
 
 <section id="proof" class="wrap">

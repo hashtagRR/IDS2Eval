@@ -12,11 +12,12 @@ it - no code required, just a YAML file.
 
 Most published NIDS results are evaluated on datasets whose quality is
 taken on faith: duplicate rows, leaked features, near-identical
-train/test splits. IDS<sup>2</sup>Eval runs 12 checks that catch these
+train/test splits. IDS<sup>2</sup>Eval runs 16 checks that catch these
 problems automatically, instead of a one-off notebook redone by hand
-for every paper, and rolls the result into a citable `SCORECARD.md` -
-"this result was obtained on a dataset that passed the following
-checks." See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what each check
+for every paper, and rolls the result into a citable scorecard
+(`SCORECARD.html`, `SCORECARD.md`, `scorecard.json`) - "this result was
+obtained on a dataset that passed the following checks," with each
+check's result before and after deduplication side by side. See [AUDIT_CHECKS.md](AUDIT_CHECKS.md) for what each check
 does and the scorecard's pass/fail rule.
 
 It's narrower than general-purpose AutoML tools (PyCaret, AutoGluon,
@@ -30,6 +31,14 @@ classifiers once the data is clean.
 python3 -m venv venv
 venv/bin/pip install -e .
 venv/bin/ids2eval --config my_config.yaml
+```
+
+Or run it from a browser - a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard)) - to browse runs, read
+their scorecards and benchmark results, and launch new runs from a
+YAML config:
+
+```bash
+venv/bin/ids2eval-dashboard --config my_config.yaml   # opens http://localhost:8765
 ```
 
 ```yaml
@@ -51,15 +60,15 @@ the CLI/output files/programmatic API, and
 | | |
 |---|---|
 | [INSTALL.md](INSTALL.md) | Setup, dependencies, verifying the install |
-| [USAGE.md](USAGE.md) | CLI, output files, caching, reproducing a run, programmatic API |
+| [USAGE.md](USAGE.md) | CLI, web UI, output files, caching, reproducing a run, programmatic API |
 | [CONFIGURATION.md](CONFIGURATION.md) | Config walkthrough with worked examples |
-| [AUDIT_CHECKS.md](AUDIT_CHECKS.md) | What each of the 12 checks does, and the research behind it |
+| [AUDIT_CHECKS.md](AUDIT_CHECKS.md) | What each of the 16 checks does, and the research behind it |
 | [configs/schema.yaml](configs/schema.yaml) | Every field, one line each - copy it as your starting point |
-| [examples/unsw-nb15-scorecard](examples/unsw-nb15-scorecard) | A real scorecard, chart included, run against the actual UNSW-NB15 dataset |
+| [examples/](examples/) | Real scorecards for four widely used datasets: [UNSW-NB15](examples/unsw-nb15-scorecard) (chart included), [NSL-KDD](examples/nsl-kdd-scorecard), [CIC-IDS2017](examples/cic-ids2017-scorecard), [CSE-CIC-IDS2018](examples/cic-ids2018-scorecard) |
 
 ## Status
 
-Implemented, tested (140 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (190 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data - not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) - audit + 5 classifiers, including

@@ -14,15 +14,17 @@ venv/bin/pip install -e ".[dev]"
 ```
 
 The `[dev]` extra adds `pytest` and `ruff`, used for the test suite and
-linting — skip it (`pip install -e .`) for a runtime-only install. A
+linting; skip it (`pip install -e .`) for a runtime-only install. A
 separate `[plots]` extra (`pip install -e ".[dev,plots]"`) adds
 `matplotlib`, needed only if you turn on
-`output.write_scorecard_plot` — see [USAGE.md](USAGE.md).
+`output.write_scorecard_plot`. See [USAGE.md](USAGE.md).
 
-This installs the `ids2eval` console script into the venv:
+This installs two console scripts into the venv: the CLI, and the
+local dashboard (see [USAGE.md](USAGE.md#web-ui-dashboard)):
 
 ```bash
 venv/bin/ids2eval --config my_config.yaml
+venv/bin/ids2eval-dashboard --config my_config.yaml
 ```
 
 ## Verify
@@ -32,27 +34,27 @@ venv/bin/pytest tests/ -v
 venv/bin/ruff check ids2eval/ tests/
 ```
 
-Both should pass clean — this is exactly what CI runs on every push
+Both should pass clean. This is exactly what CI runs on every push
 (`.github/workflows/ci.yml`).
 
 ## Dependencies
 
-Declared in `pyproject.toml` (the single source of truth — there's no
+Declared in `pyproject.toml` (the single source of truth, there's no
 separate `requirements.txt` to drift out of sync with it): `pyyaml`,
 `pandas`, `numpy`, `scikit-learn`, `scipy`, `imbalanced-learn`,
 `xgboost`, `pyarrow`. All install from prebuilt wheels on Linux/macOS/
-Windows for Python 3.10–3.12 — no compiler toolchain needed. `matplotlib`
-is not in this list on purpose — it's the `[plots]` extra above, only
+Windows for Python 3.10-3.12, no compiler toolchain needed. `matplotlib`
+is not in this list on purpose. It's the `[plots]` extra above, only
 needed for `scorecard.pdf`/`scorecard.png`.
 
 ## Real datasets used in validation
 
-Not part of the install — IDS<sup>2</sup>Eval doesn't ship or require any
+Not part of the install. IDS<sup>2</sup>Eval doesn't ship or require any
 dataset. The real-data validation referenced in the README used:
 
-- [UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset) — pre-split train/test CSVs
-- [CIC-IDS2018](https://www.unb.ca/cic/datasets/ids-2018.html) — the official "Processed Traffic Data for ML Algorithms" CSVs, publicly readable from `s3://cse-cic-ids2018/` with no credentials required
+- [UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset): pre-split train/test CSVs
+- [CIC-IDS2018](https://www.unb.ca/cic/datasets/ids-2018.html): the official "Processed Traffic Data for ML Algorithms" CSVs, publicly readable from `s3://cse-cic-ids2018/` with no credentials required
 
 Point `dataset.raw_files`/`train_file`/`test_file` in your own config
-at wherever you keep these (or any other IDS dataset in CSV form) —
+at wherever you keep these (or any other IDS dataset in CSV form);
 see [USAGE.md](USAGE.md) and [CONFIGURATION.md](CONFIGURATION.md).

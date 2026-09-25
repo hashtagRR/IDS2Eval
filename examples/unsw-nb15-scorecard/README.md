@@ -40,5 +40,10 @@ other finding are unchanged from the original run.
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /
 `environment.json` (provenance), `SCORECARD.html` / `scorecard.json` /
-`SCORECARD.md` / `scorecard.pdf` / `scorecard.png` (the citable rollup - see
+`SCORECARD.md` (the citable rollup, see
 [guide/checks.md](../../guide/checks.md#the-scorecard) for the format).
+No `scorecard.pdf`/`.png`: that chart predates this session's scorecard
+redesign and hasn't been updated to match it (it still lumps
+`known_issue_lookup` in with the other checks and shows no raw/cleaned
+comparison), so this example matches the other three and ships the
+HTML scorecard only, the same thing the dashboard shows.

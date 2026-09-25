@@ -211,13 +211,6 @@
   tr:last-child td { border-bottom: none; }
   .tablewrap { overflow-x: auto; }
 
-  /* real scorecard showcase */
-  .scorecard-showcase {
-    margin-top: 34px; border: 1px solid var(--line); border-radius: 6px;
-    background: var(--surface); padding: 22px; text-align: center;
-  }
-  .scorecard-showcase img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px; }
-  .scorecard-showcase figcaption { margin-top: 14px; color: var(--muted); font-size: .88rem; }
 
   /* config */
   pre.code-block {
@@ -315,8 +308,8 @@
 <span class="dim">[audit:after]</span>  dedup_check              <span class="ok">ok</span>      0.00% feature-duplication remaining
 <span class="dim">[audit:after]</span>  class_distribution_report <span class="dim">ok</span>     imbalance ratio 1:1 (was 2:1)
 <span class="rule">────────────────────────────────────────</span>
-<span class="dim">[scorecard]</span> <span class="warning">passed with warnings</span> — 8 ok, 1 warning, 0 flags
-<span class="dim">writing</span> examples/unsw-nb15-scorecard/scorecard.{json,pdf,png}</div>
+<span class="dim">[scorecard]</span> <span class="warning">passed with warnings</span>: 11 ok, 1 warning, 0 flags
+<span class="dim">writing</span> examples/unsw-nb15-scorecard/{SCORECARD.html,SCORECARD.md,scorecard.json}</div>
   </div>
 </div>
 
@@ -468,14 +461,11 @@
       </table>
     </div>
   </div>
-  <figure class="scorecard-showcase">
-    <img src="https://raw.githubusercontent.com/hashtagRR/IDS2Eval/main/examples/unsw-nb15-scorecard/scorecard.png" alt="Real IDS2Eval scorecard for the UNSW-NB15 dataset: passed with warnings, 8 ok, 1 warning, 0 flags, with the full per-check breakdown and diagnostic charts.">
-    <figcaption>
-      Not a mockup — this is the actual <code>scorecard.png</code> from the run above,
-      checked into the repo as-is.
-      <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">Every artifact behind it →</a>
-    </figcaption>
-  </figure>
+  <p class="sub" style="text-align:center">
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/unsw-nb15-scorecard/SCORECARD.html">Open the real SCORECARD.html →</a>
+    the actual run above, checked into the repo as-is, not a mockup.
+    <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples/unsw-nb15-scorecard">Every artifact behind it →</a>
+  </p>
 </section>
 
 <section id="config" class="wrap">

@@ -13,4 +13,3 @@ audit:
   known_issue_lookup: true
 output:
   save_preprocessed: false
-  write_scorecard_plot: true

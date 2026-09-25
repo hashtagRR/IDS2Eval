@@ -131,7 +131,7 @@ at wherever you keep these (or any other IDS dataset in CSV form); see
 | [guide/configuration.md](guide/configuration.md) | Config walkthrough with worked examples |
 | [guide/checks.md](guide/checks.md) | What each of the 16 checks does, and the research behind it |
 | [configs/schema.yaml](configs/schema.yaml) | Every field, one line each - copy it as your starting point |
-| [examples/](examples/) | Real scorecards for four widely used datasets: [UNSW-NB15](examples/unsw-nb15-scorecard) (chart included), [NSL-KDD](examples/nsl-kdd-scorecard), [CIC-IDS2017](examples/cic-ids2017-scorecard), [CSE-CIC-IDS2018](examples/cic-ids2018-scorecard) |
+| [examples/](examples/) | Real scorecards for four widely used datasets: [UNSW-NB15](examples/unsw-nb15-scorecard), [NSL-KDD](examples/nsl-kdd-scorecard), [CIC-IDS2017](examples/cic-ids2017-scorecard), [CSE-CIC-IDS2018](examples/cic-ids2018-scorecard) |
 
 ## Status
 

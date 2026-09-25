@@ -9,8 +9,6 @@
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
 
-<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
-
 ## Checks
 
 Findings from this run's own data. Each one can, in principle, be reacted to - by dropping a column, resampling, switching split modes, or just noting the caveat.
@@ -55,7 +53,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported passed with warnings, 11 ok, 1 warning(s), 0 flag(s) across 12 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported passed with warnings, 11 ok, 1 warning(s), 0 flag(s) across 12 checks. Full report: audit_report_after.json.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

@@ -1,12 +1,12 @@
 """Basic dataset sanity checks: missing labels, constant features, ±inf values.
 
 Complements leakage_screen/identity_column_flag (which catch features
-that are *too* informative) by catching the opposite class of problem —
+that are *too* informative) by catching the opposite class of problem:
 features carrying no information at all, or values that will silently
 corrupt downstream numeric coercion if left unreported. Structural
 problems severe enough to make the dataset unusable (duplicate column
 names, a train/test schema that shares no feature columns) are handled
-separately in dataset.validate_loaded() as hard failures, not here —
+separately in dataset.validate_loaded() as hard failures, not here:
 this check only reports things worth a human's attention, not things
 that make the rest of the pipeline meaningless.
 """

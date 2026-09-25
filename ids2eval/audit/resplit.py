@@ -2,14 +2,14 @@
 
 The nearest-neighbor test alone can't distinguish "this class is
 inherently homogeneous" from "a different split would reveal real
-difficulty that random sampling happens to hide" — both hypotheses look
+difficulty that random sampling happens to hide", both hypotheses look
 identical under random sampling. Constructing a non-random split along a
 dimension the random split ignores (session/group identity) and
 observing whether accuracy changes breaks that symmetry: if
 session-correlated leakage across the random split's boundary had been
 doing real work, the grouped split should cost measurable accuracy.
 
-Independent of whichever split_mode is configured for the main run —
+Independent of whichever split_mode is configured for the main run:
 always builds both splits from the raw data to compare them directly.
 """
 
@@ -46,10 +46,10 @@ def check(cfg: dict) -> dict:
         f"random-split accuracy={random_acc:.4f}, grouped-split accuracy={grouped_acc:.4f} "
         f"(drop={drop:+.4f}); "
         + (
-            "grouped split costs measurable accuracy — session-correlated leakage in the "
+            "grouped split costs measurable accuracy, session-correlated leakage in the "
             "random split may be doing real work"
             if material else
-            "grouped split reproduces random-split accuracy — consistent with inherent class "
+            "grouped split reproduces random-split accuracy, consistent with inherent class "
             "homogeneity rather than a split-artifact explanation"
         )
     )

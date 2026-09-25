@@ -4,12 +4,12 @@ Per Layeghy et al. 2021 and Catillo et al. 2021: lab-generated/synthetic
 IDS traffic can diverge from real network traffic in ways that make a
 dataset's near-perfect classifier accuracy an artifact of unrepresentative
 data rather than a real capability. Needs a reference real-traffic sample
-(audit.reference_dataset) to compare against — there's no way to detect
+(audit.reference_dataset) to compare against: there's no way to detect
 "unrealistic compared to what" without something to compare to.
 
 Method: a domain classifier trained to distinguish this dataset's rows
 from the reference sample's rows. High separability (AUC) means the two
-are easily distinguishable — a specific, checkable signature of
+are easily distinguishable, a specific, checkable signature of
 distributional divergence, not merely "different datasets differ."
 """
 

@@ -1,6 +1,6 @@
 """Scaling and class-balancing, driven by preprocessing.* config.
 
-Sampling is fit on the training split only and never applied to test —
+Sampling is fit on the training split only and never applied to test:
 test sets stay at their real-world class distribution so metrics
 reflect real deployment, matching the IDS project's balancer.py design.
 """
@@ -66,7 +66,7 @@ def apply_sampling(x_train: np.ndarray, y_train, cfg: dict, stage: str) -> tuple
         return sampler.fit_resample(x_train, y_train)
     except ValueError as e:
         logger.warning(
-            "Sampling '%s' failed for stage '%s' (%s) — likely a class too small "
+            "Sampling '%s' failed for stage '%s' (%s), likely a class too small "
             "for this sampler's neighbor count. Falling back to unsampled data.",
             algo, stage, e,
         )

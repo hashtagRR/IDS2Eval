@@ -15,7 +15,7 @@ Two independent knobs (dataset.chunk_size / dataset.max_rows):
   reservoir sample (Algorithm R) across the whole stream of rows, so
   the retained dataset never exceeds max_rows regardless of source
   file size. This is a statistical sample, not the exact full dataset.
-  It operates at the row level — if dataset.split_mode is "grouped",
+  It operates at the row level: if dataset.split_mode is "grouped",
   sampling may fragment session groups across the sample boundary;
   that's a documented limitation, not a bug fix candidate for v1.
 """
@@ -155,7 +155,7 @@ def reservoir_sample(chunks: Iterator[pd.DataFrame], max_rows: int, seed: int = 
             n_seen += m
 
     if reservoir is None:
-        raise ValueError("No data read — chunk source was empty")
+        raise ValueError("No data read, chunk source was empty")
     return reservoir, n_seen
 
 

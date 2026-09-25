@@ -1,7 +1,7 @@
 """Known-extractor-bug warning via column-name schema fingerprinting.
 
 Not a per-dataset curated issue list (that's the v2 known_issue_lookup
-check) — this matches the *extractor tool*'s column-naming signature
+check), this matches the *extractor tool*'s column-naming signature
 (e.g. CICFlowMeter) and surfaces that tool's documented bugs generally,
 regardless of which specific dataset the columns came from.
 

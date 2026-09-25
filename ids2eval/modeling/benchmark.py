@@ -1,7 +1,7 @@
 """Classifier benchmarking loop, driven by classifiers.* config.
 
 Runs a "binary" stage against schema.label_column always, and a "type"
-stage against schema.attack_category_column if one is configured — two
+stage against schema.attack_category_column if one is configured, two
 independent flat benchmarks, not a chained/routed cascade (that
 architecture is explicitly out of scope for this tool). Each stage can
 run under one or more scaling methods and one or more sampling
@@ -15,14 +15,14 @@ style choice: fitting a scaler/sampler once on the whole training set
 and only THEN handing the result to GridSearchCV/CalibratedClassifierCV
 lets those tools' internal cross-validation folds see data that was
 already transformed using information from the other folds (SMOTE's
-synthetic points are the sharpest version of this — a fold's synthetic
+synthetic points are the sharpest version of this: a fold's synthetic
 training rows can be interpolated from real neighbors that landed in a
 different, supposedly-held-out fold). Wrapping [scaler, sampler,
 classifier] in one Pipeline and always fitting it on raw, unscaled,
 unsampled data means every internal CV fold repeats scaling/sampling
 independently, exactly as it should. The plain (non-tuned, non-
-calibrated) path was never affected by this — a single fit with no
-internal CV has nowhere for this kind of leakage to occur — but it now
+calibrated) path was never affected by this, a single fit with no
+internal CV has nowhere for this kind of leakage to occur, but it now
 shares the same code path rather than a separate, easy-to-forget one.
 """
 
@@ -132,7 +132,7 @@ def _distribution(y_encoded: np.ndarray, label_encoder: LabelEncoder) -> dict:
 
 
 def _resampled_distribution(x_train, y_train, sampling_algo: str, label_encoder: LabelEncoder, seed: int) -> dict:
-    """A standalone probe resample purely for reporting — decoupled from
+    """A standalone probe resample purely for reporting, decoupled from
     what each classifier's own pipeline does internally, but deterministic
     (same seed) so it matches what they'll actually see.
     """
@@ -229,7 +229,7 @@ def _evaluate(model, x_test, y_test, label_encoder: LabelEncoder, feature_names:
 def _feature_importance(model, feature_names: list[str]) -> dict | None:
     """Best-effort: pokes into whatever wrapping (Pipeline, CalibratedClassifierCV)
     sits around the actual classifier. Returns None rather than raising if the
-    wrapping doesn't match what's expected — this is a nice-to-have, not
+    wrapping doesn't match what's expected, this is a nice-to-have, not
     something that should ever crash a benchmark run.
     """
     try:

@@ -1,7 +1,7 @@
 """Nearest-neighbor class-homogeneity test (paper Section 3.4).
 
 For each class, compares test-to-train nearest-neighbor distance against
-a *control* — train-internal nearest-neighbor distance, excluding self.
+a *control*, train-internal nearest-neighbor distance, excluding self.
 If test rows are statistically no closer to train than train rows are to
 each other, near-duplication is a property of the class population
 itself (present within each split independently), not train/test

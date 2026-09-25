@@ -1,6 +1,6 @@
 """Shared feature-matrix prep for audit checks that need to fit a model.
 
-Not a full preprocessing pipeline (no scaling/sampling) — just enough
+Not a full preprocessing pipeline (no scaling/sampling), just enough
 to turn schema-declared feature columns into a numeric matrix, with
 categorical encoding fit on train and applied to test so unseen
 categories don't leak information or crash.
@@ -50,7 +50,7 @@ def encode_multi(
     category_maps: dict[str, pd.Index] = {}
     for col in columns:
         # dtype == object misses pandas' newer dedicated string dtype
-        # (pandas >= 2.x with future.infer_string, default in pandas 3.x) —
+        # (pandas >= 2.x with future.infer_string, default in pandas 3.x), so
         # checking is_numeric_dtype instead and treating everything else as
         # categorical is robust to both, and to category dtype too.
         if pd.api.types.is_numeric_dtype(base_out[col]):

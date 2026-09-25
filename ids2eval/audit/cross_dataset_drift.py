@@ -4,7 +4,7 @@ Trains on this dataset and evaluates on a reference dataset
 (audit.reference_dataset) in a unified feature space, comparing accuracy
 against the same model's in-dataset test accuracy. A large drop is a
 specific, checkable signature that the model learned dataset-specific
-artifacts rather than generalizable attack behavior — the pattern
+artifacts rather than generalizable attack behavior, the pattern
 documented across BoT-IoT/TON_IoT/UNSW-NB15 cross-dataset evaluations.
 """
 
@@ -59,7 +59,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         f"in-dataset accuracy={in_dataset_acc:.4f}, cross-dataset (reference_dataset) "
         f"accuracy={cross_dataset_acc:.4f} (drop={drop:+.4f}); "
         + (
-            "material drop crossing datasets — model likely learned dataset-specific "
+            "material drop crossing datasets, model likely learned dataset-specific "
             "artifacts rather than generalizable attack behavior"
             if flagged else
             "no material drop crossing datasets"

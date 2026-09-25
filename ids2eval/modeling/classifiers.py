@@ -3,7 +3,7 @@ project's models/classifiers/definitions.py.
 
 Grids here are deliberately smaller than the source project's deep,
 dataset-tuned search spaces (e.g. RandomForest's 10-parameter
-RandomizedSearchCV grid) — this is a general-purpose default for
+RandomizedSearchCV grid), this is a general-purpose default for
 arbitrary datasets, not a re-tuned space for one specific dataset's
 scale. Override via classifiers.search_space in the config for
 anything heavier.

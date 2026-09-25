@@ -18,7 +18,7 @@ from __future__ import annotations
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 
-from .. import features
+from ..data import features
 
 # Wu & Keogh don't give a numeric cutoff (their test is "can a human write this in
 # one line"); a one-rule accuracy this high is the tabular-data equivalent - a

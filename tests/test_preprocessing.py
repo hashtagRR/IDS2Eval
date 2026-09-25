@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from ids2eval import preprocessing
+from ids2eval.modeling import preprocessing
 
 
 def test_scale_features_none_leaves_values_unchanged(base_cfg, synth_train_test):

@@ -16,7 +16,7 @@ from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import EditedNearestNeighbours, RandomUnderSampler
 from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 
-from . import features
+from ..data import features
 
 logger = logging.getLogger(__name__)
 

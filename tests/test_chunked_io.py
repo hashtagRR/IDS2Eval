@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from ids2eval.chunked_io import reservoir_sample
+from ids2eval.data.chunked_io import reservoir_sample
 
 
 def _chunks(n, chunk_size):

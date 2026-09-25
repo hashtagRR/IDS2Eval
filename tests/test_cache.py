@@ -2,7 +2,7 @@ import time
 
 import pandas as pd
 
-from ids2eval import cache
+from ids2eval.data import cache
 
 
 def _cfg(base_cfg, raw_file):

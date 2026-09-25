@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ids2eval import features
+from ids2eval.data import features
 
 
 def test_feature_columns_excludes_label_and_drop_columns(base_cfg):

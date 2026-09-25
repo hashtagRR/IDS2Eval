@@ -1,6 +1,6 @@
 import pytest
 
-from ids2eval.classifiers import REGISTRY, build_estimator
+from ids2eval.modeling.classifiers import REGISTRY, build_estimator
 
 
 def test_registry_has_all_14_classifiers():

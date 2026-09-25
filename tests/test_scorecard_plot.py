@@ -1,4 +1,4 @@
-from ids2eval import scorecard, scorecard_plot
+from ids2eval.reporting import scorecard, scorecard_plot
 
 
 def _finding(check, status, summary="a summary", details=None):

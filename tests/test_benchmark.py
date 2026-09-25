@@ -1,4 +1,4 @@
-from ids2eval.benchmark import run_benchmark
+from ids2eval.modeling.benchmark import run_benchmark
 
 
 def test_run_benchmark_binary_only(base_cfg, synth_train_test):
@@ -34,7 +34,7 @@ def test_run_benchmark_skips_failing_classifier_without_crashing(base_cfg, synth
     train_df, test_df = synth_train_test
     base_cfg["classifiers"]["list"] = ["DecisionTree", "NaiveBayes"]
 
-    from ids2eval import classifiers as clf_registry
+    from ids2eval.modeling import classifiers as clf_registry
     original_build = clf_registry.build_estimator
 
     def _boom(name, overrides=None, seed=None):
@@ -42,7 +42,7 @@ def test_run_benchmark_skips_failing_classifier_without_crashing(base_cfg, synth
             raise RuntimeError("simulated failure")
         return original_build(name, overrides, seed=seed)
 
-    monkeypatch.setattr("ids2eval.benchmark.clf_registry.build_estimator", _boom)
+    monkeypatch.setattr("ids2eval.modeling.benchmark.clf_registry.build_estimator", _boom)
     results, _extras = run_benchmark(train_df, test_df, base_cfg)
     assert set(results["classifier"]) == {"DecisionTree"}
 

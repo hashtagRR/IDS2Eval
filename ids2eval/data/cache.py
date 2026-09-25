@@ -25,7 +25,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from . import version_info
+from .. import version_info
 
 logger = logging.getLogger(__name__)
 

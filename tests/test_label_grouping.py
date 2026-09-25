@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ids2eval.label_grouping import apply_attack_type_mapping
+from ids2eval.data.label_grouping import apply_attack_type_mapping
 
 
 def test_partial_mapping_merges_named_categories_only(base_cfg):

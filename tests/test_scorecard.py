@@ -1,4 +1,4 @@
-from ids2eval import scorecard
+from ids2eval.reporting import scorecard
 
 
 def _finding(check, status, summary="a summary"):

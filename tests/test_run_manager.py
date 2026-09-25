@@ -1,7 +1,7 @@
 import json
 import time
 
-from ids2eval import run_manager
+from ids2eval.reporting import run_manager
 
 
 def test_create_run_dir_is_unique_across_rapid_calls(tmp_path):

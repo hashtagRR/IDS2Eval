@@ -21,8 +21,8 @@ from __future__ import annotations
 import html
 from datetime import datetime, timezone
 
-from . import version_info
-from .audit import KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
+from .. import version_info
+from ..audit import KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
 
 SCHEMA_VERSION = "1.1"
 

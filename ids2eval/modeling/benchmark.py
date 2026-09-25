@@ -39,8 +39,8 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 
+from ..data import features
 from . import classifiers as clf_registry
-from . import features
 from .preprocessing import SAMPLERS, SCALERS
 
 logger = logging.getLogger(__name__)

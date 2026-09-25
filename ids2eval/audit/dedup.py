@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from .. import dataset
+from ..data import dataset
 
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:

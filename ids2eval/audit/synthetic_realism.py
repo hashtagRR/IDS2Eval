@@ -21,7 +21,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 
-from .. import chunked_io, features
+from ..data import chunked_io, features
 
 DOMAIN_AUC_FLAG_THRESHOLD = 0.9
 MAX_ROWS_PER_SIDE = 50_000

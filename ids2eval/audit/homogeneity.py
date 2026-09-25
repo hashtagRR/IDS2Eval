@@ -17,7 +17,7 @@ from scipy.stats import mannwhitneyu
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 
-from .. import features
+from ..data import features
 
 SAMPLE_SIZE = 500
 MIN_CLASS_SIZE = 20

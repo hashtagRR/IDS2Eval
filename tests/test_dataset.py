@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from ids2eval import dataset
+from ids2eval.data import dataset
 
 
 def test_load_split_pre_split_files(tmp_path, base_cfg):

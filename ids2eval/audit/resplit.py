@@ -19,7 +19,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-from .. import dataset, features
+from ..data import dataset, features
 
 MAX_FIT_ROWS = 200_000
 # A grouped-split accuracy drop below this is read as "structurally

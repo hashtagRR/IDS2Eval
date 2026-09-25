@@ -12,11 +12,12 @@ from pathlib import Path
 
 import numpy as np
 
-from . import cache, dataset, drift, run_manager, scorecard
 from .audit import STRUCTURAL_CHECKS, run_audit
-from .benchmark import run_benchmark
 from .config import load_config
-from .label_grouping import apply_attack_type_mapping
+from .data import cache, dataset
+from .data.label_grouping import apply_attack_type_mapping
+from .modeling.benchmark import run_benchmark
+from .reporting import drift, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
@@ -133,7 +134,7 @@ def main(argv=None) -> None:
 
             has_plot = cfg["output"]["write_scorecard_plot"]
             if has_plot:
-                from . import scorecard_plot
+                from .reporting import scorecard_plot
                 scorecard_plot.render(sc, final_findings, run_dir / "scorecard.pdf", run_dir / "scorecard.png")
                 logger.info("Scorecard plot written to %s / .png", run_dir / "scorecard.pdf")
 

@@ -165,7 +165,7 @@ def test_cli_second_run_loads_from_cache_not_raw_files(tmp_path, synth_data, mon
     main(["--config", str(config_path)])  # first run: populates the cache
     assert (output_dir / ".cache" / "manifest.json").exists()
 
-    from ids2eval import dataset as dataset_module
+    from ids2eval.data import dataset as dataset_module
 
     def _boom(cfg):
         raise AssertionError("load_split should not be called on a cache hit")

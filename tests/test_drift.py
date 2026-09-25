@@ -1,6 +1,6 @@
 import json
 
-from ids2eval import drift
+from ids2eval.reporting import drift
 
 
 def _write_scorecard(run_dir, overall_status, checks, train_hash="abc", test_hash="def"):

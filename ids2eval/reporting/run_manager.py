@@ -20,7 +20,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from . import features, version_info
+from .. import version_info
+from ..data import features
 
 RUNS_DIRNAME = "runs"
 

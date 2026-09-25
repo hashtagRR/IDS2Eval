@@ -16,7 +16,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from .. import features
+from ..data import features
 
 # A feature with fewer unique values than this (or zero variance for a
 # numeric column) is flagged as carrying little-to-no signal.

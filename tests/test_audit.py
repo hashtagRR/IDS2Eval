@@ -301,7 +301,7 @@ def test_label_conflict_check_is_masked_after_dedup(base_cfg):
     # Documents the real behavior described in the module docstring: dedup already
     # ignores the label column when grouping duplicates, so it collapses a conflict
     # to a single arbitrarily-kept row before this check ever sees it.
-    from ids2eval import dataset
+    from ids2eval.data import dataset
 
     df = pd.DataFrame({
         "F1": [1.0, 1.0, 2.0],

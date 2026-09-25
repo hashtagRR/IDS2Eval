@@ -35,8 +35,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-from .. import run_manager
 from ..config import load_config
+from ..reporting import run_manager
 
 logger = logging.getLogger(__name__)
 

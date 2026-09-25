@@ -12,7 +12,7 @@ from __future__ import annotations
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
-from .. import features
+from ..data import features
 from ._auc import robust_auc
 
 # A single feature carrying more than this share of total split

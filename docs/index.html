@@ -297,9 +297,9 @@
       </p>
       <div class="hero-facts">
         <div class="fact"><div class="num">16</div><div class="label">Audit checks</div></div>
-        <div class="fact"><div class="num">5</div><div class="label">Real IDS datasets validated</div></div>
-        <div class="fact"><div class="num">193</div><div class="label">Tests, CI-gated</div></div>
-        <div class="fact"><div class="num">19.9M</div><div class="label">Rows processed across all five</div></div>
+        <div class="fact"><div class="num">7</div><div class="label">Real IDS datasets validated</div></div>
+        <div class="fact"><div class="num">194</div><div class="label">Tests, CI-gated</div></div>
+        <div class="fact"><div class="num">63.5M</div><div class="label">Rows processed across all seven</div></div>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">View on GitHub</a>
@@ -508,11 +508,11 @@
 <section id="proof" class="wrap">
   <div class="eyebrow">04 · proven on real data</div>
   <h2 class="h">Run against the actual datasets, not stand-ins.</h2>
-  <p class="sub">193 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against five real, published NIDS datasets, three of them found something worth fixing.</p>
+  <p class="sub">194 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against seven real, published NIDS datasets, four of them failing the audit outright.</p>
   <div class="stat-row">
-    <div class="fact"><div class="num">16.2M</div><div class="label">Rows chunk-loaded, 3GB peak memory</div></div>
+    <div class="fact"><div class="num">30.4M</div><div class="label">BoT-IoT flows scanned, 500K kept</div></div>
     <div class="fact"><div class="num">2.83M</div><div class="label">CIC-IDS2017 flows audited in full</div></div>
-    <div class="fact"><div class="num">3 / 5</div><div class="label">Real datasets that failed the audit</div></div>
+    <div class="fact"><div class="num">4 / 7</div><div class="label">Real datasets that failed the audit</div></div>
     <div class="fact"><div class="num">0.003pp</div><div class="label">Resplit falsification's margin</div></div>
   </div>
   <div class="proof-grid">
@@ -536,6 +536,14 @@
       <h4>CICDDoS2019</h4>
       <p>Both collection days, 431K flows. <code>label_conflict_check</code> found 5,623 feature vectors mapping to more than one label, all resolved by dedup.</p>
     </div>
+    <div class="proof-item">
+      <h4>ToN-IoT</h4>
+      <p>NetFlow-V2 release, 13.1M flows scanned. <code>identity_column_flag</code> reproduces the same destination-port shortcut (AUC 0.896) on IoT traffic from a different lab entirely.</p>
+    </div>
+    <div class="proof-item">
+      <h4>BoT-IoT</h4>
+      <p>NetFlow-V2 release, 30.4M flows scanned. <code>known_issue_lookup</code> flags under 1% benign traffic, and the sample shows it: 37 Theft rows out of 400K train.</p>
+    </div>
   </div>
   <p class="sub" style="text-align:center; margin-top:28px">
     Real scorecards, checked into the repo as-is, not mockups:
@@ -543,7 +551,9 @@
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/nsl-kdd-scorecard/SCORECARD.html">NSL-KDD</a>,
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2017-scorecard/SCORECARD.html">CIC-IDS2017</a>,
     <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2018-scorecard/SCORECARD.html">CSE-CIC-IDS2018</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ddos2019-scorecard/SCORECARD.html">CICDDoS2019</a>.
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ddos2019-scorecard/SCORECARD.html">CICDDoS2019</a>,
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/ton-iot-scorecard/SCORECARD.html">ToN-IoT</a>,
+    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/bot-iot-scorecard/SCORECARD.html">BoT-IoT</a>.
     <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples">Every artifact behind them →</a>
   </p>
 </section>

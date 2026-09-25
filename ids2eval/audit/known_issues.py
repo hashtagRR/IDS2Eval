@@ -23,6 +23,17 @@ KNOWN_ISSUES = {
             "citation": "Liu et al. 2022, IEEE CNS",
         },
     ],
+    "bot-iot": [
+        {
+            "issue": "The full dataset is over 99.9% attack traffic (benign flows are "
+                     "129,437 of 30,420,086 rows, 0.43%), an order of magnitude more "
+                     "skewed than most NIDS datasets; a uniform row-level sample may "
+                     "carry very few or zero benign rows, and a classifier's accuracy "
+                     "on this data mostly reflects its attack-vs-attack discrimination, "
+                     "not its ability to recognize normal traffic.",
+            "citation": "Koroniotis et al. 2019, Future Generation Computer Systems",
+        },
+    ],
     "cic-ddos2019": [
         {
             "issue": "By design, the two collection days cover different attack sets: "

@@ -1,0 +1,21 @@
+{
+  "train_rows": 400000,
+  "test_rows": 100000,
+  "feature_count": 41,
+  "train_class_distribution": {
+    "DDoS": 187394,
+    "DoS": 179736,
+    "Reconnaissance": 31122,
+    "Benign": 1711,
+    "Theft": 37
+  },
+  "test_class_distribution": {
+    "DDoS": 46848,
+    "DoS": 44934,
+    "Reconnaissance": 7781,
+    "Benign": 428,
+    "Theft": 9
+  },
+  "train_content_hash": "195acbd1258af37d422916d1c46863eb7c8267976b1196fdfc39f187b7f05d1e",
+  "test_content_hash": "df600d41362e37f20cf37a9857a716a8b31c531ccf4084faf2e7e3744ac80ef0"
+}

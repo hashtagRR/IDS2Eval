@@ -129,6 +129,15 @@ def test_known_issue_lookup_matches_substring(base_cfg):
     assert "Liu et al. 2022" in result["summary"]
 
 
+def test_known_issue_lookup_bot_iot_flags_benign_scarcity(base_cfg):
+    base_cfg["dataset"]["name"] = "bot-iot"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert result["status"] == "warning"
+    assert len(result["details"]["matches"]) == 1
+    assert "0.43%" in result["summary"]
+    assert "Koroniotis et al. 2019" in result["summary"]
+
+
 def test_known_issue_lookup_cic_ddos2019_has_two_curated_issues(base_cfg):
     base_cfg["dataset"]["name"] = "cic-ddos2019"
     result = known_issues.check(pd.DataFrame(), base_cfg)

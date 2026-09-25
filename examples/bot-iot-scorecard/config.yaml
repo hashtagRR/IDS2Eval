@@ -1,0 +1,26 @@
+# NF-BoT-IoT-V2 (University of Queensland NetFlow-V2 conversion of BoT-IoT,
+# 30.4M flows). Too large for this 7.8GB VM in full: a uniform 500K-row
+# reservoir sample (seeded, reproducible), split 80/20 at random (stratified).
+# `Label` is the dataset's own binary 0/1 target for the same rows `Attack`
+# already labels multi-class (with 'Benign' as the negative class) - dropped
+# so it can't leak the answer as a feature. Benign traffic is only 0.43% of
+# the full dataset (129,437 of 30,420,086 rows), so the reservoir sample may
+# carry very few benign rows - see known_issue_lookup below.
+dataset:
+  name: bot-iot
+  raw_files:
+    - /home/tango/projects/IDS2Eval_data/bot-iot/nf-bot-iot-v2.csv.gz
+  split_ratio: 0.8
+  chunk_size: 100000
+  max_rows: 500000
+schema:
+  label_column: Attack
+  drop_columns: [Label]
+  id_like_columns: [L4_DST_PORT]
+audit:
+  resplit_falsification: false   # no session/host columns in this NetFlow-V2 release
+  known_issue_lookup: true
+output:
+  dir: /home/tango/projects/IDS2Eval_data/output/bot-iot
+  save_preprocessed: false
+  write_scorecard_plot: false

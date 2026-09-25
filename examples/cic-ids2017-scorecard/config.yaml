@@ -1,0 +1,24 @@
+# CIC-IDS2017 MachineLearningCSV (all 8 day-files, ~2.83M flows), loaded in full
+# and split 80/20 at random (stratified). No IP/session columns in this release.
+dataset:
+  name: cic-ids2017
+  raw_files:
+    - Monday-WorkingHours.pcap_ISCX.csv.gz
+    - Tuesday-WorkingHours.pcap_ISCX.csv.gz
+    - Wednesday-workingHours.pcap_ISCX.csv.gz
+    - Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz
+    - Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz
+    - Friday-WorkingHours-Morning.pcap_ISCX.csv.gz
+    - Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz
+    - Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz
+  split_ratio: 0.8
+  chunk_size: 200000
+schema:
+  label_column: Label
+  id_like_columns: [Destination Port]
+audit:
+  resplit_falsification: false
+  known_issue_lookup: true
+output:
+  save_preprocessed: false
+  write_scorecard_plot: true

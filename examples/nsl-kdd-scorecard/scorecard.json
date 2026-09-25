@@ -1,15 +1,15 @@
 {
   "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T06:00:59.428268+00:00",
-  "dataset_name": "unsw-nb15",
+  "generated_at": "2026-09-25T06:02:07.476147+00:00",
+  "dataset_name": "nsl-kdd",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
   "audit_stage": "after",
-  "overall_status": "passed_with_warnings",
+  "overall_status": "failed",
   "counts": {
-    "ok": 11,
-    "warning": 1,
-    "flag": 0
+    "ok": 9,
+    "warning": 2,
+    "flag": 1
   },
   "findings": [
     {
@@ -25,12 +25,12 @@
     {
       "check": "leakage_screen",
       "status": "ok",
-      "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)"
+      "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)"
     },
     {
       "check": "one_rule_check",
       "status": "ok",
-      "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)"
+      "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)"
     },
     {
       "check": "identity_column_flag",
@@ -44,13 +44,13 @@
     },
     {
       "check": "homogeneity_test",
-      "status": "ok",
-      "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      "status": "flag",
+      "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']"
     },
     {
       "check": "class_distribution_report",
-      "status": "ok",
-      "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+      "status": "warning",
+      "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
     },
     {
       "check": "low_cardinality_warning",
@@ -64,13 +64,13 @@
     },
     {
       "check": "data_integrity_check",
-      "status": "ok",
-      "summary": "no missing labels, constant features, or +-inf values found"
+      "status": "warning",
+      "summary": "1 constant/near-constant feature(s)"
     },
     {
       "check": "known_issue_lookup",
-      "status": "warning",
-      "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+      "status": "ok",
+      "summary": "no curated known issues for dataset 'nsl-kdd'"
     }
   ],
   "checks": [
@@ -79,7 +79,7 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147"
+        "summary": "train duplicates: 16 (0.01%); test rows leaking a train feature-match: 664 (2.95%); test-internal duplicates: 47"
       },
       "after": {
         "status": "ok",
@@ -91,7 +91,7 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test"
+        "summary": "116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test"
       },
       "after": {
         "status": "ok",
@@ -103,11 +103,11 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)"
+        "summary": "no single feature or pair dominates importance (top1=14.1%, top2=25.0%)"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)"
+        "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)"
       }
     },
     {
@@ -115,11 +115,11 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train)"
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)"
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)"
       }
     },
     {
@@ -150,24 +150,24 @@
       "check": "homogeneity_test",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']"
       },
       "after": {
-        "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']"
       }
     },
     {
       "check": "class_distribution_report",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1"
+        "status": "warning",
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
       },
       "after": {
-        "status": "ok",
-        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+        "status": "warning",
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
       }
     },
     {
@@ -198,47 +198,47 @@
       "check": "data_integrity_check",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "status": "warning",
+        "summary": "1 constant/near-constant feature(s)"
       },
       "after": {
-        "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "status": "warning",
+        "summary": "1 constant/near-constant feature(s)"
       }
     },
     {
       "check": "known_issue_lookup",
       "category": "known_issue",
       "before": {
-        "status": "warning",
-        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'nsl-kdd'"
       },
       "after": {
-        "status": "warning",
-        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'nsl-kdd'"
       }
     }
   ],
   "dedup_effect": {
-    "train_rows_raw": 175341,
-    "train_rows_deduped": 101040,
-    "train_duplicates_dropped": 74301,
-    "test_rows_raw": 82332,
-    "test_rows_deduped": 52644,
-    "test_leakage_dropped": 8541,
-    "test_duplicates_dropped": 21147
+    "train_rows_raw": 125973,
+    "train_rows_deduped": 125957,
+    "train_duplicates_dropped": 16,
+    "test_rows_raw": 22544,
+    "test_rows_deduped": 21833,
+    "test_leakage_dropped": 664,
+    "test_duplicates_dropped": 47
   },
   "dataset_fingerprint": {
-    "train_rows": 175341,
-    "test_rows": 82332,
-    "feature_count": 42,
-    "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
-    "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
+    "train_rows": 125973,
+    "test_rows": 22544,
+    "feature_count": 41,
+    "train_content_hash": "8c7cf0a516450d17a5426bfb0efcf6839fb28ebaadf494f32c59e1d29bb25441",
+    "test_content_hash": "cffa47019c555661fc1d3d2b2b45f11ead633d0dcadf618718c44c6e926916d0"
   },
   "previous_run_comparison": {
-    "previous_run": "2026-09-25_044529_426970",
-    "previous_generated_at": "2026-09-25T04:47:40.587778+00:00",
-    "previous_verdict": "passed_with_warnings",
+    "previous_run": "2026-09-25_044551_511525",
+    "previous_generated_at": "2026-09-25T04:47:35.312474+00:00",
+    "previous_verdict": "failed",
     "fingerprint_changed": false,
     "changed_checks": []
   }

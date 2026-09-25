@@ -1,0 +1,245 @@
+{
+  "scorecard_schema_version": "1.1",
+  "generated_at": "2026-09-25T06:06:34.707545+00:00",
+  "dataset_name": "cic-ids2018",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
+  "audit_stage": "after",
+  "overall_status": "failed",
+  "counts": {
+    "ok": 7,
+    "warning": 3,
+    "flag": 2
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=8.6%, top2=15.4%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'TotLen Fwd Pkts <= 21' reaches 86.9% test accuracy (86.2% train)"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "flag",
+      "summary": "standalone AUC by column: {'Dst Port': 0.912}. Suggest dropping: ['Dst Port']"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "flag",
+      "summary": "9 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot', 'DoS attacks-Slowloris']"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "15 classes, train imbalance ratio (majority:minority) = 149712:1; classes below 1% of train: ['SSH-Bruteforce', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'DoS attacks-SlowHTTPTest', 'FTP-BruteForce', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "unique values by column: {'Dst Port': 24978}"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "warning",
+      "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS)"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 52,584 (13.15%); test rows leaking a train feature-match: 16,882 (16.88%); test-internal duplicates: 555"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "882 feature vector(s) (15,194 rows, 3.04%) map to more than one label. The ground truth contradicts itself for these rows; 481 of these span train and test"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=8.9%, top2=16.4%)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=8.6%, top2=15.4%)"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'Fwd Seg Size Min <= 30' reaches 83.0% test accuracy (83.2% train)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'TotLen Fwd Pkts <= 21' reaches 86.9% test accuracy (86.2% train)"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Dst Port': 0.925}. Suggest dropping: ['Dst Port']"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Dst Port': 0.912}. Suggest dropping: ['Dst Port']"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "11 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "9 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot', 'DoS attacks-Slowloris']"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 166034:1; classes below 1% of train: ['DoS attacks-SlowHTTPTest', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 149712:1; classes below 1% of train: ['SSH-Bruteforce', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'DoS attacks-SlowHTTPTest', 'FTP-BruteForce', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "unique values by column: {'Dst Port': 24978}"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "unique values by column: {'Dst Port': 24978}"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no known extractor signature matched"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no known extractor signature matched"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS)"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 400000,
+    "train_rows_deduped": 347416,
+    "train_duplicates_dropped": 52584,
+    "test_rows_raw": 100000,
+    "test_rows_deduped": 82563,
+    "test_leakage_dropped": 16882,
+    "test_duplicates_dropped": 555
+  },
+  "dataset_fingerprint": {
+    "train_rows": 400000,
+    "test_rows": 100000,
+    "feature_count": 78,
+    "train_content_hash": "d659a2f4841244f0beca91dbcf0f247f0ea8b4321167c34322a68319961cc886",
+    "test_content_hash": "a993f8e271abf51a2d9ceb601b871397dbd5c8f202230779356987433c3cf281"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-25_050425_506441",
+    "previous_generated_at": "2026-09-25T05:08:46.798089+00:00",
+    "previous_verdict": "failed",
+    "fingerprint_changed": false,
+    "changed_checks": []
+  }
+}

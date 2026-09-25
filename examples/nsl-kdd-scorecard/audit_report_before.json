@@ -1,0 +1,338 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "flag",
+    "summary": "train duplicates: 16 (0.01%); test rows leaking a train feature-match: 664 (2.95%); test-internal duplicates: 47",
+    "details": {
+      "train_rows_raw": 125973,
+      "train_rows_deduped": 125957,
+      "train_duplicates_dropped": 16,
+      "test_rows_raw": 22544,
+      "test_rows_deduped": 21833,
+      "test_leakage_dropped": 664,
+      "test_duplicates_dropped": 47
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "flag",
+    "summary": "116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test",
+    "details": {
+      "conflicting_groups": 116,
+      "conflicting_rows": 247,
+      "cross_split_conflicting_groups": 58
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=14.1%, top2=25.0%)",
+    "details": {
+      "top_features": {
+        "same_srv_rate": 0.14076366726724512,
+        "src_bytes": 0.10892420899298134,
+        "diff_srv_rate": 0.09063826001175089,
+        "flag": 0.0784260803241828,
+        "count": 0.051010539852858645
+      },
+      "top1_share": 0.14076366726724512,
+      "top2_share": 0.24968787626022648
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)",
+    "details": {
+      "rule": "same_srv_rate <= 0.495",
+      "train_accuracy": 0.8395767346971177,
+      "test_accuracy": 0.6269517388218595
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "flag",
+    "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']",
+    "details": {
+      "per_class": {
+        "normal": {
+          "test_near_zero_rate": 0.024,
+          "control_near_zero_rate": 0.036,
+          "p_value": 0.3611435343972467,
+          "leakage_signature": false
+        },
+        "neptune": {
+          "test_near_zero_rate": 0.038,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999999999999964,
+          "leakage_signature": false
+        },
+        "satan": {
+          "test_near_zero_rate": 0.012,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "ipsweep": {
+          "test_near_zero_rate": 0.6879432624113475,
+          "control_near_zero_rate": 0.0,
+          "p_value": 9.150868557394903e-28,
+          "leakage_signature": true
+        },
+        "portsweep": {
+          "test_near_zero_rate": 0.11464968152866242,
+          "control_near_zero_rate": 0.002,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "smurf": {
+          "test_near_zero_rate": 0.312,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.7893841009731437e-32,
+          "leakage_signature": true
+        },
+        "nmap": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.008,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "back": {
+          "test_near_zero_rate": 0.04178272980501393,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "pod": {
+          "test_near_zero_rate": 0.5121951219512195,
+          "control_near_zero_rate": 0.004975124378109453,
+          "p_value": 0.12179042815601371,
+          "leakage_signature": false
+        },
+        "guess_passwd": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "buffer_overflow": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999892420246862,
+          "leakage_signature": false
+        },
+        "warezmaster": {
+          "test_near_zero_rate": 0.002,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999999981642184,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']",
+    "details": {
+      "train": {
+        "counts": {
+          "normal": 67343,
+          "neptune": 41214,
+          "satan": 3633,
+          "ipsweep": 3599,
+          "portsweep": 2931,
+          "smurf": 2646,
+          "nmap": 1493,
+          "back": 956,
+          "teardrop": 892,
+          "warezclient": 890,
+          "pod": 201,
+          "guess_passwd": 53,
+          "buffer_overflow": 30,
+          "warezmaster": 20,
+          "land": 18,
+          "imap": 11,
+          "rootkit": 10,
+          "loadmodule": 9,
+          "ftp_write": 8,
+          "multihop": 7,
+          "phf": 4,
+          "perl": 3,
+          "spy": 2
+        },
+        "shares": {
+          "normal": 0.5345828074269883,
+          "neptune": 0.32716534495487126,
+          "satan": 0.028839513229025268,
+          "ipsweep": 0.028569614123661418,
+          "portsweep": 0.02326689052415994,
+          "smurf": 0.02100450096449239,
+          "nmap": 0.011851746009065434,
+          "back": 0.0075889277861128975,
+          "teardrop": 0.00708088241131036,
+          "warezclient": 0.007065005993347781,
+          "pod": 0.001595580005239218,
+          "guess_passwd": 0.000420725076008351,
+          "buffer_overflow": 0.00023814626943868925,
+          "warezmaster": 0.00015876417962579282,
+          "land": 0.00014288776166321355,
+          "imap": 8.732029879418606e-05,
+          "rootkit": 7.938208981289641e-05,
+          "loadmodule": 7.144388083160678e-05,
+          "ftp_write": 6.350567185031713e-05,
+          "multihop": 5.556746286902749e-05,
+          "phf": 3.1752835925158565e-05,
+          "perl": 2.3814626943868923e-05,
+          "spy": 1.5876417962579282e-05
+        }
+      },
+      "test": {
+        "counts": {
+          "normal": 9711,
+          "neptune": 4657,
+          "guess_passwd": 1231,
+          "mscan": 996,
+          "warezmaster": 944,
+          "apache2": 737,
+          "satan": 735,
+          "processtable": 685,
+          "smurf": 665,
+          "back": 359,
+          "snmpguess": 331,
+          "saint": 319,
+          "mailbomb": 293,
+          "snmpgetattack": 178,
+          "portsweep": 157,
+          "ipsweep": 141,
+          "httptunnel": 133,
+          "nmap": 73,
+          "pod": 41,
+          "buffer_overflow": 20,
+          "multihop": 18,
+          "named": 17,
+          "ps": 15,
+          "sendmail": 14,
+          "xterm": 13,
+          "rootkit": 13,
+          "teardrop": 12,
+          "xlock": 9,
+          "land": 7,
+          "xsnoop": 4,
+          "ftp_write": 3,
+          "loadmodule": 2,
+          "worm": 2,
+          "perl": 2,
+          "sqlattack": 2,
+          "udpstorm": 2,
+          "phf": 2,
+          "imap": 1
+        },
+        "shares": {
+          "normal": 0.43075762952448543,
+          "neptune": 0.2065738112136267,
+          "guess_passwd": 0.054604329311568486,
+          "mscan": 0.04418026969481902,
+          "warezmaster": 0.04187366926898509,
+          "apache2": 0.032691625266146204,
+          "satan": 0.03260290986515259,
+          "processtable": 0.030385024840312278,
+          "smurf": 0.029497870830376152,
+          "back": 0.01592441447835344,
+          "snmpguess": 0.014682398864442867,
+          "saint": 0.014150106458481193,
+          "mailbomb": 0.01299680624556423,
+          "snmpgetattack": 0.007895670688431512,
+          "portsweep": 0.00696415897799858,
+          "ipsweep": 0.00625443577004968,
+          "httptunnel": 0.00589957416607523,
+          "nmap": 0.003238112136266856,
+          "pod": 0.001818665720369056,
+          "buffer_overflow": 0.0008871540099361249,
+          "multihop": 0.0007984386089425125,
+          "named": 0.0007540809084457062,
+          "ps": 0.0006653655074520937,
+          "sendmail": 0.0006210078069552874,
+          "xterm": 0.0005766501064584812,
+          "rootkit": 0.0005766501064584812,
+          "teardrop": 0.0005322924059616749,
+          "xlock": 0.00039921930447125623,
+          "land": 0.0003105039034776437,
+          "xsnoop": 0.000177430801987225,
+          "ftp_write": 0.00013307310149041873,
+          "loadmodule": 8.87154009936125e-05,
+          "worm": 8.87154009936125e-05,
+          "perl": 8.87154009936125e-05,
+          "sqlattack": 8.87154009936125e-05,
+          "udpstorm": 8.87154009936125e-05,
+          "phf": 8.87154009936125e-05,
+          "imap": 4.435770049680625e-05
+        }
+      },
+      "imbalance_ratio": 33671.5,
+      "rare_classes": [
+        "back",
+        "teardrop",
+        "warezclient",
+        "pod",
+        "guess_passwd",
+        "buffer_overflow",
+        "warezmaster",
+        "land",
+        "imap",
+        "rootkit",
+        "loadmodule",
+        "ftp_write",
+        "multihop",
+        "phf",
+        "perl",
+        "spy"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "1 constant/near-constant feature(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": [
+        "num_outbound_cmds"
+      ]
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "ok",
+    "summary": "no curated known issues for dataset 'nsl-kdd'",
+    "details": {
+      "matches": []
+    }
+  }
+]

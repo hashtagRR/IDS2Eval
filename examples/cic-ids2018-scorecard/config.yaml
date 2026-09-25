@@ -1,0 +1,29 @@
+# CSE-CIC-IDS2018 "Processed Traffic Data for ML Algorithms" (all 10 day-files,
+# 16.2M flows). Too large for this 7.8GB VM in full: a uniform 500K-row
+# reservoir sample (seeded, reproducible), split 80/20 at random (stratified).
+dataset:
+  name: cic-ids2018
+  raw_files:
+    - Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz
+    - Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz
+  split_ratio: 0.8
+  chunk_size: 100000
+  max_rows: 500000
+schema:
+  label_column: Label
+  drop_columns: [Timestamp]
+  id_like_columns: [Dst Port]
+audit:
+  resplit_falsification: false   # IP columns exist in only 1 of the 10 day-files
+  known_issue_lookup: true
+output:
+  save_preprocessed: false
+  write_scorecard_plot: true

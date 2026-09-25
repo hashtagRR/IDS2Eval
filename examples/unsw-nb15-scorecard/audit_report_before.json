@@ -14,6 +14,16 @@
     }
   },
   {
+    "check": "label_conflict_check",
+    "status": "flag",
+    "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test",
+    "details": {
+      "conflicting_groups": 414,
+      "conflicting_rows": 1758,
+      "cross_split_conflicting_groups": 279
+    }
+  },
+  {
     "check": "leakage_screen",
     "status": "ok",
     "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)",
@@ -30,9 +40,25 @@
     }
   },
   {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train)",
+    "details": {
+      "rule": "sttl <= 61",
+      "train_accuracy": 0.9206289458825945,
+      "test_accuracy": 0.7663241509983967
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "ok",
     "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
     "details": {}
   },
   {
@@ -44,7 +70,7 @@
         "Normal": {
           "test_near_zero_rate": 0.034,
           "control_near_zero_rate": 0.144,
-          "p_value": 0.9999999999999984,
+          "p_value": 0.9999999999999986,
           "leakage_signature": false
         },
         "Generic": {
@@ -74,7 +100,7 @@
         "Reconnaissance": {
           "test_near_zero_rate": 0.352,
           "control_near_zero_rate": 0.47,
-          "p_value": 0.9984507729321201,
+          "p_value": 0.999332658782836,
           "leakage_signature": false
         },
         "Analysis": {
@@ -92,13 +118,13 @@
         "Shellcode": {
           "test_near_zero_rate": 0.03439153439153439,
           "control_near_zero_rate": 0.094,
-          "p_value": 0.9587398745501322,
+          "p_value": 0.9594594876471363,
           "leakage_signature": false
         },
         "Worms": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.1,
-          "p_value": 0.806218033884419,
+          "p_value": 0.8062074882286356,
           "leakage_signature": false
         }
       }
@@ -159,11 +185,11 @@
   {
     "check": "known_issue_lookup",
     "status": "warning",
-    "summary": "1 known issue(s) curated for dataset 'unsw-nb15'",
+    "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
     "details": {
       "matches": [
         {
-          "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows) \u2014 verify against the published per-attack-category counts before trusting file names.",
+          "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names.",
           "citation": "Independently verified in this project's own audit methodology"
         }
       ]

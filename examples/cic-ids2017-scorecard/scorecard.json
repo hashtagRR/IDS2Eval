@@ -1,0 +1,245 @@
+{
+  "scorecard_schema_version": "1.1",
+  "generated_at": "2026-09-25T05:33:39.674860+00:00",
+  "dataset_name": "cic-ids2017",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
+  "audit_stage": "after",
+  "overall_status": "failed",
+  "counts": {
+    "ok": 7,
+    "warning": 3,
+    "flag": 2
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=6.7%, top2=12.7%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 90.0% test accuracy (89.0% train)"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "flag",
+      "summary": "standalone AUC by column: {'Destination Port': 0.929}. Suggest dropping: ['Destination Port']"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "flag",
+      "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['DoS Slowhttptest']"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "15 classes, train imbalance ratio (majority:minority) = 185530:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "unique values by column: {'Destination Port': 51291}"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "warning",
+      "summary": "matched extractor signature(s): ['CICFlowMeter']"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "ok",
+      "summary": "no curated known issues for dataset 'cic-ids2017'"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 247,799 (10.94%); test rows leaking a train feature-match: 81,604 (14.41%); test-internal duplicates: 2,516"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "719 feature vector(s) (7,144 rows, 0.25%) map to more than one label. The ground truth contradicts itself for these rows; 335 of these span train and test"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=6.4%, top2=11.3%)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=6.7%, top2=12.7%)"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 85.6% test accuracy (85.6% train)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 90.0% test accuracy (89.0% train)"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Destination Port': 0.931}. Suggest dropping: ['Destination Port']"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Destination Port': 0.929}. Suggest dropping: ['Destination Port']"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['DoS Slowhttptest']"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 202053:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 185530:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "unique values by column: {'Destination Port': 51291}"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "unique values by column: {'Destination Port': 51291}"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'cic-ids2017'"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'cic-ids2017'"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 2264594,
+    "train_rows_deduped": 2016795,
+    "train_duplicates_dropped": 247799,
+    "test_rows_raw": 566149,
+    "test_rows_deduped": 482029,
+    "test_leakage_dropped": 81604,
+    "test_duplicates_dropped": 2516
+  },
+  "dataset_fingerprint": {
+    "train_rows": 2264594,
+    "test_rows": 566149,
+    "feature_count": 78,
+    "train_content_hash": "5864fd3ca0c2d57589584902c07a712bd806130c638ac6d48626969975b9a362",
+    "test_content_hash": "722dafecb77262e4a8661066ff0cd478cf1574faa31ebb8bfc987d5ae3673eea"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-24_181734_277650",
+    "previous_generated_at": "2026-09-24T18:26:33.452354+00:00",
+    "previous_verdict": "failed",
+    "fingerprint_changed": false,
+    "changed_checks": []
+  }
+}

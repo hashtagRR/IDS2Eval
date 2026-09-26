@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TDP74VH8EE"></script>
@@ -12,628 +12,1736 @@
 
   gtag('config', 'G-TDP74VH8EE');
 </script>
-<title>IDS2Eval: dataset quality, checked, not assumed</title>
-<meta name="description" content="A config-driven data-quality-audit and benchmarking toolkit for network intrusion detection datasets.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f172a%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22%2314b8a6%22/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>IDS²Eval ,  Audit the benchmark, not just the model</title>
+<meta name="description" content="IDS²Eval audits NIDS datasets for leakage, duplication, identity shortcuts and split fragility before benchmark scores are trusted.">
+<meta name="theme-color" content="#edf2ec">
 <style>
-  :root {
-    --paper: #f4f2ec;
-    --surface: #ffffff;
-    --surface-2: #ebe8df;
-    --ink: #16181c;
-    --muted: #5b5f6a;
-    --line: #d9d5c9;
-    --accent: #0d8f82;
-    --accent-soft: #d9f0ec;
-    --ok: #1a7f4e;
-    --warning: #a15c00;
-    --flag: #b3261e;
-    --code-bg: #14181c;
-    --code-fg: #d7dbdf;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #101317;
-      --surface: #171a1f;
-      --surface-2: #1d2126;
-      --ink: #e8e9ea;
-      --muted: #9aa0aa;
-      --line: #2b2f36;
-      --accent: #2dd4c4;
-      --accent-soft: #123531;
-      --ok: #4ade80;
-      --warning: #f2b84b;
-      --flag: #f2726b;
-      --code-bg: #0b0d10;
-      --code-fg: #d7dbdf;
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper: #101317;
-    --surface: #171a1f;
-    --surface-2: #1d2126;
-    --ink: #e8e9ea;
-    --muted: #9aa0aa;
-    --line: #2b2f36;
-    --accent: #2dd4c4;
-    --accent-soft: #123531;
-    --ok: #4ade80;
-    --warning: #f2b84b;
-    --flag: #f2726b;
-    --code-bg: #0b0d10;
-    --code-fg: #d7dbdf;
-  }
+:root{
+  --bg:#edf2ec;
+  --bg-soft:#f7faf6;
+  --surface:#ffffff;
+  --surface-2:#f2f6f1;
+  --ink:#18231d;
+  --ink-soft:#43534b;
+  --line:#d7e1d9;
+  --green:#1f8f5f;
+  --green-2:#2fa56f;
+  --green-soft:#e7f5ec;
+  --amber:#b8821b;
+  --amber-soft:#fbf3e3;
+  --red:#b84f43;
+  --red-soft:#f9e9e6;
+  --max:1240px;
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(900px 460px at 76% -80px, rgba(47,165,111,.10), transparent 70%),
+    linear-gradient(180deg,var(--bg-soft),var(--bg));
+  line-height:1.56;
+}
+a{color:inherit}
+::selection{background:var(--green);color:white}
+.wrap{width:min(var(--max),calc(100% - 42px));margin:auto}
+.mono{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
 
-  * { box-sizing: border-box; }
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "IBM Plex Sans", -apple-system, sans-serif;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
-  a { color: var(--accent); }
-  code, .mono { font-family: "IBM Plex Mono", monospace; }
+.site-nav{
+  position:sticky;top:0;z-index:90;
+  border-bottom:1px solid rgba(24,35,29,.07);
+  background:rgba(247,250,246,.84);
+  backdrop-filter:blur(16px);
+}
+.nav-row{height:70px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.03em}
+.logo-bug{
+  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+  background:var(--surface);border:1px solid var(--line);color:var(--green);
+  font:700 13px/1 monospace; box-shadow:0 4px 16px rgba(0,0,0,.04);
+}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:21px}
+.nav-links a{text-decoration:none;color:#506056;font-size:.82rem;font-weight:700}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{
+  padding:9px 13px;border:1px solid var(--line);border-radius:10px!important;background:var(--surface);color:var(--ink)!important
+}
 
-  /* topbar */
-  .topbar {
-    position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-  }
-  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.02rem; text-decoration: none; color: var(--ink); }
-  .brand .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); display: inline-block; flex: none; }
-  nav.links { display: flex; gap: 26px; }
-  nav.links a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 500; }
-  nav.links a:hover { color: var(--accent); }
-  @media (max-width: 720px) { nav.links { display: none; } }
+.hero{padding:74px 0 54px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(440px,.98fr);gap:56px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font:700 .72rem/1.2 monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--green)
+}
+.eyebrow:before{content:"";width:34px;height:1px;background:var(--green)}
+h1{
+  font-size:clamp(4.1rem,8.1vw,8rem);
+  line-height:.84;letter-spacing:-.078em;margin:18px 0 24px;
+  max-width:8.2ch;font-weight:850
+}
+h1 .audit{color:var(--green)}
+.hero-copy{max-width:63ch;color:var(--ink-soft);font-size:1.11rem}
+.hero-copy strong{color:var(--ink)}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  padding:12px 16px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);font-size:.88rem;font-weight:800;transition:.2s ease;
+  box-shadow:0 6px 22px rgba(0,0,0,.04)
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:white}
+.micro-proof{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}
+.micro-proof span{
+  padding:7px 10px;border:1px solid var(--line);border-radius:99px;
+  background:rgba(255,255,255,.6);color:#52635a;font:600 .72rem/1 monospace
+}
 
-  .eyebrow {
-    font-family: "IBM Plex Mono", monospace; font-size: .76rem; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px;
-  }
-  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--accent); }
+.audit-object{position:relative;min-height:620px;display:grid;place-items:center}
+.soft-ring{
+  position:absolute;width:560px;height:560px;border-radius:50%;
+  background:
+    radial-gradient(circle at center, rgba(47,165,111,.08), transparent 54%),
+    conic-gradient(from 110deg, transparent 0 56%, rgba(47,165,111,.09) 56% 60%, transparent 60% 100%);
+  border:1px solid rgba(31,143,95,.10);
+}
+.soft-ring:before,.soft-ring:after{
+  content:"";position:absolute;border:1px solid rgba(31,143,95,.08);border-radius:50%
+}
+.soft-ring:before{inset:64px}
+.soft-ring:after{inset:132px}
+.big-score{
+  position:absolute;right:8px;top:-6px;
+  font-size:clamp(7rem,14vw,13rem);line-height:.85;letter-spacing:-.09em;
+  font-weight:900;color:rgba(24,35,29,.05);user-select:none
+}
+.big-score small{font-size:.18em}
+.audit-console{
+  position:relative;z-index:2;width:min(100%,525px);
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:rgba(255,255,255,.92);box-shadow:0 28px 80px rgba(0,0,0,.09)
+}
+.console-top{
+  display:flex;justify-content:space-between;align-items:center;padding:14px 16px;
+  border-bottom:1px solid var(--line);color:#66766d;font:600 .72rem/1.2 monospace;background:var(--bg-soft)
+}
+.live{display:inline-flex;align-items:center;gap:7px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(31,143,95,.35)}
+.console-body{padding:18px}
+.console-kpi{
+  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:end;padding:8px 0 18px;border-bottom:1px solid var(--line)
+}
+.kpi-num{font-size:4.8rem;line-height:.82;letter-spacing:-.08em;font-weight:850;color:var(--red)}
+.kpi-copy{color:#66766d;font-size:.82rem;padding-bottom:4px}
+.audit-lines{padding-top:12px}
+.audit-line{
+  display:grid;grid-template-columns:1.1fr .55fr 1.35fr;gap:10px;align-items:center;
+  padding:10px 0;border-bottom:1px dashed rgba(24,35,29,.08);font:600 .72rem/1.4 monospace
+}
+.audit-line:last-child{border-bottom:0}
+.audit-line .name{color:#233128}.audit-line .detail{color:#6b7c73}
+.flag{color:var(--red)}.warn{color:var(--amber)}.ok{color:var(--green)}
+.console-result{
+  margin-top:14px;padding:13px 14px;border-radius:10px;
+  background:var(--amber-soft);border:1px solid #f0e0b8;color:#7b5c11;font-size:.82rem
+}
+.note{
+  position:absolute;z-index:3;padding:11px 13px;border:1px solid var(--line);border-radius:11px;
+  background:white;color:#627269;font:600 .7rem/1.3 monospace;box-shadow:0 12px 28px rgba(0,0,0,.05)
+}
+.note-a{left:-6px;bottom:74px;transform:rotate(-2deg)}
+.note-b{right:-8px;top:98px;transform:rotate(2deg)}
 
-  section { padding: 78px 0; border-bottom: 1px solid var(--line); }
-  section:last-of-type { border-bottom: none; }
+.proof-rail{border-top:1px solid rgba(24,35,29,.07);border-bottom:1px solid rgba(24,35,29,.07);background:rgba(255,255,255,.45)}
+.proof-row{display:grid;grid-template-columns:1.45fr repeat(4,1fr)}
+.proof-label,.proof-stat{padding:18px 20px;border-right:1px solid rgba(24,35,29,.07)}
+.proof-stat:last-child{border-right:0}
+.proof-label{font-size:.78rem;color:#58685f}
+.proof-stat b{display:block;font-size:1.55rem;letter-spacing:-.04em}
+.proof-stat span{font:600 .67rem/1.2 monospace;color:#6e7c74;text-transform:uppercase;letter-spacing:.07em}
 
-  /* hero */
-  .hero { padding-top: 60px; }
-  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: start; }
-  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
-  .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.2rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; }
-  .hero h1 .accent { color: var(--accent); }
-  .hero p.lede { font-size: 1.08rem; color: var(--muted); max-width: 48ch; margin-top: 18px; }
-  .hero p.name-note {
-    font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--muted);
-    margin-top: 12px; max-width: 48ch;
-  }
-  .hero p.name-note b { color: var(--ink); font-weight: 600; }
-  .hero-facts { display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
-  .fact .num { font-weight: 800; font-size: 1.9rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .fact .label { font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+.section{padding:96px 0;border-bottom:1px solid rgba(24,35,29,.06)}
+.sec-head{display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:start}
+.sec-index{font:700 .72rem/1.2 monospace;color:var(--green);padding-top:9px}
+h2{
+  font-size:clamp(2.6rem,5vw,5rem);line-height:.96;letter-spacing:-.06em;margin:0;max-width:13ch
+}
+.sec-lede{margin:24px 0 0;color:var(--ink-soft);font-size:1.06rem;max-width:70ch}
 
-  .cta-row { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px;
-    border: 1px solid var(--line); border-radius: 4px; text-decoration: none;
-    font-size: .9rem; font-weight: 600; color: var(--ink); background: var(--surface);
-  }
-  .btn:hover { border-color: var(--accent); color: var(--accent); }
-  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .btn.primary:hover { opacity: .9; color: #fff; }
+.manifesto{
+  margin-top:56px;display:grid;grid-template-columns:1.15fr .85fr;gap:42px;align-items:end
+}
+.manifesto-main{
+  font-size:clamp(2.1rem,4.4vw,4.4rem);line-height:1.03;letter-spacing:-.055em;font-weight:760;max-width:16ch
+}
+.manifesto-main em{font-style:normal;color:var(--green)}
+.manifesto-side{
+  padding:0 0 6px 24px;border-left:1px solid var(--line);color:#5b6c63
+}
+.manifesto-side strong{color:var(--ink)}
 
-  .term {
-    background: var(--code-bg); color: var(--code-fg); border: 1px solid var(--line); border-radius: 6px;
-    padding: 20px 22px; font-family: "IBM Plex Mono", monospace; font-size: .8rem;
-    overflow-x: auto; white-space: pre;
-  }
-  .term .head { display: flex; gap: 6px; margin-bottom: 14px; }
-  .term .head span { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: #3a3f45; }
-  .term .dim { color: #7d838c; }
-  .term .ok { color: #4ade80; }
-  .term .warn { color: #f2b84b; }
-  .term .flag { color: #f2726b; }
-  .term .rule { color: #3a3f45; }
+.evidence-stage{margin-top:56px;display:grid;grid-template-columns:1fr 70px 1fr;align-items:stretch}
+.evidence-card{
+  border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--surface);box-shadow:0 12px 34px rgba(0,0,0,.04)
+}
+.evidence-tag{font:700 .67rem/1.2 monospace;text-transform:uppercase;letter-spacing:.08em;color:#6d7d74}
+.evidence-card h3{font-size:1.45rem;letter-spacing:-.035em;margin:12px 0 8px}
+.evidence-card p{color:#607167;margin:0;font-size:.9rem}
+.evidence-metric{font-size:4.8rem;line-height:.9;letter-spacing:-.07em;font-weight:850;margin:31px 0 8px}
+.evidence-metric.red{color:var(--red)}.evidence-metric.green{color:var(--green)}
+.evidence-arrow{display:grid;place-items:center;color:var(--green);font-size:2rem}
+.balance{margin-top:18px;padding-top:17px;border-top:1px solid var(--line);color:#67776f;font-size:.8rem}
+.balance b{color:var(--ink)}
 
-  /* contrast grid */
-  .contrib-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 38px; }
-  @media (max-width: 900px) { .contrib-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 620px) { .contrib-grid { grid-template-columns: 1fr; } }
-  .contrib { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px 22px; display: flex; flex-direction: column; gap: 9px; }
-  .contrib.is-us {
-    background: var(--accent-soft); border: 2px solid var(--accent); position: relative;
-    padding: 26px 22px 24px; box-shadow: 0 6px 20px rgb(13 143 130 / .18); transform: scale(1.03);
-  }
-  .contrib.is-us::before {
-    content: "This one"; position: absolute; top: -11px; left: 20px; background: var(--accent);
-    color: #fff; font-family: "IBM Plex Mono", monospace; font-size: .62rem; font-weight: 700;
-    letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px;
-  }
-  .contrib .tag { font-family: "IBM Plex Mono", monospace; font-size: .66rem; letter-spacing: .07em; color: var(--muted); text-transform: uppercase; }
-  .contrib.is-us .tag { color: var(--accent); font-weight: 700; }
-  .contrib h3 { font-size: 1.02rem; font-weight: 700; }
-  .contrib.is-us h3 { font-size: 1.08rem; }
-  .contrib p { color: var(--muted); font-size: .91rem; margin: 0; }
-  .contrib.is-us p { color: var(--ink); }
-  @media (max-width: 900px) { .contrib.is-us { transform: none; } }
+.graph-card{
+  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:22px;box-shadow:0 12px 34px rgba(0,0,0,.04)
+}
+.graph-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:16px}
+.graph-head h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
+.graph-head p{margin:6px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:52ch}
+.graph-legend{display:flex;gap:8px;flex-wrap:wrap}
+.graph-legend span{
+  padding:6px 10px;border-radius:99px;border:1px solid var(--line);font:600 .7rem/1 monospace;background:var(--bg-soft);color:#586860
+}
+svg text{font-family:Inter, sans-serif}
+svg .axis{stroke:#bccac1;stroke-width:1}
+svg .grid{stroke:#e4ebe6;stroke-width:1}
+svg .lab{fill:#66766d;font-size:12px}
+svg .title-sm{fill:#26332d;font-size:13px;font-weight:700}
+svg .bar1{fill:#d66759}
+svg .bar2{fill:#299a67}
+svg .line-a{stroke:#b8821b;stroke-width:4;fill:none}
+svg .pt{fill:#b8821b}
+svg .soft-label{fill:#7a887f;font-size:11px}
 
-  /* pipeline flow */
-  .flow { display: flex; align-items: stretch; gap: 10px; margin-top: 38px; flex-wrap: wrap; }
-  .flow-step {
-    flex: 1 1 160px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
-    padding: 20px 18px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .flow-icon {
-    font-weight: 800; font-size: .95rem; color: #fff; background: var(--accent);
-    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  }
-  .flow-step h3 { font-size: 1rem; font-weight: 700; margin: 0; }
-  .flow-step p { color: var(--muted); margin: 0; font-size: .87rem; line-height: 1.45; }
-  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.2rem; flex: 0 0 auto; }
-  @media (max-width: 820px) {
-    .flow { flex-direction: column; }
-    .flow-arrow { transform: rotate(90deg); padding: 2px 0; }
-  }
+.check-layout{margin-top:54px;display:grid;grid-template-columns:290px 1fr;gap:28px}
+.check-nav{position:sticky;top:95px;align-self:start}
+.check-nav button{
+  width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;
+  color:#6b7c73;padding:12px 2px;cursor:pointer;font-size:.82rem;font-weight:750
+}
+.check-nav button.active,.check-nav button:hover{color:var(--green)}
+.check-panel{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.check-card{
+  min-height:180px;padding:22px;border:1px solid var(--line);border-radius:15px;background:var(--surface);
+  transition:.2s ease;box-shadow:0 8px 24px rgba(0,0,0,.03)
+}
+.check-card:hover{transform:translateY(-3px);border-color:#bfd0c5}
+.check-card .id{font:700 .67rem/1.2 monospace;color:var(--green)}
+.check-card h3{margin:28px 0 8px;font-size:1rem}
+.check-card p{margin:0;color:#627269;font-size:.85rem}
 
-  /* check banners (all 12, compact) */
-  .rtag {
-    display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: .66rem;
-    letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
-    white-space: nowrap;
+.workflow{margin-top:55px}
+.flow-row{
+  display:grid;grid-template-columns:115px 1fr 260px;gap:30px;padding:24px 0;border-top:1px solid var(--line);align-items:start
+}
+.flow-row:last-child{border-bottom:1px solid var(--line)}
+.flow-n{font:700 .72rem/1.2 monospace;color:var(--green)}
+.flow-title{font-size:1.35rem;font-weight:800;letter-spacing:-.035em}
+.flow-desc{color:#627269;font-size:.86rem}
+
+.dataset-grid{margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.03)}
+.dataset{
+  min-height:190px;padding:18px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between
+}
+.dataset:last-child{border-right:0}
+.dataset .dname{font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);font-size:.86rem}
+.dataset .dstatus{font:700 .66rem/1.2 monospace;color:#72827a}
+
+.run-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;margin-top:54px}
+.terminal,.scorecard{
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:0 12px 34px rgba(0,0,0,.04)
+}
+.panel-head{padding:13px 16px;border-bottom:1px solid var(--line);font:700 .7rem monospace;color:#65756d;background:var(--bg-soft)}
+pre{
+  margin:0;padding:22px;white-space:pre-wrap;overflow:auto;color:#2a3630;
+  font:12px/1.75 "SFMono-Regular",Consolas,monospace;background:var(--surface)
+}
+.score-body{padding:22px}
+.score-summary{
+  display:flex;justify-content:space-between;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--line)
+}
+.score-summary strong{font-size:1.2rem}
+.score-summary span{font:700 .7rem monospace;color:var(--amber)}
+.score-item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid rgba(24,35,29,.06);font-size:.83rem}
+.score-item small{color:#74837b}
+.status-pill{font:700 .66rem monospace}
+
+.freedom{
+  position:relative;overflow:hidden;background:var(--green-soft)
+}
+.freedom:before{
+  content:"FREE";position:absolute;right:-.03em;bottom:-.24em;font-weight:900;font-size:24vw;
+  letter-spacing:-.09em;color:rgba(31,143,95,.07);line-height:1;pointer-events:none
+}
+.freedom .sec-index{color:var(--green)}
+.freedom h2{max-width:12ch}
+.freedom-copy{margin-top:34px;max-width:70ch;font-size:1.08rem;position:relative;z-index:2}
+.freedom-copy strong{font-weight:850}
+.freedom-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px;position:relative;z-index:2}
+.freedom-meta span{border:1px solid rgba(24,35,29,.12);padding:8px 11px;border-radius:99px;font:700 .72rem monospace;background:rgba(255,255,255,.5)}
+
+.final{padding:104px 0;text-align:center}
+.final h2{max-width:12ch;margin:0 auto}
+.final p{color:#586960;max-width:58ch;margin:22px auto 28px}
+.final .actions{justify-content:center}
+footer{border-top:1px solid rgba(24,35,29,.06);padding:28px 0 38px;color:#6a7a71;font-size:.78rem}
+.foot{display:flex;justify-content:space-between;gap:20px}
+
+[data-reveal]{opacity:0;transform:translateY(16px);transition:.65s ease}
+[data-reveal].show{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+  [data-reveal]{opacity:1;transform:none}
+}
+@media(max-width:1000px){
+  .hero-grid{grid-template-columns:1fr}
+  .audit-object{min-height:520px}
+  .soft-ring{width:500px;height:500px}
+  .proof-row{grid-template-columns:1fr 1fr 1fr}
+  .proof-label{grid-column:1/-1;border-bottom:1px solid rgba(24,35,29,.07)}
+  .sec-head{grid-template-columns:1fr}
+  .manifesto,.run-grid{grid-template-columns:1fr}
+  .check-layout{grid-template-columns:1fr}
+  .check-nav{position:static;display:flex;overflow:auto;gap:8px}
+  .check-nav button{width:auto;white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:8px 11px}
+}
+@media(max-width:760px){
+  .wrap{width:min(100% - 28px,var(--max))}
+  .nav-links a:not(.nav-cta){display:none}
+  .hero{padding-top:52px}
+  h1{font-size:4.1rem}
+  .audit-object{min-height:460px}
+  .soft-ring{width:420px;height:420px}
+  .note{display:none}
+  .proof-row{grid-template-columns:1fr 1fr}
+  .proof-label{grid-column:1/-1}
+  .manifesto{grid-template-columns:1fr}
+  .evidence-stage{grid-template-columns:1fr;gap:12px}
+  .evidence-arrow{transform:rotate(90deg)}
+  .check-panel{grid-template-columns:1fr}
+  .flow-row{grid-template-columns:70px 1fr}
+  .flow-desc{grid-column:2}
+  .dataset-grid{grid-template-columns:repeat(2,1fr)}
+  .dataset{min-height:120px;border-bottom:1px solid var(--line)}
+  .dataset .dname{writing-mode:initial;transform:none}
+  .foot{flex-direction:column}
+}
+
+.name-strip{
+  margin-top:28px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;
+  color:#5a6a61;font-size:.84rem
+}
+.name-strip strong{
+  color:var(--ink);font-size:.86rem
+}
+.name-chip{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,255,255,.65);
+  font:700 .7rem/1 monospace;color:var(--green)
+}
+.name-eq{color:#91a097;font-weight:800}
+
+.audit-portfolio{
+  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
+  padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.04)
+}
+.portfolio-head{display:flex;justify-content:space-between;gap:28px;align-items:flex-start;margin-bottom:24px}
+.portfolio-head h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
+.portfolio-head p{margin:7px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:62ch}
+.portfolio-score{
+  flex:0 0 auto;display:flex;align-items:baseline;gap:7px;color:var(--red)
+}
+.portfolio-score b{font-size:3.2rem;line-height:.9;letter-spacing:-.07em}
+.portfolio-score span{font:700 .72rem/1.1 monospace;color:#7f6f69}
+.audit-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.audit-dot{
+  position:relative;height:128px;border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);
+  display:flex;flex-direction:column;justify-content:space-between;padding:14px
+}
+.audit-dot.fail{background:var(--red-soft);border-color:#eccdc7}
+.audit-dot .dot-top{font:700 .66rem/1.1 monospace;color:#7a887f}
+.audit-dot.fail .dot-top{color:var(--red)}
+.audit-dot .dot-name{font-size:.78rem;font-weight:800;line-height:1.15;color:#334139}
+.audit-dot .dot-mark{
+  width:20px;height:20px;border-radius:50%;border:2px solid #9fb0a6;background:white
+}
+.audit-dot.fail .dot-mark{border-color:var(--red);background:var(--red)}
+.audit-note{margin-top:12px;color:#697970;font-size:.77rem}
+
+.method-flow{
+  margin-top:56px;display:grid;grid-template-columns:repeat(9,1fr);align-items:center;gap:10px
+}
+.method-node{
+  grid-column:span 1;min-height:172px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);padding:18px 16px;box-shadow:0 10px 30px rgba(0,0,0,.035);
+  display:flex;flex-direction:column
+}
+.method-node .mn{font:700 .66rem/1 monospace;color:var(--green)}
+.method-node h3{margin:28px 0 8px;font-size:1rem;letter-spacing:-.02em}
+.method-node p{margin:0;color:#64746b;font-size:.8rem}
+.method-arrow{
+  text-align:center;color:#84a291;font-size:1.4rem;font-weight:900
+}
+.method-node.load{grid-column:1/3}
+.method-arrow.a1{grid-column:3}
+.method-node.audit{grid-column:4/6;border-color:#b9d8c5;background:#f4fbf7}
+.method-arrow.a2{grid-column:6}
+.method-node.clean{grid-column:7/9}
+.method-arrow.a3{grid-column:9;display:none}
+.method-flow-row2{
+  margin-top:12px;display:grid;grid-template-columns:repeat(9,1fr);align-items:center;gap:10px
+}
+.method-node.falsify{grid-column:3/5}
+.method-arrow.a4{grid-column:5}
+.method-node.preserve{grid-column:6/8}
+.flow-turn{
+  grid-column:8/10;align-self:start;color:#88a095;font:700 .72rem monospace;padding-top:10px
+}
+
+.dataset-grid-v4{
+  margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px
+}
+.dataset-card{
+  height:220px;border:1px solid var(--line);border-radius:16px;background:var(--surface);
+  position:relative;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,.03)
+}
+.dataset-name-rot{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);
+  white-space:nowrap;font-size:.92rem;font-weight:850;letter-spacing:-.02em
+}
+.validated-badge{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  background:var(--green);color:white;border-radius:7px;padding:6px 9px;
+  font:800 .62rem/1 monospace;letter-spacing:.04em
+}
+.dataset-index{
+  position:absolute;top:12px;left:12px;font:700 .62rem/1 monospace;color:#8a998f
+}
+
+@media(max-width:1000px){
+  .audit-dots{grid-template-columns:repeat(4,1fr)}
+  .method-flow,.method-flow-row2{display:grid;grid-template-columns:1fr 44px 1fr;gap:10px}
+  .method-node.load,.method-node.audit,.method-node.clean,.method-node.falsify,.method-node.preserve{grid-column:auto}
+  .method-arrow.a1,.method-arrow.a2,.method-arrow.a4{grid-column:auto}
+  .method-node.clean{grid-column:1}
+  .method-flow-row2{margin-top:10px}
+  .flow-turn{display:none}
+  .dataset-grid-v4{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:760px){
+  .portfolio-head{flex-direction:column}
+  .audit-dots{grid-template-columns:repeat(2,1fr)}
+  .method-flow,.method-flow-row2{display:flex;flex-direction:column}
+  .method-arrow{transform:rotate(90deg)}
+  .method-node{width:100%;min-height:auto}
+  .dataset-grid-v4{grid-template-columns:repeat(2,1fr)}
+  .dataset-card{height:180px}
+}
+
+
+/* V5 refinements */
+.audit-portfolio{
+  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
+  padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.04)
+}
+.portfolio-summary{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start
+}
+.portfolio-summary h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
+.portfolio-summary p{margin:8px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:62ch}
+.portfolio-metrics{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px
+}
+.portfolio-metric{
+  border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);padding:16px
+}
+.portfolio-metric b{display:block;font-size:2.2rem;line-height:.95;letter-spacing:-.05em}
+.portfolio-metric span{display:block;margin-top:6px;font:700 .66rem/1.2 monospace;color:#728078;text-transform:uppercase;letter-spacing:.04em}
+.portfolio-insights{
+  margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+}
+.portfolio-insight{
+  border-left:3px solid var(--green);padding:10px 12px;background:#f8fbf8
+}
+.portfolio-insight b{display:block;font-size:.84rem;margin-bottom:5px}
+.portfolio-insight p{margin:0;color:#65746c;font-size:.78rem}
+
+.method-flow-single{
+  margin-top:56px;display:grid;grid-template-columns:1fr 44px 1fr 44px 1fr 44px 1fr 44px 1fr;align-items:center;gap:8px;
+  position:relative;padding-bottom:58px
+}
+.method-node-v5{
+  min-height:170px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
+  padding:18px 16px;box-shadow:0 10px 30px rgba(0,0,0,.035)
+}
+.method-node-v5.audit{border-color:#b9d8c5;background:#f4fbf7}
+.method-node-v5 .mn{font:700 .66rem/1 monospace;color:var(--green)}
+.method-node-v5 h3{margin:26px 0 8px;font-size:1rem}
+.method-node-v5 p{margin:0;color:#64746b;font-size:.8rem}
+.method-arrow-v5{text-align:center;font-size:1.45rem;color:#7d9a88;font-weight:900}
+.loop-arrow{
+  position:absolute;left:43%;right:2%;bottom:10px;height:34px;border-bottom:2px solid #9eb5a6;border-right:2px solid #9eb5a6;border-radius:0 0 20px 0
+}
+.loop-arrow:before{
+  content:"";position:absolute;left:-8px;bottom:-6px;width:10px;height:10px;border-left:2px solid #9eb5a6;border-bottom:2px solid #9eb5a6;transform:rotate(45deg)
+}
+.loop-label{
+  position:absolute;left:56%;bottom:14px;transform:translateX(-50%);
+  font:700 .66rem/1 monospace;color:#788a80;background:var(--bg);padding:0 8px
+}
+
+.dataset-grid-v5{
+  margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px
+}
+.dataset-card-v5{
+  height:230px;border:1px solid var(--line);border-radius:16px;background:var(--surface);
+  position:relative;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,.03)
+}
+.dataset-name-v5{
+  position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) rotate(-90deg);
+  white-space:nowrap;font-size:.92rem;font-weight:850;letter-spacing:-.02em
+}
+.validated-badge-v5{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  background:var(--green);color:#fff;border-radius:7px;padding:6px 9px;
+  font:800 .62rem/1 monospace;letter-spacing:.04em
+}
+.dataset-index-v5{
+  position:absolute;top:12px;left:12px;font:700 .62rem/1 monospace;color:#8a998f
+}
+
+.dataset-respect{
+  margin-top:26px;padding:22px 24px;border:1px solid #cfe0d4;border-radius:16px;background:#f7fbf8
+}
+.dataset-respect .label{font:800 .67rem/1.2 monospace;color:var(--green);text-transform:uppercase;letter-spacing:.06em}
+.dataset-respect h3{margin:10px 0 8px;font-size:1.2rem;letter-spacing:-.03em}
+.dataset-respect p{margin:0;color:#5f7067;font-size:.92rem;max-width:82ch}
+.dataset-respect strong{color:var(--ink)}
+
+@media(max-width:1000px){
+  .portfolio-summary{grid-template-columns:1fr}
+  .portfolio-insights{grid-template-columns:1fr}
+  .method-flow-single{grid-template-columns:1fr 36px 1fr;row-gap:10px}
+  .method-flow-single .method-node-v5:nth-of-type(3){grid-column:1}
+  .method-flow-single .method-arrow-v5:nth-of-type(4){grid-column:2}
+  .method-flow-single .method-node-v5:nth-of-type(5){grid-column:3}
+  .loop-arrow,.loop-label{display:none}
+  .dataset-grid-v5{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:760px){
+  .portfolio-metrics{grid-template-columns:1fr}
+  .method-flow-single{display:flex;flex-direction:column;padding-bottom:0}
+  .method-arrow-v5{transform:rotate(90deg)}
+  .dataset-grid-v5{grid-template-columns:repeat(2,1fr)}
+  .dataset-card-v5{height:190px}
+}
+
+
+/* V6 refinements */
+.nav-links a{
+  position:relative;
+}
+.nav-links a.active{
+  color:var(--green);
+}
+.nav-links a.active::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-22px;
+  height:2px;
+  background:var(--green);
+  border-radius:2px;
+}
+
+.dataset-grid-v5{
+  margin-top:52px;
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0,1fr));
+  gap:12px;
+  align-items:stretch;
+}
+.dataset-card-v5{
+  height:228px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--surface);
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 26px rgba(0,0,0,.03);
+}
+.dataset-name-v5{
+  position:absolute;
+  left:50%;
+  top:44%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  transform-origin:center;
+  white-space:nowrap;
+  font-size:1rem;
+  font-weight:850;
+  letter-spacing:-.01em;
+  color:var(--ink);
+}
+.validated-badge-v5{
+  position:absolute;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  min-width:82px;
+  text-align:center;
+  background:var(--green);
+  color:#fff;
+  border-radius:7px;
+  padding:7px 10px;
+  font:800 .62rem/1 monospace;
+  letter-spacing:.04em
+}
+.dataset-index-v5{
+  position:absolute;
+  top:12px;
+  left:12px;
+  font:700 .62rem/1 monospace;
+  color:#8a998f
+}
+
+.dataset-respect{
+  margin-top:26px;
+  padding:28px 28px 26px;
+  border:1px solid #cfe0d4;
+  border-radius:16px;
+  background:#f7fbf8;
+}
+.dataset-respect .label{
+  font:800 .67rem/1.2 monospace;
+  color:var(--green);
+  text-transform:uppercase;
+  letter-spacing:.06em
+}
+.dataset-respect h3{
+  margin:10px 0 10px;
+  font-size:1.26rem;
+  letter-spacing:-.02em;
+  max-width:28ch;
+}
+.dataset-respect p{
+  margin:0;
+  color:#5f7067;
+  font-size:.92rem;
+  max-width:84ch;
+  line-height:1.7;
+}
+
+.method-flow-single{
+  margin-top:56px;
+  display:grid;
+  grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr;
+  align-items:stretch;
+  gap:10px;
+  position:relative;
+  padding-bottom:74px;
+}
+.method-node-v5{
+  min-height:176px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:var(--surface);
+  padding:18px 16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.035);
+  position:relative;
+  z-index:2;
+}
+.method-node-v5.audit{
+  border-color:#b9d8c5;
+  background:#f4fbf7;
+}
+.method-node-v5 .mn{
+  font:700 .66rem/1 monospace;
+  color:var(--green)
+}
+.method-node-v5 h3{
+  margin:26px 0 8px;
+  font-size:1rem
+}
+.method-node-v5 p{
+  margin:0;
+  color:#64746b;
+  font-size:.8rem
+}
+.method-arrow-v5{
+  text-align:center;
+  font-size:1.35rem;
+  color:#7d9a88;
+  font-weight:900;
+  display:grid;
+  place-items:center;
+}
+.method-loop-svg{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:10px;
+  height:54px;
+  width:100%;
+  overflow:visible;
+}
+.method-loop-label{
+  position:absolute;
+  left:66%;
+  bottom:0;
+  transform:translateX(-50%);
+  font:700 .66rem/1 monospace;
+  color:#788a80;
+  background:var(--bg);
+  padding:0 8px;
+  z-index:3;
+}
+
+@media(max-width:1000px){
+  .dataset-grid-v5{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:760px){
+  .dataset-grid-v5{grid-template-columns:repeat(2,1fr)}
+  .dataset-card-v5{height:188px}
+  .dataset-name-v5{font-size:.94rem}
+  .method-flow-single{
+    display:flex;
+    flex-direction:column;
+    padding-bottom:0;
   }
-  .rtag-check { background: var(--accent-soft); color: var(--accent); }
-  .rtag-known { background: var(--surface-2); color: var(--muted); }
-  .rtag-v1 { background: var(--surface-2); color: var(--ink); }
-  .rtag-v2 { background: var(--surface-2); color: var(--muted); border: 1px dashed var(--line); }
-  .check-list { border: 1px solid var(--line); border-radius: 10px; margin-top: 28px; overflow: hidden; background: var(--surface); }
-  .check-row { display: flex; align-items: center; gap: 18px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
-  .check-row:last-child { border-bottom: none; }
-  .check-row .name { flex: 0 0 220px; font-family: "IBM Plex Mono", monospace; color: var(--accent); font-weight: 500; font-size: .85rem; }
-  .check-row .row-desc { flex: 1; color: var(--muted); font-size: .84rem; line-height: 1.4; }
-  .check-row .row-tags { flex: 0 0 auto; display: flex; gap: 6px; }
-  @media (max-width: 780px) {
-    .check-row { flex-wrap: wrap; }
-    .check-row .name { flex-basis: 100%; }
-    .check-row .row-desc { flex-basis: 100%; order: 3; }
-    .check-row .row-tags { order: 2; }
+  .method-arrow-v5{transform:rotate(90deg)}
+  .method-loop-svg,
+  .method-loop-label{display:none}
+}
+
+
+/* V7 dataset/method refinements */
+.method-flow-single{
+  margin-top:56px;
+  display:grid;
+  grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr;
+  align-items:stretch;
+  gap:10px;
+  position:relative;
+  padding-bottom:76px;
+}
+.method-loop-svg{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:8px;
+  height:58px;
+  width:100%;
+  overflow:visible;
+}
+.method-loop-label{
+  position:absolute;
+  left:55%;
+  bottom:-2px;
+  transform:translateX(-50%);
+  font:700 .66rem/1 monospace;
+  color:#788a80;
+  background:var(--bg);
+  padding:0 8px;
+  z-index:3;
+}
+
+.dataset-cluster{
+  margin-top:52px;
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0,1fr));
+  gap:12px;
+  align-items:stretch;
+}
+.dataset-card-v7,
+.dataset-respect-v7{
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--surface);
+  box-shadow:0 8px 26px rgba(0,0,0,.03);
+}
+.dataset-card-v7{
+  height:188px;
+  position:relative;
+  overflow:hidden;
+  padding:16px 14px 14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.dataset-index-v7{
+  font:700 .62rem/1 monospace;
+  color:#8a998f;
+}
+.dataset-name-v7{
+  align-self:center;
+  text-align:center;
+  font-size:1rem;
+  font-weight:850;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  line-height:1.2;
+  max-width:12ch;
+}
+.validated-badge-v7{
+  align-self:center;
+  min-width:84px;
+  text-align:center;
+  background:var(--green);
+  color:#fff;
+  border-radius:7px;
+  padding:7px 10px;
+  font:800 .62rem/1 monospace;
+  letter-spacing:.04em;
+}
+.dataset-respect-v7{
+  grid-column:3 / span 3;
+  grid-row:1 / span 2;
+  padding:22px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.dataset-respect-v7 .label{
+  font:800 .67rem/1.2 monospace;
+  color:var(--green);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.dataset-respect-v7 h3{
+  margin:10px 0 10px;
+  font-size:1.24rem;
+  letter-spacing:-.02em;
+  max-width:22ch;
+}
+.dataset-respect-v7 p{
+  margin:0;
+  color:#5f7067;
+  font-size:.9rem;
+  line-height:1.65;
+}
+.dataset-respect-v7 strong{
+  color:var(--ink);
+}
+.dataset-card-v7.c1{grid-column:1}
+.dataset-card-v7.c2{grid-column:2}
+.dataset-card-v7.c3{grid-column:6}
+.dataset-card-v7.c4{grid-column:7}
+.dataset-card-v7.c5{grid-column:1}
+.dataset-card-v7.c6{grid-column:2}
+.dataset-card-v7.c7{grid-column:6}
+.dataset-card-v7.r2{grid-row:2}
+
+@media(max-width:1100px){
+  .dataset-cluster{
+    grid-template-columns:repeat(4, minmax(0,1fr));
   }
-
-  /* check cards */
-
-  /* proof stats */
-  .stat-row { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 32px; }
-  .stat-row .label { max-width: 16ch; }
-  .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
-  @media (max-width: 900px) { .proof-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .proof-grid { grid-template-columns: 1fr; } }
-  .proof-item { border: 1px solid var(--line); border-radius: 8px; padding: 16px; background: var(--surface); }
-  .proof-item h4 { margin: 0 0 8px; font-size: .92rem; font-weight: 700; }
-  .proof-item p { margin: 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
-  .proof-item code { font-size: .82em; }
-
-
-  /* config */
-  pre.code-block {
-    background: var(--code-bg); color: var(--code-fg); border-radius: 6px;
-    padding: 20px 22px; font-family: "IBM Plex Mono", monospace; font-size: .82rem;
-    overflow-x: auto; margin-top: 30px; line-height: 1.6;
+  .dataset-respect-v7{
+    grid-column:1 / span 4;
+    grid-row:auto;
   }
-  pre.code-block .k { color: #7dd3fc; }
-  pre.code-block .s { color: #86efac; }
-  pre.code-block .c { color: #7d838c; }
-
-  /* scope disclosure */
-  .disclosure {
-    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--warning);
-    border-radius: 6px; padding: 26px 28px; margin-top: 34px;
+  .dataset-card-v7.c1,.dataset-card-v7.c2,.dataset-card-v7.c3,.dataset-card-v7.c4,
+  .dataset-card-v7.c5,.dataset-card-v7.c6,.dataset-card-v7.c7,
+  .dataset-card-v7.r2{
+    grid-column:auto;
+    grid-row:auto;
   }
-  .disclosure h3 { font-family: "IBM Plex Mono", monospace; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; color: var(--warning); font-weight: 600; margin-bottom: 16px; }
-  .disclosure ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-  .disclosure li { padding-left: 20px; position: relative; color: var(--muted); font-size: .93rem; }
-  .disclosure li::before { content: "◇"; position: absolute; left: 0; color: var(--warning); font-size: .78rem; top: .2em; }
-  .disclosure li b { color: var(--ink); font-weight: 600; }
-  .disclosure li code { color: var(--ink); background: var(--surface-2); padding: .05em .35em; border-radius: 3px; }
-
-  /* footer */
-  footer { padding: 60px 0 52px; }
-  .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
-  @media (max-width: 780px) { .footer-grid { grid-template-columns: 1fr; gap: 30px; } }
-  footer h4 { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-  footer .install {
-    background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px;
-    font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink);
-    white-space: pre-line; line-height: 1.8;
+}
+@media(max-width:760px){
+  .dataset-cluster{
+    grid-template-columns:repeat(2, minmax(0,1fr));
   }
-  footer .install .prompt { color: var(--accent); }
-  footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
-  footer a { color: var(--muted); text-decoration: none; font-size: .91rem; }
-  footer a:hover { color: var(--accent); }
-  .foot-bottom { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--muted); }
+  .dataset-card-v7{
+    height:156px;
+  }
+  .dataset-name-v7{
+    font-size:.95rem;
+  }
+}
 
-  h2.h { font-size: 1.7rem; font-weight: 800; margin-top: 10px; letter-spacing: -.01em; }
-  p.sub { color: var(--muted); font-size: 1.02rem; max-width: 62ch; margin-top: 12px; }
+
+/* V9 spacing, hierarchy and finish */
+:root{
+  --section-space: 88px;
+  --card-radius: 16px;
+}
+
+body{
+  font-size:16px;
+  letter-spacing:-0.005em;
+}
+
+.wrap{
+  width:min(var(--max),calc(100% - 48px));
+}
+
+.site-nav{
+  box-shadow:0 1px 0 rgba(24,35,29,.03);
+}
+.nav-row{
+  height:72px;
+}
+.nav-links{
+  gap:15px;
+  flex-wrap:nowrap;
+}
+.nav-links a{
+  font-size:.78rem;
+  letter-spacing:.01em;
+}
+.nav-cta{
+  margin-left:4px;
+  padding:9px 12px;
+}
+
+.hero{
+  padding:82px 0 64px;
+}
+.hero-grid{
+  gap:64px;
+}
+h1{
+  margin-bottom:28px;
+}
+.hero-copy{
+  font-size:1.08rem;
+  line-height:1.72;
+}
+.actions{
+  margin-top:30px;
+}
+.micro-proof{
+  margin-top:26px;
+}
+.name-strip{
+  margin-top:20px;
+  row-gap:9px;
+}
+
+.proof-label,
+.proof-stat{
+  padding:17px 18px;
+}
+
+.section{
+  padding:var(--section-space) 0;
+}
+.sec-head{
+  grid-template-columns:160px 1fr;
+  gap:34px;
+}
+.sec-index{
+  font-size:.69rem;
+  letter-spacing:.045em;
+  padding-top:7px;
+}
+h2{
+  font-size:clamp(2.45rem,4.65vw,4.65rem);
+  line-height:.98;
+  max-width:14ch;
+}
+.sec-lede{
+  margin-top:20px;
+  font-size:1.01rem;
+  line-height:1.72;
+  max-width:68ch;
+}
+
+.manifesto{
+  margin-top:48px;
+  gap:38px;
+}
+.manifesto-main{
+  font-size:clamp(2rem,4vw,4rem);
+}
+.manifesto-side{
+  line-height:1.68;
+}
+
+.evidence-stage{
+  margin-top:48px;
+}
+.evidence-card{
+  min-height:320px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+}
+.evidence-card p{
+  line-height:1.65;
+}
+.evidence-metric{
+  margin-top:auto;
+  padding-top:28px;
+  font-size:4.4rem;
+}
+.balance{
+  margin-top:14px;
+}
+
+.audit-portfolio{
+  margin-top:16px;
+  padding:22px;
+}
+.portfolio-summary{
+  gap:18px;
+}
+.portfolio-insights{
+  margin-top:16px;
+}
+.portfolio-insight{
+  min-height:118px;
+  padding:12px 14px;
+}
+
+.check-layout{
+  margin-top:48px;
+}
+.check-panel{
+  gap:14px;
+}
+.check-card{
+  min-height:188px;
+  padding:20px;
+  border-radius:var(--card-radius);
+}
+.check-card h3{
+  margin-top:24px;
+}
+.check-card p{
+  line-height:1.6;
+}
+
+.method-flow-single{
+  margin-top:48px;
+  gap:10px;
+}
+.method-node-v5{
+  min-height:184px;
+  padding:18px;
+  border-radius:var(--card-radius);
+}
+.method-node-v5 h3{
+  margin-top:24px;
+  font-size:1.02rem;
+}
+.method-node-v5 p{
+  line-height:1.6;
+}
+
+.dataset-cluster{
+  margin-top:48px;
+  gap:12px;
+}
+.dataset-card-v7{
+  height:176px;
+  padding:14px;
+  border-radius:var(--card-radius);
+}
+.dataset-name-v7{
+  font-size:.96rem;
+  max-width:13ch;
+}
+.dataset-respect-v7{
+  padding:24px 26px;
+  border-radius:var(--card-radius);
+}
+.dataset-respect-v7 h3{
+  font-size:1.2rem;
+  line-height:1.3;
+}
+.dataset-respect-v7 p{
+  line-height:1.7;
+}
+
+.run-grid{
+  margin-top:48px;
+  gap:20px;
+}
+.terminal,.scorecard{
+  min-height:430px;
+  border-radius:var(--card-radius);
+}
+.panel-head{
+  padding:12px 15px;
+}
+pre{
+  font-size:11.7px;
+  line-height:1.72;
+}
+.score-body{
+  padding:20px;
+}
+
+.freedom{
+  padding-top:92px;
+  padding-bottom:92px;
+}
+.freedom-copy{
+  margin-top:28px;
+  line-height:1.72;
+}
+.freedom-meta{
+  margin-top:22px;
+}
+
+.final{
+  padding:96px 0;
+}
+.final p{
+  line-height:1.7;
+}
+
+.btn{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+.check-card,
+.dataset-card-v7,
+.evidence-card,
+.terminal,
+.scorecard{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.check-card:hover,
+.dataset-card-v7:hover,
+.evidence-card:hover,
+.terminal:hover,
+.scorecard:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(0,0,0,.05);
+  border-color:#bfd0c5;
+}
+
+.nav-links{
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav-links::-webkit-scrollbar{display:none}
+
+@media(max-width:1180px){
+  .nav-links{gap:12px}
+  .nav-links a{font-size:.74rem}
+}
+
+@media(max-width:1000px){
+  .wrap{width:min(var(--max),calc(100% - 36px))}
+  .sec-head{grid-template-columns:1fr;gap:14px}
+  .section{padding:76px 0}
+  .nav-links a:nth-child(n+6):not(.nav-cta){display:none}
+}
+
+@media(max-width:760px){
+  .wrap{width:min(100% - 28px,var(--max))}
+  .hero{padding:56px 0 44px}
+  .section{padding:64px 0}
+  h2{font-size:2.5rem}
+  .nav-links a:not(.nav-cta){display:none}
+  .dataset-card-v7{height:150px}
+  .evidence-card{min-height:auto}
+}
+
+
+/* V12: explicit Falsify -> Clean feedback loop */
+.method-flow-single{
+  padding-bottom:92px;
+}
+.method-loop-svg{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:265px;
+  overflow:visible;
+  pointer-events:none;
+  z-index:1;
+}
+.method-node-v5,
+.method-arrow-v5{
+  position:relative;
+  z-index:2;
+}
+.method-loop-label{
+  position:absolute;
+  left:61%;
+  bottom:8px;
+  transform:translateX(-50%);
+  font:700 .66rem/1 monospace;
+  color:#788a80;
+  background:var(--bg);
+  padding:0 8px;
+  z-index:3;
+}
+@media(max-width:760px){
+  .method-loop-svg,
+  .method-loop-label{
+    display:none;
+  }
+}
+
+
+/* FINAL UI/UX POLISH */
+:root{
+  --bg:#f4f1e8;
+  --bg-soft:#faf8f2;
+  --surface:#fffefa;
+  --surface-2:#eef5ef;
+  --ink:#1c2922;
+  --ink-soft:#526259;
+  --line:#d5dfd7;
+  --green:#23875d;
+  --green-2:#319d70;
+  --green-soft:#e7f2e9;
+  --amber:#a87518;
+  --amber-soft:#fbf1dd;
+  --red:#b35348;
+  --red-soft:#f8e8e5;
+}
+
+/* background depth without noise */
+body{
+  background:
+    radial-gradient(900px 520px at 76% -100px, rgba(49,157,112,.10), transparent 72%),
+    linear-gradient(180deg,#fbfaf6 0%,#f5f2e9 48%,#f1efe7 100%);
+}
+
+/* alternate major sections very lightly */
+.section:nth-of-type(even){
+  background:rgba(255,255,255,.28);
+}
+.section:nth-of-type(odd){
+  background:rgba(232,241,233,.22);
+}
+
+/* retain visual separation without hard rules */
+.section{
+  border-bottom:1px solid rgba(28,41,34,.055);
+}
+
+/* warmer cards */
+.evidence-card,
+.audit-portfolio,
+.check-card,
+.dataset-card-v7,
+.dataset-respect-v7,
+.terminal,
+.scorecard,
+.method-node-v5{
+  background:rgba(255,254,250,.94);
+}
+
+/* stronger hero identity */
+.hero{
+  background:
+    radial-gradient(640px 360px at 77% 18%, rgba(35,135,93,.08), transparent 72%);
+}
+
+/* proof rail gets a slightly stronger strip */
+.proof-rail{
+  background:rgba(236,243,237,.72);
+  border-top:1px solid rgba(35,135,93,.09);
+  border-bottom:1px solid rgba(35,135,93,.09);
+}
+
+/* cards should feel consistent, not floating independently */
+.evidence-card,
+.audit-portfolio,
+.check-card,
+.dataset-card-v7,
+.dataset-respect-v7,
+.terminal,
+.scorecard,
+.method-node-v5{
+  box-shadow:0 10px 26px rgba(55,75,63,.045);
+}
+
+/* slightly stronger audit emphasis */
+.method-node-v5.audit{
+  background:#edf7f0;
+  border-color:#b7d6c1;
+}
+
+/* nicer dataset composition */
+.dataset-respect-v7{
+  background:#edf6ef;
+  border-color:#c9dccf;
+}
+.validated-badge-v7{
+  background:var(--green);
+  box-shadow:0 3px 10px rgba(35,135,93,.16);
+}
+
+/* cleaner nav against warm background */
+.site-nav{
+  background:rgba(250,248,242,.88);
+  border-bottom:1px solid rgba(28,41,34,.07);
+}
+.nav-links a.active{
+  color:var(--green);
+}
+
+/* freedom section gets its own confident tone */
+.freedom{
+  background:#dfeee2;
+  border-top:1px solid #cadfce;
+  border-bottom:1px solid #cadfce;
+}
+.freedom:before{
+  color:rgba(35,135,93,.065);
+}
+
+/* final CTA gets more visual closure */
+.final{
+  background:
+    radial-gradient(620px 260px at 50% 0%, rgba(35,135,93,.07), transparent 72%),
+    rgba(255,255,255,.24);
+}
+
+/* improved reading comfort */
+.hero-copy,
+.sec-lede,
+.manifesto-side,
+.evidence-card p,
+.portfolio-insight p,
+.check-card p,
+.method-node-v5 p,
+.dataset-respect-v7 p,
+.freedom-copy,
+.final p{
+  color:#57675e;
+}
+
+/* small tactile improvements */
+.btn.primary{
+  background:#1d2c24;
+  border-color:#1d2c24;
+}
+.btn.primary:hover{
+  background:#23382d;
+  border-color:#23382d;
+}
+.btn:not(.primary):hover{
+  background:#fff;
+}
+.dataset-card-v7:hover{
+  background:#fff;
+}
+.validated-badge-v7,
+.validated-badge-v5{
+  letter-spacing:.055em;
+}
+
+/* section heading balance */
+h2{
+  text-wrap:balance;
+}
+.sec-lede{
+  text-wrap:pretty;
+}
+
+/* make the method loop more intentional */
+.method-loop-label{
+  background:var(--bg);
+  color:#72827a;
+  letter-spacing:.01em;
+}
+
+/* accessibility polish */
+a:focus-visible,
+button:focus-visible{
+  outline:3px solid rgba(35,135,93,.28);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+/* keep reduced-motion behavior intact */
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important}
+}
+
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <div class="wrap nav-row">
+    <a class="logo" href="#"><span class="logo-bug">²</span> IDS²Eval</a>
+    <div class="nav-links">
+      <a href="#question" class="nav-link">Question</a>
+      <a href="#evidence" class="nav-link">Evidence</a>
+      <a href="#checks" class="nav-link">Checks</a>
+      <a href="#workflow" class="nav-link">Method</a>
+      <a href="#datasets" class="nav-link">Datasets</a>
+      <a href="#output" class="nav-link">Output</a>
+      <a href="#freedom" class="nav-link">License</a>
+      <a href="#artifact" class="nav-link">Artifact</a>
+      <a class="nav-cta" href="https://github.com/hashtagRR/IDS2Eval">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
 
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="#top" title="IDS², Intrusion Detection Systems, Intrusion Data Sets"><span class="dot"></span>IDS<sup>2</sup>Eval</a>
-    <nav class="links">
-      <a href="#why">Why</a>
-      <a href="#pipeline">Pipeline</a>
-      <a href="#checks">Checks</a>
-      <a href="#proof">Proof</a>
-      <a href="#config">Config</a>
-      <a href="#scope">Scope</a>
-      <a href="https://github.com/hashtagRR/IDS2Eval">GitHub</a>
-    </nav>
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div data-reveal>
+      <div class="eyebrow">NIDS benchmark integrity</div>
+      <h1>Do not trust the <span class="audit">score.</span> Audit it.</h1>
+      <p class="hero-copy"><strong>99% accuracy can still come from a weak evaluation setup.</strong> IDS²Eval audits network intrusion datasets for duplication, leakage, identity shortcuts, fragile splits and documented benchmark defects before a benchmark score is treated as a conclusion.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">Run IDS²Eval ↗</a>
+        <a class="btn" href="#evidence">See what it catches ↓</a>
+      </div>
+      <div class="micro-proof">
+        <span>18 audit checks</span><span>7 real IDS datasets</span><span>201 CI tests</span><span>63.5M+ flows scanned in validation</span>
+      </div>
+      <div class="name-strip" aria-label="Meaning of IDS squared Eval">
+        <strong>Why IDS²Eval?</strong>
+        <span class="name-chip">IDS = Intrusion Detection Systems</span>
+        <span class="name-eq">×</span>
+        <span class="name-chip">IDS = Intrusion Data Sets</span>
+        <span>One evaluation framework for the system and the dataset behind the score.</span>
+      </div>
+    </div>
+
+    <div class="audit-object" data-reveal>
+      <div class="big-score">99<small>%</small></div>
+      <div class="soft-ring"></div>
+      <div class="note note-a">same session<br>on both sides?</div>
+      <div class="note note-b">did sttl learn<br>the topology?</div>
+      <div class="audit-console">
+        <div class="console-top">
+          <span>UNSW-NB15 / audit:before</span><span class="live"><i></i> evidence stream</span>
+        </div>
+        <div class="console-body">
+          <div class="console-kpi">
+            <div class="kpi-num">42.38%</div>
+            <div class="kpi-copy">training feature-space duplication detected before cleanup</div>
+          </div>
+          <div class="audit-lines">
+            <div class="audit-line"><span class="name">dedup_check</span><span class="flag">FLAG</span><span class="detail">memorisation risk</span></div>
+            <div class="audit-line"><span class="name">leakage_screen</span><span class="ok">OK</span><span class="detail">sttl = 17.8%</span></div>
+            <div class="audit-line"><span class="name">known_issue</span><span class="warn">WARN</span><span class="detail">file-name inversion</span></div>
+            <div class="audit-line"><span class="name">after / dedup</span><span class="ok">OK</span><span class="detail">0.00% remains</span></div>
+          </div>
+          <div class="console-result"><b>The data changed.</b> Class balance moved from roughly 2:1 to ~1:1 after deduplication. The benchmark should be interpreted accordingly.</div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
-<div id="top" class="wrap hero">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">Data-quality audit for NIDS datasets</div>
-      <h1>Dataset quality, <span class="accent">checked</span>, not assumed.</h1>
-      <p class="lede">
-        A paper claims 99% accuracy on a famous intrusion-detection
-        dataset. Nobody checked whether that dataset was 40% duplicate
-        rows first. IDS<sup>2</sup>Eval checks, automatically, before you
-        trust the number: 16 audit checks and a 14-classifier benchmark
-        from one YAML file.
-      </p>
-      <p class="name-note">
-        IDS<sup>2</sup>, the name works both ways: <b>I</b>ntrusion <b>D</b>etection <b>S</b>ystems,
-        and <b>I</b>ntrusion <b>D</b>ata <b>S</b>ets.
-      </p>
-      <div class="hero-facts">
-        <div class="fact"><div class="num">18</div><div class="label">Audit checks</div></div>
-        <div class="fact"><div class="num">7</div><div class="label">Real IDS datasets validated</div></div>
-        <div class="fact"><div class="num">201</div><div class="label">Tests, CI-gated</div></div>
-        <div class="fact"><div class="num">63.5M</div><div class="label">Rows processed across all seven</div></div>
-      </div>
-      <div class="cta-row">
-        <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">View on GitHub</a>
-        <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/main/README.md#installation">Install</a>
-        <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">Read the checks</a>
-      </div>
-    </div>
-    <div class="term">
-<span class="head"><span></span><span></span><span></span></span><span class="dim">$</span> ids2eval --config unsw-nb15.yaml --skip-benchmark
-<span class="rule">────────────────────────────────────────</span>
-<span class="dim">[audit:before]</span> dedup_check              <span class="flag">flag</span>    42.38% train feature-duplication
-<span class="dim">[audit:before]</span> leakage_screen           <span class="dim">ok</span>      top feature 'sttl' = 17.8% importance
-<span class="dim">[audit:before]</span> known_issue_lookup       <span class="warning">warning</span> file-naming inversion (curated, not auto-fixed)
-<span class="dim">[dedup]</span> removed 42.38% of train as exact duplicates
-<span class="dim">[audit:after]</span>  dedup_check              <span class="ok">ok</span>      0.00% feature-duplication remaining
-<span class="dim">[audit:after]</span>  class_distribution_report <span class="dim">ok</span>     imbalance ratio 1:1 (was 2:1)
-<span class="rule">────────────────────────────────────────</span>
-<span class="dim">[scorecard]</span> <span class="warning">passed with warnings</span>: 11 ok, 1 warning, 0 flags
-<span class="dim">writing</span> examples/unsw-nb15-scorecard/{SCORECARD.html,SCORECARD.md,scorecard.json}</div>
+<div class="proof-rail">
+  <div class="wrap proof-row">
+    <div class="proof-label">The page should prove the tool before explaining the implementation.</div>
+    <div class="proof-stat"><b>18</b><span>checks</span></div>
+    <div class="proof-stat"><b>7</b><span>real datasets</span></div>
+    <div class="proof-stat"><b>4 / 7</b><span>failed audit</span></div>
+    <div class="proof-stat"><b>63.5M+</b><span>flows scanned in validation</span></div>
   </div>
 </div>
 
-<section id="why" class="wrap">
-  <div class="eyebrow">01 · why this exists</div>
-  <h2 class="h">Every published NIDS paper does this differently, or not at all.</h2>
-  <p class="sub">
-    A model that scores 99% on a benchmark can still be learning
-    nothing about real attacks, if the benchmark is riddled with
-    duplicate rows, leaked features, or a train/test split with the
-    same session on both sides. Researchers have caught these problems
-    before, one at a time, in one-off notebooks tied to one dataset.
-    IDS2Eval turns that methodology into software you run on your own
-    data, in minutes, from a config file.
-  </p>
-  <div class="contrib-grid">
-    <div class="contrib">
-      <div class="tag">Status quo</div>
-      <h3>A one-off analysis notebook</h3>
-      <p>Re-derived per paper, per dataset. Findings aren't reusable, and rarely open-sourced in a runnable form.</p>
+<section class="section" id="question">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">01 / THE QUESTION</div>
+      <div>
+        <h2>What did the model actually learn?</h2>
+        <p class="sec-lede">A classifier can learn both network behaviour and properties of how a dataset was constructed. IDS²Eval helps researchers separate those effects so model results are easier to interpret and defend.</p>
+      </div>
     </div>
-    <div class="contrib">
-      <div class="tag">Generic tools</div>
-      <h3>AutoML (PyCaret, AutoGluon, TPOT)</h3>
-      <p>Breadth of algorithms, but no IDS-specific data-quality checks: leakage and homogeneity aren't in scope.</p>
-    </div>
-    <div class="contrib is-us">
-      <div class="tag">IDS<sup>2</sup>Eval</div>
-      <h3>Config-driven, IDS-specific, reusable</h3>
-      <p>16 checks + 14-classifier benchmark from one YAML file. Point it at a CSV, get a finding with a status and a number.</p>
+    <div class="manifesto" data-reveal>
+      <div class="manifesto-main">Did it learn the <em>attack</em>, or did it learn how the benchmark was built?</div>
+      <div class="manifesto-side"><strong>IDS²Eval challenges the conditions behind the metric.</strong><br><br>Duplicates. Identity fields. Temporal shortcuts. Flow-group overlap. Class homogeneity. Known dataset defects. The goal is not another quality score; it is evidence you can inspect.</div>
     </div>
   </div>
 </section>
 
-<section id="pipeline" class="wrap">
-  <div class="eyebrow">02 · what actually runs</div>
-  <h2 class="h">One command, five stages.</h2>
-  <p class="sub">
-    Point it at a config file. Everything from loading the data to a
-    finished benchmark report happens automatically.
-  </p>
-  <div class="flow">
-    <div class="flow-step">
-      <div class="flow-icon">1</div>
-      <h3>Load data</h3>
-      <p>Read your dataset and split it into training and test sets.</p>
+<section class="section" id="evidence">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">02 / REAL EVIDENCE</div>
+      <div>
+        <h2>The audit changes what the benchmark means.</h2>
+        <p class="sec-lede">The clearest proof is a real example that shows how an audit changes the way a benchmark should be read.</p>
+      </div>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">2</div>
-      <h3>Audit</h3>
-      <p>Check for duplicates, data leakage, class imbalance, and more.</p>
+
+    <div class="evidence-stage" data-reveal>
+      <article class="evidence-card">
+        <div class="evidence-tag">UNSW-NB15 · before</div>
+        <h3>Training set contains repeated feature vectors.</h3>
+        <p>Exact duplicates can reward memorisation and distort the apparent class distribution.</p>
+        <div class="evidence-metric red">42.38%</div>
+        <div class="balance">class balance: <b>roughly 2:1</b></div>
+      </article>
+      <div class="evidence-arrow">→</div>
+      <article class="evidence-card">
+        <div class="evidence-tag">UNSW-NB15 · after configured cleanup</div>
+        <h3>The duplicates are gone ,  and the dataset has changed.</h3>
+        <p>IDS²Eval records that consequence instead of silently treating cleaning as neutral.</p>
+        <div class="evidence-metric green">0.00%</div>
+        <div class="balance">class balance: <b>approximately 1:1</b></div>
+      </article>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">3</div>
-      <h3>Clean</h3>
-      <p>Remove duplicates and rebalance classes, then re-check.</p>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">4</div>
-      <h3>Benchmark</h3>
-      <p>Train and compare classifiers on the cleaned data.</p>
-    </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">5</div>
-      <h3>Report</h3>
-      <p>Save results and a record that can reproduce the run exactly.</p>
+
+    <div class="audit-portfolio" data-reveal>
+      <div class="portfolio-summary">
+        <div>
+          <h3>What the validation portfolio tells us</h3>
+          <p>The point is not that "four datasets are bad." The useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
+        </div>
+        <div class="portfolio-metrics">
+          <div class="portfolio-metric"><b>7</b><span>real NIDS datasets validated</span></div>
+          <div class="portfolio-metric"><b>4</b><span>runs with an overall FAIL status</span></div>
+        </div>
+      </div>
+      <div class="portfolio-insights">
+        <div class="portfolio-insight"><b>Repeated structural issues</b><p>Duplication, shortcut features and split assumptions are not isolated edge cases.</p></div>
+        <div class="portfolio-insight"><b>Audit before comparison</b><p>Benchmark scores become more meaningful when the data path is inspected first.</p></div>
+        <div class="portfolio-insight"><b>Evidence, not blame</b><p>The goal is to expose where evaluation can be strengthened, not to dismiss the dataset itself.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="checks" class="wrap">
-  <div class="eyebrow">03 · the checks</div>
-  <h2 class="h">Sixteen checks. Two kinds of finding, two ways to run.</h2>
-  <p class="sub">
-    Every check returns <code>{check, status, summary, details}</code>, a flag or
-    warning names the specific, checkable signature behind it, not a
-    vague quality score. Every run rolls these into a citable
-    <code>SCORECARD.html</code>: pass, passed with warnings, or failed.
-    Pass/fail rule and full writeup:
-    <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">guide/checks.md</a>.
-  </p>
-  <div class="stat-row">
-    <div class="fact"><div class="num">14</div><div class="label">Always on, zero setup</div></div>
-    <div class="fact"><div class="num">4</div><div class="label">Opt-in, deeper analysis</div></div>
-    <div class="fact"><div class="num">16</div><div class="label">Measure this run's data</div></div>
-    <div class="fact"><div class="num">2</div><div class="label">Report a documented fact</div></div>
-  </div>
-  <p class="sub" style="margin-top:18px">
-    <span class="rtag rtag-check">Checks</span> measure this run's own data and can
-    be reacted to: drop a column, resample, switch split modes. The scorecard gives
-    each a status for the raw data and the cleaned data, side by side.
-    <span class="rtag rtag-known">Known issue</span> checks look only at the
-    dataset's name or column names, never the data, so a single status is all
-    they get: nothing in your config changes what they find.
-    <span class="rtag rtag-v1">Always on</span> runs by default, no extra setup.
-    <span class="rtag rtag-v2">Opt-in</span> needs a second dataset, a declared
-    timestamp column, or accepts heavier compute.
-  </p>
-  <div class="check-list">
-    <div class="check-row">
-      <code class="name">dedup_check</code>
-      <span class="row-desc">Exact feature-space duplicates within and across train/test: memorization, not generalization.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+<section class="section" id="checks">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">03 / 18 CHECKS</div>
+      <div>
+        <h2>Specific checks, not one vague score.</h2>
+        <p class="sec-lede">Each check names a specific, falsifiable concern and emits a status, summary and supporting details. Start with the threat family, then drill into the individual checks only when needed.</p>
+      </div>
     </div>
-    <div class="check-row">
-      <code class="name">label_conflict_check</code>
-      <span class="row-desc">Groups rows by identical features and flags any group that maps to more than one label.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">leakage_screen</code>
-      <span class="row-desc">Fits a fast RandomForest and inspects its own feature importances to catch shortcut learning.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">one_rule_check</code>
-      <span class="row-desc">Fits a single depth-one decision tree and reports the winning rule in plain language.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">identity_column_flag</code>
-      <span class="row-desc">Standalone predictive power of IP/port/MAC-like columns you declare as identity columns.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">port_protocol_shortcut_check</code>
-      <span class="row-desc">Standalone predictive power of a declared port column combined with a protocol column, as a pair.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">temporal_leakage_check</code>
-      <span class="row-desc">Tests whether a configured timestamp column alone predicts the label.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">flow_group_leakage_check</code>
-      <span class="row-desc">Hashes a declared flow identity (e.g. a 5-tuple) and flags any identity present on both sides of the split.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">homogeneity_test</code>
-      <span class="row-desc">Nearest-neighbor distance vs. a same-set control, to separate real leakage from class homogeneity.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">resplit_falsification</code>
-      <span class="row-desc">A session/time-grouped resplit that makes session-correlated leakage structurally impossible.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">class_distribution_report</code>
-      <span class="row-desc">Per-class counts, shares, and imbalance ratio, before and after dedup.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">low_cardinality_warning</code>
-      <span class="row-desc">Flags identity-like columns with suspiciously few unique values relative to the split.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">data_integrity_check</code>
-      <span class="row-desc">Missing labels, missing or constant features, and plus-or-minus-infinity values.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">schema_fingerprint_check</code>
-      <span class="row-desc">Column names match a flow extractor with a documented calculation bug.</span>
-      <span class="row-tags"><span class="rtag rtag-known">Known issue</span><span class="rtag rtag-v1">Always on</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">synthetic_realism_check</code>
-      <span class="row-desc">Trains a domain classifier to distinguish this dataset from a reference real-traffic sample.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">cross_dataset_drift_check</code>
-      <span class="row-desc">Trains on this dataset, evaluates on a reference dataset in a unified feature space.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">known_issue_lookup</code>
-      <span class="row-desc">A curated table of documented, published problems for this exact dataset.</span>
-      <span class="row-tags"><span class="rtag rtag-known">Known issue</span><span class="rtag rtag-v2">Opt-in</span></span>
-    </div>
-    <div class="check-row">
-      <code class="name">seed_sensitivity_check</code>
-      <span class="row-desc">Re-fits leakage_screen and one_rule_check across five seeds and flags an unstable verdict.</span>
-      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v2">Opt-in</span></span>
+
+    <div class="check-layout" data-reveal>
+      <div class="check-nav" aria-label="Audit check categories">
+        <button class="active" data-filter="all">All failure modes</button>
+        <button data-filter="contamination">Sample contamination</button>
+        <button data-filter="shortcut">Shortcut learning</button>
+        <button data-filter="split">Split dependence</button>
+        <button data-filter="integrity">Integrity & provenance</button>
+      </div>
+      <div class="check-panel">
+        <article class="check-card" data-cat="contamination"><div class="id">C01</div><h3>Duplicate & overlap checks</h3><p>Detect exact feature-space duplication within and across partitions.</p></article>
+        <article class="check-card" data-cat="contamination"><div class="id">C02</div><h3>Label conflicts</h3><p>Find identical feature vectors that map to contradictory labels.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C03</div><h3>Leakage screen</h3><p>Use fast predictive importance to expose suspiciously dominant features.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C04</div><h3>One-rule challenge</h3><p>Ask whether one shallow rule already explains too much of the label.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C05</div><h3>Identity columns</h3><p>Measure the standalone predictive power of IP, port, MAC and similar identifiers.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C06</div><h3>Port + protocol shortcut</h3><p>Test whether a trivial pair of network fields acts as a class proxy.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C07</div><h3>Temporal leakage</h3><p>Check whether time alone is predictive enough to expose scenario structure.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C08</div><h3>Flow-group leakage</h3><p>Detect the same declared flow identity on both sides of the split.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C09</div><h3>Resplit falsification</h3><p>Re-evaluate under a grouped split that structurally blocks session-correlated leakage.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C10</div><h3>Known-issue lookup</h3><p>Surface curated, published limitations associated with the named benchmark.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C11</div><h3>Schema fingerprinting</h3><p>Match columns to extractor signatures with documented calculation problems.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C12+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="proof" class="wrap">
-  <div class="eyebrow">04 · proven on real data</div>
-  <h2 class="h">Run against the actual datasets, not stand-ins.</h2>
-  <p class="sub">201 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against seven real, published NIDS datasets, four of them failing the audit outright.</p>
-  <div class="stat-row">
-    <div class="fact"><div class="num">30.4M</div><div class="label">BoT-IoT flows scanned, 500K kept</div></div>
-    <div class="fact"><div class="num">2.83M</div><div class="label">CIC-IDS2017 flows audited in full</div></div>
-    <div class="fact"><div class="num">4 / 7</div><div class="label">Real datasets that failed the audit</div></div>
-    <div class="fact"><div class="num">0.003pp</div><div class="label">Resplit falsification's margin</div></div>
-  </div>
-  <div class="proof-grid">
-    <div class="proof-item">
-      <h4>UNSW-NB15</h4>
-      <p>Full dataset, 5 classifiers, <code>tuning: true</code>. Feature importance independently reproduced the published <code>sttl</code> TTL-topology bias.</p>
+<section class="section" id="workflow">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">04 / METHOD</div>
+      <div>
+        <h2>One config. Five stages. A preserved evidence trail.</h2>
+        <p class="sec-lede">Each stage feeds the next, so the final benchmark can be traced back to the data and audit decisions that produced it.</p>
+      </div>
     </div>
-    <div class="proof-item">
-      <h4>CSE-CIC-IDS2018</h4>
-      <p>Official 10-file, 16.2M-row distribution. <code>label_conflict_check</code> found FTP-BruteForce and DoS-SlowHTTPTest sharing identical flows under two labels.</p>
-    </div>
-    <div class="proof-item">
-      <h4>NSL-KDD</h4>
-      <p>Official train/test partition. <code>homogeneity_test</code> flags <code>smurf</code> at p = 2e-8, and 17 attack types exist only in the test set.</p>
-    </div>
-    <div class="proof-item">
-      <h4>CIC-IDS2017</h4>
-      <p>All 8 day-files, 2.83M flows, no sampling. <code>identity_column_flag</code>: Destination Port alone hits AUC 0.929.</p>
-    </div>
-    <div class="proof-item">
-      <h4>CICDDoS2019</h4>
-      <p>Both collection days, 431K flows. <code>label_conflict_check</code> found 5,623 feature vectors mapping to more than one label, all resolved by dedup.</p>
-    </div>
-    <div class="proof-item">
-      <h4>ToN-IoT</h4>
-      <p>NetFlow-V2 release, 13.1M flows scanned. <code>identity_column_flag</code> reproduces the same destination-port shortcut (AUC 0.896) on IoT traffic from a different lab entirely.</p>
-    </div>
-    <div class="proof-item">
-      <h4>BoT-IoT</h4>
-      <p>NetFlow-V2 release, 30.4M flows scanned. <code>known_issue_lookup</code> flags under 1% benign traffic, and the sample shows it: 37 Theft rows out of 400K train.</p>
-    </div>
-  </div>
-  <p class="sub" style="text-align:center; margin-top:28px">
-    Real scorecards, checked into the repo as-is, not mockups:
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/unsw-nb15-scorecard/SCORECARD.html">UNSW-NB15</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/nsl-kdd-scorecard/SCORECARD.html">NSL-KDD</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2017-scorecard/SCORECARD.html">CIC-IDS2017</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ids2018-scorecard/SCORECARD.html">CSE-CIC-IDS2018</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/cic-ddos2019-scorecard/SCORECARD.html">CICDDoS2019</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/ton-iot-scorecard/SCORECARD.html">ToN-IoT</a>,
-    <a href="https://raw.githack.com/hashtagRR/IDS2Eval/main/examples/bot-iot-scorecard/SCORECARD.html">BoT-IoT</a>.
-    <a href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples">Every artifact behind them →</a>
-  </p>
-</section>
+    
+    <div class="method-flow-single" data-reveal aria-label="IDS2Eval iterative workflow">
+      <article class="method-node-v5"><span class="mn">01</span><h3>Load</h3><p>Read the configured dataset and declared schema.</p></article>
+      <div class="method-arrow-v5">→</div>
+      <article class="method-node-v5 audit"><span class="mn">02</span><h3>Audit</h3><p>Run integrity checks on the untouched data and preserve the evidence.</p></article>
+      <div class="method-arrow-v5">→</div>
+      <article class="method-node-v5"><span class="mn">03</span><h3>Clean</h3><p>Apply configured remediation and record exactly what changed.</p></article>
+      <div class="method-arrow-v5">→</div>
+      <article class="method-node-v5"><span class="mn">04</span><h3>Falsify</h3><p>Challenge the result under stronger split and benchmark assumptions.</p></article>
+      <div class="method-arrow-v5">→</div>
+      <article class="method-node-v5"><span class="mn">05</span><h3>Preserve</h3><p>Write scorecards and machine readable artifacts for review and reproduction.</p></article>
 
-<section id="config" class="wrap">
-  <div class="eyebrow">05 · configure it</div>
-  <h2 class="h">One YAML file. No code required for the common case.</h2>
-  <p class="sub">Every field is documented in <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/configs/schema.yaml">configs/schema.yaml</a>; worked examples in <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/configuration.md">guide/configuration.md</a>.</p>
-  <pre class="code-block"><span class="c"># my_config.yaml</span>
-<span class="k">dataset</span>:
-  <span class="k">name</span>: my-dataset
-  <span class="k">raw_files</span>: [<span class="s">"data.csv"</span>]
-<span class="k">schema</span>:
-  <span class="k">label_column</span>: Label
-<span class="k">preprocessing</span>:
-  <span class="k">dedup</span>: true
-  <span class="k">sampling</span>:
-    <span class="k">binary</span>: [<span class="s">none</span>, <span class="s">smote</span>, <span class="s">smoteenn</span>]
-<span class="k">classifiers</span>:
-  <span class="k">list</span>: [RandomForest, XGBoost]
-  <span class="k">tuning</span>: true
-<span class="k">random_seed</span>: 42</pre>
-</section>
-
-<section id="scope" class="wrap">
-  <div class="eyebrow">06 · scope</div>
-  <h2 class="h">What this deliberately doesn't do.</h2>
-  <p class="sub">Disclosed on purpose, not a hidden limitations paragraph three pages into a README.</p>
-  <div class="disclosure">
-    <h3>Out of scope, on purpose</h3>
-    <ul>
-      <li><b>Feature engineering.</b> No imputation, feature selection, or dimensionality reduction. Dedicated tools already do this well; IDS2Eval audits and benchmarks the features you give it.</li>
-      <li><b>Deep hyperparameter search.</b> <code>classifiers.tuning</code> runs a fixed grid, on purpose, to keep classifier comparisons fair. Bring your own Bayesian search if you need one.</li>
-      <li><b>The staged-cascade detection architecture</b> from this project's companion research paper. This tool ships the reusable audit and benchmark methodology, not the novel architecture built on top of it.</li>
-    </ul>
+      <svg class="method-loop-svg" viewBox="0 0 1200 265" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id="loopArrowHeadV12" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="#9eb5a6"></path>
+          </marker>
+        </defs>
+        <!-- Start beneath Falsify, drop down, travel left, then rise into Clean -->
+        <path d="M 830 178
+                 C 830 198, 830 214, 815 226
+                 C 770 250, 675 250, 610 250
+                 C 585 250, 575 232, 575 205"
+              fill="none"
+              stroke="#9eb5a6"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              marker-end="url(#loopArrowHeadV12)"></path>
+      </svg>
+      <div class="method-loop-label">if falsification exposes an issue, return to Clean</div>
+    </div>
   </div>
 </section>
 
-<footer class="wrap">
-  <div class="footer-grid">
-    <div>
-      <h4>Get started</h4>
-      <div class="install"><span class="prompt">$</span> git clone https://github.com/hashtagRR/IDS2Eval.git
-<span class="prompt">$</span> cd IDS2Eval &amp;&amp; python3 -m venv venv
-<span class="prompt">$</span> venv/bin/pip install -e .
-<span class="prompt">$</span> venv/bin/ids2eval --config my_config.yaml</div>
+<section class="section" id="datasets">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">05 / DATASETS</div>
+      <div>
+        <h2>Tested against published NIDS benchmarks, not toy tables.</h2>
+        <p class="sec-lede">Seven real datasets have been exercised end to end, spanning classic connection records, modern flow datasets, IoT traffic, and DDoS-focused corpora.</p>
+      </div>
     </div>
-    <div>
-      <h4>Docs</h4>
-      <ul>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/README.md#installation">Installation</a></li>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/usage.md">Usage &amp; CLI</a></li>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/configuration.md">Configuration</a></li>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">Audit checks</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Project</h4>
-      <ul>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval">GitHub repository</a></li>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/issues">Issues</a></li>
-        <li><a href="https://github.com/hashtagRR/IDS2Eval/blob/main/LICENSE">License (AGPL-3.0)</a></li>
-      </ul>
+    <div class="dataset-cluster" data-reveal>
+      <div class="dataset-card-v7 c1"><span class="dataset-index-v7">01</span><span class="dataset-name-v7">UNSW-NB15</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c2"><span class="dataset-index-v7">02</span><span class="dataset-name-v7">NSL-KDD</span><span class="validated-badge-v7">VALIDATED</span></div>
+
+      <div class="dataset-respect-v7">
+        <div class="label">A note on dataset creators</div>
+        <h3>Designed to help researchers get more reliable results from valuable benchmark datasets.</h3>
+        <p><strong>NIDS datasets are the backbone of ML and DL research.</strong> They are difficult, expensive, and often foundational community contributions. IDS²Eval is meant to help researchers use those datasets more carefully, identify structural quirks, understand where shortcuts may appear, and train models whose performance is easier to defend. The goal is to strengthen the value of these datasets, not to diminish the work behind them.</p>
+      </div>
+
+      <div class="dataset-card-v7 c3"><span class="dataset-index-v7">03</span><span class="dataset-name-v7">CIC-IDS2017</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c4"><span class="dataset-index-v7">04</span><span class="dataset-name-v7">CSE-CIC-IDS2018</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c5 r2"><span class="dataset-index-v7">05</span><span class="dataset-name-v7">CICDDoS2019</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c6 r2"><span class="dataset-index-v7">06</span><span class="dataset-name-v7">ToN-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c7 r2"><span class="dataset-index-v7">07</span><span class="dataset-name-v7">BoT-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
     </div>
   </div>
-  <div class="foot-bottom">
-    <span>IDS<sup>2</sup>Eval</span>
-    <span>AGPL-3.0</span>
+</section>
+
+<section class="section" id="output">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">06 / OUTPUT</div>
+      <div>
+        <h2>A result you can inspect, not just a notebook to take on trust.</h2>
+        <p class="sec-lede">Human-readable scorecards sit beside machine-readable output, making the audit useful both as research evidence and as something that can be compared programmatically.</p>
+      </div>
+    </div>
+
+    <div class="run-grid" data-reveal>
+      <div class="terminal">
+        <div class="panel-head">terminal</div>
+<pre>$ ids2eval --config unsw-nb15.yaml --skip-benchmark
+
+[audit:before]
+dedup_check .......... FLAG  42.38%
+leakage_screen ....... OK    sttl 17.8%
+known_issue_lookup ... WARN  file-name inversion
+
+[dedup]
+removed 42.38% of train
+
+[audit:after]
+dedup_check .......... OK    0.00%
+class_distribution ... OK    ~1:1
+
+[scorecard]
+passed with warnings</pre>
+      </div>
+      <div class="scorecard">
+        <div class="panel-head">SCORECARD.html</div>
+        <div class="score-body">
+          <div class="score-summary"><strong>UNSW-NB15 / audit report</strong><span>PASSED WITH WARNINGS</span></div>
+          <div class="score-item"><span>Feature-space duplication<br><small>before cleanup</small></span><span class="status-pill flag">FLAG</span></div>
+          <div class="score-item"><span>Feature-space duplication<br><small>after cleanup</small></span><span class="status-pill ok">OK</span></div>
+          <div class="score-item"><span>Known dataset issue<br><small>curated finding</small></span><span class="status-pill warn">WARN</span></div>
+          <div class="score-item"><span>Class distribution<br><small>before → after recorded</small></span><span class="status-pill ok">RECORDED</span></div>
+          <div class="score-item"><span>Reproducibility artifacts<br><small>JSON + Markdown + HTML</small></span><span class="status-pill ok">WRITTEN</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section freedom" id="freedom">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-index">07 / SOFTWARE FREEDOM</div>
+      <div>
+        <h2>Free as in free speech, not free beer.</h2>
+        <div class="freedom-copy">
+          IDS²Eval is <strong>AGPLv3 free software</strong>. Use it, study it, modify it, redistribute it, and use it commercially. The point is not to prevent commerce; it is to preserve the same freedoms for the people who receive or interact with modified versions.
+          <br><br>
+          For an auditing tool, that reciprocity is part of the design: the software and its modifications should remain inspectable.
+        </div>
+        <div class="freedom-meta"><span>commercial use permitted</span><span>source remains auditable</span><span>AGPL-3.0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="artifact">
+  <div class="wrap" data-reveal>
+    <div class="eyebrow" style="justify-content:center">Research artifact</div>
+    <h2>A benchmark score should come after the audit, not before it.</h2>
+    <p>Inspect the implementation, run the checks on your own NIDS dataset, and keep the evidence that explains what the benchmark actually measured.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">Explore IDS²Eval on GitHub ↗</a>
+      <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples">Browse scorecards</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>IDS²Eval ,  Intrusion Detection Systems / Intrusion Data Sets Evaluation</span>
+    <span class="mono">AGPLv3 · free software</span>
   </div>
 </footer>
+
+
+<script>
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+const filterButtons = [...document.querySelectorAll('[data-filter]')];
+const cards = [...document.querySelectorAll('.check-card')];
+filterButtons.forEach(btn => btn.addEventListener('click', () => {
+  filterButtons.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  cards.forEach(card => {
+    const match = f === 'all' || card.dataset.cat === f;
+    card.style.display = match ? 'block' : 'none';
+  });
+}));
+
+const sections = [...document.querySelectorAll('section[id]')];
+const navLinks = [...document.querySelectorAll('.nav-link')];
+const activateNav = id => {
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+  });
+};
+
+const navObserver = new IntersectionObserver(entries => {
+  const visible = entries
+    .filter(e => e.isIntersecting)
+    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+  if (visible.length) activateNav(visible[0].target.id);
+}, {
+  rootMargin: '-20% 0px -55% 0px',
+  threshold: [0.2, 0.4, 0.6]
+});
+
+sections.forEach(section => navObserver.observe(section));
+activateNav('question');
+</script>
 
 </body>
 </html>

@@ -29,6 +29,7 @@ from . import (
     data_integrity,
     dedup,
     feature_auc_ranking,
+    feature_category_ablation,
     flow_group_leakage,
     homogeneity,
     identity_columns,
@@ -79,6 +80,7 @@ EVIDENCE_LEVEL = {
     "resplit_falsification": "direct-experiment",
     "scenario_holdout_falsification": "direct-experiment",
     "cross_capture_matrix_check": "direct-experiment",
+    "feature_category_ablation_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -143,6 +145,8 @@ def run_audit(
         findings.append(cross_dataset_drift.check(train_df, test_df, cfg))
     if audit_cfg["cross_capture_matrix_check"] and "cross_capture_matrix_check" not in skip:
         findings.append(cross_capture_matrix.check(cfg))
+    if audit_cfg["feature_category_ablation_check"] and "feature_category_ablation_check" not in skip:
+        findings.append(feature_category_ablation.check(train_df, test_df, cfg))
     if audit_cfg["known_issue_lookup"] and "known_issue_lookup" not in skip:
         findings.append(known_issues.check(train_df, cfg))
     if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:

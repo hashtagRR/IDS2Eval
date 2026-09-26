@@ -8,6 +8,7 @@ from ids2eval.audit import (
     data_integrity,
     dedup,
     feature_auc_ranking,
+    feature_category_ablation,
     flow_group_leakage,
     homogeneity,
     identity_columns,
@@ -303,6 +304,52 @@ def test_cross_capture_matrix_check_skips_past_the_scenario_cap(base_cfg, tmp_pa
     result = cross_capture_matrix.check(base_cfg)
     assert result["status"] == "ok"
     assert "skipped" in result["summary"]
+
+
+def test_feature_category_ablation_check_ok_with_no_categories_configured(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = feature_category_ablation.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.feature_categories configured" in result["summary"]
+
+
+def test_feature_category_ablation_check_ok_when_no_declared_columns_are_present(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "feature_categories": {"NotAColumn": "topology"}})
+    result = feature_category_ablation.check(train_df, test_df, cfg)
+    assert result["status"] == "ok"
+    assert "none of schema.feature_categories's columns are present" in result["summary"]
+
+
+def test_feature_category_ablation_check_flags_a_load_bearing_category(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 300
+    label = rng.choice(["A", "B"], n)
+    df = pd.DataFrame({
+        "Shortcut": np.where(label == "A", 100.0, 0.0) + rng.normal(0, 0.01, n),
+        "Noise1": rng.normal(size=n),
+        "Noise2": rng.normal(size=n),
+        "Label": label,
+    })
+    train_df, test_df = df.iloc[:200].reset_index(drop=True), df.iloc[200:].reset_index(drop=True)
+    cfg = dict(base_cfg, schema={
+        **base_cfg["schema"],
+        "feature_categories": {"Shortcut": "identity", "Noise1": "behavioural", "Noise2": "behavioural"},
+    })
+    result = feature_category_ablation.check(train_df, test_df, cfg)
+    assert result["check"] == "feature_category_ablation_check"
+    assert result["status"] in ("flag", "warning")
+    drops = result["details"]["drop_by_category"]
+    assert drops["identity"] > drops["behavioural"]
+
+
+def test_feature_category_ablation_check_ok_when_categories_cover_every_feature(base_cfg):
+    df = pd.DataFrame({"F1": range(30), "F2": range(30), "Label": ["A", "B"] * 15})
+    train_df, test_df = df.iloc[:20].reset_index(drop=True), df.iloc[20:].reset_index(drop=True)
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "feature_categories": {"F1": "only", "F2": "only"}})
+    result = feature_category_ablation.check(train_df, test_df, cfg)
+    assert result["status"] == "ok"
+    assert "nothing left to ablate against" in result["summary"]
 
 
 def test_class_distribution_report_flags_rare_class(base_cfg, synth_train_test):

@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 24 checks operationalize a
+paragraph, or not tested at all. These 25 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Nineteen run by default (v1, no external data needed); five are
+Nineteen run by default (v1, no external data needed); six are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -29,6 +29,7 @@ does and does not cover:
 | Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `temporal_realism_check`, `row_order_leakage_check` |
 | Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification`, `cross_capture_matrix_check` |
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check`, `feature_auc_ranking_check` |
+| Reliance on a declared feature category | `feature_category_ablation_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
 | Provenance (extractor bugs, curated per-dataset facts) | `schema_fingerprint_check`, `known_issue_lookup` |
@@ -294,6 +295,20 @@ full N x N accuracy matrix. Real, not negligible, compute (N*(N-1)
 RandomForest fits rather than one), so it's opt-in and capped at 6
 scenarios, skipped past that cap rather than run.
 
+### `feature_category_ablation_check`
+Needs `schema.feature_categories`, a user-declared mapping from column
+name to a category label (behavioural, topology, identity, timing, or
+any names chosen). Fits once on every feature (baseline), then once
+per declared category with that category's columns removed, and
+reports how much accuracy each category's removal costs. A category
+responsible for a large share of accuracy on its own is worth a second
+look, especially if it isn't behavioural, though this check reports
+the fact and leaves that judgment to the reader rather than hardcoding
+which category names should be considered suspicious. Deliberately
+opt-in: a category label is exactly as good as the person who assigned
+it, unlike every other check here, which measures something rather
+than trusting a declared fact.
+
 ### `known_issue_lookup`
 A curated table of documented per-dataset problems, matched on
 `dataset.name`, currently seeded with CIC-IDS2018's 2018-02-23
@@ -351,8 +366,8 @@ run's actual data or not:
   `class_distribution_report`, `low_cardinality_warning`,
   `data_integrity_check`, `resplit_falsification`,
   `scenario_holdout_falsification`, `cross_capture_matrix_check`,
-  `synthetic_realism_check`, `cross_dataset_drift_check` and
-  `seed_sensitivity_check` live.
+  `feature_category_ablation_check`, `synthetic_realism_check`,
+  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's

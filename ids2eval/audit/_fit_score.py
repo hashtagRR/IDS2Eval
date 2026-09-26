@@ -4,6 +4,9 @@ Used by any check that compares accuracy across two different ways of
 splitting the same raw data (resplit_falsification: random vs. grouped;
 scenario_holdout_falsification: random vs. one scenario held out
 entirely), rather than measuring a property of a single given split.
+Also used by feature_category_ablation_check, which instead compares
+two different FEATURE subsets of the same split, via the optional
+`cols` override.
 """
 
 from __future__ import annotations
@@ -17,8 +20,11 @@ from ..data import features
 MAX_FIT_ROWS = 200_000
 
 
-def fit_and_score(train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict) -> float:
-    cols = features.feature_columns(train_df, cfg)
+def fit_and_score(
+    train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict, cols: list[str] | None = None
+) -> float:
+    if cols is None:
+        cols = features.feature_columns(train_df, cfg)
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
     x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
     clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)

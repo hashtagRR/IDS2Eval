@@ -184,6 +184,12 @@ CHECK_INFO = {
         "Flag: best-to-worst scenario-pair accuracy spread exceeds 20 points. Warning: exceeds 10. "
         "Always ok when no schema.scenario_column is configured.",
     ),
+    "feature_category_ablation_check": (
+        "Fits once on every feature, then once per schema.feature_categories group with that group's "
+        "columns removed, and reports how much accuracy each group's removal costs.",
+        "Flag: one category's removal costs more than 30 points of accuracy. Warning: more than 15. "
+        "Always ok when no schema.feature_categories is configured.",
+    ),
     "known_issue_lookup": (
         "Looks the dataset name up in a hand-curated list of published problems with specific datasets. "
         "Looks only at the name, so its result is the same on raw and cleaned data.",

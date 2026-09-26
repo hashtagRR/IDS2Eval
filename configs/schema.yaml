@@ -30,6 +30,8 @@ schema:
                                 # like [SrcIP, DstIP, SrcPort, DstPort, Protocol]
   scenario_column: null        # optional, used only by scenario_holdout_falsification,
                                 # e.g. a capture-day or attacker-host column
+  feature_categories: {}       # optional, used only by feature_category_ablation_check,
+                                # e.g. {sttl: topology, dur: behavioural, service: identity}
 
 label_grouping:
   attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
@@ -70,6 +72,7 @@ audit:
   synthetic_realism_check: false
   cross_dataset_drift_check: false
   cross_capture_matrix_check: false # N x N accuracy matrix across schema.scenario_column values
+  feature_category_ablation_check: false # accuracy cost of removing each schema.feature_categories group
   known_issue_lookup: false
   seed_sensitivity_check: false # re-fits leakage_screen/one_rule_check across a few seeds
   reference_dataset: null      # required if any v2 check above is enabled, e.g. "/path/to/reference.csv"

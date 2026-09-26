@@ -45,6 +45,7 @@ DEFAULTS: dict[str, Any] = {
         "timestamp_column": None,
         "flow_id_columns": [],
         "scenario_column": None,
+        "feature_categories": {},
     },
     "label_grouping": {
         "attack_type_mapping": {},
@@ -77,6 +78,7 @@ DEFAULTS: dict[str, Any] = {
         "synthetic_realism_check": False,
         "cross_dataset_drift_check": False,
         "cross_capture_matrix_check": False,
+        "feature_category_ablation_check": False,
         "known_issue_lookup": False,
         "seed_sensitivity_check": False,
         "reference_dataset": None,

@@ -10,7 +10,49 @@
       "test_rows_raw": 82332,
       "test_rows_deduped": 52644,
       "test_leakage_dropped": 8541,
-      "test_duplicates_dropped": 21147
+      "test_duplicates_dropped": 21147,
+      "by_class": {
+        "Normal": {
+          "train_duplicate_rate": 0.07473214285714286,
+          "test_leak_rate": 0.039783783783783784
+        },
+        "Generic": {
+          "train_duplicate_rate": 0.9019,
+          "test_leak_rate": 0.09125112606645117
+        },
+        "Exploits": {
+          "train_duplicate_rate": 0.4393735213966999,
+          "test_leak_rate": 0.16187567373338124
+        },
+        "Fuzzers": {
+          "train_duplicate_rate": 0.18120325560932687,
+          "test_leak_rate": 0.04305509732761465
+        },
+        "DoS": {
+          "train_duplicate_rate": 0.7550554468362688,
+          "test_leak_rate": 0.4900953778429934
+        },
+        "Reconnaissance": {
+          "train_duplicate_rate": 0.3878562577447336,
+          "test_leak_rate": 0.3255148741418764
+        },
+        "Analysis": {
+          "train_duplicate_rate": 0.729,
+          "test_leak_rate": 0.18463810930576072
+        },
+        "Backdoor": {
+          "train_duplicate_rate": 0.7061855670103093,
+          "test_leak_rate": 0.00686106346483705
+        },
+        "Shellcode": {
+          "train_duplicate_rate": 0.038834951456310676,
+          "test_leak_rate": 0.03439153439153439
+        },
+        "Worms": {
+          "train_duplicate_rate": 0.06923076923076923,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -20,7 +62,55 @@
     "details": {
       "conflicting_groups": 414,
       "conflicting_rows": 1758,
-      "cross_split_conflicting_groups": 279
+      "cross_split_conflicting_groups": 279,
+      "by_class": {
+        "Normal": {
+          "conflicting_rate": 0.009978494623655914
+        },
+        "Generic": {
+          "conflicting_rate": 0.0
+        },
+        "Exploits": {
+          "conflicting_rate": 0.0
+        },
+        "Fuzzers": {
+          "conflicting_rate": 0.03402623113090819
+        },
+        "DoS": {
+          "conflicting_rate": 0.0
+        },
+        "Reconnaissance": {
+          "conflicting_rate": 0.0
+        },
+        "Analysis": {
+          "conflicting_rate": 0.0
+        },
+        "Backdoor": {
+          "conflicting_rate": 0.0
+        },
+        "Shellcode": {
+          "conflicting_rate": 0.0033090668431502318
+        },
+        "Worms": {
+          "conflicting_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+    "details": {
+      "classes_tested": 10,
+      "affected_rows": 472,
+      "top_pairs": {
+        "Backdoor / DoS": 80,
+        "Analysis / DoS": 61,
+        "Backdoor / Exploits": 56,
+        "DoS / Exploits": 54,
+        "Analysis / Exploits": 44
+      }
     }
   },
   {
@@ -56,9 +146,24 @@
     "details": {}
   },
   {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "proto"
+    }
+  },
+  {
     "check": "temporal_leakage_check",
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
     "details": {}
   },
   {
@@ -193,22 +298,6 @@
           "citation": "Independently verified in this project's own audit methodology"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "flag",
-    "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
-    "details": {
-      "classes_tested": 10,
-      "affected_rows": 472,
-      "top_pairs": {
-        "Backdoor / DoS": 80,
-        "Analysis / DoS": 61,
-        "Backdoor / Exploits": 56,
-        "DoS / Exploits": 54,
-        "Analysis / Exploits": 44
-      }
     }
   }
 ]

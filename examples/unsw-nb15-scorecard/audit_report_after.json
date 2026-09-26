@@ -10,7 +10,49 @@
       "test_rows_raw": 52644,
       "test_rows_deduped": 52644,
       "test_leakage_dropped": 0,
-      "test_duplicates_dropped": 0
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "Normal": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Exploits": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Fuzzers": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Reconnaissance": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Generic": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Shellcode": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Analysis": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Backdoor": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Worms": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -18,6 +60,14 @@
     "status": "ok",
     "summary": "no feature vector maps to more than one label",
     "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+    "details": {
+      "classes_tested": 10
+    }
   },
   {
     "check": "leakage_screen",
@@ -52,9 +102,24 @@
     "details": {}
   },
   {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "proto"
+    }
+  },
+  {
     "check": "temporal_leakage_check",
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
     "details": {}
   },
   {
@@ -189,14 +254,6 @@
           "citation": "Independently verified in this project's own audit methodology"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "ok",
-    "summary": "no near-zero-distance feature vectors found across 10 classes tested",
-    "details": {
-      "classes_tested": 10
     }
   }
 ]

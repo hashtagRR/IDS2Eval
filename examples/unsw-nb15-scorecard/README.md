@@ -7,7 +7,7 @@ folder; see [SCORECARD.md](SCORECARD.md) for the full result, or
 download [SCORECARD.html](SCORECARD.html) and open it in a browser for
 the styled version.
 
-**Result: passed with warnings** - 12 of 13 checks `ok`, one `warning`
+**Result: passed with warnings** - 14 of 15 checks `ok`, one `warning`
 (`known_issue_lookup`, described below), zero flags.
 
 Three things worth pointing out about what's actually in here:
@@ -37,9 +37,15 @@ Three things worth pointing out about what's actually in here:
   `audit_report_after.json` shows 0%, and the train-class imbalance ratio
   shifts from 2:1 to roughly 1:1 - the duplicates were disproportionately
   one class.
+- **`dedup_check`'s per-class breakdown names that class**: `Generic` sits
+  at 90.19% train duplication, `Normal` at 7.47%, both folded into the one
+  42.38% global figure above. A per-class rate this uneven means the
+  global number describes almost nobody's actual duplication rate.
 
-Re-run 2026-09-26 to pick up `near_duplicate_class_check`, which is why
-the check count reads 13; the verdict and every other finding are
+Re-run 2026-09-26 to pick up `near_duplicate_class_check` and a per-class
+breakdown on `dedup_check`, `label_conflict_check`, `leakage_screen`, and
+`identity_column_flag` (`details["by_class"]` in the JSON reports), which
+is why the check count reads 15; the verdict and every other finding are
 unchanged from the original run.
 
 Files: `config.yaml` (input), `audit_report_before.json` /

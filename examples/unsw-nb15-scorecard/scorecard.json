@@ -1,13 +1,13 @@
 {
   "scorecard_schema_version": "1.2",
-  "generated_at": "2026-09-26T08:53:08.328201+00:00",
+  "generated_at": "2026-09-26T12:19:55.604633+00:00",
   "dataset_name": "unsw-nb15",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
+  "ids2eval_git_commit": "1a0dbc89e7cf287520fde57e0718e605eb9b843e",
   "audit_stage": "after",
   "overall_status": "passed_with_warnings",
   "counts": {
-    "ok": 12,
+    "ok": 14,
     "warning": 1,
     "flag": 0
   },
@@ -21,6 +21,11 @@
       "check": "label_conflict_check",
       "status": "ok",
       "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
     },
     {
       "check": "leakage_screen",
@@ -38,9 +43,19 @@
       "summary": "no id_like_columns configured"
     },
     {
+      "check": "port_protocol_shortcut_check",
+      "status": "ok",
+      "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both"
+    },
+    {
       "check": "temporal_leakage_check",
       "status": "ok",
       "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "ok",
+      "summary": "no schema.flow_id_columns configured"
     },
     {
       "check": "homogeneity_test",
@@ -71,11 +86,6 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
-    },
-    {
-      "check": "near_duplicate_class_check",
-      "status": "ok",
-      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
     }
   ],
   "checks": [
@@ -104,6 +114,20 @@
       "after": {
         "status": "ok",
         "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
         "evidence": "statistical"
       }
     },
@@ -150,6 +174,20 @@
       }
     },
     {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "temporal_leakage_check",
       "category": "audit",
       "before": {
@@ -160,6 +198,20 @@
       "after": {
         "status": "ok",
         "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
         "evidence": "statistical"
       }
     },
@@ -246,20 +298,6 @@
         "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
         "evidence": "documented"
       }
-    },
-    {
-      "check": "near_duplicate_class_check",
-      "category": "audit",
-      "before": {
-        "status": "flag",
-        "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
-        "evidence": "statistical"
-      },
-      "after": {
-        "status": "ok",
-        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
-        "evidence": "statistical"
-      }
     }
   ],
   "dedup_effect": {
@@ -277,5 +315,12 @@
     "feature_count": 42,
     "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
     "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-26_075305_991945",
+    "previous_generated_at": "2026-09-26T07:54:22.902100+00:00",
+    "previous_verdict": "passed_with_warnings",
+    "fingerprint_changed": false,
+    "changed_checks": []
   }
 }

@@ -48,7 +48,10 @@ happens to match. Run twice when `preprocessing.dedup` is on: once
 before cleanup, once after, so a claim like "12% duplicate leakage
 before, 0% after" is backed by two real runs, not assumed. On real
 UNSW-NB15 data this found 42% train duplication and correctly dropped
-to 0% after dedup.
+to 0% after dedup, but that global figure hid an uneven split: a
+per-class breakdown (`details["by_class"]`) on that same run shows
+`Generic` at 90% train duplication against `Normal`'s 7%, invisible in
+the aggregate number alone.
 
 ### `label_conflict_check`
 Groups rows by the same features `dedup_check` compares on, and checks
@@ -64,7 +67,9 @@ benchmarks (IEEE TKDE). Like `dedup_check`, must run on the raw data:
 `preprocessing.dedup` already ignores the label column when grouping
 duplicates, so it collapses a conflicting group to one arbitrarily-kept
 row before this check ever sees it, and will always report zero after
-cleaning.
+cleaning. When flagged, `details["by_class"]` gives the conflicting
+rate per attack category, the same global-vs-per-class gap `dedup_check`
+shows.
 
 ### `near_duplicate_class_check`
 Extends `label_conflict_check` from identical feature vectors to
@@ -87,7 +92,12 @@ This is the same method that independently reproduces Flood et al.
 Port` alone hits near-perfect accuracy
 across the entire CIC family, UNSW-NB15, CIDDS, CTU-13, and NSL-KDD,
 confirmed independently against the real, official CIC-IDS2018
-distribution in this project's own validation.
+distribution in this project's own validation. When flagged,
+`details["by_class"]` gives the flagged feature's own one-vs-rest AUC
+per class, computed directly from its raw values (`roc_auc_score`, no
+extra model fit needed for a numeric feature), so a feature that
+separates one attack family cleanly but says nothing about another is
+visible rather than averaged into one importance share.
 
 ### `one_rule_check`
 Fits a single depth-1 decision tree, one feature, one threshold, and
@@ -108,7 +118,11 @@ packet-level IP/port models hit near-100% in-dataset, lose over 90%
 cross-dataset). Low cardinality specifically generalizes Meidan et al.
 2018's ([arXiv:1805.03409](https://arxiv.org/abs/1805.03409)) N-BaIoT
 per-device overfitting finding to any dataset with a limited
-attacker/victim IP pool.
+attacker/victim IP pool. When flagged, `details["by_class"]` fits one
+small one-vs-rest classifier per eligible class on the flagged column
+alone, capped at `MAX_CLASSES_FOR_BREAKDOWN` (25) classes since each is
+a real extra model fit, unlike `leakage_screen`'s per-class breakdown
+which reuses raw feature values and needs no fit at all.
 
 ### `port_protocol_shortcut_check`
 The same standalone-AUC method as `identity_column_flag`, applied to

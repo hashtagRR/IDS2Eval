@@ -16,25 +16,33 @@ one arbitrarily-kept row - after dedup, every feature vector maps to
 exactly one label by construction, and this check will correctly report
 zero. That's not the conflict being fixed, just made unobservable; the
 "before" pass is what actually shows it existed.
+
+Also attaches a per-class breakdown (details["by_class"]) when flagged:
+the global conflict rate can be driven almost entirely by one attack
+category, invisible in the aggregate count alone.
 """
 
 from __future__ import annotations
 
 import pandas as pd
 
+from . import _by_class
+
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     schema = cfg["schema"]
     label_col = schema["label_column"]
+    group_col = _by_class.group_column(cfg)
     ignore = set(schema["drop_columns"]) | {label_col}
     if schema["attack_category_column"]:
         ignore.add(schema["attack_category_column"])
     compare_cols = [c for c in train_df.columns if c not in ignore]
+    carry_cols = [label_col] if group_col == label_col else [label_col, group_col]
 
     combined = pd.concat(
         [
-            train_df[[*compare_cols, label_col]].assign(_split="train"),
-            test_df[[*compare_cols, label_col]].assign(_split="test"),
+            train_df[[*compare_cols, *carry_cols]].assign(_split="train"),
+            test_df[[*compare_cols, *carry_cols]].assign(_split="test"),
         ],
         ignore_index=True,
     )
@@ -67,11 +75,18 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     if cross_split:
         summary += f"; {cross_split:,} of these span train and test"
 
+    conflicting_mask = (combined["_n_labels"] > 1).to_numpy()
+    by_class = {}
+    for cls in _by_class.eligible_classes(combined, group_col):
+        cls_mask = (combined[group_col] == cls).to_numpy()
+        by_class[str(cls)] = {"conflicting_rate": float(conflicting_mask[cls_mask].mean())}
+
     return {
         "check": "label_conflict_check", "status": "flag", "summary": summary,
         "details": {
             "conflicting_groups": conflicting_groups,
             "conflicting_rows": conflicting_rows,
             "cross_split_conflicting_groups": cross_split,
+            "by_class": by_class,
         },
     }

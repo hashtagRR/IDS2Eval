@@ -38,11 +38,62 @@ def test_dedup_check_flags_planted_duplicates(base_cfg, synth_train_test):
     assert result["details"]["train_duplicates_dropped"] + result["details"]["test_leakage_dropped"] > 0
 
 
+def test_dedup_check_by_class_breakdown_covers_the_eligible_classes(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = dedup.check(train_df, test_df, base_cfg)
+    by_class = result["details"]["by_class"]
+    assert {"Benign", "Attack"} <= set(by_class)
+    for stats in by_class.values():
+        assert 0.0 <= stats["train_duplicate_rate"] <= 1.0
+        assert stats["test_leak_rate"] is None or 0.0 <= stats["test_leak_rate"] <= 1.0
+
+
+def test_dedup_check_by_class_isolates_which_class_carries_the_duplication(base_cfg):
+    # 30 identical train rows labeled A, 30 distinct train rows labeled B: the
+    # global rate is misleadingly split, only A's per-class rate should be high.
+    a_train = pd.DataFrame([{"F1": 1.0, "F2": 1.0}] * 30)
+    a_train["Label"] = "A"
+    b_train = pd.DataFrame([{"F1": float(50 + i), "F2": float(50 + i)} for i in range(30)])
+    b_train["Label"] = "B"
+    train_df = pd.concat([a_train, b_train], ignore_index=True)
+    test_df = pd.DataFrame([{"F1": 100.0, "F2": 100.0, "Label": "A"}] * 20
+                           + [{"F1": float(100 + i), "F2": float(100 + i), "Label": "B"} for i in range(20)])
+    result = dedup.check(train_df, test_df, base_cfg)
+    by_class = result["details"]["by_class"]
+    assert by_class["A"]["train_duplicate_rate"] > 0.5
+    assert by_class["B"]["train_duplicate_rate"] == 0.0
+
+
 def test_leakage_screen_flags_the_planted_leaky_feature(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = leakage.check(train_df, test_df, base_cfg)
     assert result["status"] == "flag"
     assert "LeakyFeature" in result["details"]["top_features"]
+    by_class = result["details"]["by_class"]
+    assert {"Benign", "Attack"} <= set(by_class)
+    assert all(0.0 <= auc <= 1.0 for auc in by_class.values())
+
+
+def test_leakage_screen_by_class_shows_uneven_separability(base_cfg):
+    # LeakyFeature perfectly separates A (always 100) and B (always 0), but for
+    # C it's uninformative noise spanning the same range - global importance
+    # still concentrates on LeakyFeature (A/B dominate the row count), but C's
+    # own per-class AUC should sit near chance, unlike A's and B's near 1.0.
+    rng = np.random.RandomState(0)
+    n_major, n_minor = 200, 40
+    a = pd.DataFrame({"LeakyFeature": [100.0] * n_major, "F1": rng.normal(size=n_major), "Label": "A"})
+    b = pd.DataFrame({"LeakyFeature": [0.0] * n_major, "F1": rng.normal(size=n_major), "Label": "B"})
+    c = pd.DataFrame({
+        "LeakyFeature": rng.uniform(0, 100, n_minor), "F1": rng.normal(size=n_minor), "Label": "C",
+    })
+    df = pd.concat([a, b, c], ignore_index=True).sample(frac=1, random_state=0).reset_index(drop=True)
+    train_df, test_df = df.iloc[: len(df) // 2].reset_index(drop=True), df.iloc[len(df) // 2 :].reset_index(drop=True)
+    result = leakage.check(train_df, test_df, base_cfg)
+    assert result["status"] == "flag"
+    by_class = result["details"]["by_class"]
+    assert by_class["A"] > 0.95
+    assert by_class["B"] > 0.95
+    assert by_class["C"] < 0.7
 
 
 def test_leakage_screen_ok_when_no_feature_dominates(base_cfg):
@@ -63,6 +114,27 @@ def test_identity_column_flag_detects_predictive_ip(base_cfg, synth_train_test):
     result = identity_columns.check_predictive_power(train_df, test_df, cfg)
     assert result["status"] == "flag"
     assert "SrcIP" in result["details"]["suggested_drop"]
+    by_class = result["details"]["by_class"]["SrcIP"]
+    assert {"Benign", "Attack"} <= set(by_class)
+    assert all(auc is None or 0.0 <= auc <= 1.0 for auc in by_class.values())
+
+
+def test_identity_column_flag_by_class_breakdown_skips_past_the_class_cap(base_cfg):
+    # A distinct SrcIP per class makes the column perfectly predictive (guaranteed
+    # flag), regardless of how many classes there are, so the cap path is actually
+    # exercised rather than depending on incidental class-count/AUC interaction.
+    n_classes = identity_columns.MAX_CLASSES_FOR_BREAKDOWN + 1
+    rows = [
+        {"SrcIP": f"10.0.0.{i}", "Label": f"class{i}"}
+        for i in range(n_classes) for _ in range(50)
+    ]
+    df = pd.DataFrame(rows)
+    train_df, test_df = df.iloc[::2].reset_index(drop=True), df.iloc[1::2].reset_index(drop=True)
+    cfg = _add_id_like_column(base_cfg)
+    result = identity_columns.check_predictive_power(train_df, test_df, cfg)
+    assert result["status"] == "flag"
+    assert isinstance(result["details"]["by_class"]["SrcIP"], str)
+    assert "skipped" in result["details"]["by_class"]["SrcIP"]
 
 
 def test_low_cardinality_warning_on_two_unique_ips(base_cfg, synth_train_test):
@@ -353,6 +425,25 @@ def test_label_conflict_check_detects_cross_split_conflicts(base_cfg):
     assert result["status"] == "flag"
     assert result["details"]["cross_split_conflicting_groups"] == 1
     assert "span train and test" in result["summary"]
+
+
+def test_label_conflict_check_by_class_isolates_which_class_conflicts(base_cfg):
+    # Class A: every row's features also appear under class B (pure conflict).
+    # Class C: 30 rows, all unlabeled-consistent, no conflict at all.
+    shared = pd.DataFrame({"F1": range(30), "F2": range(30)})
+    a = shared.copy()
+    a["Label"] = "A"
+    b = shared.copy()
+    b["Label"] = "B"
+    c = pd.DataFrame({"F1": range(100, 130), "F2": range(100, 130), "Label": "C"})
+    train_df = pd.concat([a, b, c], ignore_index=True)
+    test_df = train_df.iloc[:0].copy()  # empty test split, conflict is train-internal here
+    result = label_conflict.check(train_df, test_df, base_cfg)
+    assert result["status"] == "flag"
+    by_class = result["details"]["by_class"]
+    assert by_class["A"]["conflicting_rate"] == 1.0
+    assert by_class["B"]["conflicting_rate"] == 1.0
+    assert by_class["C"]["conflicting_rate"] == 0.0
 
 
 def test_label_conflict_check_ok_when_every_feature_vector_has_one_label(base_cfg, synth_train_test):

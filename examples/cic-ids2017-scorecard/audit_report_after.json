@@ -301,5 +301,17 @@
         }
       ]
     }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}",
+    "details": {
+      "classes_tested": 13,
+      "affected_rows": 2,
+      "top_pairs": {
+        "DoS Slowhttptest / DoS slowloris": 2
+      }
+    }
   }
 ]

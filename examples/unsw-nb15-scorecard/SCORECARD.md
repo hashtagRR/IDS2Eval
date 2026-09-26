@@ -1,10 +1,10 @@
 # IDS2Eval Scorecard
 
 **Dataset:** unsw-nb15
-**Overall status:** ⚠️ Passed with warnings, 11 ok, 1 warning(s), 0 flag(s)
-**Generated:** 2026-09-25T06:00:59.428268+00:00
-**IDS2Eval version:** 0.1.0 (git 05b5e54)
-**Scorecard schema version:** 1.1
+**Overall status:** ⚠️ Passed with warnings, 12 ok, 1 warning(s), 0 flag(s)
+**Generated:** 2026-09-26T08:53:08.328201+00:00
+**IDS2Eval version:** 0.1.0 (git 8cff297)
+**Scorecard schema version:** 1.2
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
@@ -15,16 +15,17 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 
 | # | Check | Raw data | Cleaned data | Summary |
 |---|---|---|---|---|
-| 1 | `dedup_check` | 🚩 flag | ✅ pass | train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0<br>*raw data:* train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147 |
-| 2 | `label_conflict_check` | 🚩 flag | ✅ pass | no feature vector maps to more than one label<br>*raw data:* 414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test |
-| 3 | `leakage_screen` | ✅ pass | ✅ pass | no single feature or pair dominates importance (top1=15.5%, top2=28.4%)<br>*raw data:* no single feature or pair dominates importance (top1=17.8%, top2=31.0%) |
-| 4 | `one_rule_check` | ✅ pass | ✅ pass | single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)<br>*raw data:* single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train) |
-| 5 | `identity_column_flag` | ✅ pass | ✅ pass | no id_like_columns configured |
-| 6 | `temporal_leakage_check` | ✅ pass | ✅ pass | no schema.timestamp_column configured |
-| 7 | `homogeneity_test` | ✅ pass | ✅ pass | 10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
-| 8 | `class_distribution_report` | ✅ pass | ✅ pass | 2 classes, train imbalance ratio (majority:minority) = 1:1<br>*raw data:* 2 classes, train imbalance ratio (majority:minority) = 2:1 |
-| 9 | `low_cardinality_warning` | ✅ pass | ✅ pass | no id_like_columns configured |
-| 10 | `data_integrity_check` | ✅ pass | ✅ pass | no missing labels, constant features, or +-inf values found |
+| 1 | `dedup_check` | 🚩 flag | ✅ pass | *Evidence: statistical.* train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0<br>*raw data:* train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147 |
+| 2 | `label_conflict_check` | 🚩 flag | ✅ pass | *Evidence: statistical.* no feature vector maps to more than one label<br>*raw data:* 414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test |
+| 3 | `leakage_screen` | ✅ pass | ✅ pass | *Evidence: statistical.* no single feature or pair dominates importance (top1=15.5%, top2=28.4%)<br>*raw data:* no single feature or pair dominates importance (top1=17.8%, top2=31.0%) |
+| 4 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)<br>*raw data:* single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train) |
+| 5 | `identity_column_flag` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
+| 6 | `temporal_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
+| 7 | `homogeneity_test` | ✅ pass | ✅ pass | *Evidence: statistical.* 10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
+| 8 | `class_distribution_report` | ✅ pass | ✅ pass | *Evidence: statistical.* 2 classes, train imbalance ratio (majority:minority) = 1:1<br>*raw data:* 2 classes, train imbalance ratio (majority:minority) = 2:1 |
+| 9 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
+| 10 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
+| 11 | `near_duplicate_class_check` | 🚩 flag | ✅ pass | *Evidence: statistical.* no near-zero-distance feature vectors found across 10 classes tested<br>*raw data:* 472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44} |
 
 ## Known issues
 
@@ -32,18 +33,13 @@ Documented facts about this dataset or the tool that produced it, from published
 
 | # | Check | Status | Summary |
 |---|---|---|---|
-| 1 | `schema_fingerprint_check` | ✅ pass | no known extractor signature matched |
-| 2 | `known_issue_lookup` | ⚠️ warn | Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology) |
+| 1 | `schema_fingerprint_check` | ✅ pass | *Evidence: documented.* no known extractor signature matched |
+| 2 | `known_issue_lookup` | ⚠️ warn | *Evidence: documented.* Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology) |
 
 ## What cleaning removed
 
 - Train: 175,341 → 101,040 rows (74,301 duplicates dropped)
 - Test: 82,332 → 52,644 rows (8,541 train-leaking rows and 21,147 test-internal duplicates dropped)
-
-## Compared to the previous run
-
-Compared to `2026-09-25_044529_426970` (2026-09-25T04:47:40.587778+00:00).
-No check's status changed since the previous run.
 
 ## Dataset fingerprint
 
@@ -53,7 +49,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported passed with warnings, 11 ok, 1 warning(s), 0 flag(s) across 12 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported passed with warnings, 12 ok, 1 warning(s), 0 flag(s) across 13 checks. Full report: audit_report_after.json.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

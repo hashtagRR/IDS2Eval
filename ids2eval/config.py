@@ -56,6 +56,7 @@ DEFAULTS: dict[str, Any] = {
     "audit": {
         "dedup_check": True,
         "label_conflict_check": True,
+        "near_duplicate_class_check": True,
         "leakage_screen": True,
         "one_rule_check": True,
         "identity_column_flag": True,

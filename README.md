@@ -129,13 +129,14 @@ at wherever you keep these (or any other IDS dataset in CSV form); see
 |---|---|
 | [guide/usage.md](guide/usage.md) | CLI, web UI, output files, caching, reproducing a run, programmatic API |
 | [guide/configuration.md](guide/configuration.md) | Config walkthrough with worked examples |
-| [guide/checks.md](guide/checks.md) | What each of the 18 checks does, and the research behind it |
+| [guide/checks.md](guide/checks.md) | What each of the 19 checks does, and the research behind it |
+| [guide/contributing-known-issues.md](guide/contributing-known-issues.md) | How to add a curated known issue or extractor fingerprint |
 | [configs/schema.yaml](configs/schema.yaml) | Every field, one line each - copy it as your starting point |
 | [examples/](examples/) | Real scorecards for seven widely used datasets: [UNSW-NB15](examples/unsw-nb15-scorecard), [NSL-KDD](examples/nsl-kdd-scorecard), [CIC-IDS2017](examples/cic-ids2017-scorecard), [CSE-CIC-IDS2018](examples/cic-ids2018-scorecard), [CICDDoS2019](examples/cic-ddos2019-scorecard), [ToN-IoT](examples/ton-iot-scorecard), [BoT-IoT](examples/bot-iot-scorecard) |
 
 ## Status
 
-Implemented, tested (201 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (218 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data - not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) - audit + 5 classifiers, including

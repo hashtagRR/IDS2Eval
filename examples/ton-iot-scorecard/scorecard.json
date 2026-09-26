@@ -1,13 +1,13 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T16:07:51.236670+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T09:31:25.064516+00:00",
   "dataset_name": "ton-iot",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "2ef764e98eb9b39d54c64647f9254a6033dabc8d",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 8,
+    "ok": 9,
     "warning": 2,
     "flag": 2
   },
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "ok",
       "summary": "no curated known issues for dataset 'ton-iot'"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)"
+        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)"
+        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)"
+        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)"
+        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']"
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']"
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']"
+        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']"
+        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']"
+        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']"
+        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 49397}"
+        "summary": "unique values by column: {'L4_DST_PORT': 49397}",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 49397}"
+        "summary": "unique values by column: {'L4_DST_PORT': 49397}",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "+-inf values in 2 feature column(s)"
+        "summary": "+-inf values in 2 feature column(s)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "+-inf values in 2 feature column(s)"
+        "summary": "+-inf values in 2 feature column(s)",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no curated known issues for dataset 'ton-iot'"
+        "summary": "no curated known issues for dataset 'ton-iot'",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no curated known issues for dataset 'ton-iot'"
+        "summary": "no curated known issues for dataset 'ton-iot'",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
       }
     }
   ],

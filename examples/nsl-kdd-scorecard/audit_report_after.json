@@ -335,5 +335,13 @@
         }
       ]
     }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 14 classes tested",
+    "details": {
+      "classes_tested": 14
+    }
   }
 ]

@@ -1,15 +1,15 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-26T06:55:50.551528+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T08:59:34.433490+00:00",
   "dataset_name": "cic-ids2017",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "7834a67f6553eac68d49d27912ad9ed7a92b8aae",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
     "ok": 6,
     "warning": 4,
-    "flag": 2
+    "flag": 3
   },
   "findings": [
     {
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "flag",
+      "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 247,799 (10.94%); test rows leaking a train feature-match: 81,604 (14.41%); test-internal duplicates: 2,516"
+        "summary": "train duplicates: 247,799 (10.94%); test rows leaking a train feature-match: 81,604 (14.41%); test-internal duplicates: 2,516",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "719 feature vector(s) (7,144 rows, 0.25%) map to more than one label. The ground truth contradicts itself for these rows; 335 of these span train and test"
+        "summary": "719 feature vector(s) (7,144 rows, 0.25%) map to more than one label. The ground truth contradicts itself for these rows; 335 of these span train and test",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=6.4%, top2=11.3%)"
+        "summary": "no single feature or pair dominates importance (top1=6.4%, top2=11.3%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=6.7%, top2=12.7%)"
+        "summary": "no single feature or pair dominates importance (top1=6.7%, top2=12.7%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 85.6% test accuracy (85.6% train)"
+        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 85.6% test accuracy (85.6% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 90.0% test accuracy (89.0% train)"
+        "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 90.0% test accuracy (89.0% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'Destination Port': 0.931}. Suggest dropping: ['Destination Port']"
+        "summary": "standalone AUC by column: {'Destination Port': 0.931}. Suggest dropping: ['Destination Port']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'Destination Port': 0.929}. Suggest dropping: ['Destination Port']"
+        "summary": "standalone AUC by column: {'Destination Port': 0.929}. Suggest dropping: ['Destination Port']",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']"
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['DoS Slowhttptest']"
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['DoS Slowhttptest']",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "15 classes, train imbalance ratio (majority:minority) = 202053:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']"
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 202053:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "15 classes, train imbalance ratio (majority:minority) = 185530:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']"
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 185530:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack \ufffd Brute Force', 'Web Attack \ufffd XSS', 'Infiltration', 'Web Attack \ufffd Sql Injection', 'Heartbleed']",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "unique values by column: {'Destination Port': 51291}"
+        "summary": "unique values by column: {'Destination Port': 51291}",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "unique values by column: {'Destination Port': 51291}"
+        "summary": "unique values by column: {'Destination Port': 51291}",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+        "summary": "matched extractor signature(s): ['CICFlowMeter']",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "matched extractor signature(s): ['CICFlowMeter']"
+        "summary": "matched extractor signature(s): ['CICFlowMeter']",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)"
+        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)"
+        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}",
+        "evidence": "statistical"
       }
     }
   ],
@@ -234,18 +277,5 @@
     "feature_count": 78,
     "train_content_hash": "5864fd3ca0c2d57589584902c07a712bd806130c638ac6d48626969975b9a362",
     "test_content_hash": "722dafecb77262e4a8661066ff0cd478cf1574faa31ebb8bfc987d5ae3673eea"
-  },
-  "previous_run_comparison": {
-    "previous_run": "2026-09-25_052417_698699",
-    "previous_generated_at": "2026-09-25T05:33:39.674860+00:00",
-    "previous_verdict": "failed",
-    "fingerprint_changed": false,
-    "changed_checks": [
-      {
-        "check": "known_issue_lookup",
-        "previous_status": "ok",
-        "current_status": "warning"
-      }
-    ]
   }
 }

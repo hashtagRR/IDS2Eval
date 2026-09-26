@@ -12,6 +12,7 @@ from ids2eval.audit import (
     known_issues,
     label_conflict,
     leakage,
+    near_duplicate_class,
     one_rule,
     port_protocol_shortcut,
     resplit,
@@ -359,6 +360,32 @@ def test_label_conflict_check_ok_when_every_feature_vector_has_one_label(base_cf
     result = label_conflict.check(train_df, test_df, base_cfg)
     assert result["check"] == "label_conflict_check"
     assert result["status"] == "ok"
+
+
+def test_near_duplicate_class_check_ok_with_no_cross_label_duplicates(base_cfg, synth_train_test):
+    train_df, _ = synth_train_test
+    result = near_duplicate_class.check(train_df, base_cfg)
+    assert result["check"] == "near_duplicate_class_check"
+    assert result["status"] == "ok"
+
+
+def test_near_duplicate_class_check_flags_identical_features_across_labels(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 30
+    shared = pd.DataFrame({"F1": rng.normal(size=n), "F2": rng.normal(size=n)})
+    df_a, df_b = shared.copy(), shared.copy()
+    df_a["Label"], df_b["Label"] = "AttackA", "AttackB"
+    df = pd.concat([df_a, df_b], ignore_index=True)
+    result = near_duplicate_class.check(df, base_cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["affected_rows"] > 0
+
+
+def test_near_duplicate_class_check_ok_with_fewer_than_two_eligible_classes(base_cfg):
+    df = pd.DataFrame({"F1": range(30), "Label": ["OnlyClass"] * 30})
+    result = near_duplicate_class.check(df, base_cfg)
+    assert result["status"] == "ok"
+    assert "fewer than two classes" in result["summary"]
 
 
 def test_label_conflict_check_is_masked_after_dedup(base_cfg):

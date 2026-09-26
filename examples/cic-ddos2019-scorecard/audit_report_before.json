@@ -204,5 +204,21 @@
         }
       ]
     }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "341 of 3,555 sampled rows (9.59%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 316, 'LDAP / MSSQL': 9, 'MSSQL / Portmap': 5, 'UDP / UDPLag': 4, 'MSSQL / UDP': 4}",
+    "details": {
+      "classes_tested": 8,
+      "affected_rows": 341,
+      "top_pairs": {
+        "NetBIOS / Portmap": 316,
+        "LDAP / MSSQL": 9,
+        "MSSQL / Portmap": 5,
+        "UDP / UDPLag": 4,
+        "MSSQL / UDP": 4
+      }
+    }
   }
 ]

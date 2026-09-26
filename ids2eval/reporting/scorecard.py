@@ -8,12 +8,17 @@ scorecard" section for the prior art this format draws on.
 
 SCHEMA_VERSION is independent of ids2eval's own package version: it only
 changes if this dict's shape changes, so a citation naming a schema version
-stays parseable even after ids2eval itself moves on. 1.1 is additive over
-1.0 (adds "checks", "counts", "dedup_effect", "previous_run_comparison";
-every 1.0 key is unchanged).
+stays parseable even after ids2eval itself moves on. 1.2 is additive over
+1.1, which was additive over 1.0 (1.1 added "checks", "counts",
+"dedup_effect", "previous_run_comparison"; 1.2 adds an "evidence" field
+inside each side of a "checks" row; every earlier key is unchanged).
 "checks" has one entry per check: {check, category, before, after} - category is
 "audit" or "known_issue" (see ids2eval.audit.KNOWN_ISSUE_CHECKS) - each side
-{status, summary} or null - "after" is null throughout when dedup didn't run.
+{status, summary, evidence} or null - "after" is null throughout when dedup
+didn't run. "evidence" is one of "documented", "direct-experiment",
+"statistical", or "cross-corroborated" (see ids2eval.audit.EVIDENCE_LEVEL):
+a fixed classification of how the check's status was determined, not a
+confidence guess about this particular result.
 """
 
 from __future__ import annotations
@@ -22,9 +27,16 @@ import html
 from datetime import datetime, timezone
 
 from .. import version_info
-from ..audit import KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
+from ..audit import DEFAULT_EVIDENCE_LEVEL, EVIDENCE_LEVEL, KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
 
-SCHEMA_VERSION = "1.1"
+SCHEMA_VERSION = "1.2"
+
+EVIDENCE_LABEL = {
+    "documented": "documented",
+    "direct-experiment": "direct experiment",
+    "cross-corroborated": "cross-corroborated",
+    "statistical": "statistical",
+}
 
 _STATUS_RANK = {"ok": 0, "warning": 1, "flag": 2}
 _OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "failed"}
@@ -55,6 +67,12 @@ CHECK_INFO = {
         "every row in a group has the same label. Must run on raw data: preprocessing.dedup already "
         "collapses these groups to one arbitrarily-kept label, so it always reports zero after cleaning.",
         "Flag: any feature vector maps to more than one label - the ground truth contradicts itself.",
+    ),
+    "near_duplicate_class_check": (
+        "Extends label_conflict_check from identical feature vectors to near-identical ones: a single "
+        "nearest-neighbor index over sampled rows from every class, checking whether a row's nearest "
+        "neighbor under a different label sits at effectively zero scaled distance.",
+        "Flag: any near-zero-distance neighbor pair spans two different labels.",
     ),
     "leakage_screen": (
         "Fits a random forest on all features and checks whether one or two features carry most of the "
@@ -173,15 +191,31 @@ def _check_rows(findings_before: list[dict] | None, findings_after: list[dict] |
         {
             "check": check,
             "category": "known_issue" if check in KNOWN_ISSUE_CHECKS else "audit",
-            "before": _result(before_by.get(check)),
-            "after": _result(after_by.get(check)),
+            "before": _result(before_by.get(check), _evidence(check, before_by)),
+            "after": _result(after_by.get(check), _evidence(check, after_by)),
         }
         for check in dict.fromkeys([*before_by, *after_by])
     ]
 
 
-def _result(finding: dict | None) -> dict | None:
-    return None if finding is None else {"status": finding["status"], "summary": finding["summary"]}
+def _evidence(check: str, findings_by_check: dict) -> str:
+    base = EVIDENCE_LEVEL.get(check, DEFAULT_EVIDENCE_LEVEL)
+    if check != "homogeneity_test":
+        return base
+    homogeneity = findings_by_check.get("homogeneity_test")
+    resplit = findings_by_check.get("resplit_falsification")
+    if homogeneity and resplit and homogeneity["status"] == "flag" and resplit["status"] == "flag":
+        return "cross-corroborated"
+    return base
+
+
+def _result(finding: dict | None, evidence: str | None = None) -> dict | None:
+    if finding is None:
+        return None
+    result = {"status": finding["status"], "summary": finding["summary"]}
+    if evidence is not None:
+        result["evidence"] = evidence
+    return result
 
 
 def _dedup_effect(findings_before: list[dict] | None) -> dict | None:
@@ -280,6 +314,8 @@ def _rows(scorecard: dict) -> list[dict]:
             # Provably the same check run once, not two independent measurements of the
             # same result - see STRUCTURAL_CHECKS. Renderers show one status, not two.
             "structural": r["check"] in STRUCTURAL_CHECKS,
+            # Absent on scorecards written under schema 1.0/1.1.
+            "evidence": final.get("evidence"),
         })
     return out
 
@@ -301,6 +337,11 @@ def _split_rows(rows: list[dict]) -> tuple[list[dict], list[dict]]:
 
 def _md_status(result: dict | None) -> str:
     return "n/a" if result is None else f"{_STATUS_EMOJI[result['status']]} {_STATUS_BADGE[result['status']]}"
+
+
+def _md_evidence_note(r: dict) -> str:
+    evidence = r.get("evidence")
+    return f"*Evidence: {EVIDENCE_LABEL[evidence]}.* " if evidence else ""
 
 
 def _drift_lines(scorecard: dict) -> list[str]:
@@ -382,7 +423,7 @@ def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
         else:
             statuses = f"{_md_status(r['before'])} |"
         lines.append(
-            f"| {i} | `{r['check']}` | {statuses} {r['summary']}"
+            f"| {i} | `{r['check']}` | {statuses} {_md_evidence_note(r)}{r['summary']}"
             + (f"<br>*raw data:* {r['summary_before']}" if r["summary_before"] else "") + " |"
         )
 
@@ -397,7 +438,7 @@ def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
             "|---|---|---|---|",
         ]
         for i, r in enumerate(known_rows, 1):
-            lines.append(f"| {i} | `{r['check']}` | {_md_status(r['before'])} | {r['summary']} |")
+            lines.append(f"| {i} | `{r['check']}` | {_md_status(r['before'])} | {_md_evidence_note(r)}{r['summary']} |")
 
     effect = scorecard.get("dedup_effect")
     if effect:
@@ -490,6 +531,8 @@ td.status{white-space:nowrap}
 padding:5px 9px;border-radius:999px}
 .b-ok{color:var(--ok);background:var(--ok-bg)}.b-warning{color:var(--warn);background:var(--warn-bg)}
 .b-flag{color:var(--flag);background:var(--flag-bg)}.b-none{color:var(--muted);background:transparent}
+.evidence{display:inline-block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;
+margin-right:6px}
 tr.moved td{background:color-mix(in srgb,var(--accent) 4%,transparent)}
 .was{color:var(--muted);font-size:.82rem;margin-top:3px}
 h2{font-size:1.05rem;margin:28px 0 10px}
@@ -569,13 +612,17 @@ def render_html(scorecard: dict) -> str:
             f'<td class="status" data-label="cleaned">{badge(r["after"])}</td>'
         )
 
+    def evidence_note(r: dict) -> str:
+        evidence = r.get("evidence")
+        return f'<span class="evidence">{e(EVIDENCE_LABEL[evidence])}</span>' if evidence else ""
+
     def audit_row(i: int, r: dict) -> str:
         return (
             f'<tr class="{"moved" if r["moved"] else ""}">'
             f'<td class="num">{i}</td>'
             f'<td class="check">{e(r["check"])}{_info_html(r["check"], i)}</td>'
             + status_cells(r)
-            + f"<td>{e(r['summary'])}"
+            + f"<td>{evidence_note(r)}{e(r['summary'])}"
             + (f'<div class="was">raw data: {e(r["summary_before"])}</div>' if r["summary_before"] else "")
             + "</td></tr>"
         )
@@ -586,7 +633,7 @@ def render_html(scorecard: dict) -> str:
             f'<tr><td class="num">{i}</td>'
             f'<td class="check">{e(r["check"])}{_info_html(r["check"], i + 1000)}</td>'
             f'<td class="status">{badge(r["before"])}</td>'
-            f"<td>{e(r['summary'])}</td></tr>"
+            f"<td>{evidence_note(r)}{e(r['summary'])}</td></tr>"
         )
 
     audit_rows, known_rows = _split_rows(rows)

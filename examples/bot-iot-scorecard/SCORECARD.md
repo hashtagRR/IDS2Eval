@@ -1,10 +1,10 @@
 # IDS2Eval Scorecard
 
 **Dataset:** bot-iot
-**Overall status:** ⚠️ Passed with warnings, 10 ok, 2 warning(s), 0 flag(s)
-**Generated:** 2026-09-25T16:25:07.584519+00:00
-**IDS2Eval version:** 0.1.0 (git 2ef764e)
-**Scorecard schema version:** 1.1
+**Overall status:** ⚠️ Passed with warnings, 11 ok, 2 warning(s), 0 flag(s)
+**Generated:** 2026-09-26T09:43:54.729365+00:00
+**IDS2Eval version:** 0.1.0 (git 8cff297)
+**Scorecard schema version:** 1.2
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
@@ -15,16 +15,17 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 
 | # | Check | Raw data | Cleaned data | Summary |
 |---|---|---|---|---|
-| 1 | `dedup_check` | ✅ pass | ✅ pass | train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0 |
-| 2 | `label_conflict_check` | ✅ pass | ✅ pass | no feature vector maps to more than one label |
-| 3 | `leakage_screen` | ✅ pass | ✅ pass | no single feature or pair dominates importance (top1=12.2%, top2=22.1%) |
-| 4 | `one_rule_check` | ✅ pass | ✅ pass | single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train) |
-| 5 | `identity_column_flag` | ✅ pass | ✅ pass | standalone AUC by column: {'L4_DST_PORT': 0.531} |
-| 6 | `temporal_leakage_check` | ✅ pass | ✅ pass | no schema.timestamp_column configured |
-| 7 | `homogeneity_test` | ✅ pass | ✅ pass | 4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
-| 8 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | 5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft'] |
-| 9 | `low_cardinality_warning` | ✅ pass | ✅ pass | unique values by column: {'L4_DST_PORT': 14608} |
-| 10 | `data_integrity_check` | ✅ pass | ✅ pass | no missing labels, constant features, or +-inf values found |
+| 1 | `dedup_check` | ✅ pass | ✅ pass | *Evidence: statistical.* train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0 |
+| 2 | `label_conflict_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no feature vector maps to more than one label |
+| 3 | `leakage_screen` | ✅ pass | ✅ pass | *Evidence: statistical.* no single feature or pair dominates importance (top1=12.2%, top2=22.1%) |
+| 4 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train) |
+| 5 | `identity_column_flag` | ✅ pass | ✅ pass | *Evidence: statistical.* standalone AUC by column: {'L4_DST_PORT': 0.531} |
+| 6 | `temporal_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
+| 7 | `homogeneity_test` | ✅ pass | ✅ pass | *Evidence: statistical.* 4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
+| 8 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft'] |
+| 9 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* unique values by column: {'L4_DST_PORT': 14608} |
+| 10 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
+| 11 | `near_duplicate_class_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no near-zero-distance feature vectors found across 5 classes tested |
 
 ## Known issues
 
@@ -32,8 +33,8 @@ Documented facts about this dataset or the tool that produced it, from published
 
 | # | Check | Status | Summary |
 |---|---|---|---|
-| 1 | `schema_fingerprint_check` | ✅ pass | no known extractor signature matched |
-| 2 | `known_issue_lookup` | ⚠️ warn | The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems) |
+| 1 | `schema_fingerprint_check` | ✅ pass | *Evidence: documented.* no known extractor signature matched |
+| 2 | `known_issue_lookup` | ⚠️ warn | *Evidence: documented.* The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems) |
 
 ## What cleaning removed
 
@@ -48,7 +49,7 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported passed with warnings, 10 ok, 2 warning(s), 0 flag(s) across 12 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported passed with warnings, 11 ok, 2 warning(s), 0 flag(s) across 13 checks. Full report: audit_report_after.json.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

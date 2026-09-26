@@ -5,7 +5,7 @@ official `KDDTrain+` / `KDDTest+` partition (125,973 / 22,544 rows). Produced wi
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 8 ok, 3 warnings, 1 flag after dedup, across 12 checks.
+**Result: failed** - 9 ok, 3 warnings, 1 flag after dedup, across 13 checks.
 
 What it found:
 
@@ -30,6 +30,8 @@ What it found:
   novel-attack design, visible in `audit_report_after.json`'s class distribution.
   Per-class scores on those types can't reflect anything the model learned.
 - **`num_outbound_cmds` is constant** (always 0) - a well-known KDD'99 artifact.
+- **`near_duplicate_class_check` passes**: no near-zero-distance feature vector
+  spans two different labels across the 14 classes with enough rows to test.
 - **Low duplication, as intended**: NSL-KDD was built to remove KDD'99's redundancy,
   and it shows - 16 train duplicates, and 664 test rows (2.95%) that exactly match
   a train row. Small, but still a flag: those rows test memorization.

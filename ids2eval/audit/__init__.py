@@ -32,6 +32,7 @@ from . import (
     known_issues,
     label_conflict,
     leakage,
+    near_duplicate_class,
     one_rule,
     port_protocol_shortcut,
     resplit,
@@ -50,6 +51,25 @@ STRUCTURAL_CHECKS = frozenset({"known_issue_lookup", "schema_fingerprint_check",
 # methodology and IS actionable (switch dataset.split_mode to "grouped"), so it stays
 # out of this set and is reported alongside the other audit checks, not here.
 KNOWN_ISSUE_CHECKS = frozenset({"known_issue_lookup", "schema_fingerprint_check"})
+
+# Evidence basis for a check's result, fixed per check name, not computed per
+# run: a citation needs a consistent answer to "how sure is this" for the
+# same check every time, not a judgment that could vary run to run.
+# "documented": a citation lookup against dataset.name or column names, not
+# computed from this run's data at all.
+# "direct-experiment": an actual counterfactual refit and comparison.
+# "statistical": a threshold or hypothesis test against this run's data,
+# with no independent corroboration. The default for anything not listed.
+# A fourth level, "cross-corroborated", is not a per-check label: it applies
+# only when homogeneity_test and resplit_falsification both flag on the
+# same run, and is computed once at scorecard-build time from those two
+# already-computed statuses (see ids2eval.reporting.scorecard).
+EVIDENCE_LEVEL = {
+    "known_issue_lookup": "documented",
+    "schema_fingerprint_check": "documented",
+    "resplit_falsification": "direct-experiment",
+}
+DEFAULT_EVIDENCE_LEVEL = "statistical"
 
 
 def run_audit(
@@ -72,6 +92,8 @@ def run_audit(
         findings.append(dedup.check(train_df, test_df, cfg))
     if audit_cfg["label_conflict_check"] and "label_conflict_check" not in skip:
         findings.append(label_conflict.check(train_df, test_df, cfg))
+    if audit_cfg["near_duplicate_class_check"] and "near_duplicate_class_check" not in skip:
+        findings.append(near_duplicate_class.check(train_df, cfg))
     if audit_cfg["leakage_screen"] and "leakage_screen" not in skip:
         findings.append(leakage.check(train_df, test_df, cfg))
     if audit_cfg["one_rule_check"] and "one_rule_check" not in skip:

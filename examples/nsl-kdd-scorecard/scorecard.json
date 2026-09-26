@@ -1,13 +1,13 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T17:40:01.671047+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T08:53:14.613803+00:00",
   "dataset_name": "nsl-kdd",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "7834a67f6553eac68d49d27912ad9ed7a92b8aae",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 8,
+    "ok": 9,
     "warning": 3,
     "flag": 1
   },
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 14 classes tested"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 16 (0.01%); test rows leaking a train feature-match: 664 (2.95%); test-internal duplicates: 47"
+        "summary": "train duplicates: 16 (0.01%); test rows leaking a train feature-match: 664 (2.95%); test-internal duplicates: 47",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test"
+        "summary": "116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=14.1%, top2=25.0%)"
+        "summary": "no single feature or pair dominates importance (top1=14.1%, top2=25.0%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)"
+        "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)"
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)"
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']"
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']"
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "1 constant/near-constant feature(s)"
+        "summary": "1 constant/near-constant feature(s)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "1 constant/near-constant feature(s)"
+        "summary": "1 constant/near-constant feature(s)",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
+        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
+        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 14 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 14 classes tested",
+        "evidence": "statistical"
       }
     }
   ],
@@ -234,18 +277,5 @@
     "feature_count": 41,
     "train_content_hash": "8c7cf0a516450d17a5426bfb0efcf6839fb28ebaadf494f32c59e1d29bb25441",
     "test_content_hash": "cffa47019c555661fc1d3d2b2b45f11ead633d0dcadf618718c44c6e926916d0"
-  },
-  "previous_run_comparison": {
-    "previous_run": "2026-09-25_060109_863874",
-    "previous_generated_at": "2026-09-25T06:02:07.476147+00:00",
-    "previous_verdict": "failed",
-    "fingerprint_changed": false,
-    "changed_checks": [
-      {
-        "check": "known_issue_lookup",
-        "previous_status": "ok",
-        "current_status": "warning"
-      }
-    ]
   }
 }

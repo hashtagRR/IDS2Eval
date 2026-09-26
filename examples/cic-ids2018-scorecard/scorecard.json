@@ -1,13 +1,13 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-26T07:34:46.480552+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T09:26:13.323126+00:00",
   "dataset_name": "cic-ids2018",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "7834a67f6553eac68d49d27912ad9ed7a92b8aae",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 7,
+    "ok": 8,
     "warning": 3,
     "flag": 2
   },
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 11 classes tested"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 52,584 (13.15%); test rows leaking a train feature-match: 16,882 (16.88%); test-internal duplicates: 555"
+        "summary": "train duplicates: 52,584 (13.15%); test rows leaking a train feature-match: 16,882 (16.88%); test-internal duplicates: 555",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "882 feature vector(s) (15,194 rows, 3.04%) map to more than one label. The ground truth contradicts itself for these rows; 481 of these span train and test"
+        "summary": "882 feature vector(s) (15,194 rows, 3.04%) map to more than one label. The ground truth contradicts itself for these rows; 481 of these span train and test",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=8.9%, top2=16.4%)"
+        "summary": "no single feature or pair dominates importance (top1=8.9%, top2=16.4%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=8.6%, top2=15.4%)"
+        "summary": "no single feature or pair dominates importance (top1=8.6%, top2=15.4%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'Fwd Seg Size Min <= 30' reaches 83.0% test accuracy (83.2% train)"
+        "summary": "single rule 'Fwd Seg Size Min <= 30' reaches 83.0% test accuracy (83.2% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'TotLen Fwd Pkts <= 21' reaches 86.9% test accuracy (86.2% train)"
+        "summary": "single rule 'TotLen Fwd Pkts <= 21' reaches 86.9% test accuracy (86.2% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'Dst Port': 0.925}. Suggest dropping: ['Dst Port']"
+        "summary": "standalone AUC by column: {'Dst Port': 0.925}. Suggest dropping: ['Dst Port']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'Dst Port': 0.912}. Suggest dropping: ['Dst Port']"
+        "summary": "standalone AUC by column: {'Dst Port': 0.912}. Suggest dropping: ['Dst Port']",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "11 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "summary": "11 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "9 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot', 'DoS attacks-Slowloris']"
+        "summary": "9 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot', 'DoS attacks-Slowloris']",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "15 classes, train imbalance ratio (majority:minority) = 166034:1; classes below 1% of train: ['DoS attacks-SlowHTTPTest', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']"
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 166034:1; classes below 1% of train: ['DoS attacks-SlowHTTPTest', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "15 classes, train imbalance ratio (majority:minority) = 149712:1; classes below 1% of train: ['SSH-Bruteforce', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'DoS attacks-SlowHTTPTest', 'FTP-BruteForce', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']"
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 149712:1; classes below 1% of train: ['SSH-Bruteforce', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'DoS attacks-SlowHTTPTest', 'FTP-BruteForce', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection']",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "unique values by column: {'Dst Port': 24978}"
+        "summary": "unique values by column: {'Dst Port': 24978}",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "unique values by column: {'Dst Port': 24978}"
+        "summary": "unique values by column: {'Dst Port': 24978}",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)"
+        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)"
+        "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "475 of 5,317 sampled rows (8.93%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS attacks-SlowHTTPTest / FTP-BruteForce': 474, 'Benign / DoS attacks-GoldenEye': 1}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 11 classes tested",
+        "evidence": "statistical"
       }
     }
   ],
@@ -234,12 +277,5 @@
     "feature_count": 78,
     "train_content_hash": "d659a2f4841244f0beca91dbcf0f247f0ea8b4321167c34322a68319961cc886",
     "test_content_hash": "a993f8e271abf51a2d9ceb601b871397dbd5c8f202230779356987433c3cf281"
-  },
-  "previous_run_comparison": {
-    "previous_run": "2026-09-25_060217_332433",
-    "previous_generated_at": "2026-09-25T06:06:34.707545+00:00",
-    "previous_verdict": "failed",
-    "fingerprint_changed": false,
-    "changed_checks": []
   }
 }

@@ -1,13 +1,13 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T16:25:07.584519+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T09:43:54.729365+00:00",
   "dataset_name": "bot-iot",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "2ef764e98eb9b39d54c64647f9254a6033dabc8d",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "passed_with_warnings",
   "counts": {
-    "ok": 10,
+    "ok": 11,
     "warning": 2,
     "flag": 0
   },
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 5 classes tested"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)"
+        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)"
+        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)"
+        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)"
+        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}"
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}"
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']"
+        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+        "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']"
+        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 14608}"
+        "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 14608}"
+        "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
+        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
+        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
+        "evidence": "statistical"
       }
     }
   ],

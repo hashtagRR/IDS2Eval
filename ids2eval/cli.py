@@ -1,6 +1,8 @@
 """CLI entrypoint: config -> dataset split -> audit -> preprocessing -> benchmark.
 
-    python -m ids2eval --config my_config.yaml
+    python -m ids2eval --config my_config.yaml       (same as: ids2eval run --config ...)
+    python -m ids2eval cite path/to/run_dir
+    python -m ids2eval validate-config --config my_config.yaml
 """
 
 from __future__ import annotations
@@ -8,18 +10,22 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import sys
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from .audit import STRUCTURAL_CHECKS, run_audit
 from .config import load_config
 from .data import cache, dataset
 from .data.label_grouping import apply_attack_type_mapping
 from .modeling.benchmark import run_benchmark
-from .reporting import drift, run_manager, scorecard
+from .reporting import cite, drift, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
+
+COMMANDS = ("run", "cite", "validate-config")
 
 
 def _json_default(obj):
@@ -42,16 +48,43 @@ def _write_findings(path: Path, findings: list[dict]) -> None:
 
 
 def parse_args(argv=None) -> argparse.Namespace:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    # No subcommand given (the original, still-supported invocation) - default to "run"
+    # so `ids2eval --config x.yaml` keeps working exactly as before.
+    if not argv or argv[0] not in COMMANDS:
+        argv = ["run", *argv]
+
     parser = argparse.ArgumentParser(description="IDS2Eval: audit + benchmark an IDS dataset")
-    parser.add_argument("--config", required=True, help="Path to a YAML config file")
-    parser.add_argument("--skip-audit", action="store_true", help="Skip the data-quality audit checks")
-    parser.add_argument("--skip-benchmark", action="store_true", help="Skip classifier benchmarking")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    run_parser = subparsers.add_parser("run", help="Run the audit and/or benchmark on a config")
+    run_parser.add_argument("--config", required=True, help="Path to a YAML config file")
+    run_parser.add_argument("--skip-audit", action="store_true", help="Skip the data-quality audit checks")
+    run_parser.add_argument("--skip-benchmark", action="store_true", help="Skip classifier benchmarking")
+
+    cite_parser = subparsers.add_parser("cite", help="Print a citation for a completed run's scorecard")
+    cite_parser.add_argument("run_dir", help="A run directory, or its scorecard.json directly")
+
+    validate_parser = subparsers.add_parser(
+        "validate-config", help="Check a config file for errors without loading any data"
+    )
+    validate_parser.add_argument("--config", required=True, help="Path to a YAML config file")
+
     return parser.parse_args(argv)
 
 
 def main(argv=None) -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     args = parse_args(argv)
+
+    if args.command == "cite":
+        print(cite.citation_bibtex(cite.load_scorecard(args.run_dir)))
+        return
+    if args.command == "validate-config":
+        load_config(args.config)  # raises ValueError with every problem found, if any
+        print(f"{args.config}: valid")
+        return
+
     cfg = load_config(args.config)
 
     output_dir = Path(cfg["output"]["dir"])
@@ -159,9 +192,12 @@ def main(argv=None) -> None:
             results_df, extras = run_benchmark(train_df, test_df, cfg)
             results_path = run_dir / "benchmark_results.csv"
             results_df.to_csv(results_path, index=False)
+            per_class_path = run_dir / "per_class_metrics.csv"
+            pd.DataFrame(extras["per_class_metrics"]).to_csv(per_class_path, index=False)
             details_path = run_dir / "benchmark_details.json"
             details_path.write_text(json.dumps(extras, indent=2, default=_json_default))
             logger.info("Benchmark results written to %s", results_path)
+            logger.info("Per-class precision/recall/f1 written to %s", per_class_path)
             logger.info("Per-classifier detail (confusion matrix, per-class report, "
                         "feature importance, best params) written to %s", details_path)
             logger.info("\n%s", results_df.to_string(index=False))

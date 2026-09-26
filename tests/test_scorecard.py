@@ -41,11 +41,39 @@ def test_no_findings_defaults_to_passed(base_cfg):
 
 def test_scorecard_carries_version_and_fingerprint_info(base_cfg):
     sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
-    assert sc["scorecard_schema_version"] == "1.1"
+    assert sc["scorecard_schema_version"] == "1.2"
     assert sc["dataset_name"] == base_cfg["dataset"]["name"]
     assert sc["dataset_fingerprint"]["train_content_hash"] == "abc123"
     assert "ids2eval_version" in sc
     assert sc["audit_stage"] == "after"
+
+
+def test_evidence_level_is_fixed_per_check(base_cfg):
+    findings = [
+        _finding("known_issue_lookup", "warning"),
+        _finding("schema_fingerprint_check", "warning"),
+        _finding("resplit_falsification", "ok"),
+        _finding("dedup_check", "ok"),
+    ]
+    sc = scorecard.build_scorecard(findings, "after", base_cfg, _fingerprint())
+    by_check = {row["check"]: row["after"]["evidence"] for row in sc["checks"]}
+    assert by_check["known_issue_lookup"] == "documented"
+    assert by_check["schema_fingerprint_check"] == "documented"
+    assert by_check["resplit_falsification"] == "direct-experiment"
+    assert by_check["dedup_check"] == "statistical"
+
+
+def test_homogeneity_test_evidence_is_cross_corroborated_when_resplit_also_flags(base_cfg):
+    findings = [_finding("homogeneity_test", "flag"), _finding("resplit_falsification", "flag")]
+    sc = scorecard.build_scorecard(findings, "after", base_cfg, _fingerprint())
+    by_check = {row["check"]: row["after"]["evidence"] for row in sc["checks"]}
+    assert by_check["homogeneity_test"] == "cross-corroborated"
+
+
+def test_homogeneity_test_evidence_stays_statistical_without_resplit_corroboration(base_cfg):
+    sc = scorecard.build_scorecard([_finding("homogeneity_test", "flag")], "after", base_cfg, _fingerprint())
+    by_check = {row["check"]: row["after"]["evidence"] for row in sc["checks"]}
+    assert by_check["homogeneity_test"] == "statistical"
 
 
 def test_findings_in_scorecard_omit_details(base_cfg):
@@ -113,7 +141,8 @@ def test_a_check_missing_from_one_pass_gets_null_on_that_side(base_cfg):
     before = [_finding("dedup_check", "ok")]
     sc = scorecard.build_scorecard([], "after", base_cfg, _fingerprint(), findings_before=before)
     assert sc["checks"] == [{"check": "dedup_check", "category": "audit",
-                             "before": {"status": "ok", "summary": "a summary"}, "after": None}]
+                             "before": {"status": "ok", "summary": "a summary", "evidence": "statistical"},
+                             "after": None}]
     assert "n/a" in scorecard.render_markdown(sc)
 
 
@@ -213,7 +242,10 @@ def test_known_issue_checks_get_their_own_single_status_section(base_cfg):
     md = scorecard.render_markdown(sc)
     assert "## Known issues" in md
     known_md = md.split("## Known issues")[1]
-    assert "| 1 | `known_issue_lookup` | ⚠️ warn | the actual issue text (Some et al. 2020) |" in known_md
+    assert (
+        "| 1 | `known_issue_lookup` | ⚠️ warn | *Evidence: documented.* "
+        "the actual issue text (Some et al. 2020) |" in known_md
+    )
 
 
 def test_resplit_falsification_merges_into_one_cell_within_the_checks_table(base_cfg):

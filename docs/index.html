@@ -296,9 +296,9 @@
         and <b>I</b>ntrusion <b>D</b>ata <b>S</b>ets.
       </p>
       <div class="hero-facts">
-        <div class="fact"><div class="num">18</div><div class="label">Audit checks</div></div>
+        <div class="fact"><div class="num">19</div><div class="label">Audit checks</div></div>
         <div class="fact"><div class="num">7</div><div class="label">Real IDS datasets validated</div></div>
-        <div class="fact"><div class="num">201</div><div class="label">Tests, CI-gated</div></div>
+        <div class="fact"><div class="num">218</div><div class="label">Tests, CI-gated</div></div>
         <div class="fact"><div class="num">63.5M</div><div class="label">Rows processed across all seven</div></div>
       </div>
       <div class="cta-row">
@@ -405,9 +405,9 @@
     <a href="https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md">guide/checks.md</a>.
   </p>
   <div class="stat-row">
-    <div class="fact"><div class="num">14</div><div class="label">Always on, zero setup</div></div>
+    <div class="fact"><div class="num">15</div><div class="label">Always on, zero setup</div></div>
     <div class="fact"><div class="num">4</div><div class="label">Opt-in, deeper analysis</div></div>
-    <div class="fact"><div class="num">16</div><div class="label">Measure this run's data</div></div>
+    <div class="fact"><div class="num">17</div><div class="label">Measure this run's data</div></div>
     <div class="fact"><div class="num">2</div><div class="label">Report a documented fact</div></div>
   </div>
   <p class="sub" style="margin-top:18px">
@@ -430,6 +430,11 @@
     <div class="check-row">
       <code class="name">label_conflict_check</code>
       <span class="row-desc">Groups rows by identical features and flags any group that maps to more than one label.</span>
+      <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
+    </div>
+    <div class="check-row">
+      <code class="name">near_duplicate_class_check</code>
+      <span class="row-desc">Extends label_conflict_check to near-identical features across two classes, not only exact matches.</span>
       <span class="row-tags"><span class="rtag rtag-check">Checks</span><span class="rtag rtag-v1">Always on</span></span>
     </div>
     <div class="check-row">
@@ -518,11 +523,11 @@
 <section id="proof" class="wrap">
   <div class="eyebrow">04 · proven on real data</div>
   <h2 class="h">Run against the actual datasets, not stand-ins.</h2>
-  <p class="sub">201 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against seven real, published NIDS datasets, four of them failing the audit outright.</p>
+  <p class="sub">218 tests pass in CI on Python 3.10-3.12, and every check has been run end to end against seven real, published NIDS datasets, five of them failing the audit outright.</p>
   <div class="stat-row">
     <div class="fact"><div class="num">30.4M</div><div class="label">BoT-IoT flows scanned, 500K kept</div></div>
     <div class="fact"><div class="num">2.83M</div><div class="label">CIC-IDS2017 flows audited in full</div></div>
-    <div class="fact"><div class="num">4 / 7</div><div class="label">Real datasets that failed the audit</div></div>
+    <div class="fact"><div class="num">5 / 7</div><div class="label">Real datasets that failed the audit</div></div>
     <div class="fact"><div class="num">0.003pp</div><div class="label">Resplit falsification's margin</div></div>
   </div>
   <div class="proof-grid">
@@ -544,7 +549,7 @@
     </div>
     <div class="proof-item">
       <h4>CICDDoS2019</h4>
-      <p>Both collection days, 431K flows. <code>label_conflict_check</code> found 5,623 feature vectors mapping to more than one label, all resolved by dedup.</p>
+      <p>Both collection days, 431K flows. <code>near_duplicate_class_check</code> finds near-identical flows under two different labels that survive deduplication.</p>
     </div>
     <div class="proof-item">
       <h4>ToN-IoT</h4>

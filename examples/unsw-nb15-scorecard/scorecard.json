@@ -1,13 +1,13 @@
 {
-  "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T06:00:59.428268+00:00",
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-26T08:53:08.328201+00:00",
   "dataset_name": "unsw-nb15",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
+  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
   "audit_stage": "after",
   "overall_status": "passed_with_warnings",
   "counts": {
-    "ok": 11,
+    "ok": 12,
     "warning": 1,
     "flag": 0
   },
@@ -71,6 +71,11 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
     }
   ],
   "checks": [
@@ -79,11 +84,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147"
+        "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
       }
     },
     {
@@ -91,11 +98,13 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test"
+        "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no feature vector maps to more than one label"
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
       }
     },
     {
@@ -103,11 +112,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)"
+        "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)"
+        "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)",
+        "evidence": "statistical"
       }
     },
     {
@@ -115,11 +126,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train)"
+        "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)"
+        "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)",
+        "evidence": "statistical"
       }
     },
     {
@@ -127,11 +140,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -139,11 +154,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured"
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -151,11 +168,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
       }
     },
     {
@@ -163,11 +182,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1"
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1",
+        "evidence": "statistical"
       }
     },
     {
@@ -175,11 +196,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no id_like_columns configured"
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
       }
     },
     {
@@ -187,11 +210,13 @@
       "category": "known_issue",
       "before": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       },
       "after": {
         "status": "ok",
-        "summary": "no known extractor signature matched"
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
       }
     },
     {
@@ -199,11 +224,13 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no missing labels, constant features, or +-inf values found"
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
       }
     },
     {
@@ -211,11 +238,27 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
+        "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
       }
     }
   ],
@@ -234,12 +277,5 @@
     "feature_count": 42,
     "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
     "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
-  },
-  "previous_run_comparison": {
-    "previous_run": "2026-09-25_044529_426970",
-    "previous_generated_at": "2026-09-25T04:47:40.587778+00:00",
-    "previous_verdict": "passed_with_warnings",
-    "fingerprint_changed": false,
-    "changed_checks": []
   }
 }

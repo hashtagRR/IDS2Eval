@@ -6,10 +6,15 @@ A real IDS<sup>2</sup>Eval audit of [CIC-IDS2017](https://www.unb.ca/cic/dataset
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 6 ok, 4 warnings, 2 flags after dedup, across 12 checks.
+**Result: failed** - 6 ok, 4 warnings, 3 flags after dedup, across 13 checks.
 
 What it found:
 
+- **`near_duplicate_class_check` finds 2 of 6,029 sampled rows (0.03%) with a
+  near-zero-distance neighbor under a different label**, both `DoS Slowhttptest` /
+  `DoS slowloris`, unchanged after dedup. A tiny share, but the same pattern
+  `label_conflict_check` finds at much larger scale below: two labels that are
+  hard to tell apart from features alone.
 - **`label_conflict_check` finds 719 feature vectors (7,144 rows, 0.25%) mapped to
   more than one label, before dedup**; 335 of these span train and test, so a row's
   label there depends on which copy happened to land where.

@@ -7,10 +7,10 @@ folder; see [SCORECARD.md](SCORECARD.md) for the full result, or
 download [SCORECARD.html](SCORECARD.html) and open it in a browser for
 the styled version.
 
-**Result: passed with warnings** - 11 of 12 checks `ok`, one `warning`
+**Result: passed with warnings** - 12 of 13 checks `ok`, one `warning`
 (`known_issue_lookup`, described below), zero flags.
 
-Two things worth pointing out about what's actually in here:
+Three things worth pointing out about what's actually in here:
 
 - **`known_issue_lookup` correctly caught a real file-naming inversion.**
   This redistribution's `UNSW_NB15_testing-set.csv` has 175,341 rows and
@@ -18,6 +18,12 @@ Two things worth pointing out about what's actually in here:
   dataset's documented train/test convention. `config.yaml` corrects for
   it (see its comments); the warning is the curated table surfacing that
   this is a known issue worth checking for regardless.
+- **`near_duplicate_class_check` finds 472 of 4,630 sampled rows (10.19%)
+  with a near-zero-distance neighbor under a different label before
+  dedup**, `Backdoor`/`DoS` and `Analysis`/`DoS` the most affected pairs;
+  after dedup, none remain across the 10 classes tested, the same
+  duplication-not-genuine-confusion pattern `label_conflict_check` shows
+  on other datasets in this project.
 - **`leakage_screen`'s top feature is `sttl`** - independently reproducing
   the published TTL-topology bias in UNSW-NB15 referenced in the main
   [guide/checks.md](../../guide/checks.md).
@@ -32,18 +38,17 @@ Two things worth pointing out about what's actually in here:
   shifts from 2:1 to roughly 1:1 - the duplicates were disproportionately
   one class.
 
-Re-run 2026-09-25 to pick up 3 new checks added that day
-(`label_conflict_check`, `one_rule_check`, `temporal_leakage_check`), which
-is why the "Checks run" count reads 12 rather than 9; the verdict and every
-other finding are unchanged from the original run.
+Re-run 2026-09-26 to pick up `near_duplicate_class_check`, which is why
+the check count reads 13; the verdict and every other finding are
+unchanged from the original run.
 
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /
 `environment.json` (provenance), `SCORECARD.html` / `scorecard.json` /
 `SCORECARD.md` (the citable rollup, see
 [guide/checks.md](../../guide/checks.md#the-scorecard) for the format).
-No `scorecard.pdf`/`.png`: that chart predates this session's scorecard
-redesign and hasn't been updated to match it (it still lumps
+No `scorecard.pdf`/`.png`: that chart predates the current scorecard
+format and hasn't been updated to match it (it still lumps
 `known_issue_lookup` in with the other checks and shows no raw/cleaned
-comparison), so this example matches the other three and ships the
+comparison), so this example matches the other examples and ships the
 HTML scorecard only, the same thing the dashboard shows.

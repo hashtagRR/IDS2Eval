@@ -10,7 +10,7 @@ reservoir sample, split 80/20 at random. Produced with `config.yaml` in this
 folder; open [SCORECARD.html](SCORECARD.html) in a browser for the full
 result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 8 ok, 2 warnings, 2 flags after dedup, across 12 checks.
+**Result: failed** - 9 ok, 2 warnings, 2 flags after dedup, across 13 checks.
 
 What it found:
 
@@ -34,6 +34,8 @@ What it found:
   is NetFlow v2, not CICFlowMeter, so the CICFlowMeter-specific miscalculation
   caveat that applies to the CIC-family examples does not apply here.
 - **No curated `known_issue_lookup` entries yet** for this dataset.
+- **`near_duplicate_class_check` passes**: no near-zero-distance feature vector
+  spans two different labels across the 10 classes with enough rows to test.
 - **Severe imbalance**: 1,177:1 majority:minority, with `backdoor`, `mitm`,
   and `ransomware` each under 1% of train - `ransomware` has only 93 train
   rows in this 500K-row sample.

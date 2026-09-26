@@ -194,5 +194,21 @@
         }
       ]
     }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+    "details": {
+      "classes_tested": 10,
+      "affected_rows": 472,
+      "top_pairs": {
+        "Backdoor / DoS": 80,
+        "Analysis / DoS": 61,
+        "Backdoor / Exploits": 56,
+        "DoS / Exploits": 54,
+        "Analysis / Exploits": 44
+      }
+    }
   }
 ]

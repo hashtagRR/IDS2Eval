@@ -288,5 +288,18 @@
         }
       ]
     }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "475 of 5,317 sampled rows (8.93%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS attacks-SlowHTTPTest / FTP-BruteForce': 474, 'Benign / DoS attacks-GoldenEye': 1}",
+    "details": {
+      "classes_tested": 12,
+      "affected_rows": 475,
+      "top_pairs": {
+        "DoS attacks-SlowHTTPTest / FTP-BruteForce": 474,
+        "Benign / DoS attacks-GoldenEye": 1
+      }
+    }
   }
 ]

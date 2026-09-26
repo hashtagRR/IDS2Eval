@@ -12,10 +12,15 @@ audit covers a uniform, seeded 500K-row reservoir sample (`dataset.max_rows`), s
 sample; the full dataset's duplication is higher, since a sample only catches a
 duplicate pair when both copies are drawn.
 
-**Result: failed** - 7 ok, 3 warnings, 2 flags after dedup, across 12 checks.
+**Result: failed** - 8 ok, 3 warnings, 2 flags after dedup, across 13 checks.
 
 What it found:
 
+- **`near_duplicate_class_check` finds 475 of 5,317 sampled rows (8.93%) with a
+  near-zero-distance neighbor under a different label before dedup**, almost all
+  of them `DoS attacks-SlowHTTPTest`/`FTP-BruteForce`; after dedup, none remain
+  across the 11 classes tested. The same clash `label_conflict_check` finds
+  below, confirmed at the near-duplicate level rather than only exact matches.
 - **`label_conflict_check` finds 882 feature vectors (15,194 rows, 3.04%) mapped to
   more than one label, before dedup.** The largest cluster is `FTP-BruteForce` and
   `DoS attacks-SlowHTTPTest`: dedup collapses `FTP-BruteForce` from 4,736 train rows

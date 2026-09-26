@@ -10,11 +10,19 @@ two separate days, run 2 months apart. Produced with `config.yaml` in this folde
 open [SCORECARD.html](SCORECARD.html) in a browser for the full result, or read
 [SCORECARD.md](SCORECARD.md).
 
-**Result: passed with warnings** - 8 ok, 4 warnings, 0 flags after dedup, across 12
-checks.
+**Result: failed** - 8 ok, 4 warnings, 1 flag after dedup, across 13 checks. This
+is a change from an earlier run of this same dataset, which reported passed with
+warnings before `near_duplicate_class_check` existed; see below.
 
 What it found:
 
+- **`near_duplicate_class_check` flags 98 of 3,447 sampled rows (2.84%) with a
+  near-zero-distance neighbor under a different label, even after dedup** -
+  mostly `NetBIOS`/`Portmap` (92 rows) and `LDAP`/`MSSQL` (6 rows). Unlike
+  `label_conflict_check` below, this survives cleaning: these are not exact
+  duplicates dedup would catch, near-identical flows genuinely carry two
+  different attack labels. This is the one finding that changes the verdict
+  from passed-with-warnings to failed relative to this example's earlier run.
 - **`label_conflict_check` flags 5,623 feature vectors (13,758 rows, 3.19%) mapping
   to more than one label before dedup**, 4,853 of them spanning train and test;
   after dedup, zero conflicts remain, so this one was duplication masquerading as
@@ -50,13 +58,13 @@ authentication required for this dataset). This mirror already deduplicates and
 downsamples the official multi-GB release per attack type; the row counts here
 are the mirror's, not the original collection's.
 
-Run on a 4-vCPU / 7.8GB VM: 86 seconds, audit only (`--skip-benchmark`). Produced
-with IDS2Eval at commit d9d444d.
+Run on a 4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at
+commit 8cff297.
 
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /
 `environment.json` (provenance), `SCORECARD.html` / `scorecard.json` /
 `SCORECARD.md` (the citable rollup, see
 [guide/checks.md](../../guide/checks.md#the-scorecard) for the format).
-No `scorecard.pdf`/`.png`: matching the other four examples, this one ships the
+No `scorecard.pdf`/`.png`: matching the other examples, this one ships the
 HTML scorecard only, the same thing the dashboard shows.

@@ -8,8 +8,18 @@ def test_run_benchmark_binary_only(base_cfg, synth_train_test):
     assert set(results["stage"]) == {"binary"}
     assert set(results["classifier"]) == {"DecisionTree", "NaiveBayes"}
     assert results["accuracy"].between(0, 1).all()
+    assert results["f1_macro"].between(0, 1).all()
     assert "binary" in extras["class_distributions"]
     assert "original" in extras["class_distributions"]["binary"]
+
+
+def test_run_benchmark_per_class_metrics_cover_every_class(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    _, extras = run_benchmark(train_df, test_df, base_cfg)
+    rows = [r for r in extras["per_class_metrics"] if r["classifier"] == "DecisionTree" and r["stage"] == "binary"]
+    assert {r["class"] for r in rows} == set(train_df["Label"].unique())
+    assert all(0 <= r["f1"] <= 1 for r in rows)
 
 
 def test_run_benchmark_adds_type_stage_when_attack_category_set(base_cfg, synth_train_test):

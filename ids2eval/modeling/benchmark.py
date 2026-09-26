@@ -53,12 +53,18 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
     """Returns (summary_df, extras).
 
     summary_df has one row per (stage, scaling, sampling, classifier)
-    with the scalar metrics. extras holds the heavier per-row detail
+    with the scalar metrics, including f1_macro alongside f1_weighted:
+    weighted averages every class by its support, so a strong majority
+    class can carry a weak result on rare classes, while macro treats
+    every class equally. extras holds the heavier per-row detail
     (confusion matrix, per-class report, feature importance, best
     hyperparameters) keyed by "{stage}|{scaling}|{sampling}|{classifier}",
-    plus a "class_distributions" entry recording each stage's original
-    and post-sampling class counts (scaling doesn't change class counts,
-    so it isn't part of that key).
+    a "class_distributions" entry recording each stage's original and
+    post-sampling class counts (scaling doesn't change class counts, so
+    it isn't part of that key), and a flat "per_class_metrics" list, the
+    same per-class precision/recall/f1/support already nested inside
+    each combination's per_class_report, pulled out so a summary table
+    can scan it without opening the per-combination JSON.
     """
     schema = cfg["schema"]
     stages = [("binary", schema["label_column"])]
@@ -70,6 +76,7 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
     x_train_all, x_test = x_train_all.to_numpy(), x_test.to_numpy()
 
     rows = []
+    per_class_rows = []
     extras: dict = {"class_distributions": {}}
     for stage, label_col in stages:
         label_encoder = LabelEncoder()
@@ -109,10 +116,35 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
                         **metrics,
                     })
                     extras[f"{stage}|{scaling_algo}|{sampling_algo}|{name}"] = {"best_params": best_params, **detail}
+                    per_class_rows.extend(
+                        _per_class_rows(stage, scaling_algo, sampling_algo, name, detail["per_class_report"])
+                    )
 
         extras["class_distributions"][stage] = stage_distributions
 
+    extras["per_class_metrics"] = per_class_rows
     return pd.DataFrame(rows), extras
+
+
+def _per_class_rows(
+    stage: str, scaling_algo: str, sampling_algo: str, classifier: str, per_class_report: dict
+) -> list[dict]:
+    """Flattens one (stage, scaling, sampling, classifier) combination's
+    per_class_report (already computed by _evaluate, just nested inside
+    benchmark_details.json) into rows a summary CSV can scan directly,
+    without opening the JSON. Skips classification_report's aggregate
+    keys ("accuracy", "macro avg", "weighted avg"): those are already
+    the f1_macro/f1_weighted columns in benchmark_results.csv.
+    """
+    return [
+        {
+            "stage": stage, "scaling": scaling_algo, "sampling": sampling_algo, "classifier": classifier,
+            "class": class_name, "precision": stats["precision"], "recall": stats["recall"],
+            "f1": stats["f1-score"], "support": stats["support"],
+        }
+        for class_name, stats in per_class_report.items()
+        if class_name not in ("accuracy", "macro avg", "weighted avg")
+    ]
 
 
 def _sampling_strategies(cfg: dict, stage: str) -> list[str]:
@@ -203,6 +235,10 @@ def _evaluate(model, x_test, y_test, label_encoder: LabelEncoder, feature_names:
     metrics = {
         "accuracy": float(accuracy_score(y_test, y_pred)),
         "f1_weighted": float(f1_score(y_test, y_pred, average="weighted", zero_division=0)),
+        # Weighted averages every class by its support, so a majority class can carry
+        # a poor result on rare classes. Macro treats every class equally, surfacing
+        # exactly that collapse on the imbalanced label distributions typical here.
+        "f1_macro": float(f1_score(y_test, y_pred, average="macro", zero_division=0)),
     }
     try:
         proba = model.predict_proba(x_test)

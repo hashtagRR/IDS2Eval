@@ -10,8 +10,8 @@ reservoir sample, split 80/20 at random. Produced with `config.yaml` in this
 folder; open [SCORECARD.html](SCORECARD.html) in a browser for the full
 result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: passed with warnings** - 10 ok, 2 warnings, 0 flags after dedup,
-across 12 checks.
+**Result: passed with warnings** - 11 ok, 2 warnings, 0 flags after dedup,
+across 13 checks.
 
 What it found:
 
@@ -39,6 +39,8 @@ What it found:
   is NetFlow v2, not CICFlowMeter.
 - **Extreme imbalance**: 5,065:1 majority:minority even before accounting
   for how thin `Benign` and `Theft` already are in the source data.
+- **`near_duplicate_class_check` passes**: no near-zero-distance feature vector
+  spans two different labels across the 5 classes with enough rows to test.
 
 `Label`, the dataset's own binary 0/1 target for the same rows `Attack`
 labels multi-class (with `Benign` as the negative class), is dropped via

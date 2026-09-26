@@ -2,16 +2,41 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 18 checks operationalize a
+paragraph, or not tested at all. These 19 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Fourteen run by default (v1, no external data needed); four are
+Fifteen run by default (v1, no external data needed); four are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
 Each check returns a finding: `{check, status, summary, details}`,
 where `status` is `ok`, `warning`, or `flag`, a specific, checkable
-signature of a real problem, not a vague heuristic score.
+signature of a real problem, not a vague heuristic score. Since
+schema 1.2, the scorecard also attaches an `evidence` field to every
+finding: see "Evidence levels" below.
+
+## What each check is actually testing for
+
+Grouping the checks by the failure mode they target, rather than by
+whether they run by default, makes clearer what the set as a whole
+does and does not cover:
+
+| Threat | Checks |
+|---|---|
+| Sample leakage (exact or near-exact duplicates across train/test) | `dedup_check`, `resplit_falsification` |
+| Label leakage (contradictory or confusable ground truth) | `label_conflict_check`, `near_duplicate_class_check` |
+| Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
+| Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check` |
+| Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check` |
+| Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
+| Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
+| Provenance (extractor bugs, curated per-dataset facts) | `schema_fingerprint_check`, `known_issue_lookup` |
+| Cross-dataset generalization | `synthetic_realism_check`, `cross_dataset_drift_check` |
+| Result stability across seeds | `seed_sensitivity_check` |
+
+This is a map of what the tool checks, not a claim that every failure
+mode in NIDS evaluation has a check here yet; see the "scope" section
+on the docs site for what's deliberately left out.
 
 ## v1, always on
 
@@ -40,6 +65,17 @@ benchmarks (IEEE TKDE). Like `dedup_check`, must run on the raw data:
 duplicates, so it collapses a conflicting group to one arbitrarily-kept
 row before this check ever sees it, and will always report zero after
 cleaning.
+
+### `near_duplicate_class_check`
+Extends `label_conflict_check` from identical feature vectors to
+near-identical ones. A single nearest-neighbor index over a sample from
+every class (same machinery as `homogeneity_test`), checking whether a
+row's nearest neighbor under a different label sits at effectively zero
+scaled distance, common when the same traffic-generation script
+produced two nominally different attack labels, or two attack tools
+share almost all of their flow statistics. Runs on train only: this is
+about label confusability in the data a model actually learns from, not
+a train/test split property.
 
 ### `leakage_screen`
 Fits a fast RandomForest and inspects its own `feature_importances_`
@@ -221,12 +257,14 @@ run's actual data or not:
 - **Checks**: everything that measures the loaded data and could, in
   principle, be reacted to (drop a column, resample, switch
   `dataset.split_mode`, or just note the caveat). This is where
-  `dedup_check`, `label_conflict_check`, `leakage_screen`,
-  `one_rule_check`, `identity_column_flag`, `temporal_leakage_check`,
-  `homogeneity_test`, `class_distribution_report`,
-  `low_cardinality_warning`, `data_integrity_check`,
-  `resplit_falsification`, `synthetic_realism_check`,
-  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
+  `dedup_check`, `label_conflict_check`, `near_duplicate_class_check`,
+  `leakage_screen`, `one_rule_check`, `identity_column_flag`,
+  `port_protocol_shortcut_check`, `temporal_leakage_check`,
+  `flow_group_leakage_check`, `homogeneity_test`,
+  `class_distribution_report`, `low_cardinality_warning`,
+  `data_integrity_check`, `resplit_falsification`,
+  `synthetic_realism_check`, `cross_dataset_drift_check` and
+  `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's
@@ -269,7 +307,32 @@ Schema 1.1 is additive over 1.0: it adds `counts`, `checks` (one
 entry per check, `{check, category, before, after}`, where `category`
 is `"audit"` or `"known_issue"`, each side `{status, summary}` or `null`,
 `after` is `null` throughout when dedup didn't run) and `dedup_effect`,
-and leaves every 1.0 key unchanged. `findings` is still the final pass.
+and leaves every 1.0 key unchanged. Schema 1.2 is additive over 1.1:
+each side of a `checks` row gains an `evidence` field, covered next.
+`findings` is still the final pass.
+
+**Evidence levels.** Each side of a `checks` row also carries an
+`evidence` value, a fixed classification of how that check's status
+was determined, not a confidence guess about the specific result. It
+is assigned per check, always the same for a given check regardless of
+what data it runs against, so the same check reports the same
+evidence level in every scorecard:
+
+- `documented`: `known_issue_lookup` and `schema_fingerprint_check`, a
+  citation lookup against `dataset.name` or column names, not computed
+  from this run's data at all.
+- `direct-experiment`: `resplit_falsification`, an actual counterfactual
+  refit and comparison, the strongest evidence a check can produce.
+- `statistical`: every other check, a threshold or hypothesis test
+  against this run's data, with no independent corroboration.
+- `cross-corroborated`: the one dynamic case, computed once when the
+  scorecard is built rather than assigned per check. Applies only to
+  `homogeneity_test`, and only when it flags a class on the same run
+  that `resplit_falsification` also flags: a statistical signature that
+  an independent counterfactual experiment happens to confirm is
+  stronger evidence than either finding alone.
+
+See `ids2eval.audit.EVIDENCE_LEVEL` for the exact mapping.
 
 **A visual scorecard is opt-in** (`output.write_scorecard_plot`, off by
 default, see [configuration.md](configuration.md#rendering-the-scorecard-as-a-chart)),

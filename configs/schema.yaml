@@ -46,6 +46,7 @@ audit:
   # v1, on by default, no extra setup needed
   dedup_check: true
   label_conflict_check: true   # same features, contradictory labels, see AUDIT_CHECKS.md
+  near_duplicate_class_check: true # near (not exact) duplicate features across two classes
   leakage_screen: true
   one_rule_check: true         # is a single feature+threshold rule almost as good as any model?
   identity_column_flag: true

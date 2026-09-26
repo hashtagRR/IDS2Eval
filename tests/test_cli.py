@@ -34,6 +34,7 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "train.parquet").exists()
     assert (run_dir / "test.parquet").exists()
     assert (run_dir / "benchmark_results.csv").exists()
+    assert (run_dir / "per_class_metrics.csv").exists()
     assert (run_dir / "benchmark_details.json").exists()
     assert (run_dir / "environment.json").exists()
     assert (run_dir / "resolved_config.json").exists()
@@ -42,7 +43,7 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "SCORECARD.html").exists()
 
     findings = json.loads((run_dir / "audit_report_before.json").read_text())
-    assert len(findings) == 14  # all v1 checks; v2 off by default
+    assert len(findings) == 15  # all v1 checks; v2 off by default
 
     after = json.loads((run_dir / "audit_report_after.json").read_text())
     dedup_after = next(f for f in after if f["check"] == "dedup_check")
@@ -55,6 +56,75 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert sc["overall_status"] in {"passed", "passed_with_warnings", "failed"}
     assert len(sc["findings"]) == len(after)
     assert sc["dataset_fingerprint"]["train_content_hash"]
+
+
+def test_cli_run_subcommand_is_equivalent_to_the_bare_form(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["run", "--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+    assert (run_dir / "scorecard.json").exists()
+
+
+def test_cli_cite_prints_a_bibtex_block_from_a_completed_run(tmp_path, synth_data, capsys):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+
+    capsys.readouterr()  # discard the run's own log output
+    main(["cite", str(run_dir)])
+    out = capsys.readouterr().out
+    assert out.startswith("@misc{ids2eval_test_ds_")
+    assert "test-ds" in out
+
+
+def test_cli_validate_config_accepts_a_correct_config(tmp_path, capsys):
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": ["data.csv"]},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["validate-config", "--config", str(config_path)])
+    assert "valid" in capsys.readouterr().out
+
+
+def test_cli_validate_config_rejects_a_broken_config(tmp_path):
+    import pytest
+
+    config = {"dataset": {"name": "test-ds"}}  # neither raw_files nor train_file/test_file
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    with pytest.raises(ValueError, match="exactly one of raw_files"):
+        main(["validate-config", "--config", str(config_path)])
 
 
 def test_cli_does_not_recompute_structural_checks_on_the_after_pass(tmp_path, synth_data, monkeypatch):
@@ -235,6 +305,7 @@ def test_cli_skip_flags(tmp_path, synth_data):
 
     assert not (run_dir / "audit_report_before.json").exists()
     assert not (run_dir / "benchmark_results.csv").exists()
+    assert not (run_dir / "per_class_metrics.csv").exists()
     assert not (run_dir / "train.parquet").exists()
     assert not (run_dir / "scorecard.json").exists()  # nothing to score without an audit
 

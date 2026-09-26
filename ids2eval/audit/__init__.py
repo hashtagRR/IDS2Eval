@@ -28,6 +28,7 @@ from . import (
     cross_dataset_drift,
     data_integrity,
     dedup,
+    feature_auc_ranking,
     flow_group_leakage,
     homogeneity,
     identity_columns,
@@ -108,6 +109,8 @@ def run_audit(
         findings.append(leakage.check(train_df, test_df, cfg))
     if audit_cfg["one_rule_check"] and "one_rule_check" not in skip:
         findings.append(one_rule.check(train_df, test_df, cfg))
+    if audit_cfg["feature_auc_ranking_check"] and "feature_auc_ranking_check" not in skip:
+        findings.append(feature_auc_ranking.check(train_df, cfg))
     if audit_cfg["identity_column_flag"] and "identity_column_flag" not in skip:
         findings.append(identity_columns.check_predictive_power(train_df, test_df, cfg))
     if audit_cfg["port_protocol_shortcut_check"] and "port_protocol_shortcut_check" not in skip:

@@ -60,6 +60,7 @@ DEFAULTS: dict[str, Any] = {
         "near_duplicate_class_check": True,
         "leakage_screen": True,
         "one_rule_check": True,
+        "feature_auc_ranking_check": True,
         "identity_column_flag": True,
         "port_protocol_shortcut_check": True,
         "temporal_leakage_check": True,

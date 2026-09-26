@@ -51,6 +51,7 @@ audit:
   near_duplicate_class_check: true # near (not exact) duplicate features across two classes
   leakage_screen: true
   one_rule_check: true         # is a single feature+threshold rule almost as good as any model?
+  feature_auc_ranking_check: true # standalone AUC of every numeric feature, no model fit
   identity_column_flag: true
   port_protocol_shortcut_check: true # no-ops unless a port + a proto-like column are both found
   temporal_leakage_check: true # no-ops unless schema.timestamp_column is set

@@ -86,6 +86,13 @@ CHECK_INFO = {
         "measuring nothing.",
         "Flag: the one-rule classifier reaches above 95% test accuracy on its own.",
     ),
+    "feature_auc_ranking_check": (
+        "Standalone one-vs-rest AUC of every numeric feature against every class, computed directly from "
+        "each feature's raw values (no model fit needed, unlike identity_column_flag). Reports the single "
+        "best feature-class pair found.",
+        "Flag: AUC above 0.95. Warning: above 0.90. A higher bar than identity_column_flag's 0.8, since "
+        "this ranks every feature, including ones expected to correlate with the label somewhat on their own.",
+    ),
     "identity_column_flag": (
         "How well each configured id-like column (IP, port, MAC) predicts the label on its own, as a "
         "standalone ROC AUC.",

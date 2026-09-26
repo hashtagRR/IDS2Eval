@@ -7,6 +7,7 @@ from ids2eval.audit import (
     cross_dataset_drift,
     data_integrity,
     dedup,
+    feature_auc_ranking,
     flow_group_leakage,
     homogeneity,
     identity_columns,
@@ -110,6 +111,39 @@ def test_leakage_screen_ok_when_no_feature_dominates(base_cfg):
     train_df, test_df = df.iloc[:350].reset_index(drop=True), df.iloc[350:].reset_index(drop=True)
     result = leakage.check(train_df, test_df, base_cfg)
     assert result["status"] == "ok"
+
+
+def test_feature_auc_ranking_check_flags_a_near_perfect_numeric_feature(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 200
+    label = rng.choice(["A", "B"], n)
+    df = pd.DataFrame({
+        "F1": np.where(label == "A", 100.0, 0.0) + rng.normal(0, 0.01, n),
+        "F2": rng.normal(size=n),
+        "Label": label,
+    })
+    result = feature_auc_ranking.check(df, base_cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["best_feature"] == "F1"
+    assert "F1" in result["details"]["top_features"]
+
+
+def test_feature_auc_ranking_check_ok_when_no_feature_is_separable(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 300
+    df = pd.DataFrame({
+        "F1": rng.normal(size=n), "F2": rng.normal(size=n),
+        "Label": rng.choice(["A", "B"], n),
+    })
+    result = feature_auc_ranking.check(df, base_cfg)
+    assert result["status"] == "ok"
+
+
+def test_feature_auc_ranking_check_ok_with_only_categorical_features(base_cfg):
+    df = pd.DataFrame({"Category": ["x", "y", "z"] * 10, "Label": ["A", "B", "A"] * 10})
+    result = feature_auc_ranking.check(df, base_cfg)
+    assert result["status"] == "ok"
+    assert "no numeric feature columns" in result["summary"]
 
 
 def test_identity_column_flag_detects_predictive_ip(base_cfg, synth_train_test):

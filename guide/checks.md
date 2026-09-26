@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 23 checks operationalize a
+paragraph, or not tested at all. These 24 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Eighteen run by default (v1, no external data needed); five are
+Nineteen run by default (v1, no external data needed); five are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -28,7 +28,7 @@ does and does not cover:
 | Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
 | Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `temporal_realism_check`, `row_order_leakage_check` |
 | Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification`, `cross_capture_matrix_check` |
-| Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check` |
+| Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check`, `feature_auc_ranking_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
 | Provenance (extractor bugs, curated per-dataset facts) | `schema_fingerprint_check`, `known_issue_lookup` |
@@ -108,6 +108,22 @@ time-series anomaly benchmarks turned out solvable by a single line of
 code, which meant published algorithm comparisons on them measured
 nothing. A depth-1 tree is exactly a brute-force search over every
 feature and threshold for the single best split, done in one cheap fit.
+
+### `feature_auc_ranking_check`
+`identity_column_flag`, `port_protocol_shortcut_check`, and
+`temporal_leakage_check` each test one declared column (or pair) for
+standalone predictive power, via a model fit, since turning an
+arbitrary categorical column into a score needs a small classifier.
+This ranks every numeric feature the same way, but without fitting
+anything: a numeric column's own raw values already are a score, so
+its one-vs-rest AUC against each class is a direct computation, not a
+model. Categorical columns aren't covered here (their category codes
+carry no meaningful order), the model-based checks already cover
+those. Deliberately a higher flag threshold (0.95) than
+`identity_column_flag`'s (0.8): this ranks every behavioral feature
+too, ones expected to correlate with the label to some degree on their
+own, so only a near-perfect single feature is a specific, checkable
+oddity.
 
 ### `identity_column_flag` / `low_cardinality_warning`
 Standalone predictive power and cardinality of IP/port/MAC-pattern
@@ -328,7 +344,7 @@ run's actual data or not:
   principle, be reacted to (drop a column, resample, switch
   `dataset.split_mode`, or just note the caveat). This is where
   `dedup_check`, `label_conflict_check`, `near_duplicate_class_check`,
-  `leakage_screen`, `one_rule_check`, `identity_column_flag`,
+  `leakage_screen`, `one_rule_check`, `feature_auc_ranking_check`, `identity_column_flag`,
   `port_protocol_shortcut_check`, `temporal_leakage_check`,
   `temporal_realism_check`, `flow_group_leakage_check`,
   `row_order_leakage_check`, `homogeneity_test`,

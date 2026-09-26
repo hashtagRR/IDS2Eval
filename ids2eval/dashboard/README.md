@@ -29,12 +29,14 @@ reload - no server restart. A change to `server.py` needs a restart.
 | GET | `/` , `/static/<file>` | The page and its assets (files directly in `static/` only) |
 | GET | `/api/runs` | Every run under the listed output dirs, newest first, with verdict and status |
 | GET | `/api/run/<dir_idx>/<run_name>` | One run: summary, `scorecard.json` content, benchmark rows |
+| GET | `/api/run/<dir_idx>/<run_name>/citation` | The same BibTeX `ids2eval cite` prints, read from that run's `scorecard.json` |
 | GET | `/files/<dir_idx>/<run_name>/<file>` | One artifact from a run directory (top level only) |
 | GET | `/api/job` | The current/last launched run: state, exit code, last 2,000 log lines |
 | GET | `/api/starter-config` | The YAML the New run editor starts with |
 | POST | `/api/validate` | `{yaml}` → runs the CLI's own `load_config()` validation |
 | POST | `/api/run` | `{yaml, skip_audit, skip_benchmark}` → starts a run (409 if one is already running) |
 | POST | `/api/job/stop` | Terminates the running run |
+| POST | `/api/compare-datasets` | `{yaml_a, yaml_b}` → the same comparison `ids2eval compare-datasets` runs, over two pasted configs |
 
 ## Security model
 

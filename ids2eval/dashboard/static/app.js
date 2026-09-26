@@ -70,8 +70,21 @@ async function renderRun() {
     pane.append(el("div", {class: "error-box", text: `Run crashed at stage "${d.failed_stage}": ${d.error}`}));
 
   const tabs = [["scorecard", "Scorecard"], ["benchmark", `Benchmark (${d.benchmark.length})`], ["files", "Files"]];
-  pane.append(el("div", {class: "tabs"}, ...tabs.map(([k, t]) => el("button", {class: tab === k ? "on" : "", text: t,
-    onclick: () => { tab = k; store.set("ids2eval.tab", k); renderRun(); }}))));
+  const tabRow = el("div", {class: "tabs"}, ...tabs.map(([k, t]) => el("button", {class: tab === k ? "on" : "", text: t,
+    onclick: () => { tab = k; store.set("ids2eval.tab", k); renderRun(); }})));
+  if (d.files.includes("scorecard.json")) {
+    const citeBtn = el("button", {text: "Cite"});
+    citeBtn.onclick = async () => {
+      citeBtn.disabled = true;
+      try {
+        const r = await api("/api/run/" + selected + "/citation");
+        pane.append(el("pre", {class: "log mono"}, r.bibtex));
+      } catch (e) { pane.append(el("div", {class: "error-box", text: e.message})); }
+      finally { citeBtn.disabled = false; }
+    };
+    tabRow.append(el("span", {class: "spacer"}), citeBtn);
+  }
+  pane.append(tabRow);
 
   if (tab === "scorecard") {
     if (d.files.includes("SCORECARD.html")) pane.append(el("iframe", {src: base + "SCORECARD.html",
@@ -155,6 +168,35 @@ async function renderNewRun() {
   poll();
 }
 
+async function renderCompare() {
+  view = "compare"; renderRuns();
+  const taA = el("textarea", {spellcheck: "false", "aria-label": "Config A YAML", placeholder: "First config's YAML"});
+  const taB = el("textarea", {spellcheck: "false", "aria-label": "Config B YAML", placeholder: "Second config's YAML"});
+  const msg = el("span", {class: "msg"});
+  const cmpBtn = el("button", {class: "primary", text: "Compare"});
+  const out = el("pre", {class: "log mono", text: "No comparison run yet."});
+  const setMsg = (t, cls) => { msg.textContent = t; msg.className = "msg " + (cls || ""); };
+
+  cmpBtn.onclick = async () => {
+    cmpBtn.disabled = true;
+    setMsg("Comparing…");
+    try {
+      const r = await api("/api/compare-datasets", {yaml_a: taA.value, yaml_b: taB.value});
+      out.textContent = r.report;
+      setMsg(r.result.combined_content_match ? "Equivalent" : "Non-equivalent", r.result.combined_content_match ? "ok" : "err");
+    } catch (e) { setMsg(e.message, "err"); }
+    finally { cmpBtn.disabled = false; }
+  };
+
+  $("#main").replaceChildren(el("div", {class: "pane"},
+    el("div", {class: "head"}, el("h2", {text: "Compare datasets"}),
+      el("span", {class: "muted", text: "Paste two configs to check whether they load equivalent data."})),
+    el("div", {class: "row"}, taA, taB),
+    el("div", {class: "row"}, cmpBtn, msg),
+    out));
+}
+
 $("#newrun").onclick = renderNewRun;
+$("#compare").onclick = renderCompare;
 $("#refresh").onclick = () => loadRuns(false);
 loadRuns(false);

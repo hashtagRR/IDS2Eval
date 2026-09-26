@@ -416,11 +416,10 @@ run's actual data or not:
   `cross_capture_matrix_check`, and `result_robustness_check` all look
   similarly "structural": their results also can't move with dedup,
   since each reloads the raw data itself, but they stay in the checks
-  table, because they
-  genuinely measure this run's split methodology and a config change is
-  a real fix (grouped splitting, or collecting more of an
-  under-represented scenario). See `ids2eval.audit.KNOWN_ISSUE_CHECKS`
-  vs `STRUCTURAL_CHECKS`.)
+  table, because they genuinely measure this run's split methodology
+  and a config change is a real fix (grouped splitting, or collecting
+  more of an under-represented scenario). See
+  `ids2eval.audit.KNOWN_ISSUE_CHECKS` vs `STRUCTURAL_CHECKS`.)
 
 Both tables number their rows starting at 1.
 
@@ -464,8 +463,12 @@ evidence level in every scorecard:
 - `documented`: `known_issue_lookup` and `schema_fingerprint_check`, a
   citation lookup against `dataset.name` or column names, not computed
   from this run's data at all.
-- `direct-experiment`: `resplit_falsification`, an actual counterfactual
-  refit and comparison, the strongest evidence a check can produce.
+- `direct-experiment`: `resplit_falsification`,
+  `scenario_holdout_falsification`, `cross_capture_matrix_check`,
+  `feature_category_ablation_check`, `artifact_sensitivity_check`, and
+  `result_robustness_check`, each an actual counterfactual refit and
+  comparison rather than a threshold on the data as loaded, the
+  strongest evidence a check can produce.
 - `statistical`: every other check, a threshold or hypothesis test
   against this run's data, with no independent corroboration.
 - `cross-corroborated`: the one dynamic case, computed once when the

@@ -1,4 +1,5 @@
-"""The IDS2Eval dashboard's server: browse runs, read scorecards, launch runs.
+"""The IDS2Eval dashboard's server: browse runs, read scorecards, launch runs,
+cite a run, and compare two datasets - every CLI subcommand available here too.
 
     ids2eval-dashboard --output ./output     # then open http://127.0.0.1:8765
 
@@ -36,7 +37,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from ..config import load_config
-from ..reporting import run_manager
+from ..reporting import cite, compare_datasets, run_manager
 
 logger = logging.getLogger(__name__)
 
@@ -223,6 +224,16 @@ class Handler(BaseHTTPRequestHandler):
             summary = _run_summary(int(parts[2]), self.app.output_dirs[int(parts[2])], run_dir)
             return self._json({**summary, "scorecard": _read_json(run_dir / "scorecard.json"),
                                "benchmark": _benchmark_rows(run_dir)})
+        # /api/run/<dir_idx>/<run_name>/citation - the same BibTeX `ids2eval cite` prints
+        if len(parts) == 5 and parts[:2] == ["api", "run"] and parts[4] == "citation":
+            run_dir = self.app.run_dir(parts[2], parts[3])
+            if run_dir is None or not (run_dir / "scorecard.json").is_file():
+                return self._error(HTTPStatus.NOT_FOUND, "no scorecard.json for this run")
+            try:
+                bibtex = cite.citation_bibtex(cite.load_scorecard(run_dir))
+            except (OSError, ValueError, KeyError) as e:
+                return self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(e))
+            return self._json({"bibtex": bibtex})
         # /files/<dir_idx>/<run_name>/<file> - a run artifact, top level of the run dir only
         if len(parts) == 4 and parts[0] == "files":
             run_dir = self.app.run_dir(parts[1], parts[2])
@@ -275,6 +286,8 @@ class Handler(BaseHTTPRequestHandler):
                                "output_dir": cfg["output"]["dir"] if cfg else None})
         if path == "/api/run":
             return self._start_run(body)
+        if path == "/api/compare-datasets":
+            return self._compare_datasets(body)
         if path == "/api/job/stop":
             job = self.app.job
             with job.lock:
@@ -283,6 +296,27 @@ class Handler(BaseHTTPRequestHandler):
                     job.log.append("[stopped from the web UI]")
             return self._json(job.snapshot())
         return self._error(HTTPStatus.NOT_FOUND, "not found")
+
+    def _compare_datasets(self, body: dict) -> None:
+        """The same comparison `ids2eval compare-datasets` runs, over two pasted
+        configs rather than two file paths - loads both datasets fresh, so
+        it's exactly as heavy as the CLI command, just without a subprocess.
+        """
+        yaml_a, yaml_b = body.get("yaml_a", ""), body.get("yaml_b", "")
+        if not yaml_a.strip() or not yaml_b.strip():
+            return self._error(HTTPStatus.BAD_REQUEST, "both configs are required")
+        with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as fa, \
+             tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as fb:
+            fa.write(yaml_a)
+            fb.write(yaml_b)
+        try:
+            result = compare_datasets.compare(fa.name, fb.name)
+            return self._json({"result": result, "report": compare_datasets.render_report(result)})
+        except Exception as e:  # bad YAML, missing files, schema errors - report, never crash the server
+            return self._error(HTTPStatus.BAD_REQUEST, f"{type(e).__name__}: {e}")
+        finally:
+            Path(fa.name).unlink(missing_ok=True)
+            Path(fb.name).unlink(missing_ok=True)
 
     def _start_run(self, body: dict) -> None:
         job = self.app.job

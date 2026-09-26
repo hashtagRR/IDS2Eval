@@ -41,12 +41,16 @@ at `http://localhost:8765`:
 
 - **Runs**: every run under the listed output directories, newest
   first, with its verdict; each run shows its `SCORECARD.html`, its
-  benchmark results sorted by weighted F1, and links to every artifact
+  benchmark results sorted by weighted F1, links to every artifact, and
+  a **Cite** button (the same BibTeX `ids2eval cite` prints)
 - **New run**: edit a YAML config, validate it (the same validation
   the CLI does), and launch it with a live log. A run is a real
   `python -m ids2eval` subprocess, so it behaves exactly like the CLI;
   relative paths resolve against the directory the UI was started in.
   One run at a time.
+- **Compare datasets**: paste two configs and check whether they load
+  equivalent data, the same comparison as `ids2eval compare-datasets`,
+  over pasted YAML instead of two file paths.
 
 | Flag | Effect |
 |---|---|

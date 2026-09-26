@@ -136,7 +136,7 @@ at wherever you keep these (or any other IDS dataset in CSV form); see
 
 ## Status
 
-Implemented, tested (218 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (260 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data - not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) - audit + 5 classifiers, including
@@ -163,14 +163,24 @@ growing the curated table is a good area for contributors to help with
 
 ## Provenance
 
-IDS2Eval grew out of the dataset evaluation and auditing code developed during research on machine-learning-based network intrusion detection. It generalizes portions of that research code into a dataset-independent toolkit for examining IDS datasets, evaluation pipelines, and classifier behaviour.
+IDS<sup>2</sup>Eval grew out of the dataset evaluation and auditing
+code developed during research on machine-learning-based network
+intrusion detection. It generalizes portions of that research code
+into a dataset-independent toolkit for examining IDS datasets,
+evaluation pipelines, and classifier behaviour.
 
-The originating research is described in two related manuscripts currently in preparation:
+The originating research is described in two related manuscripts
+currently in preparation:
 
-* "Auditing Network Intrusion Detection Benchmarks: A Falsification-Oriented Evaluation of UNSW-NB15 and CSE-CIC-IDS2018"
+* "Auditing Network Intrusion Detection Benchmarks: A
+  Falsification-Oriented Evaluation of UNSW-NB15 and CSE-CIC-IDS2018"
 * "Confidence-Routed Staged Detection for Network Intrusion Detection"
 
-The first manuscript develops and applies the dataset-auditing methodology from which much of IDS2Eval originated. The second evaluates a staged intrusion-detection architecture built within the broader research codebase. IDS2Eval does not implement that staged architecture.
+The first manuscript develops and applies the dataset-auditing
+methodology from which much of IDS<sup>2</sup>Eval originated. The
+second evaluates a staged intrusion-detection architecture built
+within the broader research codebase. IDS<sup>2</sup>Eval does not
+implement that staged architecture.
 
 Links to the papers will be added when publicly available.
 

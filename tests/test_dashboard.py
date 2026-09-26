@@ -102,3 +102,47 @@ def test_refuses_a_second_run_while_one_is_active(server):
     app.job.state = "running"
     status, _ = _post(base + "/api/run", {"yaml": "dataset: {}\n"})
     assert status == 409
+
+
+def test_citation_endpoint_matches_cli_bibtex(server, tmp_path):
+    base, app = server
+    run_dir = app.output_dirs[0] / "runs" / "2026-01-01_000000_000000"
+    full_scorecard = {
+        "dataset_name": "ds", "overall_status": "passed", "generated_at": "2026-01-01T00:00:00+00:00",
+        "ids2eval_version": "0.1.0", "ids2eval_git_commit": "abc123", "scorecard_schema_version": "1.2",
+        "dataset_fingerprint": {"train_content_hash": "deadbeef" * 4, "test_content_hash": "beefdead" * 4},
+    }
+    (run_dir / "scorecard.json").write_text(json.dumps(full_scorecard))
+
+    from ids2eval.reporting import cite
+    expected = cite.citation_bibtex(full_scorecard)
+
+    status, body = _get(base + "/api/run/0/2026-01-01_000000_000000/citation")
+    assert status == 200
+    assert json.loads(body)["bibtex"] == expected
+
+
+def test_citation_endpoint_404s_without_a_scorecard(server):
+    base, _ = server
+    assert _get(base + "/api/run/7/2026-01-01_000000_000000/citation")[0] == 404
+
+
+def test_compare_datasets_endpoint_reports_equivalent_configs(server, tmp_path):
+    base, _ = server
+    data_path = tmp_path / "data.csv"
+    data_path.write_text("F1,Label\n" + "".join(f"{i},{'A' if i % 2 else 'B'}\n" for i in range(40)))
+    config = (
+        f"dataset:\n  name: x\n  raw_files: [{data_path}]\n"
+        "schema:\n  label_column: Label\naudit:\n  resplit_falsification: false\n"
+    )
+
+    status, body = _post(base + "/api/compare-datasets", {"yaml_a": config, "yaml_b": config})
+    assert status == 200
+    assert body["result"]["combined_content_match"] is True
+    assert "Equivalent" in body["report"]
+
+
+def test_compare_datasets_endpoint_requires_both_configs(server):
+    base, _ = server
+    status, _ = _post(base + "/api/compare-datasets", {"yaml_a": "dataset: {}\n", "yaml_b": ""})
+    assert status == 400

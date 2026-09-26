@@ -1,3 +1,4 @@
+import hashlib
 import json
 import time
 
@@ -53,11 +54,18 @@ def test_write_resolved_config_round_trips(tmp_path):
     assert written == cfg
 
 
+def _fingerprint_cfg(raw_files=None, train_file=None, test_file=None):
+    return {
+        "schema": {"label_column": "Label", "attack_category_column": None, "drop_columns": []},
+        "dataset": {"raw_files": raw_files or [], "train_file": train_file, "test_file": test_file},
+    }
+
+
 def test_write_dataset_fingerprint_content(tmp_path):
     import pandas as pd
     train_df = pd.DataFrame({"F1": [1, 2, 3], "Label": ["A", "B", "A"]})
     test_df = pd.DataFrame({"F1": [4, 5], "Label": ["A", "B"]})
-    cfg = {"schema": {"label_column": "Label", "attack_category_column": None, "drop_columns": []}}
+    cfg = _fingerprint_cfg()
 
     run_manager.write_dataset_fingerprint(tmp_path, train_df, test_df, cfg)
     fp = json.loads((tmp_path / "dataset_fingerprint.json").read_text())
@@ -67,11 +75,13 @@ def test_write_dataset_fingerprint_content(tmp_path):
     assert fp["feature_count"] == 1
     assert fp["train_class_distribution"] == {"A": 2, "B": 1}
     assert "train_content_hash" in fp and "test_content_hash" in fp
+    assert fp["columns"] == ["F1", "Label"]
+    assert fp["source_files"] == []
 
 
 def test_dataset_fingerprint_hash_changes_with_content(tmp_path):
     import pandas as pd
-    cfg = {"schema": {"label_column": "Label", "attack_category_column": None, "drop_columns": []}}
+    cfg = _fingerprint_cfg()
     df_a = pd.DataFrame({"F1": [1, 2], "Label": ["A", "B"]})
     df_b = pd.DataFrame({"F1": [1, 3], "Label": ["A", "B"]})  # one value different
 
@@ -81,6 +91,34 @@ def test_dataset_fingerprint_hash_changes_with_content(tmp_path):
     fp_b = json.loads((tmp_path / "dataset_fingerprint.json").read_text())
 
     assert fp_a["train_content_hash"] != fp_b["train_content_hash"]
+
+
+def test_dataset_fingerprint_source_files_records_checksum_and_size(tmp_path):
+    import pandas as pd
+    data_file = tmp_path / "data.csv"
+    data_file.write_text("F1,Label\n1,A\n2,B\n")
+    cfg = _fingerprint_cfg(raw_files=[str(data_file)])
+    df = pd.DataFrame({"F1": [1, 2], "Label": ["A", "B"]})
+
+    run_manager.write_dataset_fingerprint(tmp_path, df, df, cfg)
+    fp = json.loads((tmp_path / "dataset_fingerprint.json").read_text())
+
+    assert len(fp["source_files"]) == 1
+    entry = fp["source_files"][0]
+    assert entry["path"] == str(data_file)
+    assert entry["size_bytes"] == data_file.stat().st_size
+    assert entry["sha256"] == hashlib.sha256(data_file.read_bytes()).hexdigest()
+
+
+def test_dataset_fingerprint_source_files_handles_a_missing_file(tmp_path):
+    import pandas as pd
+    cfg = _fingerprint_cfg(raw_files=["/does/not/exist.csv"])
+    df = pd.DataFrame({"F1": [1, 2], "Label": ["A", "B"]})
+
+    run_manager.write_dataset_fingerprint(tmp_path, df, df, cfg)
+    fp = json.loads((tmp_path / "dataset_fingerprint.json").read_text())
+
+    assert fp["source_files"] == [{"path": "/does/not/exist.csv", "size_bytes": None, "sha256": None}]
 
 
 def test_write_run_status_completed(tmp_path):

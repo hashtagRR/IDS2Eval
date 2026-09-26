@@ -127,6 +127,29 @@ def test_cli_validate_config_rejects_a_broken_config(tmp_path):
         main(["validate-config", "--config", str(config_path)])
 
 
+def test_cli_compare_datasets_reports_equivalent_configs(tmp_path, synth_data, capsys):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+
+    def _config(name):
+        return {
+            "dataset": {"name": name, "raw_files": [str(data_path)], "split_ratio": 0.5},
+            "schema": {"label_column": "Label"},
+            "audit": {"resplit_falsification": False},
+            "output": {"dir": str(tmp_path / f"output-{name}")},
+        }
+
+    config_a = tmp_path / "a.yaml"
+    config_a.write_text(yaml.dump(_config("a")))
+    config_b = tmp_path / "b.yaml"
+    config_b.write_text(yaml.dump(_config("b")))
+
+    main(["compare-datasets", str(config_a), str(config_b)])
+    out = capsys.readouterr().out
+    assert "Equivalent" in out
+    assert "FAIL" not in out
+
+
 def test_cli_does_not_recompute_structural_checks_on_the_after_pass(tmp_path, synth_data, monkeypatch):
     """resplit_falsification/schema_fingerprint_check/known_issue_lookup can't change between
     the raw-data pass and the cleaned-data pass (see ids2eval.audit.STRUCTURAL_CHECKS) - the

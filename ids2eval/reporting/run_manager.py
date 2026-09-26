@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import platform
 import sys
 from datetime import datetime, timezone
@@ -76,8 +77,59 @@ def write_resolved_config(run_dir: Path, cfg: dict) -> None:
     (run_dir / "resolved_config.json").write_text(json.dumps(cfg, indent=2, default=str))
 
 
-def _content_hash(df: pd.DataFrame) -> str:
+def content_hash(df: pd.DataFrame) -> str:
     return hashlib.sha256(pd.util.hash_pandas_object(df, index=False).values.tobytes()).hexdigest()
+
+
+def _file_sha256(path: str, chunk_size: int = 1 << 20) -> str | None:
+    try:
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(chunk_size), b""):
+                h.update(chunk)
+        return h.hexdigest()
+    except OSError:
+        return None
+
+
+def _source_file_manifest(dataset_cfg: dict) -> list[dict]:
+    """Per-source-file provenance: the exact bytes this run's data came
+    from, independent of how ids2eval parsed them. The same fact this
+    project's own example READMEs have recorded by hand ("every file's
+    SHA-256 matched the mirror's published checksum"), computed and
+    written automatically instead. Hashes the file as stored on disk
+    (typically gzipped), matching what a published checksum is normally
+    computed against, not the decompressed content.
+    """
+    paths = dataset_cfg["raw_files"] or [p for p in (dataset_cfg["train_file"], dataset_cfg["test_file"]) if p]
+    manifest = []
+    for path in paths:
+        try:
+            size_bytes = os.path.getsize(path)
+        except OSError:
+            size_bytes = None
+        manifest.append({"path": path, "size_bytes": size_bytes, "sha256": _file_sha256(path)})
+    return manifest
+
+
+def compute_dataset_fingerprint(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
+    """The dict write_dataset_fingerprint writes to disk, exposed on its own
+    so a caller that doesn't have (or want) a run directory, like
+    ids2eval.reporting.compare_datasets, can compute the same fingerprint
+    without a file-writing side effect.
+    """
+    label_col = cfg["schema"]["label_column"]
+    return {
+        "train_rows": len(train_df),
+        "test_rows": len(test_df),
+        "feature_count": len(features.feature_columns(train_df, cfg)),
+        "train_class_distribution": {str(k): int(v) for k, v in train_df[label_col].value_counts().items()},
+        "test_class_distribution": {str(k): int(v) for k, v in test_df[label_col].value_counts().items()},
+        "train_content_hash": content_hash(train_df),
+        "test_content_hash": content_hash(test_df),
+        "columns": list(train_df.columns),
+        "source_files": _source_file_manifest(cfg["dataset"]),
+    }
 
 
 def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
@@ -86,21 +138,15 @@ def write_dataset_fingerprint(run_dir: Path, train_df: pd.DataFrame, test_df: pd
     keyed on cheap file stats) and dataset_cfg source-file stats. This one
     hashes the actual loaded DataFrame contents, so it also catches a
     resplit or a cache-invalidation edge case the file-stats check missed,
-    not just "did the source CSV change".
+    not just "did the source CSV change". Also records the source files'
+    own checksums (source_files) and the loaded column schema (columns),
+    a provenance manifest a second run, or a second person, can compare
+    a claimed-identical dataset against.
 
     Returns the fingerprint dict too, so callers (e.g. scorecard.py) can
     reuse it without recomputing the content hashes.
     """
-    label_col = cfg["schema"]["label_column"]
-    fingerprint = {
-        "train_rows": len(train_df),
-        "test_rows": len(test_df),
-        "feature_count": len(features.feature_columns(train_df, cfg)),
-        "train_class_distribution": {str(k): int(v) for k, v in train_df[label_col].value_counts().items()},
-        "test_class_distribution": {str(k): int(v) for k, v in test_df[label_col].value_counts().items()},
-        "train_content_hash": _content_hash(train_df),
-        "test_content_hash": _content_hash(test_df),
-    }
+    fingerprint = compute_dataset_fingerprint(train_df, test_df, cfg)
     (run_dir / "dataset_fingerprint.json").write_text(json.dumps(fingerprint, indent=2))
     return fingerprint
 

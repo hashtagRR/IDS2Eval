@@ -16,6 +16,20 @@ Flags:
 | `--skip-audit` | Skip both audit passes (before and after dedup) |
 | `--skip-benchmark` | Skip classifier benchmarking |
 
+`ids2eval --config ...` is shorthand for `ids2eval run --config ...`;
+three other subcommands are available:
+
+```bash
+ids2eval validate-config --config my_config.yaml   # check a config for errors, no data loaded
+ids2eval cite path/to/a/run/directory              # print a BibTeX citation from that run's scorecard
+ids2eval compare-datasets a.yaml b.yaml            # check whether two configs load equivalent data
+```
+
+`compare-datasets` loads both configs' data and compares schema, row
+counts, label distribution, and content, useful when two configs claim
+to point at "the same" dataset (an official release and a third-party
+mirror, say) and you want to know whether they actually agree.
+
 ## Web UI (dashboard)
 
 ```bash
@@ -93,11 +107,12 @@ every run, nothing gets silently overwritten):
 | `SCORECARD.html` / `SCORECARD.md` / `scorecard.json` | A citable pass/fail rollup of the findings above, with before/after-dedup results side by side. See [checks.md](checks.md#the-scorecard). The HTML is self-contained: open it from disk, or print it to PDF |
 | `scorecard.pdf` / `scorecard.png` | A chart version of the scorecard, only if `output.write_scorecard_plot` is on (needs `pip install "ids2eval[plots]"`) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
-| `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, AUC, train/inference time |
+| `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, macro F1, AUC, train/inference time |
+| `per_class_metrics.csv` | Per-class precision/recall/F1/support, the same numbers nested in `benchmark_details.json`'s `per_class_report`, flattened so a summary table can scan it directly |
 | `benchmark_details.json` | Per-row confusion matrix, per-class precision/recall/F1, feature importance (where the classifier supports it), winning hyperparameters (if `classifiers.tuning` ran), and each stage's class distribution before/after sampling |
 | `environment.json` | Python version, platform, `ids2eval`'s own version/git commit, key package versions |
 | `resolved_config.json` | The fully resolved config (your YAML merged onto defaults): one of the three things (with the dataset fingerprint and the seed) needed to reproduce a run |
-| `dataset_fingerprint.json` | Row/feature counts, class distributions, and a real content hash of train/test: proof two runs used identical data, not just "probably the same file" |
+| `dataset_fingerprint.json` | Row/feature counts, class distributions, the loaded column schema, a real content hash of train/test, and each source file's own size and SHA256: proof two runs used identical data, not just "probably the same file" (see `ids2eval compare-datasets` above for comparing two datasets against each other) |
 | `run_status.json` | `completed`, or `failed` with which stage and the error |
 
 `output.dir/.cache/` sits outside the `runs/` tree on purpose. It's

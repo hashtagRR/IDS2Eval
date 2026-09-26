@@ -3,6 +3,7 @@
     python -m ids2eval --config my_config.yaml       (same as: ids2eval run --config ...)
     python -m ids2eval cite path/to/run_dir
     python -m ids2eval validate-config --config my_config.yaml
+    python -m ids2eval compare-datasets a.yaml b.yaml
 """
 
 from __future__ import annotations
@@ -21,11 +22,11 @@ from .config import load_config
 from .data import cache, dataset
 from .data.label_grouping import apply_attack_type_mapping
 from .modeling.benchmark import run_benchmark
-from .reporting import cite, drift, run_manager, scorecard
+from .reporting import cite, compare_datasets, drift, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
-COMMANDS = ("run", "cite", "validate-config")
+COMMANDS = ("run", "cite", "validate-config", "compare-datasets")
 
 
 def _json_default(obj):
@@ -70,6 +71,12 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
     validate_parser.add_argument("--config", required=True, help="Path to a YAML config file")
 
+    compare_parser = subparsers.add_parser(
+        "compare-datasets", help="Check whether two configs load equivalent data"
+    )
+    compare_parser.add_argument("config_a", help="Path to the first config file")
+    compare_parser.add_argument("config_b", help="Path to the second config file")
+
     return parser.parse_args(argv)
 
 
@@ -83,6 +90,9 @@ def main(argv=None) -> None:
     if args.command == "validate-config":
         load_config(args.config)  # raises ValueError with every problem found, if any
         print(f"{args.config}: valid")
+        return
+    if args.command == "compare-datasets":
+        print(compare_datasets.render_report(compare_datasets.compare(args.config_a, args.config_b)))
         return
 
     cfg = load_config(args.config)

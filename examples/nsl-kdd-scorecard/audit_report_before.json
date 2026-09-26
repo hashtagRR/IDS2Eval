@@ -10,7 +10,65 @@
       "test_rows_raw": 22544,
       "test_rows_deduped": 21833,
       "test_leakage_dropped": 664,
-      "test_duplicates_dropped": 47
+      "test_duplicates_dropped": 47,
+      "by_class": {
+        "normal": {
+          "train_duplicate_rate": 5.939741324265328e-05,
+          "test_leak_rate": 0.010812480691998765
+        },
+        "neptune": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.03328322954691862
+        },
+        "satan": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.010884353741496598
+        },
+        "ipsweep": {
+          "train_duplicate_rate": 0.0016671297582661851,
+          "test_leak_rate": 0.6879432624113475
+        },
+        "portsweep": {
+          "train_duplicate_rate": 0.000341180484476288,
+          "test_leak_rate": 0.11464968152866242
+        },
+        "smurf": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.30526315789473685
+        },
+        "nmap": {
+          "train_duplicate_rate": 0.0013395847287340924,
+          "test_leak_rate": 0.0
+        },
+        "back": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.04178272980501393
+        },
+        "teardrop": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.25
+        },
+        "warezclient": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "pod": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.5121951219512195
+        },
+        "guess_passwd": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "buffer_overflow": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "warezmaster": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.001059322033898305
+        }
+      }
     }
   },
   {
@@ -20,7 +78,92 @@
     "details": {
       "conflicting_groups": 116,
       "conflicting_rows": 247,
-      "cross_split_conflicting_groups": 58
+      "cross_split_conflicting_groups": 58,
+      "by_class": {
+        "normal": {
+          "conflicting_rate": 0.0014016144522023515
+        },
+        "neptune": {
+          "conflicting_rate": 0.0
+        },
+        "satan": {
+          "conflicting_rate": 0.0025183150183150185
+        },
+        "ipsweep": {
+          "conflicting_rate": 0.0021390374331550803
+        },
+        "smurf": {
+          "conflicting_rate": 0.0
+        },
+        "portsweep": {
+          "conflicting_rate": 0.0003238341968911917
+        },
+        "nmap": {
+          "conflicting_rate": 0.005108556832694764
+        },
+        "back": {
+          "conflicting_rate": 0.0
+        },
+        "guess_passwd": {
+          "conflicting_rate": 0.0
+        },
+        "mscan": {
+          "conflicting_rate": 0.0
+        },
+        "warezmaster": {
+          "conflicting_rate": 0.001037344398340249
+        },
+        "teardrop": {
+          "conflicting_rate": 0.00995575221238938
+        },
+        "warezclient": {
+          "conflicting_rate": 0.0
+        },
+        "apache2": {
+          "conflicting_rate": 0.0
+        },
+        "processtable": {
+          "conflicting_rate": 0.0
+        },
+        "snmpguess": {
+          "conflicting_rate": 0.0
+        },
+        "saint": {
+          "conflicting_rate": 0.03134796238244514
+        },
+        "mailbomb": {
+          "conflicting_rate": 0.0
+        },
+        "pod": {
+          "conflicting_rate": 0.045454545454545456
+        },
+        "snmpgetattack": {
+          "conflicting_rate": 0.4044943820224719
+        },
+        "httptunnel": {
+          "conflicting_rate": 0.0
+        },
+        "buffer_overflow": {
+          "conflicting_rate": 0.0
+        },
+        "multihop": {
+          "conflicting_rate": 0.0
+        },
+        "land": {
+          "conflicting_rate": 0.28
+        },
+        "rootkit": {
+          "conflicting_rate": 0.043478260869565216
+        }
+      }
+    }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 14 classes tested",
+    "details": {
+      "classes_tested": 14
     }
   },
   {
@@ -50,16 +193,64 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'wrong_fragment' alone reaches AUC 1.000 identifying 'teardrop'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "wrong_fragment": 0.9999929014608399,
+        "land": 0.9999722122980429,
+        "num_shells": 0.9998055092482337,
+        "root_shell": 0.9993450769633798,
+        "num_file_creations": 0.9990950226244344
+      },
+      "best_feature": "wrong_fragment",
+      "best_class": "teardrop"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "ok",
     "summary": "no id_like_columns configured",
     "details": {}
   },
   {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "protocol_type"
+    }
+  },
+  {
     "check": "temporal_leakage_check",
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 1.0006974487465936,
+        "test": 1.0024257656070894
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -141,6 +332,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -338,14 +535,6 @@
           "citation": "Tavallaee et al. 2009, IEEE CISDA"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "ok",
-    "summary": "no near-zero-distance feature vectors found across 14 classes tested",
-    "details": {
-      "classes_tested": 14
     }
   }
 ]

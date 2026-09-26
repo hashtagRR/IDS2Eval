@@ -10,7 +10,65 @@
       "test_rows_raw": 21833,
       "test_rows_deduped": 21833,
       "test_leakage_dropped": 0,
-      "test_duplicates_dropped": 0
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "normal": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "neptune": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "satan": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "ipsweep": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "portsweep": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "smurf": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "nmap": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "back": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "teardrop": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "warezclient": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "pod": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "guess_passwd": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "buffer_overflow": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "warezmaster": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -18,6 +76,14 @@
     "status": "ok",
     "summary": "no feature vector maps to more than one label",
     "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 14 classes tested",
+    "details": {
+      "classes_tested": 14
+    }
   },
   {
     "check": "leakage_screen",
@@ -46,16 +112,64 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'wrong_fragment' alone reaches AUC 1.000 identifying 'teardrop'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "wrong_fragment": 0.9999929005526992,
+        "land": 0.9999761795112035,
+        "num_shells": 0.9998054845419756,
+        "root_shell": 0.9993449937675164,
+        "num_file_creations": 0.999094907664703
+      },
+      "best_feature": "wrong_fragment",
+      "best_class": "teardrop"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "ok",
     "summary": "no id_like_columns configured",
     "details": {}
   },
   {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "protocol_type"
+    }
+  },
+  {
     "check": "temporal_leakage_check",
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 1.0007188756678902,
+        "test": 0.9996873571152927
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -137,6 +251,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -334,14 +454,6 @@
           "citation": "Tavallaee et al. 2009, IEEE CISDA"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "ok",
-    "summary": "no near-zero-distance feature vectors found across 14 classes tested",
-    "details": {
-      "classes_tested": 14
     }
   }
 ]

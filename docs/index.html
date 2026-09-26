@@ -1493,7 +1493,7 @@ h2{
         <a class="btn" href="#evidence">See what it catches ↓</a>
       </div>
       <div class="micro-proof">
-        <span>18 audit checks</span><span>7 real IDS datasets</span><span>201 CI tests</span><span>63.5M+ flows scanned in validation</span>
+        <span>19 audit checks</span><span>7 real IDS datasets</span><span>218 CI tests</span><span>63.5M+ flows scanned in validation</span>
       </div>
       <div class="name-strip" aria-label="Meaning of IDS squared Eval">
         <strong>Why IDS²Eval?</strong>
@@ -1534,9 +1534,9 @@ h2{
 <div class="proof-rail">
   <div class="wrap proof-row">
     <div class="proof-label">The page should prove the tool before explaining the implementation.</div>
-    <div class="proof-stat"><b>18</b><span>checks</span></div>
+    <div class="proof-stat"><b>19</b><span>checks</span></div>
     <div class="proof-stat"><b>7</b><span>real datasets</span></div>
-    <div class="proof-stat"><b>4 / 7</b><span>failed audit</span></div>
+    <div class="proof-stat"><b>5 / 7</b><span>failed audit</span></div>
     <div class="proof-stat"><b>63.5M+</b><span>flows scanned in validation</span></div>
   </div>
 </div>
@@ -1589,7 +1589,7 @@ h2{
       <div class="portfolio-summary">
         <div>
           <h3>What the validation portfolio tells us</h3>
-          <p>The point is not that "four datasets are bad." The useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
+          <p>The point is not that "five datasets are bad." The useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
         </div>
         <div class="portfolio-metrics">
           <div class="portfolio-metric"><b>7</b><span>real NIDS datasets validated</span></div>
@@ -1626,16 +1626,17 @@ h2{
       <div class="check-panel">
         <article class="check-card" data-cat="contamination"><div class="id">C01</div><h3>Duplicate & overlap checks</h3><p>Detect exact feature-space duplication within and across partitions.</p></article>
         <article class="check-card" data-cat="contamination"><div class="id">C02</div><h3>Label conflicts</h3><p>Find identical feature vectors that map to contradictory labels.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C03</div><h3>Leakage screen</h3><p>Use fast predictive importance to expose suspiciously dominant features.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C04</div><h3>One-rule challenge</h3><p>Ask whether one shallow rule already explains too much of the label.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C05</div><h3>Identity columns</h3><p>Measure the standalone predictive power of IP, port, MAC and similar identifiers.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C06</div><h3>Port + protocol shortcut</h3><p>Test whether a trivial pair of network fields acts as a class proxy.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C07</div><h3>Temporal leakage</h3><p>Check whether time alone is predictive enough to expose scenario structure.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C08</div><h3>Flow-group leakage</h3><p>Detect the same declared flow identity on both sides of the split.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C09</div><h3>Resplit falsification</h3><p>Re-evaluate under a grouped split that structurally blocks session-correlated leakage.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C10</div><h3>Known-issue lookup</h3><p>Surface curated, published limitations associated with the named benchmark.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C11</div><h3>Schema fingerprinting</h3><p>Match columns to extractor signatures with documented calculation problems.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C12+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
+        <article class="check-card" data-cat="contamination"><div class="id">C03</div><h3>Near-duplicate classes</h3><p>Find near-identical feature vectors, not only exact matches, that map to different labels.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C04</div><h3>Leakage screen</h3><p>Use fast predictive importance to expose suspiciously dominant features.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C05</div><h3>One-rule challenge</h3><p>Ask whether one shallow rule already explains too much of the label.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C06</div><h3>Identity columns</h3><p>Measure the standalone predictive power of IP, port, MAC and similar identifiers.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C07</div><h3>Port + protocol shortcut</h3><p>Test whether a trivial pair of network fields acts as a class proxy.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C08</div><h3>Temporal leakage</h3><p>Check whether time alone is predictive enough to expose scenario structure.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C09</div><h3>Flow-group leakage</h3><p>Detect the same declared flow identity on both sides of the split.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C10</div><h3>Resplit falsification</h3><p>Re-evaluate under a grouped split that structurally blocks session-correlated leakage.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C11</div><h3>Known-issue lookup</h3><p>Surface curated, published limitations associated with the named benchmark.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C12</div><h3>Schema fingerprinting</h3><p>Match columns to extractor signatures with documented calculation problems.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C13+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
       </div>
     </div>
   </div>

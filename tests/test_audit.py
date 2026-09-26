@@ -16,6 +16,7 @@ from ids2eval.audit import (
     one_rule,
     port_protocol_shortcut,
     resplit,
+    row_order_leakage,
     schema_fingerprint,
     seed_sensitivity,
     synthetic_realism,
@@ -594,6 +595,35 @@ def test_flow_group_leakage_check_ok_when_no_flow_identity_overlaps(base_cfg):
     cfg = dict(base_cfg, schema={**base_cfg["schema"], "flow_id_columns": ["SrcIP", "DstPort"]})
     result = flow_group_leakage.check(train_df, test_df, cfg)
     assert result["status"] == "ok"
+
+
+def test_row_order_leakage_check_flags_contiguous_scenario_blocks(base_cfg):
+    # First half of train is entirely Benign, second half entirely Attack: as
+    # contiguous as a label ordering can be, far below the shuffled expectation.
+    labels = ["Benign"] * 100 + ["Attack"] * 100
+    train_df = pd.DataFrame({"F1": range(200), "Label": labels})
+    test_df = pd.DataFrame({"F1": range(50), "Label": ["Benign"] * 25 + ["Attack"] * 25})
+    result = row_order_leakage.check(train_df, test_df, base_cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["contiguity_ratio"]["train"] < 0.1
+
+
+def test_row_order_leakage_check_ok_with_a_shuffled_ordering(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 400
+    labels = rng.choice(["Benign", "Attack"], size=n, p=[0.5, 0.5])
+    train_df = pd.DataFrame({"F1": range(n), "Label": labels})
+    test_df = pd.DataFrame({"F1": range(100), "Label": rng.choice(["Benign", "Attack"], size=100)})
+    result = row_order_leakage.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+
+
+def test_row_order_leakage_check_ok_with_a_single_class(base_cfg):
+    train_df = pd.DataFrame({"F1": range(50), "Label": ["Benign"] * 50})
+    test_df = pd.DataFrame({"F1": range(20), "Label": ["Benign"] * 20})
+    result = row_order_leakage.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+    assert "not enough rows or classes" in result["summary"]
 
 
 # -- seed_sensitivity_check ---------------------------------------------------

@@ -111,6 +111,12 @@ CHECK_INFO = {
         "Flag: any flow identity present in both train and test. Always ok when no "
         "schema.flow_id_columns is configured.",
     ),
+    "row_order_leakage_check": (
+        "Counts label transitions between adjacent rows and compares it to the rate a randomly shuffled "
+        "ordering of the same label distribution would produce, a closed-form Wald-Wolfowitz-style "
+        "runs statistic, not a model fit.",
+        "Flag: the transition rate is below 30% of the shuffled expectation. Warning: below 60%.",
+    ),
     "homogeneity_test": (
         "Per class: are test rows closer to their nearest train row than train rows are to each other? "
         "One-sided Mann-Whitney test on nearest-neighbour distances, up to 500 rows per class.",

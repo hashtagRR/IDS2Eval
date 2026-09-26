@@ -36,6 +36,7 @@ from . import (
     one_rule,
     port_protocol_shortcut,
     resplit,
+    row_order_leakage,
     schema_fingerprint,
     seed_sensitivity,
     synthetic_realism,
@@ -106,6 +107,8 @@ def run_audit(
         findings.append(temporal_leakage.check(train_df, test_df, cfg))
     if audit_cfg["flow_group_leakage_check"] and "flow_group_leakage_check" not in skip:
         findings.append(flow_group_leakage.check(train_df, test_df, cfg))
+    if audit_cfg["row_order_leakage_check"] and "row_order_leakage_check" not in skip:
+        findings.append(row_order_leakage.check(train_df, test_df, cfg))
     if audit_cfg["homogeneity_test"] and "homogeneity_test" not in skip:
         findings.append(homogeneity.check(train_df, test_df, cfg))
     if audit_cfg["resplit_falsification"] and "resplit_falsification" not in skip:

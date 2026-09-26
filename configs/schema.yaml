@@ -53,6 +53,7 @@ audit:
   port_protocol_shortcut_check: true # no-ops unless a port + a proto-like column are both found
   temporal_leakage_check: true # no-ops unless schema.timestamp_column is set
   flow_group_leakage_check: true # no-ops unless schema.flow_id_columns is set
+  row_order_leakage_check: true # adjacent-row label clustering vs. a shuffled baseline
   homogeneity_test: true
   resplit_falsification: true
   class_distribution_report: true

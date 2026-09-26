@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 19 checks operationalize a
+paragraph, or not tested at all. These 20 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Fifteen run by default (v1, no external data needed); four are
+Sixteen run by default (v1, no external data needed); four are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -26,7 +26,7 @@ does and does not cover:
 | Sample leakage (exact or near-exact duplicates across train/test) | `dedup_check`, `resplit_falsification` |
 | Label leakage (contradictory or confusable ground truth) | `label_conflict_check`, `near_duplicate_class_check` |
 | Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
-| Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check` |
+| Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `row_order_leakage_check` |
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
@@ -161,6 +161,22 @@ at least one of its columns survives in the loaded data; many public
 releases (including the NetFlow-V2 mirrors this project audits) already
 strip IP columns before distribution, leaving nothing to check.
 
+### `row_order_leakage_check`
+Datasets assembled by concatenating scenario-specific collection blocks
+(benign traffic captured first, then one attack type, then the next)
+leave a signature in raw row order: adjacent rows share a label far
+more often than a shuffled arrangement of the same label distribution
+would. Measured via the number of label transitions between adjacent
+rows (a Wald-Wolfowitz-style runs statistic), compared against the
+closed-form expectation for a shuffled multiset (1 minus the Simpson
+diversity index, the exact probability two independently drawn labels
+differ). Deliberately not a standalone-AUC check like
+`identity_column_flag`/`temporal_leakage_check`: those need the same
+feature to be directly comparable between train and test, and row
+position within one dataframe has no such correspondence to row
+position within another, so train and test are each tested against
+their own ordering independently.
+
 ### `homogeneity_test`
 The methodological centerpiece for distinguishing real leakage from
 inherent class homogeneity. For each class, computes each test row's
@@ -274,7 +290,7 @@ run's actual data or not:
   `dedup_check`, `label_conflict_check`, `near_duplicate_class_check`,
   `leakage_screen`, `one_rule_check`, `identity_column_flag`,
   `port_protocol_shortcut_check`, `temporal_leakage_check`,
-  `flow_group_leakage_check`, `homogeneity_test`,
+  `flow_group_leakage_check`, `row_order_leakage_check`, `homogeneity_test`,
   `class_distribution_report`, `low_cardinality_warning`,
   `data_integrity_check`, `resplit_falsification`,
   `synthetic_realism_check`, `cross_dataset_drift_check` and

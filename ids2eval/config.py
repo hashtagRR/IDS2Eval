@@ -63,6 +63,7 @@ DEFAULTS: dict[str, Any] = {
         "port_protocol_shortcut_check": True,
         "temporal_leakage_check": True,
         "flow_group_leakage_check": True,
+        "row_order_leakage_check": True,
         "homogeneity_test": True,
         "resplit_falsification": True,
         "class_distribution_report": True,

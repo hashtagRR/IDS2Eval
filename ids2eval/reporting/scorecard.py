@@ -73,12 +73,25 @@ CHECK_INFO = {
         "standalone ROC AUC.",
         "Flag: AUC above 0.8. Always ok when no schema.id_like_columns are configured.",
     ),
+    "port_protocol_shortcut_check": (
+        "How well a declared port-like column combined with a proto-like column predicts the label, as a "
+        "standalone ROC AUC - the same method as identity_column_flag, applied to the pair rather than "
+        "either column alone.",
+        "Flag: AUC above 0.8. Always ok when no port-like and proto-like column pair is found.",
+    ),
     "temporal_leakage_check": (
         "How well schema.timestamp_column alone predicts the label, as a standalone ROC AUC - datasets "
         "collected as scenario-specific time windows (attack X launched 2-3pm, attack Y 3-4pm, ...) let "
         "a model win by learning 'when', not 'what' (Wu & Keogh 2021's 'run-to-failure bias', confirmed "
         "on this project's own CIC-IDS2018 run: Timestamp alone reached AUC 0.93).",
         "Flag: AUC above 0.8. Always ok when no schema.timestamp_column is configured.",
+    ),
+    "flow_group_leakage_check": (
+        "Hashes schema.flow_id_columns (typically a 5-tuple) for train and test and checks whether any "
+        "flow identity appears on both sides of the split - a model can partly recognize the connection "
+        "instead of the attack behavior on those rows.",
+        "Flag: any flow identity present in both train and test. Always ok when no "
+        "schema.flow_id_columns is configured.",
     ),
     "homogeneity_test": (
         "Per class: are test rows closer to their nearest train row than train rows are to each other? "

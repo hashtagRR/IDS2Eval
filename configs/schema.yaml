@@ -26,6 +26,8 @@ schema:
   id_like_columns: []          # IP/port/MAC-like columns, checked for leakage but not auto-dropped
                                 # e.g. ["SrcIP", "DstIP", "SrcPort"]
   timestamp_column: null       # optional, used only by temporal_leakage_check, e.g. "Timestamp"
+  flow_id_columns: []          # optional, used only by flow_group_leakage_check, e.g. a 5-tuple
+                                # like [SrcIP, DstIP, SrcPort, DstPort, Protocol]
 
 label_grouping:
   attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
@@ -47,7 +49,9 @@ audit:
   leakage_screen: true
   one_rule_check: true         # is a single feature+threshold rule almost as good as any model?
   identity_column_flag: true
+  port_protocol_shortcut_check: true # no-ops unless a port + a proto-like column are both found
   temporal_leakage_check: true # no-ops unless schema.timestamp_column is set
+  flow_group_leakage_check: true # no-ops unless schema.flow_id_columns is set
   homogeneity_test: true
   resplit_falsification: true
   class_distribution_report: true

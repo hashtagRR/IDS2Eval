@@ -6,12 +6,14 @@ from ids2eval.audit import (
     cross_dataset_drift,
     data_integrity,
     dedup,
+    flow_group_leakage,
     homogeneity,
     identity_columns,
     known_issues,
     label_conflict,
     leakage,
     one_rule,
+    port_protocol_shortcut,
     resplit,
     schema_fingerprint,
     seed_sensitivity,
@@ -74,6 +76,31 @@ def test_identity_checks_ok_with_no_id_like_columns(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     assert identity_columns.check_predictive_power(train_df, test_df, base_cfg)["status"] == "ok"
     assert identity_columns.check_cardinality(train_df, base_cfg)["status"] == "ok"
+
+
+def test_port_protocol_shortcut_check_ok_without_a_port_and_proto_pair(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = port_protocol_shortcut.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+    assert result["details"]["port_column"] is None
+    assert result["details"]["protocol_column"] is None
+
+
+def test_port_protocol_shortcut_check_flags_a_combined_but_not_individually_predictive_pair(base_cfg):
+    # Neither DstPort nor Protocol alone splits the label (each is 50/50 across
+    # labels marginally), but the (port, protocol) pair determines it exactly,
+    # an XOR-style pattern only a combined check, not identity_column_flag run
+    # on either column alone, would catch.
+    combos = [(80, "TCP", "A"), (80, "UDP", "B"), (53, "TCP", "B"), (53, "UDP", "A")]
+    rows = [combo for combo in combos for _ in range(50)]
+    df = pd.DataFrame(rows, columns=["DstPort", "Protocol", "Label"])
+    df = df.sample(frac=1, random_state=0).reset_index(drop=True)
+    train_df, test_df = df.iloc[:150].reset_index(drop=True), df.iloc[150:].reset_index(drop=True)
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "id_like_columns": ["DstPort"]})
+    result = port_protocol_shortcut.check(train_df, test_df, cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["port_column"] == "DstPort"
+    assert result["details"]["protocol_column"] == "Protocol"
 
 
 def test_homogeneity_test_runs_and_returns_per_class_stats(base_cfg, synth_train_test):
@@ -414,6 +441,40 @@ def test_temporal_leakage_check_ok_when_timestamp_is_uninformative(base_cfg):
     train_df, test_df = df.iloc[:400], df.iloc[400:]
     cfg = dict(base_cfg, schema={**base_cfg["schema"], "timestamp_column": "Timestamp"})
     result = temporal_leakage.check(train_df, test_df, cfg)
+    assert result["status"] == "ok"
+
+
+def test_flow_group_leakage_check_ok_with_no_flow_id_columns_configured(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = flow_group_leakage.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.flow_id_columns configured" in result["summary"]
+
+
+def test_flow_group_leakage_check_flags_a_flow_shared_across_the_split(base_cfg):
+    train_df = pd.DataFrame({
+        "SrcIP": ["10.0.0.1", "10.0.0.2", "10.0.0.3"],
+        "DstPort": [80, 443, 22],
+        "Label": ["Benign", "Attack", "Benign"],
+    })
+    test_df = pd.DataFrame({
+        "SrcIP": ["10.0.0.1", "10.0.0.4"],
+        "DstPort": [80, 8080],
+        "Label": ["Benign", "Attack"],
+    })
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "flow_id_columns": ["SrcIP", "DstPort"]})
+    result = flow_group_leakage.check(train_df, test_df, cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["overlapping_identities"] == 1
+    assert result["details"]["train_rows_affected"] == 1
+    assert result["details"]["test_rows_affected"] == 1
+
+
+def test_flow_group_leakage_check_ok_when_no_flow_identity_overlaps(base_cfg):
+    train_df = pd.DataFrame({"SrcIP": ["10.0.0.1", "10.0.0.2"], "DstPort": [80, 443], "Label": ["Benign", "Attack"]})
+    test_df = pd.DataFrame({"SrcIP": ["10.0.0.3", "10.0.0.4"], "DstPort": [22, 8080], "Label": ["Benign", "Attack"]})
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "flow_id_columns": ["SrcIP", "DstPort"]})
+    result = flow_group_leakage.check(train_df, test_df, cfg)
     assert result["status"] == "ok"
 
 

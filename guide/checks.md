@@ -2,12 +2,12 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 16 checks operationalize a
+paragraph, or not tested at all. These 18 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
-rather than a one-off analysis notebook re-derived per dataset. Twelve
-run by default (v1, no external data needed); four are opt-in (v2,
-need a second dataset, a declared timestamp column, or heavier
-compute).
+rather than a one-off analysis notebook re-derived per dataset.
+Fourteen run by default (v1, no external data needed); four are
+opt-in (v2, need a second dataset, a declared timestamp column, or
+heavier compute).
 
 Each check returns a finding: `{check, status, summary, details}`,
 where `status` is `ok`, `warning`, or `flag`, a specific, checkable
@@ -74,6 +74,17 @@ cross-dataset). Low cardinality specifically generalizes Meidan et al.
 per-device overfitting finding to any dataset with a limited
 attacker/victim IP pool.
 
+### `port_protocol_shortcut_check`
+The same standalone-AUC method as `identity_column_flag`, applied to
+one column pair instead of one column: whichever `schema.id_like_columns`
+entry has "port" in its name, combined with whichever loaded column has
+"proto" in its name. A handful of (port, protocol) pairs route almost
+all benign traffic, and attack tools often target one fixed port, so
+the pair can separate classes a single column understates. No-ops
+unless both a port-like and a proto-like column are found, since
+protocol is ordinarily a plain feature rather than something declared
+via `schema.id_like_columns`.
+
 ### `temporal_leakage_check`
 How well `schema.timestamp_column` alone predicts the label, as a
 standalone ROC AUC, the same method as `identity_column_flag` applied
@@ -85,6 +96,20 @@ CIC-IDS2018 run: a RandomForest given nothing but the Timestamp column
 reached AUC 0.93 predicting benign vs. attack. No-ops (reports `ok`)
 unless `schema.timestamp_column` is set, since there's no universal
 column name to detect automatically.
+
+### `flow_group_leakage_check`
+Direct counterpart to `resplit_falsification`: rather than asking
+whether a session-grouped split *would* cost accuracy, this names
+which rows share a flow identity across the split boundary right now.
+Given `schema.flow_id_columns` (typically a 5-tuple: source/destination
+IP, source/destination port, protocol, or whatever subset a release
+keeps), it hashes that combination for train and test and reports any
+identity present on both sides, the same connection contributing rows
+to both, letting a model partly recognize the connection instead of
+the attack behavior. No-ops unless `schema.flow_id_columns` is set and
+at least one of its columns survives in the loaded data; many public
+releases (including the NetFlow-V2 mirrors this project audits) already
+strip IP columns before distribution, leaving nothing to check.
 
 ### `homogeneity_test`
 The methodological centerpiece for distinguishing real leakage from

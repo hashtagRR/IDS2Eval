@@ -43,6 +43,7 @@ DEFAULTS: dict[str, Any] = {
         "drop_columns": [],
         "id_like_columns": [],
         "timestamp_column": None,
+        "flow_id_columns": [],
     },
     "label_grouping": {
         "attack_type_mapping": {},
@@ -58,7 +59,9 @@ DEFAULTS: dict[str, Any] = {
         "leakage_screen": True,
         "one_rule_check": True,
         "identity_column_flag": True,
+        "port_protocol_shortcut_check": True,
         "temporal_leakage_check": True,
+        "flow_group_leakage_check": True,
         "homogeneity_test": True,
         "resplit_falsification": True,
         "class_distribution_report": True,

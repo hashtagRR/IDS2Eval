@@ -26,12 +26,14 @@ from . import (
     cross_dataset_drift,
     data_integrity,
     dedup,
+    flow_group_leakage,
     homogeneity,
     identity_columns,
     known_issues,
     label_conflict,
     leakage,
     one_rule,
+    port_protocol_shortcut,
     resplit,
     schema_fingerprint,
     seed_sensitivity,
@@ -76,8 +78,12 @@ def run_audit(
         findings.append(one_rule.check(train_df, test_df, cfg))
     if audit_cfg["identity_column_flag"] and "identity_column_flag" not in skip:
         findings.append(identity_columns.check_predictive_power(train_df, test_df, cfg))
+    if audit_cfg["port_protocol_shortcut_check"] and "port_protocol_shortcut_check" not in skip:
+        findings.append(port_protocol_shortcut.check(train_df, test_df, cfg))
     if audit_cfg["temporal_leakage_check"] and "temporal_leakage_check" not in skip:
         findings.append(temporal_leakage.check(train_df, test_df, cfg))
+    if audit_cfg["flow_group_leakage_check"] and "flow_group_leakage_check" not in skip:
+        findings.append(flow_group_leakage.check(train_df, test_df, cfg))
     if audit_cfg["homogeneity_test"] and "homogeneity_test" not in skip:
         findings.append(homogeneity.check(train_df, test_df, cfg))
     if audit_cfg["resplit_falsification"] and "resplit_falsification" not in skip:

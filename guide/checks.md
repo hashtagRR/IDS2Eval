@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 26 checks operationalize a
+paragraph, or not tested at all. These 27 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Nineteen run by default (v1, no external data needed); seven are
+Nineteen run by default (v1, no external data needed); eight are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -31,6 +31,7 @@ does and does not cover:
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check`, `feature_auc_ranking_check` |
 | Reliance on a declared feature category | `feature_category_ablation_check` |
 | Model dependence on a suspicious column, inside the full feature set | `artifact_sensitivity_check` |
+| Sensitivity of the headline result to split/dedup/feature-set methodology choices | `result_robustness_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
 | Provenance (extractor bugs, curated per-dataset facts) | `schema_fingerprint_check`, `known_issue_lookup` |
@@ -327,6 +328,23 @@ Deliberately opt-in: which classifier is fit and how a column is
 perturbed both shape the result, unlike a check that measures a fixed
 statistic of the data itself.
 
+### `result_robustness_check`
+Re-fits and rescores under every condition it can build from the
+config, random split (the baseline), a session-grouped split when
+`dataset.group_columns` is set, deduplicated, and identity columns
+dropped when `schema.id_like_columns` is set, and reports the full
+accuracy-by-condition vector rather than collapsing it into a single
+"fragility score" (the same reasoning `class_distribution_report` and
+every per-class breakdown already follow: which specific condition
+moved the result, and by how much, is the useful information, and a
+single number would hide exactly that). A result that barely moves
+across these conditions is robust to how it was produced; one that
+swings widely was measuring the methodology as much as the attack
+behavior. Needs at least two conditions to report anything beyond
+`ok`; a minimal config with no `group_columns` or `id_like_columns`
+still gets the random-split-vs-deduplicated comparison. Deliberately
+opt-in: the heaviest check here, one RandomForest fit per condition.
+
 ### `known_issue_lookup`
 A curated table of documented per-dataset problems, matched on
 `dataset.name`, currently seeded with CIC-IDS2018's 2018-02-23
@@ -385,8 +403,8 @@ run's actual data or not:
   `data_integrity_check`, `resplit_falsification`,
   `scenario_holdout_falsification`, `cross_capture_matrix_check`,
   `feature_category_ablation_check`, `artifact_sensitivity_check`,
-  `synthetic_realism_check`, `cross_dataset_drift_check` and
-  `seed_sensitivity_check` live.
+  `result_robustness_check`, `synthetic_realism_check`,
+  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's
@@ -395,9 +413,10 @@ run's actual data or not:
   being mixed into the checks table with a "raw/cleaned" split that
   would only invite the question of why cleaning the data didn't
   change them. (`resplit_falsification`, `scenario_holdout_falsification`,
-  and `cross_capture_matrix_check` all look similarly "structural":
-  their results also can't move with dedup, since each reloads the raw
-  data itself, but they stay in the checks table, because they
+  `cross_capture_matrix_check`, and `result_robustness_check` all look
+  similarly "structural": their results also can't move with dedup,
+  since each reloads the raw data itself, but they stay in the checks
+  table, because they
   genuinely measure this run's split methodology and a config change is
   a real fix (grouped splitting, or collecting more of an
   under-represented scenario). See `ids2eval.audit.KNOWN_ISSUE_CHECKS`

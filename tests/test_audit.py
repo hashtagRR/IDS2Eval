@@ -20,6 +20,7 @@ from ids2eval.audit import (
     one_rule,
     port_protocol_shortcut,
     resplit,
+    result_robustness,
     row_order_leakage,
     scenario_holdout,
     schema_fingerprint,
@@ -392,6 +393,51 @@ def test_artifact_sensitivity_check_ok_when_the_model_ignores_the_column(base_cf
     assert result["status"] == "ok"
 
 
+def test_result_robustness_check_ok_without_raw_files(base_cfg):
+    base_cfg["dataset"]["train_file"] = "train.csv"
+    base_cfg["dataset"]["test_file"] = "test.csv"
+    result = result_robustness.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "requires dataset.raw_files" in result["summary"]
+
+
+def test_result_robustness_check_end_to_end_random_split_and_dedup_only(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    result = result_robustness.check(base_cfg)
+    assert result["check"] == "result_robustness_check"
+    assert set(result["details"]["accuracy_by_condition"]) == {"random_split", "deduplicated"}
+    assert all(0.0 <= acc <= 1.0 for acc in result["details"]["accuracy_by_condition"].values())
+
+
+def test_result_robustness_check_includes_grouped_split_and_identity_drop(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5  # synth_data only has 2 SrcIP groups
+    base_cfg["schema"]["id_like_columns"] = ["SrcIP"]
+    result = result_robustness.check(base_cfg)
+    assert set(result["details"]["accuracy_by_condition"]) == {
+        "random_split", "grouped_split", "deduplicated", "identity_columns_dropped",
+    }
+    assert result["details"]["spread"] >= 0.0
+
+
+def test_result_robustness_check_ok_with_fewer_than_two_conditions(base_cfg, tmp_path):
+    rng = np.random.RandomState(0)
+    n = 300
+    label = rng.choice(["A", "B"], n)
+    df = pd.DataFrame({"Feature1": rng.normal(size=n), "Label": label})  # no duplicates planted
+    csv_path = tmp_path / "raw.csv"
+    df.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    result = result_robustness.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "fewer than two conditions" in result["summary"]
+
+
 def test_class_distribution_report_flags_rare_class(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = class_distribution.check(train_df, test_df, base_cfg)
@@ -598,7 +644,7 @@ def test_structural_checks_constant_matches_the_checks_that_ignore_row_content()
 
     assert STRUCTURAL_CHECKS == {
         "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
-        "scenario_holdout_falsification", "cross_capture_matrix_check",
+        "scenario_holdout_falsification", "cross_capture_matrix_check", "result_robustness_check",
     }
 
 

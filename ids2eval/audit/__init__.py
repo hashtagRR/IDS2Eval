@@ -11,9 +11,10 @@ status is one of "ok" (nothing notable), "warning" (worth a human look), or
 STRUCTURAL_CHECKS are checks whose result cannot depend on
 preprocessing.dedup: known_issue_lookup looks only at dataset.name,
 schema_fingerprint_check only at column names (dedup removes rows, never
-columns), and resplit_falsification/scenario_holdout_falsification both
-reload the raw data themselves and never look at the train_df/test_df
-they're passed. Run once, on the raw data; run_audit's caller (cli.py)
+columns), and resplit_falsification/scenario_holdout_falsification/
+cross_capture_matrix_check/result_robustness_check all reload the raw
+data themselves and never look at the train_df/test_df they're passed.
+Run once, on the raw data; run_audit's caller (cli.py)
 reuses that result instead of recomputing an answer that is guaranteed
 identical the second time.
 """
@@ -41,6 +42,7 @@ from . import (
     one_rule,
     port_protocol_shortcut,
     resplit,
+    result_robustness,
     row_order_leakage,
     scenario_holdout,
     schema_fingerprint,
@@ -52,7 +54,7 @@ from . import (
 
 STRUCTURAL_CHECKS = frozenset({
     "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
-    "scenario_holdout_falsification", "cross_capture_matrix_check",
+    "scenario_holdout_falsification", "cross_capture_matrix_check", "result_robustness_check",
 })
 
 # A strict subset of STRUCTURAL_CHECKS: checks that report a documented, curated fact
@@ -83,6 +85,7 @@ EVIDENCE_LEVEL = {
     "cross_capture_matrix_check": "direct-experiment",
     "feature_category_ablation_check": "direct-experiment",
     "artifact_sensitivity_check": "direct-experiment",
+    "result_robustness_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -151,6 +154,8 @@ def run_audit(
         findings.append(feature_category_ablation.check(train_df, test_df, cfg))
     if audit_cfg["artifact_sensitivity_check"] and "artifact_sensitivity_check" not in skip:
         findings.append(artifact_sensitivity.check(train_df, test_df, cfg))
+    if audit_cfg["result_robustness_check"] and "result_robustness_check" not in skip:
+        findings.append(result_robustness.check(cfg))
     if audit_cfg["known_issue_lookup"] and "known_issue_lookup" not in skip:
         findings.append(known_issues.check(train_df, cfg))
     if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:

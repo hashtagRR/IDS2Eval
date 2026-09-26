@@ -197,6 +197,13 @@ CHECK_INFO = {
         "Flag: reshuffling one column flips more than 30% of predictions. Warning: more than 15%. Always "
         "ok when none of schema.id_like_columns or schema.timestamp_column are present as a feature.",
     ),
+    "result_robustness_check": (
+        "Re-fits under each condition it can build from the config, random split, session-grouped "
+        "split, deduplicated, identity columns dropped, and reports the full accuracy-by-condition "
+        "vector rather than one collapsed score.",
+        "Flag: the spread between the best and worst condition exceeds 15 points of accuracy. Warning: "
+        "more than 8. Always ok when fewer than two conditions can be built.",
+    ),
     "known_issue_lookup": (
         "Looks the dataset name up in a hand-curated list of published problems with specific datasets. "
         "Looks only at the name, so its result is the same on raw and cleaned data.",

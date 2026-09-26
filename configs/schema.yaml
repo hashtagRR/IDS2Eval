@@ -73,6 +73,7 @@ audit:
   cross_dataset_drift_check: false
   cross_capture_matrix_check: false # N x N accuracy matrix across schema.scenario_column values
   feature_category_ablation_check: false # accuracy cost of removing each schema.feature_categories group
+  artifact_sensitivity_check: false # prediction-flip rate from reshuffling one id_like/timestamp column
   known_issue_lookup: false
   seed_sensitivity_check: false # re-fits leakage_screen/one_rule_check across a few seeds
   reference_dataset: null      # required if any v2 check above is enabled, e.g. "/path/to/reference.csv"

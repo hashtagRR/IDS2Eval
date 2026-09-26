@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 25 checks operationalize a
+paragraph, or not tested at all. These 26 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Nineteen run by default (v1, no external data needed); six are
+Nineteen run by default (v1, no external data needed); seven are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -30,6 +30,7 @@ does and does not cover:
 | Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification`, `cross_capture_matrix_check` |
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check`, `feature_auc_ranking_check` |
 | Reliance on a declared feature category | `feature_category_ablation_check` |
+| Model dependence on a suspicious column, inside the full feature set | `artifact_sensitivity_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
 | Provenance (extractor bugs, curated per-dataset facts) | `schema_fingerprint_check`, `known_issue_lookup` |
@@ -309,6 +310,23 @@ opt-in: a category label is exactly as good as the person who assigned
 it, unlike every other check here, which measures something rather
 than trusting a declared fact.
 
+### `artifact_sensitivity_check`
+Fits once on every feature and predicts on test, then, for each column
+already declared as a potential shortcut elsewhere
+(`schema.id_like_columns`, `schema.timestamp_column`), reshuffles just
+that column's own values across the test rows (a real, in-distribution
+reshuffle, not a synthetic replacement) and predicts again with the
+same already-fitted model. The share of predictions that flip measures
+how much the model's decision for a row depends on that one column
+rather than the rest of the row's features,
+`AS(column) = P(prediction changes | only this column reshuffled)`,
+complementing `identity_column_flag`/`temporal_leakage_check`'s
+standalone predictive-power tests (the column in isolation) with the
+model's actual dependence on it inside the full feature set.
+Deliberately opt-in: which classifier is fit and how a column is
+perturbed both shape the result, unlike a check that measures a fixed
+statistic of the data itself.
+
 ### `known_issue_lookup`
 A curated table of documented per-dataset problems, matched on
 `dataset.name`, currently seeded with CIC-IDS2018's 2018-02-23
@@ -366,8 +384,9 @@ run's actual data or not:
   `class_distribution_report`, `low_cardinality_warning`,
   `data_integrity_check`, `resplit_falsification`,
   `scenario_holdout_falsification`, `cross_capture_matrix_check`,
-  `feature_category_ablation_check`, `synthetic_realism_check`,
-  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
+  `feature_category_ablation_check`, `artifact_sensitivity_check`,
+  `synthetic_realism_check`, `cross_dataset_drift_check` and
+  `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's

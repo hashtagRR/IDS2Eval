@@ -23,6 +23,7 @@ from __future__ import annotations
 import pandas as pd
 
 from . import (
+    artifact_sensitivity,
     class_distribution,
     cross_capture_matrix,
     cross_dataset_drift,
@@ -81,6 +82,7 @@ EVIDENCE_LEVEL = {
     "scenario_holdout_falsification": "direct-experiment",
     "cross_capture_matrix_check": "direct-experiment",
     "feature_category_ablation_check": "direct-experiment",
+    "artifact_sensitivity_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -147,6 +149,8 @@ def run_audit(
         findings.append(cross_capture_matrix.check(cfg))
     if audit_cfg["feature_category_ablation_check"] and "feature_category_ablation_check" not in skip:
         findings.append(feature_category_ablation.check(train_df, test_df, cfg))
+    if audit_cfg["artifact_sensitivity_check"] and "artifact_sensitivity_check" not in skip:
+        findings.append(artifact_sensitivity.check(train_df, test_df, cfg))
     if audit_cfg["known_issue_lookup"] and "known_issue_lookup" not in skip:
         findings.append(known_issues.check(train_df, cfg))
     if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:

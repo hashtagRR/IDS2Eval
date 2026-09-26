@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from ids2eval.audit import (
+    artifact_sensitivity,
     class_distribution,
     cross_capture_matrix,
     cross_dataset_drift,
@@ -350,6 +351,45 @@ def test_feature_category_ablation_check_ok_when_categories_cover_every_feature(
     result = feature_category_ablation.check(train_df, test_df, cfg)
     assert result["status"] == "ok"
     assert "nothing left to ablate against" in result["summary"]
+
+
+def test_artifact_sensitivity_check_ok_with_no_suspicious_columns_configured(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = artifact_sensitivity.check(train_df, test_df, base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.id_like_columns or schema.timestamp_column present" in result["summary"]
+
+
+def test_artifact_sensitivity_check_flags_high_dependence_on_an_identity_column(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 300
+    label = rng.choice(["A", "B"], n)
+    df = pd.DataFrame({
+        "SrcIP": np.where(label == "A", "10.0.0.1", "10.0.0.2"),
+        "Noise": rng.normal(size=n),
+        "Label": label,
+    })
+    train_df, test_df = df.iloc[:200].reset_index(drop=True), df.iloc[200:].reset_index(drop=True)
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "id_like_columns": ["SrcIP"]})
+    result = artifact_sensitivity.check(train_df, test_df, cfg)
+    assert result["check"] == "artifact_sensitivity_check"
+    assert result["status"] in ("flag", "warning")
+    assert result["details"]["flip_rate_by_column"]["SrcIP"] > 0.1
+
+
+def test_artifact_sensitivity_check_ok_when_the_model_ignores_the_column(base_cfg):
+    rng = np.random.RandomState(0)
+    n = 300
+    label = rng.choice(["A", "B"], n)
+    df = pd.DataFrame({
+        "SrcIP": rng.choice(["10.0.0.1", "10.0.0.2", "10.0.0.3"], n),  # independent of label
+        "Behavior": np.where(label == "A", 100.0, 0.0) + rng.normal(0, 0.01, n),
+        "Label": label,
+    })
+    train_df, test_df = df.iloc[:200].reset_index(drop=True), df.iloc[200:].reset_index(drop=True)
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "id_like_columns": ["SrcIP"]})
+    result = artifact_sensitivity.check(train_df, test_df, cfg)
+    assert result["status"] == "ok"
 
 
 def test_class_distribution_report_flags_rare_class(base_cfg, synth_train_test):

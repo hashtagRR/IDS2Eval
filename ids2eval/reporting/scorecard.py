@@ -190,6 +190,13 @@ CHECK_INFO = {
         "Flag: one category's removal costs more than 30 points of accuracy. Warning: more than 15. "
         "Always ok when no schema.feature_categories is configured.",
     ),
+    "artifact_sensitivity_check": (
+        "Fits once on every feature, then reshuffles just one declared identity or timestamp column's "
+        "own values across test rows and re-predicts with the same model, measuring what share of "
+        "predictions flip.",
+        "Flag: reshuffling one column flips more than 30% of predictions. Warning: more than 15%. Always "
+        "ok when none of schema.id_like_columns or schema.timestamp_column are present as a feature.",
+    ),
     "known_issue_lookup": (
         "Looks the dataset name up in a hand-curated list of published problems with specific datasets. "
         "Looks only at the name, so its result is the same on raw and cleaned data.",

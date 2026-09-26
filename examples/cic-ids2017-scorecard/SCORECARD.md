@@ -1,13 +1,15 @@
 # IDS2Eval Scorecard
 
 **Dataset:** cic-ids2017
-**Overall status:** ❌ Failed, 7 ok, 3 warning(s), 2 flag(s)
-**Generated:** 2026-09-25T05:33:39.674860+00:00
-**IDS2Eval version:** 0.1.0 (git 05b5e54)
+**Overall status:** ❌ Failed, 6 ok, 4 warning(s), 2 flag(s)
+**Generated:** 2026-09-26T06:55:50.551528+00:00
+**IDS2Eval version:** 0.1.0 (git 7834a67)
 **Scorecard schema version:** 1.1
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
+
+<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 
@@ -33,7 +35,7 @@ Documented facts about this dataset or the tool that produced it, from published
 | # | Check | Status | Summary |
 |---|---|---|---|
 | 1 | `schema_fingerprint_check` | ⚠️ warn | matched extractor signature(s): ['CICFlowMeter'] |
-| 2 | `known_issue_lookup` | ✅ pass | no curated known issues for dataset 'cic-ids2017' |
+| 2 | `known_issue_lookup` | ⚠️ warn | The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access) |
 
 ## What cleaning removed
 
@@ -42,8 +44,8 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Compared to the previous run
 
-Compared to `2026-09-24_181734_277650` (2026-09-24T18:26:33.452354+00:00).
-No check's status changed since the previous run.
+Compared to `2026-09-25_052417_698699` (2026-09-25T05:33:39.674860+00:00).
+- `known_issue_lookup`: ok to warning
 
 ## Dataset fingerprint
 
@@ -53,7 +55,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 7 ok, 3 warning(s), 2 flag(s) across 12 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 6 ok, 4 warning(s), 2 flag(s) across 12 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

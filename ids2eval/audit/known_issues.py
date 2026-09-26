@@ -22,6 +22,35 @@ KNOWN_ISSUES = {
                      "not an extraction or pipeline bug).",
             "citation": "Liu et al. 2022, IEEE CNS",
         },
+        {
+            "issue": "An independent re-labeling audit measured a 7.53% overall label "
+                     "corruption rate, with some individual attack classes above 75%.",
+            "citation": "Cantone et al. 2024, IEEE Access",
+        },
+    ],
+    "cic-ids2017": [
+        {
+            "issue": "The traffic capture has packet misorder and duplication, and some "
+                     "attacks that were actually launched are not correctly labeled as "
+                     "attack traffic in the released CSVs.",
+            "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)",
+        },
+        {
+            "issue": "An independent re-labeling audit measured a 6.67% overall label "
+                     "corruption rate, with some individual attack classes above 75%; "
+                     "Heartbleed alone is only 11 rows (about 0.022% of the dataset), "
+                     "too few to evaluate reliably regardless of labeling accuracy.",
+            "citation": "Cantone et al. 2024, IEEE Access",
+        },
+    ],
+    "nsl-kdd": [
+        {
+            "issue": "The test set intentionally includes attack types absent from "
+                     "the training set, by design, to test generalization to unknown "
+                     "attacks rather than memorization; this project's own audit of "
+                     "the official partition finds 17 such test-only attack types.",
+            "citation": "Tavallaee et al. 2009, IEEE CISDA",
+        },
     ],
     "bot-iot": [
         {

@@ -79,7 +79,7 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 <h1>cic-ids2018: Failed</h1>
 <p class="lede">Every check ran twice: on the raw data as loaded, and on the cleaned data - the same data with exact duplicate rows removed, nothing else changed. Verdict (7 ok, 3 warning(s), 2 flag(s) across 12 checks) is judged on the cleaned data. Highlighted rows are checks whose status differs between the two.</p>
 <div class="card">
-<div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-09-25 06:06 UTC</span></div>
+<div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-09-26 07:34 UTC</span></div>
 <div class="body">
 <div class="meta">
 <div><div class="k">Dataset fingerprint</div><div class="v">cic-ids2018 ·
@@ -87,7 +87,7 @@ d659a2f4</div></div>
 <div><div class="k">Checks run</div><div class="v">10 checks + 2 known issue(s)
 · raw + cleaned</div></div>
 <div><div class="k">Tool / schema version</div><div class="v">v0.1.0
-(05b5e54) · schema 1.1</div></div>
+(7834a67) · schema 1.1</div></div>
 <div><div class="k">Verdict</div><div class="v"><span class="badge b-flag">
 failed</span></div></div>
 </div>
@@ -115,11 +115,11 @@ dropping a column, resampling, switching split modes, or just noting the caveat.
 <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Summary</th></tr></thead>
 <tbody>
 <tr><td class="num">1</td><td class="check">schema_fingerprint_check<span class="info" tabindex="0" role="button" aria-label="About schema_fingerprint_check" aria-describedby="tip-1001">i</span><span class="tip" role="tooltip" id="tip-1001"><span class="tk">What it checks</span><span class="tv">Whether the column names match a flow extractor with documented bugs (currently CICFlowMeter). Looks only at column names, which dedup never changes, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: 60% or more of the extractor&#x27;s signature columns are present - a caution about the extractor, not evidence that this copy is affected.</span></span></td><td class="status"><span class="badge b-ok">pass</span></td><td>no known extractor signature matched</td></tr>
-<tr><td class="num">2</td><td class="check">known_issue_lookup<span class="info" tabindex="0" role="button" aria-label="About known_issue_lookup" aria-describedby="tip-1002">i</span><span class="tip" role="tooltip" id="tip-1002"><span class="tk">What it checks</span><span class="tv">Looks the dataset name up in a hand-curated list of published problems with specific datasets. Looks only at the name, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: a match. Ok only means the dataset isn&#x27;t in the list, not that it has no known issues.</span></span></td><td class="status"><span class="badge b-warning">warn</span></td><td>The 2018-02-23 day-file&#x27;s Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS)</td></tr>
+<tr><td class="num">2</td><td class="check">known_issue_lookup<span class="info" tabindex="0" role="button" aria-label="About known_issue_lookup" aria-describedby="tip-1002">i</span><span class="tip" role="tooltip" id="tip-1002"><span class="tk">What it checks</span><span class="tv">Looks the dataset name up in a hand-curated list of published problems with specific datasets. Looks only at the name, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: a match. Ok only means the dataset isn&#x27;t in the list, not that it has no known issues.</span></span></td><td class="status"><span class="badge b-warning">warn</span></td><td>The 2018-02-23 day-file&#x27;s Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)</td></tr>
 </tbody></table>
 <h2>Compared to the previous run</h2>
-<p class="section-note">Compared to <code>2026-09-25_050425_506441</code>
-(2026-09-25T05:08:46.798089+00:00).</p>
+<p class="section-note">Compared to <code>2026-09-25_060217_332433</code>
+(2026-09-25T06:06:34.707545+00:00).</p>
 
 <p>No check's status changed since the previous run.</p>
 <h2>What cleaning removed</h2><div class="effect"><div class="tile"><div class="k">Train rows</div><div class="v mono">400,000 → 347,416</div><div class="k">52,584 duplicates dropped</div></div><div class="tile"><div class="k">Test rows</div><div class="v mono">100,000 → 82,563</div><div class="k">16,882 train-leaking + 555 internal duplicates dropped</div></div></div>

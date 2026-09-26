@@ -325,10 +325,15 @@
   },
   {
     "check": "known_issue_lookup",
-    "status": "ok",
-    "summary": "no curated known issues for dataset 'nsl-kdd'",
+    "status": "warning",
+    "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)",
     "details": {
-      "matches": []
+      "matches": [
+        {
+          "issue": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types.",
+          "citation": "Tavallaee et al. 2009, IEEE CISDA"
+        }
+      ]
     }
   }
 ]

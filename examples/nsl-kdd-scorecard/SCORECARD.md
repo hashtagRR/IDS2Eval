@@ -1,13 +1,15 @@
 # IDS2Eval Scorecard
 
 **Dataset:** nsl-kdd
-**Overall status:** ❌ Failed, 9 ok, 2 warning(s), 1 flag(s)
-**Generated:** 2026-09-25T06:02:07.476147+00:00
-**IDS2Eval version:** 0.1.0 (git 05b5e54)
+**Overall status:** ❌ Failed, 8 ok, 3 warning(s), 1 flag(s)
+**Generated:** 2026-09-25T17:40:01.671047+00:00
+**IDS2Eval version:** 0.1.0 (git 7834a67)
 **Scorecard schema version:** 1.1
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
+
+<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 
@@ -33,7 +35,7 @@ Documented facts about this dataset or the tool that produced it, from published
 | # | Check | Status | Summary |
 |---|---|---|---|
 | 1 | `schema_fingerprint_check` | ✅ pass | no known extractor signature matched |
-| 2 | `known_issue_lookup` | ✅ pass | no curated known issues for dataset 'nsl-kdd' |
+| 2 | `known_issue_lookup` | ⚠️ warn | The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA) |
 
 ## What cleaning removed
 
@@ -42,8 +44,8 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Compared to the previous run
 
-Compared to `2026-09-25_044551_511525` (2026-09-25T04:47:35.312474+00:00).
-No check's status changed since the previous run.
+Compared to `2026-09-25_060109_863874` (2026-09-25T06:02:07.476147+00:00).
+- `known_issue_lookup`: ok to warning
 
 ## Dataset fingerprint
 
@@ -53,7 +55,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 9 ok, 2 warning(s), 1 flag(s) across 12 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 8 ok, 3 warning(s), 1 flag(s) across 12 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

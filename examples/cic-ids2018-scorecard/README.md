@@ -26,17 +26,19 @@ What it found:
   reproduces Flood et al. 2024 (EuroS&P, Table 8), who report the same
   `SlowHTTPTest`/`FTP-BruteForce` clash; `FTP-BruteForce` was also launched against a
   closed port, so its flows carry almost no attack behavior.
-- **`one_rule_check` finds `TotLen Fwd Pkts <= 21` alone reaches 86.9% test accuracy**
-  (86.2% train), below the 95% flag threshold but a reminder of how much of this
-  problem a single feature explains.
+- **`one_rule_check` finds `Fwd Seg Size Min <= 30` alone reaches 83.0% test
+  accuracy** (83.2% train), below the 95% flag threshold but a reminder of how much
+  of this problem a single feature explains.
 - **`Dst Port` alone predicts the label at AUC 0.912** (0.925 on the raw data) -
   reproducing the published destination-port shortcut (Flood et al. 2024).
 - **Heavy duplication**: 13.15% of train rows are duplicates, and 16.88% of test rows
   exactly match a train row.
 - **Known data defects** (`data_integrity_check`): 8 constant features, ±inf in
   `Flow Byts/s` and `Flow Pkts/s`, missing values in `Flow Byts/s`.
-- **Curated known issue** (`known_issue_lookup`): the 2018-02-23 Brute Force-Web/XSS
-  rows are ~41% mislabeled (Liu et al. 2022).
+- **Two curated known issues** (`known_issue_lookup`): the 2018-02-23 Brute
+  Force-Web/XSS rows are ~41% mislabeled (Liu et al. 2022), and an independent
+  re-labeling audit separately measured a 7.53% overall label corruption rate for
+  this dataset, with some individual attack classes above 75% (Cantone et al. 2024).
 - **`homogeneity_test` flags `Bot` (p=0.025) and `DoS attacks-Slowloris` (p=0.0025)**
   after dedup. Treat as weak: 9 classes are tested at p<0.05 with no multiple-comparison
   correction, and a Bonferroni cutoff (≈0.0056) keeps only Slowloris. Before dedup the
@@ -52,7 +54,5 @@ bucket listing. One day-file (`Thuesday-20-02-2018`) has 4 extra columns (`Flow 
 
 This dataset also surfaced a crash, since fixed: a class present in train but absent
 from test (here `SQL Injection`) crashed `identity_column_flag`'s AUC. Run on a
-4-vCPU / 7.8GB VM: ~20 min to stream and sample the raw files (cached afterwards),
-3 min for the audit, audit only (`--skip-benchmark`). Produced with IDS2Eval at
-commit 05b5e54 plus the then-uncommitted scorecard 1.1 changes and AUC fix (the
-`ids2eval_git_commit` field records HEAD only).
+4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at commit
+7834a67.

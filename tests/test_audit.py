@@ -123,10 +123,29 @@ def test_known_issue_lookup_matches_substring(base_cfg):
     base_cfg["dataset"]["name"] = "CIC-IDS2018-corrected"
     result = known_issues.check(pd.DataFrame(), base_cfg)
     assert result["status"] == "warning"
-    assert len(result["details"]["matches"]) == 1
+    assert len(result["details"]["matches"]) == 2
     # the actual issue text and citation must be in the summary, not just a count
     assert "Brute-Force-Web" in result["summary"]
     assert "Liu et al. 2022" in result["summary"]
+    assert "Cantone et al. 2024" in result["summary"]
+
+
+def test_known_issue_lookup_cic_ids2017_has_two_curated_issues(base_cfg):
+    base_cfg["dataset"]["name"] = "cic-ids2017"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert result["status"] == "warning"
+    assert len(result["details"]["matches"]) == 2
+    assert "Engelen et al. 2021" in result["summary"]
+    assert "Cantone et al. 2024" in result["summary"]
+
+
+def test_known_issue_lookup_nsl_kdd_flags_test_only_attacks(base_cfg):
+    base_cfg["dataset"]["name"] = "nsl-kdd"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert result["status"] == "warning"
+    assert len(result["details"]["matches"]) == 1
+    assert "17 such test-only attack types" in result["summary"]
+    assert "Tavallaee et al. 2009" in result["summary"]
 
 
 def test_known_issue_lookup_bot_iot_flags_benign_scarcity(base_cfg):

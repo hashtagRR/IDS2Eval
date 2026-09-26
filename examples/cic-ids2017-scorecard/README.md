@@ -6,7 +6,7 @@ A real IDS<sup>2</sup>Eval audit of [CIC-IDS2017](https://www.unb.ca/cic/dataset
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 7 ok, 3 warnings, 2 flags after dedup, across 12 checks.
+**Result: failed** - 6 ok, 4 warnings, 2 flags after dedup, across 12 checks.
 
 What it found:
 
@@ -32,6 +32,12 @@ What it found:
   multiple-comparison correction, so about one false positive is expected by
   chance, and a Bonferroni cutoff (≈0.004) would not flag it.
 - **Imbalance of 185,530:1**, with 11 of 15 classes under 1% of train.
+- **`known_issue_lookup` now carries two curated entries for this dataset**: the
+  traffic capture itself has packet misorder and duplication, with some launched
+  attacks left unlabeled in the released CSVs (Engelen et al. 2021), and an
+  independent re-labeling audit measured 6.67% overall label corruption, some
+  classes above 75%, with Heartbleed at only 11 rows (0.022% of the dataset), too
+  few to evaluate reliably regardless of labeling accuracy (Cantone et al. 2024).
 
 How the data was obtained: the 8 `MachineLearningCSV` files from a Hugging Face
 mirror (`c01dsnap/CIC-IDS2017`), downloaded 2026-09-24; every file's SHA-256 matched
@@ -40,7 +46,5 @@ page rather than the archive. In this copy the Web Attack labels carry a Unicode
 replacement character (`Web Attack � Brute Force`) where the original has an
 invalid byte - the labels are otherwise unchanged.
 
-Run on a 4-vCPU / 7.8GB VM: 13 min, 4.25GB peak memory, audit only
-(`--skip-benchmark`). Produced with IDS2Eval at commit 05b5e54 plus the
-then-uncommitted scorecard 1.1 changes (the `ids2eval_git_commit` field records
-HEAD only).
+Run on a 4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at
+commit 7834a67.

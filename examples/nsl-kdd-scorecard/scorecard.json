@@ -1,14 +1,14 @@
 {
   "scorecard_schema_version": "1.1",
-  "generated_at": "2026-09-25T06:02:07.476147+00:00",
+  "generated_at": "2026-09-25T17:40:01.671047+00:00",
   "dataset_name": "nsl-kdd",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
+  "ids2eval_git_commit": "7834a67f6553eac68d49d27912ad9ed7a92b8aae",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 9,
-    "warning": 2,
+    "ok": 8,
+    "warning": 3,
     "flag": 1
   },
   "findings": [
@@ -69,8 +69,8 @@
     },
     {
       "check": "known_issue_lookup",
-      "status": "ok",
-      "summary": "no curated known issues for dataset 'nsl-kdd'"
+      "status": "warning",
+      "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
     }
   ],
   "checks": [
@@ -210,12 +210,12 @@
       "check": "known_issue_lookup",
       "category": "known_issue",
       "before": {
-        "status": "ok",
-        "summary": "no curated known issues for dataset 'nsl-kdd'"
+        "status": "warning",
+        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
       },
       "after": {
-        "status": "ok",
-        "summary": "no curated known issues for dataset 'nsl-kdd'"
+        "status": "warning",
+        "summary": "The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA)"
       }
     }
   ],
@@ -236,10 +236,16 @@
     "test_content_hash": "cffa47019c555661fc1d3d2b2b45f11ead633d0dcadf618718c44c6e926916d0"
   },
   "previous_run_comparison": {
-    "previous_run": "2026-09-25_044551_511525",
-    "previous_generated_at": "2026-09-25T04:47:35.312474+00:00",
+    "previous_run": "2026-09-25_060109_863874",
+    "previous_generated_at": "2026-09-25T06:02:07.476147+00:00",
     "previous_verdict": "failed",
     "fingerprint_changed": false,
-    "changed_checks": []
+    "changed_checks": [
+      {
+        "check": "known_issue_lookup",
+        "previous_status": "ok",
+        "current_status": "warning"
+      }
+    ]
   }
 }

@@ -77,9 +77,9 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 <body style="--accent:#c0392b"><div class="page"><div class="sheet">
 <p class="eyebrow">IDS2Eval: the scorecard, not a magic number</p>
 <h1>cic-ids2017: Failed</h1>
-<p class="lede">Every check ran twice: on the raw data as loaded, and on the cleaned data - the same data with exact duplicate rows removed, nothing else changed. Verdict (7 ok, 3 warning(s), 2 flag(s) across 12 checks) is judged on the cleaned data. Highlighted rows are checks whose status differs between the two.</p>
+<p class="lede">Every check ran twice: on the raw data as loaded, and on the cleaned data - the same data with exact duplicate rows removed, nothing else changed. Verdict (6 ok, 4 warning(s), 2 flag(s) across 12 checks) is judged on the cleaned data. Highlighted rows are checks whose status differs between the two.</p>
 <div class="card">
-<div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-09-25 05:33 UTC</span></div>
+<div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-09-26 06:55 UTC</span></div>
 <div class="body">
 <div class="meta">
 <div><div class="k">Dataset fingerprint</div><div class="v">cic-ids2017 ·
@@ -87,7 +87,7 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 <div><div class="k">Checks run</div><div class="v">10 checks + 2 known issue(s)
 · raw + cleaned</div></div>
 <div><div class="k">Tool / schema version</div><div class="v">v0.1.0
-(05b5e54) · schema 1.1</div></div>
+(7834a67) · schema 1.1</div></div>
 <div><div class="k">Verdict</div><div class="v"><span class="badge b-flag">
 failed</span></div></div>
 </div>
@@ -115,18 +115,18 @@ dropping a column, resampling, switching split modes, or just noting the caveat.
 <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Summary</th></tr></thead>
 <tbody>
 <tr><td class="num">1</td><td class="check">schema_fingerprint_check<span class="info" tabindex="0" role="button" aria-label="About schema_fingerprint_check" aria-describedby="tip-1001">i</span><span class="tip" role="tooltip" id="tip-1001"><span class="tk">What it checks</span><span class="tv">Whether the column names match a flow extractor with documented bugs (currently CICFlowMeter). Looks only at column names, which dedup never changes, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: 60% or more of the extractor&#x27;s signature columns are present - a caution about the extractor, not evidence that this copy is affected.</span></span></td><td class="status"><span class="badge b-warning">warn</span></td><td>matched extractor signature(s): [&#x27;CICFlowMeter&#x27;]</td></tr>
-<tr><td class="num">2</td><td class="check">known_issue_lookup<span class="info" tabindex="0" role="button" aria-label="About known_issue_lookup" aria-describedby="tip-1002">i</span><span class="tip" role="tooltip" id="tip-1002"><span class="tk">What it checks</span><span class="tv">Looks the dataset name up in a hand-curated list of published problems with specific datasets. Looks only at the name, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: a match. Ok only means the dataset isn&#x27;t in the list, not that it has no known issues.</span></span></td><td class="status"><span class="badge b-ok">pass</span></td><td>no curated known issues for dataset &#x27;cic-ids2017&#x27;</td></tr>
+<tr><td class="num">2</td><td class="check">known_issue_lookup<span class="info" tabindex="0" role="button" aria-label="About known_issue_lookup" aria-describedby="tip-1002">i</span><span class="tip" role="tooltip" id="tip-1002"><span class="tk">What it checks</span><span class="tv">Looks the dataset name up in a hand-curated list of published problems with specific datasets. Looks only at the name, so its result is the same on raw and cleaned data.</span><span class="tk">Rule</span><span class="tv">Warning: a match. Ok only means the dataset isn&#x27;t in the list, not that it has no known issues.</span></span></td><td class="status"><span class="badge b-warning">warn</span></td><td>The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&amp;P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)</td></tr>
 </tbody></table>
 <h2>Compared to the previous run</h2>
-<p class="section-note">Compared to <code>2026-09-24_181734_277650</code>
-(2026-09-24T18:26:33.452354+00:00).</p>
+<p class="section-note">Compared to <code>2026-09-25_052417_698699</code>
+(2026-09-25T05:33:39.674860+00:00).</p>
 
-<p>No check's status changed since the previous run.</p>
+<ul><li><code>known_issue_lookup</code>: ok to warning</li></ul>
 <h2>What cleaning removed</h2><div class="effect"><div class="tile"><div class="k">Train rows</div><div class="v mono">2,264,594 → 2,016,795</div><div class="k">247,799 duplicates dropped</div></div><div class="tile"><div class="k">Test rows</div><div class="v mono">566,149 → 482,029</div><div class="k">81,604 train-leaking + 2,516 internal duplicates dropped</div></div></div>
 <h2>Dataset fingerprint</h2>
 <p class="mono hash">train: 2,264,594 rows · test: 566,149 rows · 78 features<br>
 train sha256 5864fd3ca0c2d57589584902c07a712bd806130c638ac6d48626969975b9a362<br>test sha256 722dafecb77262e4a8661066ff0cd478cf1574faa31ebb8bfc987d5ae3673eea</p>
 <h2>Citing this result</h2>
-<blockquote>This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 7 ok, 3 warning(s), 2 flag(s) across 12 checks. Full report: audit_report_after.json.</blockquote>
+<blockquote>This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.1), which reported failed, 6 ok, 4 warning(s), 2 flag(s) across 12 checks. Full report: audit_report_after.json.</blockquote>
 <p class="foot">Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.<br>Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143).</p>
 </div></div></body></html>

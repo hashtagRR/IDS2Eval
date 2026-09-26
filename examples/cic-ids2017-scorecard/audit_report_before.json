@@ -291,10 +291,19 @@
   },
   {
     "check": "known_issue_lookup",
-    "status": "ok",
-    "summary": "no curated known issues for dataset 'cic-ids2017'",
+    "status": "warning",
+    "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
     "details": {
-      "matches": []
+      "matches": [
+        {
+          "issue": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs.",
+          "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)"
+        },
+        {
+          "issue": "An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy.",
+          "citation": "Cantone et al. 2024, IEEE Access"
+        }
+      ]
     }
   }
 ]

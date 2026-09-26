@@ -259,12 +259,16 @@
   {
     "check": "known_issue_lookup",
     "status": "warning",
-    "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS)",
+    "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)",
     "details": {
       "matches": [
         {
           "issue": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug).",
           "citation": "Liu et al. 2022, IEEE CNS"
+        },
+        {
+          "issue": "An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%.",
+          "citation": "Cantone et al. 2024, IEEE Access"
         }
       ]
     }

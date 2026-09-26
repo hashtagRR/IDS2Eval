@@ -28,6 +28,8 @@ schema:
   timestamp_column: null       # optional, used only by temporal_leakage_check, e.g. "Timestamp"
   flow_id_columns: []          # optional, used only by flow_group_leakage_check, e.g. a 5-tuple
                                 # like [SrcIP, DstIP, SrcPort, DstPort, Protocol]
+  scenario_column: null        # optional, used only by scenario_holdout_falsification,
+                                # e.g. a capture-day or attacker-host column
 
 label_grouping:
   attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
@@ -57,6 +59,7 @@ audit:
   row_order_leakage_check: true # adjacent-row label clustering vs. a shuffled baseline
   homogeneity_test: true
   resplit_falsification: true
+  scenario_holdout_falsification: true # no-ops unless schema.scenario_column is set
   class_distribution_report: true
   low_cardinality_warning: true
   schema_fingerprint_check: true

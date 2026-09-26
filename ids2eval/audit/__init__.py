@@ -11,10 +11,11 @@ status is one of "ok" (nothing notable), "warning" (worth a human look), or
 STRUCTURAL_CHECKS are checks whose result cannot depend on
 preprocessing.dedup: known_issue_lookup looks only at dataset.name,
 schema_fingerprint_check only at column names (dedup removes rows, never
-columns), and resplit_falsification reloads the raw data itself and never
-looks at the train_df/test_df it's passed. Run once, on the raw data;
-run_audit's caller (cli.py) reuses that result instead of recomputing an
-answer that is guaranteed identical the second time.
+columns), and resplit_falsification/scenario_holdout_falsification both
+reload the raw data themselves and never look at the train_df/test_df
+they're passed. Run once, on the raw data; run_audit's caller (cli.py)
+reuses that result instead of recomputing an answer that is guaranteed
+identical the second time.
 """
 
 from __future__ import annotations
@@ -37,6 +38,7 @@ from . import (
     port_protocol_shortcut,
     resplit,
     row_order_leakage,
+    scenario_holdout,
     schema_fingerprint,
     seed_sensitivity,
     synthetic_realism,
@@ -44,7 +46,9 @@ from . import (
     temporal_realism,
 )
 
-STRUCTURAL_CHECKS = frozenset({"known_issue_lookup", "schema_fingerprint_check", "resplit_falsification"})
+STRUCTURAL_CHECKS = frozenset({
+    "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification", "scenario_holdout_falsification",
+})
 
 # A strict subset of STRUCTURAL_CHECKS: checks that report a documented, curated fact
 # about the dataset or the tool that extracted it (a published labelling error, a
@@ -70,6 +74,7 @@ EVIDENCE_LEVEL = {
     "known_issue_lookup": "documented",
     "schema_fingerprint_check": "documented",
     "resplit_falsification": "direct-experiment",
+    "scenario_holdout_falsification": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -116,6 +121,8 @@ def run_audit(
         findings.append(homogeneity.check(train_df, test_df, cfg))
     if audit_cfg["resplit_falsification"] and "resplit_falsification" not in skip:
         findings.append(resplit.check(cfg))
+    if audit_cfg["scenario_holdout_falsification"] and "scenario_holdout_falsification" not in skip:
+        findings.append(scenario_holdout.check(cfg))
     if audit_cfg["class_distribution_report"] and "class_distribution_report" not in skip:
         findings.append(class_distribution.check(train_df, test_df, cfg))
     if audit_cfg["low_cardinality_warning"] and "low_cardinality_warning" not in skip:

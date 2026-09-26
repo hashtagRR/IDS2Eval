@@ -135,6 +135,13 @@ CHECK_INFO = {
         "the same whether or not preprocessing.dedup ran.",
         "Flag: grouped-split accuracy is more than 1 percentage point lower.",
     ),
+    "scenario_holdout_falsification": (
+        "Holds out the smallest schema.scenario_column value entirely as test, training on every other "
+        "scenario, and compares accuracy against a random split. Rebuilds both splits from the raw data "
+        "itself, so its result is the same whether or not preprocessing.dedup ran.",
+        "Flag: accuracy drops more than 10 percentage points on the held-out scenario. Warning: more than "
+        "5. Always ok when no schema.scenario_column is configured.",
+    ),
     "class_distribution_report": (
         "Class counts in train and test, the majority:minority ratio, and rare classes.",
         "Warning: ratio above 100:1, or any class below 1% of train.",

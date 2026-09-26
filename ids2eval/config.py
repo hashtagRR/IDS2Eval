@@ -44,6 +44,7 @@ DEFAULTS: dict[str, Any] = {
         "id_like_columns": [],
         "timestamp_column": None,
         "flow_id_columns": [],
+        "scenario_column": None,
     },
     "label_grouping": {
         "attack_type_mapping": {},
@@ -67,6 +68,7 @@ DEFAULTS: dict[str, Any] = {
         "row_order_leakage_check": True,
         "homogeneity_test": True,
         "resplit_falsification": True,
+        "scenario_holdout_falsification": True,
         "class_distribution_report": True,
         "low_cardinality_warning": True,
         "schema_fingerprint_check": True,

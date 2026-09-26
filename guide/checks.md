@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 21 checks operationalize a
+paragraph, or not tested at all. These 22 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Seventeen run by default (v1, no external data needed); four are
+Eighteen run by default (v1, no external data needed); four are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -27,6 +27,7 @@ does and does not cover:
 | Label leakage (contradictory or confusable ground truth) | `label_conflict_check`, `near_duplicate_class_check` |
 | Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
 | Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `temporal_realism_check`, `row_order_leakage_check` |
+| Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification` |
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
@@ -210,6 +211,23 @@ reproduced the random split's accuracy to within 0.003 percentage
 points, settling the question by direct experiment rather than a
 disclosed-but-untested caveat.
 
+### `scenario_holdout_falsification`
+A different falsification than `resplit_falsification`'s: instead of
+asking whether session-correlated leakage crosses a random split's
+boundary, this asks whether high random-split accuracy survives never
+having seen an entire collection scenario (`schema.scenario_column`,
+a capture day, an attacker host, whatever a release names) during
+training at all. Holds out the scenario with the fewest rows entirely
+as test, trains on every other scenario, and compares accuracy against
+a random split. Some drop under a genuinely novel scenario is expected
+even from a clean dataset, generalizing to unseen conditions is a
+harder problem than a random split of the same conditions, so the
+material-drop threshold here (10 percentage points) is deliberately
+looser than `resplit_falsification`'s (1 point): this test falsifies
+"the model learned attack behavior in general," not "there is zero
+session-correlated leakage." No-ops unless `schema.scenario_column` is
+set, since there's no universal column name to detect automatically.
+
 ### `class_distribution_report`
 Per-class counts, shares, and imbalance ratio, the universal pattern
 across NIDS benchmarks (KDD99's U2R/R2L under 1-2%, BoT-IoT's 0.01%
@@ -304,8 +322,8 @@ run's actual data or not:
   `row_order_leakage_check`, `homogeneity_test`,
   `class_distribution_report`, `low_cardinality_warning`,
   `data_integrity_check`, `resplit_falsification`,
-  `synthetic_realism_check`, `cross_dataset_drift_check` and
-  `seed_sensitivity_check` live.
+  `scenario_holdout_falsification`, `synthetic_realism_check`,
+  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's
@@ -313,12 +331,13 @@ run's actual data or not:
   they get their own section, with a single Status column, rather than
   being mixed into the checks table with a "raw/cleaned" split that
   would only invite the question of why cleaning the data didn't
-  change them. (`resplit_falsification` looks similarly "structural":
-  its result also can't move with dedup, since it reloads the raw data
-  itself, but it stays in the checks table, because it genuinely
-  measures this run's split methodology, and switching to a grouped
-  split is a real fix. See `ids2eval.audit.KNOWN_ISSUE_CHECKS` vs
-  `STRUCTURAL_CHECKS`.)
+  change them. (`resplit_falsification` and `scenario_holdout_falsification`
+  look similarly "structural": their results also can't move with
+  dedup, since each reloads the raw data itself, but they stay in the
+  checks table, because they genuinely measure this run's split
+  methodology and a config change is a real fix (grouped splitting, or
+  collecting more of an under-represented scenario). See
+  `ids2eval.audit.KNOWN_ISSUE_CHECKS` vs `STRUCTURAL_CHECKS`.)
 
 Both tables number their rows starting at 1.
 

@@ -15,13 +15,9 @@ always builds both splits from the raw data to compare them directly.
 
 from __future__ import annotations
 
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from ..data import dataset
+from ._fit_score import fit_and_score
 
-from ..data import dataset, features
-
-MAX_FIT_ROWS = 200_000
 # A grouped-split accuracy drop below this is read as "structurally
 # ruling out session-correlated leakage as the explanation," not proof
 # of zero leakage of any kind.
@@ -36,8 +32,8 @@ def check(cfg: dict) -> dict:
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg)
     grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg)
 
-    random_acc = _fit_and_score(random_train, random_test, label_col, cfg)
-    grouped_acc = _fit_and_score(grouped_train, grouped_test, label_col, cfg)
+    random_acc = fit_and_score(random_train, random_test, label_col, cfg)
+    grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg)
     drop = random_acc - grouped_acc
 
     material = drop > MATERIAL_DROP_THRESHOLD
@@ -57,12 +53,3 @@ def check(cfg: dict) -> dict:
         "check": "resplit_falsification", "status": status, "summary": summary,
         "details": {"random_accuracy": random_acc, "grouped_accuracy": grouped_acc, "drop": drop},
     }
-
-
-def _fit_and_score(train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict) -> float:
-    cols = features.feature_columns(train_df, cfg)
-    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
-    x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
-    clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)
-    clf.fit(x_train, train_fit[label_col])
-    return float(accuracy_score(test_df[label_col], clf.predict(x_test)))

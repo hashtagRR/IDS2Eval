@@ -17,6 +17,7 @@ from ids2eval.audit import (
     port_protocol_shortcut,
     resplit,
     row_order_leakage,
+    scenario_holdout,
     schema_fingerprint,
     seed_sensitivity,
     synthetic_realism,
@@ -195,6 +196,46 @@ def test_resplit_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     assert result["check"] == "resplit_falsification"
     assert 0.0 <= result["details"]["random_accuracy"] <= 1.0
     assert 0.0 <= result["details"]["grouped_accuracy"] <= 1.0
+
+
+def test_scenario_holdout_falsification_ok_with_no_scenario_column_configured(base_cfg):
+    result = scenario_holdout.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.scenario_column configured" in result["summary"]
+
+
+def test_scenario_holdout_falsification_ok_without_raw_files(base_cfg):
+    base_cfg["schema"]["scenario_column"] = "CaptureDay"
+    base_cfg["dataset"]["train_file"] = "train.csv"
+    base_cfg["dataset"]["test_file"] = "test.csv"
+    result = scenario_holdout.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "requires dataset.raw_files" in result["summary"]
+
+
+def test_scenario_holdout_falsification_end_to_end(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    df = synth_data.copy()
+    df["CaptureDay"] = (["Day1", "Day2", "Day3"] * (len(df) // 3 + 1))[: len(df)]
+    df.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["schema"]["scenario_column"] = "CaptureDay"
+    result = scenario_holdout.check(base_cfg)
+    assert result["check"] == "scenario_holdout_falsification"
+    assert 0.0 <= result["details"]["random_accuracy"] <= 1.0
+    assert 0.0 <= result["details"]["scenario_accuracy"] <= 1.0
+
+
+def test_scenario_holdout_falsification_ok_with_one_scenario(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    df = synth_data.copy()
+    df["CaptureDay"] = "OnlyDay"
+    df.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["schema"]["scenario_column"] = "CaptureDay"
+    result = scenario_holdout.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "fewer than two distinct scenarios" in result["summary"]
 
 
 def test_class_distribution_report_flags_rare_class(base_cfg, synth_train_test):
@@ -401,7 +442,9 @@ def test_structural_checks_constant_matches_the_checks_that_ignore_row_content()
     # its result - see each check's own module docstring/logic for why.
     from ids2eval.audit import STRUCTURAL_CHECKS
 
-    assert STRUCTURAL_CHECKS == {"known_issue_lookup", "schema_fingerprint_check", "resplit_falsification"}
+    assert STRUCTURAL_CHECKS == {
+        "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification", "scenario_holdout_falsification",
+    }
 
 
 # -- label_conflict_check --------------------------------------------------

@@ -62,6 +62,7 @@ DEFAULTS: dict[str, Any] = {
         "identity_column_flag": True,
         "port_protocol_shortcut_check": True,
         "temporal_leakage_check": True,
+        "temporal_realism_check": True,
         "flow_group_leakage_check": True,
         "row_order_leakage_check": True,
         "homogeneity_test": True,

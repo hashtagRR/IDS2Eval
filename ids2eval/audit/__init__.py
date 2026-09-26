@@ -41,6 +41,7 @@ from . import (
     seed_sensitivity,
     synthetic_realism,
     temporal_leakage,
+    temporal_realism,
 )
 
 STRUCTURAL_CHECKS = frozenset({"known_issue_lookup", "schema_fingerprint_check", "resplit_falsification"})
@@ -105,6 +106,8 @@ def run_audit(
         findings.append(port_protocol_shortcut.check(train_df, test_df, cfg))
     if audit_cfg["temporal_leakage_check"] and "temporal_leakage_check" not in skip:
         findings.append(temporal_leakage.check(train_df, test_df, cfg))
+    if audit_cfg["temporal_realism_check"] and "temporal_realism_check" not in skip:
+        findings.append(temporal_realism.check(train_df, cfg))
     if audit_cfg["flow_group_leakage_check"] and "flow_group_leakage_check" not in skip:
         findings.append(flow_group_leakage.check(train_df, test_df, cfg))
     if audit_cfg["row_order_leakage_check"] and "row_order_leakage_check" not in skip:

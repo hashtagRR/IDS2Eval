@@ -20,16 +20,10 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
 from ._auc import robust_auc
+from ._time import to_numeric_time
 
 AUC_FLAG_THRESHOLD = 0.8
 MAX_FIT_ROWS = 200_000
-
-
-def _to_numeric_time(series: pd.Series) -> pd.Series:
-    parsed = pd.to_datetime(series, errors="coerce")
-    if parsed.notna().mean() > 0.5:
-        return parsed.astype("int64") // 10**9
-    return pd.to_numeric(series, errors="coerce")
 
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
@@ -42,8 +36,8 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         }
 
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
-    x_train = _to_numeric_time(train_fit[col]).fillna(0).to_numpy().reshape(-1, 1)
-    x_test = _to_numeric_time(test_df[col]).fillna(0).to_numpy().reshape(-1, 1)
+    x_train = to_numeric_time(train_fit[col]).fillna(0).to_numpy().reshape(-1, 1)
+    x_test = to_numeric_time(test_df[col]).fillna(0).to_numpy().reshape(-1, 1)
     y_train, y_test = train_fit[label_col], test_df[label_col]
 
     clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)

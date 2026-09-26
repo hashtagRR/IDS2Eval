@@ -21,6 +21,7 @@ from ids2eval.audit import (
     seed_sensitivity,
     synthetic_realism,
     temporal_leakage,
+    temporal_realism,
 )
 
 
@@ -560,6 +561,39 @@ def test_temporal_leakage_check_ok_when_timestamp_is_uninformative(base_cfg):
     train_df, test_df = df.iloc[:400], df.iloc[400:]
     cfg = dict(base_cfg, schema={**base_cfg["schema"], "timestamp_column": "Timestamp"})
     result = temporal_leakage.check(train_df, test_df, cfg)
+    assert result["status"] == "ok"
+
+
+def test_temporal_realism_check_ok_with_no_timestamp_column_configured(base_cfg, synth_train_test):
+    train_df, _ = synth_train_test
+    result = temporal_realism.check(train_df, base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.timestamp_column configured" in result["summary"]
+
+
+def test_temporal_realism_check_flags_a_narrow_attack_burst_window(base_cfg):
+    # Benign spans the full 1000-minute capture; Attack is confined to a
+    # 15-minute burst near the start, well under 5% of the full span.
+    n_benign, n_attack = 200, 30
+    benign_ts = pd.date_range("2018-01-01", periods=n_benign, freq="5min")
+    attack_ts = pd.date_range("2018-01-01", periods=n_attack, freq="30s")
+    df = pd.concat([
+        pd.DataFrame({"Timestamp": benign_ts, "Label": "Benign"}),
+        pd.DataFrame({"Timestamp": attack_ts, "Label": "Attack"}),
+    ], ignore_index=True)
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "timestamp_column": "Timestamp"})
+    result = temporal_realism.check(df, cfg)
+    assert result["status"] == "flag"
+    assert result["details"]["span_ratio_by_class"]["Attack"] < 0.05
+
+
+def test_temporal_realism_check_ok_when_every_class_spans_the_full_capture(base_cfg):
+    n = 400
+    ts = pd.date_range("2018-01-01", periods=n, freq="min")
+    label = ["Benign", "Attack"] * (n // 2)  # interleaved, both span the whole range
+    df = pd.DataFrame({"Timestamp": ts, "Label": label})
+    cfg = dict(base_cfg, schema={**base_cfg["schema"], "timestamp_column": "Timestamp"})
+    result = temporal_realism.check(df, cfg)
     assert result["status"] == "ok"
 
 

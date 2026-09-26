@@ -104,6 +104,13 @@ CHECK_INFO = {
         "on this project's own CIC-IDS2018 run: Timestamp alone reached AUC 0.93).",
         "Flag: AUC above 0.8. Always ok when no schema.timestamp_column is configured.",
     ),
+    "temporal_realism_check": (
+        "The narrowest attack class's own timestamp span, as a share of the full capture's time span - "
+        "a class confined to a short burst window even when the aggregate timestamp AUC isn't dramatically "
+        "high.",
+        "Flag: below 5% of the full span. Warning: below 15%. Always ok when no "
+        "schema.timestamp_column is configured.",
+    ),
     "flow_group_leakage_check": (
         "Hashes schema.flow_id_columns (typically a 5-tuple) for train and test and checks whether any "
         "flow identity appears on both sides of the split - a model can partly recognize the connection "

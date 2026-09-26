@@ -43,7 +43,7 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "SCORECARD.html").exists()
 
     findings = json.loads((run_dir / "audit_report_before.json").read_text())
-    assert len(findings) == 16  # all v1 checks; v2 off by default
+    assert len(findings) == 17  # all v1 checks; v2 off by default
 
     after = json.loads((run_dir / "audit_report_after.json").read_text())
     dedup_after = next(f for f in after if f["check"] == "dedup_check")

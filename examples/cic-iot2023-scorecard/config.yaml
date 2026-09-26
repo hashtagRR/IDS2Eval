@@ -1,0 +1,21 @@
+# CIC-IoT2023 (dhoogla/ciciotdataset2023 on Kaggle, 46.8M flows across 34
+# fine-grained attack labels). Too large in full: a uniform 500K-row
+# reservoir sample (seeded, reproducible), split 80/20 at random
+# (stratified). binary_label is redundant with label (drop_columns), and
+# source_file/rate_was_infinite are the cleaning tool's own provenance/
+# diagnostic columns, not attack features.
+dataset:
+  name: cic-iot2023
+  raw_files: [ciciot2023.csv.gz]
+  split_ratio: 0.8
+  chunk_size: 100000
+  max_rows: 500000
+schema:
+  label_column: label
+  attack_category_column: category
+  drop_columns: [binary_label, source_file, rate_was_infinite]
+audit:
+  resplit_falsification: false   # no session/IP/flow-id columns in this feature set
+  known_issue_lookup: true
+output:
+  save_preprocessed: false

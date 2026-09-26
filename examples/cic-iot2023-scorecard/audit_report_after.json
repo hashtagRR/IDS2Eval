@@ -1,0 +1,421 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 314118,
+      "train_rows_deduped": 314118,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 67127,
+      "test_rows_deduped": 67127,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "DDoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Mirai": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Benign": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Recon": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Spoofing": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Web": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "BruteForce": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 8 classes tested",
+    "details": {
+      "classes_tested": 8
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=9.2%, top2=16.1%)",
+    "details": {
+      "top_features": {
+        "rate": 0.09234745295278844,
+        "icmp": 0.06868985495758237,
+        "header_length": 0.06622752836294654,
+        "inter_arrival_time": 0.06051778220976897,
+        "psh_flag_number": 0.05488798717164248
+      },
+      "top1_share": 0.09234745295278844,
+      "top2_share": 0.1610373079103708
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'icmp <= 0.9592' reaches 22.6% test accuracy (24.5% train)",
+    "details": {
+      "rule": "icmp <= 0.9592",
+      "train_accuracy": 0.245185,
+      "test_accuracy": 0.22645135340474026
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'fin_count' alone reaches AUC 0.999 identifying 'DDoS-RSTFINFlood'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "fin_count": 0.9991446779944184,
+        "fin_flag_number": 0.9991427904400086,
+        "rst_count": 0.9987377796741065,
+        "rst_flag_number": 0.9985184989241574,
+        "psh_flag_number": 0.9977744927674447
+      },
+      "best_feature": "fin_count",
+      "best_class": "DDoS-RSTFINFlood"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "protocol_type"
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.9993705755903098,
+        "test": 1.0011623205611313
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "8 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "details": {
+      "per_class": {
+        "DDoS": {
+          "test_near_zero_rate": 0.142,
+          "control_near_zero_rate": 0.172,
+          "p_value": 0.844967445291042,
+          "leakage_signature": false
+        },
+        "DoS": {
+          "test_near_zero_rate": 0.048,
+          "control_near_zero_rate": 0.106,
+          "p_value": 0.9977378176146141,
+          "leakage_signature": false
+        },
+        "Mirai": {
+          "test_near_zero_rate": 0.002,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.9869647786053692,
+          "leakage_signature": false
+        },
+        "Benign": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.29478606718313966,
+          "leakage_signature": false
+        },
+        "Recon": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.6939391468332595,
+          "leakage_signature": false
+        },
+        "Spoofing": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.8622334421931537,
+          "leakage_signature": false
+        },
+        "Web": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.007518796992481203,
+          "p_value": 0.6716221232340516,
+          "leakage_signature": false
+        },
+        "BruteForce": {
+          "test_near_zero_rate": 0.03225806451612903,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.8150628330618697,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "34 classes, train imbalance ratio (majority:minority) = 3030:1; classes below 1% of train: ['VulnerabilityScan', 'MITM-ArpSpoofing', 'DDoS-UDP_Fragmentation', 'DDoS-ACK_Fragmentation', 'DNS_Spoofing', 'Recon-HostDiscovery', 'Recon-OSScan', 'Recon-PortScan', 'DoS-HTTP_Flood', 'DDoS-HTTP_Flood', 'DDoS-SlowLoris', 'DictionaryBruteForce', 'BrowserHijacking', 'CommandInjection', 'SqlInjection', 'Backdoor_Malware', 'XSS', 'Recon-PingSweep', 'Uploading_Attack']",
+    "details": {
+      "train": {
+        "counts": {
+          "DDoS-ICMP_Flood": 42417,
+          "DDoS-UDP_Flood": 34820,
+          "DDoS-PSHACK_Flood": 29024,
+          "DDoS-TCP_Flood": 27384,
+          "DDoS-RSTFINFlood": 27230,
+          "DDoS-SYN_Flood": 25912,
+          "DDoS-SynonymousIP_Flood": 22294,
+          "DoS-UDP_Flood": 22150,
+          "DoS-TCP_Flood": 17154,
+          "DoS-SYN_Flood": 13775,
+          "BenignTraffic": 9372,
+          "Mirai-greeth_flood": 8423,
+          "Mirai-udpplain": 7545,
+          "Mirai-greip_flood": 6408,
+          "DDoS-ICMP_Fragmentation": 3915,
+          "VulnerabilityScan": 3101,
+          "MITM-ArpSpoofing": 2558,
+          "DDoS-UDP_Fragmentation": 2522,
+          "DDoS-ACK_Fragmentation": 2435,
+          "DNS_Spoofing": 1584,
+          "Recon-HostDiscovery": 1129,
+          "Recon-OSScan": 887,
+          "Recon-PortScan": 654,
+          "DoS-HTTP_Flood": 609,
+          "DDoS-HTTP_Flood": 248,
+          "DDoS-SlowLoris": 217,
+          "DictionaryBruteForce": 122,
+          "BrowserHijacking": 54,
+          "CommandInjection": 54,
+          "SqlInjection": 34,
+          "Backdoor_Malware": 30,
+          "XSS": 29,
+          "Recon-PingSweep": 14,
+          "Uploading_Attack": 14
+        },
+        "shares": {
+          "DDoS-ICMP_Flood": 0.1350352415334365,
+          "DDoS-UDP_Flood": 0.11085006271528534,
+          "DDoS-PSHACK_Flood": 0.0923983980542344,
+          "DDoS-TCP_Flood": 0.08717743013771895,
+          "DDoS-RSTFINFlood": 0.08668716851629006,
+          "DDoS-SYN_Flood": 0.0824912930809441,
+          "DDoS-SynonymousIP_Flood": 0.07097332849438746,
+          "DoS-UDP_Flood": 0.07051490204318123,
+          "DoS-TCP_Flood": 0.0546100509999427,
+          "DoS-SYN_Flood": 0.04385294698170751,
+          "BenignTraffic": 0.029835921532672435,
+          "Mirai-greeth_flood": 0.02681476387854246,
+          "Mirai-udpplain": 0.024019635932993333,
+          "Mirai-greip_flood": 0.02039997707867744,
+          "DDoS-ICMP_Fragmentation": 0.012463469142169503,
+          "VulnerabilityScan": 0.009872086286045372,
+          "MITM-ArpSpoofing": 0.008143436542955195,
+          "DDoS-UDP_Fragmentation": 0.008028829930153636,
+          "DDoS-ACK_Fragmentation": 0.007751863949216536,
+          "DNS_Spoofing": 0.00504269096326858,
+          "Recon-HostDiscovery": 0.00359419071813777,
+          "Recon-OSScan": 0.0028237795987495146,
+          "Recon-PortScan": 0.0020820201325616487,
+          "DoS-HTTP_Flood": 0.0019387618665597005,
+          "DDoS-HTTP_Flood": 0.0007895122215218485,
+          "DDoS-SlowLoris": 0.0006908231938316174,
+          "DictionaryBruteForce": 0.0003883890767163932,
+          "BrowserHijacking": 0.00017190991920233798,
+          "CommandInjection": 0.00017190991920233798,
+          "SqlInjection": 0.00010823957875702762,
+          "Backdoor_Malware": 9.550551066796554e-05,
+          "XSS": 9.232199364570002e-05,
+          "Recon-PingSweep": 4.456923831171725e-05,
+          "Uploading_Attack": 4.456923831171725e-05
+        }
+      },
+      "test": {
+        "counts": {
+          "DDoS-ICMP_Flood": 8287,
+          "DDoS-UDP_Flood": 7054,
+          "DDoS-PSHACK_Flood": 6178,
+          "DDoS-RSTFINFlood": 5537,
+          "DDoS-TCP_Flood": 5523,
+          "DDoS-SYN_Flood": 5444,
+          "DoS-UDP_Flood": 5002,
+          "DDoS-SynonymousIP_Flood": 4529,
+          "DoS-TCP_Flood": 3596,
+          "DoS-SYN_Flood": 3037,
+          "BenignTraffic": 2340,
+          "Mirai-greeth_flood": 2100,
+          "Mirai-udpplain": 1882,
+          "Mirai-greip_flood": 1599,
+          "DDoS-ICMP_Fragmentation": 979,
+          "VulnerabilityScan": 775,
+          "DDoS-UDP_Fragmentation": 631,
+          "MITM-ArpSpoofing": 622,
+          "DDoS-ACK_Fragmentation": 596,
+          "DNS_Spoofing": 394,
+          "Recon-HostDiscovery": 282,
+          "Recon-OSScan": 221,
+          "Recon-PortScan": 164,
+          "DoS-HTTP_Flood": 152,
+          "DDoS-HTTP_Flood": 62,
+          "DDoS-SlowLoris": 54,
+          "DictionaryBruteForce": 31,
+          "CommandInjection": 14,
+          "BrowserHijacking": 12,
+          "SqlInjection": 9,
+          "Backdoor_Malware": 7,
+          "XSS": 7,
+          "Recon-PingSweep": 4,
+          "Uploading_Attack": 3
+        },
+        "shares": {
+          "DDoS-ICMP_Flood": 0.12345256007269802,
+          "DDoS-UDP_Flood": 0.10508439227136622,
+          "DDoS-PSHACK_Flood": 0.09203450176531053,
+          "DDoS-RSTFINFlood": 0.08248543805026294,
+          "DDoS-TCP_Flood": 0.08227687815633054,
+          "DDoS-SYN_Flood": 0.08110000446914059,
+          "DoS-UDP_Flood": 0.0745154706749892,
+          "DDoS-SynonymousIP_Flood": 0.06746912568713037,
+          "DoS-TCP_Flood": 0.053570098470064206,
+          "DoS-SYN_Flood": 0.04524259984804922,
+          "BenignTraffic": 0.03485929655727204,
+          "Mirai-greeth_flood": 0.03128398408985952,
+          "Mirai-udpplain": 0.028036408598626484,
+          "Mirai-greip_flood": 0.023820519314135893,
+          "DDoS-ICMP_Fragmentation": 0.014584295439986891,
+          "VulnerabilityScan": 0.011545279842686251,
+          "DDoS-UDP_Fragmentation": 0.009400092362238741,
+          "MITM-ArpSpoofing": 0.009266018144710772,
+          "DDoS-ACK_Fragmentation": 0.00887869262740775,
+          "DNS_Spoofing": 0.0058694713006688815,
+          "Recon-HostDiscovery": 0.004200992149209707,
+          "Recon-OSScan": 0.0032922668970756922,
+          "Recon-PortScan": 0.0024431301860652196,
+          "DoS-HTTP_Flood": 0.0022643645626945937,
+          "DDoS-HTTP_Flood": 0.0009236223874149001,
+          "DDoS-SlowLoris": 0.0008044453051678162,
+          "DictionaryBruteForce": 0.00046181119370745005,
+          "CommandInjection": 0.0002085598939323968,
+          "BrowserHijacking": 0.00017876562337062582,
+          "SqlInjection": 0.00013407421752796938,
+          "Backdoor_Malware": 0.0001042799469661984,
+          "XSS": 0.0001042799469661984,
+          "Recon-PingSweep": 5.958854112354194e-05,
+          "Uploading_Attack": 4.4691405842656454e-05
+        }
+      },
+      "imbalance_ratio": 3029.785714285714,
+      "rare_classes": [
+        "VulnerabilityScan",
+        "MITM-ArpSpoofing",
+        "DDoS-UDP_Fragmentation",
+        "DDoS-ACK_Fragmentation",
+        "DNS_Spoofing",
+        "Recon-HostDiscovery",
+        "Recon-OSScan",
+        "Recon-PortScan",
+        "DoS-HTTP_Flood",
+        "DDoS-HTTP_Flood",
+        "DDoS-SlowLoris",
+        "DictionaryBruteForce",
+        "BrowserHijacking",
+        "CommandInjection",
+        "SqlInjection",
+        "Backdoor_Malware",
+        "XSS",
+        "Recon-PingSweep",
+        "Uploading_Attack"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "ok",
+    "summary": "no missing labels, constant features, or +-inf values found",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": []
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "ok",
+    "summary": "no curated known issues for dataset 'cic-iot2023'",
+    "details": {
+      "matches": []
+    }
+  }
+]

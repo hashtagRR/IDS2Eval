@@ -24,6 +24,7 @@ import pandas as pd
 
 from . import (
     class_distribution,
+    cross_capture_matrix,
     cross_dataset_drift,
     data_integrity,
     dedup,
@@ -47,7 +48,8 @@ from . import (
 )
 
 STRUCTURAL_CHECKS = frozenset({
-    "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification", "scenario_holdout_falsification",
+    "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
+    "scenario_holdout_falsification", "cross_capture_matrix_check",
 })
 
 # A strict subset of STRUCTURAL_CHECKS: checks that report a documented, curated fact
@@ -75,6 +77,7 @@ EVIDENCE_LEVEL = {
     "schema_fingerprint_check": "documented",
     "resplit_falsification": "direct-experiment",
     "scenario_holdout_falsification": "direct-experiment",
+    "cross_capture_matrix_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -135,6 +138,8 @@ def run_audit(
         findings.append(synthetic_realism.check(train_df, cfg))
     if audit_cfg["cross_dataset_drift_check"] and "cross_dataset_drift_check" not in skip:
         findings.append(cross_dataset_drift.check(train_df, test_df, cfg))
+    if audit_cfg["cross_capture_matrix_check"] and "cross_capture_matrix_check" not in skip:
+        findings.append(cross_capture_matrix.check(cfg))
     if audit_cfg["known_issue_lookup"] and "known_issue_lookup" not in skip:
         findings.append(known_issues.check(train_df, cfg))
     if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:

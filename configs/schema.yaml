@@ -68,6 +68,7 @@ audit:
   # v2, opt-in, need a second dataset or heavier compute
   synthetic_realism_check: false
   cross_dataset_drift_check: false
+  cross_capture_matrix_check: false # N x N accuracy matrix across schema.scenario_column values
   known_issue_lookup: false
   seed_sensitivity_check: false # re-fits leakage_screen/one_rule_check across a few seeds
   reference_dataset: null      # required if any v2 check above is enabled, e.g. "/path/to/reference.csv"

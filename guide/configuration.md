@@ -29,7 +29,7 @@ itself) or a `train_file`+`test_file` pair (already split).
 | `schema` | Which columns are the label, the attack-category column, and which to drop or treat as identity columns |
 | `label_grouping` | Collapsing raw attack categories into coarser ones |
 | `preprocessing` | Dedup, and scaling/class-balancing strategy: either can be a list, to compare |
-| `audit` | Which of the 18 checks run, and the reference dataset two of the four v2 checks need |
+| `audit` | Which of the 23 checks run, and the reference dataset two of the five v2 checks need |
 | `classifiers` | Which of the 14 classifiers to benchmark, tuning, calibration, per-classifier hyperparameters/search spaces |
 | `output` | Where results go, output format, run retention, optional scorecard chart |
 | `random_seed` | The single source for every seed in the pipeline |
@@ -138,7 +138,7 @@ audit:
   reference_dataset: /path/to/a/second/dataset.csv
 ```
 
-Only two of the four v2 checks need `reference_dataset`: a real-traffic
+Only two of the five v2 checks need `reference_dataset`: a real-traffic
 sample for `synthetic_realism_check`, or an independent dataset for
 `cross_dataset_drift_check`, both in the same schema. `known_issue_lookup`
 needs neither, just a `dataset.name` match, and `seed_sensitivity_check`

@@ -3,6 +3,7 @@ import pandas as pd
 
 from ids2eval.audit import (
     class_distribution,
+    cross_capture_matrix,
     cross_dataset_drift,
     data_integrity,
     dedup,
@@ -238,6 +239,38 @@ def test_scenario_holdout_falsification_ok_with_one_scenario(base_cfg, tmp_path,
     assert "fewer than two distinct scenarios" in result["summary"]
 
 
+def test_cross_capture_matrix_check_ok_with_no_scenario_column_configured(base_cfg):
+    result = cross_capture_matrix.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "no schema.scenario_column configured" in result["summary"]
+
+
+def test_cross_capture_matrix_check_end_to_end(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    df = synth_data.copy()
+    df["CaptureDay"] = (["Day1", "Day2", "Day3"] * (len(df) // 3 + 1))[: len(df)]
+    df.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["schema"]["scenario_column"] = "CaptureDay"
+    result = cross_capture_matrix.check(base_cfg)
+    assert result["check"] == "cross_capture_matrix_check"
+    assert len(result["details"]["matrix"]) == 3 * 2  # 3 scenarios, every ordered pair excluding self
+    assert all(0.0 <= acc <= 1.0 for acc in result["details"]["matrix"].values())
+
+
+def test_cross_capture_matrix_check_skips_past_the_scenario_cap(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    df = synth_data.copy()
+    n_scenarios = cross_capture_matrix.MAX_SCENARIOS + 1
+    df["CaptureDay"] = [f"Day{i % n_scenarios}" for i in range(len(df))]
+    df.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["schema"]["scenario_column"] = "CaptureDay"
+    result = cross_capture_matrix.check(base_cfg)
+    assert result["status"] == "ok"
+    assert "skipped" in result["summary"]
+
+
 def test_class_distribution_report_flags_rare_class(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = class_distribution.check(train_df, test_df, base_cfg)
@@ -443,7 +476,8 @@ def test_structural_checks_constant_matches_the_checks_that_ignore_row_content()
     from ids2eval.audit import STRUCTURAL_CHECKS
 
     assert STRUCTURAL_CHECKS == {
-        "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification", "scenario_holdout_falsification",
+        "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
+        "scenario_holdout_falsification", "cross_capture_matrix_check",
     }
 
 

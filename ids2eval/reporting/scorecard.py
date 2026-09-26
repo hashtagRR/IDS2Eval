@@ -170,6 +170,13 @@ CHECK_INFO = {
         "Trains on this dataset, tests on audit.reference_dataset, and compares accuracy.",
         "Flag: accuracy drops by more than 10 percentage points.",
     ),
+    "cross_capture_matrix_check": (
+        "Trains on each schema.scenario_column value and tests on every other one, an N x N accuracy "
+        "matrix rather than scenario_holdout_falsification's single held-out number. Capped at 6 "
+        "scenarios and skipped past that, since each pair is a real extra model fit.",
+        "Flag: best-to-worst scenario-pair accuracy spread exceeds 20 points. Warning: exceeds 10. "
+        "Always ok when no schema.scenario_column is configured.",
+    ),
     "known_issue_lookup": (
         "Looks the dataset name up in a hand-curated list of published problems with specific datasets. "
         "Looks only at the name, so its result is the same on raw and cleaned data.",

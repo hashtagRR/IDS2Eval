@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 22 checks operationalize a
+paragraph, or not tested at all. These 23 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Eighteen run by default (v1, no external data needed); four are
+Eighteen run by default (v1, no external data needed); five are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -27,7 +27,7 @@ does and does not cover:
 | Label leakage (contradictory or confusable ground truth) | `label_conflict_check`, `near_duplicate_class_check` |
 | Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
 | Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `temporal_realism_check`, `row_order_leakage_check` |
-| Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification` |
+| Collection-scenario leakage (capture day, attacker host standing in for the label) | `scenario_holdout_falsification`, `cross_capture_matrix_check` |
 | Single-feature or single-rule shortcuts | `leakage_screen`, `one_rule_check` |
 | Distribution artifacts (imbalance, rare classes) | `class_distribution_report` |
 | Basic data integrity (missing/constant/infinite values) | `data_integrity_check` |
@@ -266,6 +266,18 @@ Trains on this dataset, evaluates on `reference_dataset` in a unified
 feature space; a material accuracy drop is evidence the model learned
 dataset-specific artifacts rather than generalizable attack behavior.
 
+### `cross_capture_matrix_check`
+`scenario_holdout_falsification` reports one number: accuracy when the
+single smallest declared scenario (`schema.scenario_column`) is held
+out entirely. That can't distinguish "generalization to any unseen
+scenario is genuinely hard" from "this one pair of scenarios is
+asymmetric": training on scenario A and testing on B might collapse
+while the reverse does not, invisible in a single holdout figure.
+Trains on each declared scenario and tests on every other one, the
+full N x N accuracy matrix. Real, not negligible, compute (N*(N-1)
+RandomForest fits rather than one), so it's opt-in and capped at 6
+scenarios, skipped past that cap rather than run.
+
 ### `known_issue_lookup`
 A curated table of documented per-dataset problems, matched on
 `dataset.name`, currently seeded with CIC-IDS2018's 2018-02-23
@@ -322,8 +334,9 @@ run's actual data or not:
   `row_order_leakage_check`, `homogeneity_test`,
   `class_distribution_report`, `low_cardinality_warning`,
   `data_integrity_check`, `resplit_falsification`,
-  `scenario_holdout_falsification`, `synthetic_realism_check`,
-  `cross_dataset_drift_check` and `seed_sensitivity_check` live.
+  `scenario_holdout_falsification`, `cross_capture_matrix_check`,
+  `synthetic_realism_check`, `cross_dataset_drift_check` and
+  `seed_sensitivity_check` live.
 - **Known issues**: `known_issue_lookup` and `schema_fingerprint_check`.
   Both report a documented, curated fact (a published labelling error,
   a known-buggy extractor) rather than a measurement of this run's
@@ -331,13 +344,14 @@ run's actual data or not:
   they get their own section, with a single Status column, rather than
   being mixed into the checks table with a "raw/cleaned" split that
   would only invite the question of why cleaning the data didn't
-  change them. (`resplit_falsification` and `scenario_holdout_falsification`
-  look similarly "structural": their results also can't move with
-  dedup, since each reloads the raw data itself, but they stay in the
-  checks table, because they genuinely measure this run's split
-  methodology and a config change is a real fix (grouped splitting, or
-  collecting more of an under-represented scenario). See
-  `ids2eval.audit.KNOWN_ISSUE_CHECKS` vs `STRUCTURAL_CHECKS`.)
+  change them. (`resplit_falsification`, `scenario_holdout_falsification`,
+  and `cross_capture_matrix_check` all look similarly "structural":
+  their results also can't move with dedup, since each reloads the raw
+  data itself, but they stay in the checks table, because they
+  genuinely measure this run's split methodology and a config change is
+  a real fix (grouped splitting, or collecting more of an
+  under-represented scenario). See `ids2eval.audit.KNOWN_ISSUE_CHECKS`
+  vs `STRUCTURAL_CHECKS`.)
 
 Both tables number their rows starting at 1.
 

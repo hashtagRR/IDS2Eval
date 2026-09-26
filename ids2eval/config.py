@@ -75,6 +75,7 @@ DEFAULTS: dict[str, Any] = {
         "data_integrity_check": True,
         "synthetic_realism_check": False,
         "cross_dataset_drift_check": False,
+        "cross_capture_matrix_check": False,
         "known_issue_lookup": False,
         "seed_sensitivity_check": False,
         "reference_dataset": None,

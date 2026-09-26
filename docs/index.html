@@ -2,16 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TDP74VH8EE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TDP74VH8EE');
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDS²Eval ,  Audit the benchmark, not just the model</title>
 <meta name="description" content="IDS²Eval audits NIDS datasets for leakage, duplication, identity shortcuts and split fragility before benchmark scores are trusted.">
 <meta name="theme-color" content="#edf2ec">
@@ -1363,6 +1354,112 @@ button:focus-visible{
 /* keep reduced-motion behavior intact */
 @media (prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important}
+}
+
+
+/* FINAL PALETTE OVERRIDE: restore V12 background tone */
+:root{
+  --bg:#edf2ec;
+  --bg-soft:#f7faf6;
+  --surface:#ffffff;
+  --surface-2:#f2f6f1;
+  --ink:#18231d;
+  --ink-soft:#43534b;
+  --line:#d7e1d9;
+  --green:#1f8f5f;
+  --green-2:#2fa56f;
+  --green-soft:#e7f5ec;
+  --amber:#b8821b;
+  --amber-soft:#fbf3e3;
+  --red:#b84f43;
+  --red-soft:#f9e9e6;
+}
+
+body{
+  background:
+    radial-gradient(900px 460px at 76% -80px, rgba(47,165,111,.10), transparent 70%),
+    linear-gradient(180deg,var(--bg-soft),var(--bg));
+}
+
+.section:nth-of-type(even),
+.section:nth-of-type(odd){
+  background:transparent;
+}
+
+.hero{
+  background:transparent;
+}
+
+.proof-rail{
+  background:rgba(255,255,255,.45);
+  border-top:1px solid rgba(24,35,29,.07);
+  border-bottom:1px solid rgba(24,35,29,.07);
+}
+
+.evidence-card,
+.audit-portfolio,
+.check-card,
+.dataset-card-v7,
+.terminal,
+.scorecard,
+.method-node-v5{
+  background:var(--surface);
+}
+
+.dataset-respect-v7{
+  background:#f7fbf8;
+  border-color:#cfe0d4;
+}
+
+.site-nav{
+  background:rgba(247,250,246,.84);
+}
+
+.freedom{
+  background:var(--green-soft);
+  border-top:1px solid rgba(31,143,95,.10);
+  border-bottom:1px solid rgba(31,143,95,.10);
+}
+
+.final{
+  background:transparent;
+}
+
+.method-loop-label{
+  background:var(--bg);
+}
+
+
+/* Smaller section headline scale */
+h1{
+  font-size:clamp(3.7rem,7.2vw,7rem);
+}
+
+h2{
+  font-size:clamp(2.15rem,3.9vw,3.9rem);
+  line-height:1.02;
+  max-width:15ch;
+}
+
+.manifesto-main{
+  font-size:clamp(1.8rem,3.4vw,3.4rem);
+  line-height:1.06;
+}
+
+.final h2{
+  max-width:13ch;
+}
+
+@media(max-width:760px){
+  h1{
+    font-size:3.55rem;
+  }
+  h2{
+    font-size:2.15rem;
+  }
+  .manifesto-main{
+    font-size:1.95rem;
+  }
 }
 
 </style>

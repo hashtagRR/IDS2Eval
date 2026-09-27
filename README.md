@@ -34,6 +34,12 @@ venv/bin/pip install -e .
 venv/bin/ids2eval-dashboard   # opens http://localhost:8765, no config file needed yet
 ```
 
+(Windows: `py -3.12 -m venv venv`, then `.\venv\Scripts\pip install -e .`
+and `.\venv\Scripts\ids2eval-dashboard` - every `venv/bin/...` command
+in this Quick start section assumes Linux/macOS path syntax; see
+[Installation](#installation)'s Windows block below for why those
+specific commands look the way they do.)
+
 That opens a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard))
 with a **New run** editor already filled in with a minimal starter
 config (every other field falls back to a documented default, see

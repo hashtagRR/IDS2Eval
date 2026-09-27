@@ -10,7 +10,41 @@
       "test_rows_raw": 297029,
       "test_rows_deduped": 297029,
       "test_leakage_dropped": 0,
-      "test_duplicates_dropped": 0
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "Syn": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Benign": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "UDP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "MSSQL": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "LDAP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "NetBIOS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "Portmap": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "UDPLag": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        }
+      }
     }
   },
   {
@@ -18,6 +52,19 @@
     "status": "ok",
     "summary": "no feature vector maps to more than one label",
     "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "98 of 3,447 sampled rows (2.84%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 92, 'LDAP / MSSQL': 6}",
+    "details": {
+      "classes_tested": 8,
+      "affected_rows": 98,
+      "top_pairs": {
+        "NetBIOS / Portmap": 92,
+        "LDAP / MSSQL": 6
+      }
+    }
   },
   {
     "check": "leakage_screen",
@@ -46,16 +93,64 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Packet Length Min' alone reaches AUC 0.997 identifying 'LDAP'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Packet Length Min": 0.9970285000140438,
+        "Fwd Packet Length Min": 0.9967968346968609,
+        "Avg Packet Size": 0.9966962466690932,
+        "Packet Length Mean": 0.9965472499979329,
+        "Fwd Packet Length Mean": 0.9964733626517253
+      },
+      "best_feature": "Packet Length Min",
+      "best_class": "LDAP"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "ok",
     "summary": "no id_like_columns configured",
     "details": {}
   },
   {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "Protocol"
+    }
+  },
+  {
     "check": "temporal_leakage_check",
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "flag",
+    "summary": "adjacent-row label-transition rate (train=0.05, test=0.18) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.0488103824528728,
+        "test": 0.17544311379692495
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -77,6 +172,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -199,19 +300,6 @@
           "citation": "Independently verified in this project's own audit methodology"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "flag",
-    "summary": "98 of 3,447 sampled rows (2.84%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 92, 'LDAP / MSSQL': 6}",
-    "details": {
-      "classes_tested": 8,
-      "affected_rows": 98,
-      "top_pairs": {
-        "NetBIOS / Portmap": 92,
-        "LDAP / MSSQL": 6
-      }
     }
   }
 ]

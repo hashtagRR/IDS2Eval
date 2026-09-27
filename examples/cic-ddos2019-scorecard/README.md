@@ -10,12 +10,21 @@ two separate days, run 2 months apart. Produced with `config.yaml` in this folde
 open [SCORECARD.html](SCORECARD.html) in a browser for the full result, or read
 [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 8 ok, 4 warnings, 1 flag after dedup, across 13 checks. This
-is a change from an earlier run of this same dataset, which reported passed with
-warnings before `near_duplicate_class_check` existed; see below.
+**Result: failed** - 12 ok, 4 warnings, 3 flags after dedup, across 19 checks.
+This is a change from an earlier run of this same dataset, which reported
+passed with warnings before `near_duplicate_class_check` existed; see below.
 
 What it found:
 
+- **`feature_auc_ranking_check` finds `Packet Length Min` alone reaches AUC
+  0.997 identifying `LDAP`**, and it survives dedup - the same "check this for
+  a leakage artifact" signature as the other examples in this project, on a
+  feature that isn't otherwise flagged by anything else here.
+- **`row_order_leakage_check` flags both splits as more contiguous than a
+  shuffled ordering would produce** (train's ratio 0.05, test's 0.18, both
+  well below 1.0, train the more extreme of the two), consistent with each
+  day's rows still reflecting collection order (attack type by attack type)
+  rather than being shuffled before this train/test concatenation.
 - **`near_duplicate_class_check` flags 98 of 3,447 sampled rows (2.84%) with a
   near-zero-distance neighbor under a different label, even after dedup** -
   mostly `NetBIOS`/`Portmap` (92 rows) and `LDAP`/`MSSQL` (6 rows). Unlike
@@ -58,8 +67,14 @@ authentication required for this dataset). This mirror already deduplicates and
 downsamples the official multi-GB release per attack type; the row counts here
 are the mirror's, not the original collection's.
 
-Run on a 4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at
-commit 8cff297.
+Run on a 4-vCPU / 15GB VM, audit only (`--skip-benchmark`). Re-run 2026-09-27 to
+pick up `feature_auc_ranking_check`, `row_order_leakage_check`,
+`flow_group_leakage_check`, `port_protocol_shortcut_check`,
+`scenario_holdout_falsification`, and `temporal_realism_check` (the last four
+no-op here, no `schema.id_like_columns`/`flow_id_columns`/`scenario_column`/
+`timestamp_column` configured), which is why the check count reads 19; this is
+a fixed train/test file pair with no sampling involved, so every other finding
+is unchanged from the original run. Produced with IDS2Eval at commit bbbaa09.
 
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /

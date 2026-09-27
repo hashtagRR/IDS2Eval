@@ -31,15 +31,24 @@ classifiers once the data is clean.
 ```bash
 python3 -m venv venv
 venv/bin/pip install -e .
-venv/bin/ids2eval --config my_config.yaml
+venv/bin/ids2eval-dashboard   # opens http://localhost:8765, no config file needed yet
 ```
 
-Or run it from a browser - a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard)) - to browse runs, read
-their scorecards and benchmark results, and launch new runs from a
-YAML config:
+That opens a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard))
+with a **New run** editor already filled in with a minimal starter
+config (every other field falls back to a documented default, see
+[`configs/schema.yaml`](configs/schema.yaml) for the full list), so
+you can edit it, point `raw_files`/`label_column` at your own data,
+and click Run without writing a YAML file by hand first. It also
+browses past runs, reads their scorecards and benchmark results, and
+has a **Compare datasets** view.
+
+Prefer the terminal? The same run is one command, but here `--config`
+means what it says: a YAML file you write yourself first (see below),
+not something the CLI creates for you.
 
 ```bash
-venv/bin/ids2eval-dashboard --config my_config.yaml   # opens http://localhost:8765
+venv/bin/ids2eval --config my_config.yaml
 ```
 
 ```yaml
@@ -136,7 +145,7 @@ at wherever you keep these (or any other IDS dataset in CSV form); see
 
 ## Status
 
-Implemented, tested (260 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (264 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data - not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) - audit + 5 classifiers, including

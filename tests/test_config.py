@@ -16,6 +16,11 @@ def test_defaults_merge(tmp_path):
     assert cfg["classifiers"]["list"] == "all"
 
 
+def test_load_config_missing_file_raises_a_clear_error(tmp_path):
+    with pytest.raises(ValueError, match="Config file not found"):
+        load_config(tmp_path / "does-not-exist.yaml")
+
+
 def test_requires_dataset_name(base_cfg):
     base_cfg["dataset"]["name"] = None
     base_cfg["dataset"]["raw_files"] = ["a.csv"]

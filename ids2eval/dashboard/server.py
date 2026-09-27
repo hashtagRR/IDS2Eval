@@ -357,28 +357,43 @@ def make_server(host: str, port: int, app: App) -> ThreadingHTTPServer:
     return ThreadingHTTPServer((host, port), handler)
 
 
+def _resolve_starter(config_path: str | None, output_args: list[str]) -> tuple[str, list[Path]]:
+    """--config is entirely optional and never fatal: a missing or invalid path
+    falls back to _STARTER_CONFIG with a logged warning rather than crashing the
+    dashboard before it can even open. The bare `ids2eval-dashboard` invocation
+    (no flags at all) is the intended first-run path, not a degraded one.
+    """
+    starter = _STARTER_CONFIG
+    output_dirs = [Path(p) for p in output_args]
+    if config_path:
+        try:
+            starter = Path(config_path).read_text()
+        except OSError as e:
+            logger.warning("--config %s isn't readable (%s); opening with the starter template instead",
+                            config_path, e)
+        else:
+            cfg, err = _validate(starter)
+            if cfg:
+                output_dirs.append(Path(cfg["output"]["dir"]))
+            else:
+                logger.warning("--config doesn't validate yet (%s); prefilling it anyway", err)
+    if not output_dirs:
+        output_dirs = [Path("./output")]
+    return starter, output_dirs
+
+
 def main(argv=None) -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     parser = argparse.ArgumentParser(description="IDS2Eval dashboard (local web UI)")
     parser.add_argument("--output", action="append", default=[],
                         help="An output.dir whose runs to list (repeatable; default ./output)")
-    parser.add_argument("--config", help="A YAML config to prefill the New run editor with")
+    parser.add_argument("--config", help="Optional: a YAML config to prefill the New run editor with")
     parser.add_argument("--host", default="127.0.0.1", help="Interface to bind (default 127.0.0.1 - keep it local)")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--no-browser", action="store_true", help="Don't open a browser tab")
     args = parser.parse_args(argv)
 
-    starter = _STARTER_CONFIG
-    output_dirs = [Path(p) for p in args.output]
-    if args.config:
-        starter = Path(args.config).read_text()
-        cfg, err = _validate(starter)
-        if cfg:
-            output_dirs.append(Path(cfg["output"]["dir"]))
-        else:
-            logger.warning("--config doesn't validate yet (%s); prefilling it anyway", err)
-    if not output_dirs:
-        output_dirs = [Path("./output")]
+    starter, output_dirs = _resolve_starter(args.config, args.output)
 
     if args.host not in ("127.0.0.1", "localhost", "::1"):
         logger.warning("Binding to %s: anyone who can reach this port can run configs on this machine", args.host)

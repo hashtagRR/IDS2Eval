@@ -146,3 +146,29 @@ def test_compare_datasets_endpoint_requires_both_configs(server):
     base, _ = server
     status, _ = _post(base + "/api/compare-datasets", {"yaml_a": "dataset: {}\n", "yaml_b": ""})
     assert status == 400
+
+
+def test_resolve_starter_with_no_config_uses_the_starter_template():
+    starter, output_dirs = dashboard._resolve_starter(None, [])
+    assert starter == dashboard._STARTER_CONFIG
+    assert output_dirs == [dashboard.Path("./output")]
+
+
+def test_resolve_starter_falls_back_instead_of_crashing_on_a_missing_file(tmp_path, caplog):
+    missing = tmp_path / "does-not-exist.yaml"
+    starter, output_dirs = dashboard._resolve_starter(str(missing), [])
+    assert starter == dashboard._STARTER_CONFIG
+    assert output_dirs == [dashboard.Path("./output")]
+    assert "isn't readable" in caplog.text
+
+
+def test_resolve_starter_loads_a_real_config_and_adds_its_output_dir(tmp_path):
+    config_path = tmp_path / "cfg.yaml"
+    output_dir = tmp_path / "myoutput"
+    config_path.write_text(
+        f"dataset:\n  name: x\n  raw_files: [a.csv]\nschema:\n  label_column: Label\n"
+        f"audit:\n  resplit_falsification: false\noutput:\n  dir: {output_dir}\n"
+    )
+    starter, output_dirs = dashboard._resolve_starter(str(config_path), [])
+    assert starter == config_path.read_text()
+    assert output_dirs == [output_dir]

@@ -33,11 +33,17 @@ mirror, say) and you want to know whether they actually agree.
 ## Web UI (dashboard)
 
 ```bash
-ids2eval-dashboard --config my_config.yaml
+ids2eval-dashboard
 ```
 
-A small local web app (standard library only, no extra dependencies)
-at `http://localhost:8765`:
+No config file needed to start: this opens `http://localhost:8765`
+with a **New run** editor already filled in with a minimal starter
+config (every other field falls back to a documented default, see
+[`configs/schema.yaml`](../configs/schema.yaml)). `--config` below is
+optional, for prefilling the editor with a config you already have or
+listing runs from its `output.dir`, not a requirement to launch the
+dashboard at all. A small local web app (standard library only, no
+extra dependencies):
 
 - **Runs**: every run under the listed output directories, newest
   first, with its verdict; each run shows its `SCORECARD.html`, its
@@ -54,7 +60,7 @@ at `http://localhost:8765`:
 
 | Flag | Effect |
 |---|---|
-| `--config PATH` | Prefill the editor, and list runs from its `output.dir` |
+| `--config PATH` | Optional: prefill the editor, and list runs from its `output.dir`. A missing or invalid path falls back to the starter config with a logged warning, never a crash |
 | `--output DIR` | Also list runs from this `output.dir` (repeatable; default `./output`) |
 | `--host` / `--port` | Bind address, default `127.0.0.1:8765` |
 | `--no-browser` | Don't open a browser tab |

@@ -1,15 +1,15 @@
 {
   "scorecard_schema_version": "1.2",
-  "generated_at": "2026-09-26T09:43:54.729365+00:00",
+  "generated_at": "2026-09-27T03:08:35.773440+00:00",
   "dataset_name": "bot-iot",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "8cff297632e1662999f80bee7a71e9597179c8fc",
+  "ids2eval_git_commit": "aa2be21fdd94ddf6cc67240524f1aaab20937f60",
   "audit_stage": "after",
-  "overall_status": "passed_with_warnings",
+  "overall_status": "failed",
   "counts": {
-    "ok": 11,
+    "ok": 15,
     "warning": 2,
-    "flag": 0
+    "flag": 2
   },
   "findings": [
     {
@@ -23,6 +23,11 @@
       "summary": "no feature vector maps to more than one label"
     },
     {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 5 classes tested"
+    },
+    {
       "check": "leakage_screen",
       "status": "ok",
       "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)"
@@ -33,9 +38,19 @@
       "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)"
     },
     {
+      "check": "feature_auc_ranking_check",
+      "status": "flag",
+      "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact"
+    },
+    {
       "check": "identity_column_flag",
       "status": "ok",
       "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}"
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "status": "flag",
+      "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior"
     },
     {
       "check": "temporal_leakage_check",
@@ -43,9 +58,29 @@
       "summary": "no schema.timestamp_column configured"
     },
     {
+      "check": "temporal_realism_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "ok",
+      "summary": "no schema.flow_id_columns configured"
+    },
+    {
+      "check": "row_order_leakage_check",
+      "status": "ok",
+      "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce"
+    },
+    {
       "check": "homogeneity_test",
       "status": "ok",
       "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
     },
     {
       "check": "class_distribution_report",
@@ -71,11 +106,6 @@
       "check": "known_issue_lookup",
       "status": "warning",
       "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
-    },
-    {
-      "check": "near_duplicate_class_check",
-      "status": "ok",
-      "summary": "no near-zero-distance feature vectors found across 5 classes tested"
     }
   ],
   "checks": [
@@ -108,6 +138,20 @@
       }
     },
     {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "leakage_screen",
       "category": "audit",
       "before": {
@@ -136,6 +180,20 @@
       }
     },
     {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "identity_column_flag",
       "category": "audit",
       "before": {
@@ -146,6 +204,20 @@
       "after": {
         "status": "ok",
         "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior",
         "evidence": "statistical"
       }
     },
@@ -164,6 +236,48 @@
       }
     },
     {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "homogeneity_test",
       "category": "audit",
       "before": {
@@ -175,6 +289,20 @@
         "status": "ok",
         "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
         "evidence": "statistical"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
       }
     },
     {
@@ -246,20 +374,6 @@
         "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
         "evidence": "documented"
       }
-    },
-    {
-      "check": "near_duplicate_class_check",
-      "category": "audit",
-      "before": {
-        "status": "ok",
-        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
-        "evidence": "statistical"
-      },
-      "after": {
-        "status": "ok",
-        "summary": "no near-zero-distance feature vectors found across 5 classes tested",
-        "evidence": "statistical"
-      }
     }
   ],
   "dedup_effect": {
@@ -277,5 +391,12 @@
     "feature_count": 41,
     "train_content_hash": "195acbd1258af37d422916d1c46863eb7c8267976b1196fdfc39f187b7f05d1e",
     "test_content_hash": "df600d41362e37f20cf37a9857a716a8b31c531ccf4084faf2e7e3744ac80ef0"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-25_162341_414678",
+    "previous_generated_at": "2026-09-25T16:25:07.584519+00:00",
+    "previous_verdict": "passed_with_warnings",
+    "fingerprint_changed": false,
+    "changed_checks": []
   }
 }

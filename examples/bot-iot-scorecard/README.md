@@ -10,11 +10,23 @@ reservoir sample, split 80/20 at random. Produced with `config.yaml` in this
 folder; open [SCORECARD.html](SCORECARD.html) in a browser for the full
 result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: passed with warnings** - 11 ok, 2 warnings, 0 flags after dedup,
-across 13 checks.
+**Result: failed** - 15 ok, 2 warnings, 2 flags after dedup, across 19
+checks. This is a change from an earlier run of this same dataset, which
+reported passed with warnings before `feature_auc_ranking_check` and
+`port_protocol_shortcut_check` existed; see below.
 
 What it found:
 
+- **`port_protocol_shortcut_check` finds `L4_DST_PORT` combined with
+  `PROTOCOL` reaches AUC 0.952, though `L4_DST_PORT` alone only reaches
+  0.531** (see `identity_column_flag` below). The single-column check on its
+  own understated this dataset's identity-leakage risk: port isn't a
+  shortcut by itself here, but port-plus-protocol is a strong one, the
+  reason this check exists as a complement to `identity_column_flag` rather
+  than a redundant re-check of the same column.
+- **`feature_auc_ranking_check` finds `SHORTEST_FLOW_PKT` alone reaches AUC
+  0.990 identifying `DDoS`**, and it survives dedup - worth checking for a
+  leakage artifact the same way the port/protocol pair above is.
 - **`known_issue_lookup` warns the full dataset is over 99.9% attack
   traffic** (129,437 of 30,420,086 rows are benign, 0.43%) - and this run's
   own 500K-row uniform sample demonstrates exactly that risk: only 1,711
@@ -28,10 +40,11 @@ What it found:
   though `leakage_screen` finds no single feature dominates importance
   (top1 = 12.2%), so this rule's accuracy leans heavily on the DDoS/DoS
   majority classes rather than a universal shortcut.
-- **`identity_column_flag` finds `L4_DST_PORT` only reaches AUC 0.531** -
-  essentially uninformative on its own, unlike the CIC-family and ToN-IoT
-  examples where destination port is a severe shortcut. Not every NetFlow
-  dataset shares that leakage.
+- **`identity_column_flag` finds `L4_DST_PORT` only reaches AUC 0.531 alone**
+  - essentially uninformative by itself, unlike the CIC-family and ToN-IoT
+  examples where destination port alone is already a severe shortcut. It
+  takes `PROTOCOL` alongside it (`port_protocol_shortcut_check`, above) to
+  reveal this dataset's version of the same leakage.
 - **`homogeneity_test` and `data_integrity_check` both pass clean** - no
   leakage signature in any of the 4 classes tested, and no missing values,
   constant features, or ±inf found in this sample.
@@ -54,9 +67,16 @@ was streamed to gzip CSV in fixed-size batches rather than loaded into
 memory whole, since this machine has 7.8GB of RAM.
 
 Run on a 4-vCPU / 7.8GB VM, audit only (`--skip-benchmark`), most of it in
-the reservoir-sample pass over the full 30.4M-row file. Produced with
-IDS2Eval at commit 2ef764e plus the then-uncommitted bot-iot known-issue
-entry (the `ids2eval_git_commit` field records HEAD only).
+the reservoir-sample pass over the full 30.4M-row file. Re-run 2026-09-27
+(on a 4-vCPU / 15GB VM) to pick up `feature_auc_ranking_check`,
+`port_protocol_shortcut_check`, `row_order_leakage_check`, and
+`temporal_realism_check` (the last one no-ops here, no
+`schema.timestamp_column` configured), which is why the check count reads
+19 and the verdict changed from `passed_with_warnings` to `failed` - two
+genuinely new findings (above), not a change in any pre-existing result.
+The reservoir sample is identical across runs (same seed, same source
+file), confirmed by `identity_column_flag`'s exact-match AUC. Produced
+with IDS2Eval at commit aa2be21.
 
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /

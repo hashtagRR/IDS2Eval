@@ -1,15 +1,15 @@
 {
   "scorecard_schema_version": "1.2",
-  "generated_at": "2026-09-26T12:19:55.604633+00:00",
+  "generated_at": "2026-09-27T01:24:18.154926+00:00",
   "dataset_name": "unsw-nb15",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "1a0dbc89e7cf287520fde57e0718e605eb9b843e",
+  "ids2eval_git_commit": "c22168e74e07151b6665d79c0f0ab5dc252b9734",
   "audit_stage": "after",
-  "overall_status": "passed_with_warnings",
+  "overall_status": "failed",
   "counts": {
-    "ok": 14,
+    "ok": 17,
     "warning": 1,
-    "flag": 0
+    "flag": 1
   },
   "findings": [
     {
@@ -38,6 +38,11 @@
       "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)"
     },
     {
+      "check": "feature_auc_ranking_check",
+      "status": "ok",
+      "summary": "'sttl' alone reaches AUC 0.872 identifying '0.0'"
+    },
+    {
       "check": "identity_column_flag",
       "status": "ok",
       "summary": "no id_like_columns configured"
@@ -53,14 +58,29 @@
       "summary": "no schema.timestamp_column configured"
     },
     {
+      "check": "temporal_realism_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
       "check": "flow_group_leakage_check",
       "status": "ok",
       "summary": "no schema.flow_id_columns configured"
     },
     {
+      "check": "row_order_leakage_check",
+      "status": "flag",
+      "summary": "adjacent-row label-transition rate (train=0.09, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split"
+    },
+    {
       "check": "homogeneity_test",
       "status": "ok",
       "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
     },
     {
       "check": "class_distribution_report",
@@ -160,6 +180,20 @@
       }
     },
     {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "'sttl' alone reaches AUC 0.881 identifying '0.0'",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "'sttl' alone reaches AUC 0.872 identifying '0.0'",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "identity_column_flag",
       "category": "audit",
       "before": {
@@ -202,6 +236,20 @@
       }
     },
     {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
       "check": "flow_group_leakage_check",
       "category": "audit",
       "before": {
@@ -212,6 +260,20 @@
       "after": {
         "status": "ok",
         "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "adjacent-row label-transition rate (train=0.11, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "adjacent-row label-transition rate (train=0.09, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
         "evidence": "statistical"
       }
     },
@@ -227,6 +289,20 @@
         "status": "ok",
         "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
         "evidence": "statistical"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
       }
     },
     {
@@ -317,8 +393,8 @@
     "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
   },
   "previous_run_comparison": {
-    "previous_run": "2026-09-26_075305_991945",
-    "previous_generated_at": "2026-09-26T07:54:22.902100+00:00",
+    "previous_run": "2026-09-26_121840_037228",
+    "previous_generated_at": "2026-09-26T12:19:55.604633+00:00",
     "previous_verdict": "passed_with_warnings",
     "fingerprint_changed": false,
     "changed_checks": []

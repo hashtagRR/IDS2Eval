@@ -96,6 +96,22 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "ok",
+    "summary": "'sttl' alone reaches AUC 0.872 identifying '0.0'",
+    "details": {
+      "top_features": {
+        "sttl": 0.8718997066711976,
+        "ct_state_ttl": 0.8597720008976343,
+        "dload": 0.8154615268692134,
+        "ackdat": 0.7233023642978764,
+        "ct_dst_ltm": 0.7213316491500728
+      },
+      "best_feature": "sttl",
+      "best_class": "0.0"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "ok",
     "summary": "no id_like_columns configured",
@@ -117,10 +133,27 @@
     "details": {}
   },
   {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
     "check": "flow_group_leakage_check",
     "status": "ok",
     "summary": "no schema.flow_id_columns configured",
     "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "flag",
+    "summary": "adjacent-row label-transition rate (train=0.09, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.08891520175073545,
+        "test": 0.0001647802817595264
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -190,6 +223,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",

@@ -26,58 +26,11 @@ TPOT) on purpose: no feature engineering, no algorithm-search breadth -
 just the IDS-specific data-quality checks and a benchmark to compare
 classifiers once the data is clean.
 
-## Quick start
-
-```bash
-python3 -m venv venv
-venv/bin/pip install -e .
-venv/bin/ids2eval-dashboard   # opens http://localhost:8765, no config file needed yet
-```
-
-(Windows: `py -3.12 -m venv venv`, then `.\venv\Scripts\pip install -e .`
-and `.\venv\Scripts\ids2eval-dashboard` - every `venv/bin/...` command
-in this Quick start section assumes Linux/macOS path syntax; see
-[Installation](#installation)'s Windows block below for why those
-specific commands look the way they do.)
-
-That opens a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard))
-with a **New run** editor already filled in with
-[`configs/schema.yaml`](configs/schema.yaml)'s full reference, every
-field, its real default, and a one-line explanation, so you can edit
-it, point `dataset.name`/`raw_files`/`label_column` at your own data,
-and click Run without writing a YAML file by hand first. It also
-browses past runs, reads their scorecards and benchmark results, and
-has a **Compare datasets** view.
-
-Prefer the terminal? The same run is one command, but here `--config`
-means what it says: a YAML file you write yourself first (see below),
-not something the CLI creates for you.
-
-```bash
-venv/bin/ids2eval --config my_config.yaml
-```
-
-```yaml
-# my_config.yaml
-dataset:
-  name: my-dataset
-  raw_files: ["data.csv"]
-schema:
-  label_column: Label
-```
-
-See [Installation](#installation) below for full setup,
-[guide/usage.md](guide/usage.md) for the CLI/output files/programmatic
-API, and [guide/configuration.md](guide/configuration.md) for how to
-customize a config (field list:
-[`configs/schema.yaml`](configs/schema.yaml)).
-
 ## Installation
 
-Needs Python 3.10, 3.11, or 3.12 (tested in CI on all three).
-`pandas`/`numpy` don't yet ship prebuilt wheels for 3.13+, so
-`pyproject.toml` caps `requires-python` there deliberately: pip refuses
-cleanly instead of falling back to building them from source.
+Needs Python 3.10, 3.11, or 3.12 (tested in CI on all three; `pandas`/
+`numpy` have no prebuilt wheels yet for 3.13+, so `pyproject.toml`
+refuses those cleanly rather than falling back to a source build).
 
 **Linux / macOS**
 
@@ -88,7 +41,7 @@ python3 -m venv venv
 venv/bin/pip install -e ".[dev]"
 ```
 
-**Windows (PowerShell or cmd)**
+**Windows**
 
 ```powershell
 git clone https://github.com/hashtagRR/IDS2Eval.git
@@ -97,107 +50,118 @@ py -3.12 -m venv venv
 .\venv\Scripts\pip install -e ".[dev]"
 ```
 
-Two Windows-specific gotchas this sidesteps:
+Use `py -3.12` (the Python Launcher, installed by every official
+python.org installer), not bare `python` - see
+[Windows troubleshooting](#windows-troubleshooting) below if more than
+one Python is on your PATH.
 
-- **Use `py -3.12`, not bare `python`.** If more than one Python is on
-  PATH (an MSYS2/MinGW install, the Microsoft Store's placeholder
-  stub, a per-user install, ...), plain `python` runs whichever one PATH
-  happens to resolve first, silently, with no indication anything is
-  wrong. The `py` launcher (installed by every official python.org
-  Windows installer) picks a specific version explicitly instead. Run
-  `py --list` to see what's actually available; substitute `-3.10` or
-  `-3.11` if `3.12` isn't installed. A telltale sign this already went
-  wrong: `python -m venv venv` "succeeds" with no output, but
-  `venv\Scripts` doesn't exist afterward (an MSYS2 Python creates a
-  Unix-style `venv/bin` layout instead, since it targets a POSIX
-  environment internally even when invoked from PowerShell).
-- **The `.\` prefix matters in PowerShell.** Without it, PowerShell
-  tries to resolve `venv\Scripts\pip` as a module/cmdlet name instead
-  of a file path, and fails with a confusing "module could not be
-  loaded" error rather than "command not found." `.\` works in
-  `cmd.exe` too, so every Windows command below uses it.
+The `[dev]` extra adds `pytest`/`ruff` for the test suite; drop it
+(`pip install -e .`) for a runtime-only install. `pip install -e ".[dev,plots]"`
+adds `matplotlib`, only needed for `output.write_scorecard_plot`.
 
-The `[dev]` extra adds `pytest` and `ruff`, used for the test suite and
-linting; skip it (`pip install -e .`) for a runtime-only install. A
-separate `[plots]` extra (`pip install -e ".[dev,plots]"`) adds
-`matplotlib`, needed only if you turn on `output.write_scorecard_plot`
-(see [guide/usage.md](guide/usage.md)).
+**Run it:**
 
-This installs two console scripts into the venv: the CLI, and the
-local dashboard (see
-[guide/usage.md#web-ui-dashboard](guide/usage.md#web-ui-dashboard)).
-On Windows they're `.\venv\Scripts\ids2eval` and
-`.\venv\Scripts\ids2eval-dashboard`; on Linux/macOS, `venv/bin/ids2eval`
-and `venv/bin/ids2eval-dashboard`.
+| | Linux / macOS | Windows |
+|---|---|---|
+| Dashboard | `venv/bin/ids2eval-dashboard` | `.\venv\Scripts\ids2eval-dashboard` |
+| CLI | `venv/bin/ids2eval --config my_config.yaml` | `.\venv\Scripts\ids2eval --config my_config.yaml` |
+| Tests | `venv/bin/pytest tests/ -v` | `.\venv\Scripts\pytest tests\ -v` |
+| Lint | `venv/bin/ruff check ids2eval/ tests/` | `.\venv\Scripts\ruff check ids2eval/ tests/` |
 
-**Verify:**
+The dashboard opens `http://localhost:8765` with a **New run** editor
+already filled in with every config field and its default - no YAML
+file to write by hand first. The CLI needs a real config; see
+[Quick start](#quick-start) below for the minimal one, or
+[guide/config-reference.md](guide/config-reference.md) for every
+field. Tests and lint are exactly what CI runs on every push
+(`.github/workflows/ci.yml`, Linux only for now).
 
-```bash
-venv/bin/pytest tests/ -v          # Windows: .\venv\Scripts\pytest tests\ -v
-venv/bin/ruff check ids2eval/ tests/
+**Dependencies** (`pyproject.toml`, the only source of truth - no
+separate `requirements.txt`): `pyyaml`, `pandas`, `numpy`,
+`scikit-learn`, `scipy`, `imbalanced-learn`, `xgboost`, `pyarrow`. All
+prebuilt wheels, no compiler toolchain needed for Python 3.10-3.12 on
+any of the three platforms.
+
+### Windows troubleshooting
+
+- **More than one Python on PATH** (MSYS2/MinGW, the Microsoft Store's
+  placeholder stub, a per-user install, ...) makes bare `python`
+  silently run whichever one resolves first. Run `py --list` to see
+  what's actually available, and always use `py -3.12` (or whichever
+  version it lists in 3.10-3.12) instead of bare `python`. Telltale
+  sign this already went wrong: `python -m venv venv` "succeeds" with
+  no output, but `venv\Scripts` doesn't exist afterward (an MSYS2
+  Python creates a Unix-style `venv/bin` layout instead).
+- **PowerShell needs the `.\` prefix** on every command above. Without
+  it, PowerShell tries to resolve `venv\Scripts\pip` as a module/cmdlet
+  name instead of a file path, and fails with "module could not be
+  loaded" rather than "command not found." `.\` works in `cmd.exe` too.
+
+## Quick start
+
+```yaml
+# my_config.yaml
+dataset:
+  name: my-dataset
+  raw_files: ["data.csv"]
+schema:
+  label_column: Label
 ```
 
-Both should pass clean. This is exactly what CI runs on every push
-(`.github/workflows/ci.yml`), on Linux only; the dependencies below all
-ship prebuilt wheels for Windows too, but Windows itself isn't covered
-by CI yet.
+```bash
+venv/bin/ids2eval --config my_config.yaml
+```
 
-**Dependencies**, declared in `pyproject.toml` (the single source of
-truth, there's no separate `requirements.txt` to drift out of sync
-with it): `pyyaml`, `pandas`, `numpy`, `scikit-learn`, `scipy`,
-`imbalanced-learn`, `xgboost`, `pyarrow`. All install from prebuilt
-wheels on Linux/macOS/Windows for Python 3.10-3.12, no compiler
-toolchain needed. `matplotlib` is not in this list on purpose, it's
-the `[plots]` extra above, only needed for `scorecard.pdf`/`scorecard.png`.
+Or skip writing a config file entirely: `venv/bin/ids2eval-dashboard`
+opens a browser tab with the same thing pre-filled in an editor. See
+[guide/usage.md](guide/usage.md) for the CLI/dashboard/output
+files/programmatic API, and
+[guide/config-reference.md](guide/config-reference.md) for every
+config field with an example.
 
-**Real datasets used in validation** (not part of the install,
-IDS<sup>2</sup>Eval doesn't ship or require any dataset):
-
-- [UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset): pre-split train/test CSVs
-- [CIC-IDS2018](https://www.unb.ca/cic/datasets/ids-2018.html): the official "Processed Traffic Data for ML Algorithms" CSVs, publicly readable from `s3://cse-cic-ids2018/` with no credentials required
-
-Point `dataset.raw_files`/`train_file`/`test_file` in your own config
-at wherever you keep these (or any other IDS dataset in CSV form); see
-[guide/usage.md](guide/usage.md) and
-[guide/configuration.md](guide/configuration.md).
+**Point it at real data**: `dataset.raw_files`/`train_file`/`test_file`
+accept any IDS dataset in CSV or Parquet form - IDS<sup>2</sup>Eval doesn't
+ship or require one itself. [UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset)
+and [CIC-IDS2018](https://www.unb.ca/cic/datasets/ids-2018.html) (also
+readable straight from `s3://cse-cic-ids2018/`, no credentials needed)
+are two well-known ones this project validates against; see
+[examples/](examples/) for real scorecards on eight of them.
 
 ## Documentation
 
 | | |
 |---|---|
 | [guide/usage.md](guide/usage.md) | CLI, web UI, output files, caching, reproducing a run, programmatic API |
-| [guide/configuration.md](guide/configuration.md) | Config walkthrough with worked examples |
+| [guide/config-reference.md](guide/config-reference.md) | Every config field, tabulated, with a default and an example |
+| [guide/configuration.md](guide/configuration.md) | The reasoning behind non-obvious fields, and larger worked examples |
 | [guide/checks.md](guide/checks.md) | What each of the 27 checks does, and the research behind it |
 | [guide/contributing-known-issues.md](guide/contributing-known-issues.md) | How to add a curated known issue or extractor fingerprint |
-| [configs/schema.yaml](configs/schema.yaml) | Every field, one line each - copy it as your starting point |
-| [examples/](examples/) | Real scorecards for seven widely used datasets: [UNSW-NB15](examples/unsw-nb15-scorecard), [NSL-KDD](examples/nsl-kdd-scorecard), [CIC-IDS2017](examples/cic-ids2017-scorecard), [CSE-CIC-IDS2018](examples/cic-ids2018-scorecard), [CICDDoS2019](examples/cic-ddos2019-scorecard), [ToN-IoT](examples/ton-iot-scorecard), [BoT-IoT](examples/bot-iot-scorecard) |
+| [examples/](examples/) | Real scorecards for eight widely used datasets |
+
+Real scorecards: [UNSW-NB15](examples/unsw-nb15-scorecard),
+[NSL-KDD](examples/nsl-kdd-scorecard),
+[CIC-IDS2017](examples/cic-ids2017-scorecard),
+[CSE-CIC-IDS2018](examples/cic-ids2018-scorecard),
+[CICDDoS2019](examples/cic-ddos2019-scorecard),
+[ToN-IoT](examples/ton-iot-scorecard),
+[BoT-IoT](examples/bot-iot-scorecard),
+[CIC-IoT2023](examples/cic-iot2023-scorecard).
 
 ## Status
 
 Implemented, tested (279 tests, CI on Python 3.10/3.11/3.12), and
-validated against real data - not just synthetic fixtures:
-
-- **UNSW-NB15** (full dataset) - audit + 5 classifiers, including
-  `tuning: true` with a multi-strategy sampling comparison, ran
-  cleanly end to end. Feature importance independently reproduced the
-  published `sttl` TTL-topology bias; the before/after-dedup audit
-  surfaced a real finding (class balance shifted from 2:1 to roughly
-  1:1 after removing duplicates - they were disproportionately one
-  class). Full real-data scorecard, checks, and chart:
-  [examples/unsw-nb15-scorecard](examples/unsw-nb15-scorecard)
-- **CIC-IDS2018** (official 10-file, 16.2M-row distribution) -
-  chunked loading + reservoir sampling kept peak memory at 3.0GB on a
-  7.8GB-RAM machine; `identity_column_flag` independently reproduced
-  the published `Dst Port` leakage finding
+validated against real data, not just synthetic fixtures - see
+[examples/](examples/) for full scorecards. Two highlights:
+independently reproducing UNSW-NB15's published `sttl` TTL-topology
+bias and CIC-IDS2018's published `Dst Port` leakage finding, both via
+this project's own checks run against the real official distributions
+rather than assumed from the literature.
 
 Scaling and class-balancing always run inside cross-validation, never
 fit once beforehand - see
 [guide/configuration.md](guide/configuration.md#tuning-and-hyperparameters) for
-why that matters.
-
-`known_issue_lookup`'s two seed entries demonstrate the mechanism -
-growing the curated table is a good area for contributors to help with
-(see [guide/checks.md](guide/checks.md)).
+why that matters. Growing `known_issue_lookup`'s curated table is a
+good area for contributors to help with (see [guide/checks.md](guide/checks.md)).
 
 ## Provenance
 

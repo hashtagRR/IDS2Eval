@@ -2,7 +2,8 @@
 #
 # Copy this file, fill in `dataset` and `schema` for your data, and pass
 # it with --config. Anything you leave out uses the default shown here.
-# For the reasoning behind a field and worked examples, see CONFIGURATION.md.
+# Tabulated with examples in guide/config-reference.md; for the reasoning
+# behind a field and larger worked examples, see guide/configuration.md.
 
 random_seed: 0                 # seed for every random step (splitting, sampling, classifiers), e.g. 42
 
@@ -54,7 +55,7 @@ preprocessing:
 audit:
   # v1, on by default, no extra setup needed
   dedup_check: true
-  label_conflict_check: true   # same features, contradictory labels, see AUDIT_CHECKS.md
+  label_conflict_check: true   # same features, contradictory labels, see guide/checks.md
   near_duplicate_class_check: true # near (not exact) duplicate features across two classes
   leakage_screen: true
   one_rule_check: true         # is a single feature+threshold rule almost as good as any model?

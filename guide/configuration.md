@@ -1,27 +1,9 @@
 # Configuring IDS<sup>2</sup>Eval
 
-[`configs/schema.yaml`](../configs/schema.yaml) lists every field, its
-default, and its valid options with a short one-line comment each.
-Copy it as your starting point. This page is the reasoning behind the
-non-obvious fields, plus worked examples, for when the one-liner isn't
-enough.
-
-## Minimal config
-
-```yaml
-dataset:
-  name: my-dataset
-  raw_files: ["data.csv"]
-schema:
-  label_column: Label
-```
-
-Everything else falls back to a documented default. `dataset.name` is
-required (it's the key `known_issue_lookup`/`schema_fingerprint_check`
-match against), and you need either `raw_files` (IDS<sup>2</sup>Eval splits it
-itself) or a `train_file`+`test_file` pair (already split). Each file
-can be CSV (plain, or `.gz`/`.bz2`/`.xz`/single-member `.zip`, all
-inferred from the name) or `.parquet`.
+[config-reference.md](config-reference.md) lists every field, its
+default, and a short description, tabulated. This page is the reasoning
+behind the non-obvious fields, plus larger worked examples, for when
+the reference's one-liner isn't enough.
 
 ## Picking files out of a dataset's official download
 
@@ -72,19 +54,6 @@ archive has no single obvious member to pick, and a `.rar` archive
 needs an external `unrar`/`7z` binary with no reliable cross-platform
 story. Extract either yourself first if a `::` member reference isn't
 an option.
-
-## Config sections, at a glance
-
-| Section | Governs |
-|---|---|
-| `dataset` | Where the data comes from, how it's split, chunked reading/reservoir sampling for large files |
-| `schema` | Which columns are the label, the attack-category column, and which to drop or treat as identity columns |
-| `label_grouping` | Collapsing raw attack categories into coarser ones |
-| `preprocessing` | Dedup, and scaling/class-balancing strategy: either can be a list, to compare |
-| `audit` | Which of the 27 checks run, and the reference dataset two of the eight v2 checks need |
-| `classifiers` | Which of the 14 classifiers to benchmark, tuning, calibration, per-classifier hyperparameters/search spaces |
-| `output` | Where results go, output format, run retention, optional scorecard chart |
-| `random_seed` | The single source for every seed in the pipeline |
 
 ## Large datasets
 

@@ -155,9 +155,9 @@ people iterate on most while benchmarking.
 
 ```python
 from ids2eval.config import load_config
-from ids2eval import dataset
+from ids2eval.data import dataset
 from ids2eval.audit import run_audit
-from ids2eval.benchmark import run_benchmark
+from ids2eval.modeling.benchmark import run_benchmark
 
 cfg = load_config("my_config.yaml")
 train_df, test_df = dataset.load_split(cfg)

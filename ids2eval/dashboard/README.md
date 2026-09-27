@@ -3,20 +3,14 @@
 A local web UI for browsing runs, reading their scorecards, and launching new
 runs. Standard library only (`http.server`) - no extra dependencies.
 
-```bash
-ids2eval-dashboard   # opens http://localhost:8765, no config file needed
-```
-
-No flags are required to start it: the New run editor opens already filled
-in with `configs/schema.yaml`'s full reference (every field, its real
-default, one line of explanation each), so writing or pointing at a YAML
-file is optional, not a prerequisite. `--config PATH` prefills the editor with a
-config you already have; see [guide/usage.md](../../guide/usage.md#web-ui-dashboard)
-for the full flag list and what each panel does. This page is source-level
-reference (file layout, the HTTP API, the security model) for anyone
-reading or extending the implementation, not the place to start as a user.
+**Using it as a user?** See
+[guide/usage.md#web-ui-dashboard](../../guide/usage.md#web-ui-dashboard) for
+how to start it, what each panel does, and the flag list. This page is
+source-level reference (file layout, the HTTP API, the security model) for
+anyone reading or extending the implementation.
 
 ```bash
+ids2eval-dashboard                              # opens http://localhost:8765
 python -m ids2eval.dashboard --output ./output  # same thing, without the console script
 ```
 

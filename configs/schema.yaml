@@ -1,111 +1,87 @@
 # IDS2Eval config schema (v1)
-#
-# Copy this file, fill in `dataset` and `schema` for your data, and pass
-# it with --config. Anything you leave out uses the default shown here.
-# Tabulated with examples in guide/config-reference.md; for the reasoning
-# behind a field and larger worked examples, see guide/configuration.md.
+# Every field explained, with defaults and examples: configs/README.md
+# Copy this file, fill in `dataset` and `schema` for your data, and pass it with --config.
 
-random_seed: 0                 # seed for every random step (splitting, sampling, classifiers), e.g. 42
+random_seed: 0
 
 dataset:
-  name: null                   # required, short id for your dataset, e.g. "cic-ids2018"
-  raw_files: []                # your data file(s), IDS2Eval splits them into train/test
-                                # e.g. ["data.csv"], or ["day1.csv", "day2.csv"] for several files
-                                # CSV (plain, .gz/.bz2/.xz, or .zip with one file inside) or
-                                # .parquet; for one named file inside a multi-file zip (a real
-                                # dataset's official download usually has several), use
-                                # "archive.zip::member_name.csv"; extract a .rar first, see
-                                # ids2eval/data/chunked_io.py for why that one isn't handled
-  train_file: null             # OR: an already-split train file, e.g. "train.csv"
-  test_file: null              #     an already-split test file, e.g. "test.csv" (use with train_file)
-  split_ratio: 0.8             # train share, only used with raw_files, e.g. 0.7 for a 70/30 split
-  split_mode: random           # random | grouped, grouped avoids splitting a session across train/test
-  group_columns: []            # columns that define a "session", required if split_mode: grouped
-                                # e.g. [SrcIP, DstIP, DstPort, Protocol]
-  chunk_size: null             # rows read at a time, for files too big to load whole, e.g. 100000
-  max_rows: null                # cap total rows via reservoir sampling, e.g. 500000 (needs chunk_size set)
+  name: null                   # required
+  raw_files: []                # required, unless train_file + test_file are set
+  train_file: null             # required, unless raw_files is set (use with test_file)
+  test_file: null              # required, unless raw_files is set (use with train_file)
+  split_ratio: 0.8
+  split_mode: random
+  group_columns: []            # required if split_mode: grouped
+  chunk_size: null
+  max_rows: null
 
 schema:
-  label_column: null           # required, column with the binary/attack label, e.g. "Label"
-  attack_category_column: null # optional, multi-class attack-type column, e.g. "AttackType"
-  drop_columns: []             # columns to drop before training, e.g. ["FlowID", "Timestamp"]
-  id_like_columns: []          # IP/port/MAC-like columns, checked for leakage but not auto-dropped
-                                # e.g. ["SrcIP", "DstIP", "SrcPort"]
-  timestamp_column: null       # optional, used only by temporal_leakage_check, e.g. "Timestamp"
-  flow_id_columns: []          # optional, used only by flow_group_leakage_check, e.g. a 5-tuple
-                                # like [SrcIP, DstIP, SrcPort, DstPort, Protocol]
-  scenario_column: null        # optional, used only by scenario_holdout_falsification,
-                                # e.g. a capture-day or attacker-host column
-  feature_categories: {}       # optional, used only by feature_category_ablation_check,
-                                # e.g. {sttl: topology, dur: behavioural, service: identity}
+  label_column: null           # required
+  attack_category_column: null
+  drop_columns: []
+  id_like_columns: []
+  timestamp_column: null
+  flow_id_columns: []
+  scenario_column: null
+  feature_categories: {}
 
 label_grouping:
-  attack_type_mapping: {}      # merge attack categories, e.g. {"DoS Hulk": "DoS", "DoS GoldenEye": "DoS"}
-                                # (anything not listed here, like "PortScan", passes through unchanged)
+  attack_type_mapping: {}
 
 preprocessing:
-  dedup: true                  # remove exact duplicate rows before splitting
-  scaling: standard            # none | standard | minmax | robust
-                                # or a list to compare several, e.g. [none, standard, robust]
+  dedup: true
+  scaling: standard
   sampling:
-    binary: none                # none | smote | smoteenn | enn | random_undersample
-                                 # or a list to compare several, e.g. [none, smote, smoteenn]
-    type: none                  # same options, for the multi-class stage
+    binary: none
+    type: none
 
 audit:
-  # v1, on by default, no extra setup needed
+  # v1, on by default
   dedup_check: true
-  label_conflict_check: true   # same features, contradictory labels, see guide/checks.md
-  near_duplicate_class_check: true # near (not exact) duplicate features across two classes
+  label_conflict_check: true
+  near_duplicate_class_check: true
   leakage_screen: true
-  one_rule_check: true         # is a single feature+threshold rule almost as good as any model?
-  feature_auc_ranking_check: true # standalone AUC of every numeric feature, no model fit
+  one_rule_check: true
+  feature_auc_ranking_check: true
   identity_column_flag: true
-  port_protocol_shortcut_check: true # no-ops unless a port + a proto-like column are both found
-  temporal_leakage_check: true # no-ops unless schema.timestamp_column is set
-  temporal_realism_check: true # no-ops unless schema.timestamp_column is set
-  flow_group_leakage_check: true # no-ops unless schema.flow_id_columns is set
-  row_order_leakage_check: true # adjacent-row label clustering vs. a shuffled baseline
+  port_protocol_shortcut_check: true
+  temporal_leakage_check: true
+  temporal_realism_check: true
+  flow_group_leakage_check: true
+  row_order_leakage_check: true
   homogeneity_test: true
-  resplit_falsification: true   # needs dataset.group_columns set (session/IP columns); most
-                                 # datasets loaded via train_file/test_file or with no such
-                                 # columns should set this false instead, see guide/checks.md
-  scenario_holdout_falsification: true # no-ops unless schema.scenario_column is set
+  resplit_falsification: true   # optional, needs dataset.group_columns set
+  scenario_holdout_falsification: true
   class_distribution_report: true
   low_cardinality_warning: true
   schema_fingerprint_check: true
   data_integrity_check: true
 
-  # v2, opt-in, need a second dataset or heavier compute
+  # v2, opt-in
   synthetic_realism_check: false
   cross_dataset_drift_check: false
-  cross_capture_matrix_check: false # N x N accuracy matrix across schema.scenario_column values
-  feature_category_ablation_check: false # accuracy cost of removing each schema.feature_categories group
-  artifact_sensitivity_check: false # prediction-flip rate from reshuffling one id_like/timestamp column
-  result_robustness_check: false # accuracy spread across split/dedup/identity-column conditions
+  cross_capture_matrix_check: false
+  feature_category_ablation_check: false
+  artifact_sensitivity_check: false
+  result_robustness_check: false
   known_issue_lookup: false
-  seed_sensitivity_check: false # re-fits leakage_screen/one_rule_check across a few seeds
-  reference_dataset: null      # required if any v2 check above is enabled, e.g. "/path/to/reference.csv"
+  seed_sensitivity_check: false
+  reference_dataset: null      # required if synthetic_realism_check or cross_dataset_drift_check is true
 
 classifiers:
-  list: all                    # "all", or pick from: RandomForest, XGBoost, DecisionTree,
-                                # NaiveBayes, LogisticRegression, KNN, SVM, LDA, Stacking,
-                                # Voting, ExtraTrees, HistGradientBoosting, AdaBoost, MLP
-                                # e.g. [RandomForest, XGBoost]
-  tuning: false                # true runs a hyperparameter search, see search_space
-  calibration: none            # none | platt | isotonic
-  hyperparameters: {}          # fixed params per classifier, used when tuning: false
-                                # e.g. {RandomForest: {n_estimators: 200, max_depth: 20}}
-  search_space: {}             # grid per classifier, used when tuning: true
-                                # e.g. {XGBoost: {learning_rate: [0.01, 0.05, 0.1]}}
+  list: all
+  tuning: false
+  calibration: none
+  hyperparameters: {}
+  search_space: {}
 
 output:
-  dir: ./output                 # where results (and the load-cache) are written, e.g. ./results
-  format: parquet               # parquet | csv
-  save_preprocessed: true       # also write out the cleaned train/test data
-  keep_runs: 10                  # keep only the N most recent runs, null keeps every run
-  write_scorecard_plot: false   # also render scorecard.pdf/.png, needs `pip install "ids2eval[plots]"`
+  dir: ./output
+  format: parquet
+  save_preprocessed: true
+  keep_runs: 10
+  write_scorecard_plot: false
 
 # Not supported: feature engineering (imputation, feature selection, dimensionality
 # reduction), hyperparameter search deeper than classifiers.tuning, and multi-stage
-# cascades. See the "scope" section on the docs site for why.
+# cascades. See configs/README.md and the "scope" section on the docs site for why.

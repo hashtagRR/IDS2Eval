@@ -118,7 +118,7 @@ def load_config(path: str | Path) -> dict[str, Any]:
             user_cfg = yaml.safe_load(f) or {}
     except FileNotFoundError:
         raise ValueError(
-            f"Config file not found: {path}. See configs/schema.yaml in the repo for every "
+            f"Config file not found: {path}. See configs/README.md in the repo for every "
             "field, or the Quick start section of README.md for a minimal example."
         ) from None
     cfg = _deep_merge(DEFAULTS, user_cfg)

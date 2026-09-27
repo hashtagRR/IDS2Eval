@@ -72,7 +72,7 @@ The dashboard opens `http://localhost:8765` with a **New run** editor
 already filled in with every config field and its default - no YAML
 file to write by hand first. The CLI needs a real config; see
 [Quick start](#quick-start) below for the minimal one, or
-[guide/config-reference.md](guide/config-reference.md) for every
+[configs/README.md](configs/README.md) for every
 field. Tests and lint are exactly what CI runs on every push
 (`.github/workflows/ci.yml`, Linux only for now).
 
@@ -116,7 +116,7 @@ Or skip writing a config file entirely: `venv/bin/ids2eval-dashboard`
 opens a browser tab with the same thing pre-filled in an editor. See
 [guide/usage.md](guide/usage.md) for the CLI/dashboard/output
 files/programmatic API, and
-[guide/config-reference.md](guide/config-reference.md) for every
+[configs/README.md](configs/README.md) for every
 config field with an example.
 
 **Point it at real data**: `dataset.raw_files`/`train_file`/`test_file`
@@ -132,7 +132,7 @@ are two well-known ones this project validates against; see
 | | |
 |---|---|
 | [guide/usage.md](guide/usage.md) | CLI, web UI, output files, caching, reproducing a run, programmatic API |
-| [guide/config-reference.md](guide/config-reference.md) | Every config field, tabulated, with a default and an example |
+| [configs/README.md](configs/README.md) | Every config field, tabulated, with a default and an example |
 | [guide/configuration.md](guide/configuration.md) | The reasoning behind non-obvious fields, and larger worked examples |
 | [guide/checks.md](guide/checks.md) | What each of the 27 checks does, and the research behind it |
 | [guide/contributing-known-issues.md](guide/contributing-known-issues.md) | How to add a curated known issue or extractor fingerprint |

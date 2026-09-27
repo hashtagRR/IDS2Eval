@@ -1,6 +1,6 @@
 # Configuring IDS<sup>2</sup>Eval
 
-[config-reference.md](config-reference.md) lists every field, its
+[configs/README.md](../configs/README.md) lists every field, its
 default, and a short description, tabulated. This page is the reasoning
 behind the non-obvious fields, plus larger worked examples, for when
 the reference's one-liner isn't enough.

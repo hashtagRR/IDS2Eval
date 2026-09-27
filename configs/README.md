@@ -1,11 +1,13 @@
 # Config reference
 
-Every field in [`configs/schema.yaml`](../configs/schema.yaml), tabulated
-with its default and what it does. Copy that file as your starting
-point; anything you leave out of your own config uses the default
-shown here. For the reasoning behind the non-obvious fields and larger
-worked examples (large datasets, session-grouped splits, tuning), see
-[configuration.md](configuration.md).
+Every field in [`schema.yaml`](schema.yaml), tabulated with its
+default and what it does. `schema.yaml` itself only marks which fields
+are `required`; this page has the descriptions, so the YAML file stays
+easy to scan. Copy `schema.yaml` as your starting point; anything you
+leave out of your own config uses the default shown here. For the
+reasoning behind the non-obvious fields and larger worked examples
+(large datasets, session-grouped splits, tuning), see
+[../guide/configuration.md](../guide/configuration.md).
 
 A config needs only two things: `dataset.name` and `dataset.raw_files`
 (or `train_file`+`test_file`), plus `schema.label_column`. Everything
@@ -26,8 +28,8 @@ Where the data comes from, and how it's split.
 | Field | Default | Description |
 |---|---|---|
 | `name` | *(required)* | Short id for your dataset, e.g. `"cic-ids2018"`. Also the key `known_issue_lookup`/`schema_fingerprint_check` match against. |
-| `raw_files` | `[]` | Your data file(s); IDS<sup>2</sup>Eval splits them into train/test itself. Exactly one of `raw_files` or `train_file`+`test_file` is required. |
-| `train_file` / `test_file` | `null` | An already-split pair, used together instead of `raw_files`. |
+| `raw_files` | *(required, or use `train_file`+`test_file`)* | Your data file(s); IDS<sup>2</sup>Eval splits them into train/test itself. |
+| `train_file` / `test_file` | *(required, or use `raw_files`)* | An already-split pair, used together instead of `raw_files`. |
 | `split_ratio` | `0.8` | Train share, only used with `raw_files`. |
 | `split_mode` | `random` | `random` or `grouped`. `grouped` keeps every row sharing a `group_columns` key on one side of the split. |
 | `group_columns` | `[]` | Columns that define a "session"; required if `split_mode: grouped`. |
@@ -46,7 +48,7 @@ single-member `.zip`, all inferred from the name) or `.parquet`. To
 read one named file out of a *multi*-member zip without extracting it
 first, use `"archive.zip::member_name.csv"`. A `.rar` archive isn't
 read directly - extract it first. See
-[configuration.md](configuration.md#picking-files-out-of-a-datasets-official-download)
+[../guide/configuration.md](../guide/configuration.md#picking-files-out-of-a-datasets-official-download)
 for which files to pick from a real dataset's official download, and
 worked examples for large files (`chunk_size`/`max_rows`) and
 session-grouped splits (`split_mode: grouped`).
@@ -115,13 +117,13 @@ preprocessing:
 
 Scaling and sampling both run inside the same pipeline as the
 classifier on every fold, never fit once beforehand - see
-[configuration.md](configuration.md#tuning-and-hyperparameters) for
-why that matters.
+[../guide/configuration.md](../guide/configuration.md#tuning-and-hyperparameters)
+for why that matters.
 
 ## `audit`
 
-Which of the 27 checks run. See [checks.md](checks.md) for what each
-one tests and the research behind it.
+Which of the 27 checks run. See [../guide/checks.md](../guide/checks.md)
+for what each one tests and the research behind it.
 
 **v1, on by default, no extra setup needed:**
 
@@ -207,7 +209,7 @@ output:
 
 | Field | Default | Description |
 |---|---|---|
-| `random_seed` | `0` | The single source for every random step: splitting, sampling, classifier initialization. Changing it changes the result deterministically; see [configuration.md](configuration.md#reproducibility). |
+| `random_seed` | `0` | The single source for every random step: splitting, sampling, classifier initialization. Changing it changes the result deterministically; see [../guide/configuration.md](../guide/configuration.md#reproducibility). |
 
 ## Not supported
 

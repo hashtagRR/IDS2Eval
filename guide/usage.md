@@ -38,9 +38,10 @@ ids2eval-dashboard
 
 No config file needed to start: this opens `http://localhost:8765`
 with a **New run** editor already filled in with
-[`configs/schema.yaml`](../configs/schema.yaml)'s full reference,
-every field, its real default, and a one-line explanation, not a
-stripped-down subset. `--config` below is optional, for prefilling the
+[`configs/schema.yaml`](../configs/schema.yaml), every field and its
+real default, not a stripped-down subset (see
+[configs/README.md](../configs/README.md) for what each one does).
+`--config` below is optional, for prefilling the
 editor with a config you already have or listing runs from its
 `output.dir`, not a requirement to launch the dashboard at all. A
 small local web app (standard library only, no
@@ -75,9 +76,9 @@ troubleshooting notes are in [ids2eval/dashboard/](../ids2eval/dashboard/README.
 ## Configuration
 
 Everything else is driven by the config file. See
-[configuration.md](configuration.md) for the full surface and
-[configs/schema.yaml](../configs/schema.yaml) for the exhaustive,
-commented reference.
+[configs/README.md](../configs/README.md) for every field, tabulated
+with its default, and [configuration.md](configuration.md) for the
+reasoning behind non-obvious ones and larger worked examples.
 
 ## What actually runs
 

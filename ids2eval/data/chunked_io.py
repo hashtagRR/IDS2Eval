@@ -31,7 +31,11 @@ official download - NSL-KDD's original KDDTrain+.txt/KDDTest+.txt have
 none) is handled by dataset.column_names: when set, every CSV read
 treats row 0 as data and assigns these names positionally, instead of
 inferring a header from the first row. Ignored for Parquet, which
-already carries its own column names in the file.
+already carries its own column names in the file. A column_names list
+built for the wrong file raises a clear error naming the mismatch
+rather than pandas' own cryptic "Expected N fields... saw M" - a real,
+reproduced case: UNSW-NB15's four raw capture files have 49 columns,
+while its separate pre-split training-set/testing-set files have 45.
 
 Two independent knobs (dataset.chunk_size / dataset.max_rows):
 
@@ -130,9 +134,25 @@ def _iter_csv_chunks(source, chunk_size: int | None, column_names: list[str] | N
     exactly this).
     """
     kwargs = {"header": None, "names": column_names} if column_names else {}
-    reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False, **kwargs) if chunk_size \
-        else [pd.read_csv(source, low_memory=False, **kwargs)]
-    yield from reader
+    try:
+        reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False, **kwargs) if chunk_size \
+            else [pd.read_csv(source, low_memory=False, **kwargs)]
+        yield from reader
+    except pd.errors.ParserError as e:
+        if not column_names:
+            raise
+        # pandas' own message ("Expected N fields... saw M") already names both
+        # counts, but gives no hint that dataset.column_names is the likely
+        # cause - a real, reproduced case: UNSW-NB15's four raw capture files
+        # have 49 columns, while its separate pre-split training-set/
+        # testing-set files have 45; pointing column_names built for one at
+        # the other produces exactly this error.
+        raise ValueError(
+            f"{source}: dataset.column_names has {len(column_names)} names, but this file's "
+            f"rows don't have that many fields ({e}). Check that column_names lists every "
+            "column in this exact file's own order - a multi-file raw release sometimes has a "
+            "different column count per file."
+        ) from e
 
 
 def _iter_zip_member_chunks(

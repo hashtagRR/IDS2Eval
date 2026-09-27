@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 from ids2eval.data.chunked_io import iter_chunks, load_file, load_files_combined, reservoir_sample
 
@@ -164,6 +165,37 @@ def test_iter_chunks_reads_a_headerless_csv_with_column_names(tmp_path):
     assert list(result.columns) == ["F1", "Label"]
     assert len(result) == 6
     assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_column_names_length_mismatch_raises_a_clear_error(tmp_path):
+    # Reproduced live: UNSW-NB15's four raw capture files have 49 columns,
+    # while its separate pre-split training-set/testing-set files have 45 -
+    # column_names built for one and pointed at the other hits exactly this.
+    path = tmp_path / "raw.csv"
+    path.write_text("1,2,3\n1,2,3,4,5\n")
+    with pytest.raises(ValueError, match=r"dataset\.column_names has 3 names"):
+        list(iter_chunks([str(path)], chunk_size=None, column_names=["x", "y", "z"]))
+
+
+def test_column_names_length_mismatch_raises_a_clear_error_when_chunked(tmp_path):
+    path = tmp_path / "raw.csv"
+    path.write_text("1,2,3\n" * 3 + "1,2,3,4,5\n")
+    with pytest.raises(ValueError, match=r"dataset\.column_names has 3 names"):
+        list(iter_chunks([str(path)], chunk_size=2, column_names=["x", "y", "z"]))
+
+
+def test_a_parser_error_without_column_names_is_not_rewrapped(tmp_path, monkeypatch):
+    # Only column_names-driven mismatches get the clearer message; any other
+    # ParserError (nothing to do with a declared column count) passes through
+    # exactly as pandas raised it.
+    def _raise(*a, **k):
+        raise pd.errors.ParserError("some unrelated parsing problem")
+
+    monkeypatch.setattr(pd, "read_csv", _raise)
+    path = tmp_path / "raw.csv"
+    path.write_text("a,b\n1,2\n")
+    with pytest.raises(pd.errors.ParserError, match="some unrelated parsing problem"):
+        list(iter_chunks([str(path)], chunk_size=None))
 
 
 def test_iter_chunks_reads_a_chunked_headerless_csv_with_column_names(tmp_path):

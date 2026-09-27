@@ -76,6 +76,18 @@ no way to name a handful of columns and leave the rest positional -
 and it's ignored for `.parquet`, which already carries its own schema
 in the file and has no such ambiguity to resolve.
 
+**Get the column count right for the specific file.** A `column_names`
+list built for one release of a dataset doesn't necessarily match
+another release of the "same" dataset: UNSW-NB15's four raw capture
+files (`UNSW-NB15_1.csv`...`_4.csv`) have 49 columns, while its
+separate pre-split `training-set`/`testing-set` files have 45 - two
+real, differently-shaped releases of the same dataset. Pointing
+`column_names` built for one at the other raises a clear error
+(`dataset.column_names has N names, but this file's rows don't have
+that many fields`) rather than pandas' own cryptic tokenizing error,
+but the fix is still the same either way: check the actual file you're
+loading, not just the dataset's name.
+
 ## Large datasets
 
 ```yaml

@@ -30,6 +30,7 @@ Where the data comes from, and how it's split.
 | `name` | *(required)* | Short id for your dataset, e.g. `"cic-ids2018"`. Also the key `known_issue_lookup`/`schema_fingerprint_check` match against. |
 | `raw_files` | *(required, or use `train_file`+`test_file`)* | Your data file(s); IDS<sup>2</sup>Eval splits them into train/test itself. |
 | `train_file` / `test_file` | *(required, or use `raw_files`)* | An already-split pair, used together instead of `raw_files`. |
+| `column_names` | `[]` | Set this if the CSV has no header row at all: every row is treated as data, and these names are assigned positionally, in order. Leave empty for a normal CSV with a header row. Ignored for `.parquet`, which already carries its own column names. |
 | `split_ratio` | `0.8` | Train share, only used with `raw_files`. |
 | `split_mode` | `random` | `random` or `grouped`. `grouped` keeps every row sharing a `group_columns` key on one side of the split. |
 | `group_columns` | `[]` | Columns that define a "session"; required if `split_mode: grouped`. |
@@ -52,6 +53,31 @@ read directly - extract it first. See
 for which files to pick from a real dataset's official download, and
 worked examples for large files (`chunk_size`/`max_rows`) and
 session-grouped splits (`split_mode: grouped`).
+
+**A CSV with no header row.** Some official downloads ship this way -
+NSL-KDD's original `KDDTrain+.txt`/`KDDTest+.txt` are a real example,
+every row is data, and the standard KDD'99 column names exist only in
+the dataset's documentation, not the file itself. Rather than editing
+the file to prepend a header, declare the names in the config:
+
+```yaml
+dataset:
+  name: nsl-kdd
+  train_file: KDDTrain+.txt
+  test_file: KDDTest+.txt
+  column_names: [duration, protocol_type, service, flag, src_bytes, dst_bytes,
+                 "...", label, difficulty]   # every column, in the file's own order
+schema:
+  label_column: label
+  drop_columns: [difficulty]
+```
+
+Every column needs a name, in the file's exact order - there's no way
+to name only some columns and leave the rest positional. Verified
+against NSL-KDD's real data: stripping the header from the (already
+correctly labeled) files this project validates against and reloading
+with `column_names` set reproduces identical findings to the normal,
+headered load.
 
 **Windows paths in YAML.** A double-quoted string with a single
 backslash isn't a literal backslash in YAML, it starts an escape

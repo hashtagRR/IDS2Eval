@@ -31,6 +31,7 @@ DEFAULTS: dict[str, Any] = {
         "raw_files": [],
         "train_file": None,
         "test_file": None,
+        "column_names": [],
         "split_ratio": 0.8,
         "split_mode": "random",
         "group_columns": [],
@@ -153,6 +154,13 @@ def validate_config(cfg: dict[str, Any]) -> None:
         errors.append(f"dataset.split_mode must be one of {sorted(VALID_SPLIT_MODE)}")
     if dataset["split_mode"] == "grouped" and not dataset["group_columns"]:
         errors.append("dataset.group_columns is required when split_mode is 'grouped'")
+    column_names = dataset["column_names"]
+    if column_names:
+        if not isinstance(column_names, list) or not all(isinstance(c, str) for c in column_names):
+            errors.append("dataset.column_names must be a list of strings")
+        elif len(column_names) != len(set(column_names)):
+            dupes = sorted({c for c in column_names if column_names.count(c) > 1})
+            errors.append(f"dataset.column_names has duplicate name(s): {dupes}")
     if dataset["chunk_size"] is not None and dataset["chunk_size"] <= 0:
         errors.append("dataset.chunk_size must be a positive integer")
     if dataset["max_rows"] is not None:

@@ -216,3 +216,26 @@ def test_random_seed_default_is_valid(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["audit"]["resplit_falsification"] = False
     validate_config(base_cfg)  # should not raise
+
+
+def test_column_names_accepts_a_list_of_strings(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["column_names"] = ["F1", "F2", "Label"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    validate_config(base_cfg)  # should not raise
+
+
+def test_column_names_rejects_non_string_entries(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["column_names"] = ["F1", 2]
+    base_cfg["audit"]["resplit_falsification"] = False
+    with pytest.raises(ValueError, match="must be a list of strings"):
+        validate_config(base_cfg)
+
+
+def test_column_names_rejects_duplicates(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["column_names"] = ["F1", "Label", "F1"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    with pytest.raises(ValueError, match=r"duplicate name\(s\)"):
+        validate_config(base_cfg)

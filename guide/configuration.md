@@ -55,6 +55,27 @@ needs an external `unrar`/`7z` binary with no reliable cross-platform
 story. Extract either yourself first if a `::` member reference isn't
 an option.
 
+## A dataset with no header row
+
+```yaml
+dataset:
+  column_names: [duration, protocol_type, "...", label]
+```
+
+Some official downloads are entirely headerless: the file is nothing
+but data rows, and the column names live only in a paper or a
+`.names` companion file, not the CSV itself. NSL-KDD's original
+`KDDTrain+.txt`/`KDDTest+.txt` are exactly this shape. Without
+`dataset.column_names`, IDS<sup>2</sup>Eval would read row 0 as a header
+and silently lose that row of real traffic, then infer nonsense column
+names from whatever values happened to be in it. Setting
+`column_names` tells the loader the opposite: every row, including row
+0, is data, and these are the names, assigned positionally in the
+file's own column order. It has to be every column, in order - there's
+no way to name a handful of columns and leave the rest positional -
+and it's ignored for `.parquet`, which already carries its own schema
+in the file and has no such ambiguity to resolve.
+
 ## Large datasets
 
 ```yaml

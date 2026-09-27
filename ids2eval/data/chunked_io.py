@@ -26,6 +26,13 @@ reliable cross-platform story; extract it yourself first and point at
 the CSV/Parquet file(s) inside, or name a member with "::" if it's
 zipped instead.
 
+A CSV with no header row at all (a real, recurring shape for an
+official download - NSL-KDD's original KDDTrain+.txt/KDDTest+.txt have
+none) is handled by dataset.column_names: when set, every CSV read
+treats row 0 as data and assigns these names positionally, instead of
+inferring a header from the first row. Ignored for Parquet, which
+already carries its own column names in the file.
+
 Two independent knobs (dataset.chunk_size / dataset.max_rows):
 
 - chunk_size bounds memory during the read/downcast phase only, by
@@ -88,13 +95,21 @@ def _is_parquet(name: str) -> bool:
     return str(name).lower().endswith(".parquet")
 
 
-def _iter_parquet_chunks(source, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+def _iter_parquet_chunks(source, chunk_size: int | None, column_names: list[str] | None = None) -> Iterator[pd.DataFrame]:
     """source is a path (str) or a seekable file-like object (an in-memory
     zip member). pyarrow's reader needs random access for the footer, so a
     zip member is read fully into a BytesIO buffer by the caller first.
+
+    column_names is ignored here: Parquet always carries its own column
+    names in the file itself, unlike a headerless CSV. Logged once so a
+    dataset.column_names set for a mixed CSV+Parquet raw_files list isn't
+    silently dropped without a trace.
     """
     import pyarrow.parquet as pq
 
+    if column_names:
+        logger.warning("dataset.column_names is set but %s is Parquet, which already has its "
+                        "own column names; ignoring dataset.column_names for this file", source)
     parquet_file = pq.ParquetFile(source)
     if chunk_size:
         for batch in parquet_file.iter_batches(batch_size=chunk_size):
@@ -103,28 +118,38 @@ def _iter_parquet_chunks(source, chunk_size: int | None) -> Iterator[pd.DataFram
         yield parquet_file.read().to_pandas()
 
 
-def _iter_csv_chunks(source, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+def _iter_csv_chunks(source, chunk_size: int | None, column_names: list[str] | None = None) -> Iterator[pd.DataFrame]:
     """source is a path (str) or any readable file-like object (a zip
     member's stream, read sequentially - pandas never seeks it).
+
+    column_names, if given, means the file itself has no header row: every
+    row is data, and these names are assigned positionally (dataset.
+    column_names in the config, for a CSV export with the header stripped
+    or never included, a real, recurring shape of an official NIDS
+    download - NSL-KDD's own original KDDTrain+.txt/KDDTest+.txt are
+    exactly this).
     """
-    reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False) if chunk_size \
-        else [pd.read_csv(source, low_memory=False)]
+    kwargs = {"header": None, "names": column_names} if column_names else {}
+    reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False, **kwargs) if chunk_size \
+        else [pd.read_csv(source, low_memory=False, **kwargs)]
     yield from reader
 
 
-def _iter_zip_member_chunks(archive_path: str, member: str, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+def _iter_zip_member_chunks(
+    archive_path: str, member: str, chunk_size: int | None, column_names: list[str] | None = None
+) -> Iterator[pd.DataFrame]:
     import io
     import zipfile
 
     with zipfile.ZipFile(archive_path) as archive:
         if _is_parquet(member):
-            yield from _iter_parquet_chunks(io.BytesIO(archive.read(member)), chunk_size)
+            yield from _iter_parquet_chunks(io.BytesIO(archive.read(member)), chunk_size, column_names)
             return
         with archive.open(member) as member_file:
-            yield from _iter_csv_chunks(member_file, chunk_size)
+            yield from _iter_csv_chunks(member_file, chunk_size, column_names)
 
 
-def _iter_raw_chunks(path: str, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+def _iter_raw_chunks(path: str, chunk_size: int | None, column_names: list[str] | None = None) -> Iterator[pd.DataFrame]:
     """One file's (or one zip member's) chunks, dispatched by extension.
 
     "archive.zip::member.csv" reads just that member; see this module's
@@ -138,14 +163,16 @@ def _iter_raw_chunks(path: str, chunk_size: int | None) -> Iterator[pd.DataFrame
     """
     if "::" in path:
         archive_path, _, member = path.partition("::")
-        yield from _iter_zip_member_chunks(archive_path, member, chunk_size)
+        yield from _iter_zip_member_chunks(archive_path, member, chunk_size, column_names)
     elif _is_parquet(path):
-        yield from _iter_parquet_chunks(path, chunk_size)
+        yield from _iter_parquet_chunks(path, chunk_size, column_names)
     else:
-        yield from _iter_csv_chunks(path, chunk_size)
+        yield from _iter_csv_chunks(path, chunk_size, column_names)
 
 
-def iter_chunks(paths: list[str], chunk_size: int | None) -> Iterator[pd.DataFrame]:
+def iter_chunks(
+    paths: list[str], chunk_size: int | None, column_names: list[str] | None = None
+) -> Iterator[pd.DataFrame]:
     """Yield chunks with a dtype schema stable across the whole stream.
 
     pandas infers dtype independently per chunk of a chunked CSV read -
@@ -169,7 +196,7 @@ def iter_chunks(paths: list[str], chunk_size: int | None) -> Iterator[pd.DataFra
     numeric_columns = None
     reference_columns = None
     for path in paths:
-        for chunk in _iter_raw_chunks(path, chunk_size):
+        for chunk in _iter_raw_chunks(path, chunk_size, column_names):
             chunk.columns = chunk.columns.str.strip()
             chunk = _drop_embedded_header_rows(chunk)
 
@@ -244,8 +271,11 @@ def reservoir_sample(chunks: Iterator[pd.DataFrame], max_rows: int, seed: int = 
     return reservoir, n_seen
 
 
-def load_file(path: str, chunk_size: int | None, max_rows: int | None, seed: int = 0) -> pd.DataFrame:
-    chunks = iter_chunks([path], chunk_size)
+def load_file(
+    path: str, chunk_size: int | None, max_rows: int | None, seed: int = 0,
+    column_names: list[str] | None = None,
+) -> pd.DataFrame:
+    chunks = iter_chunks([path], chunk_size, column_names)
     if max_rows:
         df, n_seen = reservoir_sample(chunks, max_rows, seed)
         logger.info("Reservoir-sampled %s: %d rows seen -> %d kept (dataset.max_rows)", path, n_seen, len(df))
@@ -253,8 +283,11 @@ def load_file(path: str, chunk_size: int | None, max_rows: int | None, seed: int
     return pd.concat(list(chunks), ignore_index=True)
 
 
-def load_files_combined(paths: list[str], chunk_size: int | None, max_rows: int | None, seed: int = 0) -> pd.DataFrame:
-    chunks = iter_chunks(paths, chunk_size)
+def load_files_combined(
+    paths: list[str], chunk_size: int | None, max_rows: int | None, seed: int = 0,
+    column_names: list[str] | None = None,
+) -> pd.DataFrame:
+    chunks = iter_chunks(paths, chunk_size, column_names)
     if max_rows:
         df, n_seen = reservoir_sample(chunks, max_rows, seed)
         logger.info("Reservoir-sampled %d files: %d rows seen -> %d kept (dataset.max_rows)", len(paths), n_seen, len(df))

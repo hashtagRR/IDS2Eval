@@ -32,7 +32,8 @@ def load_raw_combined(dataset_cfg: dict, seed: int = 0) -> pd.DataFrame:
             "sample boundary before any grouped split is applied."
         )
     return chunked_io.load_files_combined(
-        dataset_cfg["raw_files"], dataset_cfg["chunk_size"], dataset_cfg["max_rows"], seed
+        dataset_cfg["raw_files"], dataset_cfg["chunk_size"], dataset_cfg["max_rows"], seed,
+        dataset_cfg["column_names"],
     )
 
 
@@ -42,8 +43,9 @@ def load_split(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
     seed = cfg["random_seed"]
     if dataset_cfg["train_file"] and dataset_cfg["test_file"]:
         chunk_size, max_rows = dataset_cfg["chunk_size"], dataset_cfg["max_rows"]
-        train_df = chunked_io.load_file(dataset_cfg["train_file"], chunk_size, max_rows, seed)
-        test_df = chunked_io.load_file(dataset_cfg["test_file"], chunk_size, max_rows, seed)
+        column_names = dataset_cfg["column_names"]
+        train_df = chunked_io.load_file(dataset_cfg["train_file"], chunk_size, max_rows, seed, column_names)
+        test_df = chunked_io.load_file(dataset_cfg["test_file"], chunk_size, max_rows, seed, column_names)
         return train_df, test_df
 
     combined = load_raw_combined(dataset_cfg, seed)

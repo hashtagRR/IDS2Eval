@@ -9,6 +9,7 @@ dataset:
   raw_files: []                # required, unless train_file + test_file are set
   train_file: null             # required, unless raw_files is set (use with test_file)
   test_file: null              # required, unless raw_files is set (use with train_file)
+  column_names: []             # optional, only if the CSV has no header row - see configs/README.md
   split_ratio: 0.8
   split_mode: random
   group_columns: []            # required if split_mode: grouped

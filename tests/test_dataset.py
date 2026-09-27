@@ -16,6 +16,31 @@ def test_load_split_pre_split_files(tmp_path, base_cfg):
     assert len(test_df) == 1
 
 
+def test_load_split_pre_split_files_headerless_with_column_names(tmp_path, base_cfg):
+    train_path, test_path = tmp_path / "train.csv", tmp_path / "test.csv"
+    pd.DataFrame([["A", 1], ["B", 2]]).to_csv(train_path, index=False, header=False)
+    pd.DataFrame([["A", 3]]).to_csv(test_path, index=False, header=False)
+    base_cfg["dataset"]["train_file"] = str(train_path)
+    base_cfg["dataset"]["test_file"] = str(test_path)
+    base_cfg["dataset"]["column_names"] = ["Label", "F"]
+
+    train_df, test_df = dataset.load_split(base_cfg)
+    assert list(train_df.columns) == ["Label", "F"]
+    assert len(train_df) == 2  # row 0 is data, not a consumed header
+    assert len(test_df) == 1
+
+
+def test_load_raw_combined_headerless_with_column_names(tmp_path, base_cfg):
+    path = tmp_path / "raw.csv"
+    pd.DataFrame([["A", 1], ["B", 2], ["A", 3]]).to_csv(path, index=False, header=False)
+    base_cfg["dataset"]["raw_files"] = [str(path)]
+    base_cfg["dataset"]["column_names"] = ["Label", "F"]
+
+    combined = dataset.load_raw_combined(base_cfg["dataset"])
+    assert list(combined.columns) == ["Label", "F"]
+    assert len(combined) == 3
+
+
 def test_random_split_preserves_row_count(base_cfg, synth_data):
     base_cfg["dataset"]["split_ratio"] = 0.7
     train, test = dataset._random_split(synth_data, "Label", base_cfg["dataset"])

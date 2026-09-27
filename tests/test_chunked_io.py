@@ -152,3 +152,60 @@ def test_load_files_combined_reads_two_members_of_the_same_zip(tmp_path):
         [f"{archive}::train.csv", f"{archive}::test.csv"], chunk_size=None, max_rows=None
     )
     assert len(result) == 10
+
+
+def test_iter_chunks_reads_a_headerless_csv_with_column_names(tmp_path):
+    df = _sample_df(6)
+    path = tmp_path / "headerless.csv"
+    df.to_csv(path, index=False, header=False)  # row 0 is data, not a header
+    result = pd.concat(
+        list(iter_chunks([str(path)], chunk_size=None, column_names=["F1", "Label"])), ignore_index=True
+    )
+    assert list(result.columns) == ["F1", "Label"]
+    assert len(result) == 6
+    assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_iter_chunks_reads_a_chunked_headerless_csv_with_column_names(tmp_path):
+    df = _sample_df(20)
+    path = tmp_path / "headerless.csv"
+    df.to_csv(path, index=False, header=False)
+    result = pd.concat(
+        list(iter_chunks([str(path)], chunk_size=7, column_names=["F1", "Label"])), ignore_index=True
+    )
+    assert len(result) == 20
+    assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_load_file_treats_row_zero_as_data_when_column_names_is_set(tmp_path):
+    df = _sample_df(5)
+    path = tmp_path / "headerless.csv"
+    df.to_csv(path, index=False, header=False)
+    result = load_file(str(path), chunk_size=None, max_rows=None, column_names=["F1", "Label"])
+    assert len(result) == 5  # not 4: row 0 is a real data row, not consumed as a header
+
+
+def test_iter_chunks_ignores_column_names_for_parquet(tmp_path, caplog):
+    df = _sample_df(4)
+    path = tmp_path / "data.parquet"
+    df.to_parquet(path, index=False)
+    result = pd.concat(
+        list(iter_chunks([str(path)], chunk_size=None, column_names=["X", "Y"])), ignore_index=True
+    )
+    assert list(result.columns) == ["F1", "Label"]  # Parquet's own names win, not column_names
+    assert "ignoring dataset.column_names" in caplog.text
+
+
+def test_headerless_csv_member_from_a_zip_with_column_names(tmp_path):
+    df = _sample_df(6)
+    archive = _multi_member_zip(tmp_path, {"headerless.csv": df.reset_index(drop=True)})
+    # _multi_member_zip writes df.to_csv(index=False) with a header; overwrite that
+    # member with a headerless version to match this test's real scenario.
+    import zipfile
+    with zipfile.ZipFile(archive, "a") as zf:
+        zf.writestr("no_header.csv", df.to_csv(index=False, header=False))
+    result = pd.concat(list(iter_chunks(
+        [f"{archive}::no_header.csv"], chunk_size=None, column_names=["F1", "Label"]
+    )), ignore_index=True)
+    assert list(result.columns) == ["F1", "Label"]
+    assert len(result) == 6

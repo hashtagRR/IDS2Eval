@@ -10,7 +10,53 @@
       "test_rows_raw": 82563,
       "test_rows_deduped": 82563,
       "test_leakage_dropped": 0,
-      "test_duplicates_dropped": 0
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "Benign": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDoS attacks-LOIC-HTTP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDOS attack-HOIC": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-Hulk": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Bot": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Infilteration": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "SSH-Bruteforce": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-GoldenEye": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-Slowloris": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDOS attack-LOIC-UDP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-SlowHTTPTest": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -18,6 +64,14 @@
     "status": "ok",
     "summary": "no feature vector maps to more than one label",
     "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 11 classes tested",
+    "details": {
+      "classes_tested": 11
+    }
   },
   {
     "check": "leakage_screen",
@@ -46,6 +100,22 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Tot Fwd Pkts' alone reaches AUC 1.000 identifying 'DDOS attack-LOIC-UDP'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Tot Fwd Pkts": 0.9999697381932438,
+        "Fwd Header Len": 0.9999697381932438,
+        "Subflow Fwd Pkts": 0.9999697381932438,
+        "Fwd Act Data Pkts": 0.9999697381932438,
+        "TotLen Fwd Pkts": 0.9999689658501477
+      },
+      "best_feature": "Tot Fwd Pkts",
+      "best_class": "DDOS attack-LOIC-UDP"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "flag",
     "summary": "standalone AUC by column: {'Dst Port': 0.912}. Suggest dropping: ['Dst Port']",
@@ -55,7 +125,32 @@
       },
       "suggested_drop": [
         "Dst Port"
-      ]
+      ],
+      "by_class": {
+        "Dst Port": {
+          "Benign": 0.9141429473099723,
+          "DDoS attacks-LOIC-HTTP": 0.9187108456709441,
+          "DDOS attack-HOIC": 0.912125933612282,
+          "DoS attacks-Hulk": 0.9000412498448788,
+          "Bot": 0.9802801648516235,
+          "Infilteration": 0.6189592148774302,
+          "SSH-Bruteforce": 0.9995669569884603,
+          "DoS attacks-GoldenEye": 0.8882871013197627,
+          "DoS attacks-Slowloris": 0.8949653280339961,
+          "DDOS attack-LOIC-UDP": 0.9006807830216106,
+          "DoS attacks-SlowHTTPTest": 0.800171592377261
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "flag",
+    "summary": "standalone AUC of 'Dst Port' + 'Protocol' combined: 0.912. Port and protocol together may predict the label without attack behavior",
+    "details": {
+      "port_column": "Dst Port",
+      "protocol_column": "Protocol",
+      "standalone_auc": 0.9121610461710795
     }
   },
   {
@@ -63,6 +158,29 @@
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.9995142528144265,
+        "test": 0.9965490695346165
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -126,6 +244,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -271,14 +395,6 @@
           "citation": "Cantone et al. 2024, IEEE Access"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "ok",
-    "summary": "no near-zero-distance feature vectors found across 11 classes tested",
-    "details": {
-      "classes_tested": 11
     }
   }
 ]

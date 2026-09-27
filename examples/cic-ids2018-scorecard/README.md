@@ -12,10 +12,17 @@ audit covers a uniform, seeded 500K-row reservoir sample (`dataset.max_rows`), s
 sample; the full dataset's duplication is higher, since a sample only catches a
 duplicate pair when both copies are drawn.
 
-**Result: failed** - 8 ok, 3 warnings, 2 flags after dedup, across 13 checks.
+**Result: failed** - 12 ok, 3 warnings, 4 flags after dedup, across 19 checks.
 
 What it found:
 
+- **`feature_auc_ranking_check` finds `Tot Fwd Pkts` alone reaches AUC 1.000
+  identifying `DDOS attack-LOIC-UDP`**, and it survives dedup - worth checking
+  for a leakage artifact the same way `Dst Port` already is below.
+- **`port_protocol_shortcut_check` finds `Dst Port` + `Protocol` combined reach
+  the same AUC as `Dst Port` alone** (0.912 after dedup, 0.925 before): the pair
+  adds nothing beyond what `identity_column_flag` already caught, but confirms
+  protocol isn't independently carrying signal here.
 - **`near_duplicate_class_check` finds 475 of 5,317 sampled rows (8.93%) with a
   near-zero-distance neighbor under a different label before dedup**, almost all
   of them `DoS attacks-SlowHTTPTest`/`FTP-BruteForce`; after dedup, none remain
@@ -31,9 +38,12 @@ What it found:
   reproduces Flood et al. 2024 (EuroS&P, Table 8), who report the same
   `SlowHTTPTest`/`FTP-BruteForce` clash; `FTP-BruteForce` was also launched against a
   closed port, so its flows carry almost no attack behavior.
-- **`one_rule_check` finds `Fwd Seg Size Min <= 30` alone reaches 83.0% test
-  accuracy** (83.2% train), below the 95% flag threshold but a reminder of how much
-  of this problem a single feature explains.
+- **`one_rule_check` finds a single rule reaches 83-87% test accuracy either
+  way**: `Fwd Seg Size Min <= 30` on the raw data (83.0% test, 83.2% train),
+  `TotLen Fwd Pkts <= 21` after dedup (86.9% test, 86.2% train) - below the 95%
+  flag threshold, but a reminder of how much of this problem a single feature
+  explains, and that the winning feature itself isn't stable across the
+  duplicate rows removed.
 - **`Dst Port` alone predicts the label at AUC 0.912** (0.925 on the raw data) -
   reproducing the published destination-port shortcut (Flood et al. 2024).
 - **Heavy duplication**: 13.15% of train rows are duplicates, and 16.88% of test rows
@@ -59,5 +69,9 @@ bucket listing. One day-file (`Thuesday-20-02-2018`) has 4 extra columns (`Flow 
 
 This dataset also surfaced a crash, since fixed: a class present in train but absent
 from test (here `SQL Injection`) crashed `identity_column_flag`'s AUC. Run on a
-4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at commit
-7834a67.
+4-vCPU / 15GB VM, audit only (`--skip-benchmark`). Re-run 2026-09-27 to pick up
+`feature_auc_ranking_check`, `port_protocol_shortcut_check`, `row_order_leakage_check`,
+and `temporal_realism_check` (the last two no-op here, no `schema.timestamp_column`
+configured), which is why the check count reads 19; the reservoir sample is
+identical across runs (same seed, same source files), so every other finding is
+unchanged from the original run. Produced with IDS2Eval at commit d1f0560.

@@ -99,3 +99,56 @@ def test_load_files_combined_mixes_csv_and_parquet(tmp_path):
     df2.to_parquet(parquet_path, index=False)
     result = load_files_combined([str(csv_path), str(parquet_path)], chunk_size=None, max_rows=None)
     assert len(result) == 10
+
+
+def _multi_member_zip(tmp_path, members: dict):
+    import zipfile
+    path = tmp_path / "archive.zip"
+    with zipfile.ZipFile(path, "w") as zf:
+        for name, df in members.items():
+            if name.endswith(".parquet"):
+                buf_path = tmp_path / f"_staging_{name}"
+                df.to_parquet(buf_path, index=False)
+                zf.write(buf_path, arcname=name)
+            else:
+                zf.writestr(name, df.to_csv(index=False))
+    return path
+
+
+def test_iter_chunks_reads_one_named_csv_member_from_a_multi_member_zip(tmp_path):
+    train, test = _sample_df(6), _sample_df(4)
+    # Mirrors a real official dataset zip: a train/test pair plus files that
+    # aren't training data at all (a feature-name reference, an event log).
+    archive = _multi_member_zip(tmp_path, {
+        "features.csv": pd.DataFrame({"name": ["F1", "Label"]}),
+        "training-set.csv": train,
+        "testing-set.csv": test,
+        "list_events.csv": pd.DataFrame({"event": ["x"]}),
+    })
+    result = pd.concat(list(iter_chunks([f"{archive}::training-set.csv"], chunk_size=None)), ignore_index=True)
+    assert len(result) == 6
+    assert result["Label"].tolist() == train["Label"].tolist()
+
+
+def test_iter_chunks_reads_a_chunked_csv_member_from_a_zip(tmp_path):
+    df = _sample_df(20)
+    archive = _multi_member_zip(tmp_path, {"data.csv": df})
+    result = pd.concat(list(iter_chunks([f"{archive}::data.csv"], chunk_size=7)), ignore_index=True)
+    assert len(result) == 20
+
+
+def test_iter_chunks_reads_a_parquet_member_from_a_zip(tmp_path):
+    df = _sample_df(6)
+    archive = _multi_member_zip(tmp_path, {"data.parquet": df})
+    result = pd.concat(list(iter_chunks([f"{archive}::data.parquet"], chunk_size=None)), ignore_index=True)
+    assert len(result) == 6
+    assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_load_files_combined_reads_two_members_of_the_same_zip(tmp_path):
+    train, test = _sample_df(5), _sample_df(5)
+    archive = _multi_member_zip(tmp_path, {"train.csv": train, "test.csv": test})
+    result = load_files_combined(
+        [f"{archive}::train.csv", f"{archive}::test.csv"], chunk_size=None, max_rows=None
+    )
+    assert len(result) == 10

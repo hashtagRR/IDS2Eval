@@ -5,12 +5,26 @@ CSV with a compression suffix pandas infers from the name (.csv.gz,
 .csv.bz2, .csv.xz, and .csv.zip provided the zip holds exactly one
 member - pandas' own read_csv handles all of these natively, chunked
 reading included, nothing in this module is compression-aware), or
-.parquet (dispatched to pyarrow, already a hard dependency). Not
-supported: .rar or any multi-member archive - extract those yourself
-first and point raw_files at the CSV/Parquet file(s) inside. A rar
-reader needs an external unrar/7z binary on PATH with no reliable
-cross-platform story, and a multi-member zip has no single obvious
-file to pick; both are worse trade-offs than "extract it first."
+.parquet (dispatched to pyarrow, already a hard dependency).
+
+A multi-member zip (several files in one archive, the common shape of
+a real dataset's official download - a features/schema reference, a
+pre-split train/test pair, several raw per-scenario capture files,
+an event log, ...) has no single obvious member to read, so naming
+one explicitly is required: "archive.zip::member_name.csv" (a literal
+"::" separates the archive path from the member's name inside it,
+picked because neither a real filesystem path nor a zip member name
+uses "::"). CSV members stream chunk by chunk exactly like a plain
+file; Parquet members are read whole into memory first, since
+pyarrow's reader needs a seekable source and a zip member isn't one -
+fine for a single reference file, not a substitute for chunk_size on
+something too big to hold in RAM at all.
+
+Not supported: .rar, or a zip member that is itself a nested archive.
+A rar reader needs an external unrar/7z binary on PATH with no
+reliable cross-platform story; extract it yourself first and point at
+the CSV/Parquet file(s) inside, or name a member with "::" if it's
+zipped instead.
 
 Two independent knobs (dataset.chunk_size / dataset.max_rows):
 
@@ -70,33 +84,65 @@ def _drop_embedded_header_rows(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _is_parquet(path: str) -> bool:
-    return str(path).lower().endswith(".parquet")
+def _is_parquet(name: str) -> bool:
+    return str(name).lower().endswith(".parquet")
+
+
+def _iter_parquet_chunks(source, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+    """source is a path (str) or a seekable file-like object (an in-memory
+    zip member). pyarrow's reader needs random access for the footer, so a
+    zip member is read fully into a BytesIO buffer by the caller first.
+    """
+    import pyarrow.parquet as pq
+
+    parquet_file = pq.ParquetFile(source)
+    if chunk_size:
+        for batch in parquet_file.iter_batches(batch_size=chunk_size):
+            yield batch.to_pandas()
+    else:
+        yield parquet_file.read().to_pandas()
+
+
+def _iter_csv_chunks(source, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+    """source is a path (str) or any readable file-like object (a zip
+    member's stream, read sequentially - pandas never seeks it).
+    """
+    reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False) if chunk_size \
+        else [pd.read_csv(source, low_memory=False)]
+    yield from reader
+
+
+def _iter_zip_member_chunks(archive_path: str, member: str, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+    import io
+    import zipfile
+
+    with zipfile.ZipFile(archive_path) as archive:
+        if _is_parquet(member):
+            yield from _iter_parquet_chunks(io.BytesIO(archive.read(member)), chunk_size)
+            return
+        with archive.open(member) as member_file:
+            yield from _iter_csv_chunks(member_file, chunk_size)
 
 
 def _iter_raw_chunks(path: str, chunk_size: int | None) -> Iterator[pd.DataFrame]:
-    """One file's chunks, dispatched by extension.
+    """One file's (or one zip member's) chunks, dispatched by extension.
 
-    CSV (plain or with a compression suffix pandas already infers from
-    the name - .gz, .bz2, .zip [single member], .xz) via pd.read_csv,
+    "archive.zip::member.csv" reads just that member; see this module's
+    docstring for why one has to be named explicitly. Otherwise: CSV
+    (plain or with a compression suffix pandas already infers from the
+    name - .gz, .bz2, .zip [single member], .xz) via pd.read_csv,
     chunksize supported natively. Parquet via pyarrow's own batched
     reader, since pd.read_parquet has no chunksize equivalent; already
     a hard dependency (used for output.format: parquet), so this adds
     no new package to install.
     """
-    if _is_parquet(path):
-        import pyarrow.parquet as pq
-
-        parquet_file = pq.ParquetFile(path)
-        if chunk_size:
-            for batch in parquet_file.iter_batches(batch_size=chunk_size):
-                yield batch.to_pandas()
-        else:
-            yield parquet_file.read().to_pandas()
-        return
-    reader = pd.read_csv(path, chunksize=chunk_size, low_memory=False) if chunk_size \
-        else [pd.read_csv(path, low_memory=False)]
-    yield from reader
+    if "::" in path:
+        archive_path, _, member = path.partition("::")
+        yield from _iter_zip_member_chunks(archive_path, member, chunk_size)
+    elif _is_parquet(path):
+        yield from _iter_parquet_chunks(path, chunk_size)
+    else:
+        yield from _iter_csv_chunks(path, chunk_size)
 
 
 def iter_chunks(paths: list[str], chunk_size: int | None) -> Iterator[pd.DataFrame]:

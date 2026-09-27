@@ -174,7 +174,7 @@ at wherever you keep these (or any other IDS dataset in CSV form); see
 
 ## Status
 
-Implemented, tested (275 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (279 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data - not just synthetic fixtures:
 
 - **UNSW-NB15** (full dataset) - audit + 5 classifiers, including

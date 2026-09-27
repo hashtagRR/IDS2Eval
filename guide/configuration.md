@@ -21,9 +21,57 @@ required (it's the key `known_issue_lookup`/`schema_fingerprint_check`
 match against), and you need either `raw_files` (IDS<sup>2</sup>Eval splits it
 itself) or a `train_file`+`test_file` pair (already split). Each file
 can be CSV (plain, or `.gz`/`.bz2`/`.xz`/single-member `.zip`, all
-inferred from the name) or `.parquet`; a `.rar` archive or a
-multi-member `.zip` isn't read directly, extract it first and point
-at the file(s) inside.
+inferred from the name) or `.parquet`.
+
+## Picking files out of a dataset's official download
+
+A real dataset's official archive is rarely just the training data - a
+column/feature reference, per-scenario raw capture files, an event
+log, and the actual train/test pair are often all zipped together.
+Nothing here scans a zip or a folder for you: name the exact file(s)
+you want, and IDS<sup>2</sup>Eval reads only those.
+
+The rule this project's own example configs (UNSW-NB15, NSL-KDD, ...)
+all follow: if the archive already ships a pre-split, pre-labeled
+train/test pair (file names containing something like `training-set`/
+`testing-set`, `Train+`/`Test+`), use exactly those two as
+`train_file`+`test_file`. Otherwise, use only the actual per-scenario
+data files as `raw_files` and let IDS<sup>2</sup>Eval split them itself -
+never a features/schema reference, an event log, or anything else that
+isn't itself a table of flow records.
+
+UNSW-NB15's official zip is a concrete case: it contains
+`NUSW-NB15_features.csv` (a column-name reference, not data),
+`UNSW-NB15_1.csv` through `_4.csv` (the four raw, unlabeled capture
+files), `UNSW-NB15_LIST_EVENTS.csv` (an event log), and
+`UNSW_NB15_training-set.csv` / `UNSW_NB15_testing-set.csv` (the
+official pre-split, pre-labeled pair). Since the train/test pair
+exists, that's what to use, and nothing else in the zip:
+
+```yaml
+dataset:
+  name: unsw-nb15
+  train_file: UNSW_NB15_training-set.csv
+  test_file: UNSW_NB15_testing-set.csv
+```
+
+**Without extracting the zip first**, name the member directly with
+`archive.zip::member_name.csv` (a literal `::` separates the archive
+from the file inside it):
+
+```yaml
+dataset:
+  name: unsw-nb15
+  train_file: "UNSW-NB15.zip::UNSW_NB15_training-set.csv"
+  test_file: "UNSW-NB15.zip::UNSW_NB15_testing-set.csv"
+```
+
+This only works for one explicitly named member; pointing `raw_files`
+at the whole zip with no `::member` isn't supported; a multi-file
+archive has no single obvious member to pick, and a `.rar` archive
+needs an external `unrar`/`7z` binary with no reliable cross-platform
+story. Extract either yourself first if a `::` member reference isn't
+an option.
 
 ## Config sections, at a glance
 

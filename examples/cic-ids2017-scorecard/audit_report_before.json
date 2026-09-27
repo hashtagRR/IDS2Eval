@@ -10,7 +10,61 @@
       "test_rows_raw": 566149,
       "test_rows_deduped": 482029,
       "test_leakage_dropped": 81604,
-      "test_duplicates_dropped": 2516
+      "test_duplicates_dropped": 2516,
+      "by_class": {
+        "BENIGN": {
+          "train_duplicate_rate": 0.08177557373560403,
+          "test_leak_rate": 0.1090493159121904
+        },
+        "DoS Hulk": {
+          "train_duplicate_rate": 0.2494130629997079,
+          "test_leak_rate": 0.26264199935086013
+        },
+        "PortScan": {
+          "train_duplicate_rate": 0.3836594727238407,
+          "test_leak_rate": 0.5872082048700685
+        },
+        "DDoS": {
+          "train_duplicate_rate": 6.834535886195214e-05,
+          "test_leak_rate": 0.00015621338748730767
+        },
+        "DoS GoldenEye": {
+          "train_duplicate_rate": 0.0006072382803011902,
+          "test_leak_rate": 0.0029140359397765905
+        },
+        "FTP-Patator": {
+          "train_duplicate_rate": 0.2409448818897638,
+          "test_leak_rate": 0.29093198992443325
+        },
+        "SSH-Patator": {
+          "train_duplicate_rate": 0.4465875370919881,
+          "test_leak_rate": 0.48430873621713316
+        },
+        "DoS slowloris": {
+          "train_duplicate_rate": 0.06857882251455683,
+          "test_leak_rate": 0.08800690250215704
+        },
+        "DoS Slowhttptest": {
+          "train_duplicate_rate": 0.04682882473289384,
+          "test_leak_rate": 0.05909090909090909
+        },
+        "Bot": {
+          "train_duplicate_rate": 0.007628734901462174,
+          "test_leak_rate": 0.002544529262086514
+        },
+        "Web Attack \ufffd Brute Force": {
+          "train_duplicate_rate": 0.017412935323383085,
+          "test_leak_rate": 0.046511627906976744
+        },
+        "Web Attack \ufffd XSS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Infiltration": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -20,7 +74,63 @@
     "details": {
       "conflicting_groups": 719,
       "conflicting_rows": 7144,
-      "cross_split_conflicting_groups": 335
+      "cross_split_conflicting_groups": 335,
+      "by_class": {
+        "BENIGN": {
+          "conflicting_rate": 0.00033698517925103945
+        },
+        "DoS Hulk": {
+          "conflicting_rate": 0.023010044444829122
+        },
+        "PortScan": {
+          "conflicting_rate": 0.006625558421946769
+        },
+        "DDoS": {
+          "conflicting_rate": 4.686511438993337e-05
+        },
+        "DoS GoldenEye": {
+          "conflicting_rate": 0.0
+        },
+        "FTP-Patator": {
+          "conflicting_rate": 0.0
+        },
+        "SSH-Patator": {
+          "conflicting_rate": 0.0
+        },
+        "DoS slowloris": {
+          "conflicting_rate": 0.0003450655624568668
+        },
+        "DoS Slowhttptest": {
+          "conflicting_rate": 0.0
+        },
+        "Bot": {
+          "conflicting_rate": 0.0
+        },
+        "Web Attack \ufffd Brute Force": {
+          "conflicting_rate": 0.0
+        },
+        "Web Attack \ufffd XSS": {
+          "conflicting_rate": 0.0
+        },
+        "Infiltration": {
+          "conflicting_rate": 0.0
+        },
+        "Web Attack \ufffd Sql Injection": {
+          "conflicting_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}",
+    "details": {
+      "classes_tested": 13,
+      "affected_rows": 2,
+      "top_pairs": {
+        "DoS Slowhttptest / DoS slowloris": 2
+      }
     }
   },
   {
@@ -50,6 +160,22 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Bwd Packet Length Max": 0.9999990923036426,
+        "Max Packet Length": 0.9999495369889948,
+        "Fwd Header Length": 0.9999061392901765,
+        "Fwd Header Length.1": 0.9999061392901765,
+        "Total Length of Bwd Packets": 0.9998853358709581
+      },
+      "best_feature": "Bwd Packet Length Max",
+      "best_class": "Heartbleed"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "flag",
     "summary": "standalone AUC by column: {'Destination Port': 0.931}. Suggest dropping: ['Destination Port']",
@@ -59,7 +185,33 @@
       },
       "suggested_drop": [
         "Destination Port"
-      ]
+      ],
+      "by_class": {
+        "Destination Port": {
+          "BENIGN": 0.9293811413902378,
+          "DoS Hulk": 0.9254636165359449,
+          "PortScan": 0.9825547764613569,
+          "DDoS": 0.9092403379564623,
+          "DoS GoldenEye": 0.8921590526334451,
+          "FTP-Patator": 0.9990107357752307,
+          "SSH-Patator": 0.9980547639697683,
+          "DoS slowloris": 0.8915343634400609,
+          "DoS Slowhttptest": 0.8914934810963298,
+          "Bot": 0.8232733203195143,
+          "Web Attack \ufffd Brute Force": 0.8909406766481458,
+          "Web Attack \ufffd XSS": 0.8908225695603859,
+          "Infiltration": 0.999949659272762
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": "Destination Port",
+      "protocol_column": null
     }
   },
   {
@@ -67,6 +219,29 @@
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.9989436579618624,
+        "test": 0.9978736186930728
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -148,6 +323,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -304,18 +485,6 @@
           "citation": "Cantone et al. 2024, IEEE Access"
         }
       ]
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "flag",
-    "summary": "2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}",
-    "details": {
-      "classes_tested": 13,
-      "affected_rows": 2,
-      "top_pairs": {
-        "DoS Slowhttptest / DoS slowloris": 2
-      }
     }
   }
 ]

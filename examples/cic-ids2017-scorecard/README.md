@@ -6,10 +6,16 @@ A real IDS<sup>2</sup>Eval audit of [CIC-IDS2017](https://www.unb.ca/cic/dataset
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 6 ok, 4 warnings, 3 flags after dedup, across 13 checks.
+**Result: failed** - 11 ok, 4 warnings, 4 flags after dedup, across 19 checks.
 
 What it found:
 
+- **`feature_auc_ranking_check` finds `Bwd Packet Length Max` alone reaches AUC
+  1.000 identifying `Heartbleed`, and it survives dedup.** Read this one with the
+  same caution as `known_issue_lookup`'s note below: `Heartbleed` is only 11 rows
+  total (0.022% of the dataset), and a single feature perfectly separating a class
+  that small is at least as likely to be a small-sample artifact as a genuine
+  shortcut - there's no way to tell the two apart with this few examples either way.
 - **`near_duplicate_class_check` finds 2 of 6,029 sampled rows (0.03%) with a
   near-zero-distance neighbor under a different label**, both `DoS Slowhttptest` /
   `DoS slowloris`, unchanged after dedup. A tiny share, but the same pattern
@@ -51,5 +57,8 @@ page rather than the archive. In this copy the Web Attack labels carry a Unicode
 replacement character (`Web Attack � Brute Force`) where the original has an
 invalid byte - the labels are otherwise unchanged.
 
-Run on a 4-vCPU VM, audit only (`--skip-benchmark`). Produced with IDS2Eval at
-commit 7834a67.
+Run on a 4-vCPU / 15GB VM, audit only (`--skip-benchmark`). Re-run 2026-09-26 to
+pick up `feature_auc_ranking_check`, `row_order_leakage_check`, and
+`temporal_realism_check` (the last two no-op here, no `schema.timestamp_column`
+configured), which is why the check count reads 19; every other finding is
+unchanged from the original run. Produced with IDS2Eval at commit f50c423.

@@ -8,8 +8,9 @@ ids2eval-dashboard   # opens http://localhost:8765, no config file needed
 ```
 
 No flags are required to start it: the New run editor opens already filled
-in with a minimal starter config, so writing or pointing at a YAML file is
-optional, not a prerequisite. `--config PATH` prefills the editor with a
+in with `configs/schema.yaml`'s full reference (every field, its real
+default, one line of explanation each), so writing or pointing at a YAML
+file is optional, not a prerequisite. `--config PATH` prefills the editor with a
 config you already have; see [guide/usage.md](../../guide/usage.md#web-ui-dashboard)
 for the full flag list and what each panel does. This page is source-level
 reference (file layout, the HTTP API, the security model) for anyone

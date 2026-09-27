@@ -37,12 +37,13 @@ ids2eval-dashboard
 ```
 
 No config file needed to start: this opens `http://localhost:8765`
-with a **New run** editor already filled in with a minimal starter
-config (every other field falls back to a documented default, see
-[`configs/schema.yaml`](../configs/schema.yaml)). `--config` below is
-optional, for prefilling the editor with a config you already have or
-listing runs from its `output.dir`, not a requirement to launch the
-dashboard at all. A small local web app (standard library only, no
+with a **New run** editor already filled in with
+[`configs/schema.yaml`](../configs/schema.yaml)'s full reference,
+every field, its real default, and a one-line explanation, not a
+stripped-down subset. `--config` below is optional, for prefilling the
+editor with a config you already have or listing runs from its
+`output.dir`, not a requirement to launch the dashboard at all. A
+small local web app (standard library only, no
 extra dependencies):
 
 - **Runs**: every run under the listed output directories, newest

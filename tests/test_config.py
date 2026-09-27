@@ -65,10 +65,16 @@ def test_chunk_size_and_max_rows_valid_together(base_cfg):
     validate_config(base_cfg)  # should not raise
 
 
-def test_resplit_falsification_requires_raw_and_groups(base_cfg):
+def test_resplit_falsification_rejects_a_pre_split_pair(base_cfg):
     base_cfg["dataset"]["train_file"] = "train.csv"
     base_cfg["dataset"]["test_file"] = "test.csv"
-    with pytest.raises(ValueError, match="resplit_falsification requires"):
+    with pytest.raises(ValueError, match="not a pre-split train_file/test_file pair"):
+        validate_config(base_cfg)
+
+
+def test_resplit_falsification_requires_group_columns_when_raw_files_are_set(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    with pytest.raises(ValueError, match=r"needs dataset\.group_columns set"):
         validate_config(base_cfg)
 
 

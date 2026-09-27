@@ -55,7 +55,7 @@ _CONTENT_TYPES = {
     ".pdf": "application/pdf",
     ".parquet": "application/octet-stream",
 }
-_STARTER_CONFIG = """\
+_MINIMAL_STARTER_CONFIG = """\
 # Minimal config - every other field falls back to its default.
 # The full, commented schema is configs/schema.yaml in the repo.
 dataset:
@@ -63,11 +63,60 @@ dataset:
   raw_files: [path/to/data.csv]     # or train_file + test_file
 schema:
   label_column: Label
+audit:
+  # resplit_falsification (on by default) needs dataset.group_columns - e.g. source/
+  # destination IP and port, whatever identifies a session in your data - to build its
+  # grouped-split comparison. Off here since most datasets don't have such columns
+  # loaded; turn it on and set group_columns if yours does (see guide/checks.md).
+  resplit_falsification: false
 classifiers:
   list: [DecisionTree, RandomForest]
 output:
   dir: ./output
 """
+
+# The repo's own full, commented reference (every field, its real default, and a
+# one-line explanation), one directory up from ids2eval/dashboard/server.py's install
+# location. Only resolvable from an editable install (`pip install -e .`, this
+# project's only documented install path) or a repo checkout; _build_starter_config()
+# falls back to _MINIMAL_STARTER_CONFIG when it isn't there, e.g. a built wheel.
+_SCHEMA_YAML_PATH = Path(__file__).resolve().parents[2] / "configs" / "schema.yaml"
+
+# resplit_falsification defaults to true in configs/schema.yaml (an accurate
+# reflection of the real default), but that trips audit.resplit_falsification's
+# dataset.group_columns requirement on the very first run for most datasets, which
+# don't have session-identifying columns loaded at all. Patched to false here, for
+# the editor's starting point only - schema.yaml on disk is left untouched, since
+# it's meant to state the real default, not a dashboard-friendly one.
+_RESPLIT_BLOCK = (
+    "  resplit_falsification: true   # needs dataset.group_columns set (session/IP columns); most\n"
+    "                                 # datasets loaded via train_file/test_file or with no such\n"
+    "                                 # columns should set this false instead, see guide/checks.md"
+)
+_RESPLIT_REPLACEMENT = (
+    "  resplit_falsification: false  # true is the real default here in configs/schema.yaml; off in\n"
+    "                                 # this editor since most datasets have no dataset.group_columns\n"
+    "                                 # to build its comparison split from, see guide/checks.md"
+)
+
+
+def _build_starter_config() -> str:
+    try:
+        text = _SCHEMA_YAML_PATH.read_text()
+    except OSError:
+        return _MINIMAL_STARTER_CONFIG
+    if _RESPLIT_BLOCK not in text:
+        # configs/schema.yaml's wording moved on without this patch - fall back
+        # rather than silently ship a starter that still trips the same wall.
+        logger.warning(
+            "configs/schema.yaml's resplit_falsification comment changed; "
+            "New run will start from the minimal template instead"
+        )
+        return _MINIMAL_STARTER_CONFIG
+    return text.replace(_RESPLIT_BLOCK, _RESPLIT_REPLACEMENT, 1)
+
+
+_STARTER_CONFIG = _build_starter_config()
 
 
 class Job:

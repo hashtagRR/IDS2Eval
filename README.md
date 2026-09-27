@@ -41,10 +41,10 @@ in this Quick start section assumes Linux/macOS path syntax; see
 specific commands look the way they do.)
 
 That opens a small local dashboard ([ids2eval/dashboard](ids2eval/dashboard))
-with a **New run** editor already filled in with a minimal starter
-config (every other field falls back to a documented default, see
-[`configs/schema.yaml`](configs/schema.yaml) for the full list), so
-you can edit it, point `raw_files`/`label_column` at your own data,
+with a **New run** editor already filled in with
+[`configs/schema.yaml`](configs/schema.yaml)'s full reference, every
+field, its real default, and a one-line explanation, so you can edit
+it, point `dataset.name`/`raw_files`/`label_column` at your own data,
 and click Run without writing a YAML file by hand first. It also
 browses past runs, reads their scorecards and benchmark results, and
 has a **Compare datasets** view.

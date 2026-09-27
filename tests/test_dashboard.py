@@ -148,6 +148,46 @@ def test_compare_datasets_endpoint_requires_both_configs(server):
     assert status == 400
 
 
+def test_starter_config_is_the_full_schema_reference():
+    # The New run editor should show every field, not a stripped-down subset -
+    # this is configs/schema.yaml's own content, patched only where its true
+    # default would otherwise trip a wall on the very first run (see below).
+    assert dashboard._STARTER_CONFIG == dashboard._build_starter_config()
+    assert "classifiers:" in dashboard._STARTER_CONFIG
+    assert "write_scorecard_plot" in dashboard._STARTER_CONFIG
+
+
+def test_starter_config_only_fails_on_fields_a_user_must_actually_supply():
+    # Regression test: a user editing just name/raw_files/label_column in the New
+    # run editor must not also hit audit.resplit_falsification's group_columns
+    # requirement, the most common way a brand-new config used to fail validation.
+    _, err = dashboard._validate(dashboard._STARTER_CONFIG)
+    assert err is not None
+    assert "resplit_falsification" not in err
+    assert "dataset.name is required" in err
+    assert "schema.label_column is required" in err
+
+    text = dashboard._STARTER_CONFIG
+    text = text.replace("name: null", "name: my-dataset", 1)
+    text = text.replace("raw_files: []", "raw_files: [data.csv]", 1)
+    text = text.replace("label_column: null", "label_column: Label", 1)
+    cfg, err = dashboard._validate(text)
+    assert cfg is not None, err
+
+
+def test_build_starter_config_falls_back_when_schema_yaml_is_unreachable(monkeypatch):
+    monkeypatch.setattr(dashboard, "_SCHEMA_YAML_PATH", dashboard.Path("/no/such/file.yaml"))
+    assert dashboard._build_starter_config() == dashboard._MINIMAL_STARTER_CONFIG
+
+
+def test_build_starter_config_falls_back_if_the_resplit_comment_drifts(monkeypatch, tmp_path, caplog):
+    drifted = tmp_path / "schema.yaml"
+    drifted.write_text("audit:\n  resplit_falsification: true  # wording changed\n")
+    monkeypatch.setattr(dashboard, "_SCHEMA_YAML_PATH", drifted)
+    assert dashboard._build_starter_config() == dashboard._MINIMAL_STARTER_CONFIG
+    assert "changed" in caplog.text
+
+
 def test_resolve_starter_with_no_config_uses_the_starter_template():
     starter, output_dirs = dashboard._resolve_starter(None, [])
     assert starter == dashboard._STARTER_CONFIG

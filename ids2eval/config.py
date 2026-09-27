@@ -194,11 +194,22 @@ def validate_config(cfg: dict[str, Any]) -> None:
             f"audit.reference_dataset is required when any of {reference_needing_checks} is true"
         )
     if audit["resplit_falsification"] and not (has_raw and dataset["group_columns"]):
-        errors.append(
-            "audit.resplit_falsification requires dataset.raw_files (it builds its "
-            "own independent random-vs-grouped comparison split) and dataset.group_columns "
-            ". It cannot run against a pre-split train_file/test_file pair"
-        )
+        if not has_raw:
+            errors.append(
+                "audit.resplit_falsification needs dataset.raw_files, not a pre-split "
+                "train_file/test_file pair (it builds its own independent random-vs-"
+                "grouped comparison split from the raw data). Set "
+                "audit.resplit_falsification: false if this dataset has no "
+                "session-identifying columns to group by."
+            )
+        else:
+            errors.append(
+                "audit.resplit_falsification needs dataset.group_columns set (e.g. "
+                "source/destination IP and port, or whatever identifies a session in "
+                "this dataset) to build its grouped-split comparison. Set "
+                "audit.resplit_falsification: false instead if this dataset has no "
+                "such columns, see guide/checks.md for what the check does."
+            )
 
     classifiers = cfg["classifiers"]
     clf_list = classifiers["list"]

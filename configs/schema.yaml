@@ -61,7 +61,9 @@ audit:
   flow_group_leakage_check: true # no-ops unless schema.flow_id_columns is set
   row_order_leakage_check: true # adjacent-row label clustering vs. a shuffled baseline
   homogeneity_test: true
-  resplit_falsification: true
+  resplit_falsification: true   # needs dataset.group_columns set (session/IP columns); most
+                                 # datasets loaded via train_file/test_file or with no such
+                                 # columns should set this false instead, see guide/checks.md
   scenario_holdout_falsification: true # no-ops unless schema.scenario_column is set
   class_distribution_report: true
   low_cardinality_warning: true

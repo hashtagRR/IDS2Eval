@@ -256,7 +256,7 @@ pre{
   display:flex;justify-content:space-between;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--line)
 }
 .score-summary strong{font-size:1.2rem}
-.score-summary span{font:700 .7rem monospace;color:var(--amber)}
+.score-summary span{font:700 .7rem monospace;color:var(--red)}
 .score-item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid rgba(24,35,29,.06);font-size:.83rem}
 .score-item small{color:#74837b}
 .status-pill{font:700 .66rem monospace}
@@ -824,6 +824,7 @@ footer{border-top:1px solid rgba(24,35,29,.06);padding:28px 0 38px;color:#6a7a71
 .dataset-card-v7.c5{grid-column:1}
 .dataset-card-v7.c6{grid-column:2}
 .dataset-card-v7.c7{grid-column:6}
+.dataset-card-v7.c8{grid-column:7}
 .dataset-card-v7.r2{grid-row:2}
 
 @media(max-width:1100px){
@@ -835,7 +836,7 @@ footer{border-top:1px solid rgba(24,35,29,.06);padding:28px 0 38px;color:#6a7a71
     grid-row:auto;
   }
   .dataset-card-v7.c1,.dataset-card-v7.c2,.dataset-card-v7.c3,.dataset-card-v7.c4,
-  .dataset-card-v7.c5,.dataset-card-v7.c6,.dataset-card-v7.c7,
+  .dataset-card-v7.c5,.dataset-card-v7.c6,.dataset-card-v7.c7,.dataset-card-v7.c8,
   .dataset-card-v7.r2{
     grid-column:auto;
     grid-row:auto;
@@ -1493,7 +1494,7 @@ h2{
         <a class="btn" href="#evidence">See what it catches ↓</a>
       </div>
       <div class="micro-proof">
-        <span>19 audit checks</span><span>7 real IDS datasets</span><span>218 CI tests</span><span>63.5M+ flows scanned in validation</span>
+        <span>27 audit checks</span><span>8 real IDS datasets</span><span>279 CI tests</span><span>110M+ flows scanned in validation</span>
       </div>
       <div class="name-strip" aria-label="Meaning of IDS squared Eval">
         <strong>Why IDS²Eval?</strong>
@@ -1534,10 +1535,10 @@ h2{
 <div class="proof-rail">
   <div class="wrap proof-row">
     <div class="proof-label">The page should prove the tool before explaining the implementation.</div>
-    <div class="proof-stat"><b>19</b><span>checks</span></div>
-    <div class="proof-stat"><b>7</b><span>real datasets</span></div>
-    <div class="proof-stat"><b>5 / 7</b><span>failed audit</span></div>
-    <div class="proof-stat"><b>63.5M+</b><span>flows scanned in validation</span></div>
+    <div class="proof-stat"><b>27</b><span>checks</span></div>
+    <div class="proof-stat"><b>8</b><span>real datasets</span></div>
+    <div class="proof-stat"><b>8 / 8</b><span>failed audit</span></div>
+    <div class="proof-stat"><b>110M+</b><span>flows scanned in validation</span></div>
   </div>
 </div>
 
@@ -1589,11 +1590,11 @@ h2{
       <div class="portfolio-summary">
         <div>
           <h3>What the validation portfolio tells us</h3>
-          <p>The point is not that "five datasets are bad." The useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
+          <p>The point is not that "these datasets are bad." Every widely-used NIDS benchmark tested trips at least one check; the useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
         </div>
         <div class="portfolio-metrics">
-          <div class="portfolio-metric"><b>7</b><span>real NIDS datasets validated</span></div>
-          <div class="portfolio-metric"><b>4</b><span>runs with an overall FAIL status</span></div>
+          <div class="portfolio-metric"><b>8</b><span>real NIDS datasets validated</span></div>
+          <div class="portfolio-metric"><b>8</b><span>runs with an overall FAIL status</span></div>
         </div>
       </div>
       <div class="portfolio-insights">
@@ -1608,7 +1609,7 @@ h2{
 <section class="section" id="checks">
   <div class="wrap">
     <div class="sec-head" data-reveal>
-      <div class="sec-index">03 / 18 CHECKS</div>
+      <div class="sec-index">03 / 27 CHECKS</div>
       <div>
         <h2>Specific checks, not one vague score.</h2>
         <p class="sec-lede">Each check names a specific, falsifiable concern and emits a status, summary and supporting details. Start with the threat family, then drill into the individual checks only when needed.</p>
@@ -1636,7 +1637,10 @@ h2{
         <article class="check-card" data-cat="split"><div class="id">C10</div><h3>Resplit falsification</h3><p>Re-evaluate under a grouped split that structurally blocks session-correlated leakage.</p></article>
         <article class="check-card" data-cat="integrity"><div class="id">C11</div><h3>Known-issue lookup</h3><p>Surface curated, published limitations associated with the named benchmark.</p></article>
         <article class="check-card" data-cat="integrity"><div class="id">C12</div><h3>Schema fingerprinting</h3><p>Match columns to extractor signatures with documented calculation problems.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C13+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C13</div><h3>Row-order leakage</h3><p>Compare adjacent-row label clustering against a shuffled baseline, catching data still in collection order.</p></article>
+        <article class="check-card" data-cat="shortcut"><div class="id">C14</div><h3>Feature AUC ranking</h3><p>Rank every numeric feature's own standalone AUC, no model fit needed, to surface a near-perfect single-column shortcut.</p></article>
+        <article class="check-card" data-cat="split"><div class="id">C15</div><h3>Result robustness</h3><p>Re-score under random split, grouped split, dedup on/off and identity-columns-dropped, reporting the full spread rather than one number.</p></article>
+        <article class="check-card" data-cat="integrity"><div class="id">C16+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, scenario holdout, feature-category ablation, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
       </div>
     </div>
   </div>
@@ -1692,7 +1696,7 @@ h2{
       <div class="sec-index">05 / DATASETS</div>
       <div>
         <h2>Tested against published NIDS benchmarks, not toy tables.</h2>
-        <p class="sec-lede">Seven real datasets have been exercised end to end, spanning classic connection records, modern flow datasets, IoT traffic, and DDoS-focused corpora.</p>
+        <p class="sec-lede">Eight real datasets have been exercised end to end, spanning classic connection records, modern flow datasets, IoT traffic, and DDoS-focused corpora.</p>
       </div>
     </div>
     <div class="dataset-cluster" data-reveal>
@@ -1710,6 +1714,7 @@ h2{
       <div class="dataset-card-v7 c5 r2"><span class="dataset-index-v7">05</span><span class="dataset-name-v7">CICDDoS2019</span><span class="validated-badge-v7">VALIDATED</span></div>
       <div class="dataset-card-v7 c6 r2"><span class="dataset-index-v7">06</span><span class="dataset-name-v7">ToN-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
       <div class="dataset-card-v7 c7 r2"><span class="dataset-index-v7">07</span><span class="dataset-name-v7">BoT-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
+      <div class="dataset-card-v7 c8 r2"><span class="dataset-index-v7">08</span><span class="dataset-name-v7">CIC-IoT2023</span><span class="validated-badge-v7">VALIDATED</span></div>
     </div>
   </div>
 </section>
@@ -1730,26 +1735,29 @@ h2{
 <pre>$ ids2eval --config unsw-nb15.yaml --skip-benchmark
 
 [audit:before]
-dedup_check .......... FLAG  42.38%
-leakage_screen ....... OK    sttl 17.8%
-known_issue_lookup ... WARN  file-name inversion
+dedup_check .............. FLAG  42.38%
+leakage_screen ............ OK    sttl 17.8%
+row_order_leakage_check ... FLAG  test near-fully ordered
+known_issue_lookup ........ WARN  file-name inversion
 
 [dedup]
 removed 42.38% of train
 
 [audit:after]
-dedup_check .......... OK    0.00%
-class_distribution ... OK    ~1:1
+dedup_check .............. OK    0.00%
+row_order_leakage_check ... FLAG  unchanged by dedup
+class_distribution ........ OK    ~1:1
 
 [scorecard]
-passed with warnings</pre>
+failed</pre>
       </div>
       <div class="scorecard">
         <div class="panel-head">SCORECARD.html</div>
         <div class="score-body">
-          <div class="score-summary"><strong>UNSW-NB15 / audit report</strong><span>PASSED WITH WARNINGS</span></div>
+          <div class="score-summary"><strong>UNSW-NB15 / audit report</strong><span>FAILED</span></div>
           <div class="score-item"><span>Feature-space duplication<br><small>before cleanup</small></span><span class="status-pill flag">FLAG</span></div>
           <div class="score-item"><span>Feature-space duplication<br><small>after cleanup</small></span><span class="status-pill ok">OK</span></div>
+          <div class="score-item"><span>Row-order leakage<br><small>test split near-fully ordered</small></span><span class="status-pill flag">FLAG</span></div>
           <div class="score-item"><span>Known dataset issue<br><small>curated finding</small></span><span class="status-pill warn">WARN</span></div>
           <div class="score-item"><span>Class distribution<br><small>before → after recorded</small></span><span class="status-pill ok">RECORDED</span></div>
           <div class="score-item"><span>Reproducibility artifacts<br><small>JSON + Markdown + HTML</small></span><span class="status-pill ok">WRITTEN</span></div>

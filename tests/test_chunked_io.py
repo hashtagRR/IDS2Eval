@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from ids2eval.data.chunked_io import reservoir_sample
+from ids2eval.data.chunked_io import iter_chunks, load_file, load_files_combined, reservoir_sample
 
 
 def _chunks(n, chunk_size):
@@ -43,3 +43,59 @@ def test_reservoir_sample_roughly_uniform():
     expected_mean = (n - 1) / 2
     stderr = (n / np.sqrt(12)) / np.sqrt(len(ids))
     assert abs(ids.mean() - expected_mean) < 5 * stderr
+
+
+def _sample_df(n=10):
+    return pd.DataFrame({"F1": np.arange(n, dtype="float64"), "Label": (["A", "B"] * n)[:n]})
+
+
+def test_iter_chunks_reads_plain_csv(tmp_path):
+    df = _sample_df()
+    path = tmp_path / "data.csv"
+    df.to_csv(path, index=False)
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=None)), ignore_index=True)
+    pd.testing.assert_frame_equal(result, df.astype({"F1": "float32"}))
+
+
+def test_iter_chunks_reads_chunked_csv(tmp_path):
+    df = _sample_df(20)
+    path = tmp_path / "data.csv"
+    df.to_csv(path, index=False)
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=7)), ignore_index=True)
+    assert len(result) == 20
+    assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_iter_chunks_reads_a_whole_parquet_file(tmp_path):
+    df = _sample_df()
+    path = tmp_path / "data.parquet"
+    df.to_parquet(path, index=False)
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=None)), ignore_index=True)
+    assert result["Label"].tolist() == df["Label"].tolist()
+    assert len(result) == len(df)
+
+
+def test_iter_chunks_reads_a_chunked_parquet_file(tmp_path):
+    df = _sample_df(20)
+    path = tmp_path / "data.parquet"
+    df.to_parquet(path, index=False)
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=7)), ignore_index=True)
+    assert len(result) == 20
+    assert result["Label"].tolist() == df["Label"].tolist()
+
+
+def test_load_file_downcasts_parquet_floats_to_float32(tmp_path):
+    df = _sample_df()
+    path = tmp_path / "data.parquet"
+    df.to_parquet(path, index=False)
+    result = load_file(str(path), chunk_size=None, max_rows=None)
+    assert result["F1"].dtype == np.float32
+
+
+def test_load_files_combined_mixes_csv_and_parquet(tmp_path):
+    df1, df2 = _sample_df(5), _sample_df(5)
+    csv_path, parquet_path = tmp_path / "a.csv", tmp_path / "b.parquet"
+    df1.to_csv(csv_path, index=False)
+    df2.to_parquet(parquet_path, index=False)
+    result = load_files_combined([str(csv_path), str(parquet_path)], chunk_size=None, max_rows=None)
+    assert len(result) == 10

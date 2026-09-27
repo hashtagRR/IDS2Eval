@@ -1,4 +1,16 @@
-"""Chunked CSV reading with optional reservoir sampling.
+"""Chunked CSV/Parquet reading with optional reservoir sampling.
+
+dataset.raw_files/train_file/test_file accept, per file: plain CSV,
+CSV with a compression suffix pandas infers from the name (.csv.gz,
+.csv.bz2, .csv.xz, and .csv.zip provided the zip holds exactly one
+member - pandas' own read_csv handles all of these natively, chunked
+reading included, nothing in this module is compression-aware), or
+.parquet (dispatched to pyarrow, already a hard dependency). Not
+supported: .rar or any multi-member archive - extract those yourself
+first and point raw_files at the CSV/Parquet file(s) inside. A rar
+reader needs an external unrar/7z binary on PATH with no reliable
+cross-platform story, and a multi-member zip has no single obvious
+file to pick; both are worse trade-offs than "extract it first."
 
 Two independent knobs (dataset.chunk_size / dataset.max_rows):
 
@@ -58,6 +70,35 @@ def _drop_embedded_header_rows(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _is_parquet(path: str) -> bool:
+    return str(path).lower().endswith(".parquet")
+
+
+def _iter_raw_chunks(path: str, chunk_size: int | None) -> Iterator[pd.DataFrame]:
+    """One file's chunks, dispatched by extension.
+
+    CSV (plain or with a compression suffix pandas already infers from
+    the name - .gz, .bz2, .zip [single member], .xz) via pd.read_csv,
+    chunksize supported natively. Parquet via pyarrow's own batched
+    reader, since pd.read_parquet has no chunksize equivalent; already
+    a hard dependency (used for output.format: parquet), so this adds
+    no new package to install.
+    """
+    if _is_parquet(path):
+        import pyarrow.parquet as pq
+
+        parquet_file = pq.ParquetFile(path)
+        if chunk_size:
+            for batch in parquet_file.iter_batches(batch_size=chunk_size):
+                yield batch.to_pandas()
+        else:
+            yield parquet_file.read().to_pandas()
+        return
+    reader = pd.read_csv(path, chunksize=chunk_size, low_memory=False) if chunk_size \
+        else [pd.read_csv(path, low_memory=False)]
+    yield from reader
+
+
 def iter_chunks(paths: list[str], chunk_size: int | None) -> Iterator[pd.DataFrame]:
     """Yield chunks with a dtype schema stable across the whole stream.
 
@@ -82,9 +123,7 @@ def iter_chunks(paths: list[str], chunk_size: int | None) -> Iterator[pd.DataFra
     numeric_columns = None
     reference_columns = None
     for path in paths:
-        reader = pd.read_csv(path, chunksize=chunk_size, low_memory=False) if chunk_size \
-            else [pd.read_csv(path, low_memory=False)]
-        for chunk in reader:
+        for chunk in _iter_raw_chunks(path, chunk_size):
             chunk.columns = chunk.columns.str.strip()
             chunk = _drop_embedded_header_rows(chunk)
 

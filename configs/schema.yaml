@@ -10,6 +10,9 @@ dataset:
   name: null                   # required, short id for your dataset, e.g. "cic-ids2018"
   raw_files: []                # your data file(s), IDS2Eval splits them into train/test
                                 # e.g. ["data.csv"], or ["day1.csv", "day2.csv"] for several files
+                                # CSV (plain, .gz/.bz2/.xz, or .zip with one file inside) or
+                                # .parquet; extract a .rar or multi-file .zip first, see
+                                # ids2eval/data/chunked_io.py for why those two aren't handled
   train_file: null             # OR: an already-split train file, e.g. "train.csv"
   test_file: null              #     an already-split test file, e.g. "test.csv" (use with train_file)
   split_ratio: 0.8             # train share, only used with raw_files, e.g. 0.7 for a 70/30 split

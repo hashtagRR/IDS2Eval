@@ -19,7 +19,11 @@ schema:
 Everything else falls back to a documented default. `dataset.name` is
 required (it's the key `known_issue_lookup`/`schema_fingerprint_check`
 match against), and you need either `raw_files` (IDS<sup>2</sup>Eval splits it
-itself) or a `train_file`+`test_file` pair (already split).
+itself) or a `train_file`+`test_file` pair (already split). Each file
+can be CSV (plain, or `.gz`/`.bz2`/`.xz`/single-member `.zip`, all
+inferred from the name) or `.parquet`; a `.rar` archive or a
+multi-member `.zip` isn't read directly, extract it first and point
+at the file(s) inside.
 
 ## Config sections, at a glance
 

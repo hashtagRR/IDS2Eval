@@ -87,15 +87,29 @@ venv/bin/pip install -e ".[dev]"
 ```powershell
 git clone https://github.com/hashtagRR/IDS2Eval.git
 cd IDS2Eval
-python -m venv venv
+py -3.12 -m venv venv
 .\venv\Scripts\pip install -e ".[dev]"
 ```
 
-The `.\` prefix matters in PowerShell: without it, PowerShell tries to
-resolve `venv\Scripts\pip` as a module/cmdlet name instead of a file
-path and fails with a confusing "module could not be loaded" error
-rather than "command not found." `.\` works in `cmd.exe` too, so every
-Windows command below uses it.
+Two Windows-specific gotchas this sidesteps:
+
+- **Use `py -3.12`, not bare `python`.** If more than one Python is on
+  PATH (an MSYS2/MinGW install, the Microsoft Store's placeholder
+  stub, a per-user install, ...), plain `python` runs whichever one PATH
+  happens to resolve first, silently, with no indication anything is
+  wrong. The `py` launcher (installed by every official python.org
+  Windows installer) picks a specific version explicitly instead. Run
+  `py --list` to see what's actually available; substitute `-3.10` or
+  `-3.11` if `3.12` isn't installed. A telltale sign this already went
+  wrong: `python -m venv venv` "succeeds" with no output, but
+  `venv\Scripts` doesn't exist afterward (an MSYS2 Python creates a
+  Unix-style `venv/bin` layout instead, since it targets a POSIX
+  environment internally even when invoked from PowerShell).
+- **The `.\` prefix matters in PowerShell.** Without it, PowerShell
+  tries to resolve `venv\Scripts\pip` as a module/cmdlet name instead
+  of a file path, and fails with a confusing "module could not be
+  loaded" error rather than "command not found." `.\` works in
+  `cmd.exe` too, so every Windows command below uses it.
 
 The `[dev]` extra adds `pytest` and `ruff`, used for the test suite and
 linting; skip it (`pip install -e .`) for a runtime-only install. A

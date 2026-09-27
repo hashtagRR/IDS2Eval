@@ -127,6 +127,59 @@ def test_cli_validate_config_rejects_a_broken_config(tmp_path):
         main(["validate-config", "--config", str(config_path)])
 
 
+def test_cli_recommend_prints_suggestions_for_a_completed_run(tmp_path, synth_data, capsys):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+
+    capsys.readouterr()
+    main(["recommend", str(run_dir)])
+    out = capsys.readouterr().out
+    assert "drop_flagged_columns" in out
+    assert "SrcIP" in out
+
+
+def test_cli_recommend_apply_writes_a_valid_patched_config(tmp_path, synth_data):
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)], "split_ratio": 0.5},
+        "schema": {"label_column": "Label", "id_like_columns": ["SrcIP"]},
+        "audit": {"resplit_falsification": False},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    main(["--config", str(config_path)])
+    run_dir = _latest_run_dir(output_dir)
+
+    patched_path = tmp_path / "patched.yaml"
+    main(["recommend", str(run_dir), "--config", str(config_path), "--apply", "--output", str(patched_path)])
+
+    patched = yaml.safe_load(patched_path.read_text())
+    assert "SrcIP" in patched["schema"]["drop_columns"]
+    assert patched["schema"]["id_like_columns"] == []
+    from ids2eval.config import load_config
+    load_config(patched_path)  # must still be a valid, loadable config
+
+
 def test_cli_compare_datasets_reports_equivalent_configs(tmp_path, synth_data, capsys):
     data_path = tmp_path / "data.csv"
     synth_data.to_csv(data_path, index=False)

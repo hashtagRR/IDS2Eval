@@ -4,6 +4,7 @@
     python -m ids2eval cite path/to/run_dir
     python -m ids2eval validate-config --config my_config.yaml
     python -m ids2eval compare-datasets a.yaml b.yaml
+    python -m ids2eval recommend path/to/run_dir
 """
 
 from __future__ import annotations
@@ -16,17 +17,18 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import yaml
 
 from .audit import STRUCTURAL_CHECKS, run_audit
 from .config import load_config
 from .data import cache, dataset
 from .data.label_grouping import apply_attack_type_mapping
 from .modeling.benchmark import run_benchmark
-from .reporting import cite, compare_datasets, drift, run_manager, scorecard
+from .reporting import cite, compare_datasets, drift, recommend, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
-COMMANDS = ("run", "cite", "validate-config", "compare-datasets")
+COMMANDS = ("run", "cite", "validate-config", "compare-datasets", "recommend")
 
 
 def _json_default(obj):
@@ -77,7 +79,37 @@ def parse_args(argv=None) -> argparse.Namespace:
     compare_parser.add_argument("config_a", help="Path to the first config file")
     compare_parser.add_argument("config_b", help="Path to the second config file")
 
+    recommend_parser = subparsers.add_parser(
+        "recommend", help="Suggest structural config fixes for a completed run's flagged/warned checks"
+    )
+    recommend_parser.add_argument("run_dir", help="A completed run directory")
+    recommend_parser.add_argument(
+        "--config", help="Apply patches onto this config file instead of the run's fully-resolved one"
+    )
+    recommend_parser.add_argument(
+        "--apply", action="store_true", help="Merge every recommendation that has a patch and print the result"
+    )
+    recommend_parser.add_argument("--output", help="Write the patched config here instead of stdout (needs --apply)")
+
     return parser.parse_args(argv)
+
+
+def _run_recommend(args: argparse.Namespace) -> None:
+    recs, resolved_cfg = recommend.recommendations_for_run(args.run_dir)
+    print(recommend.render_report(recs))
+    if not args.apply:
+        return
+
+    base_cfg = yaml.safe_load(Path(args.config).read_text()) if args.config else resolved_cfg
+    patchable_ids = [r["id"] for r in recs if r["patch"]]
+    patched = recommend.apply_recommendations(base_cfg, recs, patchable_ids)
+    text = yaml.safe_dump(patched, sort_keys=False)
+    if args.output:
+        Path(args.output).write_text(text)
+        print(f"\nPatched config written to {args.output}")
+    else:
+        print("\n--- patched config ---")
+        print(text)
 
 
 def main(argv=None) -> None:
@@ -94,6 +126,8 @@ def main(argv=None) -> None:
     if args.command == "compare-datasets":
         print(compare_datasets.render_report(compare_datasets.compare(args.config_a, args.config_b)))
         return
+    if args.command == "recommend":
+        return _run_recommend(args)
 
     cfg = load_config(args.config)
 

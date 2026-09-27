@@ -69,7 +69,8 @@ async function renderRun() {
   if (d.run_status === "failed")
     pane.append(el("div", {class: "error-box", text: `Run crashed at stage "${d.failed_stage}": ${d.error}`}));
 
-  const tabs = [["scorecard", "Scorecard"], ["benchmark", `Benchmark (${d.benchmark.length})`], ["files", "Files"]];
+  const tabs = [["scorecard", "Scorecard"], ["benchmark", `Benchmark (${d.benchmark.length})`],
+                ["recommendations", "Recommendations"], ["files", "Files"]];
   const tabRow = el("div", {class: "tabs"}, ...tabs.map(([k, t]) => el("button", {class: tab === k ? "on" : "", text: t,
     onclick: () => { tab = k; store.set("ids2eval.tab", k); renderRun(); }})));
   if (d.files.includes("scorecard.json")) {
@@ -107,11 +108,58 @@ async function renderRun() {
         el("tbody", {}, ...rows.map(r => el("tr", {}, ...cols.map(c =>
           el("td", {class: num.has(c) ? "num" : "", text: fmt(c, r[c])}))))))));
     }
+  } else if (tab === "recommendations") {
+    await renderRecommendations(pane, selected);
   } else {
     pane.append(el("div", {class: "files"}, ...d.files.map(f => el("a", {href: base + encodeURIComponent(f),
       target: "_blank", rel: "noopener", class: "mono", text: f}))));
   }
   $("#main").replaceChildren(pane);
+}
+
+async function renderRecommendations(pane, runId) {
+  let recs;
+  try { recs = (await api("/api/run/" + runId + "/recommendations")).recommendations; }
+  catch (e) { pane.append(el("div", {class: "error-box", text: e.message})); return; }
+  if (!recs.length) {
+    pane.append(el("p", {class: "hint",
+      text: "Nothing flagged or warned in this run has a recommendation."}));
+    return;
+  }
+
+  const checkboxes = [];
+  const cards = recs.map(r => {
+    const cb = r.patch ? el("input", {type: "checkbox"}) : null;
+    if (cb) { cb.checked = true; checkboxes.push([cb, r.id]); }
+    const head = cb
+      ? el("label", {class: "rec-head"}, cb, el("strong", {text: r.title}))
+      : el("div", {class: "rec-head"}, el("strong", {text: r.title}));
+    const card = el("div", {class: "rec-card"}, head,
+      el("p", {class: "hint", text: "checks: " + r.checks.join(", ")}),
+      el("p", {text: r.explanation}));
+    if (r.patch) card.append(el("pre", {class: "log mono"}, JSON.stringify(r.patch, null, 2)));
+    return card;
+  });
+
+  const applyBtn = el("button", {class: "primary", text: "Apply selected → New run"});
+  applyBtn.disabled = checkboxes.length === 0;
+  const msg = el("span", {class: "msg"});
+  applyBtn.onclick = async () => {
+    applyBtn.disabled = true;
+    const ids = checkboxes.filter(([cb]) => cb.checked).map(([, id]) => id);
+    try {
+      const r = await api("/api/run/" + runId + "/apply-recommendations", {ids});
+      editorText = r.yaml;
+      await renderNewRun();
+    } catch (e) { msg.textContent = e.message; msg.className = "msg err"; applyBtn.disabled = false; }
+  };
+
+  pane.append(el("p", {class: "hint",
+    text: "Only structural fixes get a checkbox - a shortcut-feature flag gets more " +
+          "evidence to enable instead of an automatic drop, and a few checks report a " +
+          "property of the data with no config fix at all; see each explanation."}));
+  pane.append(...cards);
+  if (checkboxes.length) pane.append(el("div", {class: "row"}, applyBtn, msg));
 }
 
 async function renderNewRun() {

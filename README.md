@@ -17,9 +17,11 @@ problems automatically, instead of a one-off notebook redone by hand
 for every paper, and rolls the result into a citable scorecard
 (`SCORECARD.html`, `SCORECARD.md`, `scorecard.json`) - "this result was
 obtained on a dataset that passed the following checks," with each
-check's result before and after deduplication side by side. See
-[guide/checks.md](guide/checks.md) for what each check does and the
-scorecard's pass/fail rule.
+check's result before and after deduplication side by side. When a
+check flags, `ids2eval recommend` (CLI or a dashboard tab) suggests a
+config fix for the ones that have an unambiguous one, and applies it
+to a re-runnable config on request. See [guide/checks.md](guide/checks.md)
+for what each check does and the scorecard's pass/fail rule.
 
 It's narrower than general-purpose AutoML tools (PyCaret, AutoGluon,
 TPOT) on purpose: no feature engineering, no algorithm-search breadth -
@@ -149,7 +151,7 @@ Real scorecards: [UNSW-NB15](examples/unsw-nb15-scorecard),
 
 ## Status
 
-Implemented, tested (279 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (302 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data, not just synthetic fixtures - see
 [examples/](examples/) for full scorecards. Two highlights:
 independently reproducing UNSW-NB15's published `sttl` TTL-topology

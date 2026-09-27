@@ -212,3 +212,51 @@ def test_resolve_starter_loads_a_real_config_and_adds_its_output_dir(tmp_path):
     starter, output_dirs = dashboard._resolve_starter(str(config_path), [])
     assert starter == config_path.read_text()
     assert output_dirs == [output_dir]
+
+
+def test_recommendations_endpoint_reads_a_real_run(server):
+    base, app = server
+    run_dir = app.output_dirs[0] / "runs" / "2026-01-01_000000_000000"
+    cfg = {"dataset": {"raw_files": ["a.csv"]}, "schema": {"drop_columns": []}, "audit": {}}
+    (run_dir / "resolved_config.json").write_text(json.dumps(cfg))
+    findings = [{"check": "identity_column_flag", "status": "flag",
+                 "summary": "s", "details": {"suggested_drop": ["SrcIP"]}}]
+    (run_dir / "audit_report_after.json").write_text(json.dumps(findings))
+
+    status, body = _get(base + "/api/run/0/2026-01-01_000000_000000/recommendations")
+    assert status == 200
+    recs = json.loads(body)["recommendations"]
+    assert recs[0]["id"] == "drop_flagged_columns"
+    assert recs[0]["patch"]["schema"]["drop_columns"] == ["SrcIP"]
+
+
+def test_recommendations_endpoint_404s_without_a_resolved_config(server):
+    base, _ = server
+    assert _get(base + "/api/run/0/2026-01-01_000000_000000/recommendations")[0] == 404
+
+
+def test_apply_recommendations_endpoint_merges_selected_patches(server):
+    base, app = server
+    run_dir = app.output_dirs[0] / "runs" / "2026-01-01_000000_000000"
+    cfg = {"dataset": {"raw_files": ["a.csv"]}, "schema": {"drop_columns": []}, "audit": {}}
+    (run_dir / "resolved_config.json").write_text(json.dumps(cfg))
+    findings = [{"check": "identity_column_flag", "status": "flag",
+                 "summary": "s", "details": {"suggested_drop": ["SrcIP"]}}]
+    (run_dir / "audit_report_after.json").write_text(json.dumps(findings))
+
+    status, body = _post(base + "/api/run/0/2026-01-01_000000_000000/apply-recommendations",
+                          {"ids": ["drop_flagged_columns"]})
+    assert status == 200
+    assert "SrcIP" in body["yaml"]
+
+
+def test_apply_recommendations_endpoint_with_no_ids_returns_the_original_config(server):
+    base, app = server
+    run_dir = app.output_dirs[0] / "runs" / "2026-01-01_000000_000000"
+    cfg = {"dataset": {"raw_files": ["a.csv"]}, "schema": {"drop_columns": []}, "audit": {}}
+    (run_dir / "resolved_config.json").write_text(json.dumps(cfg))
+    (run_dir / "audit_report_after.json").write_text(json.dumps([]))
+
+    status, body = _post(base + "/api/run/0/2026-01-01_000000_000000/apply-recommendations", {"ids": []})
+    assert status == 200
+    assert "SrcIP" not in body["yaml"]

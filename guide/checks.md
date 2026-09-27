@@ -387,6 +387,15 @@ whichever audit pass describes the data actually shipped in the run,
 after dedup if `preprocessing.dedup` ran, otherwise the only pass there
 was.
 
+**A `failed` verdict isn't a claim the dataset is unusable** - most real
+NIDS datasets flag at least one check under this project's own
+validation (see [examples/](../examples/)). `ids2eval recommend
+path/to/the/run` (or the dashboard's Recommendations tab) reads the
+findings and proposes a config patch for whichever checks have an
+unambiguous, mechanical fix; see
+[guide/usage.md](usage.md#cli) for what it does and doesn't suggest a
+fix for, and why.
+
 **Two sections: checks and known issues.** Every enabled check is
 sorted into one of two tables, by whether its result depends on this
 run's actual data or not:

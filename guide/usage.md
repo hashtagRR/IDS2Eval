@@ -17,18 +17,38 @@ Flags:
 | `--skip-benchmark` | Skip classifier benchmarking |
 
 `ids2eval --config ...` is shorthand for `ids2eval run --config ...`;
-three other subcommands are available:
+four other subcommands are available:
 
 ```bash
 ids2eval validate-config --config my_config.yaml   # check a config for errors, no data loaded
 ids2eval cite path/to/a/run/directory              # print a BibTeX citation from that run's scorecard
 ids2eval compare-datasets a.yaml b.yaml            # check whether two configs load equivalent data
+ids2eval recommend path/to/a/run/directory         # suggest structural config fixes for flagged/warned checks
 ```
 
 `compare-datasets` loads both configs' data and compares schema, row
 counts, label distribution, and content, useful when two configs claim
 to point at "the same" dataset (an official release and a third-party
 mirror, say) and you want to know whether they actually agree.
+
+`recommend` reads a completed run's findings and proposes a config
+patch for each check with an unambiguous, mechanical fix (add a
+flagged column to `schema.drop_columns`, switch to a session-grouped
+split, ...) - never for a check that only names a suspiciously
+predictive feature (`leakage_screen`, `one_rule_check`,
+`feature_auc_ranking_check`), since dropping a real signal isn't a fix,
+and never for a check that reports a property of the data or a
+documented fact rather than something a config change resolves
+(`known_issue_lookup`, `homogeneity_test`, ...) - those get an
+explanation instead of an invented patch. Add `--config original.yaml`
+to merge the patches onto your own config file instead of the run's
+fully-resolved one (smaller, easier to review), and `--apply --output
+patched.yaml` to write the result instead of just printing it:
+
+```bash
+ids2eval recommend path/to/a/run/directory --config my_config.yaml --apply --output patched.yaml
+ids2eval run --config patched.yaml
+```
 
 ## Web UI (dashboard)
 
@@ -59,6 +79,12 @@ extra dependencies):
 - **Compare datasets**: paste two configs and check whether they load
   equivalent data, the same comparison as `ids2eval compare-datasets`,
   over pasted YAML instead of two file paths.
+- **Recommendations** (a tab on each run): the same suggestions
+  `ids2eval recommend` prints, but with a checkbox per fixable one.
+  Check the ones you want, click **Apply selected → New run**, and the
+  New run editor opens pre-filled with the patched config, ready to
+  review, edit further, or run directly - no YAML editing required to
+  try a recommended fix.
 
 | Flag | Effect |
 |---|---|

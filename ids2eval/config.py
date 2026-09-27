@@ -112,6 +112,14 @@ def _deep_merge(base: dict, override: dict) -> dict:
     return merged
 
 
+def apply_patch(cfg: dict, patch: dict) -> dict:
+    """Deep-merge a partial config (e.g. a reporting.recommend patch) onto an
+    already-resolved config. A list in `patch` replaces the corresponding
+    list in `cfg` wholesale, it is never concatenated.
+    """
+    return _deep_merge(cfg, patch)
+
+
 def load_config(path: str | Path) -> dict[str, Any]:
     try:
         with open(path) as f:

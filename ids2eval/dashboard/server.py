@@ -1,5 +1,6 @@
 """The IDS2Eval dashboard's server: browse runs, read scorecards, launch runs,
-cite a run, and compare two datasets - every CLI subcommand available here too.
+cite a run, compare two datasets, and get structural fix recommendations for
+a flagged/warned run - every CLI subcommand available here too.
 
     ids2eval-dashboard --output ./output     # then open http://127.0.0.1:8765
 
@@ -36,8 +37,10 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+import yaml
+
 from ..config import load_config
-from ..reporting import cite, compare_datasets, run_manager
+from ..reporting import cite, compare_datasets, recommend, run_manager
 
 logger = logging.getLogger(__name__)
 
@@ -276,6 +279,16 @@ class Handler(BaseHTTPRequestHandler):
             except (OSError, ValueError, KeyError) as e:
                 return self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(e))
             return self._json({"bibtex": bibtex})
+        # /api/run/<dir_idx>/<run_name>/recommendations - structural fix suggestions
+        if len(parts) == 5 and parts[:2] == ["api", "run"] and parts[4] == "recommendations":
+            run_dir = self.app.run_dir(parts[2], parts[3])
+            if run_dir is None or not (run_dir / "resolved_config.json").is_file():
+                return self._error(HTTPStatus.NOT_FOUND, "no resolved_config.json for this run")
+            try:
+                recs, _ = recommend.recommendations_for_run(run_dir)
+            except (OSError, ValueError, KeyError) as e:
+                return self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(e))
+            return self._json({"recommendations": recs})
         # /files/<dir_idx>/<run_name>/<file> - a run artifact, top level of the run dir only
         if len(parts) == 4 and parts[0] == "files":
             run_dir = self.app.run_dir(parts[1], parts[2])
@@ -337,6 +350,21 @@ class Handler(BaseHTTPRequestHandler):
                     job.proc.terminate()
                     job.log.append("[stopped from the web UI]")
             return self._json(job.snapshot())
+
+        parts = path.strip("/").split("/")
+        # /api/run/<dir_idx>/<run_name>/apply-recommendations - merge selected
+        # patches onto the run's resolved config, return the result as YAML
+        # ready to prefill the New run editor.
+        if len(parts) == 5 and parts[:2] == ["api", "run"] and parts[4] == "apply-recommendations":
+            run_dir = self.app.run_dir(parts[2], parts[3])
+            if run_dir is None or not (run_dir / "resolved_config.json").is_file():
+                return self._error(HTTPStatus.NOT_FOUND, "no resolved_config.json for this run")
+            try:
+                recs, cfg = recommend.recommendations_for_run(run_dir)
+                patched = recommend.apply_recommendations(cfg, recs, body.get("ids") or [])
+            except (OSError, ValueError, KeyError) as e:
+                return self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(e))
+            return self._json({"yaml": yaml.safe_dump(patched, sort_keys=False)})
         return self._error(HTTPStatus.NOT_FOUND, "not found")
 
     def _compare_datasets(self, body: dict) -> None:

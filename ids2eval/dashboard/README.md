@@ -40,6 +40,7 @@ without needing any of this.
 | GET | `/api/runs` | Every run under the listed output dirs, newest first, with verdict and status |
 | GET | `/api/run/<dir_idx>/<run_name>` | One run: summary, `scorecard.json` content, benchmark rows |
 | GET | `/api/run/<dir_idx>/<run_name>/citation` | The same BibTeX `ids2eval cite` prints, read from that run's `scorecard.json` |
+| GET | `/api/run/<dir_idx>/<run_name>/recommendations` | The same suggestions `ids2eval recommend` prints, as structured JSON (`reporting.recommend.recommendations_for_run`) |
 | GET | `/files/<dir_idx>/<run_name>/<file>` | One artifact from a run directory (top level only) |
 | GET | `/api/job` | The current/last launched run: state, exit code, last 2,000 log lines |
 | GET | `/api/starter-config` | The YAML the New run editor starts with |
@@ -47,6 +48,7 @@ without needing any of this.
 | POST | `/api/run` | `{yaml, skip_audit, skip_benchmark}` → starts a run (409 if one is already running) |
 | POST | `/api/job/stop` | Terminates the running run |
 | POST | `/api/compare-datasets` | `{yaml_a, yaml_b}` → the same comparison `ids2eval compare-datasets` runs, over two pasted configs |
+| POST | `/api/run/<dir_idx>/<run_name>/apply-recommendations` | `{ids}` → merges the named recommendations' patches onto that run's resolved config, returns `{yaml}` ready to prefill the New run editor |
 
 ## Security model
 

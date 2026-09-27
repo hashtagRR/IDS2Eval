@@ -32,11 +32,15 @@ def test_citation_bibtex_carries_version_commit_and_verdict():
     assert "bbbbbbbb2222" in bib
 
 
-def test_citation_bibtex_handles_a_missing_git_commit():
+def test_citation_bibtex_omits_commit_entirely_when_unknown():
+    # A pip install from a downloaded zip has no .git directory at all, so
+    # there's no commit to report - "commit unknown" reads worse in a
+    # citation than just not mentioning a commit.
     sc = _scorecard()
     sc["ids2eval_git_commit"] = None
     bib = cite.citation_bibtex(sc)
-    assert "commit unknown" in bib
+    assert "commit" not in bib
+    assert "IDS2Eval v0.1.0 (scorecard schema 1.2)" in bib
 
 
 def test_load_scorecard_accepts_a_run_directory(tmp_path):

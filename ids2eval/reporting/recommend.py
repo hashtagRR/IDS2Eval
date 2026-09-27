@@ -12,11 +12,16 @@ bad advice dressed up as a fix. So the shortcut-feature family gets a
 different kind of recommendation, enabling result_robustness_check, itself
 just more evidence, not a change to the data. Checks that report a property
 of the data or a documented fact rather than something fixable at all
-(known_issue_lookup, schema_fingerprint_check, homogeneity_test,
-resplit_falsification, scenario_holdout_falsification,
-cross_capture_matrix_check, dedup_check, label_conflict_check,
-near_duplicate_class_check, class_distribution_report) get an explanatory
-note and no patch, never an invented "fix."
+(known_issue_lookup, homogeneity_test, resplit_falsification, ...) get an
+explanatory note and no patch, never an invented "fix."
+
+Every finding with status "flag" or "warning" ends up in the output, one
+way or another: build_recommendations() tracks which checks a patch
+already covers, and falls back to a note (a specific one from
+_NOT_FIXABLE_NOTES, or a generic one if a check isn't in that table at
+all) for everything else. A check silently missing from the list would
+misreport "nothing to recommend" for a run that still has an unaddressed
+flag - the exact bug this guarantees against.
 
 A recommendation's "patch" is a partial config dict, deep-merged onto the
 run's resolved config with config.apply_patch(); the caller (CLI or
@@ -99,7 +104,50 @@ _NOT_FIXABLE_NOTES = {
         "A curated, published problem with this specific dataset. Disclose "
         "it when reporting results; there's nothing in your config to change."
     ),
+    "result_robustness_check": (
+        "Measures whether the headline accuracy is sensitive to split/dedup/"
+        "feature-set methodology, it doesn't diagnose a fixable defect. A "
+        "flag means the reported number moves depending on how the "
+        "experiment is set up - disclose it as a caveat on the result, "
+        "there's no config change that makes a model methodology-invariant."
+    ),
+    "feature_category_ablation_check": (
+        "Reports how much accuracy a declared schema.feature_categories "
+        "group costs when removed. Evidence to report, not a defect: which "
+        "category the result depends on is exactly the point, dropping it "
+        "automatically would defeat the purpose of measuring this."
+    ),
+    "artifact_sensitivity_check": (
+        "Measures how much a fitted model's predictions actually depend on "
+        "one column when its values are reshuffled, inside the full feature "
+        "set. Like the shortcut-feature checks above, a flag here is "
+        "evidence to weigh, not necessarily a defect - a model can be "
+        "accurate while barely depending on the column in question."
+    ),
+    "synthetic_realism_check": (
+        "Needs audit.reference_dataset; a flag means this dataset's rows "
+        "are easily distinguished from real traffic by a domain classifier. "
+        "Evidence about how representative this data is, not something a "
+        "config change to this dataset fixes."
+    ),
+    "cross_dataset_drift_check": (
+        "Needs audit.reference_dataset; a flag means accuracy drops "
+        "materially on that independent dataset. Evidence about "
+        "generalization, to disclose alongside the benchmark result, not "
+        "fixable by a config change to this dataset."
+    ),
+    "seed_sensitivity_check": (
+        "Re-fits leakage_screen/one_rule_check across a few seeds and flags "
+        "if their flag/ok conclusion isn't stable. Means a single-seed "
+        "result from those checks shouldn't be over-trusted; report the "
+        "instability rather than picking a favorable seed."
+    ),
 }
+
+_GENERIC_NOTE = (
+    "No structural, mechanical fix for this one - see the check's own "
+    "summary and details above, and guide/checks.md for what it tests."
+)
 
 
 def _drop_columns_recommendation(by_check: dict, cfg: dict) -> dict | None:
@@ -251,23 +299,55 @@ def build_recommendations(findings: list[dict], cfg: dict) -> list[dict]:
     preprocessing.dedup ran, otherwise the only pass - the same findings the
     scorecard's verdict is judged on), each a full Finding dict including
     "details". cfg: that run's resolved config.
+
+    Every finding with status "flag" or "warning" ends up in exactly one
+    recommendation (a patch, or a note explaining why there isn't one) -
+    never silently absent. A check this module doesn't specifically know
+    about yet (a future check, or a v2 check not otherwise covered) still
+    gets a generic fallback note rather than vanishing from the list, which
+    would otherwise misleadingly report "nothing to recommend" for a run
+    that still has an unaddressed flag.
     """
     by_check = {f["check"]: f for f in findings}
-    recs = []
+    recs: list[dict] = []
+    covered: set[str] = set()
 
     for builder in (_drop_columns_recommendation, _grouped_split_recommendation,
                     _result_robustness_recommendation):
         rec = builder(by_check, cfg)
         if rec:
             recs.append(rec)
+            covered.update(rec["checks"])
 
-    for check_name, note in _NOT_FIXABLE_NOTES.items():
-        f = by_check.get(check_name)
-        if f and f["status"] in ("flag", "warning"):
-            recs.append({
-                "id": f"note_{check_name}", "title": f"{check_name}: no automatic fix",
-                "checks": [check_name], "explanation": note, "patch": None,
-            })
+    # data_integrity_check's missing-label symptom is never addressed by
+    # dropping columns (there's no column to drop for a missing label
+    # value), so it gets its own note even when the same check's other
+    # symptoms (constant/missing-feature/±inf columns) already got a patch
+    # and left the check name in `covered` above.
+    di = by_check.get("data_integrity_check")
+    if di and di["details"].get("missing_label_count"):
+        recs.append({
+            "id": "note_data_integrity_check_missing_labels",
+            "title": "data_integrity_check: missing label values have no automatic fix",
+            "checks": ["data_integrity_check"],
+            "explanation": (
+                f"{di['details']['missing_label_count']} row(s) have no label value at "
+                "all - not something a config change can supply. Re-collect or "
+                "re-label those rows, or drop them before this dataset is loaded."
+            ),
+            "patch": None,
+        })
+        covered.add("data_integrity_check")
+
+    for f in findings:
+        if f["status"] not in ("flag", "warning") or f["check"] in covered:
+            continue
+        note = _NOT_FIXABLE_NOTES.get(f["check"], _GENERIC_NOTE)
+        recs.append({
+            "id": f"note_{f['check']}", "title": f"{f['check']}: no automatic fix",
+            "checks": [f["check"]], "explanation": note, "patch": None,
+        })
+        covered.add(f["check"])
 
     return recs
 

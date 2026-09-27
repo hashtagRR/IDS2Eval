@@ -31,15 +31,20 @@ def citation_bibtex(scorecard: dict) -> str:
     fp = scorecard["dataset_fingerprint"]
     year = scorecard["generated_at"][:4]
     key = _bibtex_key(scorecard["dataset_name"], fp["train_content_hash"])
-    commit = scorecard["ids2eval_git_commit"] or "unknown"
+    commit = scorecard["ids2eval_git_commit"]
     verdict = scorecard["overall_status"].replace("_", " ")
+
+    # commit is only known for a git checkout (version_info.py shells out to
+    # git); a pip install from a downloaded zip - no .git directory at all -
+    # has no commit to report, and "commit unknown" reads worse in a
+    # citation than just not mentioning a commit at all.
+    howpublished = f"IDS2Eval v{scorecard['ids2eval_version']} (scorecard schema {scorecard['scorecard_schema_version']})"
+    if commit:
+        howpublished += f", commit {commit}"
 
     fields = {
         "title": f"IDS2Eval scorecard for {scorecard['dataset_name']}",
-        "howpublished": (
-            f"IDS2Eval v{scorecard['ids2eval_version']} "
-            f"(scorecard schema {scorecard['scorecard_schema_version']}), commit {commit}"
-        ),
+        "howpublished": howpublished,
         "note": (
             f"{verdict}; train content hash {fp['train_content_hash']}; "
             f"test content hash {fp['test_content_hash']}; generated {scorecard['generated_at']}"

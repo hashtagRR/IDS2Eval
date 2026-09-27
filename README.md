@@ -151,7 +151,7 @@ Real scorecards: [UNSW-NB15](examples/unsw-nb15-scorecard),
 
 ## Status
 
-Implemented, tested (312 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (316 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data, not just synthetic fixtures - see
 [examples/](examples/) for full scorecards. Two highlights:
 independently reproducing UNSW-NB15's published `sttl` TTL-topology

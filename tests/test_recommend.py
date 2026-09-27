@@ -2,6 +2,7 @@ import json
 
 from ids2eval.config import validate_config
 from ids2eval.reporting.recommend import (
+    _GENERIC_NOTE,
     apply_recommendations,
     build_recommendations,
     recommendations_for_run,
@@ -57,10 +58,24 @@ def test_drop_columns_recommendation_clears_timestamp_column_if_dropped(base_cfg
     assert rec["patch"]["schema"]["timestamp_column"] is None
 
 
-def test_drop_columns_recommendation_skips_columns_already_dropped(base_cfg):
+def test_drop_columns_recommendation_returns_none_once_the_check_itself_clears(base_cfg):
+    # The realistic downstream state after a previous drop_flagged_columns
+    # patch: the column is in drop_columns AND cleared from id_like_columns,
+    # so the check itself no longer flags at all.
+    base_cfg["schema"]["drop_columns"] = ["SrcIP"]
+    findings = [_finding("identity_column_flag", "ok")]
+    assert build_recommendations(findings, base_cfg) == []
+
+
+def test_a_check_still_flagging_an_already_dropped_column_falls_back_to_a_note(base_cfg):
+    # id_like_columns wasn't cleared (e.g. a hand-edited config): the check
+    # still tests the raw column directly and flags it again. No new
+    # column-drop patch is possible (it's already dropped), so this must not
+    # silently vanish from the report - the exact bug this guards against.
     base_cfg["schema"]["drop_columns"] = ["SrcIP"]
     findings = [_finding("identity_column_flag", "flag", {"suggested_drop": ["SrcIP"]})]
-    assert build_recommendations(findings, base_cfg) == []
+    rec = _by_id(build_recommendations(findings, base_cfg))["note_identity_column_flag"]
+    assert rec["patch"] is None
 
 
 def test_low_cardinality_warning_only_triggers_drop_columns_at_warning_status(base_cfg):
@@ -118,6 +133,40 @@ def test_not_fixable_checks_get_a_note_with_no_patch(base_cfg):
 def test_ok_status_checks_never_get_a_note(base_cfg):
     findings = [_finding("known_issue_lookup", "ok")]
     assert build_recommendations(findings, base_cfg) == []
+
+
+def test_every_new_v2_evidence_check_gets_its_own_specific_note(base_cfg):
+    # result_robustness_check itself flagging (after being enabled by an
+    # earlier recommendation) is exactly the reported bug: it produced no
+    # recommendation at all, so a still-failed re-run looked like nothing
+    # was wrong. Same coverage gap existed for these other v2 checks.
+    for check in ("result_robustness_check", "feature_category_ablation_check",
+                  "artifact_sensitivity_check", "synthetic_realism_check",
+                  "cross_dataset_drift_check", "seed_sensitivity_check"):
+        findings = [_finding(check, "flag")]
+        rec = _by_id(build_recommendations(findings, base_cfg))[f"note_{check}"]
+        assert rec["patch"] is None
+        assert rec["explanation"] != _GENERIC_NOTE  # each has its own specific wording
+
+
+def test_an_unknown_check_falls_back_to_the_generic_note_instead_of_vanishing(base_cfg):
+    findings = [_finding("some_future_check_this_module_has_never_heard_of", "flag")]
+    rec = _by_id(build_recommendations(findings, base_cfg))["note_some_future_check_this_module_has_never_heard_of"]
+    assert rec["patch"] is None
+    assert rec["explanation"] == _GENERIC_NOTE
+
+
+def test_missing_label_values_get_their_own_note_even_when_other_symptoms_are_patched(base_cfg):
+    findings = [_finding("data_integrity_check", "flag", {
+        "missing_label_count": 3, "constant_features": ["Const1"],
+        "missing_by_feature": {}, "inf_by_feature": {},
+    })]
+    recs = _by_id(build_recommendations(findings, base_cfg))
+    assert recs["drop_flagged_columns"]["patch"]["schema"]["drop_columns"] == ["Const1"]
+    assert recs["note_data_integrity_check_missing_labels"]["patch"] is None
+    assert "3 row(s)" in recs["note_data_integrity_check_missing_labels"]["explanation"]
+    # the check name is fully covered - no separate generic fallback note too
+    assert "note_data_integrity_check" not in recs
 
 
 def test_apply_recommendations_merges_selected_patches_onto_config(base_cfg):

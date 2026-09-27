@@ -51,6 +51,15 @@ for which files to pick from a real dataset's official download, and
 worked examples for large files (`chunk_size`/`max_rows`) and
 session-grouped splits (`split_mode: grouped`).
 
+**Windows paths in YAML.** A double-quoted string with a single
+backslash isn't a literal backslash in YAML, it starts an escape
+sequence (`\U` looks like the start of an 8-hex-digit Unicode escape,
+which is why `"C:\Users\..."` fails with a `ScannerError` about "8
+hexadecimal numbers"). Use forward slashes instead (`"C:/Users/.../data.csv"`,
+Windows accepts these fine), or single quotes, which YAML never
+escape-parses (`'C:\Users\...\data.csv'`), or double the backslashes
+(`"C:\\Users\\...\\data.csv"`) if you need double quotes specifically.
+
 ## `schema`
 
 Which columns mean what.

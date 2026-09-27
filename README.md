@@ -68,7 +68,10 @@ customize a config (field list:
 
 ## Installation
 
-Needs Python 3.10 or later (tested in CI on 3.10, 3.11, and 3.12).
+Needs Python 3.10, 3.11, or 3.12 (tested in CI on all three).
+`pandas`/`numpy` don't yet ship prebuilt wheels for 3.13+, so
+`pyproject.toml` caps `requires-python` there deliberately: pip refuses
+cleanly instead of falling back to building them from source.
 
 **Linux / macOS**
 
@@ -85,8 +88,14 @@ venv/bin/pip install -e ".[dev]"
 git clone https://github.com/hashtagRR/IDS2Eval.git
 cd IDS2Eval
 python -m venv venv
-venv\Scripts\pip install -e ".[dev]"
+.\venv\Scripts\pip install -e ".[dev]"
 ```
+
+The `.\` prefix matters in PowerShell: without it, PowerShell tries to
+resolve `venv\Scripts\pip` as a module/cmdlet name instead of a file
+path and fails with a confusing "module could not be loaded" error
+rather than "command not found." `.\` works in `cmd.exe` too, so every
+Windows command below uses it.
 
 The `[dev]` extra adds `pytest` and `ruff`, used for the test suite and
 linting; skip it (`pip install -e .`) for a runtime-only install. A
@@ -97,14 +106,14 @@ separate `[plots]` extra (`pip install -e ".[dev,plots]"`) adds
 This installs two console scripts into the venv: the CLI, and the
 local dashboard (see
 [guide/usage.md#web-ui-dashboard](guide/usage.md#web-ui-dashboard)).
-On Windows they're `venv\Scripts\ids2eval` and
-`venv\Scripts\ids2eval-dashboard`; on Linux/macOS, `venv/bin/ids2eval`
+On Windows they're `.\venv\Scripts\ids2eval` and
+`.\venv\Scripts\ids2eval-dashboard`; on Linux/macOS, `venv/bin/ids2eval`
 and `venv/bin/ids2eval-dashboard`.
 
 **Verify:**
 
 ```bash
-venv/bin/pytest tests/ -v          # Windows: venv\Scripts\pytest tests\ -v
+venv/bin/pytest tests/ -v          # Windows: .\venv\Scripts\pytest tests\ -v
 venv/bin/ruff check ids2eval/ tests/
 ```
 

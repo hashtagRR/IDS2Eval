@@ -10,7 +10,49 @@
       "test_rows_raw": 100000,
       "test_rows_deduped": 100000,
       "test_leakage_dropped": 0,
-      "test_duplicates_dropped": 0
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "Benign": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "scanning": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "xss": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "ddos": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "password": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "injection": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "dos": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "backdoor": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "mitm": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "ransomware": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
     }
   },
   {
@@ -18,6 +60,14 @@
     "status": "ok",
     "summary": "no feature vector maps to more than one label",
     "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+    "details": {
+      "classes_tested": 10
+    }
   },
   {
     "check": "leakage_screen",
@@ -46,16 +96,56 @@
     }
   },
   {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'OUT_PKTS' alone reaches AUC 0.992 identifying 'backdoor'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "OUT_PKTS": 0.9924198092328035,
+        "MIN_TTL": 0.9872059700803191,
+        "MAX_TTL": 0.9871771288736746,
+        "IN_PKTS": 0.987061024723076,
+        "NUM_PKTS_UP_TO_128_BYTES": 0.9867053518338545
+      },
+      "best_feature": "OUT_PKTS",
+      "best_class": "backdoor"
+    }
+  },
+  {
     "check": "identity_column_flag",
     "status": "flag",
     "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
     "details": {
       "standalone_auc": {
-        "L4_DST_PORT": 0.8956822883117883
+        "L4_DST_PORT": 0.8956823184099311
       },
       "suggested_drop": [
         "L4_DST_PORT"
-      ]
+      ],
+      "by_class": {
+        "L4_DST_PORT": {
+          "Benign": 0.9087126296823436,
+          "scanning": 0.8990046984031728,
+          "xss": 0.874518991946027,
+          "ddos": 0.9333701545592815,
+          "password": 0.8541362658157521,
+          "injection": 0.857098067591084,
+          "dos": 0.8869695498091552,
+          "backdoor": 0.9558880431089389,
+          "mitm": 0.9024680004057526,
+          "ransomware": 0.9997049321343909
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "flag",
+    "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.898. Port and protocol together may predict the label without attack behavior",
+    "details": {
+      "port_column": "L4_DST_PORT",
+      "protocol_column": "PROTOCOL",
+      "standalone_auc": 0.8975975346269953
     }
   },
   {
@@ -63,6 +153,29 @@
     "status": "ok",
     "summary": "no schema.timestamp_column configured",
     "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.9990061856563283,
+        "test": 1.0038836370744022
+      }
+    }
   },
   {
     "check": "homogeneity_test",
@@ -132,6 +245,12 @@
         }
       }
     }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
   },
   {
     "check": "class_distribution_report",
@@ -235,14 +354,6 @@
     "summary": "no curated known issues for dataset 'ton-iot'",
     "details": {
       "matches": []
-    }
-  },
-  {
-    "check": "near_duplicate_class_check",
-    "status": "ok",
-    "summary": "no near-zero-distance feature vectors found across 10 classes tested",
-    "details": {
-      "classes_tested": 10
     }
   }
 ]

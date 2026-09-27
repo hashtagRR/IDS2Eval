@@ -10,16 +10,20 @@ reservoir sample, split 80/20 at random. Produced with `config.yaml` in this
 folder; open [SCORECARD.html](SCORECARD.html) in a browser for the full
 result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 9 ok, 2 warnings, 2 flags after dedup, across 13 checks.
+**Result: failed** - 13 ok, 2 warnings, 4 flags after dedup, across 19 checks.
 
 What it found:
 
+- **`feature_auc_ranking_check` finds `OUT_PKTS` alone reaches AUC 0.992
+  identifying `backdoor`**, worth checking for a leakage artifact the same way
+  `L4_DST_PORT` already is below.
 - **`identity_column_flag` finds `L4_DST_PORT` alone predicts the label at AUC
   0.896** - the same destination-port shortcut this tool has already found in
   the CIC-IDS2017/2018 examples, now reproduced on a IoT-traffic dataset built
   by a different lab with a different flow exporter. Suggests this is a
   property of NetFlow-style features in general, not one dataset's extraction
-  bug.
+  bug. `port_protocol_shortcut_check` finds combining it with `PROTOCOL` adds
+  almost nothing (AUC 0.898 vs. 0.896 alone).
 - **`homogeneity_test` flags `dos` and `backdoor`** as significantly closer to
   train than a random split would predict, a leakage signature - with only
   19,761 (`dos`) and 496 (`backdoor`) train rows respectively, both are also
@@ -52,8 +56,15 @@ to gzip CSV in fixed-size batches rather than loaded into memory whole, since
 this machine has 7.8GB of RAM and the file holds 13.1M rows.
 
 Run on a 4-vCPU / 7.8GB VM: 9m 27s, audit only (`--skip-benchmark`), most of
-it in the reservoir-sample pass over the full 13.1M-row file. Produced with
-IDS2Eval at commit 2ef764e.
+it in the reservoir-sample pass over the full 13.1M-row file. Re-run
+2026-09-27 (on a 4-vCPU / 15GB VM) to pick up `feature_auc_ranking_check`,
+`port_protocol_shortcut_check`, `row_order_leakage_check`, and
+`temporal_realism_check` (the last one no-ops here, no
+`schema.timestamp_column` configured), which is why the check count reads
+19; the reservoir sample is identical across runs (same seed, same source
+file), confirmed by `identity_column_flag`'s exact-match AUC, so every other
+finding is unchanged from the original run. Produced with IDS2Eval at commit
+2ec4543.
 
 Files: `config.yaml` (input), `audit_report_before.json` /
 `audit_report_after.json` (full findings), `dataset_fingerprint.json` /

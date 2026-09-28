@@ -12,7 +12,7 @@ it - no code required, just a YAML file.
 
 Most published NIDS results are evaluated on datasets whose quality is
 taken on faith: duplicate rows, leaked features, near-identical
-train/test splits. IDS<sup>2</sup>Eval runs 27 checks that catch these
+train/test splits. IDS<sup>2</sup>Eval runs 28 checks that catch these
 problems automatically, instead of a one-off notebook redone by hand
 for every paper, and rolls the result into a citable scorecard
 (`SCORECARD.html`, `SCORECARD.md`, `scorecard.json`) - "this result was
@@ -136,7 +136,7 @@ are two well-known ones this project validates against; see
 | [guide/usage.md](guide/usage.md) | CLI, web UI, output files, caching, reproducing a run, programmatic API |
 | [configs/README.md](configs/README.md) | Every config field, tabulated, with a default and an example |
 | [guide/configuration.md](guide/configuration.md) | The reasoning behind non-obvious fields, and larger worked examples |
-| [guide/checks.md](guide/checks.md) | What each of the 27 checks does, and the research behind it |
+| [guide/checks.md](guide/checks.md) | What each of the 28 checks does, and the research behind it |
 | [guide/contributing-known-issues.md](guide/contributing-known-issues.md) | How to add a curated known issue or extractor fingerprint |
 | [examples/](examples/) | Real scorecards for eight widely used datasets |
 
@@ -151,7 +151,7 @@ Real scorecards: [UNSW-NB15](examples/unsw-nb15-scorecard),
 
 ## Status
 
-Implemented, tested (319 tests, CI on Python 3.10/3.11/3.12), and
+Implemented, tested (344 tests, CI on Python 3.10/3.11/3.12), and
 validated against real data, not just synthetic fixtures - see
 [examples/](examples/) for full scorecards. Two highlights:
 independently reproducing UNSW-NB15's published `sttl` TTL-topology

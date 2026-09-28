@@ -148,7 +148,7 @@ for why that matters.
 
 ## `audit`
 
-Which of the 27 checks run. See [../guide/checks.md](../guide/checks.md)
+Which of the 28 checks run. See [../guide/checks.md](../guide/checks.md)
 for what each one tests and the research behind it.
 
 **v1, on by default, no extra setup needed:**
@@ -187,7 +187,12 @@ for what each one tests and the research behind it.
 | `result_robustness_check` | `false` | Accuracy spread across split/dedup/identity-column conditions |
 | `known_issue_lookup` | `false` | Curated per-dataset published problems, matched on `dataset.name` |
 | `seed_sensitivity_check` | `false` | Re-fits `leakage_screen`/`one_rule_check` across a few seeds |
+| `repeated_seed_falsification_check` | `false` | Repeats `resplit_falsification` across `audit.repeated_seed_count` seeds, reports a 95% CI |
 | `reference_dataset` | `null` | Required if `synthetic_realism_check` or `cross_dataset_drift_check` is on |
+| `repeated_seed_count` | `10` | Seeds `repeated_seed_falsification_check` refits under |
+| `materiality_thresholds` | `{}` | Per-check overrides of the hardcoded "material drop" thresholds; see [../guide/checks.md](../guide/checks.md) |
+| `parallel_checks` | `false` | Run enabled checks concurrently instead of one at a time. Off by default: several checks running at once means several may hold their own encoded feature matrix/model fit in memory simultaneously, raising peak memory versus the sequential default |
+| `max_parallel_checks` | `4` | Caps how many checks run at once when `parallel_checks` is on |
 
 ```yaml
 audit:

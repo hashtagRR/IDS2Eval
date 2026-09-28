@@ -1,29 +1,31 @@
-# NF-ToN-IoT-V2 (University of Queensland NetFlow-V2 conversion of ToN-IoT,
-# 13.1M flows). Too large for this 7.8GB VM in full: a uniform 500K-row
-# reservoir sample (seeded, reproducible), split 80/20 at random (stratified).
-# `Label` is the dataset's own binary 0/1 target for the same rows `Attack`
-# already labels multi-class (with 'Benign' as the negative class) - dropped
-# so it can't leak the answer as a feature.
+# ToN-IoT, the OFFICIAL UNSW/Moustafa Train_Test_Network.csv artifact (research.unsw.edu.au/
+# projects/toniot-datasets), not the University of Queensland NetFlow-V2 conversion used
+# in ton-iot.yaml. This is the artifact most published ToN-IoT papers actually train and
+# report on, real Src/Dst IP + Src/Dst Port columns included (unlike the NetFlow-V2 file,
+# which drops IPs entirely). 211,043 rows total - small enough to load in full, no
+# max_rows/chunk_size sampling needed at all.
+#
+# A real, disclosable characteristic, not a defect: this file is a deliberately
+# class-balanced curated subset (50,000 normal + exactly 20,000 of each of 8 attack
+# types + 1,043 mitm), not a natural-frequency sample of the full ~13M-row ToN-IoT Network
+# capture. Verified directly: 20,569 already-visible full-row duplicates before any check
+# runs (9.7%).
 dataset:
-  name: ton-iot
+  name: ton-iot-official
   raw_files:
-    - /home/tango/projects/IDS2Eval_data/ton-iot/nf-ton-iot-v2.csv.gz
+    - train_test_network.csv.gz
   split_ratio: 0.8
-  chunk_size: 100000
-  max_rows: 500000
-  # No Src/Dst IP in this NetFlow-V2 release (privacy-stripped upstream), so this
-  # is a coarser proxy for flow identity than a true 5-tuple, port+port+protocol,
-  # not a claim of session-level grouping.
-  group_columns: [L4_SRC_PORT, L4_DST_PORT, PROTOCOL]
+  group_columns: [src_ip, src_port, dst_ip, dst_port, proto]
 schema:
-  label_column: Attack
-  drop_columns: [Label]
-  id_like_columns: [L4_DST_PORT]
+  label_column: type
+  attack_category_column: type
+  drop_columns: [label]
+  id_like_columns: [src_ip, dst_ip, src_port, dst_port]
 audit:
   resplit_falsification: true
   result_robustness_check: true
+  repeated_seed_falsification_check: true
   known_issue_lookup: true
 output:
-  dir: /home/tango/projects/IDS2Eval_data/output/ton-iot
   save_preprocessed: false
-  write_scorecard_plot: false
+  write_scorecard_plot: true

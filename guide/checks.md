@@ -2,10 +2,10 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 27 checks operationalize a
+paragraph, or not tested at all. These 28 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
-Nineteen run by default (v1, no external data needed); eight are
+Nineteen run by default (v1, no external data needed); nine are
 opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
@@ -229,6 +229,20 @@ CIC-IDS2018 near-saturation-accuracy question: a grouped resplit
 reproduced the random split's accuracy to within 0.003 percentage
 points, settling the question by direct experiment rather than a
 disclosed-but-untested caveat.
+
+### `repeated_seed_falsification_check`
+`resplit_falsification`'s one blind spot: a single random-vs-grouped
+comparison is one draw from a distribution, not a settled answer. This
+check repeats that same comparison across multiple seeds
+(`audit.repeated_seed_count`, default 10) and reports a mean accuracy
+drop with a 95% confidence interval (Student's t), rather than one
+point estimate. Classifies the result as material (the CI's lower
+bound stays above the materiality threshold), not material (the CI's
+upper bound stays below it), or inconclusive (the CI straddles the
+threshold, meaning more seeds are needed before drawing a conclusion
+either way) - a genuine three-way outcome a single seed can't
+distinguish. Opt-in: refits the classifier once per seed on top of
+`resplit_falsification`'s own single-seed run.
 
 ### `scenario_holdout_falsification`
 A different falsification than `resplit_falsification`'s: instead of

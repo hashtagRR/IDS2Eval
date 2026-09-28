@@ -54,12 +54,24 @@ KNOWN_ISSUES = {
     ],
     "bot-iot": [
         {
-            "issue": "The full dataset is over 99.9% attack traffic (benign flows are "
-                     "129,437 of 30,420,086 rows, 0.43%), an order of magnitude more "
-                     "skewed than most NIDS datasets; a uniform row-level sample may "
-                     "carry very few or zero benign rows, and a classifier's accuracy "
-                     "on this data mostly reflects its attack-vs-attack discrimination, "
-                     "not its ability to recognize normal traffic.",
+            "issue": "The NF-BoT-IoT-V2 NetFlow conversion is over 99.9% attack "
+                     "traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), "
+                     "an order of magnitude more skewed than most NIDS datasets; a "
+                     "uniform row-level sample may carry very few or zero benign "
+                     "rows, and a classifier's accuracy on this data mostly reflects "
+                     "its attack-vs-attack discrimination, not its ability to "
+                     "recognize normal traffic.",
+            "citation": "Koroniotis et al. 2019, Future Generation Computer Systems",
+        },
+    ],
+    "bot-iot-official": [
+        {
+            "issue": "The full original (non-NetFlow) release is over 99.9% attack "
+                     "traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even "
+                     "more skewed than the NetFlow-V2 conversion of this dataset; a "
+                     "classifier's accuracy on this data mostly reflects its "
+                     "attack-vs-attack discrimination, not its ability to recognize "
+                     "normal traffic.",
             "citation": "Koroniotis et al. 2019, Future Generation Computer Systems",
         },
     ],
@@ -95,7 +107,16 @@ KNOWN_ISSUES = {
 
 def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     name = (cfg["dataset"]["name"] or "").strip().lower()
-    matches = [issue for key, issues in KNOWN_ISSUES.items() if key in name for issue in issues]
+    matched_keys = [key for key in KNOWN_ISSUES if key in name]
+    # A key that is itself a substring of another matched key (e.g. "bot-iot" inside
+    # "bot-iot-official") is a less specific match for the same dataset name and is
+    # dropped in favor of the more specific one, so variant-specific curated numbers
+    # don't get mixed with a different variant's numbers under the same lookup.
+    matched_keys = [
+        key for key in matched_keys
+        if not any(key != other and key in other for other in matched_keys)
+    ]
+    matches = [issue for key in matched_keys for issue in KNOWN_ISSUES[key]]
 
     status = "warning" if matches else "ok"
     # The issue text itself, not just a count - a scorecard reader shouldn't have to

@@ -19,10 +19,12 @@ so its result cannot depend on preprocessing.dedup either.
 from __future__ import annotations
 
 from ..data import dataset
+from . import _materiality
 from ._fit_score import fit_and_score
 
 MAX_SCENARIOS = 6
 MIN_SCENARIO_ROWS = 20
+# Overridable via audit.materiality_thresholds.cross_capture_matrix_check ({"warning": .., "flag": ..}).
 SPREAD_FLAG_THRESHOLD = 0.20
 SPREAD_WARNING_THRESHOLD = 0.10
 
@@ -87,9 +89,13 @@ def check(cfg: dict) -> dict:
     best_pair, best_acc = max(matrix.items(), key=lambda kv: kv[1])
     spread = best_acc - worst_acc
 
-    if spread > SPREAD_FLAG_THRESHOLD:
+    tiers = _materiality.threshold(
+        cfg, "cross_capture_matrix_check",
+        {"warning": SPREAD_WARNING_THRESHOLD, "flag": SPREAD_FLAG_THRESHOLD},
+    )
+    if spread > tiers["flag"]:
         status = "flag"
-    elif spread > SPREAD_WARNING_THRESHOLD:
+    elif spread > tiers["warning"]:
         status = "warning"
     else:
         status = "ok"

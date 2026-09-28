@@ -117,17 +117,17 @@
     "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
     "details": {
       "standalone_auc": {
-        "L4_DST_PORT": 0.8956823184099311
+        "L4_DST_PORT": 0.8956822845275171
       },
       "suggested_drop": [
         "L4_DST_PORT"
       ],
       "by_class": {
         "L4_DST_PORT": {
-          "Benign": 0.9087126296823436,
-          "scanning": 0.8990046984031728,
+          "Benign": 0.9087125718292248,
+          "scanning": 0.8990046695167578,
           "xss": 0.874518991946027,
-          "ddos": 0.9333701545592815,
+          "ddos": 0.9333701545592816,
           "password": 0.8541362658157521,
           "injection": 0.857098067591084,
           "dos": 0.8869695498091552,
@@ -145,7 +145,7 @@
     "details": {
       "port_column": "L4_DST_PORT",
       "protocol_column": "PROTOCOL",
-      "standalone_auc": 0.8975975346269953
+      "standalone_auc": 0.8975975734944901
     }
   },
   {
@@ -244,6 +244,16 @@
           "leakage_signature": false
         }
       }
+    }
+  },
+  {
+    "check": "resplit_falsification",
+    "status": "ok",
+    "summary": "random-split accuracy=0.9648, grouped-split accuracy=0.9640 (drop=+0.0008); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "details": {
+      "random_accuracy": 0.96478,
+      "grouped_accuracy": 0.963950360496395,
+      "drop": 0.0008296395036049287
     }
   },
   {
@@ -346,6 +356,21 @@
         "DST_TO_SRC_SECOND_BYTES": 3
       },
       "constant_features": []
+    }
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "ok",
+    "summary": "accuracy ranges from 0.9640 (grouped_split) to 0.9648 (random_split) across 3 conditions, a spread of 0.0008",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.96478,
+        "grouped_split": 0.963950360496395,
+        "identity_columns_dropped": 0.96422
+      },
+      "spread": 0.0008296395036049287,
+      "worst_condition": "grouped_split",
+      "best_condition": "random_split"
     }
   },
   {

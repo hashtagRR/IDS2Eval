@@ -41,6 +41,7 @@ from . import (
     near_duplicate_class,
     one_rule,
     port_protocol_shortcut,
+    repeated_seed_falsification,
     resplit,
     result_robustness,
     row_order_leakage,
@@ -55,6 +56,7 @@ from . import (
 STRUCTURAL_CHECKS = frozenset({
     "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
     "scenario_holdout_falsification", "cross_capture_matrix_check", "result_robustness_check",
+    "repeated_seed_falsification_check",
 })
 
 # A strict subset of STRUCTURAL_CHECKS: checks that report a documented, curated fact
@@ -86,6 +88,7 @@ EVIDENCE_LEVEL = {
     "feature_category_ablation_check": "direct-experiment",
     "artifact_sensitivity_check": "direct-experiment",
     "result_robustness_check": "direct-experiment",
+    "repeated_seed_falsification_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -160,4 +163,6 @@ def run_audit(
         findings.append(known_issues.check(train_df, cfg))
     if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:
         findings.append(seed_sensitivity.check(train_df, test_df, cfg))
+    if audit_cfg["repeated_seed_falsification_check"] and "repeated_seed_falsification_check" not in skip:
+        findings.append(repeated_seed_falsification.check(cfg))
     return findings

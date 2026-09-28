@@ -1,9 +1,9 @@
 # IDS2Eval Scorecard
 
 **Dataset:** bot-iot
-**Overall status:** ❌ Failed, 15 ok, 2 warning(s), 2 flag(s)
-**Generated:** 2026-09-27T03:08:35.773440+00:00
-**IDS2Eval version:** 0.1.0 (git aa2be21)
+**Overall status:** ❌ Failed, 17 ok, 2 warning(s), 2 flag(s)
+**Generated:** 2026-09-27T10:17:04.071333+00:00
+**IDS2Eval version:** 0.1.0 (git e47f6e9)
 **Scorecard schema version:** 1.2
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
@@ -28,10 +28,12 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce |
 | 13 | `homogeneity_test` | ✅ pass | ✅ pass | *Evidence: statistical.* 4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
-| 14 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
-| 15 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft'] |
-| 16 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* unique values by column: {'L4_DST_PORT': 14608} |
-| 17 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
+| 14 | `resplit_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation |
+| 15 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
+| 16 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft'] |
+| 17 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* unique values by column: {'L4_DST_PORT': 14608} |
+| 18 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
+| 19 | `result_robustness_check` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005 |
 
 ## Known issues
 
@@ -49,7 +51,7 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Compared to the previous run
 
-Compared to `2026-09-25_162341_414678` (2026-09-25T16:25:07.584519+00:00).
+Compared to `2026-09-27_030539_473566` (2026-09-27T03:08:35.773440+00:00).
 No check's status changed since the previous run.
 
 ## Dataset fingerprint
@@ -60,7 +62,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 15 ok, 2 warning(s), 2 flag(s) across 19 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 17 ok, 2 warning(s), 2 flag(s) across 21 checks. Full report: audit_report_after.json.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

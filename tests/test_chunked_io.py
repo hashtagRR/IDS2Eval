@@ -198,6 +198,43 @@ def test_a_parser_error_without_column_names_is_not_rewrapped(tmp_path, monkeypa
         list(iter_chunks([str(path)], chunk_size=None))
 
 
+def test_a_non_utf8_csv_falls_back_to_cp1252(tmp_path):
+    # Reproduced live: CIC-IDS2017's official GeneratedLabelledFlows release
+    # has a Windows-1252 en-dash (0x96) in some "Web Attack - X"-style labels,
+    # otherwise plain ASCII. cp1252 decodes 0x96 as an en-dash; the file is
+    # not valid UTF-8 at all, so this exercises the real failure mode.
+    path = tmp_path / "raw.csv"
+    path.write_bytes(b"F1,Label\n1,Web Attack \x96 Brute Force\n2,BENIGN\n")
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=None)), ignore_index=True)
+    assert result["Label"].tolist() == ["Web Attack \u2013 Brute Force", "BENIGN"]
+
+
+def test_a_non_utf8_csv_falls_back_to_cp1252_when_chunked(tmp_path):
+    # The fallback must not duplicate rows read successfully before the bad
+    # byte is hit partway through a chunked read - the real failure mode this
+    # guards against, since the first attempt's already-read chunks must be
+    # discarded, not yielded, before retrying under the fallback encoding.
+    lines = [b"F1,Label"] + [f"{i},BENIGN".encode() for i in range(5)] + [b"5,Web Attack \x96 XSS"]
+    path = tmp_path / "raw.csv"
+    path.write_bytes(b"\n".join(lines) + b"\n")
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=2)), ignore_index=True)
+    assert len(result) == 6
+    assert result["Label"].tolist() == ["BENIGN"] * 5 + ["Web Attack \u2013 XSS"]
+
+
+def test_a_non_utf8_zip_member_is_not_retried(tmp_path):
+    # A zip member's stream can't be safely re-read from the start once
+    # partially consumed, so this must raise rather than silently produce a
+    # partial or duplicated result.
+    import zipfile
+
+    archive = tmp_path / "archive.zip"
+    with zipfile.ZipFile(archive, "w") as zf:
+        zf.writestr("data.csv", b"F1,Label\n1,Web Attack \x96 Brute Force\n")
+    with pytest.raises(UnicodeDecodeError):
+        list(iter_chunks([f"{archive}::data.csv"], chunk_size=None))
+
+
 def test_iter_chunks_reads_a_chunked_headerless_csv_with_column_names(tmp_path):
     df = _sample_df(20)
     path = tmp_path / "headerless.csv"
@@ -241,3 +278,36 @@ def test_headerless_csv_member_from_a_zip_with_column_names(tmp_path):
     )), ignore_index=True)
     assert list(result.columns) == ["F1", "Label"]
     assert len(result) == 6
+
+
+def test_fully_blank_rows_are_dropped(tmp_path, caplog):
+    # Reproduced live: CIC-IDS2017's official GeneratedLabelledFlows release
+    # has 170,366 real rows followed by 288,602 entirely blank rows (every
+    # column empty) appended to the end of one file. Left in, these crash the
+    # stratified train/test split with "Input contains NaN" before any audit
+    # check runs, since a row this empty has no label and no features at all.
+    path = tmp_path / "raw.csv"
+    path.write_text("F1,Label\n1,BENIGN\n2,BENIGN\n,\n,\n,\n")
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=None)), ignore_index=True)
+    assert len(result) == 2
+    assert result["Label"].tolist() == ["BENIGN", "BENIGN"]
+    assert "Dropped 3 fully blank row" in caplog.text
+
+
+def test_a_row_missing_only_the_label_is_not_dropped(tmp_path):
+    # _drop_blank_rows only removes a row blank in EVERY column - a row with
+    # real feature values but a missing label is a different, more debatable
+    # case left for data_integrity_check to report, not silently discarded.
+    path = tmp_path / "raw.csv"
+    path.write_text("F1,Label\n1,BENIGN\n2,\n")
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=None)), ignore_index=True)
+    assert len(result) == 2
+    assert result["F1"].tolist() == [1, 2]
+
+
+def test_fully_blank_rows_are_dropped_when_chunked(tmp_path):
+    lines = ["F1,Label"] + [f"{i},BENIGN" for i in range(4)] + [",", ",", ","]
+    path = tmp_path / "raw.csv"
+    path.write_text("\n".join(lines) + "\n")
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=2)), ignore_index=True)
+    assert len(result) == 4

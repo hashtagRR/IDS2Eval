@@ -239,3 +239,41 @@ def test_column_names_rejects_duplicates(base_cfg):
     base_cfg["audit"]["resplit_falsification"] = False
     with pytest.raises(ValueError, match=r"duplicate name\(s\)"):
         validate_config(base_cfg)
+
+
+def test_materiality_threshold_override_accepts_a_single_number_for_a_binary_check(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": 0.02}
+    validate_config(base_cfg)  # should not raise
+
+
+def test_materiality_threshold_rejects_a_dict_for_a_binary_check(base_cfg):
+    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": {"warning": 0.01, "flag": 0.02}}
+    with pytest.raises(ValueError, match="resplit_falsification must be a single number"):
+        validate_config(base_cfg)
+
+
+def test_materiality_threshold_accepts_warning_flag_dict_for_a_tiered_check(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["audit"]["materiality_thresholds"] = {"result_robustness_check": {"warning": 0.05, "flag": 0.10}}
+    validate_config(base_cfg)  # should not raise
+
+
+def test_materiality_threshold_rejects_a_bare_number_for_a_tiered_check(base_cfg):
+    base_cfg["audit"]["materiality_thresholds"] = {"result_robustness_check": 0.1}
+    with pytest.raises(ValueError, match=r'must be a dict with exactly the keys "warning" and "flag"'):
+        validate_config(base_cfg)
+
+
+def test_materiality_threshold_rejects_warning_greater_than_flag(base_cfg):
+    base_cfg["audit"]["materiality_thresholds"] = {"result_robustness_check": {"warning": 0.2, "flag": 0.1}}
+    with pytest.raises(ValueError, match=r"warning \(0.2\) must be less than .flag \(0.1\)"):
+        validate_config(base_cfg)
+
+
+def test_materiality_threshold_rejects_an_unknown_check_name(base_cfg):
+    base_cfg["audit"]["materiality_thresholds"] = {"dedup_check": 0.1}
+    with pytest.raises(ValueError, match="don't support a threshold override"):
+        validate_config(base_cfg)

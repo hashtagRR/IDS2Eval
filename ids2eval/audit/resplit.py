@@ -16,27 +16,30 @@ always builds both splits from the raw data to compare them directly.
 from __future__ import annotations
 
 from ..data import dataset
+from . import _materiality
 from ._fit_score import fit_and_score
 
 # A grouped-split accuracy drop below this is read as "structurally
 # ruling out session-correlated leakage as the explanation," not proof
-# of zero leakage of any kind.
+# of zero leakage of any kind. Overridable via audit.materiality_thresholds.
+# resplit_falsification.
 MATERIAL_DROP_THRESHOLD = 0.01
 
 
-def check(cfg: dict) -> dict:
+def check(cfg: dict, seed: int = 0) -> dict:
     dataset_cfg = cfg["dataset"]
     label_col = cfg["schema"]["label_column"]
     combined = dataset.load_raw_combined(dataset_cfg)
 
-    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg)
-    grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg)
+    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
+    grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
 
-    random_acc = fit_and_score(random_train, random_test, label_col, cfg)
-    grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg)
+    random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+    grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
     drop = random_acc - grouped_acc
 
-    material = drop > MATERIAL_DROP_THRESHOLD
+    threshold = _materiality.threshold(cfg, "resplit_falsification", MATERIAL_DROP_THRESHOLD)
+    material = drop > threshold
     status = "flag" if material else "ok"
     summary = (
         f"random-split accuracy={random_acc:.4f}, grouped-split accuracy={grouped_acc:.4f} "

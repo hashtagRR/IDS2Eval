@@ -19,6 +19,7 @@ from ids2eval.audit import (
     near_duplicate_class,
     one_rule,
     port_protocol_shortcut,
+    repeated_seed_falsification,
     resplit,
     result_robustness,
     row_order_leakage,
@@ -234,6 +235,111 @@ def test_resplit_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     assert result["check"] == "resplit_falsification"
     assert 0.0 <= result["details"]["random_accuracy"] <= 1.0
     assert 0.0 <= result["details"]["grouped_accuracy"] <= 1.0
+
+
+def test_resplit_falsification_materiality_threshold_is_overridable(base_cfg, tmp_path, synth_data, monkeypatch):
+    # Fixed accuracies isolate the threshold-comparison logic from the real
+    # model/data, which would otherwise make a tight-vs-loose threshold test
+    # flaky depending on what accuracy synth_data's random forest happens to get.
+    scores = iter([0.90, 0.85])  # drop = 0.05
+    monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5
+
+    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": 0.10}
+    assert resplit.check(base_cfg)["status"] == "ok"  # 0.05 drop below the raised 0.10 threshold
+
+    scores = iter([0.90, 0.85])
+    monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
+    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": 0.01}
+    assert resplit.check(base_cfg)["status"] == "flag"  # same 0.05 drop, now above a lowered threshold
+
+
+def test_repeated_seed_falsification_end_to_end(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5  # synth_data only has 2 SrcIP groups
+    result = repeated_seed_falsification.check(base_cfg, n_seeds=3)
+    assert result["check"] == "repeated_seed_falsification_check"
+    assert result["details"]["n_seeds"] == 3
+    assert len(result["details"]["drops_by_seed"]) == 3
+    ci_low, ci_high = result["details"]["ci_95"]
+    assert ci_low <= result["details"]["mean_drop"] <= ci_high
+    assert result["status"] in ("ok", "warning", "flag")
+
+
+def test_repeated_seed_falsification_below_minimum_seeds_is_a_no_op(base_cfg):
+    result = repeated_seed_falsification.check(base_cfg, n_seeds=2)
+    assert result["status"] == "ok"
+    assert "below the minimum" in result["summary"]
+    assert result["details"] == {}
+
+
+def test_repeated_seed_falsification_reads_n_seeds_from_config_by_default(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5
+    base_cfg["audit"]["repeated_seed_count"] = 4
+    result = repeated_seed_falsification.check(base_cfg)  # no n_seeds argument
+    assert result["details"]["n_seeds"] == 4
+
+
+def _repeated_seed_cfg(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5
+    return base_cfg
+
+
+def test_repeated_seed_falsification_classifies_material_when_ci_lower_bound_exceeds_threshold(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    # Fixed, tightly-clustered drops isolate the three-way materiality classification
+    # from the real model/data: a small spread around a mean well above the threshold
+    # should push even the CI's lower bound above it. Only fit_and_score is faked; the
+    # real split functions still run against a real temp file, matching the other tests'
+    # discipline of not mocking more than the one thing being isolated.
+    scores = iter([0.90, 0.70, 0.90, 0.69, 0.90, 0.71])  # drops ~0.20, tight spread
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    assert result["status"] == "flag"
+    assert result["details"]["material"] is True
+
+
+def test_repeated_seed_falsification_classifies_not_material_when_ci_upper_bound_is_below_threshold(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    scores = iter([0.90, 0.895, 0.90, 0.898, 0.90, 0.897])  # drops ~0.003-0.005, tiny
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    assert result["status"] == "ok"
+    assert result["details"]["material"] is False
+
+
+def test_repeated_seed_falsification_classifies_inconclusive_when_ci_straddles_threshold(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    # A wide spread of drops straddling the threshold: neither bound of the CI clears it.
+    scores = iter([0.90, 0.40, 0.90, 0.89, 0.90, 0.60])  # drops: 0.50, 0.01, 0.30
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    assert result["status"] == "warning"
+    assert result["details"]["material"] is None
 
 
 def test_scenario_holdout_falsification_ok_with_no_scenario_column_configured(base_cfg):
@@ -645,6 +751,7 @@ def test_structural_checks_constant_matches_the_checks_that_ignore_row_content()
     assert STRUCTURAL_CHECKS == {
         "known_issue_lookup", "schema_fingerprint_check", "resplit_falsification",
         "scenario_holdout_falsification", "cross_capture_matrix_check", "result_robustness_check",
+        "repeated_seed_falsification_check",
     }
 
 

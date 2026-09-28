@@ -21,12 +21,19 @@ MAX_FIT_ROWS = 200_000
 
 
 def fit_and_score(
-    train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict, cols: list[str] | None = None
+    train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict,
+    cols: list[str] | None = None, seed: int = 0,
 ) -> float:
+    """seed controls both which MAX_FIT_ROWS rows are subsampled and the
+    RandomForest's own random_state. Every existing caller omits it and gets
+    today's fixed seed=0 behavior unchanged; repeated_seed_falsification_check
+    is the one caller that varies it, to get an independent refit per seed
+    rather than the same subsample and forest every time.
+    """
     if cols is None:
         cols = features.feature_columns(train_df, cfg)
-    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
+    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
     x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
-    clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)
+    clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
     return float(accuracy_score(test_df[label_col], clf.predict(x_test)))

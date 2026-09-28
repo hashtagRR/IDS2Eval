@@ -23,8 +23,11 @@ from __future__ import annotations
 import pandas as pd
 
 from ..data import features
+from . import _materiality
 from ._fit_score import fit_and_score
 
+# Overridable via audit.materiality_thresholds.feature_category_ablation_check
+# ({"warning": .., "flag": ..}).
 MATERIAL_DROP_THRESHOLD = 0.30
 WARNING_DROP_THRESHOLD = 0.15
 
@@ -69,9 +72,13 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         }
 
     worst_category, worst_drop = max(drop_by_category.items(), key=lambda kv: kv[1])
-    if worst_drop > MATERIAL_DROP_THRESHOLD:
+    tiers = _materiality.threshold(
+        cfg, "feature_category_ablation_check",
+        {"warning": WARNING_DROP_THRESHOLD, "flag": MATERIAL_DROP_THRESHOLD},
+    )
+    if worst_drop > tiers["flag"]:
         status = "flag"
-    elif worst_drop > WARNING_DROP_THRESHOLD:
+    elif worst_drop > tiers["warning"]:
         status = "warning"
     else:
         status = "ok"

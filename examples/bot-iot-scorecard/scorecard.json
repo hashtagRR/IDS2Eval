@@ -1,13 +1,13 @@
 {
   "scorecard_schema_version": "1.2",
-  "generated_at": "2026-09-27T03:08:35.773440+00:00",
+  "generated_at": "2026-09-27T10:17:04.071333+00:00",
   "dataset_name": "bot-iot",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "aa2be21fdd94ddf6cc67240524f1aaab20937f60",
+  "ids2eval_git_commit": "e47f6e960cef08741336884e6b850adddf731a04",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 15,
+    "ok": 17,
     "warning": 2,
     "flag": 2
   },
@@ -78,6 +78,11 @@
       "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
     },
     {
+      "check": "resplit_falsification",
+      "status": "ok",
+      "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+    },
+    {
       "check": "scenario_holdout_falsification",
       "status": "ok",
       "summary": "no schema.scenario_column configured"
@@ -101,6 +106,11 @@
       "check": "data_integrity_check",
       "status": "ok",
       "summary": "no missing labels, constant features, or +-inf values found"
+    },
+    {
+      "check": "result_robustness_check",
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005"
     },
     {
       "check": "known_issue_lookup",
@@ -292,6 +302,20 @@
       }
     },
     {
+      "check": "resplit_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
       "check": "scenario_holdout_falsification",
       "category": "audit",
       "before": {
@@ -362,6 +386,20 @@
       }
     },
     {
+      "check": "result_robustness_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
       "check": "known_issue_lookup",
       "category": "known_issue",
       "before": {
@@ -393,9 +431,9 @@
     "test_content_hash": "df600d41362e37f20cf37a9857a716a8b31c531ccf4084faf2e7e3744ac80ef0"
   },
   "previous_run_comparison": {
-    "previous_run": "2026-09-25_162341_414678",
-    "previous_generated_at": "2026-09-25T16:25:07.584519+00:00",
-    "previous_verdict": "passed_with_warnings",
+    "previous_run": "2026-09-27_030539_473566",
+    "previous_generated_at": "2026-09-27T03:08:35.773440+00:00",
+    "previous_verdict": "failed",
     "fingerprint_changed": false,
     "changed_checks": []
   }

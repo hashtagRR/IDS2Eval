@@ -30,8 +30,10 @@ random-split-vs-dedup comparison.
 from __future__ import annotations
 
 from ..data import dataset, features
+from . import _materiality
 from ._fit_score import fit_and_score
 
+# Overridable via audit.materiality_thresholds.result_robustness_check ({"warning": .., "flag": ..}).
 SPREAD_FLAG_THRESHOLD = 0.15
 SPREAD_WARNING_THRESHOLD = 0.08
 
@@ -87,9 +89,13 @@ def check(cfg: dict) -> dict:
     best_condition, best_acc = max(conditions.items(), key=lambda kv: kv[1])
     spread = best_acc - worst_acc
 
-    if spread > SPREAD_FLAG_THRESHOLD:
+    tiers = _materiality.threshold(
+        cfg, "result_robustness_check",
+        {"warning": SPREAD_WARNING_THRESHOLD, "flag": SPREAD_FLAG_THRESHOLD},
+    )
+    if spread > tiers["flag"]:
         status = "flag"
-    elif spread > SPREAD_WARNING_THRESHOLD:
+    elif spread > tiers["warning"]:
         status = "warning"
     else:
         status = "ok"

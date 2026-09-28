@@ -95,6 +95,30 @@ def _drop_embedded_header_rows(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _drop_blank_rows(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop rows where every single column is missing.
+
+    A real quirk hit against CIC-IDS2017's official GeneratedLabelledFlows
+    release: its Thursday-WorkingHours-Morning-WebAttacks file has 170,366
+    real flow rows followed by 288,602 entirely blank rows (verified by
+    direct inspection of the raw bytes: literal comma-only lines with no
+    values at all) appended to the end of the file, not truncated data or a
+    header/schema issue. A row this empty carries no label and no features,
+    so it can't be used for anything downstream; left in, it crashes the
+    stratified train/test split with "Input contains NaN" before any audit
+    check gets a chance to report on it. Only drops a row that is blank in
+    EVERY column, not merely missing its label, since a row with real
+    feature values but no label is a different, more debatable case that
+    this function deliberately leaves for data_integrity_check to report
+    rather than silently discarding.
+    """
+    mask = df.isna().all(axis=1)
+    if mask.any():
+        logger.warning("Dropped %d fully blank row(s) (every column missing)", int(mask.sum()))
+        df = df.loc[~mask]
+    return df
+
+
 def _is_parquet(name: str) -> bool:
     return str(name).lower().endswith(".parquet")
 
@@ -132,27 +156,55 @@ def _iter_csv_chunks(source, chunk_size: int | None, column_names: list[str] | N
     or never included, a real, recurring shape of an official NIDS
     download - NSL-KDD's own original KDDTrain+.txt/KDDTest+.txt are
     exactly this).
+
+    Tries UTF-8 first and falls back to Windows-1252 for a path (not a zip
+    member stream) that isn't valid UTF-8: a real, reproduced case is
+    CIC-IDS2017's official GeneratedLabelledFlows release, whose Thursday
+    WebAttacks file has a Windows-1252 en-dash byte (0x96) in a "Web Attack
+    - Brute Force"-style label, otherwise plain ASCII. Each attempt is fully
+    materialized into a list before anything is yielded, specifically so a
+    decode error partway through a chunked read can't leave earlier chunks
+    already handed to the caller when the file is re-read from the start
+    under the fallback encoding, which would otherwise silently duplicate
+    those rows. A zip member's stream can't be safely re-read from the
+    start once partially consumed, so only a plain path gets the retry.
     """
     kwargs = {"header": None, "names": column_names} if column_names else {}
-    try:
-        reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False, **kwargs) if chunk_size \
-            else [pd.read_csv(source, low_memory=False, **kwargs)]
-        yield from reader
-    except pd.errors.ParserError as e:
-        if not column_names:
+    encodings = ("utf-8", "cp1252") if isinstance(source, str) else ("utf-8",)
+    for attempt, encoding in enumerate(encodings):
+        try:
+            read_kwargs = {**kwargs, "encoding": encoding}
+            reader = pd.read_csv(source, chunksize=chunk_size, low_memory=False, **read_kwargs) if chunk_size \
+                else [pd.read_csv(source, low_memory=False, **read_kwargs)]
+            chunks = list(reader)
+        except UnicodeDecodeError:
+            if attempt + 1 < len(encodings):
+                continue
             raise
-        # pandas' own message ("Expected N fields... saw M") already names both
-        # counts, but gives no hint that dataset.column_names is the likely
-        # cause - a real, reproduced case: UNSW-NB15's four raw capture files
-        # have 49 columns, while its separate pre-split training-set/
-        # testing-set files have 45; pointing column_names built for one at
-        # the other produces exactly this error.
-        raise ValueError(
-            f"{source}: dataset.column_names has {len(column_names)} names, but this file's "
-            f"rows don't have that many fields ({e}). Check that column_names lists every "
-            "column in this exact file's own order - a multi-file raw release sometimes has a "
-            "different column count per file."
-        ) from e
+        except pd.errors.ParserError as e:
+            if not column_names:
+                raise
+            # pandas' own message ("Expected N fields... saw M") already names both
+            # counts, but gives no hint that dataset.column_names is the likely
+            # cause - a real, reproduced case: UNSW-NB15's four raw capture files
+            # have 49 columns, while its separate pre-split training-set/
+            # testing-set files have 45; pointing column_names built for one at
+            # the other produces exactly this error.
+            raise ValueError(
+                f"{source}: dataset.column_names has {len(column_names)} names, but this file's "
+                f"rows don't have that many fields ({e}). Check that column_names lists every "
+                "column in this exact file's own order - a multi-file raw release sometimes has a "
+                "different column count per file."
+            ) from e
+        else:
+            if attempt > 0:
+                logger.warning(
+                    "%s: not valid UTF-8, read successfully as %s instead (a common source "
+                    "encoding for these datasets' Windows-based extraction tools)",
+                    source, encoding,
+                )
+            yield from chunks
+            return
 
 
 def _iter_zip_member_chunks(
@@ -219,6 +271,7 @@ def iter_chunks(
         for chunk in _iter_raw_chunks(path, chunk_size, column_names):
             chunk.columns = chunk.columns.str.strip()
             chunk = _drop_embedded_header_rows(chunk)
+            chunk = _drop_blank_rows(chunk)
 
             if reference_columns is None:
                 reference_columns = chunk.columns

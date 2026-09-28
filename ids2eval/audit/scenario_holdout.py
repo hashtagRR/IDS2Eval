@@ -29,8 +29,11 @@ automatically.
 from __future__ import annotations
 
 from ..data import dataset
+from . import _materiality
 from ._fit_score import fit_and_score
 
+# Overridable via audit.materiality_thresholds.scenario_holdout_falsification
+# ({"warning": .., "flag": ..}).
 MATERIAL_DROP_THRESHOLD = 0.10
 WARNING_DROP_THRESHOLD = 0.05
 MIN_HOLDOUT_ROWS = 20
@@ -81,9 +84,13 @@ def check(cfg: dict) -> dict:
     scenario_acc = fit_and_score(scenario_train, scenario_test, label_col, cfg)
     drop = random_acc - scenario_acc
 
-    if drop > MATERIAL_DROP_THRESHOLD:
+    tiers = _materiality.threshold(
+        cfg, "scenario_holdout_falsification",
+        {"warning": WARNING_DROP_THRESHOLD, "flag": MATERIAL_DROP_THRESHOLD},
+    )
+    if drop > tiers["flag"]:
         status = "flag"
-    elif drop > WARNING_DROP_THRESHOLD:
+    elif drop > tiers["warning"]:
         status = "warning"
     else:
         status = "ok"

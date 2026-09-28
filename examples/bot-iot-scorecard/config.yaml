@@ -13,12 +13,17 @@ dataset:
   split_ratio: 0.8
   chunk_size: 100000
   max_rows: 500000
+  # No Src/Dst IP in this NetFlow-V2 release (privacy-stripped upstream), so this
+  # is a coarser proxy for flow identity than a true 5-tuple, port+port+protocol,
+  # not a claim of session-level grouping.
+  group_columns: [L4_SRC_PORT, L4_DST_PORT, PROTOCOL]
 schema:
   label_column: Attack
   drop_columns: [Label]
   id_like_columns: [L4_DST_PORT]
 audit:
-  resplit_falsification: false   # no session/host columns in this NetFlow-V2 release
+  resplit_falsification: true
+  result_robustness_check: true
   known_issue_lookup: true
 output:
   dir: /home/tango/projects/IDS2Eval_data/output/bot-iot

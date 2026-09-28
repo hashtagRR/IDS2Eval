@@ -175,6 +175,16 @@
     }
   },
   {
+    "check": "resplit_falsification",
+    "status": "ok",
+    "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "details": {
+      "random_accuracy": 0.99019,
+      "grouped_accuracy": 0.989689896898969,
+      "drop": 0.0005001031010309909
+    }
+  },
+  {
     "check": "scenario_holdout_falsification",
     "status": "ok",
     "summary": "no schema.scenario_column configured",
@@ -250,6 +260,21 @@
       "missing_by_feature": {},
       "inf_by_feature": {},
       "constant_features": []
+    }
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "ok",
+    "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.99019,
+        "grouped_split": 0.989689896898969,
+        "identity_columns_dropped": 0.99015
+      },
+      "spread": 0.0005001031010309909,
+      "worst_condition": "grouped_split",
+      "best_condition": "random_split"
     }
   },
   {

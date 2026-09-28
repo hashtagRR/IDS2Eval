@@ -21,6 +21,18 @@ VALID_SPLIT_MODE = {"random", "grouped"}
 VALID_CALIBRATION = {"none", "platt", "isotonic"}
 VALID_OUTPUT_FORMAT = {"parquet", "csv"}
 
+# Which checks support audit.materiality_thresholds overrides, and the shape each one
+# expects: a single number for a binary flag/ok check, or the two named tiers for a
+# check with a three-tier ok/warning/flag scale. Kept here as the one place that has to
+# stay in sync with which checks actually call ids2eval.audit._materiality.threshold().
+MATERIALITY_SINGLE_CHECKS = {
+    "resplit_falsification", "cross_dataset_drift_check", "repeated_seed_falsification_check",
+}
+MATERIALITY_TIERED_CHECKS = {
+    "result_robustness_check", "cross_capture_matrix_check",
+    "scenario_holdout_falsification", "feature_category_ablation_check",
+}
+
 DEFAULTS: dict[str, Any] = {
     "random_seed": 0,      # every random_state/seed in the pipeline (split, reservoir
                             # sampling, SMOTE/etc., classifier init, benchmark subsampling)
@@ -84,7 +96,22 @@ DEFAULTS: dict[str, Any] = {
         "result_robustness_check": False,
         "known_issue_lookup": False,
         "seed_sensitivity_check": False,
+        "repeated_seed_falsification_check": False,
+        # Number of independent seeds repeated_seed_falsification_check refits under;
+        # each additional seed is a full pair of RandomForest refits on the whole raw
+        # dataset, real, non-negligible compute on a large dataset, hence opt-in above.
+        "repeated_seed_count": 10,
         "reference_dataset": None,
+        # Per-check materiality thresholds, frozen and user-visible rather than a buried
+        # module constant. Empty by default: each check keeps its own already-calibrated
+        # default (see the check's own module) unless overridden here by check name. A
+        # single number for a binary flag/ok check (e.g. resplit_falsification: 0.01), or
+        # {"warning": x, "flag": y} for a check with a three-tier ok/warning/flag scale
+        # (e.g. result_robustness_check). Deliberately per-check, not one global value:
+        # resplit_falsification's 0.01 and feature_category_ablation_check's 0.30 measure
+        # very different things (any session-leakage cost vs. expected ablation cost) and
+        # were each calibrated to their own check's scale.
+        "materiality_thresholds": {},
     },
     "classifiers": {
         "list": "all",
@@ -209,22 +236,58 @@ def validate_config(cfg: dict[str, Any]) -> None:
         errors.append(
             f"audit.reference_dataset is required when any of {reference_needing_checks} is true"
         )
-    if audit["resplit_falsification"] and not (has_raw and dataset["group_columns"]):
-        if not has_raw:
+    # repeated_seed_falsification_check shares resplit_falsification's exact precondition:
+    # it's the same random-vs-grouped comparison, just repeated across seeds.
+    for check_name in ("resplit_falsification", "repeated_seed_falsification_check"):
+        if audit[check_name] and not (has_raw and dataset["group_columns"]):
+            if not has_raw:
+                errors.append(
+                    f"audit.{check_name} needs dataset.raw_files, not a pre-split "
+                    "train_file/test_file pair (it builds its own independent random-vs-"
+                    f"grouped comparison split from the raw data). Set "
+                    f"audit.{check_name}: false if this dataset has no "
+                    "session-identifying columns to group by."
+                )
+            else:
+                errors.append(
+                    f"audit.{check_name} needs dataset.group_columns set (e.g. "
+                    "source/destination IP and port, or whatever identifies a session in "
+                    f"this dataset) to build its grouped-split comparison. Set "
+                    f"audit.{check_name}: false instead if this dataset has no "
+                    "such columns, see guide/checks.md for what the check does."
+                )
+
+    n_seeds = audit["repeated_seed_count"]
+    if isinstance(n_seeds, bool) or not isinstance(n_seeds, int) or n_seeds < 1:
+        errors.append("audit.repeated_seed_count must be a positive integer")
+
+    thresholds = audit["materiality_thresholds"]
+    known_threshold_checks = MATERIALITY_SINGLE_CHECKS | MATERIALITY_TIERED_CHECKS
+    unknown_threshold_checks = set(thresholds) - known_threshold_checks
+    if unknown_threshold_checks:
+        errors.append(
+            f"audit.materiality_thresholds has entries for {sorted(unknown_threshold_checks)}, "
+            f"which don't support a threshold override; valid keys are {sorted(known_threshold_checks)}"
+        )
+    for check in MATERIALITY_SINGLE_CHECKS & set(thresholds):
+        if isinstance(thresholds[check], bool) or not isinstance(thresholds[check], (int, float)):
             errors.append(
-                "audit.resplit_falsification needs dataset.raw_files, not a pre-split "
-                "train_file/test_file pair (it builds its own independent random-vs-"
-                "grouped comparison split from the raw data). Set "
-                "audit.resplit_falsification: false if this dataset has no "
-                "session-identifying columns to group by."
+                f"audit.materiality_thresholds.{check} must be a single number "
+                f"(this check has one flag/ok threshold, not separate warning/flag tiers)"
             )
-        else:
+    for check in MATERIALITY_TIERED_CHECKS & set(thresholds):
+        value = thresholds[check]
+        if not isinstance(value, dict) or set(value) != {"warning", "flag"}:
             errors.append(
-                "audit.resplit_falsification needs dataset.group_columns set (e.g. "
-                "source/destination IP and port, or whatever identifies a session in "
-                "this dataset) to build its grouped-split comparison. Set "
-                "audit.resplit_falsification: false instead if this dataset has no "
-                "such columns, see guide/checks.md for what the check does."
+                f'audit.materiality_thresholds.{check} must be a dict with exactly the keys '
+                f'"warning" and "flag" (this check has a three-tier ok/warning/flag scale)'
+            )
+        elif not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in value.values()):
+            errors.append(f"audit.materiality_thresholds.{check}'s warning and flag values must be numbers")
+        elif value["warning"] >= value["flag"]:
+            errors.append(
+                f"audit.materiality_thresholds.{check}.warning ({value['warning']}) must be "
+                f"less than .flag ({value['flag']})"
             )
 
     classifiers = cfg["classifiers"]

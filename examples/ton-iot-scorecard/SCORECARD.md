@@ -1,9 +1,9 @@
 # IDS2Eval Scorecard
 
 **Dataset:** ton-iot
-**Overall status:** ❌ Failed, 13 ok, 2 warning(s), 4 flag(s)
-**Generated:** 2026-09-27T02:48:11.150861+00:00
-**IDS2Eval version:** 0.1.0 (git 2ec4543)
+**Overall status:** ❌ Failed, 15 ok, 2 warning(s), 4 flag(s)
+**Generated:** 2026-09-27T10:59:06.372735+00:00
+**IDS2Eval version:** 0.1.0 (git e47f6e9)
 **Scorecard schema version:** 1.2
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
@@ -28,10 +28,12 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce |
 | 13 | `homogeneity_test` | 🚩 flag | 🚩 flag | *Evidence: statistical.* 10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor'] |
-| 14 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
-| 15 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware'] |
-| 16 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* unique values by column: {'L4_DST_PORT': 49397} |
-| 17 | `data_integrity_check` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* +-inf values in 2 feature column(s) |
+| 14 | `resplit_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* random-split accuracy=0.9648, grouped-split accuracy=0.9640 (drop=+0.0008); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation |
+| 15 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
+| 16 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware'] |
+| 17 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* unique values by column: {'L4_DST_PORT': 49397} |
+| 18 | `data_integrity_check` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* +-inf values in 2 feature column(s) |
+| 19 | `result_robustness_check` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* accuracy ranges from 0.9640 (grouped_split) to 0.9648 (random_split) across 3 conditions, a spread of 0.0008 |
 
 ## Known issues
 
@@ -49,7 +51,7 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Compared to the previous run
 
-Compared to `2026-09-26_080016_161051` (2026-09-26T08:04:53.320794+00:00).
+Compared to `2026-09-27_023719_055559` (2026-09-27T02:48:11.150861+00:00).
 No check's status changed since the previous run.
 
 ## Dataset fingerprint
@@ -60,7 +62,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 13 ok, 2 warning(s), 4 flag(s) across 19 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 15 ok, 2 warning(s), 4 flag(s) across 21 checks. Full report: audit_report_after.json.
 
 Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
 

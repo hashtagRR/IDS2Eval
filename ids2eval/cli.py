@@ -24,7 +24,7 @@ from .config import load_config
 from .data import cache, dataset
 from .data.label_grouping import apply_attack_type_mapping
 from .modeling.benchmark import run_benchmark
-from .reporting import cite, compare_datasets, drift, recommend, run_manager, scorecard
+from .reporting import cite, compare_datasets, drift, intervention_manifest, recommend, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
@@ -193,6 +193,16 @@ def main(argv=None) -> None:
             stage = "scorecard"
             final_findings = findings_after if cfg["preprocessing"]["dedup"] else findings_before
             final_audit_stage = "after" if cfg["preprocessing"]["dedup"] else "before"
+
+            manifest = intervention_manifest.build_manifest(final_findings)
+            if manifest:
+                manifest_path = run_dir / "intervention_manifest.json"
+                manifest_path.write_text(json.dumps(manifest, indent=2, default=_json_default))
+                logger.info(
+                    "Intervention manifest written to %s (%d intervention(s))",
+                    manifest_path, len(manifest),
+                )
+
             sc = scorecard.build_scorecard(
                 final_findings, final_audit_stage, cfg, fingerprint,
                 findings_before=findings_before if final_audit_stage == "after" else None,

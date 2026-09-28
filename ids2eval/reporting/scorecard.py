@@ -215,6 +215,15 @@ CHECK_INFO = {
         "(D'Amour et al. 2022's underspecification finding).",
         "Warning: either check's verdict changed across seeds.",
     ),
+    "repeated_seed_falsification_check": (
+        "Re-runs resplit_falsification's random-vs-grouped accuracy comparison across "
+        "audit.repeated_seed_count independent seeds (default 10) and reports a 95% "
+        "confidence interval on the mean accuracy drop, instead of a single seed's point "
+        "estimate.",
+        "Flag: even the CI's most conservative bound exceeds the materiality threshold. "
+        "Ok: even its most generous bound stays below it. Warning: the CI straddles the "
+        "threshold, inconclusive at this many seeds, not evidence of no effect.",
+    ),
 }
 
 _TWO_RUNS_NOTE = (

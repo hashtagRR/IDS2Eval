@@ -41,6 +41,11 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert (run_dir / "scorecard.json").exists()
     assert (run_dir / "SCORECARD.md").exists()
     assert (run_dir / "SCORECARD.html").exists()
+    assert (run_dir / "intervention_manifest.json").exists()  # resplit_falsification ran
+
+    manifest = json.loads((run_dir / "intervention_manifest.json").read_text())
+    assert any(r["finding"]["check"] == "resplit_falsification" for r in manifest)
+    assert all(set(r) == {"finding", "intervention", "consequence", "conclusion"} for r in manifest)
 
     findings = json.loads((run_dir / "audit_report_before.json").read_text())
     assert len(findings) == 19  # all v1 checks; v2 off by default

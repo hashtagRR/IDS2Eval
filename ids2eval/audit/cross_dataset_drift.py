@@ -15,10 +15,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 from ..data import chunked_io, features
+from . import _materiality
 
 MAX_FIT_ROWS = 200_000
 # An accuracy drop beyond this crossing datasets is read as evidence of
 # dataset-specific overfitting rather than ordinary generalization noise.
+# Overridable via audit.materiality_thresholds.cross_dataset_drift_check.
 MATERIAL_DROP_THRESHOLD = 0.10
 
 
@@ -53,7 +55,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     cross_dataset_acc = float(accuracy_score(ref_df[label_col], clf.predict(x_ref)))
     drop = in_dataset_acc - cross_dataset_acc
 
-    flagged = drop > MATERIAL_DROP_THRESHOLD
+    flagged = drop > _materiality.threshold(cfg, "cross_dataset_drift_check", MATERIAL_DROP_THRESHOLD)
     status = "flag" if flagged else "ok"
     summary = (
         f"in-dataset accuracy={in_dataset_acc:.4f}, cross-dataset (reference_dataset) "

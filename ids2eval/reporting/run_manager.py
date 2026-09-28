@@ -81,6 +81,23 @@ def content_hash(df: pd.DataFrame) -> str:
     return hashlib.sha256(pd.util.hash_pandas_object(df, index=False).values.tobytes()).hexdigest()
 
 
+def content_hash_unordered(df: pd.DataFrame) -> str:
+    """Order-independent variant of content_hash: sums per-row hashes rather than
+    hashing the row sequence, so identical row content in a different order (or
+    split differently across train/test) hashes the same. Used by compare_datasets'
+    combined-hash check, which needs exactly that property to detect the same
+    underlying data loaded with a different split_ratio/split_mode/seed; content_hash's
+    order-sensitive behavior stays the default everywhere else (dataset_fingerprint.json,
+    citation keys), which track one specific run's specific split, not row-set equality.
+    Sum (not XOR) preserves row-count multiplicity, so duplicate rows still change the
+    result - real IDS datasets often contain genuine duplicates, and this check
+    shouldn't treat "n copies of a row" the same as "one copy."
+    """
+    row_hashes = pd.util.hash_pandas_object(df, index=False).to_numpy(dtype="uint64")
+    combined = int(row_hashes.sum(dtype="uint64"))
+    return hashlib.sha256(combined.to_bytes(8, "little", signed=False)).hexdigest()
+
+
 def _file_sha256(path: str, chunk_size: int = 1 << 20) -> str | None:
     try:
         h = hashlib.sha256()

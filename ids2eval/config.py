@@ -112,6 +112,14 @@ DEFAULTS: dict[str, Any] = {
         # very different things (any session-leakage cost vs. expected ablation cost) and
         # were each calibrated to their own check's scale.
         "materiality_thresholds": {},
+        # Off by default: running checks concurrently means several may hold their own
+        # encoded feature matrix/RandomForest fit in memory at the same time instead of
+        # one at a time, raising peak memory versus the sequential default - a real
+        # concern on large-scale runs sized against sequential peak usage. Opt in once a
+        # run's VM has memory headroom to spare; max_parallel_checks caps how many run
+        # at once so this can't silently spike to running all ~28 checks simultaneously.
+        "parallel_checks": False,
+        "max_parallel_checks": 4,
     },
     "classifiers": {
         "list": "all",
@@ -177,6 +185,9 @@ def validate_config(cfg: dict[str, Any]) -> None:
         errors.append(
             "dataset must specify exactly one of raw_files, or train_file+test_file together"
         )
+    split_ratio = dataset["split_ratio"]
+    if not isinstance(split_ratio, (int, float)) or isinstance(split_ratio, bool) or not 0 < split_ratio < 1:
+        errors.append("dataset.split_ratio must be a number strictly between 0 and 1")
     if dataset["split_mode"] not in VALID_SPLIT_MODE:
         errors.append(f"dataset.split_mode must be one of {sorted(VALID_SPLIT_MODE)}")
     if dataset["split_mode"] == "grouped" and not dataset["group_columns"]:
@@ -260,6 +271,12 @@ def validate_config(cfg: dict[str, Any]) -> None:
     n_seeds = audit["repeated_seed_count"]
     if isinstance(n_seeds, bool) or not isinstance(n_seeds, int) or n_seeds < 1:
         errors.append("audit.repeated_seed_count must be a positive integer")
+
+    if not isinstance(audit["parallel_checks"], bool):
+        errors.append("audit.parallel_checks must be true or false")
+    max_parallel = audit["max_parallel_checks"]
+    if isinstance(max_parallel, bool) or not isinstance(max_parallel, int) or max_parallel < 1:
+        errors.append("audit.max_parallel_checks must be a positive integer")
 
     thresholds = audit["materiality_thresholds"]
     known_threshold_checks = MATERIALITY_SINGLE_CHECKS | MATERIALITY_TIERED_CHECKS

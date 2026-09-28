@@ -40,15 +40,16 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
             "summary": "no feature columns in common with reference_dataset", "details": {},
         }
 
-    ours = train_df.sample(n=min(len(train_df), MAX_ROWS_PER_SIDE), random_state=0)
-    ref = ref_df.sample(n=min(len(ref_df), MAX_ROWS_PER_SIDE), random_state=0)
+    seed = cfg["random_seed"]
+    ours = train_df.sample(n=min(len(train_df), MAX_ROWS_PER_SIDE), random_state=seed)
+    ref = ref_df.sample(n=min(len(ref_df), MAX_ROWS_PER_SIDE), random_state=seed)
 
     ours_enc, (ref_enc,) = features.encode_multi(ours, [ref], cols)
     x = pd.concat([ours_enc, ref_enc], ignore_index=True)
     y = pd.Series([0] * len(ours_enc) + [1] * len(ref_enc))
 
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0, stratify=y)
-    clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=seed, stratify=y)
+    clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, y_train)
     domain_auc = float(roc_auc_score(y_test, clf.predict_proba(x_test)[:, 1]))
 

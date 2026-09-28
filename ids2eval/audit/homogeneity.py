@@ -32,7 +32,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     group_col = schema["attack_category_column"] or schema["label_column"]
     cols = features.feature_columns(train_df, cfg)
 
-    index_df = train_df.sample(n=min(len(train_df), MAX_INDEX_ROWS), random_state=0)
+    index_df = train_df.sample(n=min(len(train_df), MAX_INDEX_ROWS), random_state=cfg["random_seed"])
     x_index_raw, x_test_raw = features.encode_aligned(index_df, test_df, cols)
     scaler = StandardScaler().fit(x_index_raw)
     x_index = scaler.transform(x_index_raw)

@@ -21,6 +21,8 @@ identical the second time.
 
 from __future__ import annotations
 
+import concurrent.futures
+
 import pandas as pd
 
 from . import (
@@ -106,63 +108,64 @@ def run_audit(
     with the same cfg (e.g. cli.py's after-dedup pass) - their answer can't
     change, so recomputing them (including resplit_falsification's two
     RandomForest fits) would be pure wasted work.
+
+    Runs sequentially by default. If audit.parallel_checks is set, enabled
+    checks instead run concurrently (capped at audit.max_parallel_checks) via
+    a thread pool - safe because no check mutates train_df/test_df, only
+    reads them. The returned list is always in the same schema order either
+    way; only execution order, not the caller-visible result, changes.
+    Off by default because several checks running at once means several may
+    hold their own encoded feature matrix/RandomForest fit in memory
+    simultaneously rather than one at a time, raising peak memory versus the
+    sequential default.
     """
-    findings = []
     audit_cfg = cfg["audit"]
-    if audit_cfg["dedup_check"] and "dedup_check" not in skip:
-        findings.append(dedup.check(train_df, test_df, cfg))
-    if audit_cfg["label_conflict_check"] and "label_conflict_check" not in skip:
-        findings.append(label_conflict.check(train_df, test_df, cfg))
-    if audit_cfg["near_duplicate_class_check"] and "near_duplicate_class_check" not in skip:
-        findings.append(near_duplicate_class.check(train_df, cfg))
-    if audit_cfg["leakage_screen"] and "leakage_screen" not in skip:
-        findings.append(leakage.check(train_df, test_df, cfg))
-    if audit_cfg["one_rule_check"] and "one_rule_check" not in skip:
-        findings.append(one_rule.check(train_df, test_df, cfg))
-    if audit_cfg["feature_auc_ranking_check"] and "feature_auc_ranking_check" not in skip:
-        findings.append(feature_auc_ranking.check(train_df, cfg))
-    if audit_cfg["identity_column_flag"] and "identity_column_flag" not in skip:
-        findings.append(identity_columns.check_predictive_power(train_df, test_df, cfg))
-    if audit_cfg["port_protocol_shortcut_check"] and "port_protocol_shortcut_check" not in skip:
-        findings.append(port_protocol_shortcut.check(train_df, test_df, cfg))
-    if audit_cfg["temporal_leakage_check"] and "temporal_leakage_check" not in skip:
-        findings.append(temporal_leakage.check(train_df, test_df, cfg))
-    if audit_cfg["temporal_realism_check"] and "temporal_realism_check" not in skip:
-        findings.append(temporal_realism.check(train_df, cfg))
-    if audit_cfg["flow_group_leakage_check"] and "flow_group_leakage_check" not in skip:
-        findings.append(flow_group_leakage.check(train_df, test_df, cfg))
-    if audit_cfg["row_order_leakage_check"] and "row_order_leakage_check" not in skip:
-        findings.append(row_order_leakage.check(train_df, test_df, cfg))
-    if audit_cfg["homogeneity_test"] and "homogeneity_test" not in skip:
-        findings.append(homogeneity.check(train_df, test_df, cfg))
-    if audit_cfg["resplit_falsification"] and "resplit_falsification" not in skip:
-        findings.append(resplit.check(cfg))
-    if audit_cfg["scenario_holdout_falsification"] and "scenario_holdout_falsification" not in skip:
-        findings.append(scenario_holdout.check(cfg))
-    if audit_cfg["class_distribution_report"] and "class_distribution_report" not in skip:
-        findings.append(class_distribution.check(train_df, test_df, cfg))
-    if audit_cfg["low_cardinality_warning"] and "low_cardinality_warning" not in skip:
-        findings.append(identity_columns.check_cardinality(train_df, cfg))
-    if audit_cfg["schema_fingerprint_check"] and "schema_fingerprint_check" not in skip:
-        findings.append(schema_fingerprint.check(train_df, cfg))
-    if audit_cfg["data_integrity_check"] and "data_integrity_check" not in skip:
-        findings.append(data_integrity.check(train_df, cfg))
-    if audit_cfg["synthetic_realism_check"] and "synthetic_realism_check" not in skip:
-        findings.append(synthetic_realism.check(train_df, cfg))
-    if audit_cfg["cross_dataset_drift_check"] and "cross_dataset_drift_check" not in skip:
-        findings.append(cross_dataset_drift.check(train_df, test_df, cfg))
-    if audit_cfg["cross_capture_matrix_check"] and "cross_capture_matrix_check" not in skip:
-        findings.append(cross_capture_matrix.check(cfg))
-    if audit_cfg["feature_category_ablation_check"] and "feature_category_ablation_check" not in skip:
-        findings.append(feature_category_ablation.check(train_df, test_df, cfg))
-    if audit_cfg["artifact_sensitivity_check"] and "artifact_sensitivity_check" not in skip:
-        findings.append(artifact_sensitivity.check(train_df, test_df, cfg))
-    if audit_cfg["result_robustness_check"] and "result_robustness_check" not in skip:
-        findings.append(result_robustness.check(cfg))
-    if audit_cfg["known_issue_lookup"] and "known_issue_lookup" not in skip:
-        findings.append(known_issues.check(train_df, cfg))
-    if audit_cfg["seed_sensitivity_check"] and "seed_sensitivity_check" not in skip:
-        findings.append(seed_sensitivity.check(train_df, test_df, cfg))
-    if audit_cfg["repeated_seed_falsification_check"] and "repeated_seed_falsification_check" not in skip:
-        findings.append(repeated_seed_falsification.check(cfg))
-    return findings
+    seed = cfg["random_seed"]
+
+    # Each entry is (check_name, thunk). Building the full ordered list up front - rather
+    # than appending each finding immediately - lets the dispatch loop below run these
+    # independently (they only read train_df/test_df, never mutate them) either in
+    # schema order (default) or concurrently, while the OUTPUT list always comes back in
+    # this same schema order regardless of which mode ran or which thunk finished first.
+    pending: list[tuple[str, object]] = []
+
+    def add(name: str, thunk) -> None:
+        if audit_cfg[name] and name not in skip:
+            pending.append((name, thunk))
+
+    add("dedup_check", lambda: dedup.check(train_df, test_df, cfg))
+    add("label_conflict_check", lambda: label_conflict.check(train_df, test_df, cfg))
+    add("near_duplicate_class_check", lambda: near_duplicate_class.check(train_df, cfg))
+    add("leakage_screen", lambda: leakage.check(train_df, test_df, cfg, seed=seed))
+    add("one_rule_check", lambda: one_rule.check(train_df, test_df, cfg, seed=seed))
+    add("feature_auc_ranking_check", lambda: feature_auc_ranking.check(train_df, cfg))
+    add("identity_column_flag", lambda: identity_columns.check_predictive_power(train_df, test_df, cfg))
+    add("port_protocol_shortcut_check", lambda: port_protocol_shortcut.check(train_df, test_df, cfg))
+    add("temporal_leakage_check", lambda: temporal_leakage.check(train_df, test_df, cfg))
+    add("temporal_realism_check", lambda: temporal_realism.check(train_df, cfg))
+    add("flow_group_leakage_check", lambda: flow_group_leakage.check(train_df, test_df, cfg))
+    add("row_order_leakage_check", lambda: row_order_leakage.check(train_df, test_df, cfg))
+    add("homogeneity_test", lambda: homogeneity.check(train_df, test_df, cfg))
+    add("resplit_falsification", lambda: resplit.check(cfg, seed=seed))
+    add("scenario_holdout_falsification", lambda: scenario_holdout.check(cfg))
+    add("class_distribution_report", lambda: class_distribution.check(train_df, test_df, cfg))
+    add("low_cardinality_warning", lambda: identity_columns.check_cardinality(train_df, cfg))
+    add("schema_fingerprint_check", lambda: schema_fingerprint.check(train_df, cfg))
+    add("data_integrity_check", lambda: data_integrity.check(train_df, cfg))
+    add("synthetic_realism_check", lambda: synthetic_realism.check(train_df, cfg))
+    add("cross_dataset_drift_check", lambda: cross_dataset_drift.check(train_df, test_df, cfg))
+    add("cross_capture_matrix_check", lambda: cross_capture_matrix.check(cfg))
+    add("feature_category_ablation_check", lambda: feature_category_ablation.check(train_df, test_df, cfg))
+    add("artifact_sensitivity_check", lambda: artifact_sensitivity.check(train_df, test_df, cfg))
+    add("result_robustness_check", lambda: result_robustness.check(cfg))
+    add("known_issue_lookup", lambda: known_issues.check(train_df, cfg))
+    add("seed_sensitivity_check", lambda: seed_sensitivity.check(train_df, test_df, cfg))
+    add("repeated_seed_falsification_check", lambda: repeated_seed_falsification.check(cfg))
+
+    if not audit_cfg["parallel_checks"]:
+        return [thunk() for _, thunk in pending]
+
+    max_workers = min(audit_cfg["max_parallel_checks"], len(pending)) or 1
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = [pool.submit(thunk) for _, thunk in pending]
+        return [f.result() for f in futures]

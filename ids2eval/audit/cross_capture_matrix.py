@@ -44,8 +44,9 @@ def check(cfg: dict) -> dict:
             "details": {},
         }
 
+    seed = cfg["random_seed"]
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg)
+    combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
     if scenario_col not in combined.columns:
         return {
             "check": "cross_capture_matrix_check", "status": "ok",
@@ -76,7 +77,7 @@ def check(cfg: dict) -> dict:
                 continue
             test_part = combined[combined[scenario_col] == test_scenario]
             matrix[f"{train_scenario}->{test_scenario}"] = fit_and_score(
-                train_part, test_part, label_col, cfg
+                train_part, test_part, label_col, cfg, seed=seed
             )
 
     if not matrix:

@@ -54,8 +54,9 @@ def check(cfg: dict) -> dict:
             "details": {},
         }
 
+    seed = cfg["random_seed"]
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg)
+    combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
     if scenario_col not in combined.columns:
         return {
             "check": "scenario_holdout_falsification", "status": "ok",
@@ -79,9 +80,9 @@ def check(cfg: dict) -> dict:
             "summary": f"scenario '{held_out}' has too few rows or labels to test", "details": {},
         }
 
-    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg)
-    random_acc = fit_and_score(random_train, random_test, label_col, cfg)
-    scenario_acc = fit_and_score(scenario_train, scenario_test, label_col, cfg)
+    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
+    random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+    scenario_acc = fit_and_score(scenario_train, scenario_test, label_col, cfg, seed=seed)
     drop = random_acc - scenario_acc
 
     tiers = _materiality.threshold(

@@ -54,14 +54,15 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
             "details": {},
         }
 
-    baseline_acc = fit_and_score(train_df, test_df, label_col, cfg, cols=all_cols)
+    seed = cfg["random_seed"]
+    baseline_acc = fit_and_score(train_df, test_df, label_col, cfg, cols=all_cols, seed=seed)
 
     drop_by_category = {}
     for category, cols_in_category in by_category.items():
         remaining = [c for c in all_cols if c not in cols_in_category]
         if not remaining:
             continue  # every feature falls under this one category, nothing to ablate against
-        ablated_acc = fit_and_score(train_df, test_df, label_col, cfg, cols=remaining)
+        ablated_acc = fit_and_score(train_df, test_df, label_col, cfg, cols=remaining, seed=seed)
         drop_by_category[category] = baseline_acc - ablated_acc
 
     if not drop_by_category:

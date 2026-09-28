@@ -25,10 +25,11 @@ def fit_and_score(
     cols: list[str] | None = None, seed: int = 0,
 ) -> float:
     """seed controls both which MAX_FIT_ROWS rows are subsampled and the
-    RandomForest's own random_state. Every existing caller omits it and gets
-    today's fixed seed=0 behavior unchanged; repeated_seed_falsification_check
-    is the one caller that varies it, to get an independent refit per seed
-    rather than the same subsample and forest every time.
+    RandomForest's own random_state. Callers that want the run's single
+    baseline result pass cfg["random_seed"] (the default 0 only applies if a
+    caller omits it entirely); repeated_seed_falsification_check is the one
+    caller that instead sweeps its own independent range of seeds, to get a
+    distribution rather than one baseline point.
     """
     if cols is None:
         cols = features.feature_columns(train_df, cfg)

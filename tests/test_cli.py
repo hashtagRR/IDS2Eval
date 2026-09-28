@@ -217,7 +217,9 @@ def test_cli_does_not_recompute_structural_checks_on_the_after_pass(tmp_path, sy
 
     calls = []
     real_check = resplit.check
-    monkeypatch.setattr(resplit, "check", lambda cfg: (calls.append(1), real_check(cfg))[1])
+    monkeypatch.setattr(
+        resplit, "check", lambda cfg, seed=0: (calls.append(1), real_check(cfg, seed=seed))[1]
+    )
 
     data_path = tmp_path / "data.csv"
     synth_data.to_csv(data_path, index=False)

@@ -28,9 +28,10 @@ MAX_FIT_ROWS = 200_000
 
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, seed: int = 0) -> dict:
-    """seed only varies the sample draw and the stump's own randomness -
-    used by seed_sensitivity_check to test whether the flag/ok conclusion
-    holds up across seeds, not by the default single-seed run.
+    """seed varies the sample draw and the stump's own randomness. The
+    default single run is called with cfg["random_seed"] (run_audit's job);
+    seed_sensitivity_check separately sweeps its own fixed range of seeds to
+    test whether the flag/ok conclusion holds up regardless of that one value.
     """
     label_col = cfg["schema"]["label_column"]
     cols = features.feature_columns(train_df, cfg)

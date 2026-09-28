@@ -1,5 +1,8 @@
+import copy
+
 import numpy as np
 import pandas as pd
+import pytest
 
 from ids2eval.audit import (
     artifact_sensitivity,
@@ -606,6 +609,15 @@ def test_known_issue_lookup_bot_iot_flags_benign_scarcity(base_cfg):
     assert "Koroniotis et al. 2019" in result["summary"]
 
 
+def test_known_issue_lookup_bot_iot_official_flags_benign_scarcity(base_cfg):
+    base_cfg["dataset"]["name"] = "bot-iot-official"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert result["status"] == "warning"
+    assert len(result["details"]["matches"]) == 1
+    assert "477 of 3,668,522" in result["summary"]
+    assert "30,420,086" not in result["summary"]
+
+
 def test_known_issue_lookup_cic_ddos2019_has_two_curated_issues(base_cfg):
     base_cfg["dataset"]["name"] = "cic-ddos2019"
     result = known_issues.check(pd.DataFrame(), base_cfg)
@@ -741,6 +753,38 @@ def test_run_audit_skip_omits_exactly_the_requested_checks(base_cfg, synth_train
     assert checks.isdisjoint(STRUCTURAL_CHECKS)
     # everything else that's enabled by default still ran
     assert "dedup_check" in checks and "leakage_screen" in checks
+
+
+def test_run_audit_parallel_checks_returns_identical_findings_in_the_same_order(
+    base_cfg, synth_train_test
+):
+    from ids2eval.audit import STRUCTURAL_CHECKS, run_audit
+
+    train_df, test_df = synth_train_test
+    sequential = run_audit(train_df, test_df, base_cfg, skip=STRUCTURAL_CHECKS)
+
+    parallel_cfg = copy.deepcopy(base_cfg)
+    parallel_cfg["audit"]["parallel_checks"] = True
+    parallel_cfg["audit"]["max_parallel_checks"] = 4
+    parallel = run_audit(train_df, test_df, parallel_cfg, skip=STRUCTURAL_CHECKS)
+
+    assert [f["check"] for f in parallel] == [f["check"] for f in sequential]
+    assert [f["status"] for f in parallel] == [f["status"] for f in sequential]
+
+
+def test_run_audit_parallel_checks_propagates_a_check_exception(
+    base_cfg, synth_train_test, monkeypatch
+):
+    from ids2eval.audit import dedup, run_audit
+
+    def boom(*a, **k):
+        raise RuntimeError("synthetic failure")
+
+    monkeypatch.setattr(dedup, "check", boom)
+    train_df, test_df = synth_train_test
+    base_cfg["audit"]["parallel_checks"] = True
+    with pytest.raises(RuntimeError, match="synthetic failure"):
+        run_audit(train_df, test_df, base_cfg)
 
 
 def test_structural_checks_constant_matches_the_checks_that_ignore_row_content():

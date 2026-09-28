@@ -2,7 +2,27 @@ import hashlib
 import json
 import time
 
+import pandas as pd
+
 from ids2eval.reporting import run_manager
+
+
+def test_content_hash_unordered_is_order_independent():
+    df = pd.DataFrame({"a": [1, 2, 3, 4, 5], "b": list("abcde")})
+    shuffled = df.sample(frac=1, random_state=1).reset_index(drop=True)
+    assert run_manager.content_hash_unordered(df) == run_manager.content_hash_unordered(shuffled)
+
+
+def test_content_hash_unordered_still_detects_a_real_content_difference():
+    df_a = pd.DataFrame({"a": [1, 2, 3]})
+    df_b = pd.DataFrame({"a": [1, 2, 4]})
+    assert run_manager.content_hash_unordered(df_a) != run_manager.content_hash_unordered(df_b)
+
+
+def test_content_hash_unordered_is_sensitive_to_duplicate_row_count():
+    one_copy = pd.DataFrame({"a": [1, 2, 3]})
+    with_a_duplicate = pd.DataFrame({"a": [1, 1, 2, 3]})
+    assert run_manager.content_hash_unordered(one_copy) != run_manager.content_hash_unordered(with_a_duplicate)
 
 
 def test_create_run_dir_is_unique_across_rapid_calls(tmp_path):

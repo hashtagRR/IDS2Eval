@@ -45,10 +45,11 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
             "summary": "no feature columns in common with reference_dataset", "details": {},
         }
 
-    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
+    seed = cfg["random_seed"]
+    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
     x_train, (x_test, x_ref) = features.encode_multi(train_fit, [test_df, ref_df], cols)
 
-    clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)
+    clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
 
     in_dataset_acc = float(accuracy_score(test_df[label_col], clf.predict(x_test)))

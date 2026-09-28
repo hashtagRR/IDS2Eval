@@ -44,8 +44,8 @@ def compare(config_path_a: str, config_path_b: str) -> dict:
     fp_a = run_manager.compute_dataset_fingerprint(train_a, test_a, cfg_a)
     fp_b = run_manager.compute_dataset_fingerprint(train_b, test_b, cfg_b)
 
-    combined_hash_a = run_manager.content_hash(pd.concat([train_a, test_a], ignore_index=True))
-    combined_hash_b = run_manager.content_hash(pd.concat([train_b, test_b], ignore_index=True))
+    combined_hash_a = run_manager.content_hash_unordered(pd.concat([train_a, test_a], ignore_index=True))
+    combined_hash_b = run_manager.content_hash_unordered(pd.concat([train_b, test_b], ignore_index=True))
 
     labels_a = _combined_label_counts(fp_a)
     labels_b = _combined_label_counts(fp_b)

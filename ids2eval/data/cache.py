@@ -56,6 +56,7 @@ def compute_fingerprint(cfg: dict) -> str:
         "group_columns": dataset_cfg["group_columns"],
         "chunk_size": dataset_cfg["chunk_size"],
         "max_rows": dataset_cfg["max_rows"],
+        "column_names": dataset_cfg["column_names"],
         "label_column": cfg["schema"]["label_column"],
         "attack_category_column": cfg["schema"]["attack_category_column"],
         "drop_columns": cfg["schema"]["drop_columns"],

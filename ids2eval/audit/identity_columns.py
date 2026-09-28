@@ -55,7 +55,7 @@ def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: d
         x_test = categories.get_indexer(test_df[col].astype(str)).reshape(-1, 1)
         encoded_columns[col] = (x_train, x_test)
 
-        clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)
+        clf = RandomForestClassifier(n_estimators=50, random_state=cfg["random_seed"], n_jobs=-1)
         clf.fit(x_train, train_df[label_col])
         auc = robust_auc(test_df[label_col], clf.predict_proba(x_test), clf.classes_)
         results[col] = auc
@@ -90,7 +90,7 @@ def _by_class_auc(
         y_test_binary = (test_df[group_col] == cls).to_numpy()
         if not y_train_binary.any() or y_train_binary.all() or not y_test_binary.any():
             continue
-        clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)
+        clf = RandomForestClassifier(n_estimators=50, random_state=cfg["random_seed"], n_jobs=-1)
         clf.fit(x_train_col, y_train_binary)
         auc = robust_auc(y_test_binary, clf.predict_proba(x_test_col), clf.classes_)
         by_class[str(cls)] = auc

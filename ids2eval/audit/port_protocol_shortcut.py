@@ -57,7 +57,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     x_train = pd.DataFrame({c: categories[c].get_indexer(train_df[c].astype(str)) for c in cols})
     x_test = pd.DataFrame({c: categories[c].get_indexer(test_df[c].astype(str)) for c in cols})
 
-    clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)
+    clf = RandomForestClassifier(n_estimators=50, random_state=cfg["random_seed"], n_jobs=-1)
     clf.fit(x_train, train_df[label_col])
     auc = robust_auc(test_df[label_col], clf.predict_proba(x_test), clf.classes_)
 

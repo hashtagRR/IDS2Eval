@@ -218,8 +218,11 @@ def test_every_audit_check_has_an_explainer():
 
     from ids2eval.audit import run_audit
 
+    # run_audit registers each check via add("check_name", thunk) - scrape those literal
+    # names rather than audit_cfg[...] subscripts, since parallel_checks/max_parallel_checks
+    # are read the same subscript way but aren't checks and have no scorecard explainer.
     source = inspect.getsource(run_audit)
-    checks = set(__import__("re").findall(r'audit_cfg\["(\w+)"\]', source))
+    checks = set(__import__("re").findall(r'add\("(\w+)"', source))
     assert checks == set(scorecard.CHECK_INFO)
 
 

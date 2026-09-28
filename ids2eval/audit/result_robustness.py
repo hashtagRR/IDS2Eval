@@ -47,17 +47,20 @@ def check(cfg: dict) -> dict:
             "details": {},
         }
 
+    seed = cfg["random_seed"]
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg)
+    combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
 
     conditions: dict[str, float] = {}
-    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg)
-    conditions["random_split"] = fit_and_score(random_train, random_test, label_col, cfg)
+    random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
+    conditions["random_split"] = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
 
     if dataset_cfg["group_columns"]:
         try:
-            grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg)
-            conditions["grouped_split"] = fit_and_score(grouped_train, grouped_test, label_col, cfg)
+            grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
+            conditions["grouped_split"] = fit_and_score(
+                grouped_train, grouped_test, label_col, cfg, seed=seed
+            )
         except (ValueError, RuntimeError):
             pass  # same graceful-skip as resplit_falsification when a grouped split can't be built
 
@@ -68,7 +71,7 @@ def check(cfg: dict) -> dict:
         dedup_stats["train_rows_raw"] != dedup_stats["train_rows_deduped"]
         or dedup_stats["test_rows_raw"] != dedup_stats["test_rows_deduped"]
     ):
-        conditions["deduplicated"] = fit_and_score(deduped_train, deduped_test, label_col, cfg)
+        conditions["deduplicated"] = fit_and_score(deduped_train, deduped_test, label_col, cfg, seed=seed)
 
     id_cols = [c for c in cfg["schema"]["id_like_columns"] if c in random_train.columns]
     if id_cols:
@@ -76,7 +79,7 @@ def check(cfg: dict) -> dict:
         without_ids = [c for c in all_cols if c not in id_cols]
         if without_ids:
             conditions["identity_columns_dropped"] = fit_and_score(
-                random_train, random_test, label_col, cfg, cols=without_ids
+                random_train, random_test, label_col, cfg, cols=without_ids, seed=seed
             )
 
     if len(conditions) < 2:

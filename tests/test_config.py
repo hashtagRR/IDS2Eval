@@ -41,6 +41,36 @@ def test_requires_exactly_one_data_source(base_cfg):
         validate_config(base_cfg)
 
 
+@pytest.mark.parametrize("bad_ratio", [0.0, 1.0, -0.5, 1.5])
+def test_split_ratio_must_be_strictly_between_zero_and_one(base_cfg, bad_ratio):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["split_ratio"] = bad_ratio
+    with pytest.raises(ValueError, match="split_ratio must be a number strictly between 0 and 1"):
+        validate_config(base_cfg)
+
+
+def test_split_ratio_rejects_non_numeric(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["split_ratio"] = "0.8"
+    with pytest.raises(ValueError, match="split_ratio must be a number strictly between 0 and 1"):
+        validate_config(base_cfg)
+
+
+def test_parallel_checks_must_be_boolean(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["parallel_checks"] = "yes"
+    with pytest.raises(ValueError, match="parallel_checks must be true or false"):
+        validate_config(base_cfg)
+
+
+@pytest.mark.parametrize("bad_value", [0, -1, 1.5, True])
+def test_max_parallel_checks_must_be_a_positive_integer(base_cfg, bad_value):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["max_parallel_checks"] = bad_value
+    with pytest.raises(ValueError, match="max_parallel_checks must be a positive integer"):
+        validate_config(base_cfg)
+
+
 def test_grouped_split_requires_group_columns(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["dataset"]["split_mode"] = "grouped"

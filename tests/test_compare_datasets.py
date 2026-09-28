@@ -34,6 +34,23 @@ def test_compare_identical_datasets_is_equivalent(tmp_path):
     assert "FAIL" not in report
 
 
+def test_compare_identical_data_with_different_split_ratio_is_still_equivalent(tmp_path):
+    # Same underlying rows, but a different split_ratio between the two configs puts a
+    # different subset of rows into train vs. test, so train_a/test_a's row order (and
+    # even which rows land in which side) differs from train_b/test_b's - the combined
+    # (train+test) comparison exists specifically to still recognize this as the same
+    # underlying data, regressing the order-sensitive-hash bug this test guards against.
+    data_path = tmp_path / "data.csv"
+    data_path.write_text("F1,Label\n" + "".join(f"{i},{'A' if i % 2 else 'B'}\n" for i in range(40)))
+
+    config_a = _write_config(tmp_path, "a", data_path, split_ratio=0.5)
+    config_b = _write_config(tmp_path, "b", data_path, split_ratio=0.8)
+
+    result = compare_datasets.compare(str(config_a), str(config_b))
+    assert result["row_count_match"] is True
+    assert result["combined_content_match"] is True
+
+
 def test_compare_datasets_with_different_schema(tmp_path):
     data_a = tmp_path / "a.csv"
     data_a.write_text("F1,Label\n" + "".join(f"{i},{'A' if i % 2 else 'B'}\n" for i in range(40)))

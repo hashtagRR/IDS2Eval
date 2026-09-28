@@ -52,14 +52,15 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
             "details": {},
         }
 
+    seed = cfg["random_seed"]
     label_col = schema["label_column"]
-    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
+    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
     x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
-    clf = RandomForestClassifier(n_estimators=100, random_state=0, n_jobs=-1)
+    clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
     baseline_pred = clf.predict(x_test)
 
-    rng = np.random.RandomState(0)
+    rng = np.random.RandomState(seed)
     flip_rate_by_column = {}
     for col in suspicious_cols:
         perturbed_test = test_df.copy()

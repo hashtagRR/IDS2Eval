@@ -35,12 +35,12 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
             "summary": "no schema.timestamp_column configured", "details": {},
         }
 
-    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=0)
+    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=cfg["random_seed"])
     x_train = to_numeric_time(train_fit[col]).fillna(0).to_numpy().reshape(-1, 1)
     x_test = to_numeric_time(test_df[col]).fillna(0).to_numpy().reshape(-1, 1)
     y_train, y_test = train_fit[label_col], test_df[label_col]
 
-    clf = RandomForestClassifier(n_estimators=50, random_state=0, n_jobs=-1)
+    clf = RandomForestClassifier(n_estimators=50, random_state=cfg["random_seed"], n_jobs=-1)
     clf.fit(x_train, y_train)
     auc = robust_auc(y_test, clf.predict_proba(x_test), clf.classes_)
 

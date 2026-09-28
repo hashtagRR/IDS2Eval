@@ -45,6 +45,17 @@ def test_cache_invalidated_by_config_change(base_cfg, tmp_path):
     assert cache.try_load(cfg) is None
 
 
+def test_cache_invalidated_by_column_names_change(base_cfg, tmp_path):
+    raw_file = tmp_path / "data.csv"
+    raw_file.write_text("Label,F\nA,1\n")
+    cfg = _cfg(base_cfg, raw_file)
+    cache.save(pd.DataFrame({"Label": ["A"], "F": [1]}), pd.DataFrame({"Label": ["A"], "F": [1]}), cfg)
+    assert cache.try_load(cfg) is not None
+
+    cfg["dataset"]["column_names"] = ["Label", "F"]  # was [] (default) when cached
+    assert cache.try_load(cfg) is None
+
+
 def test_cache_invalidated_when_input_file_changes(base_cfg, tmp_path):
     raw_file = tmp_path / "data.csv"
     raw_file.write_text("Label,F\nA,1\n")

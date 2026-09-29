@@ -193,6 +193,7 @@ for what each one tests and the research behind it.
 | `materiality_thresholds` | `{}` | Per-check overrides of the hardcoded "material drop" thresholds; see [../guide/checks.md](../guide/checks.md) |
 | `parallel_checks` | `false` | Run enabled checks concurrently instead of one at a time. Off by default: several checks running at once means several may hold their own encoded feature matrix/model fit in memory simultaneously, raising peak memory versus the sequential default |
 | `max_parallel_checks` | `4` | Caps how many checks run at once when `parallel_checks` is on |
+| `checkpoint` | `false` | Persist each check's result (and `repeated_seed_falsification_check`'s per-seed progress) to `output.dir/.checkpoint/` as it completes, so a crash partway through a long run resumes instead of restarting. Cleared on a successful run. Cannot be combined with `parallel_checks` |
 
 ```yaml
 audit:

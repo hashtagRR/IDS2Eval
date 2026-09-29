@@ -120,6 +120,15 @@ DEFAULTS: dict[str, Any] = {
         # at once so this can't silently spike to running all ~28 checks simultaneously.
         "parallel_checks": False,
         "max_parallel_checks": 4,
+        # Off by default: persists each check's finding (and, for
+        # repeated_seed_falsification_check, per-seed progress) to
+        # output.dir/.checkpoint/ as it's computed, so a crash partway through a
+        # long full-scale run only redoes what hadn't finished yet on the next
+        # run with the same output.dir, rather than starting over. Cleared
+        # automatically once a run completes successfully. Mutually exclusive
+        # with parallel_checks: concurrent checks writing to one checkpoint
+        # file would race.
+        "checkpoint": False,
     },
     "classifiers": {
         "list": "all",
@@ -277,6 +286,14 @@ def validate_config(cfg: dict[str, Any]) -> None:
     max_parallel = audit["max_parallel_checks"]
     if isinstance(max_parallel, bool) or not isinstance(max_parallel, int) or max_parallel < 1:
         errors.append("audit.max_parallel_checks must be a positive integer")
+
+    if not isinstance(audit["checkpoint"], bool):
+        errors.append("audit.checkpoint must be true or false")
+    if audit["checkpoint"] and audit["parallel_checks"]:
+        errors.append(
+            "audit.checkpoint and audit.parallel_checks cannot both be true: "
+            "concurrent checks writing to one checkpoint file would race"
+        )
 
     thresholds = audit["materiality_thresholds"]
     known_threshold_checks = MATERIALITY_SINGLE_CHECKS | MATERIALITY_TIERED_CHECKS

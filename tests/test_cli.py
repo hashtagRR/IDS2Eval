@@ -1,6 +1,7 @@
 import json
 
 import pandas as pd
+import pytest
 import yaml
 
 from ids2eval.cli import main
@@ -498,3 +499,71 @@ def test_cli_writes_failed_status_on_crash(tmp_path, synth_data, monkeypatch):
     assert status["status"] == "failed"
     assert status["failed_stage"] == "benchmark"
     assert "simulated benchmark crash" in status["error"]
+
+
+def test_cli_checkpoint_resumes_after_a_simulated_crash(tmp_path, synth_data, monkeypatch):
+    from ids2eval.audit import dedup, label_conflict
+
+    data_path = tmp_path / "data.csv"
+    synth_data.to_csv(data_path, index=False)
+    output_dir = tmp_path / "output"
+
+    config = {
+        "dataset": {"name": "test-ds", "raw_files": [str(data_path)],
+                     "group_columns": ["SrcIP"], "split_ratio": 0.5},
+        "schema": {"label_column": "Label"},
+        "audit": {"resplit_falsification": False, "checkpoint": True},
+        "classifiers": {"list": ["DecisionTree"]},
+        "output": {"dir": str(output_dir)},
+    }
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(yaml.dump(config))
+
+    dedup_calls = []
+    real_dedup_check = dedup.check
+    monkeypatch.setattr(
+        dedup, "check", lambda *a, **k: (dedup_calls.append(1), real_dedup_check(*a, **k))[1]
+    )
+
+    # label_conflict_check runs right after dedup_check in schema order - raising here
+    # simulates a crash partway through the before-pass, after dedup_check already
+    # completed and was checkpointed.
+    real_label_conflict_check = label_conflict.check
+    calls = {"n": 0}
+
+    def _crash_once(*a, **kw):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise RuntimeError("simulated mid-audit crash")
+        return real_label_conflict_check(*a, **kw)
+
+    monkeypatch.setattr(label_conflict, "check", _crash_once)
+
+    with pytest.raises(RuntimeError, match="simulated mid-audit crash"):
+        main(["--config", str(config_path)])
+
+    checkpoint_before = output_dir / ".checkpoint" / "before.json"
+    checkpoint_after = output_dir / ".checkpoint" / "after.json"
+    assert checkpoint_before.exists()  # left behind by the crash, for the next run to resume from
+    assert not checkpoint_after.exists()  # the after-pass was never reached
+
+    # Second run: same config, no more crashing. Must succeed and must NOT recompute
+    # dedup_check's BEFORE-pass result, which already completed and was checkpointed
+    # before the crash. dedup_check also runs a second, genuinely different time in the
+    # after-pass (it isn't in STRUCTURAL_CHECKS - post-dedup duplication is a real,
+    # separate measurement, not something to reuse from the before-pass), so the total
+    # across both main() calls is 2, not 1: one real before-pass compute (in the first,
+    # crashing call) plus one real after-pass compute (in the second call) - if resume
+    # had NOT skipped the before-pass, this would be 3.
+    main(["--config", str(config_path)])
+
+    assert len(dedup_calls) == 2
+    run_dir = _latest_run_dir(output_dir)
+    status = json.loads((run_dir / "run_status.json").read_text())
+    assert status["status"] == "completed"
+    assert not checkpoint_before.exists()  # cleared after the successful run
+    assert not checkpoint_after.exists()
+
+    findings = json.loads((run_dir / "audit_report_before.json").read_text())
+    checks = {f["check"] for f in findings}
+    assert "dedup_check" in checks and "label_conflict_check" in checks

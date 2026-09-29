@@ -345,6 +345,55 @@ def test_repeated_seed_falsification_classifies_inconclusive_when_ci_straddles_t
     assert result["details"]["material"] is None
 
 
+def test_repeated_seed_falsification_resumes_from_a_checkpointed_seed(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    from ids2eval.audit import _checkpoint
+
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+    _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", 0, 0.111)
+
+    # Only 2 more scores queued (for seeds 1 and 2) - if the resume logic didn't skip
+    # seed 0, fit_and_score would be called a 3rd time (2 fits per seed) and this
+    # iterator would raise StopIteration, failing the test.
+    scores = iter([0.90, 0.80, 0.90, 0.85])
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    result = repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
+
+    assert result["details"]["drops_by_seed"][0] == 0.111  # the checkpointed seed, untouched
+    assert len(result["details"]["drops_by_seed"]) == 3
+
+
+def test_repeated_seed_falsification_checkpoints_each_seed_as_it_completes(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    from ids2eval.audit import _checkpoint
+
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+    scores = iter([0.90, 0.70, 0.90, 0.80, 0.90, 0.85])
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
+
+    progress = _checkpoint.get_seed_progress(checkpoint_path, "repeated_seed_falsification_check")
+    assert set(progress) == {0, 1, 2}
+
+
+def test_repeated_seed_falsification_resume_truncates_to_a_smaller_n_seeds(
+    base_cfg, tmp_path, synth_data
+):
+    from ids2eval.audit import _checkpoint
+
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+    for seed, drop in enumerate([0.1, 0.2, 0.3, 0.4, 0.5]):
+        _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", seed, drop)
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    result = repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
+
+    assert result["details"]["drops_by_seed"] == [0.1, 0.2, 0.3]
+
+
 def test_scenario_holdout_falsification_ok_with_no_scenario_column_configured(base_cfg):
     result = scenario_holdout.check(base_cfg)
     assert result["status"] == "ok"
@@ -753,6 +802,40 @@ def test_run_audit_skip_omits_exactly_the_requested_checks(base_cfg, synth_train
     assert checks.isdisjoint(STRUCTURAL_CHECKS)
     # everything else that's enabled by default still ran
     assert "dedup_check" in checks and "leakage_screen" in checks
+
+
+def test_run_audit_checkpoint_skips_an_already_checkpointed_check(
+    base_cfg, synth_train_test, tmp_path, monkeypatch
+):
+    from ids2eval.audit import STRUCTURAL_CHECKS, dedup, run_audit
+
+    train_df, test_df = synth_train_test
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+
+    calls = []
+    real_check = dedup.check
+    monkeypatch.setattr(dedup, "check", lambda *a, **k: (calls.append(1), real_check(*a, **k))[1])
+
+    run_audit(train_df, test_df, base_cfg, skip=STRUCTURAL_CHECKS, checkpoint_path=checkpoint_path)
+    assert len(calls) == 1
+
+    run_audit(train_df, test_df, base_cfg, skip=STRUCTURAL_CHECKS, checkpoint_path=checkpoint_path)
+    assert len(calls) == 1  # second run reused the checkpointed result, didn't recompute
+
+
+def test_run_audit_checkpoint_produces_the_same_findings_as_uncheckpointed(
+    base_cfg, synth_train_test, tmp_path
+):
+    from ids2eval.audit import STRUCTURAL_CHECKS, run_audit
+
+    train_df, test_df = synth_train_test
+    uncheckpointed = run_audit(train_df, test_df, base_cfg, skip=STRUCTURAL_CHECKS)
+    checkpointed = run_audit(
+        train_df, test_df, base_cfg, skip=STRUCTURAL_CHECKS,
+        checkpoint_path=str(tmp_path / "checkpoint.json"),
+    )
+    assert [f["check"] for f in checkpointed] == [f["check"] for f in uncheckpointed]
+    assert [f["status"] for f in checkpointed] == [f["status"] for f in uncheckpointed]
 
 
 def test_run_audit_parallel_checks_returns_identical_findings_in_the_same_order(

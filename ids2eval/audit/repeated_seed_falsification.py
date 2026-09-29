@@ -44,36 +44,49 @@ from statistics import mean, stdev
 from scipy import stats
 
 from ..data import dataset
-from . import _materiality
+from . import _checkpoint, _materiality
 from ._fit_score import fit_and_score
 from .resplit import MATERIAL_DROP_THRESHOLD
 
 DEFAULT_N_SEEDS = 10
 MIN_N_SEEDS = 3  # below this, a t-based CI is too unstable to report meaningfully
+_CHECK_NAME = "repeated_seed_falsification_check"
 
 
-def check(cfg: dict, n_seeds: int | None = None) -> dict:
+def check(cfg: dict, n_seeds: int | None = None, checkpoint_path: str | None = None) -> dict:
     dataset_cfg = cfg["dataset"]
     if n_seeds is None:
         n_seeds = cfg["audit"]["repeated_seed_count"]
     if n_seeds < MIN_N_SEEDS:
         return {
-            "check": "repeated_seed_falsification_check", "status": "ok",
+            "check": _CHECK_NAME, "status": "ok",
             "summary": f"audit.repeated_seed_count ({n_seeds}) is below the minimum of "
                        f"{MIN_N_SEEDS} needed for a meaningful confidence interval",
             "details": {},
         }
 
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg)
 
-    drops = []
-    for seed in range(n_seeds):
+    # Resume from any seeds already checkpointed (e.g. a prior run of this same
+    # checkpoint_path that crashed partway through) rather than redoing them -
+    # this check alone can dominate a full-scale run's cost, so losing all
+    # progress to a mid-sweep crash is exactly the failure mode worth avoiding.
+    completed: dict[int, float] = (
+        _checkpoint.get_seed_progress(checkpoint_path, _CHECK_NAME) if checkpoint_path else {}
+    )
+    drops = [completed[s] for s in sorted(completed) if s < n_seeds]
+    start_seed = len(drops)
+
+    combined = dataset.load_raw_combined(dataset_cfg) if start_seed < n_seeds else None
+    for seed in range(start_seed, n_seeds):
         random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
         grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
         random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
         grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
-        drops.append(random_acc - grouped_acc)
+        drop = random_acc - grouped_acc
+        drops.append(drop)
+        if checkpoint_path:
+            _checkpoint.save_seed_progress(checkpoint_path, _CHECK_NAME, seed, drop)
 
     mean_drop = mean(drops)
     sample_std = stdev(drops)  # n_seeds >= MIN_N_SEEDS >= 2, safe for stdev's ddof=1
@@ -107,7 +120,7 @@ def check(cfg: dict, n_seeds: int | None = None) -> dict:
         )
 
     return {
-        "check": "repeated_seed_falsification_check",
+        "check": _CHECK_NAME,
         "status": status,
         "summary": (
             f"grouped-split accuracy drop across {n_seeds} seeds: mean={mean_drop:+.4f}, "

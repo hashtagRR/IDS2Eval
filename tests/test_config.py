@@ -71,6 +71,21 @@ def test_max_parallel_checks_must_be_a_positive_integer(base_cfg, bad_value):
         validate_config(base_cfg)
 
 
+def test_checkpoint_must_be_boolean(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["checkpoint"] = "yes"
+    with pytest.raises(ValueError, match="checkpoint must be true or false"):
+        validate_config(base_cfg)
+
+
+def test_checkpoint_and_parallel_checks_are_mutually_exclusive(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["checkpoint"] = True
+    base_cfg["audit"]["parallel_checks"] = True
+    with pytest.raises(ValueError, match="cannot both be true"):
+        validate_config(base_cfg)
+
+
 def test_grouped_split_requires_group_columns(base_cfg):
     base_cfg["dataset"]["raw_files"] = ["a.csv"]
     base_cfg["dataset"]["split_mode"] = "grouped"

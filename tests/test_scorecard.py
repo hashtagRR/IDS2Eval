@@ -222,7 +222,7 @@ def test_every_audit_check_has_an_explainer():
     # names rather than audit_cfg[...] subscripts, since parallel_checks/max_parallel_checks
     # are read the same subscript way but aren't checks and have no scorecard explainer.
     source = inspect.getsource(run_audit)
-    checks = set(__import__("re").findall(r'add\("(\w+)"', source))
+    checks = set(__import__("re").findall(r'add\(\s*"(\w+)"', source))
     assert checks == set(scorecard.CHECK_INFO)
 
 

@@ -15,11 +15,11 @@ import logging
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import yaml
 
-from .audit import STRUCTURAL_CHECKS, run_audit
+from ._json_utils import json_default
+from .audit import STRUCTURAL_CHECKS, _checkpoint, run_audit
 from .config import load_config
 from .data import cache, dataset
 from .data.label_grouping import apply_attack_type_mapping
@@ -31,16 +31,7 @@ logger = logging.getLogger(__name__)
 COMMANDS = ("run", "cite", "validate-config", "compare-datasets", "recommend")
 
 
-def _json_default(obj):
-    if isinstance(obj, np.bool_):
-        return bool(obj)
-    if isinstance(obj, np.integer):
-        return int(obj)
-    if isinstance(obj, np.floating):
-        return float(obj)
-    if isinstance(obj, np.ndarray):
-        return obj.tolist()
-    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+_json_default = json_default
 
 
 def _write_findings(path: Path, findings: list[dict]) -> None:
@@ -155,13 +146,23 @@ def main(argv=None) -> None:
     fingerprint = run_manager.write_dataset_fingerprint(run_dir, train_df, test_df, cfg)
     logger.info("Run artifacts: %s", run_dir)
 
+    # Stable paths (unlike run_dir, which is fresh per timestamp) so a crash-and-rerun of
+    # the same output.dir finds the checkpoint a previous, incomplete run left behind.
+    # Separate files per pass: most checks aren't in STRUCTURAL_CHECKS and legitimately
+    # produce a DIFFERENT result before vs. after dedup (that's the reason both passes
+    # exist), so a single shared checkpoint keyed only by check name would wrongly let
+    # the after-pass reuse the before-pass's result for any of them.
+    checkpoint_dir = output_dir / ".checkpoint" if cfg["audit"]["checkpoint"] else None
+    checkpoint_path_before = str(checkpoint_dir / "before.json") if checkpoint_dir else None
+    checkpoint_path_after = str(checkpoint_dir / "after.json") if checkpoint_dir else None
+
     stage = "audit_before"
     try:
         if not args.skip_audit:
             # Must run before dedup. dedup_check reports duplication already
             # present in the split, and dataset.dedup() would remove it first.
             stage = "audit_before"
-            findings_before = run_audit(train_df, test_df, cfg)
+            findings_before = run_audit(train_df, test_df, cfg, checkpoint_path=checkpoint_path_before)
             _write_findings(run_dir / "audit_report_before.json", findings_before)
 
         if cfg["preprocessing"]["dedup"]:
@@ -180,7 +181,11 @@ def main(argv=None) -> None:
                 # them - resplit_falsification's two RandomForest fits included -
                 # would be pure wasted work, not a second real measurement.
                 stage = "audit_after"
-                recomputed = {f["check"]: f for f in run_audit(train_df, test_df, cfg, skip=STRUCTURAL_CHECKS)}
+                recomputed = {
+                    f["check"]: f for f in run_audit(
+                        train_df, test_df, cfg, skip=STRUCTURAL_CHECKS, checkpoint_path=checkpoint_path_after,
+                    )
+                }
                 reused = {f["check"]: f for f in findings_before if f["check"] in STRUCTURAL_CHECKS}
                 # dict order follows findings_before's schema order, not recompute order.
                 findings_after = [(recomputed | reused)[f["check"]] for f in findings_before]
@@ -257,6 +262,13 @@ def main(argv=None) -> None:
             logger.info("\n%s", results_df.to_string(index=False))
 
         run_manager.write_run_status(run_dir, status="completed")
+        if checkpoint_dir:
+            _checkpoint.clear(checkpoint_path_before)
+            _checkpoint.clear(checkpoint_path_after)
+            try:
+                checkpoint_dir.rmdir()
+            except OSError:
+                pass  # not empty or already gone - fine, nothing left to clean up here
     except Exception as e:
         run_manager.write_run_status(run_dir, status="failed", failed_stage=stage, error=str(e))
         raise

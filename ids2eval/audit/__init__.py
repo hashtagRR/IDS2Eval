@@ -26,6 +26,7 @@ import concurrent.futures
 import pandas as pd
 
 from . import (
+    _checkpoint,
     artifact_sensitivity,
     class_distribution,
     cross_capture_matrix,
@@ -96,7 +97,8 @@ DEFAULT_EVIDENCE_LEVEL = "statistical"
 
 
 def run_audit(
-    train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, skip: frozenset[str] = frozenset()
+    train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, skip: frozenset[str] = frozenset(),
+    checkpoint_path: str | None = None,
 ) -> list[dict]:
     """Run every audit check enabled in cfg['audit'] and not in `skip`, in schema order.
 
@@ -118,6 +120,15 @@ def run_audit(
     hold their own encoded feature matrix/RandomForest fit in memory
     simultaneously rather than one at a time, raising peak memory versus the
     sequential default.
+
+    checkpoint_path, if given, persists each check's finding to a local JSON
+    file as soon as it's computed and skips recomputing a check whose result
+    is already there - so a crash partway through a long run only redoes the
+    remaining checks on the next call with the same path. Mutually exclusive
+    with parallel_checks (validated in config.py): concurrent checks writing
+    to one checkpoint file would race. repeated_seed_falsification_check
+    additionally checkpoints its own per-seed progress via this same path,
+    since it alone can dominate a full-scale run's cost.
     """
     audit_cfg = cfg["audit"]
     seed = cfg["random_seed"]
@@ -160,10 +171,20 @@ def run_audit(
     add("result_robustness_check", lambda: result_robustness.check(cfg))
     add("known_issue_lookup", lambda: known_issues.check(train_df, cfg))
     add("seed_sensitivity_check", lambda: seed_sensitivity.check(train_df, test_df, cfg))
-    add("repeated_seed_falsification_check", lambda: repeated_seed_falsification.check(cfg))
+    add(
+        "repeated_seed_falsification_check",
+        lambda: repeated_seed_falsification.check(cfg, checkpoint_path=checkpoint_path),
+    )
 
     if not audit_cfg["parallel_checks"]:
-        return [thunk() for _, thunk in pending]
+        results = []
+        for name, thunk in pending:
+            cached = _checkpoint.get_check(checkpoint_path, name) if checkpoint_path else None
+            result = cached if cached is not None else thunk()
+            if checkpoint_path and cached is None:
+                _checkpoint.save_check(checkpoint_path, name, result)
+            results.append(result)
+        return results
 
     max_workers = min(audit_cfg["max_parallel_checks"], len(pending)) or 1
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:

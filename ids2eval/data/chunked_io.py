@@ -259,13 +259,23 @@ def iter_chunks(
     pd.to_numeric(errors="coerce") on exactly those columns, so the
     dtype is stable across the entire stream regardless of per-chunk
     inference quirks. Matches the IDS project's own loader, which does
-    the same coercion for the same reason. Non-numeric columns are left
-    alone. Known limitation: trusts the first chunk's inference: a
-    column that's genuinely numeric but happens to look non-numeric in
-    just the first chunk would be (wrongly) treated as categorical for
-    the rest of the stream.
+    the same coercion for the same reason. Known limitation: trusts the
+    first chunk's inference: a column that's genuinely numeric but
+    happens to look non-numeric in just the first chunk would be
+    (wrongly) treated as categorical for the rest of the stream.
+
+    Columns locked as non-numeric from the first chunk get the mirror-image
+    treatment: forced to string dtype on every later chunk. Real failure hit
+    against CICDDoS2019: a column mostly empty/placeholder values (inferred
+    object dtype in the first chunk) had a later chunk where every value
+    happened to parse as a plain integer, so the concatenated column ended
+    up with genuinely mixed str/int Python objects in one array - pyarrow's
+    to_parquet (via cache.save) rejects that outright ("Expected bytes, got
+    a 'int' object"). Without this, only numeric-locked columns were immune
+    to the equivalent problem in the other direction.
     """
     numeric_columns = None
+    object_columns = None
     reference_columns = None
     for path in paths:
         for chunk in _iter_raw_chunks(path, chunk_size, column_names):
@@ -294,6 +304,7 @@ def iter_chunks(
 
             if numeric_columns is None:
                 numeric_columns = chunk.select_dtypes(include=["number"]).columns
+                object_columns = chunk.columns.difference(numeric_columns)
             for col in numeric_columns:
                 if col in chunk.columns:
                     # Always land on float64 here, never int64: an int64
@@ -304,6 +315,14 @@ def iter_chunks(
                     # same LossySetitemError this whole schema-locking
                     # exists to prevent - real failure, CIC-IDS2018.
                     chunk[col] = pd.to_numeric(chunk[col], errors="coerce").astype("float64")
+            for col in object_columns:
+                if col in chunk.columns and not pd.api.types.is_object_dtype(chunk[col]):
+                    # Mirror image of the numeric case above: this column looked
+                    # non-numeric in the first chunk, but this later chunk's values
+                    # all happen to parse as a different dtype (e.g. every value here
+                    # is a plain integer) - force back to string, preserving real NaN
+                    # rather than stringifying it to the literal text "nan".
+                    chunk[col] = chunk[col].where(chunk[col].isna(), chunk[col].astype(str))
             yield _downcast_chunk(chunk)
 
 

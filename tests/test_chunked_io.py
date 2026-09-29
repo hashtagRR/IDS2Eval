@@ -58,6 +58,47 @@ def test_iter_chunks_reads_plain_csv(tmp_path):
     pd.testing.assert_frame_equal(result, df.astype({"F1": "float32"}))
 
 
+def test_a_column_inferred_object_in_the_first_chunk_stays_string_typed_throughout(tmp_path):
+    # Real failure hit against CICDDoS2019's SimillarHTTP column: mostly a placeholder
+    # value, inferred as object dtype from the first chunk (a non-numeric "-" forces
+    # that), but a later chunk's rows all happen to parse as plain integers, so pandas
+    # infers THAT chunk as int64. Concatenated without correction, the column ends up
+    # with genuinely mixed str/int Python objects, which pyarrow's to_parquet (via
+    # cache.save) rejects outright ("Expected bytes, got a 'int' object").
+    path = tmp_path / "data.csv"
+    path.write_text(
+        "id,SimilarCol\n"
+        "0,0\n"
+        "1,-\n"
+        "2,0\n"
+        "3,5\n"
+        "4,10\n"
+        "5,20\n"
+    )
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=3)), ignore_index=True)
+    types_seen = result["SimilarCol"].apply(type).unique()
+    assert set(types_seen) == {str}
+    assert result["SimilarCol"].tolist() == ["0", "-", "0", "5", "10", "20"]
+
+
+def test_object_locked_column_preserves_real_nan_rather_than_stringifying_it(tmp_path):
+    path = tmp_path / "data.csv"
+    path.write_text(
+        "id,SimilarCol\n"
+        "0,-\n"
+        "1,\n"
+        "2,5\n"
+        "3,\n"
+    )
+    result = pd.concat(list(iter_chunks([str(path)], chunk_size=2)), ignore_index=True)
+    # A real NaN in the second chunk makes pandas infer that chunk as float64 (5 -> 5.0)
+    # before this fix ever sees it - not something to recover the original text for, only
+    # to make uniformly string-typed. What matters here is real NaN stays real NaN rather
+    # than becoming the literal text "nan".
+    assert result["SimilarCol"].isna().tolist() == [False, True, False, True]
+    assert result["SimilarCol"].dropna().tolist() == ["-", "5.0"]
+
+
 def test_iter_chunks_reads_chunked_csv(tmp_path):
     df = _sample_df(20)
     path = tmp_path / "data.csv"

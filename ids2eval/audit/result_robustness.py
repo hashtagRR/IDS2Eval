@@ -25,9 +25,15 @@ the grouped-split and identity-column conditions are each included only
 when the config actually supports them (dataset.group_columns,
 schema.id_like_columns), so a minimal config still gets at least the
 random-split-vs-dedup comparison.
+
+Every condition's (train, test) pair is built first - relatively cheap next
+to the fit itself - so the actual fit_and_score calls can be dispatched
+together, concurrently via a thread pool when audit.parallel_checks is set.
 """
 
 from __future__ import annotations
+
+import concurrent.futures
 
 from ..data import dataset, features
 from . import _materiality
@@ -51,16 +57,16 @@ def check(cfg: dict) -> dict:
     label_col = cfg["schema"]["label_column"]
     combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
 
-    conditions: dict[str, float] = {}
+    # name -> (train_df, test_df, cols_override); built up front so the actual fits
+    # (the expensive part) can all be dispatched together below.
+    pending: dict[str, tuple] = {}
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
-    conditions["random_split"] = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+    pending["random_split"] = (random_train, random_test, None)
 
     if dataset_cfg["group_columns"]:
         try:
             grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
-            conditions["grouped_split"] = fit_and_score(
-                grouped_train, grouped_test, label_col, cfg, seed=seed
-            )
+            pending["grouped_split"] = (grouped_train, grouped_test, None)
         except (ValueError, RuntimeError):
             pass  # same graceful-skip as resplit_falsification when a grouped split can't be built
 
@@ -71,22 +77,31 @@ def check(cfg: dict) -> dict:
         dedup_stats["train_rows_raw"] != dedup_stats["train_rows_deduped"]
         or dedup_stats["test_rows_raw"] != dedup_stats["test_rows_deduped"]
     ):
-        conditions["deduplicated"] = fit_and_score(deduped_train, deduped_test, label_col, cfg, seed=seed)
+        pending["deduplicated"] = (deduped_train, deduped_test, None)
 
     id_cols = [c for c in cfg["schema"]["id_like_columns"] if c in random_train.columns]
     if id_cols:
         all_cols = features.feature_columns(random_train, cfg)
         without_ids = [c for c in all_cols if c not in id_cols]
         if without_ids:
-            conditions["identity_columns_dropped"] = fit_and_score(
-                random_train, random_test, label_col, cfg, cols=without_ids, seed=seed
-            )
+            pending["identity_columns_dropped"] = (random_train, random_test, without_ids)
 
-    if len(conditions) < 2:
+    if len(pending) < 2:
         return {
             "check": "result_robustness_check", "status": "ok",
             "summary": "fewer than two conditions could be built to compare", "details": {},
         }
+
+    def run(name: str) -> tuple[str, float]:
+        train_df, test_df, cols = pending[name]
+        return name, fit_and_score(train_df, test_df, label_col, cfg, cols=cols, seed=seed)
+
+    if cfg["audit"]["parallel_checks"]:
+        max_workers = min(cfg["audit"]["max_parallel_checks"], len(pending))
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
+            conditions = dict(pool.map(run, pending))
+    else:
+        conditions = dict(run(name) for name in pending)
 
     worst_condition, worst_acc = min(conditions.items(), key=lambda kv: kv[1])
     best_condition, best_acc = max(conditions.items(), key=lambda kv: kv[1])

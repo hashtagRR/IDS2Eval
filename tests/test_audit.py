@@ -276,6 +276,41 @@ def test_repeated_seed_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     assert result["status"] in ("ok", "warning", "flag")
 
 
+def test_repeated_seed_falsification_parallel_checks_matches_sequential(base_cfg, tmp_path, synth_data):
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    sequential = repeated_seed_falsification.check(cfg, n_seeds=4)
+
+    parallel_cfg = copy.deepcopy(cfg)
+    parallel_cfg["audit"]["parallel_checks"] = True
+    parallel_cfg["audit"]["max_parallel_checks"] = 4
+    parallel = repeated_seed_falsification.check(parallel_cfg, n_seeds=4)
+
+    # Same seeds, same data, same fixed per-seed random_state - only execution order
+    # differs, so results must match exactly, not just approximately.
+    assert parallel["details"]["drops_by_seed"] == sequential["details"]["drops_by_seed"]
+    assert parallel["details"]["mean_drop"] == sequential["details"]["mean_drop"]
+    assert parallel["status"] == sequential["status"]
+
+
+def test_repeated_seed_falsification_prefers_checkpointing_over_parallel_when_both_given(
+    base_cfg, tmp_path, synth_data
+):
+    # checkpoint and parallel_checks are mutually exclusive at the config level, but
+    # this check's own function signature still accepts both. If a caller somehow
+    # passes both anyway (bypassing config validation), the safer sequential-with-
+    # checkpointing path wins rather than silently running in parallel with no
+    # progress saved - confirmed here by checking real per-seed checkpoint writes.
+    from ids2eval.audit import _checkpoint
+
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["parallel_checks"] = True
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+    result = repeated_seed_falsification.check(cfg, n_seeds=4, checkpoint_path=checkpoint_path)
+    assert len(result["details"]["drops_by_seed"]) == 4
+    progress = _checkpoint.get_seed_progress(checkpoint_path, "repeated_seed_falsification_check")
+    assert set(progress) == {0, 1, 2, 3}
+
+
 def test_repeated_seed_falsification_below_minimum_seeds_is_a_no_op(base_cfg):
     result = repeated_seed_falsification.check(base_cfg, n_seeds=2)
     assert result["status"] == "ok"
@@ -581,6 +616,24 @@ def test_result_robustness_check_includes_grouped_split_and_identity_drop(base_c
         "random_split", "grouped_split", "deduplicated", "identity_columns_dropped",
     }
     assert result["details"]["spread"] >= 0.0
+
+
+def test_result_robustness_check_parallel_checks_matches_sequential(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5
+    base_cfg["schema"]["id_like_columns"] = ["SrcIP"]
+    sequential = result_robustness.check(base_cfg)
+
+    parallel_cfg = copy.deepcopy(base_cfg)
+    parallel_cfg["audit"]["parallel_checks"] = True
+    parallel_cfg["audit"]["max_parallel_checks"] = 4
+    parallel = result_robustness.check(parallel_cfg)
+
+    assert parallel["details"]["accuracy_by_condition"] == sequential["details"]["accuracy_by_condition"]
+    assert parallel["status"] == sequential["status"]
 
 
 def test_result_robustness_check_ok_with_fewer_than_two_conditions(base_cfg, tmp_path):

@@ -35,10 +35,22 @@ default), via a three-way rule rather than a single point-estimate cutoff:
 Same preconditions as resplit_falsification: needs dataset.raw_files and
 dataset.group_columns, and reloads the raw data itself, so its result
 cannot depend on preprocessing.dedup either (see STRUCTURAL_CHECKS).
+
+If audit.parallel_checks is set, the remaining (not yet checkpointed) seeds
+run concurrently via a thread pool instead of one at a time - this check is
+n_seeds independent full refits, so it's the single biggest reason a config
+enabling it alongside only 1-2 other checks can still leave most of a
+multi-vCPU VM idle if only the OUTER per-check dispatch were parallelized.
+Never combined with checkpoint_path: per-seed checkpointing and concurrent
+seeds are mutually exclusive at the config level (audit.checkpoint and
+audit.parallel_checks can't both be true) for the same reason run_audit's
+outer dispatch keeps them apart - concurrent writers to one checkpoint file
+would race.
 """
 
 from __future__ import annotations
 
+import concurrent.futures
 from statistics import mean, stdev
 
 from scipy import stats
@@ -77,16 +89,28 @@ def check(cfg: dict, n_seeds: int | None = None, checkpoint_path: str | None = N
     drops = [completed[s] for s in sorted(completed) if s < n_seeds]
     start_seed = len(drops)
 
-    combined = dataset.load_raw_combined(dataset_cfg) if start_seed < n_seeds else None
-    for seed in range(start_seed, n_seeds):
+    remaining_seeds = list(range(start_seed, n_seeds))
+    combined = dataset.load_raw_combined(dataset_cfg) if remaining_seeds else None
+
+    def run_seed(seed: int) -> float:
         random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
         grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
         random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
         grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
-        drop = random_acc - grouped_acc
-        drops.append(drop)
-        if checkpoint_path:
-            _checkpoint.save_seed_progress(checkpoint_path, _CHECK_NAME, seed, drop)
+        return random_acc - grouped_acc
+
+    if cfg["audit"]["parallel_checks"] and not checkpoint_path and len(remaining_seeds) > 1:
+        max_workers = min(cfg["audit"]["max_parallel_checks"], len(remaining_seeds))
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
+            # map preserves input order in its results regardless of completion order,
+            # so drops_by_seed stays seed-ordered the same as the sequential path.
+            drops.extend(pool.map(run_seed, remaining_seeds))
+    else:
+        for seed in remaining_seeds:
+            drop = run_seed(seed)
+            drops.append(drop)
+            if checkpoint_path:
+                _checkpoint.save_seed_progress(checkpoint_path, _CHECK_NAME, seed, drop)
 
     mean_drop = mean(drops)
     sample_std = stdev(drops)  # n_seeds >= MIN_N_SEEDS >= 2, safe for stdev's ddof=1

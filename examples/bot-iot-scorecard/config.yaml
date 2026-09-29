@@ -1,31 +1,40 @@
-# NF-BoT-IoT-V2 (University of Queensland NetFlow-V2 conversion of BoT-IoT,
-# 30.4M flows). Too large for this 7.8GB VM in full: a uniform 500K-row
-# reservoir sample (seeded, reproducible), split 80/20 at random (stratified).
-# `Label` is the dataset's own binary 0/1 target for the same rows `Attack`
-# already labels multi-class (with 'Benign' as the negative class) - dropped
-# so it can't leak the answer as a feature. Benign traffic is only 0.43% of
-# the full dataset (129,437 of 30,420,086 rows), so the reservoir sample may
-# carry very few benign rows - see known_issue_lookup below.
+# BoT-IoT, the OFFICIAL UNSW/Koroniotis-et-al. "5% reduced, all-features" artifact
+# (research.unsw.edu.au/projects/bot-iot-dataset), sourced directly from OpenML dataset
+# 42072 "bot-iot-all-features", created by the original dataset authors (Koroniotis,
+# Moustafa, Sitnikova, Turnbull). Not the University of Queensland NetFlow-V2
+# conversion used in bot-iot.yaml. This is the artifact most published BoT-IoT papers
+# actually train and report on, real saddr/daddr/sport/dport columns included (the
+# NetFlow-V2 file drops IPs entirely). 3,668,522 rows - the field's own "5% reduced"
+# convention, not a sample we chose.
+#
+# No official train/test split ships with this variant (unlike ToN-IoT's
+# Train_Test_Network.csv), so this builds its own 80/20 split like CIC-IDS2017 does.
+#
+# `attack` is a redundant binary 0/1 target for the same rows `category` already
+# labels (5-class: DoS/DDoS/Reconnaissance/Normal/Theft) - dropped so it can't leak
+# the answer. `subcategory` is a finer-grained version of the SAME label `category`
+# already gives (e.g. category=DoS, subcategory=UDP) - dropped for the same reason.
+# `pkSeqID` is a bare sequential row identifier, not a feature.
+#
+# Real, verified characteristic worth knowing before reading any result: only 477 of
+# 3,668,522 rows (0.013%) are Normal traffic - even more skewed than the NetFlow-V2
+# release's own 0.43% benign share.
 dataset:
-  name: bot-iot
+  name: bot-iot-official
   raw_files:
-    - /home/tango/projects/IDS2Eval_data/bot-iot/nf-bot-iot-v2.csv.gz
+    - bot-iot-all-features.parquet
   split_ratio: 0.8
-  chunk_size: 100000
-  max_rows: 500000
-  # No Src/Dst IP in this NetFlow-V2 release (privacy-stripped upstream), so this
-  # is a coarser proxy for flow identity than a true 5-tuple, port+port+protocol,
-  # not a claim of session-level grouping.
-  group_columns: [L4_SRC_PORT, L4_DST_PORT, PROTOCOL]
+  group_columns: [saddr, sport, daddr, dport, proto]
 schema:
-  label_column: Attack
-  drop_columns: [Label]
-  id_like_columns: [L4_DST_PORT]
+  label_column: category
+  drop_columns: [pkSeqID, attack, subcategory]
+  id_like_columns: [saddr, daddr, sport, dport]
+  timestamp_column: stime
 audit:
   resplit_falsification: true
   result_robustness_check: true
+  repeated_seed_falsification_check: true
   known_issue_lookup: true
 output:
-  dir: /home/tango/projects/IDS2Eval_data/output/bot-iot
   save_preprocessed: false
-  write_scorecard_plot: false
+  write_scorecard_plot: true

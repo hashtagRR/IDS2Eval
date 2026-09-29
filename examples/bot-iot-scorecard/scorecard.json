@@ -1,15 +1,15 @@
 {
   "scorecard_schema_version": "1.2",
-  "generated_at": "2026-09-27T10:17:04.071333+00:00",
-  "dataset_name": "bot-iot",
+  "generated_at": "2026-09-29T12:52:51.346025+00:00",
+  "dataset_name": "bot-iot-official",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "e47f6e960cef08741336884e6b850adddf731a04",
+  "ids2eval_git_commit": "d5cddfedcb2ad687b63ca6fb1f114bc35e8f5081",
   "audit_stage": "after",
   "overall_status": "failed",
   "counts": {
-    "ok": 17,
-    "warning": 2,
-    "flag": 2
+    "ok": 16,
+    "warning": 3,
+    "flag": 3
   },
   "findings": [
     {
@@ -30,37 +30,37 @@
     {
       "check": "leakage_screen",
       "status": "ok",
-      "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)"
+      "summary": "no single feature or pair dominates importance (top1=29.4%, top2=48.4%)"
     },
     {
       "check": "one_rule_check",
-      "status": "ok",
-      "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)"
+      "status": "flag",
+      "summary": "single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train). This problem may be solvable without learning attack behavior"
     },
     {
       "check": "feature_auc_ranking_check",
       "status": "flag",
-      "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact"
+      "summary": "'ltime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact"
     },
     {
       "check": "identity_column_flag",
-      "status": "ok",
-      "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}"
+      "status": "flag",
+      "summary": "standalone AUC by column: {'saddr': 0.522, 'daddr': 0.865, 'sport': 0.409, 'dport': 0.536}. Suggest dropping: ['daddr']"
     },
     {
       "check": "port_protocol_shortcut_check",
-      "status": "flag",
-      "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior"
+      "status": "ok",
+      "summary": "standalone AUC of 'sport' + 'proto' combined: 0.481"
     },
     {
       "check": "temporal_leakage_check",
       "status": "ok",
-      "summary": "no schema.timestamp_column configured"
+      "summary": "standalone AUC of 'stime' alone: 0.500"
     },
     {
       "check": "temporal_realism_check",
       "status": "ok",
-      "summary": "no schema.timestamp_column configured"
+      "summary": "timestamp column has no usable time span to test"
     },
     {
       "check": "flow_group_leakage_check",
@@ -70,7 +70,7 @@
     {
       "check": "row_order_leakage_check",
       "status": "ok",
-      "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce"
+      "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce"
     },
     {
       "check": "homogeneity_test",
@@ -80,7 +80,7 @@
     {
       "check": "resplit_falsification",
       "status": "ok",
-      "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+      "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
     },
     {
       "check": "scenario_holdout_falsification",
@@ -90,12 +90,12 @@
     {
       "check": "class_distribution_report",
       "status": "warning",
-      "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']"
+      "summary": "5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']"
     },
     {
       "check": "low_cardinality_warning",
-      "status": "ok",
-      "summary": "unique values by column: {'L4_DST_PORT': 14608}"
+      "status": "warning",
+      "summary": "unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior"
     },
     {
       "check": "schema_fingerprint_check",
@@ -110,12 +110,17 @@
     {
       "check": "result_robustness_check",
       "status": "ok",
-      "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005"
+      "summary": "accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000"
     },
     {
       "check": "known_issue_lookup",
       "status": "warning",
-      "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
+      "summary": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)"
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold"
     }
   ],
   "checks": [
@@ -166,12 +171,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+        "summary": "no single feature or pair dominates importance (top1=29.4%, top2=48.4%)",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+        "summary": "no single feature or pair dominates importance (top1=29.4%, top2=48.4%)",
         "evidence": "statistical"
       }
     },
@@ -179,13 +184,13 @@
       "check": "one_rule_check",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+        "status": "flag",
+        "summary": "single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train). This problem may be solvable without learning attack behavior",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+        "status": "flag",
+        "summary": "single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train). This problem may be solvable without learning attack behavior",
         "evidence": "statistical"
       }
     },
@@ -194,12 +199,12 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact",
+        "summary": "'ltime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact",
         "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact",
+        "summary": "'ltime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact",
         "evidence": "statistical"
       }
     },
@@ -207,13 +212,13 @@
       "check": "identity_column_flag",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+        "status": "flag",
+        "summary": "standalone AUC by column: {'saddr': 0.522, 'daddr': 0.865, 'sport': 0.409, 'dport': 0.536}. Suggest dropping: ['daddr']",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+        "status": "flag",
+        "summary": "standalone AUC by column: {'saddr': 0.522, 'daddr': 0.865, 'sport': 0.409, 'dport': 0.536}. Suggest dropping: ['daddr']",
         "evidence": "statistical"
       }
     },
@@ -221,13 +226,13 @@
       "check": "port_protocol_shortcut_check",
       "category": "audit",
       "before": {
-        "status": "flag",
-        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior",
+        "status": "ok",
+        "summary": "standalone AUC of 'sport' + 'proto' combined: 0.481",
         "evidence": "statistical"
       },
       "after": {
-        "status": "flag",
-        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior",
+        "status": "ok",
+        "summary": "standalone AUC of 'sport' + 'proto' combined: 0.481",
         "evidence": "statistical"
       }
     },
@@ -236,12 +241,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured",
+        "summary": "standalone AUC of 'stime' alone: 0.500",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured",
+        "summary": "standalone AUC of 'stime' alone: 0.500",
         "evidence": "statistical"
       }
     },
@@ -250,12 +255,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured",
+        "summary": "timestamp column has no usable time span to test",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no schema.timestamp_column configured",
+        "summary": "timestamp column has no usable time span to test",
         "evidence": "statistical"
       }
     },
@@ -278,12 +283,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
         "evidence": "statistical"
       }
     },
@@ -306,12 +311,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
         "evidence": "direct-experiment"
       },
       "after": {
         "status": "ok",
-        "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
         "evidence": "direct-experiment"
       }
     },
@@ -334,12 +339,12 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+        "summary": "5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']",
         "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+        "summary": "5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']",
         "evidence": "statistical"
       }
     },
@@ -347,13 +352,13 @@
       "check": "low_cardinality_warning",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+        "status": "warning",
+        "summary": "unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+        "status": "warning",
+        "summary": "unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior",
         "evidence": "statistical"
       }
     },
@@ -390,12 +395,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+        "summary": "accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000",
         "evidence": "direct-experiment"
       },
       "after": {
         "status": "ok",
-        "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+        "summary": "accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000",
         "evidence": "direct-experiment"
       }
     },
@@ -404,35 +409,49 @@
       "category": "known_issue",
       "before": {
         "status": "warning",
-        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+        "summary": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
         "evidence": "documented"
       },
       "after": {
         "status": "warning",
-        "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+        "summary": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
         "evidence": "documented"
+      }
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
       }
     }
   ],
   "dedup_effect": {
-    "train_rows_raw": 400000,
-    "train_rows_deduped": 400000,
+    "train_rows_raw": 2934817,
+    "train_rows_deduped": 2934817,
     "train_duplicates_dropped": 0,
-    "test_rows_raw": 100000,
-    "test_rows_deduped": 100000,
+    "test_rows_raw": 733705,
+    "test_rows_deduped": 733705,
     "test_leakage_dropped": 0,
     "test_duplicates_dropped": 0
   },
   "dataset_fingerprint": {
-    "train_rows": 400000,
-    "test_rows": 100000,
-    "feature_count": 41,
-    "train_content_hash": "195acbd1258af37d422916d1c46863eb7c8267976b1196fdfc39f187b7f05d1e",
-    "test_content_hash": "df600d41362e37f20cf37a9857a716a8b31c531ccf4084faf2e7e3744ac80ef0"
+    "train_rows": 2934817,
+    "test_rows": 733705,
+    "feature_count": 42,
+    "train_content_hash": "9f5e0644a65463dc3b8846899ab4a9c321eacd6c3774c9c4dc8c03903dcde004",
+    "test_content_hash": "3f0d0ce3cd0215c34e37d2dee89656dc3fe644ac3373d64d6bf31cb9ccd00da2"
   },
   "previous_run_comparison": {
-    "previous_run": "2026-09-27_030539_473566",
-    "previous_generated_at": "2026-09-27T03:08:35.773440+00:00",
+    "previous_run": "2026-09-28_125027_031413",
+    "previous_generated_at": "2026-09-28T15:09:18.521038+00:00",
     "previous_verdict": "failed",
     "fingerprint_changed": false,
     "changed_checks": []

@@ -4,11 +4,11 @@
     "status": "ok",
     "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
     "details": {
-      "train_rows_raw": 400000,
-      "train_rows_deduped": 400000,
+      "train_rows_raw": 2934817,
+      "train_rows_deduped": 2934817,
       "train_duplicates_dropped": 0,
-      "test_rows_raw": 100000,
-      "test_rows_deduped": 100000,
+      "test_rows_raw": 733705,
+      "test_rows_deduped": 733705,
       "test_leakage_dropped": 0,
       "test_duplicates_dropped": 0,
       "by_class": {
@@ -24,7 +24,7 @@
           "train_duplicate_rate": 0.0,
           "test_leak_rate": 0.0
         },
-        "Benign": {
+        "Normal": {
           "train_duplicate_rate": 0.0,
           "test_leak_rate": 0.0
         },
@@ -52,76 +52,93 @@
   {
     "check": "leakage_screen",
     "status": "ok",
-    "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+    "summary": "no single feature or pair dominates importance (top1=29.4%, top2=48.4%)",
     "details": {
       "top_features": {
-        "LONGEST_FLOW_PKT": 0.12230940424899828,
-        "PROTOCOL": 0.09824895843980885,
-        "MAX_IP_PKT_LEN": 0.08690255499754158,
-        "L7_PROTO": 0.0836581253131307,
-        "SHORTEST_FLOW_PKT": 0.07859538155793838
+        "stime": 0.29364869739917443,
+        "ltime": 0.1899326311226188,
+        "dur": 0.10807974037281917,
+        "daddr": 0.10192642249357897,
+        "AR_P_Proto_P_SrcIP": 0.034963595766861096
       },
-      "top1_share": 0.12230940424899828,
-      "top2_share": 0.22055836268880713
+      "top1_share": 0.29364869739917443,
+      "top2_share": 0.48358132852179325
     }
   },
   {
     "check": "one_rule_check",
-    "status": "ok",
-    "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+    "status": "flag",
+    "summary": "single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train). This problem may be solvable without learning attack behavior",
     "details": {
-      "rule": "LONGEST_FLOW_PKT <= 34",
-      "train_accuracy": 0.907775,
-      "test_accuracy": 0.90813
+      "rule": "ltime <= 1.528e+09",
+      "train_accuracy": 0.97505,
+      "test_accuracy": 0.9750199330793712
     }
   },
   {
     "check": "feature_auc_ranking_check",
     "status": "flag",
-    "summary": "'SHORTEST_FLOW_PKT' alone reaches AUC 0.990 identifying 'DDoS'; a single feature this separable is worth checking for a leakage artifact",
+    "summary": "'ltime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact",
     "details": {
       "top_features": {
-        "SHORTEST_FLOW_PKT": 0.9901017959540218,
-        "L7_PROTO": 0.9895067174249071,
-        "LONGEST_FLOW_PKT": 0.9892779592563244,
-        "MAX_IP_PKT_LEN": 0.9892779592563244,
-        "PROTOCOL": 0.9892289649627307
+        "ltime": 1.0,
+        "stime": 0.9999999999999999,
+        "seq": 0.9997442256077903,
+        "N_IN_Conn_P_DstIP": 0.9959988368659175,
+        "sbytes": 0.9627663685680722
       },
-      "best_feature": "SHORTEST_FLOW_PKT",
-      "best_class": "DDoS"
+      "best_feature": "ltime",
+      "best_class": "Theft"
     }
   },
   {
     "check": "identity_column_flag",
-    "status": "ok",
-    "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+    "status": "flag",
+    "summary": "standalone AUC by column: {'saddr': 0.522, 'daddr': 0.865, 'sport': 0.409, 'dport': 0.536}. Suggest dropping: ['daddr']",
     "details": {
       "standalone_auc": {
-        "L4_DST_PORT": 0.53084005764649
+        "saddr": 0.5222855720091468,
+        "daddr": 0.864859318973488,
+        "sport": 0.4088115534377711,
+        "dport": 0.5360971552825301
       },
-      "suggested_drop": []
+      "suggested_drop": [
+        "daddr"
+      ],
+      "by_class": {
+        "daddr": {
+          "DDoS": 0.8696872022344447,
+          "DoS": 0.8687460013296517,
+          "Reconnaissance": 0.691899636333737,
+          "Normal": 0.9471763212778338,
+          "Theft": 0.8570481242733637
+        }
+      }
     }
   },
   {
     "check": "port_protocol_shortcut_check",
-    "status": "flag",
-    "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.952. Port and protocol together may predict the label without attack behavior",
+    "status": "ok",
+    "summary": "standalone AUC of 'sport' + 'proto' combined: 0.481",
     "details": {
-      "port_column": "L4_DST_PORT",
-      "protocol_column": "PROTOCOL",
-      "standalone_auc": 0.9518869809229152
+      "port_column": "sport",
+      "protocol_column": "proto",
+      "standalone_auc": 0.48117726837902774
     }
   },
   {
     "check": "temporal_leakage_check",
     "status": "ok",
-    "summary": "no schema.timestamp_column configured",
-    "details": {}
+    "summary": "standalone AUC of 'stime' alone: 0.500",
+    "details": {
+      "column": "stime",
+      "standalone_auc": 0.5
+    }
   },
   {
     "check": "temporal_realism_check",
     "status": "ok",
-    "summary": "no schema.timestamp_column configured",
+    "summary": "timestamp column has no usable time span to test",
     "details": {}
   },
   {
@@ -133,11 +150,11 @@
   {
     "check": "row_order_leakage_check",
     "status": "ok",
-    "summary": "adjacent-row label-transition rate (train=1.00, test=1.01) as a share of what a randomly shuffled ordering would produce",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
     "details": {
       "contiguity_ratio": {
-        "train": 0.9979660632758025,
-        "test": 1.0051321930893706
+        "train": 1.0001468195135594,
+        "test": 1.0020951688680209
       }
     }
   },
@@ -150,25 +167,25 @@
         "DDoS": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.75669153223956,
+          "p_value": 0.8796387859749705,
           "leakage_signature": false
         },
         "DoS": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.4405545265856184,
+          "p_value": 0.4846720571325478,
           "leakage_signature": false
         },
         "Reconnaissance": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.80556981720479,
+          "p_value": 0.9233964074147409,
           "leakage_signature": false
         },
-        "Benign": {
+        "Normal": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.43201694221454956,
+          "p_value": 0.41125498486066353,
           "leakage_signature": false
         }
       }
@@ -177,11 +194,11 @@
   {
     "check": "resplit_falsification",
     "status": "ok",
-    "summary": "random-split accuracy=0.9902, grouped-split accuracy=0.9897 (drop=+0.0005); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
     "details": {
-      "random_accuracy": 0.99019,
-      "grouped_accuracy": 0.989689896898969,
-      "drop": 0.0005001031010309909
+      "random_accuracy": 0.9999850075984217,
+      "grouped_accuracy": 0.9999604745776572,
+      "drop": 2.4533020764438973e-05
     }
   },
   {
@@ -193,56 +210,61 @@
   {
     "check": "class_distribution_report",
     "status": "warning",
-    "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+    "summary": "5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']",
     "details": {
       "train": {
         "counts": {
-          "DDoS": 187394,
-          "DoS": 179736,
-          "Reconnaissance": 31122,
-          "Benign": 1711,
-          "Theft": 37
+          "DDoS": 1541299,
+          "DoS": 1320208,
+          "Reconnaissance": 72865,
+          "Normal": 382,
+          "Theft": 63
         },
         "shares": {
-          "DDoS": 0.468485,
-          "DoS": 0.44934,
-          "Reconnaissance": 0.077805,
-          "Benign": 0.0042775,
-          "Theft": 9.25e-05
+          "DDoS": 0.5251772086641178,
+          "DoS": 0.4498433803538687,
+          "Reconnaissance": 0.0248277831292377,
+          "Normal": 0.0001301614376637453,
+          "Theft": 2.146641511208365e-05
         }
       },
       "test": {
         "counts": {
-          "DDoS": 46848,
-          "DoS": 44934,
-          "Reconnaissance": 7781,
-          "Benign": 428,
-          "Theft": 9
+          "DDoS": 385325,
+          "DoS": 330052,
+          "Reconnaissance": 18217,
+          "Normal": 95,
+          "Theft": 16
         },
         "shares": {
-          "DDoS": 0.46848,
-          "DoS": 0.44934,
-          "Reconnaissance": 0.07781,
-          "Benign": 0.00428,
-          "Theft": 9e-05
+          "DDoS": 0.5251770125595436,
+          "DoS": 0.44984292051982744,
+          "Reconnaissance": 0.024828779959247926,
+          "Normal": 0.0001294798318125132,
+          "Theft": 2.1807129568423275e-05
         }
       },
-      "imbalance_ratio": 5064.7027027027025,
+      "imbalance_ratio": 24465.06349206349,
       "rare_classes": [
-        "Benign",
+        "Normal",
         "Theft"
       ]
     }
   },
   {
     "check": "low_cardinality_warning",
-    "status": "ok",
-    "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+    "status": "warning",
+    "summary": "unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior",
     "details": {
       "cardinalities": {
-        "L4_DST_PORT": 14608
+        "saddr": 21,
+        "daddr": 81,
+        "sport": 65541,
+        "dport": 6914
       },
-      "flagged": []
+      "flagged": [
+        "saddr"
+      ]
     }
   },
   {
@@ -265,14 +287,14 @@
   {
     "check": "result_robustness_check",
     "status": "ok",
-    "summary": "accuracy ranges from 0.9897 (grouped_split) to 0.9902 (random_split) across 3 conditions, a spread of 0.0005",
+    "summary": "accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000",
     "details": {
       "accuracy_by_condition": {
-        "random_split": 0.99019,
-        "grouped_split": 0.989689896898969,
-        "identity_columns_dropped": 0.99015
+        "random_split": 0.9999850075984217,
+        "grouped_split": 0.9999604745776572,
+        "identity_columns_dropped": 0.9999809187616276
       },
-      "spread": 0.0005001031010309909,
+      "spread": 2.4533020764438973e-05,
       "worst_condition": "grouped_split",
       "best_condition": "random_split"
     }
@@ -280,14 +302,41 @@
   {
     "check": "known_issue_lookup",
     "status": "warning",
-    "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+    "summary": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
     "details": {
       "matches": [
         {
-          "issue": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic.",
+          "issue": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic.",
           "citation": "Koroniotis et al. 2019, Future Generation Computer Systems"
         }
       ]
+    }
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "status": "ok",
+    "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold",
+    "details": {
+      "n_seeds": 10,
+      "drops_by_seed": [
+        2.4533020764438973e-05,
+        -6.814727990134273e-06,
+        -1.6355347176366664e-05,
+        8.177673588183332e-06,
+        4.3614259136903755e-05,
+        1.4992401578206582e-05,
+        2.3170075166389914e-05,
+        2.044418397040282e-05,
+        0.0,
+        -2.1807129568340855e-05
+      ],
+      "mean_drop": 8.995440946968359e-06,
+      "ci_95": [
+        -5.569379902733409e-06,
+        2.356026179667013e-05
+      ],
+      "materiality_threshold": 0.01,
+      "material": false
     }
   }
 ]

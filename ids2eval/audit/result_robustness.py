@@ -29,11 +29,19 @@ random-split-vs-dedup comparison.
 Every condition's (train, test) pair is built first - relatively cheap next
 to the fit itself - so the actual fit_and_score calls can be dispatched
 together, concurrently via a thread pool when audit.parallel_checks is set.
+
+Accepts an already-loaded `combined` DataFrame so run_audit can share one
+load across this, resplit_falsification, and repeated_seed_falsification_
+check when several run together, instead of each reloading the full raw
+dataset from disk - a real cost at full scale. Still loads it itself when
+called standalone, so this is purely an optimization.
 """
 
 from __future__ import annotations
 
 import concurrent.futures
+
+import pandas as pd
 
 from ..data import dataset, features
 from . import _materiality
@@ -44,7 +52,7 @@ SPREAD_FLAG_THRESHOLD = 0.15
 SPREAD_WARNING_THRESHOLD = 0.08
 
 
-def check(cfg: dict) -> dict:
+def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
     dataset_cfg = cfg["dataset"]
     if not dataset_cfg["raw_files"]:
         return {
@@ -55,7 +63,8 @@ def check(cfg: dict) -> dict:
 
     seed = cfg["random_seed"]
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
+    if combined is None:
+        combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
 
     # name -> (train_df, test_df, cols_override); built up front so the actual fits
     # (the expensive part) can all be dispatched together below.

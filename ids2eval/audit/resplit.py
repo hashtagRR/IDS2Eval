@@ -11,9 +11,21 @@ doing real work, the grouped split should cost measurable accuracy.
 
 Independent of whichever split_mode is configured for the main run:
 always builds both splits from the raw data to compare them directly.
+
+Accepts an already-loaded `combined` DataFrame so run_audit can share one
+load across this, scenario_holdout_falsification, result_robustness_check,
+and repeated_seed_falsification_check when several run together - each
+independently reloading the full raw dataset from disk is a real cost at
+full scale (a real failure this was built to avoid: a 70M-row config
+running all three of these checks was reloading the same data three times
+sequentially, contributing to repeated VM-level instability on a long run).
+Still loads it itself when called standalone (e.g. every existing direct
+unit test), so this is purely an optimization, not a behavior change.
 """
 
 from __future__ import annotations
+
+import pandas as pd
 
 from ..data import dataset
 from . import _materiality
@@ -26,10 +38,11 @@ from ._fit_score import fit_and_score
 MATERIAL_DROP_THRESHOLD = 0.01
 
 
-def check(cfg: dict, seed: int = 0) -> dict:
+def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dict:
     dataset_cfg = cfg["dataset"]
     label_col = cfg["schema"]["label_column"]
-    combined = dataset.load_raw_combined(dataset_cfg)
+    if combined is None:
+        combined = dataset.load_raw_combined(dataset_cfg, seed=cfg["random_seed"])
 
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
     grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)

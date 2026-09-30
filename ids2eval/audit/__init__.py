@@ -25,6 +25,7 @@ import concurrent.futures
 
 import pandas as pd
 
+from ..data import dataset
 from . import (
     _checkpoint,
     artifact_sensitivity,
@@ -121,6 +122,13 @@ def run_audit(
     simultaneously rather than one at a time, raising peak memory versus the
     sequential default.
 
+    resplit_falsification, result_robustness_check, and repeated_seed_
+    falsification_check each need the full raw dataset (not just train_df/
+    test_df) and would otherwise each reload it independently - loaded once
+    here and shared across whichever of the three are enabled, since that
+    reload is a real, serious cost at full scale (see each check's own
+    docstring for the real failure this was built to avoid).
+
     checkpoint_path, if given, persists each check's finding to a local JSON
     file as soon as it's computed and skips recomputing a check whose result
     is already there - so a crash partway through a long run only redoes the
@@ -132,6 +140,20 @@ def run_audit(
     """
     audit_cfg = cfg["audit"]
     seed = cfg["random_seed"]
+    dataset_cfg = cfg["dataset"]
+
+    # resplit_falsification, result_robustness_check, and repeated_seed_falsification_check
+    # each independently reload the full raw dataset when called standalone - fine at small
+    # scale, but a real, serious cost at full scale: a real failure hit running all three
+    # together against a 70M-row dataset, where each ~45-70 minute reload compounded into
+    # repeated VM-level instability on a run that redundantly reloaded the same data three
+    # times sequentially. Loaded once here and passed to whichever of the three are enabled.
+    _raw_reload_checks = ("resplit_falsification", "result_robustness_check", "repeated_seed_falsification_check")
+    shared_combined = None
+    if dataset_cfg["raw_files"] and any(
+        audit_cfg[name] and name not in skip for name in _raw_reload_checks
+    ):
+        shared_combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
 
     # Each entry is (check_name, thunk). Building the full ordered list up front - rather
     # than appending each finding immediately - lets the dispatch loop below run these
@@ -157,7 +179,7 @@ def run_audit(
     add("flow_group_leakage_check", lambda: flow_group_leakage.check(train_df, test_df, cfg))
     add("row_order_leakage_check", lambda: row_order_leakage.check(train_df, test_df, cfg))
     add("homogeneity_test", lambda: homogeneity.check(train_df, test_df, cfg))
-    add("resplit_falsification", lambda: resplit.check(cfg, seed=seed))
+    add("resplit_falsification", lambda: resplit.check(cfg, seed=seed, combined=shared_combined))
     add("scenario_holdout_falsification", lambda: scenario_holdout.check(cfg))
     add("class_distribution_report", lambda: class_distribution.check(train_df, test_df, cfg))
     add("low_cardinality_warning", lambda: identity_columns.check_cardinality(train_df, cfg))
@@ -168,12 +190,14 @@ def run_audit(
     add("cross_capture_matrix_check", lambda: cross_capture_matrix.check(cfg))
     add("feature_category_ablation_check", lambda: feature_category_ablation.check(train_df, test_df, cfg))
     add("artifact_sensitivity_check", lambda: artifact_sensitivity.check(train_df, test_df, cfg))
-    add("result_robustness_check", lambda: result_robustness.check(cfg))
+    add("result_robustness_check", lambda: result_robustness.check(cfg, combined=shared_combined))
     add("known_issue_lookup", lambda: known_issues.check(train_df, cfg))
     add("seed_sensitivity_check", lambda: seed_sensitivity.check(train_df, test_df, cfg))
     add(
         "repeated_seed_falsification_check",
-        lambda: repeated_seed_falsification.check(cfg, checkpoint_path=checkpoint_path),
+        lambda: repeated_seed_falsification.check(
+            cfg, checkpoint_path=checkpoint_path, combined=shared_combined,
+        ),
     )
 
     if not audit_cfg["parallel_checks"]:

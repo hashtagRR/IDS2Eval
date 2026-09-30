@@ -46,6 +46,15 @@ seeds are mutually exclusive at the config level (audit.checkpoint and
 audit.parallel_checks can't both be true) for the same reason run_audit's
 outer dispatch keeps them apart - concurrent writers to one checkpoint file
 would race.
+
+Accepts an already-loaded `combined` DataFrame so run_audit can share one
+load across this, resplit_falsification, and result_robustness_check when
+several run together, instead of each reloading the full raw dataset from
+disk - a real cost at full scale (a real failure this was built to avoid:
+a 70M-row config running all three of these checks was reloading the same
+data three times sequentially, contributing to repeated VM-level
+instability on a long run). Still loads it itself when called standalone,
+so this is purely an optimization, not a behavior change.
 """
 
 from __future__ import annotations
@@ -53,6 +62,7 @@ from __future__ import annotations
 import concurrent.futures
 from statistics import mean, stdev
 
+import pandas as pd
 from scipy import stats
 
 from ..data import dataset
@@ -65,7 +75,10 @@ MIN_N_SEEDS = 3  # below this, a t-based CI is too unstable to report meaningful
 _CHECK_NAME = "repeated_seed_falsification_check"
 
 
-def check(cfg: dict, n_seeds: int | None = None, checkpoint_path: str | None = None) -> dict:
+def check(
+    cfg: dict, n_seeds: int | None = None, checkpoint_path: str | None = None,
+    combined: pd.DataFrame | None = None,
+) -> dict:
     dataset_cfg = cfg["dataset"]
     if n_seeds is None:
         n_seeds = cfg["audit"]["repeated_seed_count"]
@@ -90,7 +103,8 @@ def check(cfg: dict, n_seeds: int | None = None, checkpoint_path: str | None = N
     start_seed = len(drops)
 
     remaining_seeds = list(range(start_seed, n_seeds))
-    combined = dataset.load_raw_combined(dataset_cfg) if remaining_seeds else None
+    if combined is None and remaining_seeds:
+        combined = dataset.load_raw_combined(dataset_cfg, seed=cfg["random_seed"])
 
     def run_seed(seed: int) -> float:
         random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)

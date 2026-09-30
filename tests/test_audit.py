@@ -891,6 +891,29 @@ def test_run_audit_checkpoint_produces_the_same_findings_as_uncheckpointed(
     assert [f["status"] for f in checkpointed] == [f["status"] for f in uncheckpointed]
 
 
+def test_run_audit_shares_one_raw_load_across_the_three_checks_that_need_it(
+    base_cfg, tmp_path, synth_data, synth_train_test, monkeypatch
+):
+    # Real failure this guards against: resplit_falsification, result_robustness_check,
+    # and repeated_seed_falsification_check each independently reloading the full raw
+    # dataset when enabled together - a 70M-row config doing this three times
+    # sequentially was a serious, real cost (see run_audit's own docstring).
+    from ids2eval.audit import dataset, run_audit
+
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["result_robustness_check"] = True
+    cfg["audit"]["repeated_seed_falsification_check"] = True
+    cfg["audit"]["repeated_seed_count"] = 3
+
+    calls = []
+    real_load = dataset.load_raw_combined
+    monkeypatch.setattr(dataset, "load_raw_combined", lambda *a, **k: (calls.append(1), real_load(*a, **k))[1])
+
+    train_df, test_df = synth_train_test
+    run_audit(train_df, test_df, cfg)
+    assert len(calls) == 1  # not 3, despite all three checks needing the raw data
+
+
 def test_run_audit_parallel_checks_returns_identical_findings_in_the_same_order(
     base_cfg, synth_train_test
 ):

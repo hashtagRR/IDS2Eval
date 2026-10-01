@@ -26,10 +26,12 @@ import argparse
 import csv
 import json
 import logging
+import os
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 import webbrowser
 from collections import deque
 from http import HTTPStatus
@@ -127,6 +129,9 @@ class Job:
         self.state = "idle"
         self.returncode: int | None = None
         self.output_dir: str | None = None
+        self.started_at: float | None = None
+        self.finished_at: float | None = None
+        self.last_output_at: float | None = None
 
     def start(self, config_path: Path, output_dir: Path, skip_audit: bool, skip_benchmark: bool) -> None:
         cmd = [sys.executable, "-m", "ids2eval", "--config", str(config_path)]
@@ -136,24 +141,36 @@ class Job:
             cmd.append("--skip-benchmark")
         self.log.clear()
         self.log.append("$ " + " ".join(cmd))
+        # Unbuffered so each line reaches the live log as it's written (a pipe
+        # would otherwise block-buffer stdout); UTF-8 so a non-ASCII class or
+        # feature name can't fail decoding on a Windows code page.
+        env = {**os.environ, "PYTHONUNBUFFERED": "1", "PYTHONIOENCODING": "utf-8"}
         self.proc = subprocess.Popen(  # noqa: S603 - argv list, no shell; config was validated first
             cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
+            encoding="utf-8", errors="replace", env=env,
         )
         self.state, self.returncode, self.output_dir = "running", None, str(output_dir)
+        self.started_at = self.last_output_at = time.time()
+        self.finished_at = None
         threading.Thread(target=self._pump, args=(self.proc, config_path), daemon=True).start()
 
     def _pump(self, proc: subprocess.Popen, config_path: Path) -> None:
         for line in proc.stdout:
             self.log.append(line.rstrip("\n"))
+            self.last_output_at = time.time()
         proc.wait()
         with self.lock:
+            self.finished_at = time.time()
             self.returncode = proc.returncode
             self.state = "completed" if proc.returncode == 0 else "failed"
         config_path.unlink(missing_ok=True)
 
     def snapshot(self) -> dict:
+        # Server-side clock in the payload, so the page's elapsed/idle timers
+        # don't depend on the browser's clock agreeing with the server's.
         return {"state": self.state, "returncode": self.returncode, "output_dir": self.output_dir,
-                "log": list(self.log)}
+                "started_at": self.started_at, "finished_at": self.finished_at,
+                "last_output_at": self.last_output_at, "now": time.time(), "log": list(self.log)}
 
 
 class App:

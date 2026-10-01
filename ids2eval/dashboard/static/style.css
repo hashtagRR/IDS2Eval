@@ -247,6 +247,8 @@ font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
 pre.log{min-height:300px;max-height:62vh}
 pre.code{max-height:40vh}
 .error-box{border:1px solid var(--flag);background:var(--flag-bg);color:var(--flag);border-radius:10px;padding:10px 12px}
+.runprog{display:flex;flex-direction:column;gap:8px}
+.runprog:empty{display:none}
 .msg{font-size:13px}.msg.err{color:var(--flag)}.msg.ok{color:var(--ok)}
 .empty{color:var(--muted);text-align:center;padding:36px 12px}
 .loading{color:var(--muted);padding:24px 0}

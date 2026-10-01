@@ -91,6 +91,37 @@ def test_check_info_serves_the_scorecard_explanations(server):
     assert info["dedup_check"] == {"what": CHECK_INFO["dedup_check"][0], "rule": CHECK_INFO["dedup_check"][1]}
 
 
+def test_job_streams_unbuffered_output_with_timing(tmp_path):
+    # A child that prints, then sleeps: with a block-buffered pipe the line
+    # wouldn't arrive until exit, and the dashboard would look frozen.
+    import sys
+    import time
+    job = dashboard.Job()
+    script = tmp_path / "child.py"
+    script.write_text("import time\nprint('first line')\ntime.sleep(3)\nprint('second line')\n")
+    env_seen = {}
+
+    real_popen = dashboard.subprocess.Popen
+
+    def fake_popen(cmd, **kw):
+        env_seen.update(kw.get("env") or {})
+        return real_popen([sys.executable, str(script)], **kw)
+
+    dashboard.subprocess.Popen = fake_popen
+    try:
+        job.start(tmp_path / "cfg.yaml", tmp_path, False, False)
+        deadline = time.time() + 2.5
+        while time.time() < deadline and not any("first line" in line for line in job.log):
+            time.sleep(0.05)
+        snap = job.snapshot()
+        assert any("first line" in line for line in snap["log"]), "output only arrived at exit"
+        assert snap["state"] == "running" and snap["started_at"] <= snap["last_output_at"] <= snap["now"]
+        assert env_seen["PYTHONUNBUFFERED"] == "1"
+        job.proc.wait(timeout=10)
+    finally:
+        dashboard.subprocess.Popen = real_popen
+
+
 def test_serves_run_files_but_not_outside_the_run_dir(server):
     base, _ = server
     assert _get(base + "/files/0/2026-01-01_000000_000000/SCORECARD.html")[0] == 200

@@ -63,6 +63,11 @@ function fmtNum(v) {
   if (Number.isInteger(v)) return v.toLocaleString();
   return Math.abs(v) < 1 ? v.toFixed(4) : v.toLocaleString(undefined, {maximumFractionDigits: 3});
 }
+function dur(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const h = Math.floor(sec / 3600), m = Math.floor(sec / 60) % 60, s = sec % 60;
+  return h ? `${h}h ${m}m` : m ? `${m}m ${String(s).padStart(2, "0")}s` : `${s}s`;
+}
 function when(name) {  // run dirs are named YYYY-MM-DD_HHMMSS_micro (UTC)
   const m = /^(\d{4}-\d{2}-\d{2})_(\d{2})(\d{2})/.exec(name || "");
   return m ? `${m[1]} ${m[2]}:${m[3]} UTC` : name;
@@ -897,6 +902,8 @@ async function renderNewRun(main) {
   const valBtn = el("button", {text: "Validate"});
   const log = el("pre", {class: "log", text: "No run started from this page yet."});
   const jobBadge = el("span");
+  const progress = el("div", {class: "runprog", "aria-live": "polite"});
+  let lastJob = null, polledAt = 0, tickTimer = null;
   const loader = configPicker((text, err) => {
     if (err) return setMsg(err.message, "err");
     ta.value = editor.text = text; validated = false; setStep(0); setMsg("Loaded.", "ok");
@@ -919,8 +926,18 @@ async function renderNewRun(main) {
   stopBtn.onclick = () => api("/api/job/stop", {}).catch(e => setMsg(e.message, "err"));
 
   function show(job) {
+    // Follow the tail only when the reader is already at the bottom, so
+    // scrolling up to read an earlier line isn't yanked back every second.
+    const atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
     if (job.log.length) log.textContent = job.log.join("\n");
-    log.scrollTop = log.scrollHeight;
+    if (atBottom) log.scrollTop = log.scrollHeight;
+    lastJob = job; polledAt = Date.now();
+    drawProgress();
+    clearInterval(tickTimer);
+    if (job.state === "running") tickTimer = setInterval(() => {
+      if (!progress.isConnected) { clearInterval(tickTimer); return; }
+      drawProgress();
+    }, 1000);
     runBtn.disabled = job.state === "running"; stopBtn.disabled = job.state !== "running";
     jobBadge.replaceChildren(job.state === "running" ? el("span", {class: "badge s-running", text: "Running"})
       : job.state === "completed" ? statusBadge("ok", "Completed") : job.state === "failed"
@@ -932,6 +949,39 @@ async function renderNewRun(main) {
         await loadRuns(); if (runs.length) location.hash = runHref(runs[0].id); }}));
     }
     if (job.state === "failed") { setStep(3, true); setMsg(`Run failed (exit ${job.returncode}) - see the log.`, "err"); }
+  }
+  // Elapsed time, the current stage and step, and time since the last line of
+  // output - so a check that runs for minutes without printing still shows
+  // the run is alive. Times come from the server's clock (job.now).
+  function drawProgress() {
+    const job = lastJob;
+    if (!job || !job.started_at || job.state === "idle") { progress.replaceChildren(); return; }
+    const now = job.state === "running" ? job.now + (Date.now() - polledAt) / 1000 : (job.finished_at || job.now);
+    const elapsed = now - job.started_at, quiet = job.state === "running" ? now - job.last_output_at : 0;
+    let stage = null, step = null;
+    for (let i = job.log.length - 1; i >= 0 && (!stage || !step); i--) {
+      const line = job.log[i];
+      if (!stage) { const m = /Stage: (.+)$/.exec(line); if (m) stage = m[1]; }
+      if (!step) {
+        const m = /(Audit check|Benchmark) (\d+)\/(\d+)( done)?: (\S+)/.exec(line);
+        if (m) step = {kind: m[1], i: +m[2], n: +m[3], done: !!m[4], name: m[5]};
+      }
+    }
+    const kids = [el("div", {class: "row"},
+      el("span", {class: "tag", text: (job.state === "running" ? "Elapsed " : "Took ") + dur(elapsed)}),
+      stage ? el("span", {class: "tag", text: "Stage: " + stage}) : null,
+      step && job.state === "running" ? el("span", {class: "tag", text: step.done
+        ? `${step.kind} ${step.i}/${step.n} finished: ${step.name}` : `${step.kind} ${step.i}/${step.n}: ${step.name}`}) : null)];
+    if (step && job.state === "running") {
+      const doneCount = step.done ? step.i : step.i - 1;
+      kids.push(el("div", {class: "progress s-ok", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": String(step.n),
+        "aria-valuenow": String(doneCount), "aria-label": `${step.kind}: ${doneCount} of ${step.n} done`},
+        el("span", {style: {width: (100 * doneCount / step.n) + "%"}})));
+    }
+    if (job.state === "running" && quiet >= 30) kids.push(el("p", {class: "hint", text:
+      `No new output for ${dur(quiet)}. The run is still going: some checks and classifiers work for several ` +
+      "minutes on a large dataset before they print anything."}));
+    progress.replaceChildren(...kids);
   }
   async function poll() {
     clearTimeout(pollTimer);
@@ -950,7 +1000,7 @@ async function renderNewRun(main) {
         el("div", {class: "row"}, el("label", {}, skipAudit, " skip audit"), el("label", {}, skipBench, " skip benchmark"),
           el("span", {class: "spacer"}), valBtn, runBtn, stopBtn),
         msg),
-      card("Run log", jobBadge, log)));
+      card("Run log", jobBadge, progress, log)));
   poll();
 }
 

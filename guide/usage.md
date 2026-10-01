@@ -92,7 +92,11 @@ extra dependencies):
   the CLI does), and launch it with a live log. A run is a real
   `python -m ids2eval` subprocess, so it behaves exactly like the CLI;
   relative paths resolve against the directory the UI was started in.
-  One run at a time. **Load config from…** fills the editor with the
+  One run at a time. While it runs, the log updates live: the audit
+  prints a line as each check starts and finishes, the benchmark as each
+  classifier is fitted, and the panel above the log shows elapsed time,
+  the current stage and step with a progress bar, and how long it has
+  been since the last line of output. **Load config from…** fills the editor with the
   starter template or any earlier run's resolved config.
 - **Compare datasets**: paste two configs and check whether they load
   equivalent data, the same comparison as `ids2eval compare-datasets`,

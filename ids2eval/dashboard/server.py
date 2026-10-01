@@ -40,7 +40,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 from ..config import load_config
-from ..reporting import cite, compare_datasets, recommend, run_manager
+from ..reporting import cite, compare_datasets, recommend, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
@@ -199,6 +199,7 @@ def _run_summary(idx: int, output_dir: Path, run_dir: Path) -> dict:
     sc = _read_json(run_dir / "scorecard.json") or {}
     status = _read_json(run_dir / "run_status.json") or {}
     cfg = _read_json(run_dir / "resolved_config.json") or {}
+    fp = sc.get("dataset_fingerprint") or {}
     return {
         "id": f"{idx}/{run_dir.name}",
         "name": run_dir.name,
@@ -208,6 +209,15 @@ def _run_summary(idx: int, output_dir: Path, run_dir: Path) -> dict:
         "failed_stage": status.get("failed_stage"),
         "error": status.get("error"),
         "verdict": sc.get("overall_status"),
+        "generated_at": sc.get("generated_at"),
+        "counts": sc.get("counts"),
+        "train_rows": fp.get("train_rows"),
+        "test_rows": fp.get("test_rows"),
+        "feature_count": fp.get("feature_count"),
+        # Each check's final status (after dedup when it ran), for the
+        # dashboard's cross-run views without fetching every scorecard.
+        "check_status": {c["check"]: (c.get("after") or c.get("before") or {}).get("status")
+                         for c in sc.get("checks", []) if "check" in c},
         "files": sorted(p.name for p in run_dir.iterdir() if p.is_file()),
     }
 
@@ -259,6 +269,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(self.app.job.snapshot())
         if path == "/api/starter-config":
             return self._json({"yaml": self.app.starter_config})
+        if path == "/api/check-info":
+            # The same "what it checks" / "rule" text SCORECARD.html shows on hover.
+            return self._json({k: {"what": what, "rule": rule}
+                               for k, (what, rule) in scorecard.CHECK_INFO.items()})
 
         parts = path.strip("/").split("/")
         # /api/run/<dir_idx>/<run_name> - one run's detail
@@ -268,6 +282,9 @@ class Handler(BaseHTTPRequestHandler):
                 return self._error(HTTPStatus.NOT_FOUND, "no such run")
             summary = _run_summary(int(parts[2]), self.app.output_dirs[int(parts[2])], run_dir)
             return self._json({**summary, "scorecard": _read_json(run_dir / "scorecard.json"),
+                               "audit_report": _read_json(run_dir / "audit_report_after.json")
+                               or _read_json(run_dir / "audit_report_before.json"),
+                               "environment": _read_json(run_dir / "environment.json"),
                                "benchmark": _benchmark_rows(run_dir)})
         # /api/run/<dir_idx>/<run_name>/citation - the same BibTeX `ids2eval cite` prints
         if len(parts) == 5 and parts[:2] == ["api", "run"] and parts[4] == "citation":

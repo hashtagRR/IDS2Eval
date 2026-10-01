@@ -67,15 +67,28 @@ editor with a config you already have or listing runs from its
 small local web app (standard library only, no
 extra dependencies):
 
+- **Dashboard**: totals across the latest audited run of every
+  dataset, a chart of which checks flag most often across datasets,
+  and the most recent runs
+- **Datasets**: one row per dataset (rows, features, verdict, check
+  counts) and an audit matrix, every check against every dataset, where
+  each cell links to that check's evidence
 - **Runs**: every run under the listed output directories, newest
-  first, with its verdict; each run shows its `SCORECARD.html`, its
-  benchmark results sorted by weighted F1, links to every artifact, and
-  a **Cite** button (the same BibTeX `ids2eval cite` prints)
+  first, filterable by dataset and verdict. Each run has tabs:
+  **Overview** (findings, check families, the effect of deduplication,
+  the comparison with the previous run), **Checks** (each check's
+  summary, what it measures, its ok/warning/flag rule, and its recorded
+  evidence as tables and bars), **Recommendations**, **Benchmark**
+  (classifiers ranked by a chosen metric, plus the full table),
+  **Provenance** (data fingerprint, git commit, package versions),
+  **Scorecard** (`SCORECARD.html` plus every export), and **Files**. A
+  **Cite** button gives the same BibTeX `ids2eval cite` prints
 - **New run**: edit a YAML config, validate it (the same validation
   the CLI does), and launch it with a live log. A run is a real
   `python -m ids2eval` subprocess, so it behaves exactly like the CLI;
   relative paths resolve against the directory the UI was started in.
-  One run at a time.
+  One run at a time. **Load config from…** fills the editor with the
+  starter template or any earlier run's resolved config.
 - **Compare datasets**: paste two configs and check whether they load
   equivalent data, the same comparison as `ids2eval compare-datasets`,
   over pasted YAML instead of two file paths.

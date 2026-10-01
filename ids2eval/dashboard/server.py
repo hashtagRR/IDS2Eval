@@ -284,6 +284,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._json({**summary, "scorecard": _read_json(run_dir / "scorecard.json"),
                                "audit_report": _read_json(run_dir / "audit_report_after.json")
                                or _read_json(run_dir / "audit_report_before.json"),
+                               # dedup_check's per-class rates only exist before dedup
+                               "audit_report_before": _read_json(run_dir / "audit_report_before.json"),
                                "environment": _read_json(run_dir / "environment.json"),
                                "benchmark": _benchmark_rows(run_dir)})
         # /api/run/<dir_idx>/<run_name>/citation - the same BibTeX `ids2eval cite` prints

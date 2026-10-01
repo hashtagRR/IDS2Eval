@@ -75,11 +75,16 @@ extra dependencies):
   each cell links to that check's evidence
 - **Runs**: every run under the listed output directories, newest
   first, filterable by dataset and verdict. Each run has tabs:
-  **Overview** (findings, check families, the effect of deduplication,
-  the comparison with the previous run), **Checks** (each check's
-  summary, what it measures, its ok/warning/flag rule, and its recorded
-  evidence as tables and bars), **Recommendations**, **Benchmark**
-  (classifiers ranked by a chosen metric, plus the full table),
+  **Overview** (findings, check families, charts of the key evidence,
+  the effect of deduplication, the comparison with the previous run),
+  **Checks** (each check's summary, what it measures, its
+  ok/warning/flag rule, and its recorded evidence as a chart where one
+  fits, such as class sizes, per-class duplicate and leakage rates,
+  single-feature AUCs, nearest-neighbour rates, per-seed results, with
+  every recorded value one click away), **Recommendations**,
+  **Benchmark** (classifiers ranked by a chosen metric, score against
+  training time, per-class F1, a confusion matrix and feature
+  importance per classifier, plus the full table),
   **Provenance** (data fingerprint, git commit, package versions),
   **Scorecard** (`SCORECARD.html` plus every export), and **Files**. A
   **Cite** button gives the same BibTeX `ids2eval cite` prints

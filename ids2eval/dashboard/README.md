@@ -22,6 +22,7 @@ python -m ids2eval.dashboard --output ./output  # same thing, without the consol
 |---|---|
 | `server.py` | The HTTP server: the JSON API, file serving, request guards, and the run job (one `python -m ids2eval` subprocess at a time) |
 | `static/index.html` | The page shell: sidebar nav, top bar, and the `<main>` the pages render into |
+| `static/charts.js` | The chart kit (dot plots, strip plot, scatter, heatmap, composition bars) and the per-check evidence views built on it (`CHECK_VIZ`). SVG drawn at the container's pixel width, redrawn on resize; loaded before `app.js` |
 | `static/style.css` | All styling, including dark mode (`prefers-color-scheme`) |
 | `static/app.js` | All page behavior - a hash router (`#/`, `#/datasets`, `#/runs`, `#/run/<dir_idx>/<run>/<tab>`, `#/new`, `#/compare`) whose pages fetch the API below and build the DOM with `textContent` (never `innerHTML`). Charts are plain HTML rows sized through `element.style`, which the CSP allows |
 

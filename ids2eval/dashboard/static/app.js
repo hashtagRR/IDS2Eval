@@ -421,7 +421,7 @@ async function renderRun(main, id, tab, sel) {
   if (tab === "overview") renderOverview(body, d, id);
   else if (tab === "checks") renderChecks(body, d, id, sel);
   else if (tab === "recommendations") await renderRecommendations(body, id);
-  else if (tab === "benchmark") renderBenchmark(body, d);
+  else if (tab === "benchmark") await renderBenchmark(body, d, id);
   else if (tab === "provenance") renderProvenance(body, d, sc);
   else if (tab === "scorecard") renderScorecardTab(body, d, base);
   else renderFiles(body, d, base);
@@ -477,14 +477,16 @@ function renderOverview(body, d, id) {
       el("a", {href: runHref(id, "checks", c.check), text: prettyCheck(c.check)}), el("p", {text: c.summary || ""}))))
       : empty("Every check came back ok."));
   body.append(el("div", {class: "grid g2"}, findCard, famCard));
+  const visuals = visualSummary(d, id, checks);
+  if (visuals.length) body.append(el("h2", {class: "section-title", text: "Evidence at a glance"}),
+    el("div", {class: "grid g2"}, ...visuals));
 
   const extra = [];
   const de = sc.dedup_effect;
   if (de) {
     const changed = checks.filter(c => c.before && c.after && c.before.status !== c.after.status);
     extra.push(card("Effect of deduplication", null,
-      barList([["Train rows, raw", de.train_rows_raw], ["Train rows, deduplicated", de.train_rows_deduped],
-               ["Test rows, raw", de.test_rows_raw], ["Test rows, deduplicated", de.test_rows_deduped]]),
+      dedupComposition(de),
       el("dl", {class: "kv"},
         el("dt", {text: "Train duplicates dropped"}), el("dd", {text: fmtInt(de.train_duplicates_dropped)}),
         el("dt", {text: "Test rows leaking a train match"}), el("dd", {text: fmtInt(de.test_leakage_dropped)}),
@@ -497,6 +499,36 @@ function renderOverview(body, d, id) {
   const prev = sc.previous_run_comparison;
   if (prev) extra.push(prevRunCard(prev, d));
   if (extra.length) body.append(el("div", {class: "grid g2"}, ...extra));
+}
+
+// The checks whose evidence charts best, in reading order; each card shows
+// only when that check recorded data in this run.
+const OVERVIEW_VIZ = [
+  ["class_distribution_report", "Class distribution"],
+  ["dedup_check", "Duplicates and train/test leakage by class", (d, b) => dedupByClass(b && b.by_class ? b : d)],
+  ["feature_auc_ranking_check", "Strongest single features"],
+  ["identity_column_flag", "Identity-like columns"],
+  ["homogeneity_test", "Test-to-train nearest neighbours"],
+  ["one_rule_check", "One-rule baseline"],
+  ["result_robustness_check", "Accuracy under each condition"],
+  ["repeated_seed_falsification_check", "Falsification across seeds"],
+  ["label_conflict_check", "Conflicting labels"],
+];
+function reportsByCheck(d) {
+  const by = (rep) => Object.fromEntries((rep || []).map(r => [r.check, r.details || {}]));
+  return [by(d.audit_report), by(d.audit_report_before)];
+}
+function visualSummary(d, id, checks) {
+  const [after, before] = reportsByCheck(d);
+  const status = Object.fromEntries(checks.map(c => [c.check, c.status]));
+  const cards = [];
+  for (const [check, title, pick] of OVERVIEW_VIZ) {
+    const nodes = pick ? [pick(after[check] || {}, before[check])].filter(Boolean) : checkViz(check, after[check], before[check]);
+    if (!nodes.length) continue;
+    cards.push(card(title, el("div", {class: "row"}, status[check] ? statusBadge(status[check]) : null,
+      el("a", {class: "btn", href: runHref(id, "checks", check), text: "Details →"})), ...nodes));
+  }
+  return cards;
 }
 
 function prevRunCard(prev, d) {
@@ -542,6 +574,8 @@ function renderChecks(body, d, id, sel) {
   drawList();
 
   const c = current, info = checkInfo[c.check], rep = details[c.check];
+  const viz = checkViz(c.check, rep?.details, reportsByCheck(d)[1][c.check]);
+  const generic = rep && rep.details && Object.keys(rep.details).length ? renderValue(rep.details, 0) : null;
   const changed = c.before && c.after && c.before.status !== c.after.status;
   const detail = card(null, null,
     el("div", {class: "card-head"}, el("div", {class: "title row"}, el("h1", {text: prettyCheck(c.check)}), statusBadge(c.status)),
@@ -556,8 +590,9 @@ function renderChecks(body, d, id, sel) {
     changed && c.before.summary ? el("div", {}, el("h3", {text: "Before deduplication"}),
       el("p", {class: "hint", text: c.before.summary})) : null,
     el("h3", {text: "Evidence"}),
-    rep && rep.details && Object.keys(rep.details).length ? renderValue(rep.details, 0)
-      : el("p", {class: "hint", text: "No structured details recorded for this check."}),
+    viz.length ? el("div", {class: "stack"}, ...viz) : null,
+    viz.length && generic ? el("details", {class: "raw"}, el("summary", {text: "All recorded values"}), generic)
+      : generic || el("p", {class: "hint", text: "No structured details recorded for this check."}),
     rep ? el("details", {class: "raw"}, el("summary", {text: "Raw JSON"}),
       el("pre", {class: "code", text: JSON.stringify(rep, null, 2)})) : null);
   body.append(el("div", {class: "split"}, list, detail));
@@ -647,7 +682,7 @@ async function renderRecommendations(body, runId) {
 
 const METRICS = [["f1_macro", "Macro F1"], ["f1_weighted", "Weighted F1"], ["accuracy", "Accuracy"], ["auc", "AUC"],
                  ["train_time_s", "Train time (s)"], ["infer_time_s", "Inference time (s)"]];
-function renderBenchmark(body, d) {
+async function renderBenchmark(body, d, id) {
   const rows = d.benchmark.map(r => {
     const o = {...r};
     for (const [k] of METRICS) o[k] = r[k] === "" || r[k] == null ? null : +r[k];
@@ -655,42 +690,114 @@ function renderBenchmark(body, d) {
   });
   if (!rows.length) { body.append(card(null, null, empty("No benchmark results in this run."))); return; }
   const metrics = METRICS.filter(([k]) => rows.some(r => r[k] != null));
+  const scores = metrics.filter(([k]) => !k.endsWith("_s"));
   const stages = [...new Set(rows.map(r => r.stage))];
   let metric = metrics.some(([k]) => k === store.get("ids2eval.metric")) ? store.get("ids2eval.metric") : metrics[0][0];
-  let stage = stages[0];
+  let stage = stages[0], picked = null;
+  const label = Object.fromEntries(METRICS);
+  // Only name the scaling/sampling variant when the run actually varied it.
+  const multiVariant = new Set(rows.map(r => `${r.scaling}|${r.sampling}`)).size > 1;
+  const nameOf = (r) => r.classifier + (multiVariant ? ` (${[r.scaling, r.sampling].filter(Boolean).join(", ")})` : "");
+  const keyOf = (r) => [r.stage, r.scaling, r.sampling, r.classifier].join("|");
+
   const sel = el("select", {"aria-label": "Metric", onchange: () => { metric = sel.value; store.set("ids2eval.metric", metric); draw(); }},
     ...metrics.map(([k, t]) => el("option", {value: k, text: t})));
   sel.value = metric;
   const stageChips = el("div", {class: "chips"});
-  const chartBox = el("div");
+  const chartBox = el("div"), scatterBox = el("div"), perClassBox = el("div"), cmBox = el("div"), fiBox = el("div");
+  const clfSel = el("select", {"aria-label": "Classifier", onchange: () => { picked = clfSel.value; drawDetail(); }});
+  let details = null;
+
+  const stageRows = () => rows.filter(r => r.stage === stage);
   function draw() {
     stageChips.replaceChildren(...(stages.length > 1 ? stages.map(s => el("button", {class: "chip" + (s === stage ? " on" : ""),
-      text: s, "aria-pressed": String(s === stage), onclick: () => { stage = s; draw(); }})) : []));
+      text: s, "aria-pressed": String(s === stage), onclick: () => { stage = s; picked = null; draw(); }})) : []));
     const lower = metric.endsWith("_s");
-    const pts = rows.filter(r => r.stage === stage && r[metric] != null)
-      .sort((a, b) => lower ? a[metric] - b[metric] : b[metric] - a[metric]);
-    chartBox.replaceChildren(pts.length ? classifierChart(pts, metric) : empty("No values for this metric."));
+    const pts = stageRows().filter(r => r[metric] != null).sort((a, b) => lower ? a[metric] - b[metric] : b[metric] - a[metric]);
+    chartBox.replaceChildren(pts.length ? classifierChart(pts, metric, nameOf) : empty("No values for this metric."));
+    const yKey = lower ? (scores[0] || [])[0] : metric;
+    const sc = yKey && rows.some(r => r.train_time_s != null) ? scatter({
+      points: stageRows().filter(r => r[yKey] != null && r.train_time_s > 0).map(r => ({x: r.train_time_s, y: r[yKey], label: nameOf(r),
+        tip: r.infer_time_s != null ? [`Inference time: ${r.infer_time_s.toFixed(2)} s`] : []})),
+      xLog: true, xLabel: "Training time (s, log scale)", yLabel: label[yKey], xFmt: v => v.toFixed(2) + " s",
+      yFmt: v => v.toFixed(4), unitY: true}) : null;
+    scatterBox.replaceChildren(sc || empty("Not enough timed results to plot."));
+    if (details) drawDetail();
   }
+
+  function drawDetail() {
+    const sr = stageRows().filter(r => details[keyOf(r)]);
+    if (!sr.length) { perClassBox.replaceChildren(empty("No per-class detail for this stage.")); cmBox.replaceChildren(); fiBox.replaceChildren(); return; }
+    const byScore = [...sr].sort((a, b) => (b[scores[0]?.[0]] ?? 0) - (a[scores[0]?.[0]] ?? 0));
+    // Per-class F1, classes ordered by test support (largest first)
+    const reports = byScore.map(r => [nameOf(r), details[keyOf(r)].per_class_report || {}]);
+    const support = {};
+    for (const [, rep] of reports) for (const [c, v] of Object.entries(rep))
+      if (v && typeof v === "object" && !/avg$/.test(c)) support[c] = Math.max(support[c] || 0, v.support || 0);
+    const classes = Object.keys(support).sort((a, b) => support[b] - support[a]);
+    const repOf = Object.fromEntries(reports);
+    perClassBox.replaceChildren(heatmap({rows: reports.map(([n]) => n), cols: classes, rowHead: "Classifier",
+      value: (r, c) => repOf[r][c]?.["f1-score"], text: v => v.toFixed(2), domain: [0, 1],
+      caption: "columns ordered by test support, largest first",
+      tip: (v, r, c) => { const x = repOf[r][c] || {}; return [`F1: ${v.toFixed(4)}`, `Precision: ${(x.precision ?? NaN).toFixed(4)}`,
+        `Recall: ${(x.recall ?? NaN).toFixed(4)}`, `Support: ${fmtInt(x.support)}`]; }}));
+    // Classifier picker for the confusion matrix and feature importance
+    if (!picked || !sr.some(r => keyOf(r) === picked)) picked = keyOf(byScore[0]);
+    clfSel.replaceChildren(...byScore.map(r => el("option", {value: keyOf(r), text: nameOf(r)})));
+    clfSel.value = picked;
+    const det = details[picked], name = nameOf(sr.find(r => keyOf(r) === picked));
+    const cm = det.confusion_matrix, labels = det.confusion_matrix_labels || [];
+    if (Array.isArray(cm) && cm.length) {
+      const rowSum = cm.map(row => row.reduce((a, b) => a + b, 0) || 1);
+      const L = labels.map(String);
+      cmBox.replaceChildren(el("p", {class: "hint", text: `${name}. Rows are the true class, columns the prediction; shading is ` +
+        "the share of each true class, so small classes read as clearly as large ones."}),
+        heatmap({rows: L, cols: L, rowHead: "True ↓ / Predicted →", value: (r, c) => cm[L.indexOf(r)][L.indexOf(c)] / rowSum[L.indexOf(r)],
+          text: (v, r, c) => fmtTick(cm[L.indexOf(r)][L.indexOf(c)]), domain: [0, 1], caption: "share of the true class",
+          tip: (v, r, c) => [`${fmtInt(cm[L.indexOf(r)][L.indexOf(c)])} rows`, `${pct(v)} of true ${r}`]}));
+    } else cmBox.replaceChildren(empty("No confusion matrix recorded."));
+    const fi = det.feature_importance;
+    if (fi && Object.keys(fi).length) {
+      const signed = Object.values(fi).some(v => v < 0);
+      const top = Object.entries(fi).map(([k, v]) => [k, Math.abs(v)]).sort((a, b) => b[1] - a[1]).slice(0, 15);
+      fiBox.replaceChildren(el("p", {class: "hint", text: signed
+        ? `${name} reports signed coefficients; bars show their magnitude. Top 15 of ${Object.keys(fi).length}.`
+        : `${name}, top 15 of ${Object.keys(fi).length} features.`}), barList(top));
+    } else fiBox.replaceChildren(empty(`${name} doesn't record feature importance.`));
+  }
+
   draw();
-  const label = Object.fromEntries(METRICS);
   body.append(card("Classifier comparison", el("div", {class: "row"}, stageChips, sel),
     el("p", {class: "hint", text: "Bars start at zero, so near-ceiling scores look alike on purpose - the exact " +
       "value is printed on each bar and in the table below. Time metrics sort fastest first."}), chartBox));
-  body.append(card("All results", null, el("p", {class: "hint", text: "Per-class detail is in benchmark_details.json under Files."}),
+  body.append(card("Score against training time", null, el("p", {class: "hint", text:
+    "Up and to the left is better. The score axis is zoomed to the data, since dots encode position, not length."}), scatterBox));
+  if (d.files.includes("benchmark_details.json")) {
+    body.append(card("Per-class F1", null, perClassBox),
+      el("div", {class: "grid g2"}, card("Confusion matrix", clfSel, cmBox), card("Feature importance", null, fiBox)));
+    perClassBox.replaceChildren(el("div", {class: "loading", text: "Loading per-class detail…"}));
+    try {
+      const r = await fetch("/files/" + id + "/benchmark_details.json");
+      if (!r.ok) throw new Error("benchmark_details.json couldn't be read");
+      details = await r.json();
+      drawDetail();
+    } catch (e) { perClassBox.replaceChildren(errorBox(e.message)); }
+  }
+  body.append(card("All results", null,
     dataTable([{key: "stage", label: "Stage"}, {key: "classifier", label: "Classifier"}, {key: "scaling", label: "Scaling"},
       {key: "sampling", label: "Sampling"},
       ...metrics.map(([k]) => ({key: k, label: label[k], num: true,
         render: r => r[k] == null ? "n/a" : r[k].toFixed(k.endsWith("_s") ? 2 : 4)}))],
       rows, {initial: [metrics[0][0], -1]})));
 }
-function classifierChart(pts, metric) {
+function classifierChart(pts, metric, nameOf) {
   const time = metric.endsWith("_s");
   const max = time ? Math.max(...pts.map(p => p[metric])) || 1 : 1;
   const ticks = [0, 0.25, 0.5, 0.75, 1];
   const fmt = (v) => v.toFixed(time ? 2 : 4);
   return el("div", {class: "hbars", role: "list", "aria-label": "Classifier scores"},
     ...pts.map(p => {
-      const name = p.classifier + (p.scaling || p.sampling ? ` (${[p.scaling, p.sampling].filter(Boolean).join(", ")})` : "");
+      const name = nameOf(p);
       return withTip(el("div", {class: "hb-row", role: "listitem"},
         el("span", {class: "hb-label", title: name, text: name}),
         el("div", {class: "hb-track gridded"}, el("span", {class: "hb-seg acc", style: {width: (100 * p[metric] / max) + "%"}})),

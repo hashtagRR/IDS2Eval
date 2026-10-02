@@ -1,1853 +1,388 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IDS²Eval ,  Audit the benchmark, not just the model</title>
-<meta name="description" content="IDS²Eval audits NIDS datasets for leakage, duplication, identity shortcuts and split fragility before benchmark scores are trusted.">
-<meta name="theme-color" content="#edf2ec">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TDP74VH8EE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TDP74VH8EE');
+</script>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="IDS²Eval audits NIDS datasets, split methodology and classifier evaluation conditions before benchmark scores are trusted." />
+<meta name="theme-color" content="#06111f" />
+<title>IDS²Eval | NIDS Dataset Audit and Benchmarking</title>
 <style>
 :root{
-  --bg:#edf2ec;
-  --bg-soft:#f7faf6;
-  --surface:#ffffff;
-  --surface-2:#f2f6f1;
-  --ink:#18231d;
-  --ink-soft:#43534b;
-  --line:#d7e1d9;
-  --green:#1f8f5f;
-  --green-2:#2fa56f;
-  --green-soft:#e7f5ec;
-  --amber:#b8821b;
-  --amber-soft:#fbf3e3;
-  --red:#b84f43;
-  --red-soft:#f9e9e6;
+  --bg:#06111f;
+  --bg-2:#081827;
+  --bg-3:#0a2035;
+  --panel:#0b1b2e;
+  --panel-2:#0f263f;
+  --panel-3:#102d4b;
+  --line:#1b4266;
+  --line-hi:#286995;
+  --text:#f4f9ff;
+  --muted:#a7bed4;
+  --muted-2:#7896b1;
+  --cyan:#43d7ff;
+  --cyan-2:#1db8ff;
+  --blue:#4a8cff;
+  --violet:#9b75ff;
+  --green:#39d6a3;
+  --amber:#ffc45e;
+  --red:#ff6f8a;
   --max:1240px;
   --radius:20px;
+  --shadow:0 28px 90px rgba(0,0,0,.34);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;
-  color:var(--ink);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:
-    radial-gradient(900px 460px at 76% -80px, rgba(47,165,111,.10), transparent 70%),
-    linear-gradient(180deg,var(--bg-soft),var(--bg));
-  line-height:1.56;
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;overflow-x:hidden}
 a{color:inherit}
-::selection{background:var(--green);color:white}
-.wrap{width:min(var(--max),calc(100% - 42px));margin:auto}
+button{font:inherit}
+::selection{background:rgba(67,215,255,.26)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+.wrap{width:min(var(--max),calc(100% - 44px));margin:auto;position:relative;z-index:2}
 .mono{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+.muted{color:var(--muted)}
+
+/* ambient background */
+#datafield{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.75}
+.page-glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+ radial-gradient(760px 520px at 92% 8%,rgba(59,130,246,.16),transparent 70%),
+ radial-gradient(660px 480px at 6% 23%,rgba(67,215,255,.08),transparent 67%),
+ radial-gradient(720px 540px at 85% 76%,rgba(155,117,255,.07),transparent 70%)}
+.grid-fade{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.13;background-image:linear-gradient(rgba(86,150,204,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(86,150,204,.12) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 80%,transparent 100%)}
+
+/* navigation */
+.nav{position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(65,111,151,.25);background:rgba(6,17,31,.82);backdrop-filter:blur(18px)}
+.nav-row{height:70px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
+.brand-mark{width:30px;height:27px;display:flex;align-items:center;justify-content:center;gap:2px}
+.brand-mark i{display:block;width:3px;border-radius:3px;background:linear-gradient(180deg,var(--cyan),var(--blue));box-shadow:0 0 12px rgba(67,215,255,.32);animation:eq 1.9s ease-in-out infinite}
+.brand-mark i:nth-child(1){height:8px;animation-delay:-1.1s}.brand-mark i:nth-child(2){height:15px;animation-delay:-.4s}.brand-mark i:nth-child(3){height:24px;animation-delay:-1.6s}.brand-mark i:nth-child(4){height:17px;animation-delay:-.8s}.brand-mark i:nth-child(5){height:21px;animation-delay:-1.3s}.brand-mark i:nth-child(6){height:10px;animation-delay:-.2s}
+@keyframes eq{50%{transform:scaleY(.55);opacity:.62}}
+.brand sup{font-size:.58em;position:relative;top:-.43em;color:var(--cyan)}.brand em{font-style:normal;color:var(--cyan)}
+.nav-links{display:flex;gap:4px;margin-left:auto;align-items:center}
+.nav-links a{position:relative;text-decoration:none;color:#9fb6cb;font-size:.77rem;font-weight:760;padding:9px 10px;border-radius:9px;transition:.2s}
+.nav-links a:hover{color:#fff;background:#0f2740}
+.nav-links a.active{color:#fff;background:linear-gradient(180deg,rgba(29,184,255,.13),rgba(29,184,255,.06));box-shadow:inset 0 -2px 0 var(--cyan)}
+.nav-cta{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 15px;border:1px solid #2c4f70;border-radius:11px;text-decoration:none;background:#0d2037;color:#edf7ff;font-size:.83rem;font-weight:820;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);border-color:#4d7ea7;background:#112945}
+.btn.primary{border-color:#43bff6;background:linear-gradient(135deg,#1b9bea,#3bd4ff);color:#03111c;box-shadow:0 12px 30px rgba(51,195,255,.22)}
+.btn.primary:hover{box-shadow:0 16px 40px rgba(51,195,255,.30);filter:brightness(1.03)}
+.btn.ghost{background:transparent}
+.mobile-toggle{display:none;margin-left:auto;width:42px;height:42px;border:1px solid #284a69;background:#0d2035;border-radius:10px;color:#dff7ff;cursor:pointer}
+
+/* hero */
+.hero{position:relative;padding:76px 0 48px;overflow:hidden}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:180px;background:linear-gradient(180deg,transparent,var(--bg));pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(560px,1.1fr);gap:58px;align-items:center;min-height:620px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:800 .72rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.12em;color:#63dcff}
+.eyebrow:before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+h1{margin:18px 0 22px;font-size:clamp(4rem,7vw,7.25rem);line-height:.89;letter-spacing:-.074em;max-width:8.4ch}
+h1 .accent{display:block;background:linear-gradient(90deg,#5adfff,#49a8ff 56%,#9a7bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lede{font-size:1.13rem;max-width:59ch;color:#c7d7e6}.hero-lede strong{color:#fff}
+.hero-sub{max-width:62ch;margin-top:12px;font-size:.94rem;color:#8fa9c0}
+.name-equation{max-width:64ch;margin-top:15px;padding:13px 15px;border:1px solid rgba(67,215,255,.2);border-radius:14px;background:linear-gradient(180deg,rgba(13,32,53,.86),rgba(9,25,42,.82));box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}.name-kicker{display:block;color:#63dcff;font:850 .62rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.11em;text-transform:uppercase;margin-bottom:6px}.name-line{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;color:#eef8ff;font-size:.88rem;font-weight:780;line-height:1.45}.name-line .times{color:#63dcff;font-weight:950}.name-equation small{display:block;margin-top:5px;color:#8fa9c0;font-size:.72rem;line-height:1.45}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:27px}
+.trust-row{display:flex;gap:17px;row-gap:10px;flex-wrap:wrap;margin-top:23px;margin-bottom:16px;color:#9cb4c9;font-size:.75rem;font-weight:700}
+.trust-row span{display:flex;align-items:center;gap:8px}.trust-row i{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px rgba(67,215,255,.5)}
+.hero-visual{position:relative;min-height:565px}
+.orbit{position:absolute;border-radius:50%;border:1px solid rgba(67,215,255,.14);pointer-events:none;animation:spin 29s linear infinite}.orbit.o1{width:510px;height:510px;right:-54px;top:15px}.orbit.o2{width:395px;height:395px;right:5px;top:72px;animation-duration:21s;animation-direction:reverse;border-color:rgba(155,117,255,.14)}.orbit:before{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--cyan);left:-4px;top:50%;box-shadow:0 0 17px var(--cyan)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float-tag{position:absolute;z-index:7;padding:8px 11px;border:1px solid #2a5b84;border-radius:10px;background:rgba(8,27,47,.84);backdrop-filter:blur(10px);box-shadow:0 12px 30px rgba(0,0,0,.2);font:750 .67rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#bdd0e3;animation:float 5s ease-in-out infinite}.float-tag b{color:var(--cyan);margin-right:6px}.ft1{right:10px;top:35px}.ft2{left:0;top:126px;animation-delay:-1.7s}.ft3{right:-8px;bottom:72px;animation-delay:-3.2s}@keyframes float{50%{transform:translateY(-8px)}}
+
+/* hero application mock */
+.app{position:absolute;z-index:6;inset:66px 0 auto 28px;overflow:hidden;border:1px solid #2b5d87;border-radius:20px;background:linear-gradient(180deg,rgba(14,34,57,.99),rgba(6,18,32,.99));box-shadow:var(--shadow),0 0 90px rgba(26,142,232,.1)}
+.app-top{height:50px;display:flex;align-items:center;gap:14px;padding:0 15px;border-bottom:1px solid #204563;background:#0a1a2d}.app-brand{font-size:.83rem;font-weight:880}.app-tabs{display:flex;gap:4px;margin-left:auto}.app-tabs span{padding:7px 8px;border-radius:7px;color:#7895af;font-size:.59rem;font-weight:760}.app-tabs .sel{color:#e9fbff;background:#10314f;box-shadow:inset 0 -2px 0 var(--cyan)}
+.app-body{display:grid;grid-template-columns:1.04fr .96fr;gap:11px;padding:13px}.ui-card{border:1px solid #1b3e5f;border-radius:13px;background:#0a1a2d;padding:13px;min-height:130px}.ui-title{margin-bottom:10px;color:#d4e5f3;font-size:.67rem;font-weight:820}.audit-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mini-kpi{padding:10px;border:1px solid #1d4264;border-radius:9px;background:#0c2037}.mini-kpi b{display:block;font-size:1.18rem;letter-spacing:-.04em}.mini-kpi span{display:block;margin-top:2px;color:#7695b1;font-size:.5rem;text-transform:uppercase;letter-spacing:.08em}.mini-kpi b.cyan{color:var(--cyan)}.mini-kpi b.violet{color:#a58aff}.mini-kpi b.green{color:var(--green)}
+.result-list{display:grid;gap:7px;font-size:.59rem}.result{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.result span:first-child{color:#a9bfd2}.status{font-size:.54rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}.ok{color:var(--green)}.warn{color:var(--amber)}.flag{color:var(--red)}
+.evidence-card{grid-column:1/-1}.evidence-grid{display:grid;grid-template-columns:.8fr 1.25fr .7fr;gap:11px;align-items:center}.metric-big{font-size:2.7rem;line-height:1;font-weight:900;letter-spacing:-.06em;color:var(--red)}.metric-big small{display:block;margin-top:7px;font-size:.53rem;color:#8ba5bd;font-weight:650;letter-spacing:0;line-height:1.4}.before-after{display:grid;gap:8px}.meter-lab{display:flex;justify-content:space-between;font-size:.54rem;color:#8ea7be}.meter{height:12px;border-radius:99px;overflow:hidden;background:#183858}.meter i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ff5d7b,#ff88a0)}.meter.after i{background:linear-gradient(90deg,var(--green),#6be4bd)}.arrow-box{text-align:center}.arrow-box b{display:block;color:var(--green);font-size:1.5rem}.arrow-box span{display:block;color:#82a0ba;font-size:.5rem;margin-top:4px}
+
+/* proof strip */
+.proof{position:relative;z-index:5;margin-top:12px}.proof-row{display:grid;grid-template-columns:repeat(5,1fr);overflow:hidden;border:1px solid #224f76;border-radius:18px;background:linear-gradient(180deg,rgba(12,31,52,.97),rgba(8,23,39,.97));box-shadow:0 18px 54px rgba(0,0,0,.22)}.proof-item{min-height:104px;padding:20px 21px;border-right:1px solid #21425f}.proof-item:last-child{border-right:0}.proof-item b{display:block;font-size:1.7rem;line-height:1;letter-spacing:-.05em}.proof-item b.proof-word{font-size:1.08rem;letter-spacing:.08em;color:var(--cyan);padding-top:2px}.proof-item span{display:block;margin-top:5px;color:#8da7bf;font-size:.68rem}.proof-item .label{color:#d8e8f5;font-size:.77rem;font-weight:820}
+
+/* shared sections */
+.section{position:relative;padding:96px 0;border-bottom:1px solid rgba(45,79,112,.38)}
+.sec-head{display:grid;grid-template-columns:185px 1fr;gap:36px;align-items:start}.sec-index{padding-top:7px;color:#58d6ff;font:800 .69rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.11em}
+h2{margin:0;font-size:clamp(2.65rem,5.1vw,5rem);line-height:.96;letter-spacing:-.058em;max-width:14ch}.sec-lede{max-width:72ch;margin:20px 0 0;color:#9eb5ca;font-size:1rem}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #29577d;border-radius:99px;background:#0c2138;color:#9ec1db;font:740 .58rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em}
+
+/* Why cards */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:46px}.problem{position:relative;min-height:250px;padding:22px;border:1px solid #1f4465;border-radius:17px;background:linear-gradient(180deg,#0d2035,#091827);overflow:hidden}.problem:after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-80px;top:-85px;background:radial-gradient(circle,rgba(67,215,255,.13),transparent 70%)}.num{font:850 .62rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#5bd8ff;letter-spacing:.1em}.problem h3{font-size:1.13rem;margin:42px 0 9px;letter-spacing:-.025em}.problem p{margin:0;color:#8fa8bf;font-size:.83rem}.problem .signal{margin-top:18px;padding-top:15px;border-top:1px dashed #244765;color:#c4d7e7;font-size:.73rem}
+
+/* capability grid */
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:46px}.cap{min-height:225px;padding:21px;border:1px solid #1f4364;border-radius:17px;background:linear-gradient(180deg,#0e2137,#091927);transition:.25s}.cap:hover{transform:translateY(-3px);border-color:#3474a4;box-shadow:0 18px 44px rgba(0,0,0,.2)}.cap-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.cap-icon{width:40px;height:40px;border:1px solid #26577f;border-radius:11px;background:#0d2946;display:grid;place-items:center;color:var(--cyan);font-weight:900}.cap:nth-child(2n) .cap-icon{color:#ae91ff}.cap h3{font-size:1rem;margin:28px 0 9px}.cap p{font-size:.79rem;color:#8fa8bf;margin:0}.cap small{color:#6485a2;font:700 .54rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em}
+
+/* evidence */
+.evidence-layout{display:grid;grid-template-columns:.75fr 1.15fr 1.15fr;gap:12px;margin-top:46px}.e-card{min-height:240px;padding:20px;border:1px solid #204665;border-radius:17px;background:#0a1a2d}.e-card h3{font-size:.78rem;margin:0 0 18px;color:#d2e3f1}.e-number{font-size:3.5rem;font-weight:900;line-height:.95;letter-spacing:-.065em;color:var(--red)}.e-number.green{color:var(--green)}.e-card p{font-size:.77rem;color:#8fa8bf;margin:12px 0 0}.compare-stack{display:grid;gap:16px}.stack-title{display:flex;justify-content:space-between;gap:15px;font-size:.66rem;color:#91a9c0}.stackbar{height:20px;border-radius:6px;overflow:hidden;background:#203f5c;display:flex}.stackbar .dup{background:linear-gradient(90deg,#ff5575,#ff8397)}.stackbar .remain{background:#6e95bd}.stackbar.clean .dup{width:0!important}.stackbar.clean .remain{width:100%!important;background:linear-gradient(90deg,#33c995,#72dfbd)}.balance{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:12px}.balance-block{padding:12px;border:1px solid #1c405e;border-radius:10px;background:#0c2036}.balance-block b{display:block;font-size:1.2rem}.balance-block span{color:#7593ae;font-size:.59rem}.balance-arrow{color:#6cdfff}.evidence-note{margin-top:13px;color:#6f91ab;font-size:.66rem}
+
+/* checks matrix */
+.checks-shell{margin-top:46px;border:1px solid #214c70;border-radius:20px;background:#0a1728;overflow:hidden}.checks-top{display:flex;gap:8px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #1e3f5d;background:#0b1b2e}.filter-btn{border:1px solid #244967;background:#0d2137;color:#8eabc3;border-radius:9px;padding:8px 10px;font-size:.66rem;font-weight:760;cursor:pointer}.filter-btn.active{color:#e7fbff;border-color:#2c86b3;background:#103452;box-shadow:inset 0 -2px 0 var(--cyan)}.check-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#183d5c}.check-card{min-height:168px;padding:18px;background:#0a192a}.check-card .code{font:800 .56rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#4fcff7;letter-spacing:.1em}.check-card h3{font-size:.9rem;margin:23px 0 8px}.check-card p{margin:0;color:#829fb8;font-size:.72rem}.check-card[hidden]{display:none}
+
+/* workflow */
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;position:relative}.workflow:before{content:"";position:absolute;left:8%;right:8%;top:37px;height:1px;background:linear-gradient(90deg,#2b739d,#5146a4,#2b739d);opacity:.65}.step{position:relative;padding:0 16px;text-align:center}.step-n{position:relative;z-index:2;width:72px;height:72px;margin:0 auto 18px;border-radius:50%;border:1px solid #2a6288;background:radial-gradient(circle at 35% 30%,#153c5d,#091927 68%);display:grid;place-items:center;color:#64ddff;font-weight:900;box-shadow:0 0 0 8px var(--bg),0 0 26px rgba(67,215,255,.07)}.step h3{font-size:.88rem;margin:0 0 7px}.step p{color:#819eb7;font-size:.69rem;margin:0}
+
+/* dashboard */
+.dashboard-shell{margin-top:46px;overflow:hidden;border:1px solid #225579;border-radius:20px;background:#081727;box-shadow:0 24px 72px rgba(0,0,0,.28)}.dash-top{height:58px;display:flex;align-items:center;gap:22px;padding:0 17px;border-bottom:1px solid #1c405f;background:#0a1b2e}.dash-brand{font-weight:880}.dash-tabs{display:flex;gap:4px}.dash-tabs span{font-size:.64rem;color:#809bb4;padding:8px 9px;border-radius:7px}.dash-tabs .active{color:#e1faff;background:#10314f;box-shadow:inset 0 -2px 0 var(--cyan)}.dash-body{display:grid;grid-template-columns:190px 1fr 310px;min-height:380px}.dash-side{padding:14px;border-right:1px solid #1c3c59;background:#091928}.side-item{padding:10px 11px;margin-bottom:4px;border-radius:8px;color:#86a1b8;font-size:.69rem;font-weight:720}.side-item.active{background:#113656;color:#e0f8ff}.dash-main{padding:18px}.panel-title{font-size:.89rem;font-weight:860}.panel-sub{font-size:.65rem;color:#7592ac;margin-top:3px}.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}.dk{padding:12px;border:1px solid #1d3f5d;border-radius:10px;background:#0c2035}.dk b{font-size:1.12rem}.dk span{display:block;color:#718da6;font-size:.5rem;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}.table{border:1px solid #1d3d5b;border-radius:10px;overflow:hidden}.tr{display:grid;grid-template-columns:1.25fr .78fr .9fr .8fr 1fr;padding:9px 10px;border-bottom:1px solid #173550;font-size:.61rem;color:#9cb3c8}.tr.head{background:#10273f;color:#7594af;text-transform:uppercase;font-size:.51rem;font-weight:820}.tr:last-child{border-bottom:0}.dash-preview{padding:18px;border-left:1px solid #1c3c59;background:#081625}.mini-chart{height:130px;position:relative;margin-top:16px;border-left:1px solid #31526f;border-bottom:1px solid #31526f;background:linear-gradient(#16334f55 1px,transparent 1px),linear-gradient(90deg,#16334f55 1px,transparent 1px);background-size:100% 32px,48px 100%}.mini-chart svg{position:absolute;inset:0;width:100%;height:100%}.runline{fill:none;stroke:var(--cyan);stroke-width:3;stroke-dasharray:500;stroke-dashoffset:500;animation:draw 4.8s ease-in-out infinite alternate}.runfill{fill:url(#runGrad);opacity:.18}@keyframes draw{to{stroke-dashoffset:0}}.dash-status{display:grid;gap:7px;margin-top:16px;font-size:.61rem}.dash-status div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #203c57}.dash-status span{color:#8ca6bd}.dash-status b{color:var(--green)}
+
+/* classifier chips */
+.models{margin-top:46px;display:flex;flex-wrap:wrap;gap:8px}.model-chip{padding:9px 11px;border:1px solid #214b6d;border-radius:10px;background:#0b1d31;color:#9fb9cf;font:730 .65rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}.bench-note{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.note-card{padding:18px;border:1px solid #1e4363;border-radius:15px;background:#0a1a2c}.note-card h3{margin:0 0 8px;font-size:.86rem}.note-card p{margin:0;color:#88a4bc;font-size:.74rem}
+
+/* datasets */
+.dataset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:44px}.dataset{position:relative;height:126px;padding:17px;border:1px solid #214565;border-radius:15px;background:linear-gradient(145deg,#0d1e32,#10243a);overflow:hidden}.dataset:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-38px;top:-40px;background:radial-gradient(circle,rgba(67,215,255,.15),transparent 70%)}.dataset small{font:740 .55rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#6e8ba5;letter-spacing:.08em}.dataset b{display:block;margin-top:25px;font-size:.95rem}.validated{position:absolute;right:12px;bottom:11px;color:var(--green);font:800 .51rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em}
+
+/* outputs */
+.output-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;margin-top:46px}.terminal{border:1px solid #214b6d;border-radius:18px;overflow:hidden;background:#071521;box-shadow:0 18px 46px rgba(0,0,0,.2)}.terminal-top{height:42px;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid #183650;background:#0a1b2d}.dot{width:8px;height:8px;border-radius:50%;background:#466984}.terminal pre{margin:0;padding:18px;color:#aac4d9;font:650 .69rem/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}.terminal .cmd{color:#e5f8ff}.terminal .t-red{color:var(--red)}.terminal .t-amber{color:var(--amber)}.terminal .t-green{color:var(--green)}.artifacts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.artifact{padding:17px;border:1px solid #1f4464;border-radius:14px;background:#0b1b2e}.artifact b{display:block;font-size:.82rem}.artifact span{display:block;margin-top:5px;color:#819eb7;font-size:.68rem}
+
+/* freedom */
+.freedom{position:relative;overflow:hidden;padding:92px 0;background:linear-gradient(180deg,#071522,#05101a)}.freedom:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;right:-110px;bottom:-300px;border:1px solid rgba(67,215,255,.15);box-shadow:0 0 130px rgba(67,215,255,.06) inset}.freedom-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:78px;align-items:center}.freedom h2{max-width:11ch}.freedom h2 span{color:var(--cyan)}.freedom-copy{color:#9eb5ca}.freedom-copy strong{color:#fff}.freedom-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}.freedom-words{display:flex;gap:8px;flex-wrap:wrap;margin-top:21px}.freedom-words span{padding:7px 10px;border:1px solid #294a67;border-radius:99px;background:#0c1e31;color:#9fb8cd;font:720 .58rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em}
+
+/* final CTA/footer */
+.final-cta{padding:70px 0 76px;text-align:center;border-top:1px solid #173450;background:radial-gradient(600px 240px at 50% 100%,rgba(31,155,239,.12),transparent 70%)}.final-cta h2{max-width:800px;margin:0 auto;font-size:clamp(2.4rem,5vw,4.5rem)}.final-cta p{max-width:700px;margin:18px auto 0;color:#92aac0}.final-cta .actions{justify-content:center}
+footer{position:relative;z-index:2;padding:27px 0;border-top:1px solid #1a334a;color:#7892a9;font-size:.71rem}.footer-row{display:flex;justify-content:space-between;gap:20px;align-items:center}.footer-row a{color:#a9bfd2;text-decoration:none}
+
+[data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .75s ease}[data-reveal].visible{opacity:1;transform:none}
 
-.site-nav{
-  position:sticky;top:0;z-index:90;
-  border-bottom:1px solid rgba(24,35,29,.07);
-  background:rgba(247,250,246,.84);
-  backdrop-filter:blur(16px);
+@media(max-width:1120px){
+  .nav-links{display:none}.mobile-toggle{display:grid;place-items:center}.nav.open .nav-links{display:flex;position:absolute;left:22px;right:22px;top:62px;flex-direction:column;align-items:stretch;padding:10px;border:1px solid #244b6b;border-radius:14px;background:#081827;box-shadow:var(--shadow)}.nav.open .nav-links a{padding:11px 12px}.nav-cta{display:none}
+  .hero-grid{grid-template-columns:1fr}.hero-visual{min-height:530px}.app{inset:44px 0 auto}.proof-row{grid-template-columns:repeat(3,1fr)}.proof-item:nth-child(3){border-right:0}.proof-item:nth-child(-n+3){border-bottom:1px solid #21425f}.proof-item:nth-child(4){grid-column:1/2}.proof-item:nth-child(5){grid-column:2/4}
+  .cap-grid{grid-template-columns:repeat(2,1fr)}.check-grid{grid-template-columns:repeat(3,1fr)}.dash-body{grid-template-columns:175px 1fr}.dash-preview{display:none}.dataset-grid{grid-template-columns:repeat(2,1fr)}
 }
-.nav-row{height:70px;display:flex;align-items:center;gap:26px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.03em}
-.logo-bug{
-  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
-  background:var(--surface);border:1px solid var(--line);color:var(--green);
-  font:700 13px/1 monospace; box-shadow:0 4px 16px rgba(0,0,0,.04);
+@media(max-width:780px){
+  .wrap{width:min(var(--max),calc(100% - 28px))}.nav-row{height:62px}.hero{padding-top:52px}.hero-grid{gap:20px;min-height:auto}h1{font-size:clamp(3.35rem,17vw,5.8rem)}.hero-visual{min-height:470px}.app{inset:28px -150px auto 0;transform:scale(.80);transform-origin:left top}.orbit,.float-tag{display:none}
+  .proof{margin-top:14px}.proof-row{grid-template-columns:1fr 1fr}.proof-item{border-bottom:1px solid #21425f!important}.proof-item:nth-child(even){border-right:0}.proof-item:nth-child(5){grid-column:1/-1;border-bottom:0!important}
+  .sec-head{grid-template-columns:1fr;gap:12px}.section{padding:76px 0}.problem-grid,.evidence-layout,.bench-note,.output-layout{grid-template-columns:1fr}.cap-grid{grid-template-columns:1fr 1fr}.check-grid{grid-template-columns:1fr 1fr}.workflow{grid-template-columns:1fr;gap:24px}.workflow:before{left:35px;right:auto;top:36px;bottom:36px;width:1px;height:auto}.step{text-align:left;display:grid;grid-template-columns:72px 1fr;column-gap:18px;padding:0}.step-n{margin:0;grid-row:1/3}.step h3{align-self:end}.dash-shell{overflow:auto}.dash-body{min-width:720px}.dataset-grid{grid-template-columns:1fr 1fr}.artifacts{grid-template-columns:1fr}.freedom-grid{grid-template-columns:1fr;gap:34px}.footer-row{display:block}.footer-row div+div{margin-top:8px}
 }
-.nav-links{margin-left:auto;display:flex;align-items:center;gap:21px}
-.nav-links a{text-decoration:none;color:#506056;font-size:.82rem;font-weight:700}
-.nav-links a:hover{color:var(--ink)}
-.nav-cta{
-  padding:9px 13px;border:1px solid var(--line);border-radius:10px!important;background:var(--surface);color:var(--ink)!important
+@media(max-width:520px){
+  .hero-visual{min-height:410px}.app{right:-260px;transform:scale(.67)}.actions .btn{width:100%}.proof-row,.cap-grid,.check-grid,.dataset-grid{grid-template-columns:1fr}.proof-item{border-right:0!important}.proof-item:nth-child(5){grid-column:auto}.audit-kpis{grid-template-columns:1fr 1fr}.mini-kpi:nth-child(3){grid-column:1/-1}.sec-lede{font-size:.92rem}.evidence-grid{grid-template-columns:1fr}.arrow-box{text-align:left}.freedom{padding:72px 0}
 }
-
-.hero{padding:74px 0 54px;position:relative;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(440px,.98fr);gap:56px;align-items:center}
-.eyebrow{
-  display:inline-flex;align-items:center;gap:9px;
-  font:700 .72rem/1.2 monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--green)
-}
-.eyebrow:before{content:"";width:34px;height:1px;background:var(--green)}
-h1{
-  font-size:clamp(4.1rem,8.1vw,8rem);
-  line-height:.84;letter-spacing:-.078em;margin:18px 0 24px;
-  max-width:8.2ch;font-weight:850
-}
-h1 .audit{color:var(--green)}
-.hero-copy{max-width:63ch;color:var(--ink-soft);font-size:1.11rem}
-.hero-copy strong{color:var(--ink)}
-.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
-.btn{
-  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
-  padding:12px 16px;border-radius:11px;border:1px solid var(--line);
-  background:var(--surface);font-size:.88rem;font-weight:800;transition:.2s ease;
-  box-shadow:0 6px 22px rgba(0,0,0,.04)
-}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary{background:var(--ink);border-color:var(--ink);color:white}
-.micro-proof{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}
-.micro-proof span{
-  padding:7px 10px;border:1px solid var(--line);border-radius:99px;
-  background:rgba(255,255,255,.6);color:#52635a;font:600 .72rem/1 monospace
-}
-
-.audit-object{position:relative;min-height:620px;display:grid;place-items:center}
-.soft-ring{
-  position:absolute;width:560px;height:560px;border-radius:50%;
-  background:
-    radial-gradient(circle at center, rgba(47,165,111,.08), transparent 54%),
-    conic-gradient(from 110deg, transparent 0 56%, rgba(47,165,111,.09) 56% 60%, transparent 60% 100%);
-  border:1px solid rgba(31,143,95,.10);
-}
-.soft-ring:before,.soft-ring:after{
-  content:"";position:absolute;border:1px solid rgba(31,143,95,.08);border-radius:50%
-}
-.soft-ring:before{inset:64px}
-.soft-ring:after{inset:132px}
-.big-score{
-  position:absolute;right:8px;top:-6px;
-  font-size:clamp(7rem,14vw,13rem);line-height:.85;letter-spacing:-.09em;
-  font-weight:900;color:rgba(24,35,29,.05);user-select:none
-}
-.big-score small{font-size:.18em}
-.audit-console{
-  position:relative;z-index:2;width:min(100%,525px);
-  border:1px solid var(--line);border-radius:20px;overflow:hidden;
-  background:rgba(255,255,255,.92);box-shadow:0 28px 80px rgba(0,0,0,.09)
-}
-.console-top{
-  display:flex;justify-content:space-between;align-items:center;padding:14px 16px;
-  border-bottom:1px solid var(--line);color:#66766d;font:600 .72rem/1.2 monospace;background:var(--bg-soft)
-}
-.live{display:inline-flex;align-items:center;gap:7px}
-.live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(31,143,95,.35)}
-.console-body{padding:18px}
-.console-kpi{
-  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:end;padding:8px 0 18px;border-bottom:1px solid var(--line)
-}
-.kpi-num{font-size:4.8rem;line-height:.82;letter-spacing:-.08em;font-weight:850;color:var(--red)}
-.kpi-copy{color:#66766d;font-size:.82rem;padding-bottom:4px}
-.audit-lines{padding-top:12px}
-.audit-line{
-  display:grid;grid-template-columns:1.1fr .55fr 1.35fr;gap:10px;align-items:center;
-  padding:10px 0;border-bottom:1px dashed rgba(24,35,29,.08);font:600 .72rem/1.4 monospace
-}
-.audit-line:last-child{border-bottom:0}
-.audit-line .name{color:#233128}.audit-line .detail{color:#6b7c73}
-.flag{color:var(--red)}.warn{color:var(--amber)}.ok{color:var(--green)}
-.console-result{
-  margin-top:14px;padding:13px 14px;border-radius:10px;
-  background:var(--amber-soft);border:1px solid #f0e0b8;color:#7b5c11;font-size:.82rem
-}
-.note{
-  position:absolute;z-index:3;padding:11px 13px;border:1px solid var(--line);border-radius:11px;
-  background:white;color:#627269;font:600 .7rem/1.3 monospace;box-shadow:0 12px 28px rgba(0,0,0,.05)
-}
-.note-a{left:-6px;bottom:74px;transform:rotate(-2deg)}
-.note-b{right:-8px;top:98px;transform:rotate(2deg)}
-
-.proof-rail{border-top:1px solid rgba(24,35,29,.07);border-bottom:1px solid rgba(24,35,29,.07);background:rgba(255,255,255,.45)}
-.proof-row{display:grid;grid-template-columns:1.45fr repeat(4,1fr)}
-.proof-label,.proof-stat{padding:18px 20px;border-right:1px solid rgba(24,35,29,.07)}
-.proof-stat:last-child{border-right:0}
-.proof-label{font-size:.78rem;color:#58685f}
-.proof-stat b{display:block;font-size:1.55rem;letter-spacing:-.04em}
-.proof-stat span{font:600 .67rem/1.2 monospace;color:#6e7c74;text-transform:uppercase;letter-spacing:.07em}
-
-.section{padding:96px 0;border-bottom:1px solid rgba(24,35,29,.06)}
-.sec-head{display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:start}
-.sec-index{font:700 .72rem/1.2 monospace;color:var(--green);padding-top:9px}
-h2{
-  font-size:clamp(2.6rem,5vw,5rem);line-height:.96;letter-spacing:-.06em;margin:0;max-width:13ch
-}
-.sec-lede{margin:24px 0 0;color:var(--ink-soft);font-size:1.06rem;max-width:70ch}
-
-.manifesto{
-  margin-top:56px;display:grid;grid-template-columns:1.15fr .85fr;gap:42px;align-items:end
-}
-.manifesto-main{
-  font-size:clamp(2.1rem,4.4vw,4.4rem);line-height:1.03;letter-spacing:-.055em;font-weight:760;max-width:16ch
-}
-.manifesto-main em{font-style:normal;color:var(--green)}
-.manifesto-side{
-  padding:0 0 6px 24px;border-left:1px solid var(--line);color:#5b6c63
-}
-.manifesto-side strong{color:var(--ink)}
-
-.evidence-stage{margin-top:56px;display:grid;grid-template-columns:1fr 70px 1fr;align-items:stretch}
-.evidence-card{
-  border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--surface);box-shadow:0 12px 34px rgba(0,0,0,.04)
-}
-.evidence-tag{font:700 .67rem/1.2 monospace;text-transform:uppercase;letter-spacing:.08em;color:#6d7d74}
-.evidence-card h3{font-size:1.45rem;letter-spacing:-.035em;margin:12px 0 8px}
-.evidence-card p{color:#607167;margin:0;font-size:.9rem}
-.evidence-metric{font-size:4.8rem;line-height:.9;letter-spacing:-.07em;font-weight:850;margin:31px 0 8px}
-.evidence-metric.red{color:var(--red)}.evidence-metric.green{color:var(--green)}
-.evidence-arrow{display:grid;place-items:center;color:var(--green);font-size:2rem}
-.balance{margin-top:18px;padding-top:17px;border-top:1px solid var(--line);color:#67776f;font-size:.8rem}
-.balance b{color:var(--ink)}
-
-.graph-card{
-  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:22px;box-shadow:0 12px 34px rgba(0,0,0,.04)
-}
-.graph-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:16px}
-.graph-head h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
-.graph-head p{margin:6px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:52ch}
-.graph-legend{display:flex;gap:8px;flex-wrap:wrap}
-.graph-legend span{
-  padding:6px 10px;border-radius:99px;border:1px solid var(--line);font:600 .7rem/1 monospace;background:var(--bg-soft);color:#586860
-}
-svg text{font-family:Inter, sans-serif}
-svg .axis{stroke:#bccac1;stroke-width:1}
-svg .grid{stroke:#e4ebe6;stroke-width:1}
-svg .lab{fill:#66766d;font-size:12px}
-svg .title-sm{fill:#26332d;font-size:13px;font-weight:700}
-svg .bar1{fill:#d66759}
-svg .bar2{fill:#299a67}
-svg .line-a{stroke:#b8821b;stroke-width:4;fill:none}
-svg .pt{fill:#b8821b}
-svg .soft-label{fill:#7a887f;font-size:11px}
-
-.check-layout{margin-top:54px;display:grid;grid-template-columns:290px 1fr;gap:28px}
-.check-nav{position:sticky;top:95px;align-self:start}
-.check-nav button{
-  width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;
-  color:#6b7c73;padding:12px 2px;cursor:pointer;font-size:.82rem;font-weight:750
-}
-.check-nav button.active,.check-nav button:hover{color:var(--green)}
-.check-panel{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.check-card{
-  min-height:180px;padding:22px;border:1px solid var(--line);border-radius:15px;background:var(--surface);
-  transition:.2s ease;box-shadow:0 8px 24px rgba(0,0,0,.03)
-}
-.check-card:hover{transform:translateY(-3px);border-color:#bfd0c5}
-.check-card .id{font:700 .67rem/1.2 monospace;color:var(--green)}
-.check-card h3{margin:28px 0 8px;font-size:1rem}
-.check-card p{margin:0;color:#627269;font-size:.85rem}
-
-.workflow{margin-top:55px}
-.flow-row{
-  display:grid;grid-template-columns:115px 1fr 260px;gap:30px;padding:24px 0;border-top:1px solid var(--line);align-items:start
-}
-.flow-row:last-child{border-bottom:1px solid var(--line)}
-.flow-n{font:700 .72rem/1.2 monospace;color:var(--green)}
-.flow-title{font-size:1.35rem;font-weight:800;letter-spacing:-.035em}
-.flow-desc{color:#627269;font-size:.86rem}
-
-.dataset-grid{margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.03)}
-.dataset{
-  min-height:190px;padding:18px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between
-}
-.dataset:last-child{border-right:0}
-.dataset .dname{font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);font-size:.86rem}
-.dataset .dstatus{font:700 .66rem/1.2 monospace;color:#72827a}
-
-.run-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;margin-top:54px}
-.terminal,.scorecard{
-  border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:0 12px 34px rgba(0,0,0,.04)
-}
-.panel-head{padding:13px 16px;border-bottom:1px solid var(--line);font:700 .7rem monospace;color:#65756d;background:var(--bg-soft)}
-pre{
-  margin:0;padding:22px;white-space:pre-wrap;overflow:auto;color:#2a3630;
-  font:12px/1.75 "SFMono-Regular",Consolas,monospace;background:var(--surface)
-}
-.score-body{padding:22px}
-.score-summary{
-  display:flex;justify-content:space-between;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--line)
-}
-.score-summary strong{font-size:1.2rem}
-.score-summary span{font:700 .7rem monospace;color:var(--red)}
-.score-item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid rgba(24,35,29,.06);font-size:.83rem}
-.score-item small{color:#74837b}
-.status-pill{font:700 .66rem monospace}
-
-.freedom{
-  position:relative;overflow:hidden;background:var(--green-soft)
-}
-.freedom:before{
-  content:"FREE";position:absolute;right:-.03em;bottom:-.24em;font-weight:900;font-size:24vw;
-  letter-spacing:-.09em;color:rgba(31,143,95,.07);line-height:1;pointer-events:none
-}
-.freedom .sec-index{color:var(--green)}
-.freedom h2{max-width:12ch}
-.freedom-copy{margin-top:34px;max-width:70ch;font-size:1.08rem;position:relative;z-index:2}
-.freedom-copy strong{font-weight:850}
-.freedom-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px;position:relative;z-index:2}
-.freedom-meta span{border:1px solid rgba(24,35,29,.12);padding:8px 11px;border-radius:99px;font:700 .72rem monospace;background:rgba(255,255,255,.5)}
-
-.final{padding:104px 0;text-align:center}
-.final h2{max-width:12ch;margin:0 auto}
-.final p{color:#586960;max-width:58ch;margin:22px auto 28px}
-.final .actions{justify-content:center}
-footer{border-top:1px solid rgba(24,35,29,.06);padding:28px 0 38px;color:#6a7a71;font-size:.78rem}
-.foot{display:flex;justify-content:space-between;gap:20px}
-
-[data-reveal]{opacity:0;transform:translateY(16px);transition:.65s ease}
-[data-reveal].show{opacity:1;transform:none}
-
-@media (prefers-reduced-motion:reduce){
-  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
-  [data-reveal]{opacity:1;transform:none}
-}
-@media(max-width:1000px){
-  .hero-grid{grid-template-columns:1fr}
-  .audit-object{min-height:520px}
-  .soft-ring{width:500px;height:500px}
-  .proof-row{grid-template-columns:1fr 1fr 1fr}
-  .proof-label{grid-column:1/-1;border-bottom:1px solid rgba(24,35,29,.07)}
-  .sec-head{grid-template-columns:1fr}
-  .manifesto,.run-grid{grid-template-columns:1fr}
-  .check-layout{grid-template-columns:1fr}
-  .check-nav{position:static;display:flex;overflow:auto;gap:8px}
-  .check-nav button{width:auto;white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:8px 11px}
-}
-@media(max-width:760px){
-  .wrap{width:min(100% - 28px,var(--max))}
-  .nav-links a:not(.nav-cta){display:none}
-  .hero{padding-top:52px}
-  h1{font-size:4.1rem}
-  .audit-object{min-height:460px}
-  .soft-ring{width:420px;height:420px}
-  .note{display:none}
-  .proof-row{grid-template-columns:1fr 1fr}
-  .proof-label{grid-column:1/-1}
-  .manifesto{grid-template-columns:1fr}
-  .evidence-stage{grid-template-columns:1fr;gap:12px}
-  .evidence-arrow{transform:rotate(90deg)}
-  .check-panel{grid-template-columns:1fr}
-  .flow-row{grid-template-columns:70px 1fr}
-  .flow-desc{grid-column:2}
-  .dataset-grid{grid-template-columns:repeat(2,1fr)}
-  .dataset{min-height:120px;border-bottom:1px solid var(--line)}
-  .dataset .dname{writing-mode:initial;transform:none}
-  .foot{flex-direction:column}
-}
-
-.name-strip{
-  margin-top:28px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;
-  color:#5a6a61;font-size:.84rem
-}
-.name-strip strong{
-  color:var(--ink);font-size:.86rem
-}
-.name-chip{
-  display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;
-  border:1px solid var(--line);background:rgba(255,255,255,.65);
-  font:700 .7rem/1 monospace;color:var(--green)
-}
-.name-eq{color:#91a097;font-weight:800}
-
-.audit-portfolio{
-  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
-  padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.04)
-}
-.portfolio-head{display:flex;justify-content:space-between;gap:28px;align-items:flex-start;margin-bottom:24px}
-.portfolio-head h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
-.portfolio-head p{margin:7px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:62ch}
-.portfolio-score{
-  flex:0 0 auto;display:flex;align-items:baseline;gap:7px;color:var(--red)
-}
-.portfolio-score b{font-size:3.2rem;line-height:.9;letter-spacing:-.07em}
-.portfolio-score span{font:700 .72rem/1.1 monospace;color:#7f6f69}
-.audit-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
-.audit-dot{
-  position:relative;height:128px;border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);
-  display:flex;flex-direction:column;justify-content:space-between;padding:14px
-}
-.audit-dot.fail{background:var(--red-soft);border-color:#eccdc7}
-.audit-dot .dot-top{font:700 .66rem/1.1 monospace;color:#7a887f}
-.audit-dot.fail .dot-top{color:var(--red)}
-.audit-dot .dot-name{font-size:.78rem;font-weight:800;line-height:1.15;color:#334139}
-.audit-dot .dot-mark{
-  width:20px;height:20px;border-radius:50%;border:2px solid #9fb0a6;background:white
-}
-.audit-dot.fail .dot-mark{border-color:var(--red);background:var(--red)}
-.audit-note{margin-top:12px;color:#697970;font-size:.77rem}
-
-.method-flow{
-  margin-top:56px;display:grid;grid-template-columns:repeat(9,1fr);align-items:center;gap:10px
-}
-.method-node{
-  grid-column:span 1;min-height:172px;border:1px solid var(--line);border-radius:18px;
-  background:var(--surface);padding:18px 16px;box-shadow:0 10px 30px rgba(0,0,0,.035);
-  display:flex;flex-direction:column
-}
-.method-node .mn{font:700 .66rem/1 monospace;color:var(--green)}
-.method-node h3{margin:28px 0 8px;font-size:1rem;letter-spacing:-.02em}
-.method-node p{margin:0;color:#64746b;font-size:.8rem}
-.method-arrow{
-  text-align:center;color:#84a291;font-size:1.4rem;font-weight:900
-}
-.method-node.load{grid-column:1/3}
-.method-arrow.a1{grid-column:3}
-.method-node.audit{grid-column:4/6;border-color:#b9d8c5;background:#f4fbf7}
-.method-arrow.a2{grid-column:6}
-.method-node.clean{grid-column:7/9}
-.method-arrow.a3{grid-column:9;display:none}
-.method-flow-row2{
-  margin-top:12px;display:grid;grid-template-columns:repeat(9,1fr);align-items:center;gap:10px
-}
-.method-node.falsify{grid-column:3/5}
-.method-arrow.a4{grid-column:5}
-.method-node.preserve{grid-column:6/8}
-.flow-turn{
-  grid-column:8/10;align-self:start;color:#88a095;font:700 .72rem monospace;padding-top:10px
-}
-
-.dataset-grid-v4{
-  margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px
-}
-.dataset-card{
-  height:220px;border:1px solid var(--line);border-radius:16px;background:var(--surface);
-  position:relative;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,.03)
-}
-.dataset-name-rot{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);
-  white-space:nowrap;font-size:.92rem;font-weight:850;letter-spacing:-.02em
-}
-.validated-badge{
-  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
-  background:var(--green);color:white;border-radius:7px;padding:6px 9px;
-  font:800 .62rem/1 monospace;letter-spacing:.04em
-}
-.dataset-index{
-  position:absolute;top:12px;left:12px;font:700 .62rem/1 monospace;color:#8a998f
-}
-
-@media(max-width:1000px){
-  .audit-dots{grid-template-columns:repeat(4,1fr)}
-  .method-flow,.method-flow-row2{display:grid;grid-template-columns:1fr 44px 1fr;gap:10px}
-  .method-node.load,.method-node.audit,.method-node.clean,.method-node.falsify,.method-node.preserve{grid-column:auto}
-  .method-arrow.a1,.method-arrow.a2,.method-arrow.a4{grid-column:auto}
-  .method-node.clean{grid-column:1}
-  .method-flow-row2{margin-top:10px}
-  .flow-turn{display:none}
-  .dataset-grid-v4{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:760px){
-  .portfolio-head{flex-direction:column}
-  .audit-dots{grid-template-columns:repeat(2,1fr)}
-  .method-flow,.method-flow-row2{display:flex;flex-direction:column}
-  .method-arrow{transform:rotate(90deg)}
-  .method-node{width:100%;min-height:auto}
-  .dataset-grid-v4{grid-template-columns:repeat(2,1fr)}
-  .dataset-card{height:180px}
-}
-
-
-/* V5 refinements */
-.audit-portfolio{
-  margin-top:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
-  padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.04)
-}
-.portfolio-summary{
-  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start
-}
-.portfolio-summary h3{margin:0;font-size:1.2rem;letter-spacing:-.03em}
-.portfolio-summary p{margin:8px 0 0;color:var(--ink-soft);font-size:.9rem;max-width:62ch}
-.portfolio-metrics{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:10px
-}
-.portfolio-metric{
-  border:1px solid var(--line);border-radius:14px;background:var(--bg-soft);padding:16px
-}
-.portfolio-metric b{display:block;font-size:2.2rem;line-height:.95;letter-spacing:-.05em}
-.portfolio-metric span{display:block;margin-top:6px;font:700 .66rem/1.2 monospace;color:#728078;text-transform:uppercase;letter-spacing:.04em}
-.portfolio-insights{
-  margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px
-}
-.portfolio-insight{
-  border-left:3px solid var(--green);padding:10px 12px;background:#f8fbf8
-}
-.portfolio-insight b{display:block;font-size:.84rem;margin-bottom:5px}
-.portfolio-insight p{margin:0;color:#65746c;font-size:.78rem}
-
-.method-flow-single{
-  margin-top:56px;display:grid;grid-template-columns:1fr 44px 1fr 44px 1fr 44px 1fr 44px 1fr;align-items:center;gap:8px;
-  position:relative;padding-bottom:58px
-}
-.method-node-v5{
-  min-height:170px;border:1px solid var(--line);border-radius:18px;background:var(--surface);
-  padding:18px 16px;box-shadow:0 10px 30px rgba(0,0,0,.035)
-}
-.method-node-v5.audit{border-color:#b9d8c5;background:#f4fbf7}
-.method-node-v5 .mn{font:700 .66rem/1 monospace;color:var(--green)}
-.method-node-v5 h3{margin:26px 0 8px;font-size:1rem}
-.method-node-v5 p{margin:0;color:#64746b;font-size:.8rem}
-.method-arrow-v5{text-align:center;font-size:1.45rem;color:#7d9a88;font-weight:900}
-.loop-arrow{
-  position:absolute;left:43%;right:2%;bottom:10px;height:34px;border-bottom:2px solid #9eb5a6;border-right:2px solid #9eb5a6;border-radius:0 0 20px 0
-}
-.loop-arrow:before{
-  content:"";position:absolute;left:-8px;bottom:-6px;width:10px;height:10px;border-left:2px solid #9eb5a6;border-bottom:2px solid #9eb5a6;transform:rotate(45deg)
-}
-.loop-label{
-  position:absolute;left:56%;bottom:14px;transform:translateX(-50%);
-  font:700 .66rem/1 monospace;color:#788a80;background:var(--bg);padding:0 8px
-}
-
-.dataset-grid-v5{
-  margin-top:52px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px
-}
-.dataset-card-v5{
-  height:230px;border:1px solid var(--line);border-radius:16px;background:var(--surface);
-  position:relative;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,.03)
-}
-.dataset-name-v5{
-  position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) rotate(-90deg);
-  white-space:nowrap;font-size:.92rem;font-weight:850;letter-spacing:-.02em
-}
-.validated-badge-v5{
-  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
-  background:var(--green);color:#fff;border-radius:7px;padding:6px 9px;
-  font:800 .62rem/1 monospace;letter-spacing:.04em
-}
-.dataset-index-v5{
-  position:absolute;top:12px;left:12px;font:700 .62rem/1 monospace;color:#8a998f
-}
-
-.dataset-respect{
-  margin-top:26px;padding:22px 24px;border:1px solid #cfe0d4;border-radius:16px;background:#f7fbf8
-}
-.dataset-respect .label{font:800 .67rem/1.2 monospace;color:var(--green);text-transform:uppercase;letter-spacing:.06em}
-.dataset-respect h3{margin:10px 0 8px;font-size:1.2rem;letter-spacing:-.03em}
-.dataset-respect p{margin:0;color:#5f7067;font-size:.92rem;max-width:82ch}
-.dataset-respect strong{color:var(--ink)}
-
-@media(max-width:1000px){
-  .portfolio-summary{grid-template-columns:1fr}
-  .portfolio-insights{grid-template-columns:1fr}
-  .method-flow-single{grid-template-columns:1fr 36px 1fr;row-gap:10px}
-  .method-flow-single .method-node-v5:nth-of-type(3){grid-column:1}
-  .method-flow-single .method-arrow-v5:nth-of-type(4){grid-column:2}
-  .method-flow-single .method-node-v5:nth-of-type(5){grid-column:3}
-  .loop-arrow,.loop-label{display:none}
-  .dataset-grid-v5{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:760px){
-  .portfolio-metrics{grid-template-columns:1fr}
-  .method-flow-single{display:flex;flex-direction:column;padding-bottom:0}
-  .method-arrow-v5{transform:rotate(90deg)}
-  .dataset-grid-v5{grid-template-columns:repeat(2,1fr)}
-  .dataset-card-v5{height:190px}
-}
-
-
-/* V6 refinements */
-.nav-links a{
-  position:relative;
-}
-.nav-links a.active{
-  color:var(--green);
-}
-.nav-links a.active::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-22px;
-  height:2px;
-  background:var(--green);
-  border-radius:2px;
-}
-
-.dataset-grid-v5{
-  margin-top:52px;
-  display:grid;
-  grid-template-columns:repeat(7, minmax(0,1fr));
-  gap:12px;
-  align-items:stretch;
-}
-.dataset-card-v5{
-  height:228px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--surface);
-  position:relative;
-  overflow:hidden;
-  box-shadow:0 8px 26px rgba(0,0,0,.03);
-}
-.dataset-name-v5{
-  position:absolute;
-  left:50%;
-  top:44%;
-  transform:translate(-50%,-50%) rotate(-90deg);
-  transform-origin:center;
-  white-space:nowrap;
-  font-size:1rem;
-  font-weight:850;
-  letter-spacing:-.01em;
-  color:var(--ink);
-}
-.validated-badge-v5{
-  position:absolute;
-  left:50%;
-  bottom:16px;
-  transform:translateX(-50%);
-  min-width:82px;
-  text-align:center;
-  background:var(--green);
-  color:#fff;
-  border-radius:7px;
-  padding:7px 10px;
-  font:800 .62rem/1 monospace;
-  letter-spacing:.04em
-}
-.dataset-index-v5{
-  position:absolute;
-  top:12px;
-  left:12px;
-  font:700 .62rem/1 monospace;
-  color:#8a998f
-}
-
-.dataset-respect{
-  margin-top:26px;
-  padding:28px 28px 26px;
-  border:1px solid #cfe0d4;
-  border-radius:16px;
-  background:#f7fbf8;
-}
-.dataset-respect .label{
-  font:800 .67rem/1.2 monospace;
-  color:var(--green);
-  text-transform:uppercase;
-  letter-spacing:.06em
-}
-.dataset-respect h3{
-  margin:10px 0 10px;
-  font-size:1.26rem;
-  letter-spacing:-.02em;
-  max-width:28ch;
-}
-.dataset-respect p{
-  margin:0;
-  color:#5f7067;
-  font-size:.92rem;
-  max-width:84ch;
-  line-height:1.7;
-}
-
-.method-flow-single{
-  margin-top:56px;
-  display:grid;
-  grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr;
-  align-items:stretch;
-  gap:10px;
-  position:relative;
-  padding-bottom:74px;
-}
-.method-node-v5{
-  min-height:176px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:var(--surface);
-  padding:18px 16px;
-  box-shadow:0 10px 30px rgba(0,0,0,.035);
-  position:relative;
-  z-index:2;
-}
-.method-node-v5.audit{
-  border-color:#b9d8c5;
-  background:#f4fbf7;
-}
-.method-node-v5 .mn{
-  font:700 .66rem/1 monospace;
-  color:var(--green)
-}
-.method-node-v5 h3{
-  margin:26px 0 8px;
-  font-size:1rem
-}
-.method-node-v5 p{
-  margin:0;
-  color:#64746b;
-  font-size:.8rem
-}
-.method-arrow-v5{
-  text-align:center;
-  font-size:1.35rem;
-  color:#7d9a88;
-  font-weight:900;
-  display:grid;
-  place-items:center;
-}
-.method-loop-svg{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:10px;
-  height:54px;
-  width:100%;
-  overflow:visible;
-}
-.method-loop-label{
-  position:absolute;
-  left:66%;
-  bottom:0;
-  transform:translateX(-50%);
-  font:700 .66rem/1 monospace;
-  color:#788a80;
-  background:var(--bg);
-  padding:0 8px;
-  z-index:3;
-}
-
-@media(max-width:1000px){
-  .dataset-grid-v5{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:760px){
-  .dataset-grid-v5{grid-template-columns:repeat(2,1fr)}
-  .dataset-card-v5{height:188px}
-  .dataset-name-v5{font-size:.94rem}
-  .method-flow-single{
-    display:flex;
-    flex-direction:column;
-    padding-bottom:0;
-  }
-  .method-arrow-v5{transform:rotate(90deg)}
-  .method-loop-svg,
-  .method-loop-label{display:none}
-}
-
-
-/* V7 dataset/method refinements */
-.method-flow-single{
-  margin-top:56px;
-  display:grid;
-  grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr;
-  align-items:stretch;
-  gap:10px;
-  position:relative;
-  padding-bottom:76px;
-}
-.method-loop-svg{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:8px;
-  height:58px;
-  width:100%;
-  overflow:visible;
-}
-.method-loop-label{
-  position:absolute;
-  left:55%;
-  bottom:-2px;
-  transform:translateX(-50%);
-  font:700 .66rem/1 monospace;
-  color:#788a80;
-  background:var(--bg);
-  padding:0 8px;
-  z-index:3;
-}
-
-.dataset-cluster{
-  margin-top:52px;
-  display:grid;
-  grid-template-columns:repeat(7, minmax(0,1fr));
-  gap:12px;
-  align-items:stretch;
-}
-.dataset-card-v7,
-.dataset-respect-v7{
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--surface);
-  box-shadow:0 8px 26px rgba(0,0,0,.03);
-}
-.dataset-card-v7{
-  height:188px;
-  position:relative;
-  overflow:hidden;
-  padding:16px 14px 14px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-.dataset-index-v7{
-  font:700 .62rem/1 monospace;
-  color:#8a998f;
-}
-.dataset-name-v7{
-  align-self:center;
-  text-align:center;
-  font-size:1rem;
-  font-weight:850;
-  letter-spacing:-.01em;
-  color:var(--ink);
-  line-height:1.2;
-  max-width:12ch;
-}
-.validated-badge-v7{
-  align-self:center;
-  min-width:84px;
-  text-align:center;
-  background:var(--green);
-  color:#fff;
-  border-radius:7px;
-  padding:7px 10px;
-  font:800 .62rem/1 monospace;
-  letter-spacing:.04em;
-}
-.dataset-respect-v7{
-  grid-column:3 / span 3;
-  grid-row:1 / span 2;
-  padding:22px 24px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.dataset-respect-v7 .label{
-  font:800 .67rem/1.2 monospace;
-  color:var(--green);
-  text-transform:uppercase;
-  letter-spacing:.06em;
-}
-.dataset-respect-v7 h3{
-  margin:10px 0 10px;
-  font-size:1.24rem;
-  letter-spacing:-.02em;
-  max-width:22ch;
-}
-.dataset-respect-v7 p{
-  margin:0;
-  color:#5f7067;
-  font-size:.9rem;
-  line-height:1.65;
-}
-.dataset-respect-v7 strong{
-  color:var(--ink);
-}
-.dataset-card-v7.c1{grid-column:1}
-.dataset-card-v7.c2{grid-column:2}
-.dataset-card-v7.c3{grid-column:6}
-.dataset-card-v7.c4{grid-column:7}
-.dataset-card-v7.c5{grid-column:1}
-.dataset-card-v7.c6{grid-column:2}
-.dataset-card-v7.c7{grid-column:6}
-.dataset-card-v7.c8{grid-column:7}
-.dataset-card-v7.r2{grid-row:2}
-
-@media(max-width:1100px){
-  .dataset-cluster{
-    grid-template-columns:repeat(4, minmax(0,1fr));
-  }
-  .dataset-respect-v7{
-    grid-column:1 / span 4;
-    grid-row:auto;
-  }
-  .dataset-card-v7.c1,.dataset-card-v7.c2,.dataset-card-v7.c3,.dataset-card-v7.c4,
-  .dataset-card-v7.c5,.dataset-card-v7.c6,.dataset-card-v7.c7,.dataset-card-v7.c8,
-  .dataset-card-v7.r2{
-    grid-column:auto;
-    grid-row:auto;
-  }
-}
-@media(max-width:760px){
-  .dataset-cluster{
-    grid-template-columns:repeat(2, minmax(0,1fr));
-  }
-  .dataset-card-v7{
-    height:156px;
-  }
-  .dataset-name-v7{
-    font-size:.95rem;
-  }
-}
-
-
-/* V9 spacing, hierarchy and finish */
-:root{
-  --section-space: 88px;
-  --card-radius: 16px;
-}
-
-body{
-  font-size:16px;
-  letter-spacing:-0.005em;
-}
-
-.wrap{
-  width:min(var(--max),calc(100% - 48px));
-}
-
-.site-nav{
-  box-shadow:0 1px 0 rgba(24,35,29,.03);
-}
-.nav-row{
-  height:72px;
-}
-.nav-links{
-  gap:15px;
-  flex-wrap:nowrap;
-}
-.nav-links a{
-  font-size:.78rem;
-  letter-spacing:.01em;
-}
-.nav-cta{
-  margin-left:4px;
-  padding:9px 12px;
-}
-
-.hero{
-  padding:82px 0 64px;
-}
-.hero-grid{
-  gap:64px;
-}
-h1{
-  margin-bottom:28px;
-}
-.hero-copy{
-  font-size:1.08rem;
-  line-height:1.72;
-}
-.actions{
-  margin-top:30px;
-}
-.micro-proof{
-  margin-top:26px;
-}
-.name-strip{
-  margin-top:20px;
-  row-gap:9px;
-}
-
-.proof-label,
-.proof-stat{
-  padding:17px 18px;
-}
-
-.section{
-  padding:var(--section-space) 0;
-}
-.sec-head{
-  grid-template-columns:160px 1fr;
-  gap:34px;
-}
-.sec-index{
-  font-size:.69rem;
-  letter-spacing:.045em;
-  padding-top:7px;
-}
-h2{
-  font-size:clamp(2.45rem,4.65vw,4.65rem);
-  line-height:.98;
-  max-width:14ch;
-}
-.sec-lede{
-  margin-top:20px;
-  font-size:1.01rem;
-  line-height:1.72;
-  max-width:68ch;
-}
-
-.manifesto{
-  margin-top:48px;
-  gap:38px;
-}
-.manifesto-main{
-  font-size:clamp(2rem,4vw,4rem);
-}
-.manifesto-side{
-  line-height:1.68;
-}
-
-.evidence-stage{
-  margin-top:48px;
-}
-.evidence-card{
-  min-height:320px;
-  padding:22px;
-  display:flex;
-  flex-direction:column;
-}
-.evidence-card p{
-  line-height:1.65;
-}
-.evidence-metric{
-  margin-top:auto;
-  padding-top:28px;
-  font-size:4.4rem;
-}
-.balance{
-  margin-top:14px;
-}
-
-.audit-portfolio{
-  margin-top:16px;
-  padding:22px;
-}
-.portfolio-summary{
-  gap:18px;
-}
-.portfolio-insights{
-  margin-top:16px;
-}
-.portfolio-insight{
-  min-height:118px;
-  padding:12px 14px;
-}
-
-.check-layout{
-  margin-top:48px;
-}
-.check-panel{
-  gap:14px;
-}
-.check-card{
-  min-height:188px;
-  padding:20px;
-  border-radius:var(--card-radius);
-}
-.check-card h3{
-  margin-top:24px;
-}
-.check-card p{
-  line-height:1.6;
-}
-
-.method-flow-single{
-  margin-top:48px;
-  gap:10px;
-}
-.method-node-v5{
-  min-height:184px;
-  padding:18px;
-  border-radius:var(--card-radius);
-}
-.method-node-v5 h3{
-  margin-top:24px;
-  font-size:1.02rem;
-}
-.method-node-v5 p{
-  line-height:1.6;
-}
-
-.dataset-cluster{
-  margin-top:48px;
-  gap:12px;
-}
-.dataset-card-v7{
-  height:176px;
-  padding:14px;
-  border-radius:var(--card-radius);
-}
-.dataset-name-v7{
-  font-size:.96rem;
-  max-width:13ch;
-}
-.dataset-respect-v7{
-  padding:24px 26px;
-  border-radius:var(--card-radius);
-}
-.dataset-respect-v7 h3{
-  font-size:1.2rem;
-  line-height:1.3;
-}
-.dataset-respect-v7 p{
-  line-height:1.7;
-}
-
-.run-grid{
-  margin-top:48px;
-  gap:20px;
-}
-.terminal,.scorecard{
-  min-height:430px;
-  border-radius:var(--card-radius);
-}
-.panel-head{
-  padding:12px 15px;
-}
-pre{
-  font-size:11.7px;
-  line-height:1.72;
-}
-.score-body{
-  padding:20px;
-}
-
-.freedom{
-  padding-top:92px;
-  padding-bottom:92px;
-}
-.freedom-copy{
-  margin-top:28px;
-  line-height:1.72;
-}
-.freedom-meta{
-  margin-top:22px;
-}
-
-.final{
-  padding:96px 0;
-}
-.final p{
-  line-height:1.7;
-}
-
-.btn{
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
-}
-.check-card,
-.dataset-card-v7,
-.evidence-card,
-.terminal,
-.scorecard{
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.check-card:hover,
-.dataset-card-v7:hover,
-.evidence-card:hover,
-.terminal:hover,
-.scorecard:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 30px rgba(0,0,0,.05);
-  border-color:#bfd0c5;
-}
-
-.nav-links{
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-.nav-links::-webkit-scrollbar{display:none}
-
-@media(max-width:1180px){
-  .nav-links{gap:12px}
-  .nav-links a{font-size:.74rem}
-}
-
-@media(max-width:1000px){
-  .wrap{width:min(var(--max),calc(100% - 36px))}
-  .sec-head{grid-template-columns:1fr;gap:14px}
-  .section{padding:76px 0}
-  .nav-links a:nth-child(n+6):not(.nav-cta){display:none}
-}
-
-@media(max-width:760px){
-  .wrap{width:min(100% - 28px,var(--max))}
-  .hero{padding:56px 0 44px}
-  .section{padding:64px 0}
-  h2{font-size:2.5rem}
-  .nav-links a:not(.nav-cta){display:none}
-  .dataset-card-v7{height:150px}
-  .evidence-card{min-height:auto}
-}
-
-
-/* V12: explicit Falsify -> Clean feedback loop */
-.method-flow-single{
-  padding-bottom:92px;
-}
-.method-loop-svg{
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:265px;
-  overflow:visible;
-  pointer-events:none;
-  z-index:1;
-}
-.method-node-v5,
-.method-arrow-v5{
-  position:relative;
-  z-index:2;
-}
-.method-loop-label{
-  position:absolute;
-  left:61%;
-  bottom:8px;
-  transform:translateX(-50%);
-  font:700 .66rem/1 monospace;
-  color:#788a80;
-  background:var(--bg);
-  padding:0 8px;
-  z-index:3;
-}
-@media(max-width:760px){
-  .method-loop-svg,
-  .method-loop-label{
-    display:none;
-  }
-}
-
-
-/* FINAL UI/UX POLISH */
-:root{
-  --bg:#f4f1e8;
-  --bg-soft:#faf8f2;
-  --surface:#fffefa;
-  --surface-2:#eef5ef;
-  --ink:#1c2922;
-  --ink-soft:#526259;
-  --line:#d5dfd7;
-  --green:#23875d;
-  --green-2:#319d70;
-  --green-soft:#e7f2e9;
-  --amber:#a87518;
-  --amber-soft:#fbf1dd;
-  --red:#b35348;
-  --red-soft:#f8e8e5;
-}
-
-/* background depth without noise */
-body{
-  background:
-    radial-gradient(900px 520px at 76% -100px, rgba(49,157,112,.10), transparent 72%),
-    linear-gradient(180deg,#fbfaf6 0%,#f5f2e9 48%,#f1efe7 100%);
-}
-
-/* alternate major sections very lightly */
-.section:nth-of-type(even){
-  background:rgba(255,255,255,.28);
-}
-.section:nth-of-type(odd){
-  background:rgba(232,241,233,.22);
-}
-
-/* retain visual separation without hard rules */
-.section{
-  border-bottom:1px solid rgba(28,41,34,.055);
-}
-
-/* warmer cards */
-.evidence-card,
-.audit-portfolio,
-.check-card,
-.dataset-card-v7,
-.dataset-respect-v7,
-.terminal,
-.scorecard,
-.method-node-v5{
-  background:rgba(255,254,250,.94);
-}
-
-/* stronger hero identity */
-.hero{
-  background:
-    radial-gradient(640px 360px at 77% 18%, rgba(35,135,93,.08), transparent 72%);
-}
-
-/* proof rail gets a slightly stronger strip */
-.proof-rail{
-  background:rgba(236,243,237,.72);
-  border-top:1px solid rgba(35,135,93,.09);
-  border-bottom:1px solid rgba(35,135,93,.09);
-}
-
-/* cards should feel consistent, not floating independently */
-.evidence-card,
-.audit-portfolio,
-.check-card,
-.dataset-card-v7,
-.dataset-respect-v7,
-.terminal,
-.scorecard,
-.method-node-v5{
-  box-shadow:0 10px 26px rgba(55,75,63,.045);
-}
-
-/* slightly stronger audit emphasis */
-.method-node-v5.audit{
-  background:#edf7f0;
-  border-color:#b7d6c1;
-}
-
-/* nicer dataset composition */
-.dataset-respect-v7{
-  background:#edf6ef;
-  border-color:#c9dccf;
-}
-.validated-badge-v7{
-  background:var(--green);
-  box-shadow:0 3px 10px rgba(35,135,93,.16);
-}
-
-/* cleaner nav against warm background */
-.site-nav{
-  background:rgba(250,248,242,.88);
-  border-bottom:1px solid rgba(28,41,34,.07);
-}
-.nav-links a.active{
-  color:var(--green);
-}
-
-/* freedom section gets its own confident tone */
-.freedom{
-  background:#dfeee2;
-  border-top:1px solid #cadfce;
-  border-bottom:1px solid #cadfce;
-}
-.freedom:before{
-  color:rgba(35,135,93,.065);
-}
-
-/* final CTA gets more visual closure */
-.final{
-  background:
-    radial-gradient(620px 260px at 50% 0%, rgba(35,135,93,.07), transparent 72%),
-    rgba(255,255,255,.24);
-}
-
-/* improved reading comfort */
-.hero-copy,
-.sec-lede,
-.manifesto-side,
-.evidence-card p,
-.portfolio-insight p,
-.check-card p,
-.method-node-v5 p,
-.dataset-respect-v7 p,
-.freedom-copy,
-.final p{
-  color:#57675e;
-}
-
-/* small tactile improvements */
-.btn.primary{
-  background:#1d2c24;
-  border-color:#1d2c24;
-}
-.btn.primary:hover{
-  background:#23382d;
-  border-color:#23382d;
-}
-.btn:not(.primary):hover{
-  background:#fff;
-}
-.dataset-card-v7:hover{
-  background:#fff;
-}
-.validated-badge-v7,
-.validated-badge-v5{
-  letter-spacing:.055em;
-}
-
-/* section heading balance */
-h2{
-  text-wrap:balance;
-}
-.sec-lede{
-  text-wrap:pretty;
-}
-
-/* make the method loop more intentional */
-.method-loop-label{
-  background:var(--bg);
-  color:#72827a;
-  letter-spacing:.01em;
-}
-
-/* accessibility polish */
-a:focus-visible,
-button:focus-visible{
-  outline:3px solid rgba(35,135,93,.28);
-  outline-offset:3px;
-  border-radius:8px;
-}
-
-/* keep reduced-motion behavior intact */
-@media (prefers-reduced-motion:reduce){
-  *{scroll-behavior:auto!important}
-}
-
-
-/* FINAL PALETTE OVERRIDE: restore V12 background tone */
-:root{
-  --bg:#edf2ec;
-  --bg-soft:#f7faf6;
-  --surface:#ffffff;
-  --surface-2:#f2f6f1;
-  --ink:#18231d;
-  --ink-soft:#43534b;
-  --line:#d7e1d9;
-  --green:#1f8f5f;
-  --green-2:#2fa56f;
-  --green-soft:#e7f5ec;
-  --amber:#b8821b;
-  --amber-soft:#fbf3e3;
-  --red:#b84f43;
-  --red-soft:#f9e9e6;
-}
-
-body{
-  background:
-    radial-gradient(900px 460px at 76% -80px, rgba(47,165,111,.10), transparent 70%),
-    linear-gradient(180deg,var(--bg-soft),var(--bg));
-}
-
-.section:nth-of-type(even),
-.section:nth-of-type(odd){
-  background:transparent;
-}
-
-.hero{
-  background:transparent;
-}
-
-.proof-rail{
-  background:rgba(255,255,255,.45);
-  border-top:1px solid rgba(24,35,29,.07);
-  border-bottom:1px solid rgba(24,35,29,.07);
-}
-
-.evidence-card,
-.audit-portfolio,
-.check-card,
-.dataset-card-v7,
-.terminal,
-.scorecard,
-.method-node-v5{
-  background:var(--surface);
-}
-
-.dataset-respect-v7{
-  background:#f7fbf8;
-  border-color:#cfe0d4;
-}
-
-.site-nav{
-  background:rgba(247,250,246,.84);
-}
-
-.freedom{
-  background:var(--green-soft);
-  border-top:1px solid rgba(31,143,95,.10);
-  border-bottom:1px solid rgba(31,143,95,.10);
-}
-
-.final{
-  background:transparent;
-}
-
-.method-loop-label{
-  background:var(--bg);
-}
-
-
-/* Smaller section headline scale */
-h1{
-  font-size:clamp(3.7rem,7.2vw,7rem);
-}
-
-h2{
-  font-size:clamp(2.15rem,3.9vw,3.9rem);
-  line-height:1.02;
-  max-width:15ch;
-}
-
-.manifesto-main{
-  font-size:clamp(1.8rem,3.4vw,3.4rem);
-  line-height:1.06;
-}
-
-.final h2{
-  max-width:13ch;
-}
-
-@media(max-width:760px){
-  h1{
-    font-size:3.55rem;
-  }
-  h2{
-    font-size:2.15rem;
-  }
-  .manifesto-main{
-    font-size:1.95rem;
-  }
-}
-
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}[data-reveal]{opacity:1;transform:none}#datafield{display:none}}
 </style>
 </head>
 <body>
-<nav class="site-nav">
+<canvas id="datafield" aria-hidden="true"></canvas><div class="page-glow" aria-hidden="true"></div><div class="grid-fade" aria-hidden="true"></div>
+
+<nav class="nav" id="nav">
   <div class="wrap nav-row">
-    <a class="logo" href="#"><span class="logo-bug">²</span> IDS²Eval</a>
-    <div class="nav-links">
-      <a href="#question" class="nav-link">Question</a>
-      <a href="#evidence" class="nav-link">Evidence</a>
-      <a href="#checks" class="nav-link">Checks</a>
-      <a href="#workflow" class="nav-link">Method</a>
-      <a href="#datasets" class="nav-link">Datasets</a>
-      <a href="#output" class="nav-link">Output</a>
-      <a href="#freedom" class="nav-link">License</a>
-      <a href="#artifact" class="nav-link">Artifact</a>
-      <a class="nav-cta" href="https://github.com/hashtagRR/IDS2Eval">GitHub ↗</a>
+    <a class="brand" href="#home" aria-label="IDS2Eval home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span>IDS<sup>2</sup><em>Eval</em></span></a>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a class="active" href="#home">Home</a>
+      <a href="#why">Why</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#checks">Checks</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#datasets">Datasets</a>
+      <a href="#freedom">License</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign#quick-start" target="_blank" rel="noopener">Get started →</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="wrap hero-grid">
-    <div data-reveal>
-      <div class="eyebrow">NIDS benchmark integrity</div>
-      <h1>Do not trust the <span class="audit">score.</span> Audit it.</h1>
-      <p class="hero-copy"><strong>99% accuracy can still come from a weak evaluation setup.</strong> IDS²Eval audits network intrusion datasets for duplication, leakage, identity shortcuts, fragile splits and documented benchmark defects before a benchmark score is treated as a conclusion.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">Run IDS²Eval ↗</a>
-        <a class="btn" href="#evidence">See what it catches ↓</a>
+<header class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div data-reveal>
+        <div class="eyebrow">NIDS benchmark integrity</div>
+        <h1>Audit the benchmark<span class="accent">behind the model.</span></h1>
+        <p class="hero-lede"><strong>IDS²Eval audits network-intrusion datasets and evaluation conditions before classifier benchmarking.</strong></p>
+        <div class="name-equation"><span class="name-kicker">IDS²Eval, two readings.</span><div class="name-line"><strong>IDS²Eval</strong><span>=</span><span>Intrusion Detection System Evaluation</span><span class="times">×</span><span>Intrusion Data Set Evaluation</span></div><small>Audit the dataset first, then benchmark the IDS model under the same recorded workflow.</small></div>
+        <p class="hero-sub">Check duplication, label conflicts, shortcut features, split leakage, temporal artefacts and known dataset issues. Re-audit after configured deduplication, run the selected stress checks, benchmark classifiers, and keep the run artifacts.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign#installation" target="_blank" rel="noopener">▶ Run IDS²Eval</a>
+          <a class="btn" href="#evidence">View the UNSW-NB15 example ↓</a>
+        </div>
+        <div class="trust-row"><span><i></i>AGPL-3.0-only free software</span><span><i></i>Local dashboard</span><span><i></i>CSV · Parquet · .txt · ZIP</span><span><i></i>Citable scorecards</span></div>
       </div>
-      <div class="micro-proof">
-        <span>28 audit checks</span><span>8 real IDS datasets</span><span>344 CI tests</span><span>70M+ flows scanned in validation</span>
-      </div>
-      <div class="name-strip" aria-label="Meaning of IDS squared Eval">
-        <strong>Why IDS²Eval?</strong>
-        <span class="name-chip">IDS = Intrusion Detection Systems</span>
-        <span class="name-eq">×</span>
-        <span class="name-chip">IDS = Intrusion Data Sets</span>
-        <span>One evaluation framework for the system and the dataset behind the score.</span>
+
+      <div class="hero-visual" data-reveal>
+        <div class="orbit o1"></div><div class="orbit o2"></div>
+        <div class="float-tag ft1"><b>◇</b> 28 AUDIT CHECKS</div><div class="float-tag ft2"><b>⌁</b> FALSIFY</div><div class="float-tag ft3"><b>✓</b> PRESERVE</div>
+        <div class="app" role="img" aria-label="Illustrative IDS2Eval local dashboard using real UNSW-NB15 audit evidence">
+          <div class="app-top"><span class="app-brand">IDS²Eval</span><div class="app-tabs"><span class="sel">Overview</span><span>Checks</span><span>Benchmark</span><span>Provenance</span><span>Scorecard</span></div></div>
+          <div class="app-body">
+            <div class="ui-card"><div class="ui-title">Audit coverage</div><div class="audit-kpis"><div class="mini-kpi"><b class="cyan">28</b><span>checks</span></div><div class="mini-kpi"><b class="violet">19</b><span>default</span></div><div class="mini-kpi"><b class="green">9</b><span>opt-in</span></div></div></div>
+            <div class="ui-card"><div class="ui-title">UNSW-NB15 · raw-data sample findings</div><div class="result-list"><div class="result"><span>Feature-space duplication</span><span class="status flag">flag</span></div><div class="result"><span>Label conflicts</span><span class="status flag">flag</span></div><div class="result"><span>Row-order leakage</span><span class="status flag">flag</span></div><div class="result"><span>Known issue lookup</span><span class="status warn">warn</span></div></div></div>
+            <div class="ui-card evidence-card"><div class="ui-title">Evidence preserved before and after configured deduplication</div><div class="evidence-grid"><div><div class="metric-big">42.38%<small>training feature-space duplication detected before cleanup</small></div></div><div class="before-after"><div><div class="meter-lab"><span>before</span><strong>42.38%</strong></div><div class="meter"><i style="width:42.38%"></i></div></div><div><div class="meter-lab"><span>after</span><strong>0.00%</strong></div><div class="meter after"><i style="width:100%"></i></div></div></div><div class="arrow-box"><b>2:1 → ~1:1</b><span>class balance also changed</span></div></div></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="audit-object" data-reveal>
-      <div class="big-score">99<small>%</small></div>
-      <div class="soft-ring"></div>
-      <div class="note note-a">same session<br>on both sides?</div>
-      <div class="note note-b">did sttl learn<br>the topology?</div>
-      <div class="audit-console">
-        <div class="console-top">
-          <span>UNSW-NB15 / audit:before</span><span class="live"><i></i> evidence stream</span>
-        </div>
-        <div class="console-body">
-          <div class="console-kpi">
-            <div class="kpi-num">42.38%</div>
-            <div class="kpi-copy">training feature-space duplication detected before cleanup</div>
-          </div>
-          <div class="audit-lines">
-            <div class="audit-line"><span class="name">dedup_check</span><span class="flag">FLAG</span><span class="detail">memorisation risk</span></div>
-            <div class="audit-line"><span class="name">leakage_screen</span><span class="ok">OK</span><span class="detail">sttl = 17.8%</span></div>
-            <div class="audit-line"><span class="name">known_issue</span><span class="warn">WARN</span><span class="detail">file-name inversion</span></div>
-            <div class="audit-line"><span class="name">after / dedup</span><span class="ok">OK</span><span class="detail">0.00% remains</span></div>
-          </div>
-          <div class="console-result"><b>The data changed.</b> Class balance moved from roughly 2:1 to ~1:1 after deduplication. The benchmark should be interpreted accordingly.</div>
-        </div>
-      </div>
-    </div>
+    <div class="proof" data-reveal><div class="proof-row">
+      <div class="proof-item"><b>28</b><span class="label">audit checks</span><span>19 enabled + 9 opt-in</span></div>
+      <div class="proof-item"><b>14</b><span class="label">supported classifiers</span><span>including stacking + voting</span></div>
+      <div class="proof-item"><b>8</b><span class="label">real dataset scorecards</span><span>published NIDS benchmarks</span></div>
+      <div class="proof-item"><b>3</b><span class="label">scorecard formats</span><span>HTML · Markdown · JSON</span></div>
+      <div class="proof-item"><b class="proof-word">MULTI</b><span class="label">format input</span><span>CSV · Parquet · .txt · ZIP</span></div>
+    </div></div>
   </div>
 </header>
 
-<div class="proof-rail">
-  <div class="wrap proof-row">
-    <div class="proof-label">The page should prove the tool before explaining the implementation.</div>
-    <div class="proof-stat"><b>28</b><span>checks</span></div>
-    <div class="proof-stat"><b>8</b><span>real datasets</span></div>
-    <div class="proof-stat"><b>8 / 8</b><span>failed audit</span></div>
-    <div class="proof-stat"><b>70M+</b><span>flows scanned in validation</span></div>
+<section class="section" id="why"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">01 / Why audit first</div><div><h2>A high score can still come from a weak benchmark.</h2><p class="sec-lede">A classifier score can reflect attack behaviour, dataset construction, or both. IDS²Eval checks the dataset and split conditions before benchmarking.</p></div></div>
+  <div class="problem-grid" data-reveal>
+    <article class="problem"><div class="num">01 / CONTAMINATION</div><h3>Did train and test really stay separate?</h3><p>Exact duplicates and repeated flow identities can place effectively familiar traffic on both sides of a split; separate near-duplicate checks expose confusable samples.</p><div class="signal">Checks include duplicate overlap, flow-group leakage and grouped resplit falsification.</div></article>
+    <article class="problem"><div class="num">02 / SHORTCUTS</div><h3>Did the model learn a shortcut?</h3><p>Ports, addresses, timestamps, collection order and a single dominant feature can become class proxies even when the model appears accurate.</p><div class="signal">Checks include identity columns, temporal leakage, one-rule challenge and feature-AUC ranking.</div></article>
+    <article class="problem"><div class="num">03 / FRAGILITY</div><h3>Would the conclusion survive a stronger setup?</h3><p>Some results move when the split, seed, feature set, scenario or deduplication policy changes. IDS²Eval can measure that sensitivity directly.</p><div class="signal">Opt-in stress tests include scenario holdout, repeated seeds, cross-capture and result robustness.</div></article>
   </div>
-</div>
+</div></section>
 
-<section class="section" id="question">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">01 / THE QUESTION</div>
-      <div>
-        <h2>What did the model actually learn?</h2>
-        <p class="sec-lede">A classifier can learn both network behaviour and properties of how a dataset was constructed. IDS²Eval helps researchers separate those effects so model results are easier to interpret and defend.</p>
-      </div>
-    </div>
-    <div class="manifesto" data-reveal>
-      <div class="manifesto-main">Did it learn the <em>attack</em>, or did it learn how the benchmark was built?</div>
-      <div class="manifesto-side"><strong>IDS²Eval challenges the conditions behind the metric.</strong><br><br>Duplicates. Identity fields. Temporal shortcuts. Flow-group overlap. Class homogeneity. Known dataset defects. The goal is not another quality score; it is evidence you can inspect.</div>
-    </div>
+<section class="section" id="capabilities"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">02 / Capabilities</div><div><h2>One workflow from audit to reproducible result.</h2><p class="sec-lede">IDS²Eval focuses on NIDS dataset integrity, falsification checks, configured preprocessing, classifier benchmarking and the artifacts needed to trace a run.</p></div></div>
+  <div class="cap-grid" data-reveal>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">✓</div><small>Audit</small></div><h3>28 specific checks</h3><p>Inspect sample leakage, label conflicts, identity and temporal shortcuts, scenario artefacts, data integrity, provenance and result stability.</p></article>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">⇄</div><small>Before / after</small></div><h3>Audit both states</h3><p>When deduplication is enabled, IDS²Eval audits the raw split, deduplicates it, then reruns checks that depend on row content. Structural checks are reused.</p></article>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">⌁</div><small>Falsify</small></div><h3>Test stronger setups</h3><p>Grouped resplits and opt-in stress checks compare results across stronger split, seed, scenario and feature-set conditions.</p></article>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">⬡</div><small>Benchmark</small></div><h3>14 classifier registry</h3><p>Run binary and optional attack-type benchmarks across configured scaling and sampling strategies, with per-class metrics and timing.</p></article>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">→</div><small>Recommend</small></div><h3>Config fixes where supported</h3><p>Checks with a defined config-level remedy can generate a patch. Other findings remain review items with their recorded details.</p></article>
+    <article class="cap"><div class="cap-top"><div class="cap-icon">≣</div><small>Preserve</small></div><h3>Citable run artifacts</h3><p>Keep scorecards, benchmark tables, fingerprints, environment details, resolved config and machine-readable evidence under a fresh run directory.</p></article>
   </div>
-</section>
+</div></section>
 
-<section class="section" id="evidence">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">02 / REAL EVIDENCE</div>
-      <div>
-        <h2>The audit changes what the benchmark means.</h2>
-        <p class="sec-lede">The clearest proof is a real example that shows how an audit changes the way a benchmark should be read.</p>
-      </div>
+<section class="section" id="evidence"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">03 / Shipped example</div><div><h2>A dataset issue can change the benchmark.</h2><p class="sec-lede">The shipped UNSW-NB15 scorecard reports 42.38% feature-space duplication in the configured training split before deduplication. The same run records the post-deduplication state.</p></div></div>
+  <div class="evidence-layout" data-reveal>
+    <article class="e-card"><h3>Before configured cleanup</h3><div class="e-number">42.38%</div><p>Training feature-space duplication was flagged in the shipped validation run.</p><div class="evidence-note">The scorecard records the condition that produced the benchmark result.</div></article>
+    <article class="e-card"><h3>Duplicate evidence</h3><div class="compare-stack"><div><div class="stack-title"><span>Raw training data</span><strong>42.38% duplicate</strong></div><div class="stackbar"><div class="dup" style="width:42.38%"></div><div class="remain" style="width:57.62%"></div></div></div><div><div class="stack-title"><span>After configured deduplication</span><strong>0.00% duplicate</strong></div><div class="stackbar clean"><div class="dup"></div><div class="remain"></div></div></div></div><p>The run keeps both audit states alongside the deduplication statistics.</p></article>
+    <article class="e-card"><h3>The dataset distribution moved too</h3><div class="balance"><div class="balance-block"><b>~2:1</b><span>class balance before</span></div><div class="balance-arrow">→</div><div class="balance-block"><b>~1:1</b><span>class balance after</span></div></div><p>Deduplication disproportionately affected one class, so the benchmark should be interpreted in light of the changed distribution.</p></article>
+  </div>
+</div></section>
+
+<section class="section" id="checks"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">04 / Audit checks</div><div><h2>28 checks for specific failure modes.</h2><p class="sec-lede">Each check returns a status, summary and details. The scorecard links those findings to the run evidence. Nineteen checks are enabled by default and nine are opt-in.</p></div></div>
+  <div class="checks-shell" data-reveal>
+    <div class="checks-top" role="toolbar" aria-label="Filter sample audit checks">
+      <button class="filter-btn active" data-filter="all">All samples</button>
+      <button class="filter-btn" data-filter="contamination">Contamination</button>
+      <button class="filter-btn" data-filter="shortcut">Shortcut learning</button>
+      <button class="filter-btn" data-filter="split">Split & robustness</button>
+      <button class="filter-btn" data-filter="integrity">Integrity & provenance</button>
     </div>
-
-    <div class="evidence-stage" data-reveal>
-      <article class="evidence-card">
-        <div class="evidence-tag">UNSW-NB15 · before</div>
-        <h3>Training set contains repeated feature vectors.</h3>
-        <p>Exact duplicates can reward memorisation and distort the apparent class distribution.</p>
-        <div class="evidence-metric red">42.38%</div>
-        <div class="balance">class balance: <b>roughly 2:1</b></div>
-      </article>
-      <div class="evidence-arrow">→</div>
-      <article class="evidence-card">
-        <div class="evidence-tag">UNSW-NB15 · after configured cleanup</div>
-        <h3>The duplicates are gone ,  and the dataset has changed.</h3>
-        <p>IDS²Eval records that consequence instead of silently treating cleaning as neutral.</p>
-        <div class="evidence-metric green">0.00%</div>
-        <div class="balance">class balance: <b>approximately 1:1</b></div>
-      </article>
-    </div>
-
-    <div class="audit-portfolio" data-reveal>
-      <div class="portfolio-summary">
-        <div>
-          <h3>What the validation portfolio tells us</h3>
-          <p>The point is not that "these datasets are bad." Every widely-used NIDS benchmark tested trips at least one check; the useful finding is that the audit repeatedly surfaces issues that can materially change how a benchmark should be interpreted.</p>
-        </div>
-        <div class="portfolio-metrics">
-          <div class="portfolio-metric"><b>8</b><span>real NIDS datasets validated</span></div>
-          <div class="portfolio-metric"><b>8</b><span>runs with an overall FAIL status</span></div>
-        </div>
-      </div>
-      <div class="portfolio-insights">
-        <div class="portfolio-insight"><b>Repeated structural issues</b><p>Duplication, shortcut features and split assumptions are not isolated edge cases.</p></div>
-        <div class="portfolio-insight"><b>Audit before comparison</b><p>Benchmark scores become more meaningful when the data path is inspected first.</p></div>
-        <div class="portfolio-insight"><b>Evidence, not blame</b><p>The goal is to expose where evaluation can be strengthened, not to dismiss the dataset itself.</p></div>
-      </div>
+    <div class="check-grid">
+      <article class="check-card" data-kind="contamination"><div class="code">C01</div><h3>Duplicate & overlap</h3><p>Exact feature-space duplicates within and across train/test.</p></article>
+      <article class="check-card" data-kind="contamination"><div class="code">C02</div><h3>Label conflicts</h3><p>Identical feature vectors mapped to contradictory labels.</p></article>
+      <article class="check-card" data-kind="contamination"><div class="code">C03</div><h3>Flow-group leakage</h3><p>Declared flow identities that appear on both sides of the split; no-ops when no flow-ID columns are configured.</p></article>
+      <article class="check-card" data-kind="shortcut"><div class="code">C04</div><h3>Leakage screen</h3><p>Fast model importance to expose suspiciously dominant features.</p></article>
+      <article class="check-card" data-kind="shortcut"><div class="code">C05</div><h3>One-rule challenge</h3><p>A depth-1 tree tests whether one simple rule already explains too much.</p></article>
+      <article class="check-card" data-kind="shortcut"><div class="code">C06</div><h3>Identity columns</h3><p>Standalone predictive power of declared IP-, port-, MAC- and similar identity columns.</p></article>
+      <article class="check-card" data-kind="shortcut"><div class="code">C07</div><h3>Temporal leakage</h3><p>When a timestamp column is declared, tests whether time alone acts as a class proxy for collection scenarios.</p></article>
+      <article class="check-card" data-kind="split"><div class="code">C08</div><h3>Grouped resplit</h3><p>When group columns are available, re-evaluates under a split that blocks session-correlated leakage.</p></article>
+      <article class="check-card" data-kind="split"><div class="code">C09</div><h3>Scenario holdout</h3><p>When a scenario column is declared, tests generalization with one collection scenario held out.</p></article>
+      <article class="check-card" data-kind="split"><div class="code">C10</div><h3>Result robustness</h3><p>Compares performance across available split, dedup and feature-set conditions.</p></article>
+      <article class="check-card" data-kind="integrity"><div class="code">C11</div><h3>Data integrity</h3><p>Missing labels or feature values, constant or near-constant features, and infinite values.</p></article>
+      <article class="check-card" data-kind="integrity"><div class="code">C12</div><h3>Known issues & fingerprints</h3><p>Curated dataset facts and feature-extractor signatures with documented defects.</p></article>
     </div>
   </div>
-</section>
+</div></section>
 
-<section class="section" id="checks">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">03 / 28 CHECKS</div>
-      <div>
-        <h2>Specific checks, not one vague score.</h2>
-        <p class="sec-lede">Each check names a specific, falsifiable concern and emits a status, summary and supporting details. Start with the threat family, then drill into the individual checks only when needed.</p>
-      </div>
-    </div>
-
-    <div class="check-layout" data-reveal>
-      <div class="check-nav" aria-label="Audit check categories">
-        <button class="active" data-filter="all">All failure modes</button>
-        <button data-filter="contamination">Sample contamination</button>
-        <button data-filter="shortcut">Shortcut learning</button>
-        <button data-filter="split">Split dependence</button>
-        <button data-filter="integrity">Integrity & provenance</button>
-      </div>
-      <div class="check-panel">
-        <article class="check-card" data-cat="contamination"><div class="id">C01</div><h3>Duplicate & overlap checks</h3><p>Detect exact feature-space duplication within and across partitions.</p></article>
-        <article class="check-card" data-cat="contamination"><div class="id">C02</div><h3>Label conflicts</h3><p>Find identical feature vectors that map to contradictory labels.</p></article>
-        <article class="check-card" data-cat="contamination"><div class="id">C03</div><h3>Near-duplicate classes</h3><p>Find near-identical feature vectors, not only exact matches, that map to different labels.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C04</div><h3>Leakage screen</h3><p>Use fast predictive importance to expose suspiciously dominant features.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C05</div><h3>One-rule challenge</h3><p>Ask whether one shallow rule already explains too much of the label.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C06</div><h3>Identity columns</h3><p>Measure the standalone predictive power of IP, port, MAC and similar identifiers.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C07</div><h3>Port + protocol shortcut</h3><p>Test whether a trivial pair of network fields acts as a class proxy.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C08</div><h3>Temporal leakage</h3><p>Check whether time alone is predictive enough to expose scenario structure.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C09</div><h3>Flow-group leakage</h3><p>Detect the same declared flow identity on both sides of the split.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C10</div><h3>Resplit falsification</h3><p>Re-evaluate under a grouped split that structurally blocks session-correlated leakage.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C11</div><h3>Known-issue lookup</h3><p>Surface curated, published limitations associated with the named benchmark.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C12</div><h3>Schema fingerprinting</h3><p>Match columns to extractor signatures with documented calculation problems.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C13</div><h3>Row-order leakage</h3><p>Compare adjacent-row label clustering against a shuffled baseline, catching data still in collection order.</p></article>
-        <article class="check-card" data-cat="shortcut"><div class="id">C14</div><h3>Feature AUC ranking</h3><p>Rank every numeric feature's own standalone AUC, no model fit needed, to surface a near-perfect single-column shortcut.</p></article>
-        <article class="check-card" data-cat="split"><div class="id">C15</div><h3>Result robustness</h3><p>Re-score under random split, grouped split, dedup on/off and identity-columns-dropped, reporting the full spread rather than one number.</p></article>
-        <article class="check-card" data-cat="integrity"><div class="id">C16+</div><h3>Distribution, realism & drift</h3><p>Class balance, homogeneity, scenario holdout, feature-category ablation, synthetic realism, cross-dataset drift, seed sensitivity and core data-integrity checks complete the suite.</p></article>
-      </div>
-    </div>
+<section class="section" id="workflow"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">05 / Workflow</div><div><h2>One config, one recorded run.</h2><p class="sec-lede">The CLI and local dashboard use the same core pipeline. The dashboard opens with a pre-filled starter config.</p></div></div>
+  <div class="workflow" data-reveal>
+    <div class="step"><div class="step-n">01</div><h3>Load & validate</h3><p>Load CSV, Parquet, CSV-formatted .txt, compressed CSV, or a named CSV/Parquet member from ZIP. Then validate the schema and fingerprint the data.</p></div>
+    <div class="step"><div class="step-n">02</div><h3>Audit raw data</h3><p>Run enabled checks before deduplication and save the untouched evidence.</p></div>
+    <div class="step"><div class="step-n">03</div><h3>Apply configured preprocessing</h3><p>Deduplicate when enabled. Then rerun data-dependent checks and reuse structural findings.</p></div>
+    <div class="step"><div class="step-n">04</div><h3>Benchmark classifiers</h3><p>Run the configured binary and optional attack-type benchmarks across the selected scaling and sampling strategies.</p></div>
+    <div class="step"><div class="step-n">05</div><h3>Preserve</h3><p>Write scorecards, benchmark detail, fingerprints, environment and run status.</p></div>
   </div>
-</section>
+</div></section>
 
-<section class="section" id="workflow">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">04 / METHOD</div>
-      <div>
-        <h2>One config. Five stages. A preserved evidence trail.</h2>
-        <p class="sec-lede">Each stage feeds the next, so the final benchmark can be traced back to the data and audit decisions that produced it.</p>
-      </div>
-    </div>
-    
-    <div class="method-flow-single" data-reveal aria-label="IDS2Eval iterative workflow">
-      <article class="method-node-v5"><span class="mn">01</span><h3>Load</h3><p>Read the configured dataset and declared schema.</p></article>
-      <div class="method-arrow-v5">→</div>
-      <article class="method-node-v5 audit"><span class="mn">02</span><h3>Audit</h3><p>Run integrity checks on the untouched data and preserve the evidence.</p></article>
-      <div class="method-arrow-v5">→</div>
-      <article class="method-node-v5"><span class="mn">03</span><h3>Clean</h3><p>Apply configured remediation and record exactly what changed.</p></article>
-      <div class="method-arrow-v5">→</div>
-      <article class="method-node-v5"><span class="mn">04</span><h3>Falsify</h3><p>Challenge the result under stronger split and benchmark assumptions.</p></article>
-      <div class="method-arrow-v5">→</div>
-      <article class="method-node-v5"><span class="mn">05</span><h3>Preserve</h3><p>Write scorecards and machine readable artifacts for review and reproduction.</p></article>
-
-      <svg class="method-loop-svg" viewBox="0 0 1200 265" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <marker id="loopArrowHeadV12" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L9,4.5 L0,9 z" fill="#9eb5a6"></path>
-          </marker>
-        </defs>
-        <!-- Start beneath Falsify, drop down, travel left, then rise into Clean -->
-        <path d="M 830 178
-                 C 830 198, 830 214, 815 226
-                 C 770 250, 675 250, 610 250
-                 C 585 250, 575 232, 575 205"
-              fill="none"
-              stroke="#9eb5a6"
-              stroke-width="2.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              marker-end="url(#loopArrowHeadV12)"></path>
-      </svg>
-      <div class="method-loop-label">if falsification exposes an issue, return to Clean</div>
-    </div>
+<section class="section" id="dashboard"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">06 / Local dashboard</div><div><h2>Inspect runs in the local dashboard.</h2><p class="sec-lede">Browse datasets and runs, open check evidence, apply supported recommendation patches to a new config, compare datasets, view classifier results, and inspect provenance and scorecards.</p></div></div>
+  <div class="dashboard-shell" data-reveal>
+    <div class="dash-top"><span class="dash-brand">IDS²Eval</span><div class="dash-tabs"><span class="active">Datasets</span><span>Runs</span><span>Evidence</span><span>Benchmark</span><span>Provenance</span><span>Scorecard</span></div></div>
+    <div class="dash-body"><aside class="dash-side"><div class="side-item active">⌂ Dashboard</div><div class="side-item">▦ Datasets</div><div class="side-item">↻ Runs</div><div class="side-item">✓ Checks</div><div class="side-item">→ Recommendations</div><div class="side-item">＋ New run</div><div class="side-item">⇄ Compare datasets</div></aside><main class="dash-main"><div class="panel-title">Dataset portfolio</div><div class="panel-sub">Latest audited run for each dataset</div><div class="dash-kpis"><div class="dk"><b>8</b><span>datasets</span></div><div class="dk"><b>28</b><span>checks</span></div><div class="dk"><b>14</b><span>classifiers</span></div><div class="dk"><b>1</b><span>local UI</span></div></div><div class="table"><div class="tr head"><span>Dataset</span><span>Rows</span><span>Verdict</span><span>Evidence</span><span>Action</span></div><div class="tr"><span>UNSW-NB15</span><span>real data</span><span class="flag">FAIL</span><span>before / after</span><span style="color:var(--cyan)">Open run</span></div><div class="tr"><span>CIC-IDS2017</span><span>real data</span><span class="flag">FAIL</span><span>scorecard</span><span style="color:var(--cyan)">Open run</span></div><div class="tr"><span>CSE-CIC-IDS2018</span><span>real data</span><span class="flag">FAIL</span><span>scorecard</span><span style="color:var(--cyan)">Open run</span></div><div class="tr"><span>BoT-IoT</span><span>real data</span><span class="flag">FAIL</span><span>scorecard</span><span style="color:var(--cyan)">Open run</span></div></div></main><aside class="dash-preview"><div class="panel-title">Run evidence</div><div class="panel-sub">Example visual trace</div><div class="mini-chart"><svg viewBox="0 0 300 130" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="runGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#43d7ff"/><stop offset="1" stop-color="#43d7ff" stop-opacity="0"/></linearGradient></defs><path class="runfill" d="M0,110 L22,101 L44,103 L66,83 L88,86 L110,65 L132,71 L154,49 L176,54 L198,33 L220,42 L242,23 L264,31 L286,14 L300,19 L300,130 L0,130 Z"/><path class="runline" d="M0,110 L22,101 L44,103 L66,83 L88,86 L110,65 L132,71 L154,49 L176,54 L198,33 L220,42 L242,23 L264,31 L286,14 L300,19"/></svg></div><div class="dash-status"><div><span>Config validated</span><b>yes</b></div><div><span>Dataset fingerprint</span><b>written</b></div><div><span>Scorecard exports</span><b>ready</b></div></div></aside></div>
   </div>
-</section>
+</div></section>
 
-<section class="section" id="datasets">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">05 / DATASETS</div>
-      <div>
-        <h2>Tested against published NIDS benchmarks, not toy tables.</h2>
-        <p class="sec-lede">Eight real datasets have been exercised end to end, spanning classic connection records, modern flow datasets, IoT traffic, and DDoS-focused corpora.</p>
-      </div>
-    </div>
-    <div class="dataset-cluster" data-reveal>
-      <div class="dataset-card-v7 c1"><span class="dataset-index-v7">01</span><span class="dataset-name-v7">UNSW-NB15</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c2"><span class="dataset-index-v7">02</span><span class="dataset-name-v7">NSL-KDD</span><span class="validated-badge-v7">VALIDATED</span></div>
+<section class="section" id="benchmark"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">07 / Benchmarking</div><div><h2>Benchmark after the evaluation conditions are visible.</h2><p class="sec-lede">The registry contains 14 supported classifiers, including stacking and voting ensembles. Runs can include binary detection and, when configured, attack-type classification, with accuracy, weighted F1, macro F1, AUC, training time, inference time and per-class metrics.</p></div></div>
+  <div class="models" data-reveal><span class="model-chip">RandomForest</span><span class="model-chip">XGBoost</span><span class="model-chip">DecisionTree</span><span class="model-chip">NaiveBayes</span><span class="model-chip">LogisticRegression</span><span class="model-chip">KNN</span><span class="model-chip">SVM</span><span class="model-chip">LDA</span><span class="model-chip">Stacking</span><span class="model-chip">Voting</span><span class="model-chip">ExtraTrees</span><span class="model-chip">HistGradientBoosting</span><span class="model-chip">AdaBoost</span><span class="model-chip">MLP</span></div>
+  <div class="bench-note" data-reveal><article class="note-card"><h3>Fold-local preprocessing when tuning</h3><p>When tuning is enabled, scaling and sampling stay inside the imbalanced-learn pipeline passed to GridSearchCV, so they are fitted independently inside each CV fold.</p></article><article class="note-card"><h3>Evidence beyond one metric</h3><p>Benchmark outputs include confusion matrices, per-class precision/recall/F1, feature importance where supported, best hyperparameters when tuning runs, and class distributions before/after sampling.</p></article></div>
+</div></section>
 
-      <div class="dataset-respect-v7">
-        <div class="label">A note on dataset creators</div>
-        <h3>Designed to help researchers get more reliable results from valuable benchmark datasets.</h3>
-        <p><strong>NIDS datasets are the backbone of ML and DL research.</strong> They are difficult, expensive, and often foundational community contributions. IDS²Eval is meant to help researchers use those datasets more carefully, identify structural quirks, understand where shortcuts may appear, and train models whose performance is easier to defend. The goal is to strengthen the value of these datasets, not to diminish the work behind them.</p>
-      </div>
+<section class="section" id="datasets"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">08 / Validation portfolio</div><div><h2>Eight shipped scorecards from real NIDS datasets.</h2><p class="sec-lede">The repository includes scorecards produced from real data for eight published NIDS datasets. They cover classic connection records, modern flow datasets, IoT traffic and DDoS-focused corpora.</p></div></div>
+  <div class="dataset-grid" data-reveal><div class="dataset"><small>01</small><b>UNSW-NB15</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>02</small><b>NSL-KDD</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>03</small><b>CIC-IDS2017</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>04</small><b>CSE-CIC-IDS2018</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>05</small><b>CICDDoS2019</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>06</small><b>ToN-IoT</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>07</small><b>BoT-IoT</b><span class="validated">VALIDATED</span></div><div class="dataset"><small>08</small><b>CIC-IoT2023</b><span class="validated">VALIDATED</span></div></div>
+</div></section>
 
-      <div class="dataset-card-v7 c3"><span class="dataset-index-v7">03</span><span class="dataset-name-v7">CIC-IDS2017</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c4"><span class="dataset-index-v7">04</span><span class="dataset-name-v7">CSE-CIC-IDS2018</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c5 r2"><span class="dataset-index-v7">05</span><span class="dataset-name-v7">CICDDoS2019</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c6 r2"><span class="dataset-index-v7">06</span><span class="dataset-name-v7">ToN-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c7 r2"><span class="dataset-index-v7">07</span><span class="dataset-name-v7">BoT-IoT</span><span class="validated-badge-v7">VALIDATED</span></div>
-      <div class="dataset-card-v7 c8 r2"><span class="dataset-index-v7">08</span><span class="dataset-name-v7">CIC-IoT2023</span><span class="validated-badge-v7">VALIDATED</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="output">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">06 / OUTPUT</div>
-      <div>
-        <h2>A result you can inspect, not just a notebook to take on trust.</h2>
-        <p class="sec-lede">Human-readable scorecards sit beside machine-readable output, making the audit useful both as research evidence and as something that can be compared programmatically.</p>
-      </div>
-    </div>
-
-    <div class="run-grid" data-reveal>
-      <div class="terminal">
-        <div class="panel-head">terminal</div>
-<pre>$ ids2eval --config unsw-nb15.yaml --skip-benchmark
+<section class="section" id="outputs"><div class="wrap">
+  <div class="sec-head" data-reveal><div class="sec-index">09 / Output & provenance</div><div><h2>A result you can inspect, cite and reproduce.</h2><p class="sec-lede">Each run gets a fresh directory. Human-readable scorecards sit beside machine-readable findings, benchmark detail, configuration, environment and content fingerprints so the result can be traced back to the data and decisions that produced it.</p></div></div>
+  <div class="output-layout" data-reveal>
+    <div class="terminal"><div class="terminal-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><pre><span class="cmd"># shipped example: examples/unsw-nb15-scorecard/scorecard.json</span>
+<span class="muted"># condensed below for the marketing view</span>
 
 [audit:before]
-dedup_check .............. FLAG  42.38%
-leakage_screen ............ OK    sttl 17.8%
-row_order_leakage_check ... FLAG  test near-fully ordered
-known_issue_lookup ........ WARN  file-name inversion
+dedup_check ............... <span class="t-red">FLAG  74,301 train duplicates (42.38%)</span>
+label_conflict_check ...... <span class="t-red">FLAG  1,758 rows in conflicting vectors</span>
+row_order_leakage_check ... <span class="t-red">FLAG</span>
+known_issue_lookup ........ <span class="t-amber">WARN</span>
 
 [dedup]
-removed 42.38% of train
+train 175,341 → 101,040
+test   82,332 → 52,644
 
 [audit:after]
-dedup_check .............. OK    0.00%
-row_order_leakage_check ... FLAG  unchanged by dedup
-class_distribution ........ OK    ~1:1
+dedup_check ............... <span class="t-green">OK    0.00%</span>
 
 [scorecard]
-failed</pre>
-      </div>
-      <div class="scorecard">
-        <div class="panel-head">SCORECARD.html</div>
-        <div class="score-body">
-          <div class="score-summary"><strong>UNSW-NB15 / audit report</strong><span>FAILED</span></div>
-          <div class="score-item"><span>Feature-space duplication<br><small>before cleanup</small></span><span class="status-pill flag">FLAG</span></div>
-          <div class="score-item"><span>Feature-space duplication<br><small>after cleanup</small></span><span class="status-pill ok">OK</span></div>
-          <div class="score-item"><span>Row-order leakage<br><small>test split near-fully ordered</small></span><span class="status-pill flag">FLAG</span></div>
-          <div class="score-item"><span>Known dataset issue<br><small>curated finding</small></span><span class="status-pill warn">WARN</span></div>
-          <div class="score-item"><span>Class distribution<br><small>before → after recorded</small></span><span class="status-pill ok">RECORDED</span></div>
-          <div class="score-item"><span>Reproducibility artifacts<br><small>JSON + Markdown + HTML</small></span><span class="status-pill ok">WRITTEN</span></div>
-        </div>
-      </div>
-    </div>
+FAILED · 17 ok · 1 warning · 1 flag</pre></div>
+    <div class="artifacts"><article class="artifact"><b>SCORECARD.html / .md / .json</b><span>Citable audit rollup with before/after evidence and final verdict.</span></article><article class="artifact"><b>benchmark_results.csv</b><span>Scalar metrics by stage, scaling, sampling and classifier.</span></article><article class="artifact"><b>benchmark_details.json</b><span>Confusion matrices, per-class report, feature importance and tuning detail.</span></article><article class="artifact"><b>per_class_metrics.csv</b><span>Flat precision, recall, F1 and support for each class.</span></article><article class="artifact"><b>dataset_fingerprint.json</b><span>Row/feature counts, class distribution, loaded schema and content/source hashes.</span></article><article class="artifact"><b>environment + resolved config</b><span>Tool version, git commit, package versions and fully resolved run settings.</span></article></div>
   </div>
-</section>
+</div></section>
 
-<section class="section freedom" id="freedom">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-index">07 / SOFTWARE FREEDOM</div>
-      <div>
-        <h2>Free as in free speech, not free beer.</h2>
-        <div class="freedom-copy">
-          IDS²Eval is <strong>AGPLv3 free software</strong>. Use it, study it, modify it, redistribute it, and use it commercially. The point is not to prevent commerce; it is to preserve the same freedoms for the people who receive or interact with modified versions.
-          <br><br>
-          For an auditing tool, that reciprocity is part of the design: the software and its modifications should remain inspectable.
-        </div>
-        <div class="freedom-meta"><span>commercial use permitted</span><span>source remains auditable</span><span>AGPL-3.0</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="freedom" id="freedom"><div class="wrap freedom-grid">
+  <div data-reveal><div class="sec-index">10 / Software freedom</div><h2>Free, open and <span>inspectable.</span></h2></div>
+  <div data-reveal><p class="freedom-copy"><strong>IDS²Eval is AGPL-3.0-only free software.</strong> The licence permits use, study, modification and redistribution, including commercial use, subject to its terms. Modified versions offered over a network remain subject to the AGPL source-sharing requirements.</p><div class="freedom-actions"><a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/ui-redesign/LICENSE" target="_blank" rel="noopener">Read the licence →</a><a class="btn" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign/examples" target="_blank" rel="noopener">Browse real scorecards →</a><a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign" target="_blank" rel="noopener">Explore the source ↗</a></div><div class="freedom-words"><span>use</span><span>study</span><span>modify</span><span>redistribute</span><span>commercial use permitted</span><span>AGPL-3.0-only</span></div></div>
+</div></section>
 
-<section class="final" id="artifact">
-  <div class="wrap" data-reveal>
-    <div class="eyebrow" style="justify-content:center">Research artifact</div>
-    <h2>A benchmark score should come after the audit, not before it.</h2>
-    <p>Inspect the implementation, run the checks on your own NIDS dataset, and keep the evidence that explains what the benchmark actually measured.</p>
-    <div class="actions">
-      <a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval">Explore IDS²Eval on GitHub ↗</a>
-      <a class="btn" href="https://github.com/hashtagRR/IDS2Eval/tree/main/examples">Browse scorecards</a>
-    </div>
-  </div>
-</section>
+<section class="final-cta"><div class="wrap" data-reveal><h2>Run IDS²Eval on your own dataset.</h2><p>Review the audit findings, benchmark under the recorded configuration, and keep the artifacts from the run.</p><div class="actions"><a class="btn primary" href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign#quick-start" target="_blank" rel="noopener">Get started with IDS²Eval →</a><a class="btn" href="https://github.com/hashtagRR/IDS2Eval/blob/ui-redesign/guide/checks.md" target="_blank" rel="noopener">Read all 28 checks</a></div></div></section>
 
-<footer>
-  <div class="wrap foot">
-    <span>IDS²Eval ,  Intrusion Detection Systems / Intrusion Data Sets Evaluation</span>
-    <span class="mono">AGPLv3 · free software</span>
-  </div>
-</footer>
-
+<footer><div class="wrap footer-row"><div>IDS²Eval · Intrusion Detection System Evaluation × Intrusion Data Set Evaluation</div><div><a href="https://github.com/hashtagRR/IDS2Eval/tree/ui-redesign" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/hashtagRR/IDS2Eval/blob/ui-redesign/LICENSE" target="_blank" rel="noopener">AGPL-3.0-only</a></div></div></footer>
 
 <script>
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+// reveal-on-scroll
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}})},{threshold:.11});
+document.querySelectorAll('[data-reveal]').forEach(el=>revealObserver.observe(el));
 
-const filterButtons = [...document.querySelectorAll('[data-filter]')];
-const cards = [...document.querySelectorAll('.check-card')];
-filterButtons.forEach(btn => btn.addEventListener('click', () => {
-  filterButtons.forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const f = btn.dataset.filter;
-  cards.forEach(card => {
-    const match = f === 'all' || card.dataset.cat === f;
-    card.style.display = match ? 'block' : 'none';
-  });
-}));
+// active nav state
+const navLinks=[...document.querySelectorAll('.nav-links a')];
+const sections=[...document.querySelectorAll('header[id],section[id]')];
+const spy=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-42% 0px -50% 0px'});
+sections.forEach(s=>spy.observe(s));
 
-const sections = [...document.querySelectorAll('section[id]')];
-const navLinks = [...document.querySelectorAll('.nav-link')];
-const activateNav = id => {
-  navLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-  });
-};
+// mobile nav
+const nav=document.getElementById('nav'),toggle=document.getElementById('mobileToggle');
+toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'×':'☰'});
+navLinks.forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'}));
 
-const navObserver = new IntersectionObserver(entries => {
-  const visible = entries
-    .filter(e => e.isIntersecting)
-    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-  if (visible.length) activateNav(visible[0].target.id);
-}, {
-  rootMargin: '-20% 0px -55% 0px',
-  threshold: [0.2, 0.4, 0.6]
-});
+// sample check filtering
+const filterButtons=[...document.querySelectorAll('.filter-btn')],checkCards=[...document.querySelectorAll('.check-card')];
+filterButtons.forEach(btn=>btn.addEventListener('click',()=>{filterButtons.forEach(b=>b.classList.toggle('active',b===btn));const f=btn.dataset.filter;checkCards.forEach(card=>{card.hidden=f!=='all'&&card.dataset.kind!==f})}));
 
-sections.forEach(section => navObserver.observe(section));
-activateNav('question');
+// dataset / flow inspired background; decorative only
+const c=document.getElementById('datafield'),ctx=c.getContext('2d');let W,H,dpr,nodes=[],t=0;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);makeNodes()}
+function makeNodes(){const count=Math.max(28,Math.min(78,Math.floor(W/22)));nodes=Array.from({length:count},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.10,vy:(Math.random()-.5)*.075,r:Math.random()*1.45+.45,p:Math.random()*Math.PI*2}))}
+function draw(){if(reduce)return;ctx.clearRect(0,0,W,H);t+=.006;for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<-20)n.x=W+20;if(n.x>W+20)n.x=-20;if(n.y<-20)n.y=H+20;if(n.y>H+20)n.y=-20}
+  for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);if(d<148){ctx.strokeStyle=`rgba(49,152,228,${(1-d/148)*.08})`;ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}}
+  for(let k=0;k<4;k++){ctx.beginPath();for(let x=-40;x<W+40;x+=16){const y=H*(.16+.22*k)+Math.sin(x*.008+t*(1+k*.18)+k)*21+Math.sin(x*.003-t)*14;const yy=y+Math.sin(t*2+k)*8;if(x===-40)ctx.moveTo(x,yy);else ctx.lineTo(x,yy)}ctx.strokeStyle=`rgba(${k%2?124:43},${k%2?104:202},255,${.03+k*.006})`;ctx.lineWidth=1;ctx.stroke()}
+  for(const n of nodes){const pulse=.67+.33*Math.sin(t*3+n.p);ctx.fillStyle=`rgba(79,205,255,${.18*pulse})`;ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse,0,Math.PI*2);ctx.fill()}
+  requestAnimationFrame(draw)}
+addEventListener('resize',resize);resize();if(!reduce)draw();
 </script>
-
 </body>
 </html>

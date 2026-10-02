@@ -22,6 +22,8 @@ identical the second time.
 from __future__ import annotations
 
 import concurrent.futures
+import logging
+import time
 
 import pandas as pd
 
@@ -95,6 +97,8 @@ EVIDENCE_LEVEL = {
     "repeated_seed_falsification_check": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
+
+logger = logging.getLogger(__name__)
 
 
 def run_audit(
@@ -200,17 +204,35 @@ def run_audit(
         ),
     )
 
+    # One log line per check: some take minutes on a large dataset, and
+    # without these a run (and the dashboard's live log) looks frozen.
+    total = len(pending)
+
+    def done(i: int, name: str, result: dict, started: float, note: str = "") -> None:
+        logger.info("Audit check %d/%d done: %s -> %s (%.1fs%s)", i, total, name,
+                    (result or {}).get("status", "?"), time.monotonic() - started, note)
+
     if not audit_cfg["parallel_checks"]:
         results = []
-        for name, thunk in pending:
+        for i, (name, thunk) in enumerate(pending, 1):
+            started = time.monotonic()
             cached = _checkpoint.get_check(checkpoint_path, name) if checkpoint_path else None
+            if cached is None:
+                logger.info("Audit check %d/%d: %s ...", i, total, name)
             result = cached if cached is not None else thunk()
             if checkpoint_path and cached is None:
                 _checkpoint.save_check(checkpoint_path, name, result)
+            done(i, name, result, started, ", from checkpoint" if cached is not None else "")
             results.append(result)
         return results
 
     max_workers = min(audit_cfg["max_parallel_checks"], len(pending)) or 1
+    logger.info("Audit: running %d checks, up to %d at a time", total, max_workers)
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
+        started = time.monotonic()
         futures = [pool.submit(thunk) for _, thunk in pending]
+        names = {f: name for f, (name, _) in zip(futures, pending, strict=True)}
+        for i, f in enumerate(concurrent.futures.as_completed(futures), 1):
+            if f.exception() is None:
+                done(i, names[f], f.result(), started, " since the batch started")
         return [f.result() for f in futures]

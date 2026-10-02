@@ -4,13 +4,30 @@
 <title>IDS2Eval</title>
 <link rel="stylesheet" href="/static/style.css"></head>
 <body>
-<header><h1>IDS2Eval</h1><span class="sub">dataset audit &amp; benchmark</span><span class="spacer"></span>
-<button id="refresh" title="Reload the run list">Refresh</button>
-<button id="compare">Compare datasets</button>
-<button id="newrun" class="primary">New run</button></header>
-<div class="layout">
-<aside id="runs"><div class="empty">Loading runs…</div></aside>
-<main id="main"></main>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="#/">IDS<sup>2</sup>Eval</a>
+<a class="newrun" href="#/new">+ New run</a>
+<nav class="nav" aria-label="Main">
+<a href="#/" data-nav="dashboard">Dashboard</a>
+<a href="#/datasets" data-nav="datasets">Datasets</a>
+<a href="#/runs" data-nav="runs">Runs</a>
+<a href="#/compare" data-nav="compare">Compare datasets</a>
+</nav>
+<div class="side-foot">Local dashboard · dataset audit &amp; benchmark</div>
+</aside>
+<section class="content">
+<header class="top">
+<button id="menu" class="icon-btn" aria-label="Open navigation" aria-controls="sidebar">☰</button>
+<nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+<span class="spacer"></span>
+<button id="refresh" title="Reload runs from disk">Refresh</button>
+<button id="theme" class="icon-btn" title="Theme"></button>
+</header>
+<main class="main" id="main"></main>
+</section>
 </div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<script src="/static/charts.js"></script>
 <script src="/static/app.js"></script>
 </body></html>

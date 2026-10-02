@@ -21,9 +21,10 @@ python -m ids2eval.dashboard --output ./output  # same thing, without the consol
 | File | What it is |
 |---|---|
 | `server.py` | The HTTP server: the JSON API, file serving, request guards, and the run job (one `python -m ids2eval` subprocess at a time) |
-| `static/index.html` | The page skeleton |
+| `static/index.html` | The page shell: sidebar nav, top bar, and the `<main>` the pages render into |
+| `static/charts.js` | The chart kit (dot plots, strip plot, scatter, heatmap, composition bars) and the per-check evidence views built on it (`CHECK_VIZ`). SVG drawn at the container's pixel width, redrawn on resize; loaded before `app.js` |
 | `static/style.css` | All styling, including dark mode (`prefers-color-scheme`) |
-| `static/app.js` | All page behavior - fetches the API below and builds the DOM with `textContent` (never `innerHTML`) |
+| `static/app.js` | All page behavior - a hash router (`#/`, `#/datasets`, `#/runs`, `#/run/<dir_idx>/<run>/<tab>`, `#/new`, `#/compare`) whose pages fetch the API below and build the DOM with `textContent` (never `innerHTML`). Charts are plain HTML rows sized through `element.style`, which the CSP allows |
 
 The static files are served as-is, so a change to them shows up on a browser
 reload - no server restart. A change to `server.py` needs a restart.
@@ -37,8 +38,9 @@ without needing any of this.
 | Method | Path | Returns / does |
 |---|---|---|
 | GET | `/` , `/static/<file>` | The page and its assets (files directly in `static/` only) |
-| GET | `/api/runs` | Every run under the listed output dirs, newest first, with verdict and status |
-| GET | `/api/run/<dir_idx>/<run_name>` | One run: summary, `scorecard.json` content, benchmark rows |
+| GET | `/api/runs` | Every run under the listed output dirs, newest first, with verdict, status, check counts, row/feature counts, and each check's final status (`check_status`) |
+| GET | `/api/run/<dir_idx>/<run_name>` | One run: summary, `scorecard.json` content, per-check details (`audit_report`, from `audit_report_after.json` or `_before`), `environment.json`, benchmark rows |
+| GET | `/api/check-info` | What each check measures and its ok/warning/flag rule - the same text as the hover tips in `SCORECARD.html` (`reporting.scorecard.CHECK_INFO`) |
 | GET | `/api/run/<dir_idx>/<run_name>/citation` | The same BibTeX `ids2eval cite` prints, read from that run's `scorecard.json` |
 | GET | `/api/run/<dir_idx>/<run_name>/recommendations` | The same suggestions `ids2eval recommend` prints, as structured JSON (`reporting.recommend.recommendations_for_run`) |
 | GET | `/files/<dir_idx>/<run_name>/<file>` | One artifact from a run directory (top level only) |

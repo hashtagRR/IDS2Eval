@@ -162,11 +162,13 @@ def main(argv=None) -> None:
             # Must run before dedup. dedup_check reports duplication already
             # present in the split, and dataset.dedup() would remove it first.
             stage = "audit_before"
+            logger.info("Stage: audit (before dedup)")
             findings_before = run_audit(train_df, test_df, cfg, checkpoint_path=checkpoint_path_before)
             _write_findings(run_dir / "audit_report_before.json", findings_before)
 
         if cfg["preprocessing"]["dedup"]:
             stage = "dedup"
+            logger.info("Stage: dedup")
             train_df, test_df, dedup_stats = dataset.dedup(train_df, test_df, cfg)
             logger.info("Dedup: %s", dedup_stats)
 
@@ -181,6 +183,7 @@ def main(argv=None) -> None:
                 # them - resplit_falsification's two RandomForest fits included -
                 # would be pure wasted work, not a second real measurement.
                 stage = "audit_after"
+                logger.info("Stage: audit (after dedup)")
                 recomputed = {
                     f["check"]: f for f in run_audit(
                         train_df, test_df, cfg, skip=STRUCTURAL_CHECKS, checkpoint_path=checkpoint_path_after,
@@ -248,6 +251,7 @@ def main(argv=None) -> None:
 
         if not args.skip_benchmark:
             stage = "benchmark"
+            logger.info("Stage: benchmark")
             results_df, extras = run_benchmark(train_df, test_df, cfg)
             results_path = run_dir / "benchmark_results.csv"
             results_df.to_csv(results_path, index=False)

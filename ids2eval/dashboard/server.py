@@ -26,10 +26,12 @@ import argparse
 import csv
 import json
 import logging
+import os
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 import webbrowser
 from collections import deque
 from http import HTTPStatus
@@ -40,7 +42,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 from ..config import load_config
-from ..reporting import cite, compare_datasets, recommend, run_manager
+from ..reporting import cite, compare_datasets, recommend, run_manager, scorecard
 
 logger = logging.getLogger(__name__)
 
@@ -127,6 +129,9 @@ class Job:
         self.state = "idle"
         self.returncode: int | None = None
         self.output_dir: str | None = None
+        self.started_at: float | None = None
+        self.finished_at: float | None = None
+        self.last_output_at: float | None = None
 
     def start(self, config_path: Path, output_dir: Path, skip_audit: bool, skip_benchmark: bool) -> None:
         cmd = [sys.executable, "-m", "ids2eval", "--config", str(config_path)]
@@ -136,24 +141,36 @@ class Job:
             cmd.append("--skip-benchmark")
         self.log.clear()
         self.log.append("$ " + " ".join(cmd))
+        # Unbuffered so each line reaches the live log as it's written (a pipe
+        # would otherwise block-buffer stdout); UTF-8 so a non-ASCII class or
+        # feature name can't fail decoding on a Windows code page.
+        env = {**os.environ, "PYTHONUNBUFFERED": "1", "PYTHONIOENCODING": "utf-8"}
         self.proc = subprocess.Popen(  # noqa: S603 - argv list, no shell; config was validated first
             cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
+            encoding="utf-8", errors="replace", env=env,
         )
         self.state, self.returncode, self.output_dir = "running", None, str(output_dir)
+        self.started_at = self.last_output_at = time.time()
+        self.finished_at = None
         threading.Thread(target=self._pump, args=(self.proc, config_path), daemon=True).start()
 
     def _pump(self, proc: subprocess.Popen, config_path: Path) -> None:
         for line in proc.stdout:
             self.log.append(line.rstrip("\n"))
+            self.last_output_at = time.time()
         proc.wait()
         with self.lock:
+            self.finished_at = time.time()
             self.returncode = proc.returncode
             self.state = "completed" if proc.returncode == 0 else "failed"
         config_path.unlink(missing_ok=True)
 
     def snapshot(self) -> dict:
+        # Server-side clock in the payload, so the page's elapsed/idle timers
+        # don't depend on the browser's clock agreeing with the server's.
         return {"state": self.state, "returncode": self.returncode, "output_dir": self.output_dir,
-                "log": list(self.log)}
+                "started_at": self.started_at, "finished_at": self.finished_at,
+                "last_output_at": self.last_output_at, "now": time.time(), "log": list(self.log)}
 
 
 class App:
@@ -199,6 +216,7 @@ def _run_summary(idx: int, output_dir: Path, run_dir: Path) -> dict:
     sc = _read_json(run_dir / "scorecard.json") or {}
     status = _read_json(run_dir / "run_status.json") or {}
     cfg = _read_json(run_dir / "resolved_config.json") or {}
+    fp = sc.get("dataset_fingerprint") or {}
     return {
         "id": f"{idx}/{run_dir.name}",
         "name": run_dir.name,
@@ -208,6 +226,15 @@ def _run_summary(idx: int, output_dir: Path, run_dir: Path) -> dict:
         "failed_stage": status.get("failed_stage"),
         "error": status.get("error"),
         "verdict": sc.get("overall_status"),
+        "generated_at": sc.get("generated_at"),
+        "counts": sc.get("counts"),
+        "train_rows": fp.get("train_rows"),
+        "test_rows": fp.get("test_rows"),
+        "feature_count": fp.get("feature_count"),
+        # Each check's final status (after dedup when it ran), for the
+        # dashboard's cross-run views without fetching every scorecard.
+        "check_status": {c["check"]: (c.get("after") or c.get("before") or {}).get("status")
+                         for c in sc.get("checks", []) if "check" in c},
         "files": sorted(p.name for p in run_dir.iterdir() if p.is_file()),
     }
 
@@ -259,6 +286,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(self.app.job.snapshot())
         if path == "/api/starter-config":
             return self._json({"yaml": self.app.starter_config})
+        if path == "/api/check-info":
+            # The same "what it checks" / "rule" text SCORECARD.html shows on hover.
+            return self._json({k: {"what": what, "rule": rule}
+                               for k, (what, rule) in scorecard.CHECK_INFO.items()})
 
         parts = path.strip("/").split("/")
         # /api/run/<dir_idx>/<run_name> - one run's detail
@@ -268,6 +299,11 @@ class Handler(BaseHTTPRequestHandler):
                 return self._error(HTTPStatus.NOT_FOUND, "no such run")
             summary = _run_summary(int(parts[2]), self.app.output_dirs[int(parts[2])], run_dir)
             return self._json({**summary, "scorecard": _read_json(run_dir / "scorecard.json"),
+                               "audit_report": _read_json(run_dir / "audit_report_after.json")
+                               or _read_json(run_dir / "audit_report_before.json"),
+                               # dedup_check's per-class rates only exist before dedup
+                               "audit_report_before": _read_json(run_dir / "audit_report_before.json"),
+                               "environment": _read_json(run_dir / "environment.json"),
                                "benchmark": _benchmark_rows(run_dir)})
         # /api/run/<dir_idx>/<run_name>/citation - the same BibTeX `ids2eval cite` prints
         if len(parts) == 5 and parts[:2] == ["api", "run"] and parts[4] == "citation":

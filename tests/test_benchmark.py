@@ -159,3 +159,37 @@ def test_same_random_seed_is_fully_reproducible(base_cfg, synth_train_test):
     assert results_a["accuracy"].tolist() == results_b["accuracy"].tolist()
     assert extras_a["binary|standard|smote|DecisionTree"]["feature_importance"] == \
         extras_b["binary|standard|smote|DecisionTree"]["feature_importance"]
+
+
+def test_run_benchmark_scores_test_labels_never_seen_in_training(base_cfg, synth_train_test):
+    # NSL-KDD's KDDTest+ has attack types absent from KDDTrain+ ("saint", ...).
+    # Those rows stay in the evaluation as their own class, which no model
+    # can predict, rather than crashing the run or being silently dropped.
+    train_df, test_df = synth_train_test
+    test_df = test_df.copy()
+    test_df.loc[test_df.index[:7], "Label"] = "Novel"
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    results, extras = run_benchmark(train_df, test_df, base_cfg)
+    assert len(results) == 1
+    assert extras["unseen_test_labels"] == {"binary": {"Novel": 7}}
+    detail = extras["binary|standard|none|DecisionTree"]
+    labels = detail["confusion_matrix_labels"]
+    assert labels[-1] == "Novel"
+    cm = detail["confusion_matrix"]
+    assert len(cm) == len(labels) and all(len(row) == len(labels) for row in cm)
+    assert sum(cm[-1]) == 7 and cm[-1][-1] == 0
+    assert detail["per_class_report"]["Novel"]["recall"] == 0
+    assert results["auc"].notna().all()  # computed on the rows whose class the model knows
+
+
+def test_run_benchmark_keeps_matrix_aligned_when_a_train_class_is_absent_from_test(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    test_df = test_df[test_df["Label"] != "Rare"].reset_index(drop=True)
+    base_cfg["classifiers"]["list"] = ["DecisionTree"]
+    _, extras = run_benchmark(train_df, test_df, base_cfg)
+    detail = extras["binary|standard|none|DecisionTree"]
+    labels = detail["confusion_matrix_labels"]
+    cm = detail["confusion_matrix"]
+    assert len(cm) == len(labels)
+    assert sum(cm[labels.index("Rare")]) == 0  # no test rows of that class, but its row is still there
+    assert extras["unseen_test_labels"] == {}

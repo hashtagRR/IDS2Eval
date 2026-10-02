@@ -83,7 +83,14 @@ def _grouped_split(
             f"None of dataset.group_columns {dataset_cfg['group_columns']} "
             f"are present in the loaded data"
         )
-    groups = df[group_cols].astype(str).agg("|".join, axis=1)
+    # Vectorized string concatenation, not df[group_cols].astype(str).agg("|".join,
+    # axis=1): that row-wise .agg runs a Python-level join once per row, which at
+    # full scale (hundreds of millions of rows) becomes the dominant memory cost
+    # in the whole audit - a real failure this was built to avoid, not a
+    # theoretical one.
+    groups = df[group_cols[0]].astype(str)
+    for col in group_cols[1:]:
+        groups = groups + "|" + df[col].astype(str)
 
     n_splits = round(1.0 / (1.0 - dataset_cfg["split_ratio"]))
     sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)

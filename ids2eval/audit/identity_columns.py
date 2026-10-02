@@ -35,6 +35,13 @@ LOW_CARDINALITY_THRESHOLD = 50
 # A per-class breakdown fits one small classifier per eligible class; past
 # this many classes the extra compute stops being a cheap add-on.
 MAX_CLASSES_FOR_BREAKDOWN = 25
+# Same cap as _fit_score.MAX_FIT_ROWS: fitting a RandomForest (here, up to
+# 1 + MAX_CLASSES_FOR_BREAKDOWN times, once per id_like_column plus one per
+# flagged column's per-class breakdown) on the full train_df scales with raw
+# row count rather than feature count, so at full scale (hundreds of
+# millions of rows) it is the dominant memory cost in the whole audit - a
+# real failure this was built to avoid, not a theoretical one.
+MAX_FIT_ROWS = 200_000
 
 
 def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
@@ -46,17 +53,19 @@ def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: d
             "summary": "no id_like_columns configured", "details": {},
         }
 
+    train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=cfg["random_seed"])
+
     results = {}
     flagged = []
     encoded_columns = {}
     for col in id_cols:
-        categories = pd.Index(train_df[col].astype(str).unique())
-        x_train = categories.get_indexer(train_df[col].astype(str)).reshape(-1, 1)
+        categories = pd.Index(train_fit[col].astype(str).unique())
+        x_train = categories.get_indexer(train_fit[col].astype(str)).reshape(-1, 1)
         x_test = categories.get_indexer(test_df[col].astype(str)).reshape(-1, 1)
         encoded_columns[col] = (x_train, x_test)
 
         clf = RandomForestClassifier(n_estimators=50, random_state=cfg["random_seed"], n_jobs=-1)
-        clf.fit(x_train, train_df[label_col])
+        clf.fit(x_train, train_fit[label_col])
         auc = robust_auc(test_df[label_col], clf.predict_proba(x_test), clf.classes_)
         results[col] = auc
         if auc is not None and auc > AUC_FLAG_THRESHOLD:
@@ -70,7 +79,7 @@ def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: d
     details = {"standalone_auc": results, "suggested_drop": flagged}
     if flagged:
         details["by_class"] = {
-            col: _by_class_auc(train_df, test_df, *encoded_columns[col], cfg) for col in flagged
+            col: _by_class_auc(train_fit, test_df, *encoded_columns[col], cfg) for col in flagged
         }
 
     return {"check": "identity_column_flag", "status": status, "summary": summary, "details": details}

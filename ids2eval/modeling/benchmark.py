@@ -80,6 +80,10 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
     rows = []
     per_class_rows = []
     extras: dict = {"class_distributions": {}, "unseen_test_labels": {}}
+    # Progress counter for the log; one fit per (stage, sampling, scaling, classifier).
+    step = 0
+    total = sum(len(_sampling_strategies(cfg, st)) for st, _ in stages) * len(_scaling_strategies(cfg)) \
+        * len(_resolve_classifier_list(cfg))
     for stage, label_col in stages:
         label_encoder = LabelEncoder()
         y_train_all = label_encoder.fit_transform(train_df[label_col])
@@ -107,6 +111,9 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
 
             for scaling_algo in _scaling_strategies(cfg):
                 for name in _resolve_classifier_list(cfg):
+                    step += 1
+                    logger.info("Benchmark %d/%d: %s (stage=%s, scaling=%s, sampling=%s) ...",
+                                step, total, name, stage, scaling_algo, sampling_algo)
                     try:
                         model, fit_time, best_params = _fit_classifier(
                             name, x_train, y_train, cfg, sampling_algo, scaling_algo
@@ -121,6 +128,8 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
                     metrics, infer_time, detail = _evaluate(
                         model, x_test, y_test, class_names, len(label_encoder.classes_), cols
                     )
+                    logger.info("Benchmark %d/%d done: %s macro-F1=%.4f (fit %.1fs, predict %.1fs)",
+                                step, total, name, metrics.get("f1_macro", float("nan")), fit_time, infer_time)
                     rows.append({
                         "stage": stage, "scaling": scaling_algo, "sampling": sampling_algo, "classifier": name,
                         "train_time_s": round(fit_time, 4), "infer_time_s": round(infer_time, 4),

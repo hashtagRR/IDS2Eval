@@ -66,6 +66,62 @@ def test_run_detail_includes_benchmark_rows(server):
     assert detail["benchmark"] == [{"stage": "binary", "classifier": "DecisionTree", "f1_weighted": "0.9"}]
 
 
+def test_run_summary_carries_per_check_status_and_detail_carries_audit_report(server, tmp_path):
+    base, _ = server
+    run_dir = tmp_path / "out" / "runs" / "2026-01-01_000000_000000"
+    (run_dir / "scorecard.json").write_text(json.dumps({
+        "dataset_name": "ds", "overall_status": "failed", "counts": {"ok": 1, "warning": 0, "flag": 1},
+        "dataset_fingerprint": {"train_rows": 80, "test_rows": 20, "feature_count": 5},
+        "checks": [{"check": "dedup_check", "before": {"status": "flag"}, "after": {"status": "ok"}},
+                   {"check": "one_rule_check", "before": {"status": "flag"}, "after": None}]}))
+    (run_dir / "audit_report_after.json").write_text(json.dumps([{"check": "dedup_check", "details": {"n": 1}}]))
+    run = json.loads(_get(base + "/api/runs")[1])[0]
+    # after wins when present, before is the fallback for checks that didn't rerun
+    assert run["check_status"] == {"dedup_check": "ok", "one_rule_check": "flag"}
+    assert (run["train_rows"], run["test_rows"], run["feature_count"]) == (80, 20, 5)
+    detail = json.loads(_get(base + "/api/run/0/2026-01-01_000000_000000")[1])
+    assert detail["audit_report"] == [{"check": "dedup_check", "details": {"n": 1}}]
+
+
+def test_check_info_serves_the_scorecard_explanations(server):
+    from ids2eval.reporting.scorecard import CHECK_INFO
+    base, _ = server
+    info = json.loads(_get(base + "/api/check-info")[1])
+    assert set(info) == set(CHECK_INFO)
+    assert info["dedup_check"] == {"what": CHECK_INFO["dedup_check"][0], "rule": CHECK_INFO["dedup_check"][1]}
+
+
+def test_job_streams_unbuffered_output_with_timing(tmp_path):
+    # A child that prints, then sleeps: with a block-buffered pipe the line
+    # wouldn't arrive until exit, and the dashboard would look frozen.
+    import sys
+    import time
+    job = dashboard.Job()
+    script = tmp_path / "child.py"
+    script.write_text("import time\nprint('first line')\ntime.sleep(3)\nprint('second line')\n")
+    env_seen = {}
+
+    real_popen = dashboard.subprocess.Popen
+
+    def fake_popen(cmd, **kw):
+        env_seen.update(kw.get("env") or {})
+        return real_popen([sys.executable, str(script)], **kw)
+
+    dashboard.subprocess.Popen = fake_popen
+    try:
+        job.start(tmp_path / "cfg.yaml", tmp_path, False, False)
+        deadline = time.time() + 2.5
+        while time.time() < deadline and not any("first line" in line for line in job.log):
+            time.sleep(0.05)
+        snap = job.snapshot()
+        assert any("first line" in line for line in snap["log"]), "output only arrived at exit"
+        assert snap["state"] == "running" and snap["started_at"] <= snap["last_output_at"] <= snap["now"]
+        assert env_seen["PYTHONUNBUFFERED"] == "1"
+        job.proc.wait(timeout=10)
+    finally:
+        dashboard.subprocess.Popen = real_popen
+
+
 def test_serves_run_files_but_not_outside_the_run_dir(server):
     base, _ = server
     assert _get(base + "/files/0/2026-01-01_000000_000000/SCORECARD.html")[0] == 200

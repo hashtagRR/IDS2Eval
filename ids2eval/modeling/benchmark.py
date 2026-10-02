@@ -61,7 +61,9 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
     hyperparameters) keyed by "{stage}|{scaling}|{sampling}|{classifier}",
     a "class_distributions" entry recording each stage's original and
     post-sampling class counts (scaling doesn't change class counts, so
-    it isn't part of that key), and a flat "per_class_metrics" list, the
+    it isn't part of that key), an "unseen_test_labels" entry mapping each
+    stage that had test labels absent from training to {label: test row
+    count} (see _encode_test_labels), and a flat "per_class_metrics" list, the
     same per-class precision/recall/f1/support already nested inside
     each combination's per_class_report, pulled out so a summary table
     can scan it without opening the per-combination JSON.
@@ -77,11 +79,18 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
 
     rows = []
     per_class_rows = []
-    extras: dict = {"class_distributions": {}}
+    extras: dict = {"class_distributions": {}, "unseen_test_labels": {}}
     for stage, label_col in stages:
         label_encoder = LabelEncoder()
         y_train_all = label_encoder.fit_transform(train_df[label_col])
-        y_test = label_encoder.transform(test_df[label_col])
+        y_test, class_names, unseen = _encode_test_labels(label_encoder, test_df[label_col])
+        if unseen:
+            extras["unseen_test_labels"][stage] = unseen
+            logger.warning(
+                "Stage '%s': %d test row(s) carry %d label(s) never seen in training (%s). They stay in the "
+                "evaluation as their own classes, which no classifier can predict; AUC uses the other rows only.",
+                stage, sum(unseen.values()), len(unseen), ", ".join(f"{k}={v}" for k, v in unseen.items()),
+            )
 
         if len(x_train_all) > MAX_FIT_ROWS:
             idx = np.random.RandomState(cfg["random_seed"]).choice(len(x_train_all), size=MAX_FIT_ROWS, replace=False)
@@ -109,7 +118,9 @@ def run_benchmark(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> t
                         )
                         continue
 
-                    metrics, infer_time, detail = _evaluate(model, x_test, y_test, label_encoder, cols)
+                    metrics, infer_time, detail = _evaluate(
+                        model, x_test, y_test, class_names, len(label_encoder.classes_), cols
+                    )
                     rows.append({
                         "stage": stage, "scaling": scaling_algo, "sampling": sampling_algo, "classifier": name,
                         "train_time_s": round(fit_time, 4), "infer_time_s": round(infer_time, 4),
@@ -227,7 +238,33 @@ def _fit_classifier(name: str, x_train, y_train, cfg: dict, sampling_algo: str, 
     return model, fit_time, best_params
 
 
-def _evaluate(model, x_test, y_test, label_encoder: LabelEncoder, feature_names: list[str]) -> tuple[dict, float, dict]:
+def _encode_test_labels(label_encoder: LabelEncoder, test_labels: pd.Series) -> tuple[np.ndarray, list[str], dict]:
+    """Encodes test labels against the classes seen in training. A test label
+    the training split never had (NSL-KDD's KDDTest+ has several attack types
+    KDDTrain+ lacks) gets a code after the training classes instead of
+    raising, so those rows are scored as the misses they are rather than
+    crashing the stage or being dropped, which would overstate every metric.
+
+    Returns (codes, class names in code order, {unseen label: test row count}).
+    """
+    known = {c: i for i, c in enumerate(label_encoder.classes_)}
+    unseen_labels = sorted(set(test_labels.unique()) - set(known), key=str)
+    codes = {**known, **{c: len(known) + j for j, c in enumerate(unseen_labels)}}
+    y_test = test_labels.map(codes).to_numpy(dtype=int)
+    counts = test_labels.value_counts()
+    unseen = {str(c): int(counts[c]) for c in unseen_labels}
+    class_names = [str(c) for c in label_encoder.classes_] + [str(c) for c in unseen_labels]
+    return y_test, class_names, unseen
+
+
+def _evaluate(
+    model, x_test, y_test, class_names: list[str], n_train_classes: int, feature_names: list[str]
+) -> tuple[dict, float, dict]:
+    """Codes 0..n_train_classes-1 are the training classes; any code past that
+    is a test-only class (see _encode_test_labels). Every per-class output is
+    built over the full code range, so the confusion matrix and report keep
+    one row per class even when a class is absent from y_test and y_pred.
+    """
     start = time.perf_counter()
     y_pred = model.predict(x_test)
     infer_time = time.perf_counter() - start
@@ -241,25 +278,53 @@ def _evaluate(model, x_test, y_test, label_encoder: LabelEncoder, feature_names:
         "f1_macro": float(f1_score(y_test, y_pred, average="macro", zero_division=0)),
     }
     try:
-        proba = model.predict_proba(x_test)
-        if proba.shape[1] == 2:
-            metrics["auc"] = float(roc_auc_score(y_test, proba[:, 1]))
+        # AUC needs a probability column per true class, and the model has none
+        # for a class it never trained on, so it covers the known-class rows.
+        known = y_test < n_train_classes
+        proba = _full_proba(model, x_test[known], n_train_classes)
+        y_known = y_test[known]
+        if n_train_classes == 2:
+            metrics["auc"] = float(roc_auc_score(y_known, proba[:, 1]))
         else:
-            metrics["auc"] = float(roc_auc_score(y_test, proba, multi_class="ovr", average="weighted"))
+            metrics["auc"] = _ovr_weighted_auc(y_known, proba)
     except (AttributeError, ValueError) as e:
         logger.warning("Could not compute AUC: %s", e)
         metrics["auc"] = None
 
-    class_names = [str(c) for c in label_encoder.classes_]
+    labels = np.arange(len(class_names))
     detail = {
-        "confusion_matrix": confusion_matrix(y_test, y_pred).tolist(),
+        "confusion_matrix": confusion_matrix(y_test, y_pred, labels=labels).tolist(),
         "confusion_matrix_labels": class_names,
         "per_class_report": classification_report(
-            y_test, y_pred, target_names=class_names, output_dict=True, zero_division=0
+            y_test, y_pred, labels=labels, target_names=class_names, output_dict=True, zero_division=0
         ),
         "feature_importance": _feature_importance(model, feature_names),
     }
     return metrics, infer_time, detail
+
+
+def _ovr_weighted_auc(y: np.ndarray, proba: np.ndarray) -> float:
+    """One-vs-rest AUC per class present in y, on that class's own probability
+    column, averaged by support: what roc_auc_score(multi_class="ovr",
+    average="weighted") returns when every class is present, but still
+    defined when a training class has no test rows (sklearn raises then).
+    """
+    present, support = np.unique(y, return_counts=True)
+    if len(present) < 2:
+        raise ValueError("only one class present in the test labels")
+    aucs = [roc_auc_score(y == c, proba[:, c]) for c in present]
+    return float(np.average(aucs, weights=support))
+
+
+def _full_proba(model, x, n_classes: int) -> np.ndarray:
+    """predict_proba widened to one column per training class: a class the
+    fit sample happened to miss (MAX_FIT_ROWS subsampling, a resampler)
+    has no column in model.classes_, which would misalign the others.
+    """
+    proba = model.predict_proba(x)
+    full = np.zeros((proba.shape[0], n_classes))
+    full[:, np.asarray(model.classes_, dtype=int)] = proba
+    return full
 
 
 def _feature_importance(model, feature_names: list[str]) -> dict | None:

@@ -27,6 +27,7 @@ VALID_OUTPUT_FORMAT = {"parquet", "csv"}
 # stay in sync with which checks actually call ids2eval.audit._materiality.threshold().
 MATERIALITY_SINGLE_CHECKS = {
     "resplit_falsification", "cross_dataset_drift_check", "repeated_seed_falsification_check",
+    "homogeneity_test",
 }
 MATERIALITY_TIERED_CHECKS = {
     "result_robustness_check", "cross_capture_matrix_check",

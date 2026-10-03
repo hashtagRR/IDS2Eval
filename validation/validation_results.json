@@ -1,0 +1,202 @@
+[
+  {
+    "check": "dedup_check",
+    "defect": "exact train/test duplication",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 800 (20.00%); test-internal duplicates: 0"
+  },
+  {
+    "check": "dedup_check",
+    "defect": "exact train/test duplication",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+  },
+  {
+    "check": "label_conflict_check",
+    "defect": "label conflict (identical features, different label)",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "400 feature vector(s) (800 rows, 9.52%) map to more than one label. The ground truth contradicts itself for these rows"
+  },
+  {
+    "check": "label_conflict_check",
+    "defect": "label conflict (identical features, different label)",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "no feature vector maps to more than one label"
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "defect": "near-duplicate feature vectors across classes",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "258 of 1,000 sampled rows (25.80%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'attack / benign': 258}"
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "defect": "near-duplicate feature vectors across classes",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "no near-zero-distance feature vectors found across 2 classes tested"
+  },
+  {
+    "check": "identity_column_flag",
+    "defect": "identity column encodes the label",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "standalone AUC by column: {'src_ip': 1.0}. Suggest dropping: ['src_ip']"
+  },
+  {
+    "check": "identity_column_flag",
+    "defect": "identity column encodes the label",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "standalone AUC by column: {'src_ip': 0.495}"
+  },
+  {
+    "check": "low_cardinality_warning",
+    "defect": "identity column has few distinct values",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "warning",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "unique values by column: {'src_ip': 5}. ['src_ip'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior"
+  },
+  {
+    "check": "low_cardinality_warning",
+    "defect": "identity column has few distinct values",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "unique values by column: {'src_ip': 2530}"
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "defect": "port+protocol pair encodes the label",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "standalone AUC of 'dst_port' + 'proto' combined: 1.000. Port and protocol together may predict the label without attack behavior"
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "defect": "port+protocol pair encodes the label",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "standalone AUC of 'dst_port' + 'proto' combined: 0.505"
+  },
+  {
+    "check": "one_rule_check",
+    "defect": "single feature threshold perfectly separates classes",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "single rule 'f0 <= -3.401e-05' reaches 100.0% test accuracy (100.0% train). This problem may be solvable without learning attack behavior"
+  },
+  {
+    "check": "one_rule_check",
+    "defect": "single feature threshold perfectly separates classes",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "single rule 'f4 <= -2.164' reaches 50.7% test accuracy (50.5% train)"
+  },
+  {
+    "check": "row_order_leakage_check",
+    "defect": "rows blocked by label instead of shuffled",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split"
+  },
+  {
+    "check": "row_order_leakage_check",
+    "defect": "rows blocked by label instead of shuffled",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "adjacent-row label-transition rate (train=1.01, test=1.01) as a share of what a randomly shuffled ordering would produce"
+  },
+  {
+    "check": "temporal_leakage_check",
+    "defect": "timestamp alone encodes the label",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "standalone AUC of 'ts' alone: 1.000. Timestamp alone may predict the label without learning attack behavior"
+  },
+  {
+    "check": "temporal_leakage_check",
+    "defect": "timestamp alone encodes the label",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "standalone AUC of 'ts' alone: 0.503"
+  },
+  {
+    "check": "temporal_realism_check",
+    "defect": "one class confined to a narrow time burst",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "narrowest class's own time span: 'attack' covers 0.9% of the full capture window; timestamp alone may act as a proxy for this class rather than its actual traffic behavior"
+  },
+  {
+    "check": "temporal_realism_check",
+    "defect": "one class confined to a narrow time burst",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "narrowest class's own time span: 'benign' covers 100.0% of the full capture window"
+  }
+]

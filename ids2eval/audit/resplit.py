@@ -44,11 +44,19 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
     if combined is None:
         combined = dataset.load_raw_combined(dataset_cfg, seed=cfg["random_seed"])
 
+    # Scored one split at a time, not both built up front: at full scale (hundreds
+    # of millions of rows) holding combined plus both split pairs simultaneously -
+    # five full-size DataFrames at once - is itself the dominant memory cost, a
+    # real failure this was built to avoid, not a theoretical one. fit_and_score
+    # only needs the float back, so each split's train/test can be freed before
+    # the next is built.
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
-    grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
-
     random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+    del random_train, random_test
+
+    grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
     grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
+    del grouped_train, grouped_test
     drop = random_acc - grouped_acc
 
     threshold = _materiality.threshold(cfg, "resplit_falsification", MATERIAL_DROP_THRESHOLD)

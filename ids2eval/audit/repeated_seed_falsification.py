@@ -107,10 +107,16 @@ def check(
         combined = dataset.load_raw_combined(dataset_cfg, seed=cfg["random_seed"])
 
     def run_seed(seed: int) -> float:
+        # Scored one split at a time, not both built up front - see resplit.check's
+        # own comment: holding combined plus both split pairs at once is the
+        # dominant memory cost at full scale, and this runs n_seeds times.
         random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
-        grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
         random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+        del random_train, random_test
+
+        grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
         grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
+        del grouped_train, grouped_test
         return random_acc - grouped_acc
 
     if cfg["audit"]["parallel_checks"] and not checkpoint_path and len(remaining_seeds) > 1:

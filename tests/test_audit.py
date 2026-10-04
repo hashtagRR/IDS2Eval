@@ -228,6 +228,33 @@ def test_homogeneity_test_runs_and_returns_per_class_stats(base_cfg, synth_train
     assert len(result["details"]["per_class"]) >= 1
 
 
+def _homogeneity_frames(test_copies_train: bool, train_internal_dupes: bool):
+    rng = np.random.RandomState(0)
+    n = 600
+    train = pd.DataFrame({"f1": rng.normal(size=n), "f2": rng.normal(size=n), "Label": "A"})
+    if train_internal_dupes:
+        train = pd.concat([train, train], ignore_index=True)
+    if test_copies_train:
+        test = train.sample(n=300, random_state=1).reset_index(drop=True)
+    else:
+        test = pd.DataFrame({"f1": rng.normal(size=300), "f2": rng.normal(size=300), "Label": "A"})
+    return train, test
+
+
+@pytest.mark.parametrize("test_copies_train,train_dupes,expected_cls,expected_status", [
+    (True, False, "leakage", "flag"),
+    (False, True, "below_control", "ok"),
+    (False, False, "equivalent", "ok"),
+])
+def test_homogeneity_test_classification_is_one_sided(
+    base_cfg, test_copies_train, train_dupes, expected_cls, expected_status
+):
+    train_df, test_df = _homogeneity_frames(test_copies_train, train_dupes)
+    result = homogeneity.check(train_df, test_df, base_cfg)
+    assert result["details"]["per_class"]["A"]["classification"] == expected_cls
+    assert result["status"] == expected_status
+
+
 def test_resplit_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     csv_path = tmp_path / "raw.csv"
     synth_data.to_csv(csv_path, index=False)
@@ -1073,6 +1100,18 @@ def test_one_rule_check_ok_when_no_single_feature_suffices(base_cfg):
     result = one_rule.check(train_df, test_df, base_cfg)
     assert result["status"] == "ok"
     assert result["details"]["test_accuracy"] < 0.95
+
+
+def test_one_rule_check_ok_on_imbalanced_data_with_no_signal(base_cfg):
+    # ~99% majority class and labels independent of the features: any stump scores
+    # near the majority share, which is not a shortcut.
+    rng = np.random.RandomState(0)
+    n = 4000
+    df = pd.DataFrame({"F1": rng.normal(size=n), "F2": rng.normal(size=n),
+                       "Label": rng.choice(["Benign", "Attack"], size=n, p=[0.99, 0.01])})
+    result = one_rule.check(df.iloc[:3000], df.iloc[3000:], base_cfg)
+    assert result["details"]["test_accuracy"] > 0.95
+    assert result["status"] == "ok"
 
 
 # -- temporal_leakage_check ---------------------------------------------------

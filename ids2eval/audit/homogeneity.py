@@ -10,15 +10,14 @@ within each split independently), not train/test boundary leakage. If
 test rows are notably more prone to it, that's a real leakage signature
 the resplit-falsification check can then corroborate.
 
-Reports this as a genuine equivalence test, not an unreplicated
-non-significance claim: failing to detect a difference is not the same
-claim as having shown the two rates are close, so this computes a 95%
-CI on the rate difference (test minus control) and classifies each class
-against a pre-specified equivalence margin, the same three-way
-material/not-material/inconclusive pattern already used by
-repeated_seed_falsification_check for the same reason - "statistically
-indistinguishable" from a single p-value conflates "no detected
-difference" with "shown to be equivalent," two different claims.
+Reports a 95% CI on the rate difference (test minus control) against a
+pre-specified margin rather than a single p-value, since failing to detect
+a difference is not the same claim as having shown there is none. Leakage
+is one-sided, so a class is "leakage" when the CI's lower bound exceeds
++margin, cleared when its upper bound is below +margin ("equivalent" if
+the CI also sits inside +/-margin, "below_control" if test rows are
+materially less near-duplicated than train is with itself), and
+"inconclusive" when the CI straddles +margin.
 """
 
 from __future__ import annotations
@@ -30,8 +29,8 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 
-from . import _materiality
 from ..data import features
+from . import _materiality
 
 SAMPLE_SIZE = 500
 MIN_CLASS_SIZE = 20
@@ -105,16 +104,15 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         n_test, n_control = len(test_dist), len(control_dist)
         ci_low, ci_high = _rate_diff_ci(test_near_zero, n_test, control_near_zero, n_control)
 
-        # Three-way, same pattern as repeated_seed_falsification_check: the CI's
-        # lower bound above the margin is a real leakage signature even at the
-        # most conservative estimate; the CI entirely within +/-margin is a
-        # genuine equivalence claim, not just "no difference detected"; anything
-        # straddling either boundary is inconclusive, not silently "ok".
+        # Leakage is one-sided (test closer to train than the control), so the
+        # decision bound is +margin only. A CI entirely below -margin means the
+        # test rows are materially *less* near-duplicated than train is with
+        # itself: decisively not leakage, so it must not land in "inconclusive".
         if ci_low > margin:
             classification = "leakage"
             flagged_classes.append(cls)
-        elif ci_low > -margin and ci_high < margin:
-            classification = "equivalent"
+        elif ci_high < margin:
+            classification = "equivalent" if ci_low > -margin else "below_control"
         else:
             classification = "inconclusive"
             inconclusive_classes.append(cls)
@@ -137,9 +135,9 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         )
     else:
         detail = (
-            f"test-to-train and train-internal near-duplicate rates fall within a pre-specified "
-            f"+/-{margin:.2f} equivalence margin for every class (95% CI), consistent with inherent "
-            f"class homogeneity rather than train/test leakage"
+            f"for every class the 95% CI upper bound on (test-to-train minus train-internal) "
+            f"near-duplicate rate is below the +{margin:.2f} margin, so no class shows a "
+            f"train/test leakage signature"
         )
     summary = f"{len(per_class)} classes tested; {detail}"
 

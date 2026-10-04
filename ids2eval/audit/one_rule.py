@@ -24,6 +24,10 @@ from ..data import features
 # one line"); a one-rule accuracy this high is the tabular-data equivalent - a
 # threshold on a single feature is about as simple a rule as exists.
 ACCURACY_FLAG_THRESHOLD = 0.95
+# A rule must also remove at least this share of the errors made by always
+# predicting the training majority class: on a 99:1 dataset with no signal, any
+# stump scores ~99% by predicting the majority, which says nothing about shortcuts.
+MIN_ERROR_REDUCTION = 0.5
 MAX_FIT_ROWS = 200_000
 
 
@@ -55,13 +59,23 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, seed: int = 
     train_acc = float(stump.score(x_train, y_train))
     test_acc = float(stump.score(x_test, y_test))
 
-    flagged = test_acc > ACCURACY_FLAG_THRESHOLD
+    majority = y_train.value_counts().idxmax()
+    baseline_acc = float((y_test == majority).mean())
+    error_reduction = (test_acc - baseline_acc) / (1 - baseline_acc) if baseline_acc < 1 else 0.0
+
+    flagged = test_acc > ACCURACY_FLAG_THRESHOLD and error_reduction >= MIN_ERROR_REDUCTION
     status = "flag" if flagged else "ok"
-    summary = f"single rule '{rule}' reaches {test_acc:.1%} test accuracy ({train_acc:.1%} train)"
+    summary = (
+        f"single rule '{rule}' reaches {test_acc:.1%} test accuracy ({train_acc:.1%} train), "
+        f"vs. {baseline_acc:.1%} from always predicting the majority class"
+    )
     if flagged:
         summary += ". This problem may be solvable without learning attack behavior"
 
     return {
         "check": "one_rule_check", "status": status, "summary": summary,
-        "details": {"rule": rule, "train_accuracy": train_acc, "test_accuracy": test_acc},
+        "details": {
+            "rule": rule, "train_accuracy": train_acc, "test_accuracy": test_acc,
+            "majority_baseline_accuracy": baseline_acc, "error_reduction_vs_baseline": error_reduction,
+        },
     }

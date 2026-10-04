@@ -111,6 +111,10 @@ time-series anomaly benchmarks turned out solvable by a single line of
 code, which meant published algorithm comparisons on them measured
 nothing. A depth-1 tree is exactly a brute-force search over every
 feature and threshold for the single best split, done in one cheap fit.
+It flags when that rule exceeds 95% test accuracy *and* removes at least
+half the errors of always predicting the training majority class, so a
+heavily imbalanced dataset with no real signal (where any rule scores near
+the majority share) does not flag.
 
 ### `feature_auc_ranking_check`
 `identity_column_flag`, `port_protocol_shortcut_check`, and

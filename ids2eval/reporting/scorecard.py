@@ -84,7 +84,8 @@ CHECK_INFO = {
         "in plain language. Per Wu & Keogh 2021: most widely-used time-series anomaly benchmarks turned "
         "out solvable by a single line of code, which meant published algorithm comparisons on them were "
         "measuring nothing.",
-        "Flag: the one-rule classifier reaches above 95% test accuracy on its own.",
+        "Flag: the one-rule classifier reaches above 95% test accuracy on its own and removes at least half "
+        "the errors of always predicting the majority class.",
     ),
     "feature_auc_ranking_check": (
         "Standalone one-vs-rest AUC of every numeric feature against every class, computed directly from "

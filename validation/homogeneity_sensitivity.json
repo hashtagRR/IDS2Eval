@@ -1,0 +1,566 @@
+{
+  "unsw-nb15/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    }
+  },
+  "unsw-nb15/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    }
+  },
+  "nsl-kdd/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 4,
+      "cleared": 6,
+      "inconclusive": 2
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 4,
+      "cleared": 6,
+      "inconclusive": 2
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 3,
+      "cleared": 8,
+      "inconclusive": 1
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 4,
+      "cleared": 5,
+      "inconclusive": 3
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 3,
+      "cleared": 5,
+      "inconclusive": 4
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 3,
+      "cleared": 7,
+      "inconclusive": 2
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 11,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    }
+  },
+  "nsl-kdd/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 1,
+      "cleared": 10,
+      "inconclusive": 1
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 1,
+      "cleared": 10,
+      "inconclusive": 1
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 1,
+      "cleared": 11,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 2
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    }
+  },
+  "cic-ids2017/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 4
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 2
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 8
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 6,
+      "inconclusive": 6
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 2
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 6,
+      "inconclusive": 6
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 4
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    }
+  },
+  "cic-ids2017/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 11,
+      "inconclusive": 1
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 8
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 5,
+      "inconclusive": 7
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 4
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 8
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 7,
+      "inconclusive": 5
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 12,
+      "inconclusive": 0
+    }
+  },
+  "cic-ddos2019/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    }
+  },
+  "cic-ddos2019/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 1,
+      "inconclusive": 1
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 0
+    }
+  },
+  "ton-iot-official/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 7,
+      "inconclusive": 3
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 2
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 3,
+      "inconclusive": 7
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 2
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 7,
+      "inconclusive": 3
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    }
+  },
+  "ton-iot-official/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 7,
+      "inconclusive": 3
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 5,
+      "inconclusive": 5
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 8,
+      "inconclusive": 2
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 10,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 9,
+      "inconclusive": 1
+    }
+  },
+  "bot-iot-official/before": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 2
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 3,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    }
+  },
+  "bot-iot-official/after": {
+    "cutoff=1e-06,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.05": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=1e-06,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.025": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.05": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.001,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    },
+    "cutoff=0.1,margin=0.025": {
+      "leakage": 0,
+      "cleared": 2,
+      "inconclusive": 2
+    },
+    "cutoff=0.1,margin=0.05": {
+      "leakage": 0,
+      "cleared": 3,
+      "inconclusive": 1
+    },
+    "cutoff=0.1,margin=0.1": {
+      "leakage": 0,
+      "cleared": 4,
+      "inconclusive": 0
+    }
+  }
+}

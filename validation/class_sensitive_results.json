@@ -1,0 +1,50 @@
+{
+  "ton-iot-official": {
+    "random": {
+      "accuracy": 0.9948589163448553,
+      "balanced_accuracy": 0.9860190909090909,
+      "macro_f1": 0.9857921172030023,
+      "worst_class_recall": 0.9090909090909091,
+      "worst_class_label": "mitm"
+    },
+    "grouped": {
+      "accuracy": 0.9944560272934041,
+      "balanced_accuracy": 0.9846988461538462,
+      "macro_f1": 0.9848655836341367,
+      "worst_class_recall": 0.8990384615384616,
+      "worst_class_label": "mitm"
+    }
+  },
+  "bot-iot-official": {
+    "random": {
+      "accuracy": 0.9999850075984217,
+      "balanced_accuracy": 0.9685416528228405,
+      "macro_f1": 0.9825042348570443,
+      "worst_class_recall": 0.9052631578947369,
+      "worst_class_label": "Normal"
+    },
+    "grouped": {
+      "accuracy": 0.9999604745776572,
+      "balanced_accuracy": 0.85625,
+      "macro_f1": 0.9086546368220663,
+      "worst_class_recall": 0.5,
+      "worst_class_label": "Theft"
+    }
+  },
+  "cic-ids2017-glf": {
+    "random": {
+      "accuracy": 0.9994524409651876,
+      "balanced_accuracy": 0.8143315054684404,
+      "macro_f1": 0.8320069535934166,
+      "worst_class_recall": 0.0,
+      "worst_class_label": "Web Attack \u2013 Sql Injection"
+    },
+    "grouped": {
+      "accuracy": 0.9994188716571872,
+      "balanced_accuracy": 0.7908887179977837,
+      "macro_f1": 0.8003376372723883,
+      "worst_class_recall": 0.0,
+      "worst_class_label": "Infiltration"
+    }
+  }
+}

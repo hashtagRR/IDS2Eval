@@ -16,19 +16,22 @@ Usage: venv/bin/python3 validation/class_sensitive_metrics.py
 """
 from __future__ import annotations
 
-import sys
 import json
+import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sklearn.ensemble import RandomForestClassifier  # noqa: E402
-from sklearn.metrics import (  # noqa: E402
-    accuracy_score, balanced_accuracy_score, f1_score, recall_score,
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    accuracy_score,
+    balanced_accuracy_score,
+    f1_score,
+    recall_score,
 )
 
-from ids2eval.config import load_config  # noqa: E402
-from ids2eval.data import dataset, features  # noqa: E402
+from ids2eval.config import load_config
+from ids2eval.data import dataset, features
 
 MAX_FIT_ROWS = 200_000  # matches ids2eval.audit._fit_score.MAX_FIT_ROWS exactly
 

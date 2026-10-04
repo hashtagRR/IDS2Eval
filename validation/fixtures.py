@@ -312,6 +312,137 @@ def temporal_realism_negative():
     return train, None, cfg
 
 
+# --- 11. Cross-boundary copies vs inherent homogeneity -> homogeneity_test --
+
+def homogeneity_positive():
+    # Every population row is distinct, but a fifth of test is copied from train:
+    # test rows match train far more often than train rows match each other.
+    rng = np.random.RandomState(21)
+    train = _noise_features(rng, N)
+    train["label"] = _labels(rng, N)
+    test = _noise_features(rng, N)
+    test["label"] = _labels(rng, N)
+    k = N // 5
+    test.iloc[:k] = train.iloc[:k].to_numpy()
+    return train, test, base_cfg()
+
+
+def homogeneity_negative():
+    # A mechanically repetitive population (50 distinct vectors per class, like
+    # scripted attack traffic) split at random: rows match across the boundary
+    # constantly, but no more often than within train itself.
+    rng = np.random.RandomState(22)
+    parts = []
+    for cls in ("benign", "attack"):
+        templates = _noise_features(rng, 50)
+        rows = templates.iloc[rng.randint(0, 50, size=N)].reset_index(drop=True)
+        rows["label"] = cls
+        parts.append(rows)
+    pop = pd.concat(parts, ignore_index=True).sample(frac=1.0, random_state=0).reset_index(drop=True)
+    return pop.iloc[:N].reset_index(drop=True), pop.iloc[N:].reset_index(drop=True), base_cfg()
+
+
+# --- 12-13. Group-memorization leakage -> resplit / repeated-seed falsification
+# These checks build their own splits from the combined raw data, so the
+# fixture returns one combined frame (as `train`) plus a full default config.
+
+GROUP_COLS = ["src_ip", "src_port", "dst_ip", "dst_port", "proto"]
+
+
+def full_cfg(**overrides) -> dict:
+    import copy
+
+    from ids2eval.config import DEFAULTS
+    cfg = copy.deepcopy(DEFAULTS)
+    cfg["schema"]["label_column"] = "label"
+    cfg["dataset"]["raw_files"] = ["<in-memory fixture>"]
+    cfg["dataset"]["group_columns"] = list(GROUP_COLS)
+    cfg["schema"]["drop_columns"] = list(GROUP_COLS)
+    cfg["audit"]["repeated_seed_count"] = 5
+    for key, value in overrides.items():
+        section, field = key.split("__")
+        cfg[section][field] = value
+    return cfg
+
+
+def _flows(rng: np.random.RandomState, n_groups: int, rows_per_group: int) -> pd.DataFrame:
+    gid = np.repeat(np.arange(n_groups), rows_per_group)
+    return pd.DataFrame({
+        "src_ip": [f"10.0.{g // 250}.{g % 250}" for g in gid],
+        "src_port": 1024 + gid,
+        "dst_ip": "192.168.1.1",
+        "dst_port": 443,
+        "proto": "tcp",
+        "_gid": gid,
+    })
+
+
+def group_leak_positive():
+    # Each flow group has its own feature signature and its own random label,
+    # unrelated to any feature that generalizes across groups: a random split
+    # lets the model recognize groups it has already seen, a grouped split
+    # cannot, so accuracy should collapse toward chance under grouping.
+    rng = np.random.RandomState(23)
+    n_groups, per = 400, 10
+    df = _flows(rng, n_groups, per)
+    centroids = rng.normal(scale=3.0, size=(n_groups, 6))
+    feats = centroids[df["_gid"]] + rng.normal(scale=0.3, size=(len(df), 6))
+    df[[f"f{i}" for i in range(6)]] = feats
+    group_labels = rng.choice(["benign", "attack"], size=n_groups)
+    df["label"] = group_labels[df["_gid"]]
+    return df.drop(columns="_gid"), None, full_cfg()
+
+
+def group_leak_negative():
+    # Same flow-group structure, but the label depends on a per-row feature
+    # that generalizes across groups, so grouping should not matter.
+    rng = np.random.RandomState(24)
+    df = _flows(rng, 400, 10)
+    df[[f"f{i}" for i in range(6)]] = rng.normal(size=(len(df), 6))
+    df["label"] = np.where(df["f0"] > 0, "attack", "benign")
+    return df.drop(columns="_gid"), None, full_cfg()
+
+
+# --- 14. Identity-column dependence -> result_robustness_check --------------
+
+def robustness_positive():
+    # The label is recoverable only from an identity column; dropping the
+    # declared identity columns should collapse accuracy.
+    rng = np.random.RandomState(25)
+    df = _noise_features(rng, 2 * N)
+    df["label"] = _labels(rng, 2 * N)
+    df["src_ip"] = np.where(df["label"] == "benign", "10.0.0.1", "10.0.0.2")
+    cfg = full_cfg(dataset__group_columns=[], schema__drop_columns=[], schema__id_like_columns=["src_ip"])
+    return df, None, cfg
+
+
+def robustness_negative():
+    rng = np.random.RandomState(26)
+    df = _noise_features(rng, 2 * N)
+    df["label"] = np.where(df["f0"] > 0, "attack", "benign")
+    df["src_ip"] = rng.randint(0, 2 * N, size=2 * N).astype(str)
+    cfg = full_cfg(dataset__group_columns=[], schema__drop_columns=[], schema__id_like_columns=["src_ip"])
+    return df, None, cfg
+
+
+# --- Negative control: severe class imbalance, no leakage of any kind -------
+
+def imbalance_control():
+    # 0.5% minority class (under class_distribution_report's 1% rare-class rule),
+    # labels independent of every feature, no duplicates,
+    # no identity columns, rows shuffled. Only class_distribution_report should
+    # react; every leakage-type check should stay clean.
+    # 20,000 rows per split so the minority class (~100 rows) clears every
+    # check's minimum class size and is actually tested, not skipped.
+    rng = np.random.RandomState(27)
+    n = 5 * N
+    train = _noise_features(rng, n)
+    train["label"] = rng.choice(["benign", "attack"], size=n, p=[0.995, 0.005])
+    test = _noise_features(rng, n)
+    test["label"] = rng.choice(["benign", "attack"], size=n, p=[0.995, 0.005])
+    return train, test, base_cfg()
+
+
 FIXTURES = {
     "dedup_check": {
         "defect": "exact train/test duplication",
@@ -353,4 +484,27 @@ FIXTURES = {
         "defect": "one class confined to a narrow time burst",
         "positive": temporal_realism_positive, "negative": temporal_realism_negative,
     },
+    "homogeneity_test": {
+        "defect": "test rows copied from train (vs. a repetitive population split at random)",
+        "positive": homogeneity_positive, "negative": homogeneity_negative,
+    },
+    "resplit_falsification": {
+        "defect": "label tied to flow groups the random split leaks",
+        "positive": group_leak_positive, "negative": group_leak_negative,
+    },
+    "repeated_seed_falsification_check": {
+        "defect": "label tied to flow groups the random split leaks (5 seeds)",
+        "positive": group_leak_positive, "negative": group_leak_negative,
+    },
+    "result_robustness_check": {
+        "defect": "label recoverable only from an identity column",
+        "positive": robustness_positive, "negative": robustness_negative,
+    },
 }
+
+# Checks run on imbalance_control: the first should react, the rest must not.
+IMBALANCE_EXPECTED_FIRES = ["class_distribution_report"]
+IMBALANCE_EXPECTED_CLEAN = [
+    "dedup_check", "label_conflict_check", "near_duplicate_class_check", "one_rule_check",
+    "row_order_leakage_check", "homogeneity_test", "feature_auc_ranking_check",
+]

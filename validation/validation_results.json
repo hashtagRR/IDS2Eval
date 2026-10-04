@@ -127,7 +127,7 @@
     "actual_status": "flag",
     "actual_bucket": "fires",
     "passed": true,
-    "summary": "single rule 'f0 <= -3.401e-05' reaches 100.0% test accuracy (100.0% train). This problem may be solvable without learning attack behavior"
+    "summary": "single rule 'f0 <= -3.401e-05' reaches 100.0% test accuracy (100.0% train), vs. 48.4% from always predicting the majority class. This problem may be solvable without learning attack behavior"
   },
   {
     "check": "one_rule_check",
@@ -137,7 +137,7 @@
     "actual_status": "ok",
     "actual_bucket": "clean",
     "passed": true,
-    "summary": "single rule 'f4 <= -2.164' reaches 50.7% test accuracy (50.5% train)"
+    "summary": "single rule 'f4 <= -2.164' reaches 50.7% test accuracy (50.5% train), vs. 49.5% from always predicting the majority class"
   },
   {
     "check": "row_order_leakage_check",
@@ -198,5 +198,165 @@
     "actual_bucket": "clean",
     "passed": true,
     "summary": "narrowest class's own time span: 'benign' covers 100.0% of the full capture window"
+  },
+  {
+    "check": "homogeneity_test",
+    "defect": "test rows copied from train (vs. a repetitive population split at random)",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "2 classes tested; leakage signature (95% CI lower bound exceeds the +0.05 margin) in: ['benign', 'attack']"
+  },
+  {
+    "check": "homogeneity_test",
+    "defect": "test rows copied from train (vs. a repetitive population split at random)",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature"
+  },
+  {
+    "check": "resplit_falsification",
+    "defect": "label tied to flow groups the random split leaks",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "random-split accuracy=0.9875, grouped-split accuracy=0.5188 (drop=+0.4688); grouped split costs measurable accuracy, session-correlated leakage in the random split may be doing real work"
+  },
+  {
+    "check": "resplit_falsification",
+    "defect": "label tied to flow groups the random split leaks",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "defect": "label tied to flow groups the random split leaks (5 seeds)",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.4715, 95% CI=[+0.4211, +0.5219]; material: even the most conservative estimate in the 95% CI (+0.4211) exceeds the +0.0100 materiality threshold"
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "defect": "label tied to flow groups the random split leaks (5 seeds)",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0000, 95% CI=[+0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold"
+  },
+  {
+    "check": "result_robustness_check",
+    "defect": "label recoverable only from an identity column",
+    "polarity": "positive",
+    "expected": "fires",
+    "actual_status": "flag",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "accuracy ranges from 0.5244 (identity_columns_dropped) to 1.0000 (random_split) across 2 conditions, a spread of 0.4756; the headline result depends on methodology choices as much as the classifier"
+  },
+  {
+    "check": "result_robustness_check",
+    "defect": "label recoverable only from an identity column",
+    "polarity": "negative",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "accuracy ranges from 1.0000 (random_split) to 1.0000 (random_split) across 2 conditions, a spread of 0.0000"
+  },
+  {
+    "check": "class_distribution_report",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "fires",
+    "actual_status": "warning",
+    "actual_bucket": "fires",
+    "passed": true,
+    "summary": "2 classes, train imbalance ratio (majority:minority) = 203:1; classes below 1% of train: ['attack']"
+  },
+  {
+    "check": "dedup_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+  },
+  {
+    "check": "label_conflict_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "no feature vector maps to more than one label"
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "no near-zero-distance feature vectors found across 2 classes tested"
+  },
+  {
+    "check": "one_rule_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "single rule 'f0 <= 4.201' reaches 99.4% test accuracy (99.5% train), vs. 99.4% from always predicting the majority class"
+  },
+  {
+    "check": "row_order_leakage_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "adjacent-row label-transition rate (train=0.99, test=1.00) as a share of what a randomly shuffled ordering would produce"
+  },
+  {
+    "check": "homogeneity_test",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature"
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "defect": "negative control: 0.5% minority class, no leakage",
+    "polarity": "imbalance",
+    "expected": "clean",
+    "actual_status": "ok",
+    "actual_bucket": "clean",
+    "passed": true,
+    "summary": "'f2' alone reaches AUC 0.562 identifying 'benign'"
   }
 ]

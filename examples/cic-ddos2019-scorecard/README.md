@@ -10,7 +10,7 @@ two separate days, run 2 months apart. Produced with `config.yaml` in this folde
 open [SCORECARD.html](SCORECARD.html) in a browser for the full result, or read
 [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 12 ok, 4 warnings, 3 flags after dedup, across 19 checks.
+**Result: review required** - 12 ok, 4 warnings, 3 flags after dedup, across 19 checks.
 This is a change from an earlier run of this same dataset, which reported
 passed with warnings before `near_duplicate_class_check` existed; see below.
 
@@ -31,7 +31,7 @@ What it found:
   `label_conflict_check` below, this survives cleaning: these are not exact
   duplicates dedup would catch, near-identical flows genuinely carry two
   different attack labels. This is the one finding that changes the verdict
-  from passed-with-warnings to failed relative to this example's earlier run.
+  from passed-with-warnings to review required relative to this example's earlier run.
 - **`label_conflict_check` flags 5,623 feature vectors (13,758 rows, 3.19%) mapping
   to more than one label before dedup**, 4,853 of them spanning train and test;
   after dedup, zero conflicts remain, so this one was duplication masquerading as

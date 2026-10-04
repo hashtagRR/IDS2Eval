@@ -19,6 +19,7 @@ import logging
 from pathlib import Path
 
 from . import run_manager
+from . import scorecard as _scorecard
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +51,7 @@ def compare(scorecard: dict, previous_run_dir: Path) -> dict | None:
     current run over an unrelated one's leftover state.
     """
     try:
-        previous = json.loads((previous_run_dir / "scorecard.json").read_text())
+        previous = _scorecard.upgrade(json.loads((previous_run_dir / "scorecard.json").read_text()))
     except (OSError, ValueError) as e:
         logger.warning("Could not read previous run's scorecard at %s: %s", previous_run_dir, e)
         return None

@@ -398,14 +398,16 @@ paper can point to instead of "this dataset's quality was not
 independently verified": *"this result was obtained on a dataset that
 passed the following IDS2Eval checks."*
 
-**Pass/fail is an explicit, fixed rule**, since it becomes a citable
-claim: any `flag` gives `failed`; no flags but any `warning` gives
+**The verdict is an explicit, fixed rule**, since it becomes a citable
+claim: any `flag` gives `review_required`; no flags but any `warning` gives
 `passed_with_warnings`; all `ok` gives `passed`. The scorecard reflects
 whichever audit pass describes the data actually shipped in the run,
 after dedup if `preprocessing.dedup` ran, otherwise the only pass there
 was.
 
-**A `failed` verdict isn't a claim the dataset is unusable** - most real
+**A `review_required` verdict isn't a claim the dataset is unusable** - it
+means at least one named check crossed its threshold and the scorecard needs
+a human reading before results from this data are trusted. Most real
 NIDS datasets flag at least one check under this project's own
 validation (see [examples/](../examples/)). `ids2eval recommend
 path/to/the/run` (or the dashboard's Recommendations tab) reads the
@@ -510,7 +512,7 @@ See `ids2eval.audit.EVIDENCE_LEVEL` for the exact mapping.
 **A visual scorecard is opt-in** (`output.write_scorecard_plot`, off by
 default, see [configuration.md](configuration.md#rendering-the-scorecard-as-a-chart)),
 producing both `scorecard.pdf` and `scorecard.png` from one figure: the
-pass/fail verdict, the full per-check breakdown (name, status, and the
+verdict, the full per-check breakdown (name, status, and the
 check's own summary for this run, since a bare "8 ok, 1 warning" count
 means nothing without seeing which checks and why), and, only when
 those specific checks ran, a train-vs-test class distribution chart and

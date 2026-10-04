@@ -1,11 +1,11 @@
 {
-  "scorecard_schema_version": "1.2",
+  "scorecard_schema_version": "1.3",
   "generated_at": "2026-09-29T12:52:51.346025+00:00",
   "dataset_name": "bot-iot-official",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": "d5cddfedcb2ad687b63ca6fb1f114bc35e8f5081",
   "audit_stage": "after",
-  "overall_status": "failed",
+  "overall_status": "review_required",
   "counts": {
     "ok": 16,
     "warning": 3,
@@ -452,7 +452,7 @@
   "previous_run_comparison": {
     "previous_run": "2026-09-28_125027_031413",
     "previous_generated_at": "2026-09-28T15:09:18.521038+00:00",
-    "previous_verdict": "failed",
+    "previous_verdict": "review_required",
     "fingerprint_changed": false,
     "changed_checks": []
   }

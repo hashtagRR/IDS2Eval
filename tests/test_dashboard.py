@@ -79,6 +79,8 @@ def test_run_summary_carries_per_check_status_and_detail_carries_audit_report(se
     # after wins when present, before is the fallback for checks that didn't rerun
     assert run["check_status"] == {"dedup_check": "ok", "one_rule_check": "flag"}
     assert (run["train_rows"], run["test_rows"], run["feature_count"]) == (80, 20, 5)
+    # a scorecard written before schema 1.3 still says "failed" on disk
+    assert run["verdict"] == "review_required"
     detail = json.loads(_get(base + "/api/run/0/2026-01-01_000000_000000")[1])
     assert detail["audit_report"] == [{"check": "dedup_check", "details": {"n": 1}}]
 
@@ -170,8 +172,8 @@ def test_citation_endpoint_matches_cli_bibtex(server, tmp_path):
     }
     (run_dir / "scorecard.json").write_text(json.dumps(full_scorecard))
 
-    from ids2eval.reporting import cite
-    expected = cite.citation_bibtex(full_scorecard)
+    from ids2eval.reporting import cite, scorecard
+    expected = cite.citation_bibtex(scorecard.upgrade(full_scorecard))
 
     status, body = _get(base + "/api/run/0/2026-01-01_000000_000000/citation")
     assert status == 200

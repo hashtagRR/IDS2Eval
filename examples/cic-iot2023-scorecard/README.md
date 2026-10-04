@@ -9,7 +9,7 @@ folder; see [SCORECARD.md](SCORECARD.md) for the full result, or
 download [SCORECARD.html](SCORECARD.html) and open it in a browser for
 the styled version.
 
-**Result: failed** - 17 of 19 checks `ok`, one `warning`
+**Result: review required** - 17 of 19 checks `ok`, one `warning`
 (`class_distribution_report`), one `flag`
 (`feature_auc_ranking_check`, described below), after dedup.
 

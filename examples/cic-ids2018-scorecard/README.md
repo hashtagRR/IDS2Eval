@@ -12,7 +12,7 @@ audit covers a uniform, seeded 500K-row reservoir sample (`dataset.max_rows`), s
 sample; the full dataset's duplication is higher, since a sample only catches a
 duplicate pair when both copies are drawn.
 
-**Result: failed** - 12 ok, 3 warnings, 4 flags after dedup, across 19 checks.
+**Result: review required** - 12 ok, 3 warnings, 4 flags after dedup, across 19 checks.
 
 What it found:
 

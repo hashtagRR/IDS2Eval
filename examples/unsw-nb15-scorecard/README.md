@@ -7,7 +7,7 @@ folder; see [SCORECARD.md](SCORECARD.md) for the full result, or
 download [SCORECARD.html](SCORECARD.html) and open it in a browser for
 the styled version.
 
-**Result: failed** - 17 of 19 checks `ok`, one `warning`
+**Result: review required** - 17 of 19 checks `ok`, one `warning`
 (`known_issue_lookup`), one `flag` (`row_order_leakage_check`, below).
 
 Three things worth pointing out about what's actually in here:
@@ -57,7 +57,7 @@ Three things worth pointing out about what's actually in here:
 Re-run 2026-09-27 to pick up `row_order_leakage_check`, `feature_auc_ranking_check`,
 and `temporal_realism_check` (the last one no-ops here, no `schema.timestamp_column`
 configured), which is why the check count reads 19 and the verdict changed from
-`passed_with_warnings` to `failed` - a genuinely new finding
+`passed_with_warnings` to `review_required` - a genuinely new finding
 (`row_order_leakage_check`'s test-split block-ordering above), not a change in
 any pre-existing result. An earlier re-run (2026-09-26) had already added
 `near_duplicate_class_check` and a per-class breakdown on `dedup_check`,

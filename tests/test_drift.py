@@ -45,13 +45,21 @@ def test_compare_detects_a_check_that_regressed(tmp_path):
     previous_dir = tmp_path / "previous"
     _write_scorecard(previous_dir, "passed", [_check_row("dedup_check", "ok")])
     current = {
-        "overall_status": "failed",
+        "overall_status": "review_required",
         "checks": [_check_row("dedup_check", "flag")],
         "dataset_fingerprint": {"train_content_hash": "abc", "test_content_hash": "def"},
     }
     result = drift.compare(current, previous_dir)
     assert result["changed_checks"] == [{"check": "dedup_check", "previous_status": "ok", "current_status": "flag"}]
     assert result["fingerprint_changed"] is False
+
+
+def test_compare_reports_a_legacy_failed_previous_verdict_as_review_required(tmp_path):
+    previous_dir = tmp_path / "previous"
+    _write_scorecard(previous_dir, "failed", [])
+    current = {"overall_status": "passed", "checks": [],
+               "dataset_fingerprint": {"train_content_hash": "abc", "test_content_hash": "def"}}
+    assert drift.compare(current, previous_dir)["previous_verdict"] == "review_required"
 
 
 def test_compare_reports_no_changes_when_every_check_matches(tmp_path):

@@ -1,11 +1,11 @@
 {
-  "scorecard_schema_version": "1.2",
+  "scorecard_schema_version": "1.3",
   "generated_at": "2026-09-28T11:36:44.267288+00:00",
   "dataset_name": "ton-iot-official",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": "e47f6e960cef08741336884e6b850adddf731a04",
   "audit_stage": "after",
-  "overall_status": "failed",
+  "overall_status": "review_required",
   "counts": {
     "ok": 18,
     "warning": 1,

@@ -1,11 +1,11 @@
 {
-  "scorecard_schema_version": "1.2",
+  "scorecard_schema_version": "1.3",
   "generated_at": "2026-09-26T23:53:01.112494+00:00",
   "dataset_name": "nsl-kdd",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": "ad380bebc08fea454656f9b9ed4af8170edacb75",
   "audit_stage": "after",
-  "overall_status": "failed",
+  "overall_status": "review_required",
   "counts": {
     "ok": 14,
     "warning": 3,
@@ -395,7 +395,7 @@
   "previous_run_comparison": {
     "previous_run": "2026-09-25_173918_112471",
     "previous_generated_at": "2026-09-25T17:40:01.671047+00:00",
-    "previous_verdict": "failed",
+    "previous_verdict": "review_required",
     "fingerprint_changed": false,
     "changed_checks": []
   }

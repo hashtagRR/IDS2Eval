@@ -1,10 +1,10 @@
 # IDS2Eval Scorecard
 
 **Dataset:** bot-iot-official
-**Overall status:** ❌ Failed, 16 ok, 3 warning(s), 3 flag(s)
+**Overall status:** 🚩 Review Required, 16 ok, 3 warning(s), 3 flag(s)
 **Generated:** 2026-09-29T12:52:51.346025+00:00
 **IDS2Eval version:** 0.1.0 (git d5cddfe)
-**Scorecard schema version:** 1.2
+**Scorecard schema version:** 1.3
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
@@ -63,9 +63,9 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 16 ok, 3 warning(s), 3 flag(s) across 22 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 16 ok, 3 warning(s), 3 flag(s) across 22 checks. Full report: audit_report_after.json.
 
-Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
+Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
 
 ---
 *Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and scorecards for synthetic data evaluation ([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)).*

@@ -30,8 +30,8 @@ matplotlib.use("Agg")  # headless - never touches a display, safe in CI/servers
 import matplotlib.pyplot as plt
 
 _STATUS_COLOR = {"ok": "#1a7f4e", "warning": "#a15c00", "flag": "#b3261e"}
-_VERDICT_TEXT = {"passed": "PASSED", "passed_with_warnings": "PASSED WITH WARNINGS", "failed": "FAILED"}
-_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "failed": "flag"}
+_VERDICT_TEXT = {"passed": "PASSED", "passed_with_warnings": "PASSED WITH WARNINGS", "review_required": "REVIEW REQUIRED"}
+_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag"}
 _INK = "#16181c"
 _MUTED = "#5b5f6a"
 _ACCENT = "#0d8f82"
@@ -74,7 +74,7 @@ def render(scorecard: dict, findings: list[dict], pdf_path: Path, png_path: Path
 
     fig.text(
         0.01, 0.005,
-        "Verdict rule: any flag -> failed  ·  warnings only -> passed with warnings  ·  all ok -> passed",
+        "Verdict rule: any flag -> review required  ·  warnings only -> passed with warnings  ·  all ok -> passed",
         fontsize=7, color=_MUTED,
     )
 

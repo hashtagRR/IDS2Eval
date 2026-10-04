@@ -5,7 +5,7 @@ official `KDDTrain+` / `KDDTest+` partition (125,973 / 22,544 rows). Produced wi
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 14 ok, 3 warnings, 2 flags after dedup, across 19 checks.
+**Result: review required** - 14 ok, 3 warnings, 2 flags after dedup, across 19 checks.
 
 What it found:
 

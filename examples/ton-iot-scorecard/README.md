@@ -11,7 +11,7 @@ full: no reservoir sampling needed at all. Produced with `config.yaml` in
 this folder; open [SCORECARD.html](SCORECARD.html) in a browser for the full
 result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 18 ok, 1 warning, 3 flags after dedup, across 28 checks.
+**Result: review required** - 18 ok, 1 warning, 3 flags after dedup, across 28 checks.
 
 What it found:
 

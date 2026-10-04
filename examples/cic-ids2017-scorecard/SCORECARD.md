@@ -1,15 +1,13 @@
 # IDS2Eval Scorecard
 
 **Dataset:** cic-ids2017
-**Overall status:** ❌ Failed, 11 ok, 4 warning(s), 4 flag(s)
+**Overall status:** 🚩 Review Required, 11 ok, 4 warning(s), 4 flag(s)
 **Generated:** 2026-09-27T01:05:28.576231+00:00
 **IDS2Eval version:** 0.1.0 (git f50c423)
-**Scorecard schema version:** 1.2
+**Scorecard schema version:** 1.3
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
-
-<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 
@@ -62,9 +60,9 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 11 ok, 4 warning(s), 4 flag(s) across 19 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 11 ok, 4 warning(s), 4 flag(s) across 19 checks. Full report: audit_report_after.json.
 
-Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.
+Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
 
 ---
 *Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and scorecards for synthetic data evaluation ([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)).*

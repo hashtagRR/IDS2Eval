@@ -59,7 +59,7 @@ def test_cli_end_to_end(tmp_path, synth_data):
     assert sc["audit_stage"] == "after"  # preprocessing.dedup defaults true
     assert sc["dedup_effect"]["train_duplicates_dropped"] > 0  # synth_data has 10 duplicate rows
     assert all(set(r) == {"check", "category", "before", "after"} and r["after"] for r in sc["checks"])
-    assert sc["overall_status"] in {"passed", "passed_with_warnings", "failed"}
+    assert sc["overall_status"] in {"passed", "passed_with_warnings", "review_required"}
     assert len(sc["findings"]) == len(after)
     assert sc["dataset_fingerprint"]["train_content_hash"]
 

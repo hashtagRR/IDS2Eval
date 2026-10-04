@@ -24,14 +24,29 @@ def test_a_warning_with_no_flags_passes_with_warnings(base_cfg):
     assert sc["overall_status"] == "passed_with_warnings"
 
 
-def test_any_flag_fails_regardless_of_other_statuses(base_cfg):
+def test_any_flag_requires_review_regardless_of_other_statuses(base_cfg):
     findings = [
         _finding("dedup_check", "ok"),
         _finding("class_distribution_report", "warning"),
         _finding("leakage_screen", "flag"),
     ]
     sc = scorecard.build_scorecard(findings, "after", base_cfg, _fingerprint())
-    assert sc["overall_status"] == "failed"
+    assert sc["overall_status"] == "review_required"
+
+
+def test_upgrade_converts_a_legacy_failed_scorecard():
+    legacy = {"scorecard_schema_version": "1.2", "overall_status": "failed",
+              "previous_run_comparison": {"previous_verdict": "failed", "changed_checks": []}}
+    sc = scorecard.upgrade(legacy)
+    assert sc["overall_status"] == "review_required"
+    assert sc["previous_run_comparison"]["previous_verdict"] == "review_required"
+    assert sc["scorecard_schema_version"] == scorecard.SCHEMA_VERSION
+    assert legacy["overall_status"] == "failed"
+
+
+def test_upgrade_leaves_current_verdicts_alone():
+    sc = scorecard.upgrade({"scorecard_schema_version": scorecard.SCHEMA_VERSION, "overall_status": "passed"})
+    assert sc["overall_status"] == "passed"
 
 
 def test_no_findings_defaults_to_passed(base_cfg):
@@ -41,7 +56,7 @@ def test_no_findings_defaults_to_passed(base_cfg):
 
 def test_scorecard_carries_version_and_fingerprint_info(base_cfg):
     sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
-    assert sc["scorecard_schema_version"] == "1.2"
+    assert sc["scorecard_schema_version"] == "1.3"
     assert sc["dataset_name"] == base_cfg["dataset"]["name"]
     assert sc["dataset_fingerprint"]["train_content_hash"] == "abc123"
     assert "ids2eval_version" in sc
@@ -86,7 +101,7 @@ def test_render_markdown_includes_verdict_and_every_check(base_cfg):
     findings = [_finding("dedup_check", "ok"), _finding("leakage_screen", "flag", "leak found")]
     sc = scorecard.build_scorecard(findings, "after", base_cfg, _fingerprint())
     md = scorecard.render_markdown(sc)
-    assert "Failed" in md
+    assert "Review Required" in md
     assert "dedup_check" in md
     assert "leakage_screen" in md
     assert "leak found" in md
@@ -183,7 +198,7 @@ def test_render_html_is_standalone_and_escapes_summaries(base_cfg):
     assert "<script>" not in page
     assert "&lt;script&gt;" in page
     assert "leakage_screen" in page
-    assert "Failed" in page
+    assert "Review Required" in page
     assert "http" not in page.split("<body")[0]  # no external assets in <head>
 
 

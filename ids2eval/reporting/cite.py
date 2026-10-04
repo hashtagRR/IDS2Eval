@@ -12,6 +12,8 @@ import json
 import re
 from pathlib import Path
 
+from . import scorecard as _scorecard
+
 
 def _bibtex_key(dataset_name: str, train_content_hash: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "_", dataset_name.lower()).strip("_")
@@ -24,7 +26,7 @@ def load_scorecard(run_dir: str | Path) -> dict:
         path = path / "scorecard.json"
     if not path.exists():
         raise FileNotFoundError(f"No scorecard.json found at or under {run_dir}")
-    return json.loads(path.read_text())
+    return _scorecard.upgrade(json.loads(path.read_text()))
 
 
 def citation_bibtex(scorecard: dict) -> str:

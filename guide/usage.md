@@ -164,7 +164,7 @@ every run, nothing gets silently overwritten):
 |---|---|
 | `audit_report_before.json` | All enabled audit findings, computed before dedup |
 | `audit_report_after.json` | Same, after dedup (only if `preprocessing.dedup` is on) |
-| `SCORECARD.html` / `SCORECARD.md` / `scorecard.json` | A citable pass/fail rollup of the findings above, with before/after-dedup results side by side. See [checks.md](checks.md#the-scorecard). The HTML is self-contained: open it from disk, or print it to PDF |
+| `SCORECARD.html` / `SCORECARD.md` / `scorecard.json` | A citable rollup of the findings above (verdict: passed, passed with warnings, or review required), with before/after-dedup results side by side. See [checks.md](checks.md#the-scorecard). The HTML is self-contained: open it from disk, or print it to PDF |
 | `scorecard.pdf` / `scorecard.png` | A chart version of the scorecard, only if `output.write_scorecard_plot` is on (needs `pip install "ids2eval[plots]"`) |
 | `train.<fmt>` / `test.<fmt>` | The preprocessed data (parquet by default) |
 | `benchmark_results.csv` | One row per (stage, scaling, sampling strategy, classifier): accuracy, weighted F1, macro F1, AUC, train/inference time |

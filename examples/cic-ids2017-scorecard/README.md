@@ -6,7 +6,7 @@ A real IDS<sup>2</sup>Eval audit of [CIC-IDS2017](https://www.unb.ca/cic/dataset
 `config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
 the full result, or read [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 11 ok, 4 warnings, 4 flags after dedup, across 19 checks.
+**Result: review required** - 11 ok, 4 warnings, 4 flags after dedup, across 19 checks.
 
 What it found:
 

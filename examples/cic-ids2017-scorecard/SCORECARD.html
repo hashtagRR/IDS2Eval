@@ -78,7 +78,7 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 </style></head>
 <body style="--accent:#c0392b"><div class="page"><div class="sheet">
 <p class="eyebrow">IDS2Eval: the scorecard, not a magic number</p>
-<h1>cic-ids2017: Failed</h1>
+<h1>cic-ids2017: Review Required</h1>
 <p class="lede">Every check ran twice: on the raw data as loaded, and on the cleaned data - the same data with exact duplicate rows removed, nothing else changed. Verdict (11 ok, 4 warning(s), 4 flag(s) across 19 checks) is judged on the cleaned data. Highlighted rows are checks whose status differs between the two.</p>
 <div class="card">
 <div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-09-27 01:05 UTC</span></div>
@@ -89,9 +89,9 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 <div><div class="k">Checks run</div><div class="v">17 checks + 2 known issue(s)
 · raw + cleaned</div></div>
 <div><div class="k">Tool / schema version</div><div class="v">v0.1.0
-(f50c423) · schema 1.2</div></div>
+(f50c423) · schema 1.3</div></div>
 <div><div class="k">Verdict</div><div class="v"><span class="badge b-flag">
-failed</span></div></div>
+review required</span></div></div>
 </div>
 <h2 class="first">Checks</h2>
 <p class="section-note">Findings from this run's own data. Each one can, in principle, be reacted to - by
@@ -136,6 +136,6 @@ dropping a column, resampling, switching split modes, or just noting the caveat.
 <p class="mono hash">train: 2,264,594 rows · test: 566,149 rows · 78 features<br>
 train sha256 5864fd3ca0c2d57589584902c07a712bd806130c638ac6d48626969975b9a362<br>test sha256 722dafecb77262e4a8661066ff0cd478cf1574faa31ebb8bfc987d5ae3673eea</p>
 <h2>Citing this result</h2>
-<blockquote>This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 11 ok, 4 warning(s), 4 flag(s) across 19 checks. Full report: audit_report_after.json.</blockquote>
-<p class="foot">Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.<br>Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143).</p>
+<blockquote>This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 11 ok, 4 warning(s), 4 flag(s) across 19 checks. Full report: audit_report_after.json.</blockquote>
+<p class="foot">Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.<br>Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143).</p>
 </div></div></body></html>

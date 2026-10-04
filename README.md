@@ -21,7 +21,7 @@ check's result before and after deduplication side by side. When a
 check flags, `ids2eval recommend` (CLI or a dashboard tab) suggests a
 config fix for the ones that have an unambiguous one, and applies it
 to a re-runnable config on request. See [guide/checks.md](guide/checks.md)
-for what each check does and the scorecard's pass/fail rule.
+for what each check does and the scorecard's verdict rule.
 
 It's narrower than general-purpose AutoML tools (PyCaret, AutoGluon,
 TPOT) on purpose: no feature engineering, no algorithm-search breadth -

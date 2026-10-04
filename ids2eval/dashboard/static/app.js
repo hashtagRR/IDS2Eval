@@ -36,7 +36,7 @@ const store = {get(k) { try { return localStorage.getItem(k); } catch { return n
 const STATUS = {ok: {label: "OK", icon: "✓"}, warning: {label: "Warning", icon: "!"}, flag: {label: "Flag", icon: "✕"}};
 const VERDICT = {passed: {label: "Passed", status: "ok"},
                  passed_with_warnings: {label: "Passed with warnings", status: "warning"},
-                 failed: {label: "Audit failed", status: "flag"}};
+                 review_required: {label: "Review Required", status: "flag"}};
 const RANK = {ok: 0, warning: 1, flag: 2};
 // Display grouping only - the audit itself has no families. A check missing
 // here (a new one) lands in "Other" rather than disappearing.
@@ -220,7 +220,7 @@ async function route() {
 function renderDashboard(main) {
   setCrumbs(["Dashboard"]);
   const latest = latestByDataset();
-  const failing = latest.filter(r => r.verdict === "failed").length;
+  const needsReview = latest.filter(r => r.verdict === "review_required").length;
   const flags = latest.reduce((s, r) => s + ((r.counts || {}).flag || 0), 0);
   const warns = latest.reduce((s, r) => s + ((r.counts || {}).warning || 0), 0);
   const kids = [
@@ -229,7 +229,7 @@ function renderDashboard(main) {
     el("div", {class: "kpis"},
       kpi("Datasets audited", String(latest.length)),
       kpi("Runs", String(runs.length)),
-      kpi("Failing audits", `${failing} / ${latest.length}`, failing ? "flag" : "ok", "latest run per dataset"),
+      kpi("Review required", `${needsReview} / ${latest.length}`, needsReview ? "flag" : "ok", "latest run per dataset"),
       kpi("Flagged checks", String(flags), flags ? "flag" : "ok", "across latest runs"),
       kpi("Warnings", String(warns), warns ? "warning" : "ok", "across latest runs")),
   ];
@@ -351,7 +351,7 @@ function renderRuns(main) {
   const host = el("div");
   const search = el("input", {type: "search", placeholder: "Filter by dataset or run…", value: filter.q,
     "aria-label": "Filter runs", oninput: () => { filter.q = search.value; store.set("ids2eval.runs.q", search.value); draw(); }});
-  const opts = [["all", "All"], ["failed", "Failed"], ["passed_with_warnings", "Warnings"], ["passed", "Passed"],
+  const opts = [["all", "All"], ["review_required", "Review Required"], ["passed_with_warnings", "Warnings"], ["passed", "Passed"],
                 ["crashed", "Crashed"]];
   const chipBox = el("div", {class: "chips"});
   function draw() {

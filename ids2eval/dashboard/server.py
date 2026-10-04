@@ -205,6 +205,11 @@ class App:
         return sorted(runs, key=lambda r: r["name"], reverse=True)
 
 
+def _read_scorecard(run_dir: Path) -> dict | None:
+    sc = _read_json(run_dir / "scorecard.json")
+    return scorecard.upgrade(sc) if isinstance(sc, dict) else None
+
+
 def _read_json(path: Path) -> dict | list | None:
     try:
         return json.loads(path.read_text())
@@ -213,7 +218,7 @@ def _read_json(path: Path) -> dict | list | None:
 
 
 def _run_summary(idx: int, output_dir: Path, run_dir: Path) -> dict:
-    sc = _read_json(run_dir / "scorecard.json") or {}
+    sc = _read_scorecard(run_dir) or {}
     status = _read_json(run_dir / "run_status.json") or {}
     cfg = _read_json(run_dir / "resolved_config.json") or {}
     fp = sc.get("dataset_fingerprint") or {}
@@ -298,7 +303,7 @@ class Handler(BaseHTTPRequestHandler):
             if run_dir is None:
                 return self._error(HTTPStatus.NOT_FOUND, "no such run")
             summary = _run_summary(int(parts[2]), self.app.output_dirs[int(parts[2])], run_dir)
-            return self._json({**summary, "scorecard": _read_json(run_dir / "scorecard.json"),
+            return self._json({**summary, "scorecard": _read_scorecard(run_dir),
                                "audit_report": _read_json(run_dir / "audit_report_after.json")
                                or _read_json(run_dir / "audit_report_before.json"),
                                # dedup_check's per-class rates only exist before dedup

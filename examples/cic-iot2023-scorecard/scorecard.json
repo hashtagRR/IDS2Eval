@@ -1,11 +1,11 @@
 {
-  "scorecard_schema_version": "1.2",
+  "scorecard_schema_version": "1.3",
   "generated_at": "2026-09-26T23:48:52.431922+00:00",
   "dataset_name": "cic-iot2023",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": "ad380bebc08fea454656f9b9ed4af8170edacb75",
   "audit_stage": "after",
-  "overall_status": "failed",
+  "overall_status": "review_required",
   "counts": {
     "ok": 17,
     "warning": 1,

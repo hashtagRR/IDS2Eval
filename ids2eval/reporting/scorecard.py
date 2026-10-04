@@ -1,4 +1,4 @@
-"""Formalizes audit findings into a citable pass/fail scorecard.
+"""Formalizes audit findings into a citable, versioned scorecard.
 
 Not a new check. A rollup of the audit findings, dataset fingerprint, and
 tool version already computed elsewhere, into one stable, versioned artifact
@@ -11,7 +11,10 @@ changes if this dict's shape changes, so a citation naming a schema version
 stays parseable even after ids2eval itself moves on. 1.2 is additive over
 1.1, which was additive over 1.0 (1.1 added "checks", "counts",
 "dedup_effect", "previous_run_comparison"; 1.2 adds an "evidence" field
-inside each side of a "checks" row; every earlier key is unchanged).
+inside each side of a "checks" row; every earlier key is unchanged). 1.3
+renames the "flag" verdict from "failed" to "review_required": a flag means
+a named check crossed its threshold and the scorecard needs a human reading,
+not that the dataset is unusable. upgrade() converts older scorecards.
 "checks" has one entry per check: {check, category, before, after} - category is
 "audit" or "known_issue" (see ids2eval.audit.KNOWN_ISSUE_CHECKS) - each side
 {status, summary, evidence} or null - "after" is null throughout when dedup
@@ -29,7 +32,7 @@ from datetime import datetime, timezone
 from .. import version_info
 from ..audit import DEFAULT_EVIDENCE_LEVEL, EVIDENCE_LEVEL, KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
 
-SCHEMA_VERSION = "1.2"
+SCHEMA_VERSION = "1.3"
 
 EVIDENCE_LABEL = {
     "documented": "documented",
@@ -39,16 +42,17 @@ EVIDENCE_LABEL = {
 }
 
 _STATUS_RANK = {"ok": 0, "warning": 1, "flag": 2}
-_OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "failed"}
+_OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "review_required"}
+_LEGACY_VERDICTS = {"failed": "review_required"}
 _STATUS_EMOJI = {"ok": "✅", "warning": "⚠️", "flag": "🚩"}
 _STATUS_BADGE = {"ok": "pass", "warning": "warn", "flag": "flag"}
 _VERDICT_LABEL = {
     "passed": "✅ Passed",
     "passed_with_warnings": "⚠️ Passed with warnings",
-    "failed": "❌ Failed",
+    "review_required": "🚩 Review Required",
 }
-_VERDICT_PLAIN = {"passed": "Passed", "passed_with_warnings": "Passed with warnings", "failed": "Failed"}
-_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "failed": "flag"}
+_VERDICT_PLAIN = {"passed": "Passed", "passed_with_warnings": "Passed with warnings", "review_required": "Review Required"}
+_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag"}
 
 # Hover text for each check in SCORECARD.html: what it measures, and the exact
 # rule that turns a measurement into ok/warning/flag. Keep the rules in sync
@@ -237,7 +241,7 @@ _KNOWN_ISSUES_NOTE = (
     "measured from this run's data, and nothing in this run's config can fix what they report."
 )
 
-_VERDICT_RULE = "any flag → failed · warnings only → passed with warnings · all ok → passed"
+_VERDICT_RULE = "any flag → review required · warnings only → passed with warnings · all ok → passed"
 _PRIOR_ART = (
     "Scorecard format inspired by structured dataset-documentation practices. Datasheets for "
     "Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143)."
@@ -427,6 +431,26 @@ def _drift_lines(scorecard: dict) -> list[str]:
     else:
         lines.append("No check's status changed since the previous run.")
     return lines
+
+
+def normalize_verdict(verdict: str | None) -> str | None:
+    return _LEGACY_VERDICTS.get(verdict, verdict)
+
+
+def upgrade(scorecard: dict) -> dict:
+    """A copy of a scorecard read from disk, in the current verdict vocabulary.
+
+    Only the 1.3 rename needs converting: every other key is unchanged since 1.0.
+    """
+    sc = dict(scorecard)
+    if "overall_status" in sc:
+        sc["overall_status"] = normalize_verdict(sc["overall_status"])
+    prev = sc.get("previous_run_comparison")
+    if isinstance(prev, dict) and "previous_verdict" in prev:
+        sc["previous_run_comparison"] = {**prev, "previous_verdict": normalize_verdict(prev["previous_verdict"])}
+    if sc.get("scorecard_schema_version") in ("1.0", "1.1", "1.2"):
+        sc["scorecard_schema_version"] = SCHEMA_VERSION
+    return sc
 
 
 def citation_text(scorecard: dict) -> str:

@@ -13,7 +13,7 @@ Produced with `config.yaml` in this folder; open
 [SCORECARD.html](SCORECARD.html) in a browser for the full result, or read
 [SCORECARD.md](SCORECARD.md).
 
-**Result: failed** - 16 ok, 3 warnings, 3 flags after dedup, across 22
+**Result: review required** - 16 ok, 3 warnings, 3 flags after dedup, across 22
 checks.
 
 What it found:

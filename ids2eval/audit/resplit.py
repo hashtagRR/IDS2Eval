@@ -52,28 +52,41 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
     # the next is built.
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
     random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
+    n_random = len(random_test)
     del random_train, random_test
 
     grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
     grouped_acc = fit_and_score(grouped_train, grouped_test, label_col, cfg, seed=seed)
+    n_grouped = len(grouped_test)
     del grouped_train, grouped_test
     drop = random_acc - grouped_acc
 
     threshold = _materiality.threshold(cfg, "resplit_falsification", MATERIAL_DROP_THRESHOLD)
-    material = drop > threshold
-    status = "flag" if material else "ok"
-    summary = (
-        f"random-split accuracy={random_acc:.4f}, grouped-split accuracy={grouped_acc:.4f} "
-        f"(drop={drop:+.4f}); "
-        + (
-            "grouped split costs measurable accuracy, session-correlated leakage in the "
-            "random split may be doing real work"
-            if material else
+    # One comparison on finite test sets: a drop only counts as material once it
+    # clears the threshold by more than its own sampling margin. A drop above the
+    # threshold but within that margin is reported as inconclusive (warning).
+    margin = _materiality.accuracy_gap_margin(random_acc, n_random, grouped_acc, n_grouped)
+    if drop - margin > threshold:
+        status, verdict = "flag", (
+            "grouped split costs measurable accuracy beyond test-set sampling noise, "
+            "session-correlated leakage in the random split may be doing real work"
+        )
+    elif drop > threshold:
+        status, verdict = "warning", (
+            f"the drop exceeds the {threshold:.2f} threshold but lies within its sampling margin "
+            f"(+/-{margin:.4f}) at this test size; inconclusive, see repeated_seed_falsification_check"
+        )
+    else:
+        status, verdict = "ok", (
             "grouped split reproduces random-split accuracy, consistent with inherent class "
             "homogeneity rather than a split-artifact explanation"
         )
+    summary = (
+        f"random-split accuracy={random_acc:.4f}, grouped-split accuracy={grouped_acc:.4f} "
+        f"(drop={drop:+.4f}); {verdict}"
     )
     return {
         "check": "resplit_falsification", "status": status, "summary": summary,
-        "details": {"random_accuracy": random_acc, "grouped_accuracy": grouped_acc, "drop": drop},
+        "details": {"random_accuracy": random_acc, "grouped_accuracy": grouped_acc, "drop": drop,
+                    "sampling_margin": margin, "random_test_rows": n_random, "grouped_test_rows": n_grouped},
     }

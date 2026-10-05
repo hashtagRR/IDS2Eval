@@ -147,7 +147,8 @@ CHECK_INFO = {
         "Retrains with a grouped split (no session from dataset.group_columns on both sides) and compares "
         "accuracy against a random split. Rebuilds both splits from the raw data itself, so its result is "
         "the same whether or not preprocessing.dedup ran.",
-        "Flag: grouped-split accuracy is more than 1 percentage point lower.",
+        "Flag: grouped-split accuracy is more than 1 percentage point lower even after allowing for the "
+        "test sets' sampling margin. Warning: more than 1 point lower, but within that margin.",
     ),
     "scenario_holdout_falsification": (
         "Holds out the smallest schema.scenario_column value entirely as test, training on every other "
@@ -208,8 +209,9 @@ CHECK_INFO = {
         "Re-fits under each condition it can build from the config, random split, session-grouped "
         "split, deduplicated, identity columns dropped, and reports the full accuracy-by-condition "
         "vector rather than one collapsed score.",
-        "Flag: the spread between the best and worst condition exceeds 15 points of accuracy. Warning: "
-        "more than 8. Always ok when fewer than two conditions can be built.",
+        "Flag: the spread between the best and worst condition exceeds 15 points of accuracy even after "
+        "allowing for the test sets' sampling margin. Warning: more than 8 points. Always ok when fewer "
+        "than two conditions can be built.",
     ),
     "known_issue_lookup": (
         "Looks the dataset name up in a hand-curated list of published problems with specific datasets. "

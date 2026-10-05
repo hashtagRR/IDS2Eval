@@ -239,6 +239,14 @@ reproduced the random split's accuracy to within 0.003 percentage
 points, settling the question by direct experiment rather than a
 disclosed-but-untested caveat.
 
+A single comparison on finite test sets is noisy: with about 1,200 test
+rows per side, the 95% sampling margin on an accuracy gap is about
++/-0.04, four times the 0.01 threshold. The check therefore flags only
+when the drop exceeds the threshold by more than that margin, and reports
+a drop that exceeds the threshold only within its margin as a warning
+(inconclusive). `result_robustness_check` applies the same margin to its
+flag tier.
+
 ### `repeated_seed_falsification_check`
 `resplit_falsification`'s one blind spot: a single random-vs-grouped
 comparison is one draw from a distribution, not a settled answer. This

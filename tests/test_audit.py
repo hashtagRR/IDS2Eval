@@ -1334,3 +1334,11 @@ def test_label_conflict_check_handles_many_feature_columns_without_blowing_up(ba
     result = label_conflict.check(train_df, test_df, base_cfg)
     assert result["check"] == "label_conflict_check"
     assert result["status"] in {"ok", "flag"}
+
+
+def test_accuracy_gap_margin_shrinks_with_test_size():
+    from ids2eval.audit import _materiality
+    small = _materiality.accuracy_gap_margin(0.5, 1200, 0.5, 1200)
+    large = _materiality.accuracy_gap_margin(0.5, 1_200_000, 0.5, 1_200_000)
+    assert round(small, 4) == 0.0400
+    assert large < 0.0015 < 0.01 < small

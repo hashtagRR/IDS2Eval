@@ -101,6 +101,8 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
             "summary": "fewer than two conditions could be built to compare", "details": {},
         }
 
+    test_rows = {name: len(test_df) for name, (_, test_df, _) in pending.items()}
+
     def run(name: str) -> tuple[str, float]:
         train_df, test_df, cols = pending[name]
         return name, fit_and_score(train_df, test_df, label_col, cfg, cols=cols, seed=seed)
@@ -120,7 +122,13 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
         cfg, "result_robustness_check",
         {"warning": SPREAD_WARNING_THRESHOLD, "flag": SPREAD_FLAG_THRESHOLD},
     )
-    if spread > tiers["flag"]:
+    # Tiers are judged on the spread minus its sampling margin at these test sizes,
+    # so test-set noise alone can't flag; a spread that crosses a tier only within
+    # that margin is reported as a warning (inconclusive) instead.
+    margin = _materiality.accuracy_gap_margin(
+        best_acc, test_rows[best_condition], worst_acc, test_rows[worst_condition],
+    )
+    if spread - margin > tiers["flag"]:
         status = "flag"
     elif spread > tiers["warning"]:
         status = "warning"
@@ -129,7 +137,8 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
 
     summary = (
         f"accuracy ranges from {worst_acc:.4f} ({worst_condition}) to {best_acc:.4f} "
-        f"({best_condition}) across {len(conditions)} conditions, a spread of {spread:.4f}"
+        f"({best_condition}) across {len(conditions)} conditions, a spread of {spread:.4f} "
+        f"(sampling margin +/-{margin:.4f})"
     )
     if status != "ok":
         summary += "; the headline result depends on methodology choices as much as the classifier"
@@ -139,5 +148,6 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
         "details": {
             "accuracy_by_condition": conditions, "spread": spread,
             "worst_condition": worst_condition, "best_condition": best_condition,
+            "sampling_margin": margin,
         },
     }

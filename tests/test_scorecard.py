@@ -312,7 +312,7 @@ def test_known_issue_lookup_summary_names_the_actual_issue():
     from ids2eval.audit import known_issues
 
     result = known_issues.check(None, {"dataset": {"name": "cic-ids2018"}})
-    assert "Brute-Force-Web" in result["summary"]
+    assert "Brute Force-Web" in result["summary"]
     assert "Liu et al. 2022" in result["summary"]
 
 

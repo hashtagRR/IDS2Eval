@@ -17,15 +17,16 @@ import pandas as pd
 KNOWN_ISSUES = {
     "cic-ids2018": [
         {
-            "issue": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows "
-                     "are approximately 41% mislabeled (ground-truth labeling error, "
-                     "not an extraction or pipeline bug).",
-            "citation": "Liu et al. 2022, IEEE CNS",
+            "issue": "In the original release, 172 of the 362 flows labeled Brute Force-Web "
+                     "on 2018-02-23 are not part of the attack: 21 have malformed addresses "
+                     "and 151 (41.7%) are background traffic, 128 of them UDP (126 to port 500) "
+                     "(a ground-truth labeling error, not an extraction or pipeline bug).",
+            "citation": "Liu et al. 2022, IEEE CNS, companion documentation",
         },
         {
-            "issue": "An independent re-labeling audit measured a 7.53% overall label "
-                     "corruption rate, with some individual attack classes above 75%.",
-            "citation": "Cantone et al. 2024, IEEE Access",
+            "issue": "A full re-labeling of the original release found 7.53% of labels wrong, "
+                     "with the error rate above 75% for some attack classes.",
+            "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
         },
     ],
     "cic-ids2017": [
@@ -36,11 +37,14 @@ KNOWN_ISSUES = {
             "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)",
         },
         {
-            "issue": "An independent re-labeling audit measured a 6.67% overall label "
-                     "corruption rate, with some individual attack classes above 75%; "
-                     "Heartbleed alone is only 11 rows (about 0.022% of the dataset), "
-                     "too few to evaluate reliably regardless of labeling accuracy.",
-            "citation": "Cantone et al. 2024, IEEE Access",
+            "issue": "A full re-labeling of the original release found 6.67% of labels wrong, "
+                     "with the error rate above 75% for some attack classes.",
+            "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
+        },
+        {
+            "issue": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to "
+                     "evaluate reliably regardless of labeling accuracy.",
+            "citation": "Cantone et al. 2024, IEEE Access, Table 1",
         },
     ],
     "nsl-kdd": [

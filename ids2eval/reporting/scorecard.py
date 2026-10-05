@@ -137,9 +137,11 @@ CHECK_INFO = {
         "Flag: the transition rate is below 30% of the shuffled expectation. Warning: below 60%.",
     ),
     "homogeneity_test": (
-        "Per class: are test rows closer to their nearest train row than train rows are to each other? "
-        "One-sided Mann-Whitney test on nearest-neighbour distances, up to 500 rows per class.",
-        "Flag: p < 0.05 in any class. Not corrected for testing many classes, so a single flag is weak evidence.",
+        "Per class: do test rows have an identical training row (distance below 1e-6 after scaling) more "
+        "often than training rows have one among the rest of training? 95% CI on the difference of the two "
+        "match rates, up to 500 rows per class.",
+        "Flag: in any class the CI's lower bound exceeds +0.05. Warning: some class's CI straddles +0.05 "
+        "(inconclusive). Ok: every class's upper bound is below +0.05.",
     ),
     "resplit_falsification": (
         "Retrains with a grouped split (no session from dataset.group_columns on both sides) and compares "

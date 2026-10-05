@@ -255,6 +255,15 @@ def test_homogeneity_test_classification_is_one_sided(
     assert result["status"] == expected_status
 
 
+def test_homogeneity_rate_diff_ci_matches_newcombe_reference_and_handles_extreme_rates():
+    # Newcombe (1998) Table II example: 56/70 vs 48/80 -> 95% CI [0.0524, 0.3339]
+    lo, hi = homogeneity._rate_diff_ci(56 / 70, 70, 48 / 80, 80)
+    assert round(lo, 4) == 0.0524 and round(hi, 4) == 0.3339
+    # both rates at 1.0: a Wald interval collapses to [0, 0]; this one must not
+    lo, hi = homogeneity._rate_diff_ci(1.0, 500, 1.0, 500)
+    assert lo < 0 < hi
+
+
 def test_resplit_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     csv_path = tmp_path / "raw.csv"
     synth_data.to_csv(csv_path, index=False)

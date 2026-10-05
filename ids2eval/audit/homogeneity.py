@@ -50,17 +50,26 @@ NEAR_ZERO_DISTANCE = 1e-6
 EQUIVALENCE_MARGIN = 0.05
 
 
+_Z = 1.959964  # z_{0.975}
+
+
+def _wilson(p: float, n: int) -> tuple[float, float]:
+    centre = (p + _Z**2 / (2 * n)) / (1 + _Z**2 / n)
+    half = _Z * math.sqrt(p * (1 - p) / n + _Z**2 / (4 * n**2)) / (1 + _Z**2 / n)
+    return centre - half, centre + half
+
+
 def _rate_diff_ci(p_test: float, n_test: int, p_control: float, n_control: int) -> tuple[float, float]:
-    """95% Wald CI for the difference of two independent proportions
-    (test rate minus control rate). Adequate at this check's sample sizes
-    (up to SAMPLE_SIZE=500 per side); not Wilson/Newcombe-corrected, since
-    this is a diagnostic threshold comparison, not a primary estimate."""
+    """95% Newcombe hybrid-score CI for the difference of two independent
+    proportions (test rate minus control rate). Unlike the Wald interval it
+    stays a proper interval when a rate is at 0 or 1, which match rates
+    often are here."""
     diff = p_test - p_control
-    se = math.sqrt(
-        p_test * (1 - p_test) / n_test + p_control * (1 - p_control) / n_control
-    )
-    margin = 1.959964 * se  # z_{0.975}
-    return diff - margin, diff + margin
+    lo_t, hi_t = _wilson(p_test, n_test)
+    lo_c, hi_c = _wilson(p_control, n_control)
+    lower = diff - math.sqrt((p_test - lo_t) ** 2 + (hi_c - p_control) ** 2)
+    upper = diff + math.sqrt((hi_t - p_test) ** 2 + (p_control - lo_c) ** 2)
+    return lower, upper
 
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:

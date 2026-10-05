@@ -214,12 +214,17 @@ their own ordering independently.
 ### `homogeneity_test`
 The methodological centerpiece for distinguishing real leakage from
 inherent class homogeneity. For each class, computes each test row's
-nearest-neighbor distance to the training set, and, critically, the
-*same statistic as a control*: each training row's nearest-neighbor
-distance to the rest of the training set, excluding itself. If the two
-are statistically indistinguishable (Mann-Whitney U), the near-
-duplication is a property of the class population itself, not an
-artifact of the split.
+nearest-neighbor distance to the training set, and the *same statistic
+as a control*: each training row's nearest-neighbor distance to the
+rest of the training set, excluding itself. A distance below 1e-6 after
+scaling counts as a match. The check takes a 95% Newcombe hybrid-score
+CI on the difference between the two match rates (test minus control),
+which stays well-behaved when a rate is near 0 or 1, and judges
+it one-sided against a +0.05 margin (`audit.materiality_thresholds.
+homogeneity_test`): leakage when the lower bound exceeds the margin,
+cleared when the upper bound is below it, inconclusive otherwise. A
+cleared class's repeated vectors are a property of the class population
+itself, present within each split independently.
 
 ### `resplit_falsification`
 The nearest-neighbor test's one blind spot: a random split can't

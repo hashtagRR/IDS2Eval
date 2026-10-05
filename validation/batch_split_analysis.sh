@@ -19,7 +19,8 @@
 # only a preemption or VM loss triggers an automatic retry. To rerun after a
 # fix, resubmit with the same RESULT_URI; FORCE_STAGES reruns finished stages.
 #
-# Environment: CODE_URI, DATA_URI, CONFIG_URI, RESULT_URI, N_SEEDS, FORCE_STAGES (optional).
+# Environment: CODE_URI, DATA_URI, CONFIG_URI, RESULT_URI, N_SEEDS; optional FORCE_STAGES,
+# and WHEELS_URI (gs:// folder of wheels) for an offline install on a VM without external IP.
 set -u
 export PATH="${PATH:+$PATH:}/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export HOME="${HOME:-/root}"
@@ -74,12 +75,25 @@ else
 fi
 
 log "stage install"
-if ! "$PY" -c "import ensurepip, venv" >/dev/null 2>&1; then
-    apt-get update -qq && apt-get install -y -qq python3-venv python3-pip >/dev/null
+if [ -n "${WHEELS_URI:-}" ]; then
+    # No external IP (the project's org policy denies them), so no apt or PyPI:
+    # bootstrap pip from staged wheels and install everything offline.
+    mkdir -p wheels && gcloud storage cp "$WHEELS_URI/*.whl" wheels/ --quiet \
+        || { log "wheel fetch failed"; push_logs; exit 2; }
+    PIP_WHEEL=$(ls wheels/pip-*.whl | head -1)
+    "$PY" -m venv --without-pip venv || { log "venv creation failed"; push_logs; exit 4; }
+    venv/bin/python "$PIP_WHEEL/pip" install -q --no-index "$PIP_WHEEL" \
+        || { log "pip bootstrap failed"; push_logs; exit 5; }
+    venv/bin/python -m pip install -q --no-index --find-links wheels "./ids2eval_src" \
+        || { log "pip install failed"; push_logs; exit 5; }
+else
+    if ! "$PY" -c "import ensurepip, venv" >/dev/null 2>&1; then
+        apt-get update -qq && apt-get install -y -qq python3-venv python3-pip >/dev/null
+    fi
+    "$PY" -m venv venv || { log "venv creation failed"; push_logs; exit 4; }
+    venv/bin/pip install -q --upgrade pip
+    venv/bin/pip install -q "./ids2eval_src" || { log "pip install failed"; push_logs; exit 5; }
 fi
-"$PY" -m venv venv || { log "venv creation failed"; push_logs; exit 4; }
-venv/bin/pip install -q --upgrade pip
-venv/bin/pip install -q "./ids2eval_src" || { log "pip install failed"; push_logs; exit 5; }
 log "$(venv/bin/python3 --version 2>&1), ids2eval $(venv/bin/python3 -c 'from importlib.metadata import version; print(version("ids2eval"))' 2>&1)"
 
 (

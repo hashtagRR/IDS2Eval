@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IDS2Eval Scorecard · cic-ddos2019-fullscale-resplit</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#16181c;--muted:#6b6f7a;--line:#e6e8ec;--bar:#16181c;--bar-ink:#f2f3f5;
+--ok:#1a7f4e;--ok-bg:#e3f4ea;--warn:#a15c00;--warn-bg:#fdf0da;--flag:#b3261e;--flag-bg:#fbe3e1;--code:#f0f1f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--card:#171a1f;--ink:#e8eaee;
+--muted:#9aa0ab;--line:#2a2e36;--bar:#0b0c0f;--bar-ink:#e8eaee;--ok:#5cc98f;--ok-bg:#15301f;--warn:#f0b35a;
+--warn-bg:#35270f;--flag:#f08a80;--flag-bg:#3a1916;--code:#20242b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",
+Helvetica,Arial,sans-serif}
+.mono,code,td.check{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.page{max-width:1080px;margin:24px auto;padding:0 16px}
+.sheet{background:var(--card);border:1px solid var(--line);border-left:8px solid var(--accent);border-radius:10px;
+padding:36px 40px}
+.eyebrow{color:var(--muted);font-size:1.05rem;margin:0}
+h1{font-size:1.9rem;line-height:1.2;margin:.2rem 0 .5rem}
+.lede{color:var(--muted);margin:0 0 28px}
+.card{border:1px solid var(--line);border-radius:8px}
+.bar{background:var(--bar);color:var(--bar-ink);display:flex;justify-content:space-between;gap:12px;
+flex-wrap:wrap;padding:12px 24px;border-radius:7px 7px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.bar b{font-weight:700}
+.body{padding:20px 24px 8px}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding-bottom:18px;
+border-bottom:1px solid var(--line)}
+.meta .k{color:var(--muted);font-size:.82rem}
+.meta .v{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th{text-align:left;color:var(--muted);font-size:.82rem;font-weight:600;padding:10px;border-bottom:1px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td{overflow-wrap:break-word}
+td.num{color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;
+width:1%;white-space:nowrap}
+td.check{white-space:nowrap;position:relative}
+.info{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:6px;
+border:1px solid var(--muted);border-radius:50%;color:var(--muted);font:700 10px/1 -apple-system,BlinkMacSystemFont,
+"Segoe UI",Helvetica,Arial,sans-serif;cursor:help;vertical-align:1px}
+.info:hover,.info:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.tip{display:none;position:absolute;left:4px;top:calc(100% - 4px);z-index:10;width:min(360px,calc(100vw - 48px));
+padding:10px 12px;background:var(--bar);color:var(--bar-ink);border-radius:8px;box-shadow:0 8px 24px rgb(0 0 0/.28);
+font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;white-space:normal;
+text-align:left;overflow-wrap:normal}
+.tip .tk{display:block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.65}
+.tip .tv{display:block;margin-bottom:8px}.tip .tv:last-child{margin-bottom:0}
+.info:hover+.tip,.info:focus+.tip{display:block}
+td.status{white-space:nowrap}
+.same-note{color:var(--muted);font-size:.78rem;margin-left:6px}
+.badge{display:inline-block;font:700 .75rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+padding:5px 9px;border-radius:999px}
+.b-ok{color:var(--ok);background:var(--ok-bg)}.b-warning{color:var(--warn);background:var(--warn-bg)}
+.b-flag{color:var(--flag);background:var(--flag-bg)}.b-none{color:var(--muted);background:transparent}
+.evidence{display:inline-block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;
+margin-right:6px}
+tr.moved td{background:color-mix(in srgb,var(--accent) 4%,transparent)}
+.was{color:var(--muted);font-size:.82rem;margin-top:3px}
+h2{font-size:1.05rem;margin:28px 0 10px}
+h2.first{margin-top:0}
+.section-note{margin:0 0 4px;color:var(--muted);font-size:.9rem}
+.effect{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.tile .k{color:var(--muted);font-size:.82rem}.tile .v{font-size:1.05rem;font-weight:600}
+blockquote{margin:0;padding:14px 16px;border-left:3px solid var(--accent);background:var(--code);border-radius:4px}
+.hash{font-size:.8rem;overflow-wrap:anywhere}
+.foot{color:var(--muted);font-size:.8rem;margin-top:28px;border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:720px){.sheet{padding:24px 18px}.meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+.effect{grid-template-columns:1fr}
+thead{display:none}table,tbody,tr,td{display:block;width:100%}
+tr{border-bottom:1px solid var(--line);padding:10px 4px}td{border:0;padding:3px 0}
+td.num,td.check,td.status{display:inline-block;width:auto;margin-right:10px;vertical-align:middle}
+td.status[data-label]:not([data-label=""])::before{content:attr(data-label) " ";color:var(--muted);font-size:.75rem;
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.same-note{display:block;margin:2px 0 0}
+td.check{white-space:normal}.tip{left:0;width:calc(100vw - 72px)}
+tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{background:none}}
+@media print{body{background:#fff}.page{margin:0;max-width:none}.sheet{border-radius:0}.info,.tip{display:none}}
+</style></head>
+<body style="--accent:#c0392b"><div class="page"><div class="sheet">
+<p class="eyebrow">IDS2Eval: the scorecard, not a magic number</p>
+<h1>cic-ddos2019-fullscale-resplit: Failed</h1>
+<p class="lede">Every check ran twice: on the raw data as loaded, and on the cleaned data - the same data with exact duplicate rows removed, nothing else changed. Verdict (3 ok, 0 warning(s), 1 flag(s) across 4 checks) is judged on the cleaned data.</p>
+<div class="card">
+<div class="bar"><b>SCORECARD</b><span>ids2eval v0.1.0 · generated 2026-10-03 07:42 UTC</span></div>
+<div class="body">
+<div class="meta">
+<div><div class="k">Dataset fingerprint</div><div class="v">cic-ddos2019-fullscale-resplit ·
+aab4bff8</div></div>
+<div><div class="k">Checks run</div><div class="v">4 checks + 0 known issue(s)
+· raw + cleaned</div></div>
+<div><div class="k">Tool / schema version</div><div class="v">v0.1.0
+ · schema 1.2</div></div>
+<div><div class="k">Verdict</div><div class="v"><span class="badge b-flag">
+failed</span></div></div>
+</div>
+<h2 class="first">Checks</h2>
+<p class="section-note">Findings from this run's own data. Each one can, in principle, be reacted to - by
+dropping a column, resampling, switching split modes, or just noting the caveat.</p>
+<table>
+<thead><tr><th>#</th><th>Check</th><th>Raw data</th><th>Cleaned data</th><th>Summary</th></tr></thead>
+<tbody>
+<tr class=""><td class="num">1</td><td class="check">resplit_falsification<span class="info" tabindex="0" role="button" aria-label="About resplit_falsification" aria-describedby="tip-1">i</span><span class="tip" role="tooltip" id="tip-1"><span class="tk">What it checks</span><span class="tv">Retrains with a grouped split (no session from dataset.group_columns on both sides) and compares accuracy against a random split. Rebuilds both splits from the raw data itself, so its result is the same whether or not preprocessing.dedup ran.</span><span class="tk">Rule</span><span class="tv">Flag: grouped-split accuracy is more than 1 percentage point lower.</span></span></td><td class="status" colspan="2"><span class="badge b-ok">pass</span> <span class="same-note">same on raw and cleaned data</span></td><td><span class="evidence">direct experiment</span>random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation</td></tr>
+<tr class=""><td class="num">2</td><td class="check">scenario_holdout_falsification<span class="info" tabindex="0" role="button" aria-label="About scenario_holdout_falsification" aria-describedby="tip-2">i</span><span class="tip" role="tooltip" id="tip-2"><span class="tk">What it checks</span><span class="tv">Holds out the smallest schema.scenario_column value entirely as test, training on every other scenario, and compares accuracy against a random split. Rebuilds both splits from the raw data itself, so its result is the same whether or not preprocessing.dedup ran.</span><span class="tk">Rule</span><span class="tv">Flag: accuracy drops more than 10 percentage points on the held-out scenario. Warning: more than 5. Always ok when no schema.scenario_column is configured.</span></span></td><td class="status" colspan="2"><span class="badge b-ok">pass</span> <span class="same-note">same on raw and cleaned data</span></td><td><span class="evidence">direct experiment</span>no schema.scenario_column configured</td></tr>
+<tr class=""><td class="num">3</td><td class="check">result_robustness_check<span class="info" tabindex="0" role="button" aria-label="About result_robustness_check" aria-describedby="tip-3">i</span><span class="tip" role="tooltip" id="tip-3"><span class="tk">What it checks</span><span class="tv">Re-fits under each condition it can build from the config, random split, session-grouped split, deduplicated, identity columns dropped, and reports the full accuracy-by-condition vector rather than one collapsed score.</span><span class="tk">Rule</span><span class="tv">Flag: the spread between the best and worst condition exceeds 15 points of accuracy. Warning: more than 8. Always ok when fewer than two conditions can be built.</span></span></td><td class="status" colspan="2"><span class="badge b-flag">flag</span> <span class="same-note">same on raw and cleaned data</span></td><td><span class="evidence">direct experiment</span>accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier</td></tr>
+<tr class=""><td class="num">4</td><td class="check">repeated_seed_falsification_check<span class="info" tabindex="0" role="button" aria-label="About repeated_seed_falsification_check" aria-describedby="tip-4">i</span><span class="tip" role="tooltip" id="tip-4"><span class="tk">What it checks</span><span class="tv">Re-runs resplit_falsification&#x27;s random-vs-grouped accuracy comparison across audit.repeated_seed_count independent seeds (default 10) and reports a 95% confidence interval on the mean accuracy drop, instead of a single seed&#x27;s point estimate.</span><span class="tk">Rule</span><span class="tv">Flag: even the CI&#x27;s most conservative bound exceeds the materiality threshold. Ok: even its most generous bound stays below it. Warning: the CI straddles the threshold, inconclusive at this many seeds, not evidence of no effect.</span></span></td><td class="status" colspan="2"><span class="badge b-ok">pass</span> <span class="same-note">same on raw and cleaned data</span></td><td><span class="evidence">direct experiment</span>grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold</td></tr>
+</tbody></table>
+</div></div>
+
+
+
+<h2>Dataset fingerprint</h2>
+<p class="mono hash">train: 56,342,109 rows · test: 14,085,528 rows · 83 features<br>
+train sha256 aab4bff8725d0f144519192a89a39702f6b4d587c6030aeb29c726ca33b5f190<br>test sha256 1d62938665c9bc456c99794a18be65645c4aa4e0afa3d698361782436c5f073e</p>
+<h2>Citing this result</h2>
+<blockquote>This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.2), which reported failed, 3 ok, 0 warning(s), 1 flag(s) across 4 checks. Full report: audit_report_after.json.</blockquote>
+<p class="foot">Verdict rule: any flag → failed · warnings only → passed with warnings · all ok → passed.<br>Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143).</p>
+</div></div></body></html>

@@ -1,0 +1,80 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "cic-ids2018",
+    "raw_files": [
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz"
+    ],
+    "train_file": null,
+    "test_file": null,
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [],
+    "chunk_size": 100000,
+    "max_rows": 500000
+  },
+  "schema": {
+    "label_column": "Label",
+    "attack_category_column": null,
+    "drop_columns": [
+      "Timestamp"
+    ],
+    "id_like_columns": [
+      "Dst Port"
+    ],
+    "timestamp_column": null
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": true,
+    "label_conflict_check": true,
+    "leakage_screen": true,
+    "one_rule_check": true,
+    "identity_column_flag": true,
+    "temporal_leakage_check": true,
+    "homogeneity_test": true,
+    "resplit_falsification": false,
+    "class_distribution_report": true,
+    "low_cardinality_warning": true,
+    "schema_fingerprint_check": true,
+    "data_integrity_check": true,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "known_issue_lookup": true,
+    "seed_sensitivity_check": false,
+    "reference_dataset": null
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "/home/tango/projects/IDS2Eval_data/output/cic-ids2018",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": true
+  }
+}

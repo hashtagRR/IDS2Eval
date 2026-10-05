@@ -1,0 +1,334 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 125957,
+      "train_rows_deduped": 125957,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 21833,
+      "test_rows_deduped": 21833,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)",
+    "details": {
+      "top_features": {
+        "same_srv_rate": 0.1424028080639066,
+        "src_bytes": 0.11351996535333324,
+        "flag": 0.08149257665486945,
+        "diff_srv_rate": 0.0790030460712448,
+        "dst_host_serror_rate": 0.05165086987436958
+      },
+      "top1_share": 0.1424028080639066,
+      "top2_share": 0.25592277341723985
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)",
+    "details": {
+      "rule": "same_srv_rate <= 0.495",
+      "train_accuracy": 0.8396516271425963,
+      "test_accuracy": 0.6343608299363349
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "flag",
+    "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']",
+    "details": {
+      "per_class": {
+        "normal": {
+          "test_near_zero_rate": 0.024,
+          "control_near_zero_rate": 0.034,
+          "p_value": 0.6661111512043575,
+          "leakage_signature": false
+        },
+        "neptune": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999999999999999,
+          "leakage_signature": false
+        },
+        "satan": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "ipsweep": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.9950415743837754,
+          "leakage_signature": false
+        },
+        "portsweep": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "smurf": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.995325460395144e-08,
+          "leakage_signature": true
+        },
+        "nmap": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "back": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "pod": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.999999998724733,
+          "leakage_signature": false
+        },
+        "guess_passwd": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 1.0,
+          "leakage_signature": false
+        },
+        "buffer_overflow": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999871711736311,
+          "leakage_signature": false
+        },
+        "warezmaster": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9999999991266273,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']",
+    "details": {
+      "train": {
+        "counts": {
+          "normal": 67339,
+          "neptune": 41214,
+          "satan": 3633,
+          "ipsweep": 3593,
+          "portsweep": 2930,
+          "smurf": 2646,
+          "nmap": 1491,
+          "back": 956,
+          "teardrop": 892,
+          "warezclient": 890,
+          "pod": 201,
+          "guess_passwd": 53,
+          "buffer_overflow": 30,
+          "warezmaster": 20,
+          "land": 15,
+          "imap": 11,
+          "rootkit": 10,
+          "loadmodule": 9,
+          "ftp_write": 8,
+          "multihop": 7,
+          "phf": 4,
+          "perl": 3,
+          "spy": 2
+        },
+        "shares": {
+          "normal": 0.534618957263193,
+          "neptune": 0.32720690394340923,
+          "satan": 0.028843176639646865,
+          "ipsweep": 0.028525607945568725,
+          "portsweep": 0.023261906841223593,
+          "smurf": 0.021007169113268814,
+          "nmap": 0.011837373071762585,
+          "back": 0.007589891788467493,
+          "teardrop": 0.007081781877942473,
+          "warezclient": 0.007065903443238566,
+          "pod": 0.0015957826877426424,
+          "guess_passwd": 0.00042077851965353257,
+          "buffer_overflow": 0.00023817652055860332,
+          "warezmaster": 0.0001587843470390689,
+          "land": 0.00011908826027930166,
+          "imap": 8.73313908714879e-05,
+          "rootkit": 7.939217351953445e-05,
+          "loadmodule": 7.1452956167581e-05,
+          "ftp_write": 6.351373881562756e-05,
+          "multihop": 5.557452146367411e-05,
+          "phf": 3.175686940781378e-05,
+          "perl": 2.3817652055860335e-05,
+          "spy": 1.587843470390689e-05
+        }
+      },
+      "test": {
+        "counts": {
+          "normal": 9582,
+          "neptune": 4502,
+          "guess_passwd": 1231,
+          "mscan": 996,
+          "warezmaster": 943,
+          "apache2": 737,
+          "satan": 724,
+          "processtable": 685,
+          "smurf": 462,
+          "back": 344,
+          "snmpguess": 331,
+          "saint": 312,
+          "mailbomb": 293,
+          "portsweep": 139,
+          "httptunnel": 133,
+          "snmpgetattack": 130,
+          "nmap": 73,
+          "ipsweep": 44,
+          "buffer_overflow": 20,
+          "pod": 20,
+          "multihop": 18,
+          "named": 17,
+          "ps": 15,
+          "sendmail": 14,
+          "xterm": 13,
+          "rootkit": 13,
+          "teardrop": 9,
+          "xlock": 9,
+          "land": 4,
+          "xsnoop": 4,
+          "ftp_write": 3,
+          "loadmodule": 2,
+          "worm": 2,
+          "perl": 2,
+          "sqlattack": 2,
+          "udpstorm": 2,
+          "phf": 2,
+          "imap": 1
+        },
+        "shares": {
+          "normal": 0.43887692941876977,
+          "neptune": 0.2062016213988,
+          "guess_passwd": 0.056382540191453306,
+          "mscan": 0.045619017084230294,
+          "warezmaster": 0.043191499106856594,
+          "apache2": 0.03375624055329089,
+          "satan": 0.03316081161544451,
+          "processtable": 0.03137452480190537,
+          "smurf": 0.02116062840654056,
+          "back": 0.01575596573993496,
+          "snmpguess": 0.015160536802088582,
+          "saint": 0.014290294508313104,
+          "mailbomb": 0.013420052214537627,
+          "portsweep": 0.006366509412357441,
+          "httptunnel": 0.006091696056428343,
+          "snmpgetattack": 0.005954289378463793,
+          "nmap": 0.003343562497137361,
+          "ipsweep": 0.0020152979434800533,
+          "buffer_overflow": 0.0009160445197636605,
+          "pod": 0.0009160445197636605,
+          "multihop": 0.0008244400677872945,
+          "named": 0.0007786378417991114,
+          "ps": 0.0006870333898227454,
+          "sendmail": 0.0006412311638345624,
+          "xterm": 0.0005954289378463793,
+          "rootkit": 0.0005954289378463793,
+          "teardrop": 0.00041222003389364725,
+          "xlock": 0.00041222003389364725,
+          "land": 0.0001832089039527321,
+          "xsnoop": 0.0001832089039527321,
+          "ftp_write": 0.00013740667796454908,
+          "loadmodule": 9.160445197636606e-05,
+          "worm": 9.160445197636606e-05,
+          "perl": 9.160445197636606e-05,
+          "sqlattack": 9.160445197636606e-05,
+          "udpstorm": 9.160445197636606e-05,
+          "phf": 9.160445197636606e-05,
+          "imap": 4.580222598818303e-05
+        }
+      },
+      "imbalance_ratio": 33669.5,
+      "rare_classes": [
+        "back",
+        "teardrop",
+        "warezclient",
+        "pod",
+        "guess_passwd",
+        "buffer_overflow",
+        "warezmaster",
+        "land",
+        "imap",
+        "rootkit",
+        "loadmodule",
+        "ftp_write",
+        "multihop",
+        "phf",
+        "perl",
+        "spy"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "1 constant/near-constant feature(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": [
+        "num_outbound_cmds"
+      ]
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "ok",
+    "summary": "no curated known issues for dataset 'nsl-kdd'",
+    "details": {
+      "matches": []
+    }
+  }
+]

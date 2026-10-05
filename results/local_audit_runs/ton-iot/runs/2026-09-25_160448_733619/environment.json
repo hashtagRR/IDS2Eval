@@ -1,0 +1,18 @@
+{
+  "python_version": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+  "platform": "Linux-6.12.107+deb13-cloud-amd64-x86_64-with-glibc2.41",
+  "ids2eval": {
+    "version": "0.1.0",
+    "git_commit": "2ef764e98eb9b39d54c64647f9254a6033dabc8d"
+  },
+  "packages": {
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "imbalanced-learn": "0.14.2",
+    "xgboost": "3.4.1",
+    "pyyaml": "6.0.3",
+    "pyarrow": "25.0.1"
+  }
+}

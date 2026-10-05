@@ -1,0 +1,31 @@
+{
+  "train_rows": 125170,
+  "test_rows": 306201,
+  "feature_count": 77,
+  "train_class_distribution": {
+    "Syn": 48840,
+    "Benign": 46427,
+    "UDP": 18090,
+    "MSSQL": 8523,
+    "LDAP": 1906,
+    "Portmap": 685,
+    "NetBIOS": 644,
+    "UDPLag": 55
+  },
+  "test_class_distribution": {
+    "DrDoS_NTP": 121368,
+    "TFTP": 98917,
+    "Benign": 51404,
+    "DrDoS_UDP": 10420,
+    "UDP-lag": 8872,
+    "DrDoS_MSSQL": 6212,
+    "DrDoS_DNS": 3669,
+    "DrDoS_SNMP": 2717,
+    "DrDoS_LDAP": 1440,
+    "DrDoS_NetBIOS": 598,
+    "Syn": 533,
+    "WebDDoS": 51
+  },
+  "train_content_hash": "0d2aca1b3453d9b224be088b6e2000ab2181a32a14bd331d4349f1620148ec63",
+  "test_content_hash": "71b75ac9db06a3be8a7d6d0479191e6c40af349a3a5fca22402baa55c95df308"
+}

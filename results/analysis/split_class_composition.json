@@ -1,0 +1,17 @@
+{
+  "ton-iot-official": {
+    "seeds": 10,
+    "max_abs_class_share_diff": 2.357487797059396e-05,
+    "max_js_divergence": 2.0390523231912337e-08
+  },
+  "bot-iot-official": {
+    "seeds": 10,
+    "max_abs_class_share_diff": 1.3629455980264534e-06,
+    "max_js_divergence": 1.8433851587264298e-08
+  },
+  "cic-ids2017-glf": {
+    "seeds": 5,
+    "max_abs_class_share_diff": 3.653119330460086e-05,
+    "max_js_divergence": 5.491247701597713e-06
+  }
+}

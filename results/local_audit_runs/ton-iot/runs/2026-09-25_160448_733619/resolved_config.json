@@ -1,0 +1,71 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "ton-iot",
+    "raw_files": [
+      "/home/tango/projects/IDS2Eval_data/ton-iot/nf-ton-iot-v2.csv.gz"
+    ],
+    "train_file": null,
+    "test_file": null,
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [],
+    "chunk_size": 100000,
+    "max_rows": 500000
+  },
+  "schema": {
+    "label_column": "Attack",
+    "attack_category_column": null,
+    "drop_columns": [
+      "Label"
+    ],
+    "id_like_columns": [
+      "L4_DST_PORT"
+    ],
+    "timestamp_column": null
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": true,
+    "label_conflict_check": true,
+    "leakage_screen": true,
+    "one_rule_check": true,
+    "identity_column_flag": true,
+    "temporal_leakage_check": true,
+    "homogeneity_test": true,
+    "resplit_falsification": false,
+    "class_distribution_report": true,
+    "low_cardinality_warning": true,
+    "schema_fingerprint_check": true,
+    "data_integrity_check": true,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "known_issue_lookup": true,
+    "seed_sensitivity_check": false,
+    "reference_dataset": null
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "/home/tango/projects/IDS2Eval_data/output/ton-iot",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": false
+  }
+}

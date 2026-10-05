@@ -1,0 +1,15 @@
+{
+  "train_rows": 175341,
+  "test_rows": 82332,
+  "feature_count": 42,
+  "train_class_distribution": {
+    "1.0": 119341,
+    "0.0": 56000
+  },
+  "test_class_distribution": {
+    "1.0": 45332,
+    "0.0": 37000
+  },
+  "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
+  "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
+}

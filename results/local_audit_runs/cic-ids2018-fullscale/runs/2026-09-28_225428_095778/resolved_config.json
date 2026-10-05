@@ -1,0 +1,104 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "cic-ids2018-fullscale",
+    "raw_files": [
+      "/tmp/ids2eval_task/data/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "/tmp/ids2eval_task/data/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz"
+    ],
+    "train_file": null,
+    "test_file": null,
+    "column_names": [],
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [
+      "Dst Port",
+      "Protocol",
+      "Timestamp"
+    ],
+    "chunk_size": 200000,
+    "max_rows": null
+  },
+  "schema": {
+    "label_column": "Label",
+    "attack_category_column": null,
+    "drop_columns": [
+      "Timestamp"
+    ],
+    "id_like_columns": [
+      "Dst Port"
+    ],
+    "timestamp_column": null,
+    "flow_id_columns": [],
+    "scenario_column": null,
+    "feature_categories": {}
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": true,
+    "label_conflict_check": true,
+    "near_duplicate_class_check": true,
+    "leakage_screen": true,
+    "one_rule_check": true,
+    "feature_auc_ranking_check": true,
+    "identity_column_flag": true,
+    "port_protocol_shortcut_check": true,
+    "temporal_leakage_check": true,
+    "temporal_realism_check": true,
+    "flow_group_leakage_check": true,
+    "row_order_leakage_check": true,
+    "homogeneity_test": true,
+    "resplit_falsification": true,
+    "scenario_holdout_falsification": true,
+    "class_distribution_report": true,
+    "low_cardinality_warning": true,
+    "schema_fingerprint_check": true,
+    "data_integrity_check": true,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "cross_capture_matrix_check": false,
+    "feature_category_ablation_check": false,
+    "artifact_sensitivity_check": false,
+    "result_robustness_check": true,
+    "known_issue_lookup": true,
+    "seed_sensitivity_check": false,
+    "repeated_seed_falsification_check": true,
+    "repeated_seed_count": 10,
+    "reference_dataset": null,
+    "materiality_thresholds": {},
+    "parallel_checks": false,
+    "max_parallel_checks": 4
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "/tmp/ids2eval_task/out",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": true
+  }
+}

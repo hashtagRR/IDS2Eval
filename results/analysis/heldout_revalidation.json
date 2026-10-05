@@ -1,0 +1,1534 @@
+{
+  "part1": {
+    "resplit_falsification": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 7
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "repeated_seed_falsification_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "result_robustness_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 5
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 300,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 300,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 301,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 301,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 302,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 302,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 303,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 303,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 304,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 304,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    }
+  },
+  "part2": {
+    "n_datasets": 30,
+    "datasets_with_any_flag": 3,
+    "per_check": {
+      "dedup_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "label_conflict_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "near_duplicate_class_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "leakage_screen": {
+        "flag": 0,
+        "warning": 0
+      },
+      "one_rule_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "feature_auc_ranking_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "identity_column_flag": {
+        "flag": 0,
+        "warning": 0
+      },
+      "port_protocol_shortcut_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_realism_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "flow_group_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "row_order_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "homogeneity_test": {
+        "flag": 0,
+        "warning": 10
+      },
+      "resplit_falsification": {
+        "flag": 2,
+        "warning": 3
+      },
+      "class_distribution_report": {
+        "flag": 0,
+        "warning": 0
+      },
+      "low_cardinality_warning": {
+        "flag": 0,
+        "warning": 30
+      },
+      "schema_fingerprint_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "data_integrity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "artifact_sensitivity_check": {
+        "flag": 0,
+        "warning": 8
+      },
+      "result_robustness_check": {
+        "flag": 3,
+        "warning": 0
+      },
+      "seed_sensitivity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "repeated_seed_falsification_check": {
+        "flag": 0,
+        "warning": 18
+      }
+    },
+    "runs": [
+      {
+        "balance": "balanced",
+        "seed": 300,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 301,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "warning",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 302,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 303,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "warning",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 304,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 305,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 306,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 307,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 308,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "warning",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 309,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 300,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 301,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 302,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 303,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 304,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 305,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 306,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 307,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 308,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 309,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 300,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 301,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 302,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 303,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 304,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 305,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 306,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 307,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 308,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 309,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      }
+    ]
+  }
+}

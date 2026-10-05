@@ -1,0 +1,56 @@
+[
+  {
+    "check": "resplit_falsification",
+    "status": "ok",
+    "summary": "random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "details": {
+      "random_accuracy": 0.8947650382719058,
+      "grouped_accuracy": 0.894677430622409,
+      "drop": 8.760764949677924e-05
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "flag",
+    "summary": "accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.8947650382719058,
+        "grouped_split": 0.894677430622409,
+        "deduplicated": 0.8893682379848766,
+        "identity_columns_dropped": 0.7319264141180934
+      },
+      "spread": 0.16283862415381234,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "random_split"
+    }
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "status": "ok",
+    "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold",
+    "details": {
+      "n_seeds": 5,
+      "drops_by_seed": [
+        8.760764949677924e-05,
+        -9.959830572170425e-05,
+        -1.0073804504018291e-05,
+        -0.000442368933560755,
+        -3.293414703042785e-05
+      ],
+      "mean_drop": -9.947350826402523e-05,
+      "ci_95": [
+        -0.0003516539390346511,
+        0.00015270692250660066
+      ],
+      "materiality_threshold": 0.01,
+      "material": false
+    }
+  }
+]

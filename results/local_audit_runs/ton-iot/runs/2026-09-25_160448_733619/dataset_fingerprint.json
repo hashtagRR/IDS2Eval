@@ -1,0 +1,31 @@
+{
+  "train_rows": 400000,
+  "test_rows": 100000,
+  "feature_count": 41,
+  "train_class_distribution": {
+    "Benign": 109471,
+    "scanning": 91597,
+    "xss": 74565,
+    "ddos": 53396,
+    "password": 30271,
+    "injection": 20121,
+    "dos": 19761,
+    "backdoor": 496,
+    "mitm": 229,
+    "ransomware": 93
+  },
+  "test_class_distribution": {
+    "Benign": 27368,
+    "scanning": 22899,
+    "xss": 18641,
+    "ddos": 13349,
+    "password": 7568,
+    "injection": 5030,
+    "dos": 4940,
+    "backdoor": 124,
+    "mitm": 58,
+    "ransomware": 23
+  },
+  "train_content_hash": "03587bbee696fad295803a852004fc276e4ce227ac99539751cad0733c7034ef",
+  "test_content_hash": "c737a0aff65db970152f95dff7e8f39d87f7b5a44bb4771146eef487884049f0"
+}

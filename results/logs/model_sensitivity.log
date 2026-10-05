@@ -1,0 +1,33 @@
+=== ton-iot-official: 211,043 rows, seeds 0..9
+  seed 0: logistic_regression acc 0.8576->0.8007 mF1 0.794->0.777; xgboost acc 0.9953->0.9942 mF1 0.984->0.983
+  seed 1: logistic_regression acc 0.8546->0.8591 mF1 0.808->0.801; xgboost acc 0.9956->0.9946 mF1 0.987->0.984
+  seed 2: logistic_regression acc 0.8448->0.8821 mF1 0.795->0.814; xgboost acc 0.9960->0.9952 mF1 0.989->0.983
+  seed 3: logistic_regression acc 0.8751->0.8521 mF1 0.820->0.784; xgboost acc 0.9955->0.9946 mF1 0.988->0.985
+  seed 4: logistic_regression acc 0.8819->0.8914 mF1 0.825->0.821; xgboost acc 0.9953->0.9951 mF1 0.986->0.986
+  seed 5: logistic_regression acc 0.7936->0.8930 mF1 0.738->0.844; xgboost acc 0.9954->0.9952 mF1 0.986->0.985
+  seed 6: logistic_regression acc 0.8449->0.7963 mF1 0.803->0.758; xgboost acc 0.9953->0.9953 mF1 0.988->0.986
+  seed 7: logistic_regression acc 0.8464->0.7862 mF1 0.788->0.751; xgboost acc 0.9950->0.9950 mF1 0.986->0.984
+  seed 8: logistic_regression acc 0.7686->0.8951 mF1 0.732->0.835; xgboost acc 0.9957->0.9948 mF1 0.989->0.984
+  seed 9: logistic_regression acc 0.8302->0.8534 mF1 0.778->0.799; xgboost acc 0.9953->0.9950 mF1 0.986->0.985
+=== bot-iot-official: 3,668,522 rows, seeds 0..9
+  seed 0: logistic_regression acc 0.9984->0.9995 mF1 0.777->0.743; xgboost acc 1.0000->0.9999 mF1 0.987->0.880
+  seed 1: logistic_regression acc 0.9993->0.9995 mF1 0.689->0.758; xgboost acc 1.0000->1.0000 mF1 0.943->0.948
+  seed 2: logistic_regression acc 0.9996->0.9989 mF1 0.717->0.748; xgboost acc 0.9999->1.0000 mF1 0.856->0.946
+  seed 3: logistic_regression acc 0.9994->0.9994 mF1 0.726->0.705; xgboost acc 0.9999->0.9999 mF1 0.884->0.915
+  seed 4: logistic_regression acc 0.9996->0.9992 mF1 0.715->0.746; xgboost acc 0.9999->0.9999 mF1 0.771->0.717
+  seed 5: logistic_regression acc 0.9984->0.9991 mF1 0.795->0.759; xgboost acc 1.0000->0.9999 mF1 0.981->0.773
+  seed 6: logistic_regression acc 0.9996->0.9992 mF1 0.757->0.655; xgboost acc 0.9999->0.9999 mF1 0.924->0.913
+  seed 7: logistic_regression acc 0.9989->0.9985 mF1 0.878->0.724; xgboost acc 0.9999->0.9999 mF1 0.931->0.895
+  seed 8: logistic_regression acc 0.9985->0.9994 mF1 0.705->0.685; xgboost acc 0.9999->0.9999 mF1 0.876->0.918
+  seed 9: logistic_regression acc 0.9994->0.9985 mF1 0.682->0.822; xgboost acc 0.9999->1.0000 mF1 0.941->0.959
+/home/tango/projects/IDS2Eval_data/cic-ids2017/glf/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+Dropped 29634 fully blank row(s) (every column missing)
+Dropped 200000 fully blank row(s) (every column missing)
+Dropped 58968 fully blank row(s) (every column missing)
+=== cic-ids2017-glf: 2,830,743 rows, seeds 0..4
+  seed 0: logistic_regression acc 0.9843->0.9841 mF1 0.618->0.577; xgboost acc 0.9997->0.9995 mF1 0.765->0.809
+  seed 1: logistic_regression acc 0.9784->0.9773 mF1 0.539->0.565; xgboost acc 0.9995->0.9996 mF1 0.760->0.815
+  seed 2: logistic_regression acc 0.9819->0.9801 mF1 0.586->0.575; xgboost acc 0.9996->0.9996 mF1 0.810->0.815
+  seed 3: logistic_regression acc 0.9803->0.9817 mF1 0.548->0.553; xgboost acc 0.9996->0.9996 mF1 0.759->0.753
+  seed 4: logistic_regression acc 0.9851->0.9787 mF1 0.592->0.568; xgboost acc 0.9994->0.9996 mF1 0.760->0.815
+DONE

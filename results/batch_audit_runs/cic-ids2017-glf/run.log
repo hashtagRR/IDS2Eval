@@ -1,0 +1,84 @@
+INFO ids2eval.cli: Loading dataset 'cic-ids2017-glf'
+WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+WARNING ids2eval.data.chunked_io: Dropped 29634 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 200000 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 58968 fully blank row(s) (every column missing)
+INFO ids2eval.data.cache: Cached load+split+label-grouping result to /tmp/ids2eval_task/out/.cache
+INFO ids2eval.cli: Split: train=2264594 rows, test=566149 rows
+INFO ids2eval.cli: Run artifacts: /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033
+WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+WARNING ids2eval.data.chunked_io: Dropped 29634 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 200000 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 58968 fully blank row(s) (every column missing)
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165831 train / 291457 test, zero overlap confirmed.
+WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+WARNING ids2eval.data.chunked_io: Dropped 29634 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 200000 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 58968 fully blank row(s) (every column missing)
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165831 train / 291457 test, zero overlap confirmed.
+WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+WARNING ids2eval.data.chunked_io: Dropped 29634 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 200000 fully blank row(s) (every column missing)
+WARNING ids2eval.data.chunked_io: Dropped 58968 fully blank row(s) (every column missing)
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165831 train / 291457 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165830 train / 291458 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165827 train / 291461 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165833 train / 291455 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165840 train / 291448 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165834 train / 291454 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165828 train / 291460 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165830 train / 291458 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165830 train / 291458 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1457288 groups total, 1165828 train / 291460 test, zero overlap confirmed.
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033/audit_report_before.json
+INFO ids2eval.cli: [FLAG] dedup_check: train duplicates: 9,191 (0.41%); test rows leaking a train feature-match: 3,825 (0.68%); test-internal duplicates: 319
+INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=17.2%, top2=31.0%)
+INFO ids2eval.cli: [OK] one_rule_check: single rule 'Source IP <= 0.5' reaches 86.6% test accuracy (88.3% train)
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column: {'Source IP': 0.985, 'Destination IP': 0.98, 'Source Port': 0.839, 'Destination Port': 0.931}. Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']
+INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Source Port' + 'Protocol' combined: 0.907. Port and protocol together may predict the label without attack behavior
+INFO ids2eval.cli: [OK] temporal_leakage_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] temporal_realism_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce
+INFO ids2eval.cli: [FLAG] homogeneity_test: 12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=0.9995, grouped-split accuracy=0.9994 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 15 classes, train imbalance ratio (majority:minority) = 202053:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack – Brute Force', 'Web Attack – XSS', 'Infiltration', 'Web Attack – Sql Injection', 'Heartbleed']
+INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Source IP': 16328, 'Destination IP': 18766, 'Source Port': 64558, 'Destination Port': 51291}
+INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']
+INFO ids2eval.cli: [WARNING] data_integrity_check: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)
+INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9976 (identity_columns_dropped) to 0.9995 (random_split) across 4 conditions, a spread of 0.0018
+INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0001]; not material: even the most generous estimate in the 95% CI (+0.0001) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Dedup: {'train_rows_raw': 2264594, 'train_rows_deduped': 2255403, 'train_duplicates_dropped': 9191, 'test_rows_raw': 566149, 'test_rows_deduped': 562005, 'test_leakage_dropped': 3825, 'test_duplicates_dropped': 319}
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033/audit_report_after.json
+INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0
+INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=15.1%, top2=21.7%)
+INFO ids2eval.cli: [OK] one_rule_check: single rule 'Source IP <= 1.5' reaches 81.3% test accuracy (83.3% train)
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column: {'Source IP': 0.985, 'Destination IP': 0.98, 'Source Port': 0.837, 'Destination Port': 0.931}. Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']
+INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Source Port' + 'Protocol' combined: 0.907. Port and protocol together may predict the label without attack behavior
+INFO ids2eval.cli: [OK] temporal_leakage_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] temporal_realism_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce
+INFO ids2eval.cli: [OK] homogeneity_test: 12 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=0.9995, grouped-split accuracy=0.9994 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 15 classes, train imbalance ratio (majority:minority) = 201575:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack – Brute Force', 'Web Attack – XSS', 'Infiltration', 'Web Attack – Sql Injection', 'Heartbleed']
+INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Source IP': 16328, 'Destination IP': 18766, 'Source Port': 64558, 'Destination Port': 51291}
+INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']
+INFO ids2eval.cli: [WARNING] data_integrity_check: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)
+INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9976 (identity_columns_dropped) to 0.9995 (random_split) across 4 conditions, a spread of 0.0018
+INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0001]; not material: even the most generous estimate in the 95% CI (+0.0001) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Intervention manifest written to /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033/intervention_manifest.json (3 intervention(s))
+INFO matplotlib.font_manager: generated new fontManager
+INFO ids2eval.cli: Scorecard plot written to /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033/scorecard.pdf / .png
+INFO ids2eval.cli: Scorecard: failed -> /tmp/ids2eval_task/out/runs/2026-09-28_125107_547033/scorecard.json
+exit=0 seconds=13053

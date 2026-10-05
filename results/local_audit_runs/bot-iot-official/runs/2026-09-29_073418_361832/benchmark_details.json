@@ -1,0 +1,2395 @@
+{
+  "class_distributions": {
+    "binary": {
+      "original": {
+        "DDoS": 105087,
+        "DoS": 89923,
+        "Reconnaissance": 4953,
+        "Normal": 29,
+        "Theft": 8
+      },
+      "none": {
+        "DDoS": 105087,
+        "DoS": 89923,
+        "Reconnaissance": 4953,
+        "Normal": 29,
+        "Theft": 8
+      }
+    }
+  },
+  "binary|standard|none|RandomForest": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        91,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        18217,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        15
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.999997404794901,
+        "recall": 1.0,
+        "f1-score": 0.9999987023957667,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 1.0,
+        "recall": 0.9578947368421052,
+        "f1-score": 0.978494623655914,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9997804730805115,
+        "recall": 1.0,
+        "f1-score": 0.999890224490916,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 0.9375,
+        "f1-score": 0.967741935483871,
+        "support": 16.0
+      },
+      "accuracy": 0.9999931852720099,
+      "macro avg": {
+        "precision": 0.9999555755750826,
+        "recall": 0.979078947368421,
+        "f1-score": 0.9892250972052935,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9999931864723599,
+        "recall": 0.9999931852720099,
+        "f1-score": 0.9999931049678208,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 0.30070034504882676,
+      "flgs": 0.0019334719396672847,
+      "flgs_number": 0.0009699181177948008,
+      "proto": 0.003883724889648901,
+      "proto_number": 0.0036798613327706318,
+      "saddr": 0.0008530884467301521,
+      "sport": 6.116370691531948e-05,
+      "daddr": 0.11779129158684432,
+      "dport": 0.008321384947219276,
+      "pkts": 0.003488004868066607,
+      "bytes": 0.009193674626674355,
+      "state": 0.006941025865944848,
+      "state_number": 0.0002728890505271091,
+      "ltime": 0.20275584097974098,
+      "seq": 0.002814183604908543,
+      "dur": 0.1079454090808368,
+      "mean": 0.004026687299754587,
+      "stddev": 0.0008488043339431008,
+      "sum": 0.032639395946510275,
+      "min": 0.006447262580837736,
+      "max": 0.0033970477686549537,
+      "spkts": 0.007938830508687466,
+      "dpkts": 0.0004559668140928226,
+      "sbytes": 0.010605211481593609,
+      "dbytes": 0.0022480671849843966,
+      "rate": 0.019928248374026226,
+      "srate": 0.024123341193893016,
+      "drate": 0.0020598569616146465,
+      "TnBPSrcIP": 0.0011678471978851953,
+      "TnBPDstIP": 0.0015400176988412005,
+      "TnP_PSrcIP": 0.00127462955388592,
+      "TnP_PDstIP": 0.0018070729986429572,
+      "TnP_PerProto": 0.006202420081347004,
+      "TnP_Per_Dport": 0.008571681272724918,
+      "AR_P_Proto_P_SrcIP": 0.008928859029143447,
+      "AR_P_Proto_P_DstIP": 0.015330234073177301,
+      "N_IN_Conn_P_DstIP": 0.048026588776574855,
+      "N_IN_Conn_P_SrcIP": 0.0010728518724437443,
+      "AR_P_Proto_P_Sport": 0.010268036026413074,
+      "AR_P_Proto_P_Dport": 0.0046424590442011495,
+      "Pkts_P_State_P_Protocol_P_DestIP": 0.0019474173839963652,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.002895886449013342
+    }
+  },
+  "binary|standard|none|XGBoost": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        89,
+        6,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        18216,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.9888888888888889,
+        "recall": 0.9368421052631579,
+        "f1-score": 0.9621621621621622,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9996707276918011,
+        "recall": 0.9999451062194653,
+        "f1-score": 0.9998078981311233,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9999904593808138,
+      "macro avg": {
+        "precision": 0.997711923316138,
+        "recall": 0.9873574422965247,
+        "f1-score": 0.9923940120586572,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9999903859055153,
+        "recall": 0.9999904593808138,
+        "f1-score": 0.9999903311080885,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 0.9711453914642334,
+      "flgs": 0.0,
+      "flgs_number": 0.0,
+      "proto": 0.00011229427764192224,
+      "proto_number": 7.429024117300287e-05,
+      "saddr": 0.0016633063787594438,
+      "sport": 6.071300231269561e-05,
+      "daddr": 0.005876490846276283,
+      "dport": 0.001353841507807374,
+      "pkts": 6.594965816475451e-05,
+      "bytes": 0.00010795413254527375,
+      "state": 0.00362247577868402,
+      "state_number": 0.0001614271168364212,
+      "ltime": 0.0001423830835847184,
+      "seq": 0.002145550213754177,
+      "dur": 0.00016126295668072999,
+      "mean": 3.5280299925943837e-05,
+      "stddev": 0.0,
+      "sum": 1.9610559320426546e-05,
+      "min": 3.8782960473326966e-05,
+      "max": 4.272913793101907e-05,
+      "spkts": 0.0,
+      "dpkts": 1.3719212802243419e-05,
+      "sbytes": 1.8731756426859647e-05,
+      "dbytes": 3.404562085052021e-05,
+      "rate": 0.0016847028164193034,
+      "srate": 0.0,
+      "drate": 0.0,
+      "TnBPSrcIP": 0.00044006964890286326,
+      "TnBPDstIP": 0.0,
+      "TnP_PSrcIP": 0.0020605712197721004,
+      "TnP_PDstIP": 0.0,
+      "TnP_PerProto": 0.002282745437696576,
+      "TnP_Per_Dport": 0.0004651935596484691,
+      "AR_P_Proto_P_SrcIP": 2.788343590509612e-05,
+      "AR_P_Proto_P_DstIP": 3.561796620488167e-05,
+      "N_IN_Conn_P_DstIP": 0.00398018304258585,
+      "N_IN_Conn_P_SrcIP": 0.0002634679258335382,
+      "AR_P_Proto_P_Sport": 0.0,
+      "AR_P_Proto_P_Dport": 0.00011262986663496122,
+      "Pkts_P_State_P_Protocol_P_DestIP": 4.9532227421877906e-05,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.001701230532489717
+    }
+  },
+  "binary|standard|none|DecisionTree": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        88,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        10,
+        18207,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.8979591836734694,
+        "recall": 0.9263157894736842,
+        "f1-score": 0.9119170984455959,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9996156802459646,
+        "recall": 0.9994510621946533,
+        "f1-score": 0.9995333644423705,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9999768299248335,
+      "macro avg": {
+        "precision": 0.9795149727838869,
+        "recall": 0.9851533703336676,
+        "f1-score": 0.9822900925775933,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.999977245581657,
+        "recall": 0.9999768299248335,
+        "f1-score": 0.9999770090491398,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 0.09005362035837922,
+      "flgs": 0.0,
+      "flgs_number": 0.0,
+      "proto": 0.0,
+      "proto_number": 0.0,
+      "saddr": 0.00011499046337625922,
+      "sport": 0.0,
+      "daddr": 0.00043823091788304974,
+      "dport": 0.0,
+      "pkts": 0.0,
+      "bytes": 0.0,
+      "state": 0.0,
+      "state_number": 0.0,
+      "ltime": 0.9093931582603615,
+      "seq": 0.0,
+      "dur": 0.0,
+      "mean": 0.0,
+      "stddev": 0.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "spkts": 0.0,
+      "dpkts": 0.0,
+      "sbytes": 0.0,
+      "dbytes": 0.0,
+      "rate": 0.0,
+      "srate": 0.0,
+      "drate": 0.0,
+      "TnBPSrcIP": 0.0,
+      "TnBPDstIP": 0.0,
+      "TnP_PSrcIP": 0.0,
+      "TnP_PDstIP": 0.0,
+      "TnP_PerProto": 0.0,
+      "TnP_Per_Dport": 0.0,
+      "AR_P_Proto_P_SrcIP": 0.0,
+      "AR_P_Proto_P_DstIP": 0.0,
+      "N_IN_Conn_P_DstIP": 0.0,
+      "N_IN_Conn_P_SrcIP": 0.0,
+      "AR_P_Proto_P_Sport": 0.0,
+      "AR_P_Proto_P_Dport": 0.0,
+      "Pkts_P_State_P_Protocol_P_DestIP": 0.0,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.0
+    }
+  },
+  "binary|standard|none|NaiveBayes": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        384201,
+        884,
+        0,
+        240,
+        0
+      ],
+      [
+        0,
+        329932,
+        0,
+        120,
+        0
+      ],
+      [
+        0,
+        0,
+        88,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        250,
+        17967,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 1.0,
+        "recall": 0.9970829818983975,
+        "f1-score": 0.9985393605934042,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9973278196943316,
+        "recall": 0.9996364209276114,
+        "f1-score": 0.9984807858755455,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.2603550295857988,
+        "recall": 0.9263157894736842,
+        "f1-score": 0.4064665127020785,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9799825460892331,
+        "recall": 0.9862765548663337,
+        "f1-score": 0.983119476895297,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9979542186573623,
+      "macro avg": {
+        "precision": 0.8475330790738728,
+        "recall": 0.9818623494332053,
+        "f1-score": 0.877321227213265,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9982051605422777,
+        "recall": 0.9979542186573623,
+        "f1-score": 0.9980535246315035,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|LogisticRegression": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        384546,
+        467,
+        306,
+        0,
+        6
+      ],
+      [
+        143,
+        329825,
+        79,
+        0,
+        5
+      ],
+      [
+        4,
+        1,
+        84,
+        6,
+        0
+      ],
+      [
+        0,
+        37,
+        8,
+        18172,
+        0
+      ],
+      [
+        10,
+        0,
+        0,
+        0,
+        6
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9995918929667822,
+        "recall": 0.9979783299811847,
+        "f1-score": 0.9987844597858779,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.998471225743953,
+        "recall": 0.9993122295880649,
+        "f1-score": 0.9988915506479583,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.1761006289308176,
+        "recall": 0.8842105263157894,
+        "f1-score": 0.2937062937062937,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.999669930685444,
+        "recall": 0.99752977987594,
+        "f1-score": 0.9985987086138206,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.35294117647058826,
+        "recall": 0.375,
+        "f1-score": 0.36363636363636365,
+        "support": 16.0
+      },
+      "accuracy": 0.9985389223189156,
+      "macro avg": {
+        "precision": 0.7053549709595169,
+        "recall": 0.8508061731521959,
+        "f1-score": 0.7307234752780629,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9989689792253524,
+        "recall": 0.9985389223189156,
+        "f1-score": 0.9987228777178726,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 19.711288502591966,
+      "flgs": 2.914312087292196,
+      "flgs_number": -0.9324128048353368,
+      "proto": 2.084764831654255,
+      "proto_number": 0.9812817500977249,
+      "saddr": -0.15790969768719856,
+      "sport": -0.09371343658215361,
+      "daddr": -5.367993407645123,
+      "dport": 1.8015410770666562,
+      "pkts": 0.9594447336851897,
+      "bytes": 0.010196715092885335,
+      "state": -0.9312693753548352,
+      "state_number": -0.0046873954984399235,
+      "ltime": 19.742192814476752,
+      "seq": 0.9816409000804439,
+      "dur": -0.897677670740189,
+      "mean": 3.8001124293377226,
+      "stddev": 0.5897696703896406,
+      "sum": -5.814103784658757,
+      "min": -0.3531749277458118,
+      "max": 0.10448274164564395,
+      "spkts": 1.9979943696118474,
+      "dpkts": -0.11057348239232713,
+      "sbytes": 0.19936615945560981,
+      "dbytes": -0.19253955470991124,
+      "rate": -0.7159442072961937,
+      "srate": -2.73913244341169,
+      "drate": -1.9057464289623305,
+      "TnBPSrcIP": 0.5660505830409778,
+      "TnBPDstIP": 0.12915624431979494,
+      "TnP_PSrcIP": 3.256800215576366,
+      "TnP_PDstIP": 3.9184103397929757,
+      "TnP_PerProto": 2.0631229354165534,
+      "TnP_Per_Dport": -12.515739381542623,
+      "AR_P_Proto_P_SrcIP": -0.7266379212916912,
+      "AR_P_Proto_P_DstIP": -2.2658492332113314,
+      "N_IN_Conn_P_DstIP": 2.512141631622023,
+      "N_IN_Conn_P_SrcIP": -1.7838434833589107,
+      "AR_P_Proto_P_Sport": -0.7100261555081984,
+      "AR_P_Proto_P_Dport": -0.5805637775202857,
+      "Pkts_P_State_P_Protocol_P_DestIP": -0.5720148087678072,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 1.2859153637602516
+    }
+  },
+  "binary|standard|none|KNN": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        384736,
+        589,
+        0,
+        0,
+        0
+      ],
+      [
+        116,
+        329935,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        83,
+        12,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        18217,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        15
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9996985854302434,
+        "recall": 0.9984714202296763,
+        "f1-score": 0.9990846260015555,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9982179811450909,
+        "recall": 0.9996455104044211,
+        "f1-score": 0.9989312357699947,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 1.0,
+        "recall": 0.8736842105263158,
+        "f1-score": 0.9325842696629213,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9992320772310899,
+        "recall": 1.0,
+        "f1-score": 0.9996158911325724,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 0.9375,
+        "f1-score": 0.967741935483871,
+        "support": 16.0
+      },
+      "accuracy": 0.9990200421150189,
+      "macro avg": {
+        "precision": 0.9994297287612849,
+        "recall": 0.9618602282320825,
+        "f1-score": 0.9795915916101829,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9990210088451447,
+        "recall": 0.9990200421150189,
+        "f1-score": 0.9990195212077817,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|SVM": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        383416,
+        1907,
+        0,
+        0,
+        2
+      ],
+      [
+        315,
+        329732,
+        5,
+        0,
+        0
+      ],
+      [
+        14,
+        8,
+        66,
+        7,
+        0
+      ],
+      [
+        0,
+        57,
+        2,
+        18158,
+        0
+      ],
+      [
+        5,
+        6,
+        0,
+        0,
+        5
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.999129641693811,
+        "recall": 0.9950457406085772,
+        "f1-score": 0.9970835094106557,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9940369599951765,
+        "recall": 0.9990304558069637,
+        "f1-score": 0.9965274524678056,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.9041095890410958,
+        "recall": 0.6947368421052632,
+        "f1-score": 0.7857142857142857,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9996146435452794,
+        "recall": 0.9967612669484548,
+        "f1-score": 0.9981859161123633,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.7142857142857143,
+        "recall": 0.3125,
+        "f1-score": 0.43478260869565216,
+        "support": 16.0
+      },
+      "accuracy": 0.9968270626477944,
+      "macro avg": {
+        "precision": 0.9222353097122153,
+        "recall": 0.7996148610938517,
+        "f1-score": 0.8424587544801524,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9968322620806013,
+        "recall": 0.9968270626477944,
+        "f1-score": 0.9968211123247981,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|LDA": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        382280,
+        3045,
+        0,
+        0,
+        0
+      ],
+      [
+        21041,
+        309011,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        72,
+        20,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        18215,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9478306361434192,
+        "recall": 0.9920975799649646,
+        "f1-score": 0.9694590475320993,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.990242136026867,
+        "recall": 0.9362494394822634,
+        "f1-score": 0.9624891762756421,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 1.0,
+        "recall": 0.7578947368421053,
+        "f1-score": 0.8622754491017964,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.99890320811626,
+        "recall": 0.9998902124389306,
+        "f1-score": 0.9993964665861955,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.7619047619047619,
+        "recall": 1.0,
+        "f1-score": 0.8648648648648649,
+        "support": 16.0
+      },
+      "accuracy": 0.9671380186859841,
+      "macro avg": {
+        "precision": 0.9397761484382616,
+        "recall": 0.9372263937456526,
+        "f1-score": 0.9316970008721196,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9681799191369106,
+        "recall": 0.9671380186859841,
+        "f1-score": 0.9670508508674981,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 836.1870982376759,
+      "flgs": 2.412066120707879,
+      "flgs_number": -2.2454320997221755,
+      "proto": 3.5430218465278824,
+      "proto_number": 3.880879854778189,
+      "saddr": -0.24592419015163927,
+      "sport": 0.05310407773330882,
+      "daddr": -2.070135622395984,
+      "dport": 0.36828521844237816,
+      "pkts": 35.29877973847968,
+      "bytes": -32.45601611368698,
+      "state": -0.5838002063117771,
+      "state_number": 0.1791960689159601,
+      "ltime": -823.1023638982741,
+      "seq": -0.36184194800452396,
+      "dur": -0.378010208072659,
+      "mean": 3.5811593599596088,
+      "stddev": 0.7479750035675929,
+      "sum": -7.244606887184669,
+      "min": 0.09213560137425113,
+      "max": -0.9732126675248285,
+      "spkts": 0.4187264314658116,
+      "dpkts": 69.6506954398285,
+      "sbytes": 9.011657814658495,
+      "dbytes": -76.48889924078046,
+      "rate": -0.15218483933158083,
+      "srate": -0.033432973662338036,
+      "drate": -0.10789061342545095,
+      "TnBPSrcIP": -0.7109984569711048,
+      "TnBPDstIP": 0.4578002928904415,
+      "TnP_PSrcIP": 1.0734450727635767,
+      "TnP_PDstIP": -2.8133979387496755,
+      "TnP_PerProto": -0.11627915348922895,
+      "TnP_Per_Dport": 0.9907997242467034,
+      "AR_P_Proto_P_SrcIP": 0.0220372959718816,
+      "AR_P_Proto_P_DstIP": -0.17791011561911083,
+      "N_IN_Conn_P_DstIP": 1.3727810855751323,
+      "N_IN_Conn_P_SrcIP": -0.9641783819008111,
+      "AR_P_Proto_P_Sport": 0.0643980689596929,
+      "AR_P_Proto_P_Dport": 0.10972433643829492,
+      "Pkts_P_State_P_Protocol_P_DestIP": 0.15862411198362608,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.38294396226809785
+    }
+  },
+  "binary|standard|none|Stacking": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        9,
+        65,
+        21,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        18217,
+        0
+      ],
+      [
+        14,
+        2,
+        0,
+        0,
+        0
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9999636683543581,
+        "recall": 1.0,
+        "f1-score": 0.999981833847176,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9999666730290884,
+        "recall": 1.0,
+        "f1-score": 0.9999833362368679,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 1.0,
+        "recall": 0.6842105263157895,
+        "f1-score": 0.8125,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9988485579559162,
+        "recall": 1.0,
+        "f1-score": 0.9994239473323275,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9999373045024907,
+      "macro avg": {
+        "precision": 0.7997557798678725,
+        "recall": 0.7368421052631579,
+        "f1-score": 0.7623778234832742,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9999155315222367,
+        "recall": 0.9999373045024907,
+        "f1-score": 0.9999225761952921,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|Voting": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        88,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        18217,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 1.0,
+        "recall": 0.9263157894736842,
+        "f1-score": 0.9617486338797814,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9996158911325724,
+        "recall": 1.0,
+        "f1-score": 0.9998079086742955,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9999904593808138,
+      "macro avg": {
+        "precision": 0.9999231782265146,
+        "recall": 0.9852631578947368,
+        "f1-score": 0.9923113085108154,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9999904630454501,
+        "recall": 0.9999904593808138,
+        "f1-score": 0.9999902778262901,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|ExtraTrees": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385323,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        330048,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        92,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        1,
+        18214,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9999896192065441,
+        "recall": 0.9999948095763317,
+        "f1-score": 0.9999922143847029,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.999987880697587,
+        "recall": 0.999987880697587,
+        "f1-score": 0.999987880697587,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.989247311827957,
+        "recall": 0.968421052631579,
+        "f1-score": 0.9787234042553191,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.999835318658396,
+        "recall": 0.999835318658396,
+        "f1-score": 0.999835318658396,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9999836446528236,
+      "macro avg": {
+        "precision": 0.9978120260780969,
+        "recall": 0.9936478123127788,
+        "f1-score": 0.9957077635992011,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9999836153704625,
+        "recall": 0.9999836446528236,
+        "f1-score": 0.9999836156645925,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 0.18809389020397782,
+      "flgs": 0.008536687743589422,
+      "flgs_number": 0.010633944002216792,
+      "proto": 0.010949281592755891,
+      "proto_number": 0.018552638780275348,
+      "saddr": 0.011378269777064813,
+      "sport": 0.0005057939642669435,
+      "daddr": 0.10095983396153203,
+      "dport": 0.00579618419856603,
+      "pkts": 0.007044921168198846,
+      "bytes": 0.00439067596778311,
+      "state": 0.00697593896021933,
+      "state_number": 0.0061001735243482805,
+      "ltime": 0.19486427743421972,
+      "seq": 0.004657987909208515,
+      "dur": 0.06481314487623714,
+      "mean": 0.021755906290363912,
+      "stddev": 0.012205420192842754,
+      "sum": 0.03218858477614139,
+      "min": 0.025002220342282427,
+      "max": 0.02186107646590952,
+      "spkts": 0.011317851377811427,
+      "dpkts": 0.0029872734954924643,
+      "sbytes": 0.009277660192398205,
+      "dbytes": 0.0013264951226313172,
+      "rate": 0.02091206205659966,
+      "srate": 0.015033792403974221,
+      "drate": 0.001299864873581015,
+      "TnBPSrcIP": 0.0027469191869375752,
+      "TnBPDstIP": 0.0066272530611268905,
+      "TnP_PSrcIP": 0.005837786068281197,
+      "TnP_PDstIP": 0.006985772215361229,
+      "TnP_PerProto": 0.004374283042974428,
+      "TnP_Per_Dport": 0.008286247218418785,
+      "AR_P_Proto_P_SrcIP": 0.017765991587343457,
+      "AR_P_Proto_P_DstIP": 0.023982062379492988,
+      "N_IN_Conn_P_DstIP": 0.056547882407385695,
+      "N_IN_Conn_P_SrcIP": 0.004778860088857132,
+      "AR_P_Proto_P_Sport": 0.017039735625424678,
+      "AR_P_Proto_P_Dport": 0.013250964655496331,
+      "Pkts_P_State_P_Protocol_P_DestIP": 0.006170355425173847,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.006184035383237303
+    }
+  },
+  "binary|standard|none|HistGradientBoosting": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        383445,
+        14,
+        2,
+        129,
+        1735
+      ],
+      [
+        0,
+        328135,
+        744,
+        30,
+        1143
+      ],
+      [
+        8,
+        49,
+        6,
+        32,
+        0
+      ],
+      [
+        121,
+        13,
+        11,
+        17428,
+        644
+      ],
+      [
+        15,
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.999624598202764,
+        "recall": 0.995121001751768,
+        "f1-score": 0.9973677160254593,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9997684416427237,
+        "recall": 0.9941918243185922,
+        "f1-score": 0.9969723347658914,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.007863695937090432,
+        "recall": 0.06315789473684211,
+        "f1-score": 0.013986013986013986,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9891032917139614,
+        "recall": 0.956688807158149,
+        "f1-score": 0.9726260568685995,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9936064221996579,
+      "macro avg": {
+        "precision": 0.5992720054993079,
+        "recall": 0.6018319055930703,
+        "f1-score": 0.5961904243291929,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9992778619742422,
+        "recall": 0.9936064221996579,
+        "f1-score": 0.9964264735295059,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "binary|standard|none|AdaBoost": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        385325,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        330052,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        95,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        18217,
+        0
+      ],
+      [
+        16,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9999584783347736,
+        "recall": 1.0,
+        "f1-score": 0.9999792387363657,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9948121450415028,
+        "recall": 1.0,
+        "f1-score": 0.9973993265624572,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 16.0
+      },
+      "accuracy": 0.9998487130386191,
+      "macro avg": {
+        "precision": 0.5989541246752552,
+        "recall": 0.6,
+        "f1-score": 0.5994757130597647,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9996980987052939,
+        "recall": 0.9998487130386191,
+        "f1-score": 0.9997732381516801,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": {
+      "stime": 0.43783600923984767,
+      "flgs": 0.0,
+      "flgs_number": 0.0,
+      "proto": 0.0,
+      "proto_number": 0.0,
+      "saddr": 0.0,
+      "sport": 0.0,
+      "daddr": 0.0,
+      "dport": 0.0,
+      "pkts": 0.0,
+      "bytes": 0.0,
+      "state": 0.0,
+      "state_number": 0.0,
+      "ltime": 0.5621639907601523,
+      "seq": 0.0,
+      "dur": 0.0,
+      "mean": 0.0,
+      "stddev": 0.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "spkts": 0.0,
+      "dpkts": 0.0,
+      "sbytes": 0.0,
+      "dbytes": 0.0,
+      "rate": 0.0,
+      "srate": 0.0,
+      "drate": 0.0,
+      "TnBPSrcIP": 0.0,
+      "TnBPDstIP": 0.0,
+      "TnP_PSrcIP": 0.0,
+      "TnP_PDstIP": 0.0,
+      "TnP_PerProto": 0.0,
+      "TnP_Per_Dport": 0.0,
+      "AR_P_Proto_P_SrcIP": 0.0,
+      "AR_P_Proto_P_DstIP": 0.0,
+      "N_IN_Conn_P_DstIP": 0.0,
+      "N_IN_Conn_P_SrcIP": 0.0,
+      "AR_P_Proto_P_Sport": 0.0,
+      "AR_P_Proto_P_Dport": 0.0,
+      "Pkts_P_State_P_Protocol_P_DestIP": 0.0,
+      "Pkts_P_State_P_Protocol_P_SrcIP": 0.0
+    }
+  },
+  "binary|standard|none|MLP": {
+    "best_params": null,
+    "confusion_matrix": [
+      [
+        384858,
+        418,
+        45,
+        0,
+        4
+      ],
+      [
+        43,
+        330002,
+        1,
+        0,
+        6
+      ],
+      [
+        5,
+        0,
+        84,
+        6,
+        0
+      ],
+      [
+        0,
+        0,
+        7,
+        18210,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        15
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "DDoS",
+      "DoS",
+      "Normal",
+      "Reconnaissance",
+      "Theft"
+    ],
+    "per_class_report": {
+      "DDoS": {
+        "precision": 0.9998726965214974,
+        "recall": 0.9987880360734445,
+        "f1-score": 0.999330071978313,
+        "support": 385325.0
+      },
+      "DoS": {
+        "precision": 0.9987349434053628,
+        "recall": 0.9998485087198381,
+        "f1-score": 0.9992914158359476,
+        "support": 330052.0
+      },
+      "Normal": {
+        "precision": 0.6131386861313869,
+        "recall": 0.8842105263157894,
+        "f1-score": 0.7241379310344828,
+        "support": 95.0
+      },
+      "Reconnaissance": {
+        "precision": 0.9996706192358367,
+        "recall": 0.9996157435362574,
+        "f1-score": 0.9996431806329427,
+        "support": 18217.0
+      },
+      "Theft": {
+        "precision": 0.6,
+        "recall": 0.9375,
+        "f1-score": 0.7317073170731707,
+        "support": 16.0
+      },
+      "accuracy": 0.9992694611594578,
+      "macro avg": {
+        "precision": 0.8422833890588167,
+        "recall": 0.9639925629290659,
+        "f1-score": 0.8908219833109714,
+        "support": 733705.0
+      },
+      "weighted avg": {
+        "precision": 0.9992970746741191,
+        "recall": 0.9992694611594578,
+        "f1-score": 0.9992789889760072,
+        "support": 733705.0
+      }
+    },
+    "feature_importance": null
+  },
+  "per_class_metrics": [
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "RandomForest",
+      "class": "DDoS",
+      "precision": 0.999997404794901,
+      "recall": 1.0,
+      "f1": 0.9999987023957667,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "RandomForest",
+      "class": "DoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "RandomForest",
+      "class": "Normal",
+      "precision": 1.0,
+      "recall": 0.9578947368421052,
+      "f1": 0.978494623655914,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "RandomForest",
+      "class": "Reconnaissance",
+      "precision": 0.9997804730805115,
+      "recall": 1.0,
+      "f1": 0.999890224490916,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "RandomForest",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 0.9375,
+      "f1": 0.967741935483871,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "XGBoost",
+      "class": "DDoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "XGBoost",
+      "class": "DoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "XGBoost",
+      "class": "Normal",
+      "precision": 0.9888888888888889,
+      "recall": 0.9368421052631579,
+      "f1": 0.9621621621621622,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "XGBoost",
+      "class": "Reconnaissance",
+      "precision": 0.9996707276918011,
+      "recall": 0.9999451062194653,
+      "f1": 0.9998078981311233,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "XGBoost",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "DecisionTree",
+      "class": "DDoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "DecisionTree",
+      "class": "DoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "DecisionTree",
+      "class": "Normal",
+      "precision": 0.8979591836734694,
+      "recall": 0.9263157894736842,
+      "f1": 0.9119170984455959,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "DecisionTree",
+      "class": "Reconnaissance",
+      "precision": 0.9996156802459646,
+      "recall": 0.9994510621946533,
+      "f1": 0.9995333644423705,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "DecisionTree",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "NaiveBayes",
+      "class": "DDoS",
+      "precision": 1.0,
+      "recall": 0.9970829818983975,
+      "f1": 0.9985393605934042,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "NaiveBayes",
+      "class": "DoS",
+      "precision": 0.9973278196943316,
+      "recall": 0.9996364209276114,
+      "f1": 0.9984807858755455,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "NaiveBayes",
+      "class": "Normal",
+      "precision": 0.2603550295857988,
+      "recall": 0.9263157894736842,
+      "f1": 0.4064665127020785,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "NaiveBayes",
+      "class": "Reconnaissance",
+      "precision": 0.9799825460892331,
+      "recall": 0.9862765548663337,
+      "f1": 0.983119476895297,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "NaiveBayes",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LogisticRegression",
+      "class": "DDoS",
+      "precision": 0.9995918929667822,
+      "recall": 0.9979783299811847,
+      "f1": 0.9987844597858779,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LogisticRegression",
+      "class": "DoS",
+      "precision": 0.998471225743953,
+      "recall": 0.9993122295880649,
+      "f1": 0.9988915506479583,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LogisticRegression",
+      "class": "Normal",
+      "precision": 0.1761006289308176,
+      "recall": 0.8842105263157894,
+      "f1": 0.2937062937062937,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LogisticRegression",
+      "class": "Reconnaissance",
+      "precision": 0.999669930685444,
+      "recall": 0.99752977987594,
+      "f1": 0.9985987086138206,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LogisticRegression",
+      "class": "Theft",
+      "precision": 0.35294117647058826,
+      "recall": 0.375,
+      "f1": 0.36363636363636365,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "KNN",
+      "class": "DDoS",
+      "precision": 0.9996985854302434,
+      "recall": 0.9984714202296763,
+      "f1": 0.9990846260015555,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "KNN",
+      "class": "DoS",
+      "precision": 0.9982179811450909,
+      "recall": 0.9996455104044211,
+      "f1": 0.9989312357699947,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "KNN",
+      "class": "Normal",
+      "precision": 1.0,
+      "recall": 0.8736842105263158,
+      "f1": 0.9325842696629213,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "KNN",
+      "class": "Reconnaissance",
+      "precision": 0.9992320772310899,
+      "recall": 1.0,
+      "f1": 0.9996158911325724,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "KNN",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 0.9375,
+      "f1": 0.967741935483871,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "SVM",
+      "class": "DDoS",
+      "precision": 0.999129641693811,
+      "recall": 0.9950457406085772,
+      "f1": 0.9970835094106557,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "SVM",
+      "class": "DoS",
+      "precision": 0.9940369599951765,
+      "recall": 0.9990304558069637,
+      "f1": 0.9965274524678056,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "SVM",
+      "class": "Normal",
+      "precision": 0.9041095890410958,
+      "recall": 0.6947368421052632,
+      "f1": 0.7857142857142857,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "SVM",
+      "class": "Reconnaissance",
+      "precision": 0.9996146435452794,
+      "recall": 0.9967612669484548,
+      "f1": 0.9981859161123633,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "SVM",
+      "class": "Theft",
+      "precision": 0.7142857142857143,
+      "recall": 0.3125,
+      "f1": 0.43478260869565216,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LDA",
+      "class": "DDoS",
+      "precision": 0.9478306361434192,
+      "recall": 0.9920975799649646,
+      "f1": 0.9694590475320993,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LDA",
+      "class": "DoS",
+      "precision": 0.990242136026867,
+      "recall": 0.9362494394822634,
+      "f1": 0.9624891762756421,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LDA",
+      "class": "Normal",
+      "precision": 1.0,
+      "recall": 0.7578947368421053,
+      "f1": 0.8622754491017964,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LDA",
+      "class": "Reconnaissance",
+      "precision": 0.99890320811626,
+      "recall": 0.9998902124389306,
+      "f1": 0.9993964665861955,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "LDA",
+      "class": "Theft",
+      "precision": 0.7619047619047619,
+      "recall": 1.0,
+      "f1": 0.8648648648648649,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Stacking",
+      "class": "DDoS",
+      "precision": 0.9999636683543581,
+      "recall": 1.0,
+      "f1": 0.999981833847176,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Stacking",
+      "class": "DoS",
+      "precision": 0.9999666730290884,
+      "recall": 1.0,
+      "f1": 0.9999833362368679,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Stacking",
+      "class": "Normal",
+      "precision": 1.0,
+      "recall": 0.6842105263157895,
+      "f1": 0.8125,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Stacking",
+      "class": "Reconnaissance",
+      "precision": 0.9988485579559162,
+      "recall": 1.0,
+      "f1": 0.9994239473323275,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Stacking",
+      "class": "Theft",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Voting",
+      "class": "DDoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Voting",
+      "class": "DoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Voting",
+      "class": "Normal",
+      "precision": 1.0,
+      "recall": 0.9263157894736842,
+      "f1": 0.9617486338797814,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Voting",
+      "class": "Reconnaissance",
+      "precision": 0.9996158911325724,
+      "recall": 1.0,
+      "f1": 0.9998079086742955,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "Voting",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "ExtraTrees",
+      "class": "DDoS",
+      "precision": 0.9999896192065441,
+      "recall": 0.9999948095763317,
+      "f1": 0.9999922143847029,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "ExtraTrees",
+      "class": "DoS",
+      "precision": 0.999987880697587,
+      "recall": 0.999987880697587,
+      "f1": 0.999987880697587,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "ExtraTrees",
+      "class": "Normal",
+      "precision": 0.989247311827957,
+      "recall": 0.968421052631579,
+      "f1": 0.9787234042553191,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "ExtraTrees",
+      "class": "Reconnaissance",
+      "precision": 0.999835318658396,
+      "recall": 0.999835318658396,
+      "f1": 0.999835318658396,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "ExtraTrees",
+      "class": "Theft",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "HistGradientBoosting",
+      "class": "DDoS",
+      "precision": 0.999624598202764,
+      "recall": 0.995121001751768,
+      "f1": 0.9973677160254593,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "HistGradientBoosting",
+      "class": "DoS",
+      "precision": 0.9997684416427237,
+      "recall": 0.9941918243185922,
+      "f1": 0.9969723347658914,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "HistGradientBoosting",
+      "class": "Normal",
+      "precision": 0.007863695937090432,
+      "recall": 0.06315789473684211,
+      "f1": 0.013986013986013986,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "HistGradientBoosting",
+      "class": "Reconnaissance",
+      "precision": 0.9891032917139614,
+      "recall": 0.956688807158149,
+      "f1": 0.9726260568685995,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "HistGradientBoosting",
+      "class": "Theft",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "AdaBoost",
+      "class": "DDoS",
+      "precision": 0.9999584783347736,
+      "recall": 1.0,
+      "f1": 0.9999792387363657,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "AdaBoost",
+      "class": "DoS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "AdaBoost",
+      "class": "Normal",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "AdaBoost",
+      "class": "Reconnaissance",
+      "precision": 0.9948121450415028,
+      "recall": 1.0,
+      "f1": 0.9973993265624572,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "AdaBoost",
+      "class": "Theft",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 16.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "MLP",
+      "class": "DDoS",
+      "precision": 0.9998726965214974,
+      "recall": 0.9987880360734445,
+      "f1": 0.999330071978313,
+      "support": 385325.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "MLP",
+      "class": "DoS",
+      "precision": 0.9987349434053628,
+      "recall": 0.9998485087198381,
+      "f1": 0.9992914158359476,
+      "support": 330052.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "MLP",
+      "class": "Normal",
+      "precision": 0.6131386861313869,
+      "recall": 0.8842105263157894,
+      "f1": 0.7241379310344828,
+      "support": 95.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "MLP",
+      "class": "Reconnaissance",
+      "precision": 0.9996706192358367,
+      "recall": 0.9996157435362574,
+      "f1": 0.9996431806329427,
+      "support": 18217.0
+    },
+    {
+      "stage": "binary",
+      "scaling": "standard",
+      "sampling": "none",
+      "classifier": "MLP",
+      "class": "Theft",
+      "precision": 0.6,
+      "recall": 0.9375,
+      "f1": 0.7317073170731707,
+      "support": 16.0
+    }
+  ]
+}

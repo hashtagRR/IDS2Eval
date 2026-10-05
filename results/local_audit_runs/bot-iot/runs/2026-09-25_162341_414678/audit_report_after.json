@@ -1,0 +1,183 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 400000,
+      "train_rows_deduped": 400000,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 100000,
+      "test_rows_deduped": 100000,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=12.2%, top2=22.1%)",
+    "details": {
+      "top_features": {
+        "LONGEST_FLOW_PKT": 0.12230940424899828,
+        "PROTOCOL": 0.09824895843980885,
+        "MAX_IP_PKT_LEN": 0.08690255499754158,
+        "L7_PROTO": 0.0836581253131307,
+        "SHORTEST_FLOW_PKT": 0.07859538155793838
+      },
+      "top1_share": 0.12230940424899828,
+      "top2_share": 0.22055836268880713
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'LONGEST_FLOW_PKT <= 34' reaches 90.8% test accuracy (90.8% train)",
+    "details": {
+      "rule": "LONGEST_FLOW_PKT <= 34",
+      "train_accuracy": 0.907775,
+      "test_accuracy": 0.90813
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "standalone AUC by column: {'L4_DST_PORT': 0.531}",
+    "details": {
+      "standalone_auc": {
+        "L4_DST_PORT": 0.53084005764649
+      },
+      "suggested_drop": []
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "4 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "details": {
+      "per_class": {
+        "DDoS": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.75669153223956,
+          "leakage_signature": false
+        },
+        "DoS": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.4405545265856184,
+          "leakage_signature": false
+        },
+        "Reconnaissance": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.80556981720479,
+          "leakage_signature": false
+        },
+        "Benign": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.43201694221454956,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "5 classes, train imbalance ratio (majority:minority) = 5065:1; classes below 1% of train: ['Benign', 'Theft']",
+    "details": {
+      "train": {
+        "counts": {
+          "DDoS": 187394,
+          "DoS": 179736,
+          "Reconnaissance": 31122,
+          "Benign": 1711,
+          "Theft": 37
+        },
+        "shares": {
+          "DDoS": 0.468485,
+          "DoS": 0.44934,
+          "Reconnaissance": 0.077805,
+          "Benign": 0.0042775,
+          "Theft": 9.25e-05
+        }
+      },
+      "test": {
+        "counts": {
+          "DDoS": 46848,
+          "DoS": 44934,
+          "Reconnaissance": 7781,
+          "Benign": 428,
+          "Theft": 9
+        },
+        "shares": {
+          "DDoS": 0.46848,
+          "DoS": 0.44934,
+          "Reconnaissance": 0.07781,
+          "Benign": 0.00428,
+          "Theft": 9e-05
+        }
+      },
+      "imbalance_ratio": 5064.7027027027025,
+      "rare_classes": [
+        "Benign",
+        "Theft"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "unique values by column: {'L4_DST_PORT': 14608}",
+    "details": {
+      "cardinalities": {
+        "L4_DST_PORT": 14608
+      },
+      "flagged": []
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "ok",
+    "summary": "no missing labels, constant features, or +-inf values found",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": []
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+    "details": {
+      "matches": [
+        {
+          "issue": "The full dataset is over 99.9% attack traffic (benign flows are 129,437 of 30,420,086 rows, 0.43%), an order of magnitude more skewed than most NIDS datasets; a uniform row-level sample may carry very few or zero benign rows, and a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic.",
+          "citation": "Koroniotis et al. 2019, Future Generation Computer Systems"
+        }
+      ]
+    }
+  }
+]

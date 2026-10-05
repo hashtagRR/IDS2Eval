@@ -1,0 +1,3712 @@
+{
+  "part1": {
+    "dedup_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "label_conflict_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "near_duplicate_class_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "identity_column_flag": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "low_cardinality_warning": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "port_protocol_shortcut_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "one_rule_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "row_order_leakage_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "temporal_leakage_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "temporal_realism_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "homogeneity_test": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "resplit_falsification": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 6
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "repeated_seed_falsification_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 7
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "result_robustness_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 5
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 100,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 100,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 101,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 101,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 102,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 102,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 103,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 103,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 104,
+          "balance": "balanced",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 104,
+          "balance": "imbalanced",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    }
+  },
+  "part2": {
+    "n_datasets": 30,
+    "datasets_with_any_flag": 9,
+    "per_check": {
+      "dedup_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "label_conflict_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "near_duplicate_class_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "leakage_screen": {
+        "flag": 0,
+        "warning": 0
+      },
+      "one_rule_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "feature_auc_ranking_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "identity_column_flag": {
+        "flag": 0,
+        "warning": 0
+      },
+      "port_protocol_shortcut_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_realism_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "flow_group_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "row_order_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "homogeneity_test": {
+        "flag": 0,
+        "warning": 9
+      },
+      "resplit_falsification": {
+        "flag": 9,
+        "warning": 0
+      },
+      "class_distribution_report": {
+        "flag": 0,
+        "warning": 0
+      },
+      "low_cardinality_warning": {
+        "flag": 0,
+        "warning": 30
+      },
+      "schema_fingerprint_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "data_integrity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "artifact_sensitivity_check": {
+        "flag": 0,
+        "warning": 7
+      },
+      "result_robustness_check": {
+        "flag": 4,
+        "warning": 0
+      },
+      "seed_sensitivity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "repeated_seed_falsification_check": {
+        "flag": 0,
+        "warning": 18
+      }
+    },
+    "runs": [
+      {
+        "balance": "balanced",
+        "seed": 200,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 201,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 202,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 203,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 204,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 205,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 206,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 207,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 208,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "balanced",
+        "seed": 209,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "warning",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 200,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 201,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 202,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 203,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 204,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 205,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 206,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 207,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 208,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_10pct",
+        "seed": 209,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 200,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 201,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 202,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 203,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 204,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 205,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 206,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 207,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "flag",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "flag",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 208,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      },
+      {
+        "balance": "imbalanced_2pct",
+        "seed": 209,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "warning",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        }
+      }
+    ]
+  }
+}

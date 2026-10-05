@@ -5,3 +5,6 @@ output/
 *.egg-info/
 build/
 .claude/
+
+# large binary archives of results; kept locally, not in git
+results/local_audit_runs/archives/

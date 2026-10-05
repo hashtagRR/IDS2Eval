@@ -1,0 +1,402 @@
+{
+  "scorecard_schema_version": "1.3",
+  "generated_at": "2026-09-27T02:48:11.150861+00:00",
+  "dataset_name": "ton-iot",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "2ec454337f11fa5e69f01db302e67b502eff81fe",
+  "audit_stage": "after",
+  "overall_status": "review_required",
+  "counts": {
+    "ok": 13,
+    "warning": 2,
+    "flag": 4
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)"
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "status": "flag",
+      "summary": "'OUT_PKTS' alone reaches AUC 0.992 identifying 'backdoor'; a single feature this separable is worth checking for a leakage artifact"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "flag",
+      "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']"
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "status": "flag",
+      "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.898. Port and protocol together may predict the label without attack behavior"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "temporal_realism_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "ok",
+      "summary": "no schema.flow_id_columns configured"
+    },
+    {
+      "check": "row_order_leakage_check",
+      "status": "ok",
+      "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "flag",
+      "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "unique values by column: {'L4_DST_PORT': 49397}"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "+-inf values in 2 feature column(s)"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "ok",
+      "summary": "no curated known issues for dataset 'ton-iot'"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "'OUT_PKTS' alone reaches AUC 0.992 identifying 'backdoor'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "'OUT_PKTS' alone reaches AUC 0.992 identifying 'backdoor'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.898. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC of 'L4_DST_PORT' + 'PROTOCOL' combined: 0.898. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "unique values by column: {'L4_DST_PORT': 49397}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "unique values by column: {'L4_DST_PORT': 49397}",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "+-inf values in 2 feature column(s)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "+-inf values in 2 feature column(s)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'ton-iot'",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'ton-iot'",
+        "evidence": "documented"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 400000,
+    "train_rows_deduped": 400000,
+    "train_duplicates_dropped": 0,
+    "test_rows_raw": 100000,
+    "test_rows_deduped": 100000,
+    "test_leakage_dropped": 0,
+    "test_duplicates_dropped": 0
+  },
+  "dataset_fingerprint": {
+    "train_rows": 400000,
+    "test_rows": 100000,
+    "feature_count": 41,
+    "train_content_hash": "03587bbee696fad295803a852004fc276e4ce227ac99539751cad0733c7034ef",
+    "test_content_hash": "c737a0aff65db970152f95dff7e8f39d87f7b5a44bb4771146eef487884049f0"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-26_080016_161051",
+    "previous_generated_at": "2026-09-26T08:04:53.320794+00:00",
+    "previous_verdict": "review_required",
+    "fingerprint_changed": false,
+    "changed_checks": []
+  }
+}

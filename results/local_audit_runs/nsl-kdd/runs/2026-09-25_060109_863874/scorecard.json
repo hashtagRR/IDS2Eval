@@ -1,0 +1,245 @@
+{
+  "scorecard_schema_version": "1.3",
+  "generated_at": "2026-09-25T06:02:07.476147+00:00",
+  "dataset_name": "nsl-kdd",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "05b5e54ef7b41c5acc33228598eb71942bc1f06c",
+  "audit_stage": "after",
+  "overall_status": "review_required",
+  "counts": {
+    "ok": 9,
+    "warning": 2,
+    "flag": 1
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "flag",
+      "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "1 constant/near-constant feature(s)"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "ok",
+      "summary": "no curated known issues for dataset 'nsl-kdd'"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 16 (0.01%); test rows leaking a train feature-match: 664 (2.95%); test-internal duplicates: 47"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=14.1%, top2=25.0%)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=14.2%, top2=25.6%)"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no known extractor signature matched"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no known extractor signature matched"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "1 constant/near-constant feature(s)"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "1 constant/near-constant feature(s)"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'nsl-kdd'"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'nsl-kdd'"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 125973,
+    "train_rows_deduped": 125957,
+    "train_duplicates_dropped": 16,
+    "test_rows_raw": 22544,
+    "test_rows_deduped": 21833,
+    "test_leakage_dropped": 664,
+    "test_duplicates_dropped": 47
+  },
+  "dataset_fingerprint": {
+    "train_rows": 125973,
+    "test_rows": 22544,
+    "feature_count": 41,
+    "train_content_hash": "8c7cf0a516450d17a5426bfb0efcf6839fb28ebaadf494f32c59e1d29bb25441",
+    "test_content_hash": "cffa47019c555661fc1d3d2b2b45f11ead633d0dcadf618718c44c6e926916d0"
+  },
+  "previous_run_comparison": {
+    "previous_run": "2026-09-25_044551_511525",
+    "previous_generated_at": "2026-09-25T04:47:35.312474+00:00",
+    "previous_verdict": "review_required",
+    "fingerprint_changed": false,
+    "changed_checks": []
+  }
+}

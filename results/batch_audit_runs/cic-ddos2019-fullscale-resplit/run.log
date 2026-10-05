@@ -1,0 +1,29 @@
+INFO ids2eval.cli: Loading dataset 'cic-ddos2019-fullscale-resplit'
+INFO ids2eval.data.cache: Cached load+split+label-grouping result to /tmp/ids2eval_task/out/.cache
+INFO ids2eval.cli: Split: train=56342109 rows, test=14085528 rows
+INFO ids2eval.cli: Run artifacts: /tmp/ids2eval_task/out/runs/2026-10-02_140713_839892
+INFO ids2eval.cli: Stage: audit (before dedup)
+INFO ids2eval.audit: Audit check 1/4 done: resplit_falsification -> ok (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 2/4 done: scenario_holdout_falsification -> ok (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 3/4 done: result_robustness_check -> flag (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 4/4: repeated_seed_falsification_check ...
+INFO ids2eval.data.dataset: Grouped split: 46127849 groups total, 36902270 train / 9225579 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 46127849 groups total, 36902269 train / 9225580 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 46127849 groups total, 36902266 train / 9225583 test, zero overlap confirmed.
+INFO ids2eval.audit: Audit check 4/4 done: repeated_seed_falsification_check -> ok (57184.0s)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-02_140713_839892/audit_report_before.json
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [FLAG] result_robustness_check: accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Stage: dedup
+INFO ids2eval.cli: Dedup: {'train_rows_raw': 56342109, 'train_rows_deduped': 54453296, 'train_duplicates_dropped': 1888813, 'test_rows_raw': 14085528, 'test_rows_deduped': 13138650, 'test_leakage_dropped': 866520, 'test_duplicates_dropped': 80358}
+INFO ids2eval.cli: Stage: audit (after dedup)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-02_140713_839892/audit_report_after.json
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [FLAG] result_robustness_check: accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Intervention manifest written to /tmp/ids2eval_task/out/runs/2026-10-02_140713_839892/intervention_manifest.json (3 intervention(s))
+INFO ids2eval.cli: Scorecard: failed -> /tmp/ids2eval_task/out/runs/2026-10-02_140713_839892/scorecard.json
+exit=0 seconds=66918

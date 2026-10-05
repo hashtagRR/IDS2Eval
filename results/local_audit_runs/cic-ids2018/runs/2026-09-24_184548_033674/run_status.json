@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "finished_at": "2026-09-24T18:47:00.330132+00:00",
+  "failed_stage": "audit_before",
+  "error": "Number of classes in y_true not equal to the number of columns in 'y_score'"
+}

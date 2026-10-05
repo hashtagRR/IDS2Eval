@@ -1,0 +1,102 @@
+{
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-10-03T07:42:42.705238+00:00",
+  "dataset_name": "cic-ddos2019-fullscale-resplit",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": null,
+  "audit_stage": "after",
+  "overall_status": "failed",
+  "counts": {
+    "ok": 3,
+    "warning": 0,
+    "flag": 1
+  },
+  "findings": [
+    {
+      "check": "resplit_falsification",
+      "status": "ok",
+      "summary": "random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
+    },
+    {
+      "check": "result_robustness_check",
+      "status": "flag",
+      "summary": "accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier"
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold"
+    }
+  ],
+  "checks": [
+    {
+      "check": "resplit_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.8948, grouped-split accuracy=0.8947 (drop=+0.0001); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "result_robustness_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "accuracy ranges from 0.7319 (identity_columns_dropped) to 0.8948 (random_split) across 4 conditions, a spread of 0.1628; the headline result depends on methodology choices as much as the classifier",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0001, 95% CI=[-0.0004, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
+      }
+    }
+  ],
+  "dedup_effect": null,
+  "dataset_fingerprint": {
+    "train_rows": 56342109,
+    "test_rows": 14085528,
+    "feature_count": 83,
+    "train_content_hash": "aab4bff8725d0f144519192a89a39702f6b4d587c6030aeb29c726ca33b5f190",
+    "test_content_hash": "1d62938665c9bc456c99794a18be65645c4aa4e0afa3d698361782436c5f073e"
+  }
+}

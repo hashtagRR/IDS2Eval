@@ -1,0 +1,56 @@
+{
+  "unsw-nb15": {
+    "test_rows": 82332,
+    "matched_rows": 8541,
+    "matched_share": 0.10373852208132925,
+    "accuracy_matched": 0.9432150802013816,
+    "accuracy_novel": 0.8642788415931482,
+    "accuracy_all": 0.8724675703250255,
+    "matched_label_agreement": 0.9459079733052336
+  },
+  "nsl-kdd": {
+    "test_rows": 22544,
+    "matched_rows": 664,
+    "matched_share": 0.029453513129879347,
+    "accuracy_matched": 0.9171686746987951,
+    "accuracy_novel": 0.7169104204753199,
+    "accuracy_all": 0.7228087295954577,
+    "matched_label_agreement": 0.9141566265060241
+  },
+  "cic-ids2017": {
+    "test_rows": 566149,
+    "matched_rows": 81604,
+    "matched_share": 0.1441387337962268,
+    "accuracy_matched": 0.9957967746679084,
+    "accuracy_novel": 0.9982849890103086,
+    "accuracy_all": 0.9979263409455814,
+    "matched_label_agreement": 0.9971570021077398
+  },
+  "cic-ddos2019": {
+    "test_rows": 306201,
+    "matched_rows": 6763,
+    "matched_share": 0.02208679919399349,
+    "accuracy_matched": 0.061215436936270885,
+    "accuracy_novel": 0.1700518972207936,
+    "accuracy_all": 0.1676480481775043,
+    "matched_label_agreement": 0.061215436936270885
+  },
+  "ton-iot-official": {
+    "test_rows": 42209,
+    "matched_rows": 5185,
+    "matched_share": 0.12284110023928546,
+    "accuracy_matched": 1.0,
+    "accuracy_novel": 0.9941389369057908,
+    "accuracy_all": 0.9948589163448553,
+    "matched_label_agreement": 1.0
+  },
+  "cic-ids2018": {
+    "test_rows": 100000,
+    "matched_rows": 16882,
+    "matched_share": 0.16882,
+    "accuracy_matched": 0.9521383722307784,
+    "accuracy_novel": 0.9867297095695277,
+    "accuracy_all": 0.98089,
+    "matched_label_agreement": 0.9534415353631086
+  }
+}

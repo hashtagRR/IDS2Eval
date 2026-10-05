@@ -1,0 +1,240 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 400000,
+      "train_rows_deduped": 400000,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 100000,
+      "test_rows_deduped": 100000,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=9.4%, top2=17.4%)",
+    "details": {
+      "top_features": {
+        "L4_DST_PORT": 0.09446280605311609,
+        "LONGEST_FLOW_PKT": 0.07962897037230124,
+        "SRC_TO_DST_SECOND_BYTES": 0.0787295122352274,
+        "MAX_IP_PKT_LEN": 0.07693971993860597,
+        "IN_BYTES": 0.05992818746283397
+      },
+      "top1_share": 0.09446280605311609,
+      "top2_share": 0.17409177642541734
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'L4_DST_PORT <= 443.5' reaches 40.3% test accuracy (40.4% train)",
+    "details": {
+      "rule": "L4_DST_PORT <= 443.5",
+      "train_accuracy": 0.404485,
+      "test_accuracy": 0.40333
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "flag",
+    "summary": "standalone AUC by column: {'L4_DST_PORT': 0.896}. Suggest dropping: ['L4_DST_PORT']",
+    "details": {
+      "standalone_auc": {
+        "L4_DST_PORT": 0.8956822883117883
+      },
+      "suggested_drop": [
+        "L4_DST_PORT"
+      ]
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "flag",
+    "summary": "10 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['dos', 'backdoor']",
+    "details": {
+      "per_class": {
+        "Benign": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9861384748212084,
+          "leakage_signature": false
+        },
+        "scanning": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.4507237744968454,
+          "leakage_signature": false
+        },
+        "xss": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.3985577314325608,
+          "leakage_signature": false
+        },
+        "ddos": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.373349313610155,
+          "leakage_signature": false
+        },
+        "password": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.3676420931261011,
+          "leakage_signature": false
+        },
+        "injection": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.7096546652275812,
+          "leakage_signature": false
+        },
+        "dos": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.01582762660133437,
+          "leakage_signature": true
+        },
+        "backdoor": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.001338752620451691,
+          "leakage_signature": true
+        },
+        "mitm": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.7580114143936774,
+          "leakage_signature": false
+        },
+        "ransomware": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.352963173785208,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "10 classes, train imbalance ratio (majority:minority) = 1177:1; classes below 1% of train: ['backdoor', 'mitm', 'ransomware']",
+    "details": {
+      "train": {
+        "counts": {
+          "Benign": 109471,
+          "scanning": 91597,
+          "xss": 74565,
+          "ddos": 53396,
+          "password": 30271,
+          "injection": 20121,
+          "dos": 19761,
+          "backdoor": 496,
+          "mitm": 229,
+          "ransomware": 93
+        },
+        "shares": {
+          "Benign": 0.2736775,
+          "scanning": 0.2289925,
+          "xss": 0.1864125,
+          "ddos": 0.13349,
+          "password": 0.0756775,
+          "injection": 0.0503025,
+          "dos": 0.0494025,
+          "backdoor": 0.00124,
+          "mitm": 0.0005725,
+          "ransomware": 0.0002325
+        }
+      },
+      "test": {
+        "counts": {
+          "Benign": 27368,
+          "scanning": 22899,
+          "xss": 18641,
+          "ddos": 13349,
+          "password": 7568,
+          "injection": 5030,
+          "dos": 4940,
+          "backdoor": 124,
+          "mitm": 58,
+          "ransomware": 23
+        },
+        "shares": {
+          "Benign": 0.27368,
+          "scanning": 0.22899,
+          "xss": 0.18641,
+          "ddos": 0.13349,
+          "password": 0.07568,
+          "injection": 0.0503,
+          "dos": 0.0494,
+          "backdoor": 0.00124,
+          "mitm": 0.00058,
+          "ransomware": 0.00023
+        }
+      },
+      "imbalance_ratio": 1177.1075268817203,
+      "rare_classes": [
+        "backdoor",
+        "mitm",
+        "ransomware"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "unique values by column: {'L4_DST_PORT': 49397}",
+    "details": {
+      "cardinalities": {
+        "L4_DST_PORT": 49397
+      },
+      "flagged": []
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "+-inf values in 2 feature column(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {
+        "SRC_TO_DST_SECOND_BYTES": 2,
+        "DST_TO_SRC_SECOND_BYTES": 3
+      },
+      "constant_features": []
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "ok",
+    "summary": "no curated known issues for dataset 'ton-iot'",
+    "details": {
+      "matches": []
+    }
+  }
+]

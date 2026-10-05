@@ -1,0 +1,105 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "cic-ddos2019-fullscale-resplit",
+    "raw_files": [
+      "/tmp/ids2eval_task/data/train-full.csv.gz",
+      "/tmp/ids2eval_task/data/test-full.csv.gz"
+    ],
+    "train_file": null,
+    "test_file": null,
+    "column_names": [],
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [
+      "Source IP",
+      "Source Port",
+      "Destination IP",
+      "Destination Port",
+      "Protocol"
+    ],
+    "chunk_size": 200000,
+    "max_rows": null
+  },
+  "schema": {
+    "label_column": "Label",
+    "attack_category_column": null,
+    "drop_columns": [
+      "Unnamed: 0",
+      "Flow ID",
+      "Timestamp",
+      "SimillarHTTP"
+    ],
+    "id_like_columns": [
+      "Source IP",
+      "Destination IP",
+      "Source Port",
+      "Destination Port"
+    ],
+    "timestamp_column": null,
+    "flow_id_columns": [],
+    "scenario_column": null,
+    "feature_categories": {}
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": false,
+    "label_conflict_check": false,
+    "near_duplicate_class_check": false,
+    "leakage_screen": false,
+    "one_rule_check": false,
+    "feature_auc_ranking_check": false,
+    "identity_column_flag": false,
+    "port_protocol_shortcut_check": false,
+    "temporal_leakage_check": false,
+    "temporal_realism_check": false,
+    "flow_group_leakage_check": false,
+    "row_order_leakage_check": false,
+    "homogeneity_test": false,
+    "resplit_falsification": true,
+    "scenario_holdout_falsification": true,
+    "class_distribution_report": false,
+    "low_cardinality_warning": false,
+    "schema_fingerprint_check": false,
+    "data_integrity_check": false,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "cross_capture_matrix_check": false,
+    "feature_category_ablation_check": false,
+    "artifact_sensitivity_check": false,
+    "result_robustness_check": true,
+    "known_issue_lookup": false,
+    "seed_sensitivity_check": false,
+    "repeated_seed_falsification_check": true,
+    "repeated_seed_count": 5,
+    "reference_dataset": null,
+    "materiality_thresholds": {},
+    "parallel_checks": false,
+    "max_parallel_checks": 4,
+    "checkpoint": true
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "/tmp/ids2eval_task/out",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": false
+  }
+}

@@ -1,0 +1,13 @@
+unsw-nb15 before {'leakage': 0, 'cleared': 10, 'inconclusive': 0}
+unsw-nb15 after {'leakage': 0, 'cleared': 8, 'inconclusive': 2}
+nsl-kdd before {'leakage': 4, 'cleared': 5, 'inconclusive': 3}
+nsl-kdd after {'leakage': 0, 'cleared': 9, 'inconclusive': 3}
+cic-ids2017 before {'leakage': 0, 'cleared': 10, 'inconclusive': 2}
+cic-ids2017 after {'leakage': 0, 'cleared': 12, 'inconclusive': 0}
+cic-ddos2019 before {'leakage': 0, 'cleared': 2, 'inconclusive': 0}
+cic-ddos2019 after {'leakage': 0, 'cleared': 2, 'inconclusive': 0}
+ton-iot-official before {'leakage': 0, 'cleared': 8, 'inconclusive': 2}
+ton-iot-official after {'leakage': 0, 'cleared': 9, 'inconclusive': 1}
+bot-iot-official before {'leakage': 0, 'cleared': 4, 'inconclusive': 0}
+bot-iot-official after {'leakage': 0, 'cleared': 4, 'inconclusive': 0}
+DONE

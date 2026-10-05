@@ -1,0 +1,1714 @@
+{
+  "unsw-nb15/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "Normal": {
+        "test_rate": 0.034,
+        "control_rate": 0.144,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.1458053777052599,
+          -0.0756724804692081
+        ],
+        "class": "cleared"
+      },
+      "Generic": {
+        "test_rate": 0.09,
+        "control_rate": 0.98,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.9138611831314915,
+          -0.8572731730082882
+        ],
+        "class": "cleared"
+      },
+      "Exploits": {
+        "test_rate": 0.168,
+        "control_rate": 0.506,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.39105253613964314,
+          -0.2818387383382042
+        ],
+        "class": "cleared"
+      },
+      "Fuzzers": {
+        "test_rate": 0.032,
+        "control_rate": 0.214,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.22196833588144385,
+          -0.14314499012867
+        ],
+        "class": "cleared"
+      },
+      "DoS": {
+        "test_rate": 0.464,
+        "control_rate": 0.806,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.39598176358106596,
+          -0.28468686200918053
+        ],
+        "class": "cleared"
+      },
+      "Reconnaissance": {
+        "test_rate": 0.352,
+        "control_rate": 0.47,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.17772222443173136,
+          -0.05704782200253143
+        ],
+        "class": "cleared"
+      },
+      "Analysis": {
+        "test_rate": 0.17,
+        "control_rate": 0.85,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.7217403639037736,
+          -0.630935313756365
+        ],
+        "class": "cleared"
+      },
+      "Backdoor": {
+        "test_rate": 0.006,
+        "control_rate": 0.774,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.8027165130434235,
+          -0.7276605923565954
+        ],
+        "class": "cleared"
+      },
+      "Shellcode": {
+        "test_rate": 0.03439153439153439,
+        "control_rate": 0.094,
+        "n_test": 378,
+        "n_control": 500,
+        "ci": [
+          -0.09168032691773959,
+          -0.026984667121778466
+        ],
+        "class": "cleared"
+      },
+      "Worms": {
+        "test_rate": 0.0,
+        "control_rate": 0.1,
+        "n_test": 44,
+        "n_control": 130,
+        "ci": [
+          -0.16358576153595,
+          -0.010012583302782305
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "unsw-nb15/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "Normal": {
+        "test_rate": 0.0,
+        "control_rate": 0.004,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.014465715343449847,
+          0.004158082981553436
+        ],
+        "class": "cleared"
+      },
+      "Exploits": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Fuzzers": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Reconnaissance": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Generic": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Shellcode": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 364,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.010443246101129823
+        ],
+        "class": "cleared"
+      },
+      "Analysis": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 294,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.012897663393553966
+        ],
+        "class": "cleared"
+      },
+      "Backdoor": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 70,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.05202306318827402
+        ],
+        "class": "inconclusive"
+      },
+      "Worms": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 43,
+        "n_control": 121,
+        "ci": [
+          -0.030770698417971906,
+          0.08200980441345543
+        ],
+        "class": "inconclusive"
+      }
+    }
+  },
+  "nsl-kdd/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 4,
+        "cleared": 3,
+        "inconclusive": 5
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 4,
+        "cleared": 5,
+        "inconclusive": 3
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 3,
+        "cleared": 7,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 4,
+        "cleared": 3,
+        "inconclusive": 5
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 4,
+        "cleared": 4,
+        "inconclusive": 4
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 3,
+        "cleared": 6,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 11,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "normal": {
+        "test_rate": 0.024,
+        "control_rate": 0.036,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.03462362911343273,
+          0.009847009588788296
+        ],
+        "class": "cleared"
+      },
+      "neptune": {
+        "test_rate": 0.038,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          0.02246104975767641,
+          0.05858477272504103
+        ],
+        "class": "inconclusive"
+      },
+      "satan": {
+        "test_rate": 0.012,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          0.001988119390231847,
+          0.025930361265228637
+        ],
+        "class": "cleared"
+      },
+      "ipsweep": {
+        "test_rate": 0.6879432624113475,
+        "control_rate": 0.0,
+        "n_test": 141,
+        "n_control": 500,
+        "ci": [
+          0.6069782521121857,
+          0.7585792933919117
+        ],
+        "class": "leakage"
+      },
+      "portsweep": {
+        "test_rate": 0.11464968152866242,
+        "control_rate": 0.002,
+        "n_test": 157,
+        "n_control": 500,
+        "ci": [
+          0.07073200656778945,
+          0.17196602350856655
+        ],
+        "class": "leakage"
+      },
+      "smurf": {
+        "test_rate": 0.312,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          0.27221554567964684,
+          0.35391380362796615
+        ],
+        "class": "leakage"
+      },
+      "nmap": {
+        "test_rate": 0.0,
+        "control_rate": 0.008,
+        "n_test": 73,
+        "n_control": 500,
+        "ci": [
+          -0.020387035973185322,
+          0.04223008142894818
+        ],
+        "class": "cleared"
+      },
+      "back": {
+        "test_rate": 0.04178272980501393,
+        "control_rate": 0.0,
+        "n_test": 359,
+        "n_control": 500,
+        "ci": [
+          0.023786910784229256,
+          0.06778605211286995
+        ],
+        "class": "inconclusive"
+      },
+      "pod": {
+        "test_rate": 0.5121951219512195,
+        "control_rate": 0.004975124378109453,
+        "n_test": 41,
+        "n_control": 201,
+        "ci": [
+          0.3581373077272032,
+          0.6525383282595627
+        ],
+        "class": "leakage"
+      },
+      "guess_passwd": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 53,
+        "ci": [
+          -0.06758198957064511,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "buffer_overflow": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 20,
+        "n_control": 30,
+        "ci": [
+          -0.11351339476145204,
+          0.16112516018512965
+        ],
+        "class": "inconclusive"
+      },
+      "warezmaster": {
+        "test_rate": 0.002,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 20,
+        "ci": [
+          -0.15913357627891045,
+          0.011240706827931778
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "nsl-kdd/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 5
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 3
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 1,
+        "cleared": 6,
+        "inconclusive": 5
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 1,
+        "cleared": 7,
+        "inconclusive": 4
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 1,
+        "cleared": 9,
+        "inconclusive": 2
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 11,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "normal": {
+        "test_rate": 0.024,
+        "control_rate": 0.034,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.03225597521197418,
+          0.011583835017746551
+        ],
+        "class": "cleared"
+      },
+      "neptune": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "satan": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "ipsweep": {
+        "test_rate": 0.0,
+        "control_rate": 0.002,
+        "n_test": 44,
+        "n_control": 500,
+        "ci": [
+          -0.011240706827931778,
+          0.07831249174180302
+        ],
+        "class": "inconclusive"
+      },
+      "portsweep": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 139,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.026893164711292442
+        ],
+        "class": "cleared"
+      },
+      "smurf": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 462,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.008246279518618086
+        ],
+        "class": "cleared"
+      },
+      "nmap": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 73,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.04999200870496552
+        ],
+        "class": "cleared"
+      },
+      "back": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 344,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.011043706215040148
+        ],
+        "class": "cleared"
+      },
+      "pod": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 20,
+        "n_control": 201,
+        "ci": [
+          -0.018753327096357457,
+          0.16112516018512965
+        ],
+        "class": "inconclusive"
+      },
+      "guess_passwd": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 53,
+        "ci": [
+          -0.06758198957064511,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "buffer_overflow": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 20,
+        "n_control": 30,
+        "ci": [
+          -0.11351339476145204,
+          0.16112516018512965
+        ],
+        "class": "inconclusive"
+      },
+      "warezmaster": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 20,
+        "ci": [
+          -0.16112516018512965,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "cic-ids2017/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 5
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 8
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 6
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 5,
+        "inconclusive": 7
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 4
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 11,
+        "inconclusive": 1
+      }
+    },
+    "baseline": {
+      "BENIGN": {
+        "test_rate": 0.068,
+        "control_rate": 0.08,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.04506402209856108,
+          0.020861603135542167
+        ],
+        "class": "cleared"
+      },
+      "DoS Hulk": {
+        "test_rate": 0.242,
+        "control_rate": 0.264,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.07571744599913552,
+          0.03187857636395881
+        ],
+        "class": "cleared"
+      },
+      "PortScan": {
+        "test_rate": 0.108,
+        "control_rate": 0.124,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.05599777013309515,
+          0.023926826169462158
+        ],
+        "class": "cleared"
+      },
+      "DDoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS GoldenEye": {
+        "test_rate": 0.004,
+        "control_rate": 0.01,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.01950857629827077,
+          0.005927441256862705
+        ],
+        "class": "cleared"
+      },
+      "FTP-Patator": {
+        "test_rate": 0.25,
+        "control_rate": 0.232,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.03501122778396117,
+          0.07088780373327566
+        ],
+        "class": "inconclusive"
+      },
+      "SSH-Patator": {
+        "test_rate": 0.402,
+        "control_rate": 0.3864168618266979,
+        "n_test": 500,
+        "n_control": 427,
+        "ci": [
+          -0.04749782215844474,
+          0.07820007837075527
+        ],
+        "class": "inconclusive"
+      },
+      "DoS slowloris": {
+        "test_rate": 0.03,
+        "control_rate": 0.03940886699507389,
+        "n_test": 500,
+        "n_control": 406,
+        "ci": [
+          -0.035804132958564855,
+          0.014728016818156098
+        ],
+        "class": "cleared"
+      },
+      "DoS Slowhttptest": {
+        "test_rate": 0.042,
+        "control_rate": 0.04,
+        "n_test": 500,
+        "n_control": 375,
+        "ci": [
+          -0.026783252001585375,
+          0.028450430263504054
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 393,
+        "n_control": 142,
+        "ci": [
+          -0.026339964717595556,
+          0.00968008456607621
+        ],
+        "class": "cleared"
+      },
+      "Web Attack \ufffd Brute Force": {
+        "test_rate": 0.006644518272425249,
+        "control_rate": 0.0,
+        "n_test": 301,
+        "n_control": 110,
+        "ci": [
+          -0.027441989393873358,
+          0.02389901049855985
+        ],
+        "class": "cleared"
+      },
+      "Web Attack \ufffd XSS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 130,
+        "n_control": 36,
+        "ci": [
+          -0.09641862996887933,
+          0.028701561634224194
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "cic-ids2017/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 8
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 5,
+        "inconclusive": 7
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 4
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 8
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 5,
+        "inconclusive": 7
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "BENIGN": {
+        "test_rate": 0.008,
+        "control_rate": 0.014,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.021407853195883154,
+          0.008328659833846033
+        ],
+        "class": "cleared"
+      },
+      "DoS Hulk": {
+        "test_rate": 0.002,
+        "control_rate": 0.006,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.01560767230056527,
+          0.006052447814940878
+        ],
+        "class": "cleared"
+      },
+      "DDoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.011240706827931778,
+          0.005800174936599509
+        ],
+        "class": "cleared"
+      },
+      "PortScan": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS GoldenEye": {
+        "test_rate": 0.002,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.005800174936599509,
+          0.011240706827931778
+        ],
+        "class": "cleared"
+      },
+      "FTP-Patator": {
+        "test_rate": 0.028,
+        "control_rate": 0.012244897959183673,
+        "n_test": 500,
+        "n_control": 490,
+        "ci": [
+          -0.0023680429202024844,
+          0.03535382732140592
+        ],
+        "class": "cleared"
+      },
+      "DoS slowloris": {
+        "test_rate": 0.002,
+        "control_rate": 0.007853403141361256,
+        "n_test": 500,
+        "n_control": 382,
+        "ci": [
+          -0.020922357219013858,
+          0.004739653823067708
+        ],
+        "class": "cleared"
+      },
+      "DoS Slowhttptest": {
+        "test_rate": 0.004,
+        "control_rate": 0.005089058524173028,
+        "n_test": 500,
+        "n_control": 393,
+        "ci": [
+          -0.014676562416711234,
+          0.010008896306359788
+        ],
+        "class": "cleared"
+      },
+      "SSH-Patator": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 266,
+        "ci": [
+          -0.014235984704581175,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 392,
+        "n_control": 173,
+        "ci": [
+          -0.021722614739762815,
+          0.009704539014565344
+        ],
+        "class": "cleared"
+      },
+      "Web Attack \ufffd Brute Force": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 285,
+        "n_control": 130,
+        "ci": [
+          -0.028701561634224194,
+          0.013299541195278028
+        ],
+        "class": "cleared"
+      },
+      "Web Attack \ufffd XSS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 130,
+        "n_control": 49,
+        "ci": [
+          -0.07269782028398425,
+          0.028701561634224194
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "cic-ddos2019/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "Syn": {
+        "test_rate": 0.0,
+        "control_rate": 0.074,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.10033475355737301,
+          -0.05274654933729426
+        ],
+        "class": "cleared"
+      },
+      "Benign": {
+        "test_rate": 0.076,
+        "control_rate": 0.092,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.050924427935217204,
+          0.01871930388256471
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "cic-ddos2019/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 1,
+        "inconclusive": 1
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "Syn": {
+        "test_rate": 0.0,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.011240706827931778,
+          0.005800174936599509
+        ],
+        "class": "cleared"
+      },
+      "Benign": {
+        "test_rate": 0.04,
+        "control_rate": 0.032,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.015855466994387158,
+          0.0322680627955564
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "ton-iot-official/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 3
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 2,
+        "inconclusive": 8
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "normal": {
+        "test_rate": 0.216,
+        "control_rate": 0.202,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.036434089933854684,
+          0.0643597544559655
+        ],
+        "class": "inconclusive"
+      },
+      "ransomware": {
+        "test_rate": 0.31,
+        "control_rate": 0.324,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.07145617010786677,
+          0.04358389726393676
+        ],
+        "class": "cleared"
+      },
+      "injection": {
+        "test_rate": 0.006,
+        "control_rate": 0.006,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.01215265159880199,
+          0.01215265159880199
+        ],
+        "class": "cleared"
+      },
+      "scanning": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "ddos": {
+        "test_rate": 0.002,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.005800174936599509,
+          0.011240706827931778
+        ],
+        "class": "cleared"
+      },
+      "backdoor": {
+        "test_rate": 0.938,
+        "control_rate": 0.954,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.04494429485210759,
+          0.01247345758231657
+        ],
+        "class": "cleared"
+      },
+      "xss": {
+        "test_rate": 0.36,
+        "control_rate": 0.406,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.10575481942027115,
+          0.014222110913862718
+        ],
+        "class": "cleared"
+      },
+      "password": {
+        "test_rate": 0.012,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.0012914944418465565,
+          0.024027370556435466
+        ],
+        "class": "cleared"
+      },
+      "dos": {
+        "test_rate": 0.77,
+        "control_rate": 0.756,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.038704018600532,
+          0.06661036050925317
+        ],
+        "class": "inconclusive"
+      },
+      "mitm": {
+        "test_rate": 0.014354066985645933,
+        "control_rate": 0.024,
+        "n_test": 209,
+        "n_control": 500,
+        "ci": [
+          -0.02951929126116698,
+          0.01921460483642827
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "ton-iot-official/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 4
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 5,
+        "inconclusive": 5
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 1
+      }
+    },
+    "baseline": {
+      "normal": {
+        "test_rate": 0.082,
+        "control_rate": 0.084,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.03666872920746175,
+          0.03264246035069353
+        ],
+        "class": "cleared"
+      },
+      "scanning": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "ddos": {
+        "test_rate": 0.0,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.011240706827931778,
+          0.005800174936599509
+        ],
+        "class": "cleared"
+      },
+      "injection": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "password": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "dos": {
+        "test_rate": 0.768,
+        "control_rate": 0.758,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.04269407551655678,
+          0.06262716779991748
+        ],
+        "class": "inconclusive"
+      },
+      "backdoor": {
+        "test_rate": 0.948,
+        "control_rate": 0.942,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.022870678939818208,
+          0.035041426640945623
+        ],
+        "class": "cleared"
+      },
+      "xss": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "ransomware": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "mitm": {
+        "test_rate": 0.014354066985645933,
+        "control_rate": 0.008,
+        "n_test": 209,
+        "n_control": 500,
+        "ci": [
+          -0.00923251328635464,
+          0.03378341731811936
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "bot-iot-official/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 1,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "DDoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Reconnaissance": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Normal": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 95,
+        "n_control": 29,
+        "ci": [
+          -0.11696980012918376,
+          0.038864854128766085
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "bot-iot-official/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 1,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 3,
+        "inconclusive": 1
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "DDoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Reconnaissance": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Normal": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 95,
+        "n_control": 29,
+        "ci": [
+          -0.11696980012918376,
+          0.038864854128766085
+        ],
+        "class": "cleared"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+=== ton-iot-official: 211,043 rows, seeds 0..9
+  seed 0: macro_f1 0.9858 -> 0.9849, worst mitm 0.909 -> mitm 0.899
+  seed 1: macro_f1 0.9852 -> 0.9841, worst mitm 0.914 -> mitm 0.856
+  seed 2: macro_f1 0.9867 -> 0.9845, worst mitm 0.914 -> mitm 0.885
+  seed 3: macro_f1 0.9875 -> 0.9837, worst mitm 0.933 -> mitm 0.890
+  seed 4: macro_f1 0.9852 -> 0.9875, worst mitm 0.909 -> mitm 0.923
+  seed 5: macro_f1 0.9852 -> 0.9872, worst mitm 0.943 -> mitm 0.938
+  seed 6: macro_f1 0.9860 -> 0.9843, worst mitm 0.928 -> mitm 0.918
+  seed 7: macro_f1 0.9840 -> 0.9844, worst mitm 0.919 -> mitm 0.904
+  seed 8: macro_f1 0.9858 -> 0.9857, worst mitm 0.933 -> mitm 0.914
+  seed 9: macro_f1 0.9850 -> 0.9878, worst mitm 0.904 -> mitm 0.943
+=== bot-iot-official: 3,668,522 rows, seeds 0..9
+  seed 0: macro_f1 0.9825 -> 0.9087, worst Normal 0.905 -> Theft 0.500
+  seed 1: macro_f1 0.9621 -> 0.9800, worst Theft 0.812 -> Normal 0.874
+  seed 2: macro_f1 0.8927 -> 0.9611, worst Theft 0.438 -> Normal 0.781
+  seed 3: macro_f1 0.9132 -> 0.9364, worst Theft 0.625 -> Normal 0.562
+  seed 4: macro_f1 0.9567 -> 0.8304, worst Theft 0.750 -> Theft 0.250
+  seed 5: macro_f1 0.9876 -> 0.9496, worst Normal 0.884 -> Theft 0.750
+  seed 6: macro_f1 0.9568 -> 0.9111, worst Theft 0.750 -> Theft 0.562
+  seed 7: macro_f1 0.9643 -> 0.9483, worst Normal 0.800 -> Normal 0.635
+  seed 8: macro_f1 0.9123 -> 0.9576, worst Theft 0.500 -> Normal 0.747
+  seed 9: macro_f1 0.9331 -> 0.9646, worst Normal 0.579 -> Normal 0.802
+/home/tango/projects/IDS2Eval_data/cic-ids2017/glf/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+Dropped 29634 fully blank row(s) (every column missing)
+Dropped 200000 fully blank row(s) (every column missing)
+Dropped 58968 fully blank row(s) (every column missing)
+=== cic-ids2017-glf: 2,830,743 rows, seeds 0..4
+  seed 0: macro_f1 0.8320 -> 0.8003, worst Web Attack – Sql Injection 0.000 -> Infiltration 0.000
+  seed 1: macro_f1 0.8136 -> 0.8023, worst Infiltration 0.000 -> Infiltration 0.000
+  seed 2: macro_f1 0.7443 -> 0.8033, worst Heartbleed 0.000 -> Infiltration 0.000
+/home/tango/projects/IDS2Eval_data/cic-ids2017/glf/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz: not valid UTF-8, read successfully as cp1252 instead (a common source encoding for these datasets' Windows-based extraction tools)
+Dropped 29634 fully blank row(s) (every column missing)
+Dropped 200000 fully blank row(s) (every column missing)
+Dropped 58968 fully blank row(s) (every column missing)
+=== cic-ids2017-glf: 2,830,743 rows, seeds 3..4
+  seed 3: macro_f1 0.7359 -> 0.7424, worst Heartbleed 0.000 -> Heartbleed 0.000
+  seed 4: macro_f1 0.8081 -> 0.8027, worst Infiltration 0.000 -> Infiltration 0.000
+DONE

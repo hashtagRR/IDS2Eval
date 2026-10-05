@@ -1,0 +1,452 @@
+{
+  "scorecard_schema_version": "1.2",
+  "generated_at": "2026-09-28T16:26:28.912492+00:00",
+  "dataset_name": "cic-ids2017-glf",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": null,
+  "audit_stage": "after",
+  "overall_status": "failed",
+  "counts": {
+    "ok": 15,
+    "warning": 4,
+    "flag": 3
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 13 classes tested"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=15.1%, top2=21.7%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'Source IP <= 1.5' reaches 81.3% test accuracy (83.3% train)"
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "status": "flag",
+      "summary": "'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "flag",
+      "summary": "standalone AUC by column: {'Source IP': 0.985, 'Destination IP': 0.98, 'Source Port': 0.837, 'Destination Port': 0.931}. Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']"
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "status": "flag",
+      "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.907. Port and protocol together may predict the label without attack behavior"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "temporal_realism_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "ok",
+      "summary": "no schema.flow_id_columns configured"
+    },
+    {
+      "check": "row_order_leakage_check",
+      "status": "ok",
+      "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "ok",
+      "summary": "12 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+    },
+    {
+      "check": "resplit_falsification",
+      "status": "ok",
+      "summary": "random-split accuracy=0.9995, grouped-split accuracy=0.9994 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "warning",
+      "summary": "15 classes, train imbalance ratio (majority:minority) = 201575:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \u2013 Brute Force', 'Web Attack \u2013 XSS', 'Infiltration', 'Web Attack \u2013 Sql Injection', 'Heartbleed']"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "unique values by column: {'Source IP': 16328, 'Destination IP': 18766, 'Source Port': 64558, 'Destination Port': 51291}"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "warning",
+      "summary": "matched extractor signature(s): ['CICFlowMeter']"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)"
+    },
+    {
+      "check": "result_robustness_check",
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9976 (identity_columns_dropped) to 0.9995 (random_split) across 4 conditions, a spread of 0.0018"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "warning",
+      "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)"
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0001]; not material: even the most generous estimate in the 95% CI (+0.0001) stays below the +0.0100 materiality threshold"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 9,191 (0.41%); test rows leaking a train feature-match: 3,825 (0.68%); test-internal duplicates: 319",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 13 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 13 classes tested",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=17.2%, top2=31.0%)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=15.1%, top2=21.7%)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'Source IP <= 0.5' reaches 86.6% test accuracy (88.3% train)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'Source IP <= 1.5' reaches 81.3% test accuracy (83.3% train)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Source IP': 0.985, 'Destination IP': 0.98, 'Source Port': 0.839, 'Destination Port': 0.931}. Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC by column: {'Source IP': 0.985, 'Destination IP': 0.98, 'Source Port': 0.837, 'Destination Port': 0.931}. Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.907. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.907. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "12 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "resplit_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9995, grouped-split accuracy=0.9994 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9995, grouped-split accuracy=0.9994 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 202053:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \u2013 Brute Force', 'Web Attack \u2013 XSS', 'Infiltration', 'Web Attack \u2013 Sql Injection', 'Heartbleed']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "15 classes, train imbalance ratio (majority:minority) = 201575:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'SSH-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'Bot', 'Web Attack \u2013 Brute Force', 'Web Attack \u2013 XSS', 'Infiltration', 'Web Attack \u2013 Sql Injection', 'Heartbleed']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "unique values by column: {'Source IP': 16328, 'Destination IP': 18766, 'Source Port': 64558, 'Destination Port': 51291}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "unique values by column: {'Source IP': 16328, 'Destination IP': 18766, 'Source Port': 64558, 'Destination Port': 51291}",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "matched extractor signature(s): ['CICFlowMeter']",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "result_robustness_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "accuracy ranges from 0.9976 (identity_columns_dropped) to 0.9995 (random_split) across 4 conditions, a spread of 0.0018",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "accuracy ranges from 0.9976 (identity_columns_dropped) to 0.9995 (random_split) across 4 conditions, a spread of 0.0018",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0001]; not material: even the most generous estimate in the 95% CI (+0.0001) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0001]; not material: even the most generous estimate in the 95% CI (+0.0001) stays below the +0.0100 materiality threshold",
+        "evidence": "direct-experiment"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 2264594,
+    "train_rows_deduped": 2255403,
+    "train_duplicates_dropped": 9191,
+    "test_rows_raw": 566149,
+    "test_rows_deduped": 562005,
+    "test_leakage_dropped": 3825,
+    "test_duplicates_dropped": 319
+  },
+  "dataset_fingerprint": {
+    "train_rows": 2264594,
+    "test_rows": 566149,
+    "feature_count": 82,
+    "train_content_hash": "c502fed3ca3edcce9767e01f95b3788905b75aadc83c7eb39bd587c4c7b49327",
+    "test_content_hash": "50a9575ddae1b0c876ab7794bbbd42547cec3bd674927620e0d417de1ebf1ae8"
+  }
+}

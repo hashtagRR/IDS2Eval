@@ -1,0 +1,484 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 9282585,
+      "train_rows_deduped": 9282585,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 2164424,
+      "test_rows_deduped": 2164424,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "Benign": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDoS attacks-LOIC-HTTP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDOS attack-HOIC": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-Hulk": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Bot": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Infilteration": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "SSH-Bruteforce": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-GoldenEye": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-Slowloris": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDOS attack-LOIC-UDP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Brute Force -Web": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Brute Force -XSS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "SQL Injection": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "FTP-BruteForce": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS attacks-SlowHTTPTest": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 15 classes tested",
+    "details": {
+      "classes_tested": 15
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=7.1%, top2=12.7%)",
+    "details": {
+      "top_features": {
+        "Dst Port": 0.07076980218996615,
+        "Init Fwd Win Byts": 0.05598804357311773,
+        "Flow Duration": 0.03136752938351385,
+        "Fwd Seg Size Min": 0.029911336790164205,
+        "Fwd IAT Tot": 0.02975288209700829
+      },
+      "top1_share": 0.07076980218996615,
+      "top2_share": 0.12675784576308388
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'Dst Port <= 121' reaches 88.8% test accuracy (88.6% train)",
+    "details": {
+      "rule": "Dst Port <= 121",
+      "train_accuracy": 0.88625,
+      "test_accuracy": 0.8882326198563683
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Fwd Act Data Pkts' alone reaches AUC 1.000 identifying 'DDOS attack-LOIC-UDP'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Fwd Act Data Pkts": 0.9999596748031613,
+        "Tot Fwd Pkts": 0.9999579331774154,
+        "Subflow Fwd Pkts": 0.9999579331774154,
+        "TotLen Fwd Pkts": 0.9999565241666487,
+        "Subflow Fwd Byts": 0.9999565241666487
+      },
+      "best_feature": "Fwd Act Data Pkts",
+      "best_class": "DDOS attack-LOIC-UDP"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "flag",
+    "summary": "standalone AUC by column: {'Dst Port': 0.93}. Suggest dropping: ['Dst Port']",
+    "details": {
+      "standalone_auc": {
+        "Dst Port": 0.9295522983568313
+      },
+      "suggested_drop": [
+        "Dst Port"
+      ],
+      "by_class": {
+        "Dst Port": {
+          "Benign": 0.930294169606844,
+          "DDoS attacks-LOIC-HTTP": 0.9258807956971621,
+          "DDOS attack-HOIC": 0.9097143015388891,
+          "DoS attacks-Hulk": 0.9070864371754985,
+          "Bot": 0.9980160183914754,
+          "Infilteration": 0.7384372850332336,
+          "SSH-Bruteforce": 0.999570052139043,
+          "DoS attacks-GoldenEye": 0.9048368724856992,
+          "DoS attacks-Slowloris": 0.9036453119053554,
+          "DDOS attack-LOIC-UDP": 0.9033567644049798,
+          "Brute Force -Web": 0.9140187939284282,
+          "Brute Force -XSS": 0.9050544445228489,
+          "SQL Injection": 0.9032950796268173,
+          "FTP-BruteForce": 0.9999768991551097,
+          "DoS attacks-SlowHTTPTest": 0.9999768991551097
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "flag",
+    "summary": "standalone AUC of 'Dst Port' + 'Protocol' combined: 0.930. Port and protocol together may predict the label without attack behavior",
+    "details": {
+      "port_column": "Dst Port",
+      "protocol_column": "Protocol",
+      "standalone_auc": 0.9296840871911523
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.9996509987728168,
+        "test": 0.999834893808106
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "details": {
+      "per_class": {
+        "Benign": {
+          "test_near_zero_rate": 0.008,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.8081803020821177,
+          "leakage_signature": false
+        },
+        "DDoS attacks-LOIC-HTTP": {
+          "test_near_zero_rate": 0.002,
+          "control_near_zero_rate": 0.004,
+          "p_value": 0.4735056819730251,
+          "leakage_signature": false
+        },
+        "DDOS attack-HOIC": {
+          "test_near_zero_rate": 0.002,
+          "control_near_zero_rate": 0.038,
+          "p_value": 0.9999999073823902,
+          "leakage_signature": false
+        },
+        "DoS attacks-Hulk": {
+          "test_near_zero_rate": 0.026,
+          "control_near_zero_rate": 0.064,
+          "p_value": 0.9999999999999043,
+          "leakage_signature": false
+        },
+        "Bot": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.6920929784020267,
+          "leakage_signature": false
+        },
+        "Infilteration": {
+          "test_near_zero_rate": 0.008,
+          "control_near_zero_rate": 0.002,
+          "p_value": 0.9465090856551739,
+          "leakage_signature": false
+        },
+        "SSH-Bruteforce": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.57060745759653,
+          "leakage_signature": false
+        },
+        "DoS attacks-GoldenEye": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.49113366655455754,
+          "leakage_signature": false
+        },
+        "DoS attacks-Slowloris": {
+          "test_near_zero_rate": 0.008,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.9635304954865892,
+          "leakage_signature": false
+        },
+        "DDOS attack-LOIC-UDP": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "p_value": 0.29030790642098403,
+          "leakage_signature": false
+        }
+      }
+    }
+  },
+  {
+    "check": "resplit_falsification",
+    "status": "ok",
+    "summary": "random-split accuracy=0.9823, grouped-split accuracy=0.9826 (drop=-0.0003); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "details": {
+      "random_accuracy": 0.9823226777396215,
+      "grouped_accuracy": 0.9826133324790072,
+      "drop": -0.0002906547393857206
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "15 classes, train imbalance ratio (majority:minority) = 316063:1; classes below 1% of train: ['Infilteration', 'SSH-Bruteforce', 'DoS attacks-GoldenEye', 'DoS attacks-Slowloris', 'DDOS attack-LOIC-UDP', 'Brute Force -Web', 'Brute Force -XSS', 'SQL Injection', 'FTP-BruteForce', 'DoS attacks-SlowHTTPTest']",
+    "details": {
+      "train": {
+        "counts": {
+          "Benign": 8217634,
+          "DDoS attacks-LOIC-HTTP": 460212,
+          "DDOS attack-HOIC": 164935,
+          "DoS attacks-Hulk": 125026,
+          "Bot": 116070,
+          "Infilteration": 80401,
+          "SSH-Bruteforce": 75227,
+          "DoS attacks-GoldenEye": 33134,
+          "DoS attacks-Slowloris": 7819,
+          "DDOS attack-LOIC-UDP": 1384,
+          "Brute Force -Web": 442,
+          "Brute Force -XSS": 183,
+          "SQL Injection": 64,
+          "FTP-BruteForce": 28,
+          "DoS attacks-SlowHTTPTest": 26
+        },
+        "shares": {
+          "Benign": 0.8852743066721177,
+          "DDoS attacks-LOIC-HTTP": 0.049578000093723894,
+          "DDOS attack-HOIC": 0.017768218658918825,
+          "DoS attacks-Hulk": 0.013468877473246946,
+          "Bot": 0.012504060022073592,
+          "Infilteration": 0.008661488152276547,
+          "SSH-Bruteforce": 0.008104100312574568,
+          "DoS attacks-GoldenEye": 0.003569479837782256,
+          "DoS attacks-Slowloris": 0.000842330019062578,
+          "DDOS attack-LOIC-UDP": 0.00014909639933272898,
+          "Brute Force -Web": 4.7616046607706795e-05,
+          "Brute Force -XSS": 1.971433603893743e-05,
+          "SQL Injection": 6.894631183016369e-06,
+          "FTP-BruteForce": 3.016401142569661e-06,
+          "DoS attacks-SlowHTTPTest": 2.8009439181003997e-06
+        }
+      },
+      "test": {
+        "counts": {
+          "Benign": 1922512,
+          "DDoS attacks-LOIC-HTTP": 114800,
+          "DDOS attack-HOIC": 33926,
+          "Bot": 28465,
+          "DoS attacks-Hulk": 20173,
+          "SSH-Bruteforce": 18815,
+          "Infilteration": 15067,
+          "DoS attacks-GoldenEye": 8258,
+          "DoS attacks-Slowloris": 1893,
+          "DDOS attack-LOIC-UDP": 346,
+          "Brute Force -Web": 108,
+          "Brute Force -XSS": 44,
+          "SQL Injection": 15,
+          "DoS attacks-SlowHTTPTest": 1,
+          "FTP-BruteForce": 1
+        },
+        "shares": {
+          "Benign": 0.8882326198563683,
+          "DDoS attacks-LOIC-HTTP": 0.05303951536297879,
+          "DDOS attack-HOIC": 0.015674378033139532,
+          "Bot": 0.013151304919923269,
+          "DoS attacks-Hulk": 0.009320262573322047,
+          "SSH-Bruteforce": 0.008692843915979494,
+          "Infilteration": 0.006961205383048793,
+          "DoS attacks-GoldenEye": 0.003815333779333439,
+          "DoS attacks-Slowloris": 0.0008745975834679342,
+          "DDOS attack-LOIC-UDP": 0.00015985777278389076,
+          "Brute Force -Web": 4.989780190942255e-05,
+          "Brute Force -XSS": 2.0328734111246224e-05,
+          "SQL Injection": 6.930250265197577e-06,
+          "DoS attacks-SlowHTTPTest": 4.6201668434650513e-07,
+          "FTP-BruteForce": 4.6201668434650513e-07
+        }
+      },
+      "imbalance_ratio": 316062.8461538461,
+      "rare_classes": [
+        "Infilteration",
+        "SSH-Bruteforce",
+        "DoS attacks-GoldenEye",
+        "DoS attacks-Slowloris",
+        "DDOS attack-LOIC-UDP",
+        "Brute Force -Web",
+        "Brute Force -XSS",
+        "SQL Injection",
+        "FTP-BruteForce",
+        "DoS attacks-SlowHTTPTest"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "unique values by column: {'Dst Port': 64496}",
+    "details": {
+      "cardinalities": {
+        "Dst Port": 64496
+      },
+      "flagged": []
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {
+        "Flow Byts/s": 37392
+      },
+      "inf_by_feature": {
+        "Flow Byts/s": 20023,
+        "Flow Pkts/s": 57415
+      },
+      "constant_features": [
+        "Bwd PSH Flags",
+        "Bwd URG Flags",
+        "Fwd Byts/b Avg",
+        "Fwd Pkts/b Avg",
+        "Fwd Blk Rate Avg",
+        "Bwd Byts/b Avg",
+        "Bwd Pkts/b Avg",
+        "Bwd Blk Rate Avg"
+      ]
+    }
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "ok",
+    "summary": "accuracy ranges from 0.9818 (identity_columns_dropped) to 0.9921 (deduplicated) across 4 conditions, a spread of 0.0104",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.9823226777396215,
+        "grouped_split": 0.9826133324790072,
+        "deduplicated": 0.9921041348645182,
+        "identity_columns_dropped": 0.9817540809754484
+      },
+      "spread": 0.010350053889069843,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "deduplicated"
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug). (Liu et al. 2022, IEEE CNS); An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%. (Cantone et al. 2024, IEEE Access)",
+    "details": {
+      "matches": [
+        {
+          "issue": "The 2018-02-23 day-file's Brute-Force-Web/Brute-Force-XSS rows are approximately 41% mislabeled (ground-truth labeling error, not an extraction or pipeline bug).",
+          "citation": "Liu et al. 2022, IEEE CNS"
+        },
+        {
+          "issue": "An independent re-labeling audit measured a 7.53% overall label corruption rate, with some individual attack classes above 75%.",
+          "citation": "Cantone et al. 2024, IEEE Access"
+        }
+      ]
+    }
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "status": "ok",
+    "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0001, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold",
+    "details": {
+      "n_seeds": 10,
+      "drops_by_seed": [
+        -0.0002906547393857206,
+        -0.00014025297188746677,
+        -2.2271679277596768e-05,
+        0.00016492355692376837,
+        0.00021209454838766462,
+        2.6614675119107645e-05,
+        0.0002074334129299471,
+        0.00016989517495125117,
+        0.000109524191684085,
+        3.622010764803285e-05
+      ],
+      "mean_drop": 4.735262770930726e-05,
+      "ci_95": [
+        -6.954179868137519e-05,
+        0.00016424705409998972
+      ],
+      "materiality_threshold": 0.01,
+      "material": false
+    }
+  }
+]

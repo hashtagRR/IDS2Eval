@@ -1,0 +1,62 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "nsl-kdd",
+    "raw_files": [],
+    "train_file": "/home/tango/projects/IDS2Eval_data/nsl-kdd/KDDTrain+.csv.gz",
+    "test_file": "/home/tango/projects/IDS2Eval_data/nsl-kdd/KDDTest+.csv.gz",
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [],
+    "chunk_size": null,
+    "max_rows": null
+  },
+  "schema": {
+    "label_column": "label",
+    "attack_category_column": null,
+    "drop_columns": [
+      "difficulty"
+    ],
+    "id_like_columns": []
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": true,
+    "leakage_screen": true,
+    "identity_column_flag": true,
+    "homogeneity_test": true,
+    "resplit_falsification": false,
+    "class_distribution_report": true,
+    "low_cardinality_warning": true,
+    "schema_fingerprint_check": true,
+    "data_integrity_check": true,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "known_issue_lookup": true,
+    "reference_dataset": null
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "/home/tango/projects/IDS2Eval_data/output/nsl-kdd",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "train_rows": 2264594,
+  "test_rows": 566149,
+  "feature_count": 78,
+  "train_class_distribution": {
+    "BENIGN": 1818477,
+    "DoS Hulk": 184858,
+    "PortScan": 127144,
+    "DDoS": 102421,
+    "DoS GoldenEye": 8234,
+    "FTP-Patator": 6350,
+    "SSH-Patator": 4718,
+    "DoS slowloris": 4637,
+    "DoS Slowhttptest": 4399,
+    "Bot": 1573,
+    "Web Attack \ufffd Brute Force": 1206,
+    "Web Attack \ufffd XSS": 522,
+    "Infiltration": 29,
+    "Web Attack \ufffd Sql Injection": 17,
+    "Heartbleed": 9
+  },
+  "test_class_distribution": {
+    "BENIGN": 454620,
+    "DoS Hulk": 46215,
+    "PortScan": 31786,
+    "DDoS": 25606,
+    "DoS GoldenEye": 2059,
+    "FTP-Patator": 1588,
+    "SSH-Patator": 1179,
+    "DoS slowloris": 1159,
+    "DoS Slowhttptest": 1100,
+    "Bot": 393,
+    "Web Attack \ufffd Brute Force": 301,
+    "Web Attack \ufffd XSS": 130,
+    "Infiltration": 7,
+    "Web Attack \ufffd Sql Injection": 4,
+    "Heartbleed": 2
+  },
+  "train_content_hash": "5864fd3ca0c2d57589584902c07a712bd806130c638ac6d48626969975b9a362",
+  "test_content_hash": "722dafecb77262e4a8661066ff0cd478cf1574faa31ebb8bfc987d5ae3673eea"
+}

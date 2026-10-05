@@ -280,21 +280,25 @@ def test_resplit_falsification_materiality_threshold_is_overridable(base_cfg, tm
     # Fixed accuracies isolate the threshold-comparison logic from the real
     # model/data, which would otherwise make a tight-vs-loose threshold test
     # flaky depending on what accuracy synth_data's random forest happens to get.
-    scores = iter([0.90, 0.85])  # drop = 0.05
-    monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
+    # The test sets hold roughly 400-600 rows each (the grouped side's size
+    # depends on scikit-learn's StratifiedGroupKFold shuffle), so the sampling
+    # margin on the gap is about 0.04. The drop is chosen to clear any
+    # threshold below it by more than that, whatever the exact split sizes.
     csv_path = tmp_path / "raw.csv"
     synth_data.to_csv(csv_path, index=False)
     base_cfg["dataset"]["raw_files"] = [str(csv_path)]
     base_cfg["dataset"]["group_columns"] = ["SrcIP"]
     base_cfg["dataset"]["split_ratio"] = 0.5
 
-    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": 0.10}
-    assert resplit.check(base_cfg)["status"] == "ok"  # 0.05 drop below the raised 0.10 threshold
+    def run(threshold):
+        scores = iter([0.95, 0.80])  # drop = 0.15
+        monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
+        base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": threshold}
+        return resplit.check(base_cfg)["status"]
 
-    scores = iter([0.90, 0.85])
-    monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
-    base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": 0.01}
-    assert resplit.check(base_cfg)["status"] == "flag"  # same 0.05 drop, now above a lowered threshold
+    assert run(0.20) == "ok"  # drop below the raised threshold
+    assert run(0.01) == "flag"  # drop exceeds the lowered threshold by far more than the margin
+    assert run(0.13) == "warning"  # drop exceeds the threshold, but only within the margin
 
 
 def test_repeated_seed_falsification_end_to_end(base_cfg, tmp_path, synth_data):

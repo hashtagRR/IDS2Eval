@@ -73,6 +73,12 @@ def main():
             if stage == "after":
                 tr, te, _ = dataset.dedup(tr, te, cfg)
             dists = distances(tr, te, cfg)
+            baseline = {}
+            for cls, (test_d, ctrl_d) in dists.items():
+                p_t, p_c = float((test_d < 1e-6).mean()), float((ctrl_d < 1e-6).mean())
+                lo, hi = h._rate_diff_ci(p_t, len(test_d), p_c, len(ctrl_d))
+                baseline[cls] = {"test_rate": p_t, "control_rate": p_c, "n_test": len(test_d),
+                                 "n_control": len(ctrl_d), "ci": [lo, hi], "class": classify(lo, hi, 0.05)}
             grid = {}
             for cutoff in CUTOFFS:
                 for margin in MARGINS:
@@ -82,11 +88,12 @@ def main():
                         lo, hi = h._rate_diff_ci(p_t, len(test_d), p_c, len(ctrl_d))
                         counts[classify(lo, hi, margin)] += 1
                     grid[f"cutoff={cutoff:g},margin={margin:g}"] = counts
-            results[f"{name}/{stage}"] = grid
+            results[f"{name}/{stage}"] = {"grid": grid, "baseline": baseline}
             print(name, stage, grid["cutoff=1e-06,margin=0.05"], flush=True)
         del tr, te
         gc.collect()
-    (Path(__file__).resolve().parent / "homogeneity_sensitivity.json").write_text(json.dumps(results, indent=2))
+    out = Path(__file__).resolve().parent.parent / "results" / "analysis" / "homogeneity_sensitivity.json"
+    out.write_text(json.dumps(results, indent=2))
     print("DONE")
 
 

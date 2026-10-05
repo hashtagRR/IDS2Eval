@@ -83,7 +83,7 @@ def main():
         print(f"  grouped: {grouped_metrics}")
         results[name] = {"random": random_metrics, "grouped": grouped_metrics}
 
-    out_path = Path(__file__).resolve().parent / "class_sensitive_results.json"
+    out_path = Path(__file__).resolve().parent.parent / "results" / "analysis" / "class_sensitive_results.json"
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
     print(f"\nWritten to {out_path}")

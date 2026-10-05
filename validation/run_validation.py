@@ -116,7 +116,7 @@ def main() -> int:
     print(f"{n_pass}/{len(results)} fixture evaluations passed ({len(FIXTURES)} defects x 2 polarities, "
           f"plus {len(IMBALANCE_EXPECTED_FIRES) + len(IMBALANCE_EXPECTED_CLEAN)} checks on the imbalance control)")
 
-    out_path = Path(__file__).resolve().parent / "validation_results.json"
+    out_path = Path(__file__).resolve().parent.parent / "results" / "analysis" / "validation_results.json"
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
     print(f"Full results written to {out_path}")

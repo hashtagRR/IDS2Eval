@@ -34,7 +34,7 @@ from ids2eval.data import dataset, features
 
 MAX_FIT_ROWS = 200_000  # matches ids2eval.audit._fit_score.MAX_FIT_ROWS
 CONFIG_DIR = Path("/home/tango/projects/IDS2Eval_data/configs")
-OUT_PATH = Path(__file__).resolve().parent / "class_sensitive_seeds.json"
+OUT_PATH = Path(__file__).resolve().parent.parent / "results" / "analysis" / "class_sensitive_seeds.json"
 SUMMARY_METRICS = ["accuracy", "balanced_accuracy", "macro_f1", "worst_class_recall"]
 
 

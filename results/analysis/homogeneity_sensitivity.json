@@ -1710,5 +1710,349 @@
         "class": "cleared"
       }
     }
+  },
+  "cic-ids2018-fullscale/before": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 6
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 3
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 6
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 4
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 11,
+        "inconclusive": 1
+      }
+    },
+    "baseline": {
+      "Benign": {
+        "test_rate": 0.142,
+        "control_rate": 0.156,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.05828484989900543,
+          0.030291189702581413
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-HOIC": {
+        "test_rate": 0.524,
+        "control_rate": 0.552,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.08939276126577961,
+          0.033692920533365645
+        ],
+        "class": "cleared"
+      },
+      "DDoS attacks-LOIC-HTTP": {
+        "test_rate": 0.004,
+        "control_rate": 0.004,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.01086070652813382,
+          0.01086070652813382
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Hulk": {
+        "test_rate": 0.374,
+        "control_rate": 0.412,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.09809417680575218,
+          0.022484285745127945
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.46,
+        "control_rate": 0.442,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.043536245394057,
+          0.07934403696378169
+        ],
+        "class": "inconclusive"
+      },
+      "FTP-BruteForce": {
+        "test_rate": 1.0,
+        "control_rate": 1.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914657,
+          0.007624340580914657
+        ],
+        "class": "cleared"
+      },
+      "SSH-Bruteforce": {
+        "test_rate": 0.496,
+        "control_rate": 0.512,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.07764673191499628,
+          0.04581924004461615
+        ],
+        "class": "cleared"
+      },
+      "Infilteration": {
+        "test_rate": 0.124,
+        "control_rate": 0.108,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.023926826169462158,
+          0.05599777013309515
+        ],
+        "class": "inconclusive"
+      },
+      "DoS attacks-SlowHTTPTest": {
+        "test_rate": 0.998,
+        "control_rate": 0.996,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.0076857839806548384,
+          0.012594496561795208
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-GoldenEye": {
+        "test_rate": 0.002,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.005800174936599509,
+          0.011240706827931778
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Slowloris": {
+        "test_rate": 0.092,
+        "control_rate": 0.06306306306306306,
+        "n_test": 500,
+        "n_control": 111,
+        "ci": [
+          -0.03640591633038727,
+          0.0719505024929141
+        ],
+        "class": "inconclusive"
+      },
+      "DDOS attack-LOIC-UDP": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 346,
+        "n_control": 34,
+        "ci": [
+          -0.10151455559221921,
+          0.010980570723607228
+        ],
+        "class": "cleared"
+      }
+    }
+  },
+  "cic-ids2018-fullscale/after": {
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 6
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 4
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      }
+    },
+    "baseline": {
+      "Benign": {
+        "test_rate": 0.008,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.004452311164579871,
+          0.018496032168202736
+        ],
+        "class": "cleared"
+      },
+      "DDoS attacks-LOIC-HTTP": {
+        "test_rate": 0.002,
+        "control_rate": 0.004,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.012594496561795274,
+          0.007685783980654946
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-HOIC": {
+        "test_rate": 0.002,
+        "control_rate": 0.038,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.05665054546227201,
+          -0.01960734713295592
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Hulk": {
+        "test_rate": 0.026,
+        "control_rate": 0.064,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.06516703895907097,
+          -0.012348288123300095
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Infilteration": {
+        "test_rate": 0.008,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.004452311164579871,
+          0.018496032168202736
+        ],
+        "class": "cleared"
+      },
+      "SSH-Bruteforce": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-GoldenEye": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Slowloris": {
+        "test_rate": 0.008,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 162,
+        "ci": [
+          -0.01567287802994844,
+          0.020387035973185322
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-LOIC-UDP": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 346,
+        "n_control": 30,
+        "ci": [
+          -0.11351339476145204,
+          0.010980570723607228
+        ],
+        "class": "cleared"
+      }
+    }
   }
 }

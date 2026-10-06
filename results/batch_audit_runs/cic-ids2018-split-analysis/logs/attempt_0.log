@@ -1,0 +1,9 @@
+[2026-10-05T19:04:44Z] stage setup: attempt 0 on ids2eval-cic2018-s-dc6d0c77-6d5d-44400-group0-0-x4qf, 16 vCPU, 125 GB
+[2026-10-05T19:04:47Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic-ids2018-split-analysis/out
+[2026-10-05T19:04:48Z] no previous output, starting fresh
+[2026-10-05T19:04:48Z] stage fetch: code and config
+[2026-10-05T19:04:50Z] stage fetch: raw data from gs://ids2eval-batch-bc67afd1/data/cic-ids2018
+[2026-10-05T19:04:52Z] fetched 10 files, 1.6G
+[2026-10-05T19:04:52Z] stage install
+[2026-10-05T19:05:15Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-05T19:05:15Z] stage analysis: start (N_SEEDS=10, FORCE_STAGES=none)

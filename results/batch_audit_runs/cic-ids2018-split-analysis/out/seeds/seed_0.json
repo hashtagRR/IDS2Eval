@@ -1,0 +1,117 @@
+{
+  "seed": 0,
+  "random": {
+    "random_forest": {
+      "accuracy": 0.9823226777396215,
+      "balanced_accuracy": 0.744956947400751,
+      "macro_f1": 0.7682376838692682,
+      "worst_class_recall": 0.058823529411764705,
+      "worst_class_label": "SQL Injection",
+      "per_class_recall": {
+        "Benign": 0.9968030458200436,
+        "Bot": 0.9962088123274747,
+        "Brute Force -Web": 0.39344262295081966,
+        "Brute Force -XSS": 0.41304347826086957,
+        "DDOS attack-HOIC": 0.9980977092337631,
+        "DDOS attack-LOIC-UDP": 0.8786127167630058,
+        "DDoS attacks-LOIC-HTTP": 0.9969367743279127,
+        "DoS attacks-GoldenEye": 0.9979523006504457,
+        "DoS attacks-Hulk": 0.9999458769024269,
+        "DoS attacks-SlowHTTPTest": 0.5005003931660591,
+        "DoS attacks-Slowloris": 0.9626933575978162,
+        "FTP-BruteForce": 0.8888342987174183,
+        "Infilteration": 0.09411183499552289,
+        "SQL Injection": 0.058823529411764705,
+        "SSH-Bruteforce": 0.9983474598859214
+      },
+      "per_class_support": {
+        "Benign": 2696942,
+        "Bot": 57238,
+        "Brute Force -Web": 122,
+        "Brute Force -XSS": 46,
+        "DDOS attack-HOIC": 137203,
+        "DDOS attack-LOIC-UDP": 346,
+        "DDoS attacks-LOIC-HTTP": 115238,
+        "DoS attacks-GoldenEye": 8302,
+        "DoS attacks-Hulk": 92382,
+        "DoS attacks-SlowHTTPTest": 27978,
+        "DoS attacks-Slowloris": 2198,
+        "FTP-BruteForce": 38672,
+        "Infilteration": 32387,
+        "SQL Injection": 17,
+        "SSH-Bruteforce": 37518
+      }
+    },
+    "random_forest_seconds": 59.9,
+    "other_models": {
+      "logistic_regression": {
+        "accuracy": 0.9643755338295054,
+        "balanced_accuracy": 0.6378955551388259,
+        "macro_f1": 0.6485875044482475
+      },
+      "xgboost": {
+        "accuracy": 0.9842209777708235,
+        "balanced_accuracy": 0.7508625815657868,
+        "macro_f1": 0.7696402141988682
+      }
+    },
+    "other_models_seconds": 112.0
+  },
+  "grouped": {
+    "random_forest": {
+      "accuracy": 0.9826133324790072,
+      "balanced_accuracy": 0.7401579780713425,
+      "macro_f1": 0.7677501621627404,
+      "worst_class_recall": 0.0,
+      "worst_class_label": "SQL Injection",
+      "per_class_recall": {
+        "Benign": 0.9970341492081913,
+        "Bot": 0.9971522415178727,
+        "Brute Force -Web": 0.39344262295081966,
+        "Brute Force -XSS": 0.45652173913043476,
+        "DDOS attack-HOIC": 0.9987681587252994,
+        "DDOS attack-LOIC-UDP": 0.8034682080924855,
+        "DDoS attacks-LOIC-HTTP": 0.9964942119786876,
+        "DoS attacks-GoldenEye": 0.9987954709708504,
+        "DoS attacks-Hulk": 0.9998077251751837,
+        "DoS attacks-SlowHTTPTest": 0.5127435210008937,
+        "DoS attacks-Slowloris": 0.9704276615104641,
+        "FTP-BruteForce": 0.8899089686562532,
+        "Infilteration": 0.08833791336029889,
+        "SQL Injection": 0.0,
+        "SSH-Bruteforce": 0.9994670787924006
+      },
+      "per_class_support": {
+        "Benign": 2695348,
+        "Bot": 57238,
+        "Brute Force -Web": 122,
+        "Brute Force -XSS": 46,
+        "DDOS attack-HOIC": 137193,
+        "DDOS attack-LOIC-UDP": 346,
+        "DDoS attacks-LOIC-HTTP": 115238,
+        "DoS attacks-GoldenEye": 8302,
+        "DoS attacks-Hulk": 93616,
+        "DoS attacks-SlowHTTPTest": 27975,
+        "DoS attacks-Slowloris": 2198,
+        "FTP-BruteForce": 38668,
+        "Infilteration": 32387,
+        "SQL Injection": 17,
+        "SSH-Bruteforce": 37529
+      }
+    },
+    "random_forest_seconds": 52.4,
+    "other_models": {
+      "logistic_regression": {
+        "accuracy": 0.9656074151406111,
+        "balanced_accuracy": 0.6259002418896369,
+        "macro_f1": 0.6372959887788957
+      },
+      "xgboost": {
+        "accuracy": 0.9842090330824469,
+        "balanced_accuracy": 0.7042278755122285,
+        "macro_f1": 0.7228804188171001
+      }
+    },
+    "other_models_seconds": 105.8
+  }
+}

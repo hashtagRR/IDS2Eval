@@ -1,0 +1,12 @@
+[2026-10-05T19:26:05Z] stage setup: attempt 1 on ids2eval-cic2018-s-dc6d0c77-6d5d-44400-group0-0-x4qf, 16 vCPU, 125 GB
+[2026-10-05T19:26:08Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic-ids2018-split-analysis/out
+[2026-10-05T19:26:11Z] previous state: {"load":{"attempts":1,"started":"2026-10-05T19:05:16Z","status":"done","finished":"2026-10-05T19:16:12Z","rows":16232943,"columns":80,"seconds":656.2},"homogeneity":{"attempts":1,"started":"2026-10-05T19:16:12Z","status":"done","finished":"2026-10-05T19:22:24Z","seconds":372.0},"seeds":{"attempts":1,"started":"2026-10-05T19:22:24Z","status":"running"}}
+[2026-10-05T19:26:11Z] stage fetch: code and config
+[2026-10-05T19:26:12Z] stage fetch: cached combined.parquet present, skipping raw data download
+[2026-10-05T19:26:12Z] stage install
+[2026-10-05T19:26:35Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-05T19:26:35Z] stage analysis: start (N_SEEDS=10, FORCE_STAGES=none)
+[2026-10-05T22:41:51Z] stage analysis: exit 0 after 11716s
+[2026-10-05T22:41:51Z] state: {"load":{"attempts":1,"started":"2026-10-05T19:05:16Z","status":"done","finished":"2026-10-05T19:16:12Z","rows":16232943,"columns":80,"seconds":656.2},"homogeneity":{"attempts":1,"started":"2026-10-05T19:16:12Z","status":"done","finished":"2026-10-05T19:22:24Z","seconds":372.0},"seeds":{"attempts":2,"started":"2026-10-05T19:26:38Z","status":"done","finished":"2026-10-05T22:41:50Z","seconds":11712.4},"summarize":{"attempts":1,"started":"2026-10-05T22:41:50Z","status":"done","finished":"2026-10-05T22:41:50Z","seconds":0.0}}
+[2026-10-05T22:41:51Z] stage upload
+[2026-10-05T22:41:52Z] done

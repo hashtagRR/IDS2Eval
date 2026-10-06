@@ -1,0 +1,153 @@
+===== attempt 0 2026-10-05T19:05:15Z =====
+2026-10-05T19:05:16 INFO batch_split_analysis: dataset cic-ids2018-fullscale, 10 seeds, stages already done: [], forced: []
+2026-10-05T19:05:16 INFO batch_split_analysis: stage load: start
+2026-10-05T19:06:53 WARNING ids2eval.data.chunked_io: Dropped 1 embedded header row(s) found as literal data
+2026-10-05T19:08:43 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:08:48 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:08:53 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:08:59 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:05 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:11 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:17 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:24 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:30 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:36 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:42 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:48 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:09:55 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:01 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:07 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:13 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:20 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:26 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:32 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:39 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:45 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:51 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:10:57 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:04 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:10 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:16 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:23 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:29 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:36 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:42 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:48 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:11:55 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:01 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:07 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:14 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:20 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:26 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:33 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:39 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:12:44 WARNING ids2eval.data.chunked_io: /tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz: column schema differs from the first file read (extra: ['Dst IP', 'Flow ID', 'Src IP', 'Src Port'], missing: []) - aligning to the first file's schema
+2026-10-05T19:14:34 WARNING ids2eval.data.chunked_io: Dropped 8 embedded header row(s) found as literal data
+2026-10-05T19:14:39 WARNING ids2eval.data.chunked_io: Dropped 16 embedded header row(s) found as literal data
+2026-10-05T19:14:44 WARNING ids2eval.data.chunked_io: Dropped 8 embedded header row(s) found as literal data
+2026-10-05T19:14:48 WARNING ids2eval.data.chunked_io: Dropped 1 embedded header row(s) found as literal data
+2026-10-05T19:14:55 WARNING ids2eval.data.chunked_io: Dropped 12 embedded header row(s) found as literal data
+2026-10-05T19:14:59 WARNING ids2eval.data.chunked_io: Dropped 13 embedded header row(s) found as literal data
+2026-10-05T19:16:12 INFO batch_split_analysis: cached combined frame: 16,232,943 rows -> /tmp/ids2eval_task/out/cache/combined.parquet (1574.9 MB)
+2026-10-05T19:16:12 INFO batch_split_analysis: stage load: done in 656s
+2026-10-05T19:16:12 INFO batch_split_analysis: stage homogeneity: start
+2026-10-05T19:16:53 INFO batch_split_analysis: audited split: train=12,986,354 test=3,246,589
+2026-10-05T19:17:04 INFO batch_split_analysis: before dedup: warning (11s)
+2026-10-05T19:22:17 INFO batch_split_analysis: dedup: {'train_rows_raw': 12986354, 'train_rows_deduped': 9282585, 'train_duplicates_dropped': 3703769, 'test_rows_raw': 3246589, 'test_rows_deduped': 2164424, 'test_leakage_dropped': 1065936, 'test_duplicates_dropped': 16229}
+2026-10-05T19:22:24 INFO batch_split_analysis: after dedup: ok (7s)
+2026-10-05T19:22:24 INFO batch_split_analysis: stage homogeneity: done in 372s
+2026-10-05T19:22:24 INFO batch_split_analysis: stage seeds: start
+2026-10-05T19:23:05 INFO batch_split_analysis: seed 0 random split: train=12,986,354 test=3,246,589 (40s)
+2026-10-05T19:24:05 INFO batch_split_analysis: seed 0 random random_forest done (60s)
+===== attempt 1 2026-10-05T19:26:35Z =====
+2026-10-05T19:26:37 INFO batch_split_analysis: dataset cic-ids2018-fullscale, 10 seeds, stages already done: ['load', 'homogeneity'], forced: []
+2026-10-05T19:26:37 INFO batch_split_analysis: stage load: already done, skipping
+2026-10-05T19:26:37 INFO batch_split_analysis: stage homogeneity: already done, skipping
+2026-10-05T19:26:37 INFO batch_split_analysis: loading data for stage seeds
+2026-10-05T19:26:37 INFO batch_split_analysis: reading cached combined frame /tmp/ids2eval_task/out/cache/combined.parquet
+2026-10-05T19:26:38 INFO batch_split_analysis: stage seeds: start
+2026-10-05T19:27:03 INFO batch_split_analysis: seed 0 random split: train=12,986,354 test=3,246,589 (25s)
+2026-10-05T19:28:55 INFO batch_split_analysis: seed 0 random other_models done (112s)
+2026-10-05T19:42:57 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111093 train / 777612 test, zero overlap confirmed.
+2026-10-05T19:42:57 INFO batch_split_analysis: seed 0 grouped split: train=12,986,720 test=3,246,223 (842s)
+2026-10-05T19:43:50 INFO batch_split_analysis: seed 0 grouped random_forest done (52s)
+2026-10-05T19:45:35 INFO batch_split_analysis: seed 0 grouped other_models done (106s)
+2026-10-05T19:45:35 INFO batch_split_analysis: seed 0: RF acc 0.98232->0.98261 mF1 0.7682->0.7678; LR acc 0.9644->0.9656; XGB acc 0.98422->0.98421 mF1 0.7696->0.7229
+2026-10-05T19:45:59 INFO batch_split_analysis: seed 1 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T19:46:54 INFO batch_split_analysis: seed 1 random random_forest done (55s)
+2026-10-05T19:48:32 INFO batch_split_analysis: seed 1 random other_models done (98s)
+2026-10-05T20:02:25 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111090 train / 777615 test, zero overlap confirmed.
+2026-10-05T20:02:26 INFO batch_split_analysis: seed 1 grouped split: train=12,986,734 test=3,246,209 (833s)
+2026-10-05T20:03:19 INFO batch_split_analysis: seed 1 grouped random_forest done (53s)
+2026-10-05T20:05:10 INFO batch_split_analysis: seed 1 grouped other_models done (111s)
+2026-10-05T20:05:10 INFO batch_split_analysis: seed 1: RF acc 0.98234->0.98248 mF1 0.7513->0.7690; LR acc 0.9656->0.9654; XGB acc 0.98416->0.98411 mF1 0.7065->0.7470
+2026-10-05T20:05:35 INFO batch_split_analysis: seed 2 random split: train=12,986,354 test=3,246,589 (25s)
+2026-10-05T20:06:31 INFO batch_split_analysis: seed 2 random random_forest done (56s)
+2026-10-05T20:08:13 INFO batch_split_analysis: seed 2 random other_models done (102s)
+2026-10-05T20:22:12 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111101 train / 777604 test, zero overlap confirmed.
+2026-10-05T20:22:12 INFO batch_split_analysis: seed 2 grouped split: train=12,986,735 test=3,246,208 (839s)
+2026-10-05T20:23:04 INFO batch_split_analysis: seed 2 grouped random_forest done (51s)
+2026-10-05T20:24:34 INFO batch_split_analysis: seed 2 grouped other_models done (90s)
+2026-10-05T20:24:34 INFO batch_split_analysis: seed 2: RF acc 0.98241->0.98243 mF1 0.7352->0.7174; LR acc 0.9654->0.9654; XGB acc 0.98413->0.98417 mF1 0.6836->0.7175
+2026-10-05T20:24:57 INFO batch_split_analysis: seed 3 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T20:25:52 INFO batch_split_analysis: seed 3 random random_forest done (55s)
+2026-10-05T20:27:39 INFO batch_split_analysis: seed 3 random other_models done (107s)
+2026-10-05T20:41:33 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111109 train / 777596 test, zero overlap confirmed.
+2026-10-05T20:41:33 INFO batch_split_analysis: seed 3 grouped split: train=12,986,719 test=3,246,224 (834s)
+2026-10-05T20:42:25 INFO batch_split_analysis: seed 3 grouped random_forest done (52s)
+2026-10-05T20:44:20 INFO batch_split_analysis: seed 3 grouped other_models done (114s)
+2026-10-05T20:44:20 INFO batch_split_analysis: seed 3: RF acc 0.98252->0.98236 mF1 0.7589->0.7496; LR acc 0.9650->0.9654; XGB acc 0.98413->0.98412 mF1 0.7077->0.6893
+2026-10-05T20:44:43 INFO batch_split_analysis: seed 4 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T20:45:38 INFO batch_split_analysis: seed 4 random random_forest done (55s)
+2026-10-05T20:47:24 INFO batch_split_analysis: seed 4 random other_models done (106s)
+2026-10-05T21:01:11 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111106 train / 777599 test, zero overlap confirmed.
+2026-10-05T21:01:11 INFO batch_split_analysis: seed 4 grouped split: train=12,986,727 test=3,246,216 (827s)
+2026-10-05T21:02:03 INFO batch_split_analysis: seed 4 grouped random_forest done (52s)
+2026-10-05T21:03:42 INFO batch_split_analysis: seed 4 grouped other_models done (99s)
+2026-10-05T21:03:42 INFO batch_split_analysis: seed 4: RF acc 0.98256->0.98235 mF1 0.7699->0.7138; LR acc 0.9655->0.9652; XGB acc 0.98424->0.98415 mF1 0.6968->0.7121
+2026-10-05T21:04:06 INFO batch_split_analysis: seed 5 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T21:05:01 INFO batch_split_analysis: seed 5 random random_forest done (55s)
+2026-10-05T21:06:47 INFO batch_split_analysis: seed 5 random other_models done (106s)
+2026-10-05T21:20:45 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111082 train / 777623 test, zero overlap confirmed.
+2026-10-05T21:20:45 INFO batch_split_analysis: seed 5 grouped split: train=12,986,721 test=3,246,222 (838s)
+2026-10-05T21:21:37 INFO batch_split_analysis: seed 5 grouped random_forest done (52s)
+2026-10-05T21:23:16 INFO batch_split_analysis: seed 5 grouped other_models done (99s)
+2026-10-05T21:23:16 INFO batch_split_analysis: seed 5: RF acc 0.98257->0.98254 mF1 0.7575->0.7343; LR acc 0.9655->0.9652; XGB acc 0.98416->0.98417 mF1 0.7448->0.6980
+2026-10-05T21:23:40 INFO batch_split_analysis: seed 6 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T21:24:34 INFO batch_split_analysis: seed 6 random random_forest done (55s)
+2026-10-05T21:26:09 INFO batch_split_analysis: seed 6 random other_models done (95s)
+2026-10-05T21:40:06 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111087 train / 777618 test, zero overlap confirmed.
+2026-10-05T21:40:06 INFO batch_split_analysis: seed 6 grouped split: train=12,986,719 test=3,246,224 (837s)
+2026-10-05T21:40:58 INFO batch_split_analysis: seed 6 grouped random_forest done (52s)
+2026-10-05T21:42:40 INFO batch_split_analysis: seed 6 grouped other_models done (102s)
+2026-10-05T21:42:40 INFO batch_split_analysis: seed 6: RF acc 0.98253->0.98233 mF1 0.7152->0.7556; LR acc 0.9653->0.9658; XGB acc 0.98433->0.98415 mF1 0.7038->0.7171
+2026-10-05T21:43:04 INFO batch_split_analysis: seed 7 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T21:43:59 INFO batch_split_analysis: seed 7 random random_forest done (55s)
+2026-10-05T21:45:45 INFO batch_split_analysis: seed 7 random other_models done (106s)
+2026-10-05T21:59:41 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111077 train / 777628 test, zero overlap confirmed.
+2026-10-05T21:59:42 INFO batch_split_analysis: seed 7 grouped split: train=12,986,727 test=3,246,216 (836s)
+2026-10-05T22:00:34 INFO batch_split_analysis: seed 7 grouped random_forest done (53s)
+2026-10-05T22:02:31 INFO batch_split_analysis: seed 7 grouped other_models done (116s)
+2026-10-05T22:02:31 INFO batch_split_analysis: seed 7: RF acc 0.98253->0.98236 mF1 0.7397->0.7174; LR acc 0.9655->0.9658; XGB acc 0.98416->0.98404 mF1 0.7314->0.7046
+2026-10-05T22:02:54 INFO batch_split_analysis: seed 8 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T22:03:50 INFO batch_split_analysis: seed 8 random random_forest done (56s)
+2026-10-05T22:05:30 INFO batch_split_analysis: seed 8 random other_models done (100s)
+2026-10-05T22:19:27 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111094 train / 777611 test, zero overlap confirmed.
+2026-10-05T22:19:28 INFO batch_split_analysis: seed 8 grouped split: train=12,986,727 test=3,246,216 (838s)
+2026-10-05T22:20:20 INFO batch_split_analysis: seed 8 grouped random_forest done (53s)
+2026-10-05T22:22:12 INFO batch_split_analysis: seed 8 grouped other_models done (112s)
+2026-10-05T22:22:12 INFO batch_split_analysis: seed 8: RF acc 0.98247->0.98236 mF1 0.7547->0.7576; LR acc 0.9648->0.9657; XGB acc 0.98424->0.98420 mF1 0.7085->0.7169
+2026-10-05T22:22:36 INFO batch_split_analysis: seed 9 random split: train=12,986,354 test=3,246,589 (24s)
+2026-10-05T22:23:30 INFO batch_split_analysis: seed 9 random random_forest done (55s)
+2026-10-05T22:25:11 INFO batch_split_analysis: seed 9 random other_models done (101s)
+2026-10-05T22:39:08 INFO ids2eval.data.dataset: Grouped split: 3888705 groups total, 3111103 train / 777602 test, zero overlap confirmed.
+2026-10-05T22:39:09 INFO batch_split_analysis: seed 9 grouped split: train=12,986,728 test=3,246,215 (837s)
+2026-10-05T22:40:01 INFO batch_split_analysis: seed 9 grouped random_forest done (53s)
+2026-10-05T22:41:50 INFO batch_split_analysis: seed 9 grouped other_models done (109s)
+2026-10-05T22:41:50 INFO batch_split_analysis: seed 9: RF acc 0.98241->0.98237 mF1 0.7629->0.7631; LR acc 0.9654->0.9651; XGB acc 0.98413->0.98422 mF1 0.7174->0.7077
+2026-10-05T22:41:50 INFO batch_split_analysis: stage seeds: done in 11712s
+2026-10-05T22:41:50 INFO batch_split_analysis: stage summarize: start
+2026-10-05T22:41:50 INFO batch_split_analysis: RF summary: {"n_seeds": 10, "accuracy": {"mean_drop": 4.735262770930726e-05, "ci_low": -6.954179868137519e-05, "ci_high": 0.00016424705409998972}, "balanced_accuracy": {"mean_drop": 0.00675853824168573, "ci_low": -0.005388260849439769, "ci_high": 0.01890533733281123}, "macro_f1": {"mean_drop": 0.006791623385934009, "ci_low": -0.011790756832047103, "ci_high": 0.02537400360391512}, "worst_class_recall": {"mean_drop": 0.0, "ci_low": -0.01983661643845037, "ci_high": 0.01983661643845037}}
+2026-10-05T22:41:50 INFO batch_split_analysis: LR/XGB summary: {"n_seeds": 10, "logistic_regression": {"accuracy": {"mean_drop": -0.00021796999889869272, "ci_low": -0.0006064648886278515, "ci_high": 0.00017052489083046598}, "balanced_accuracy": {"mean_drop": 0.012224152561326695, "ci_low": -0.005365191375748132, "ci_high": 0.029813496498401523}, "macro_f1": {"mean_drop": 0.013414731969360128, "ci_low": -0.004972872152015457, "ci_high": 0.03180233609073571}}, "xgboost": {"accuracy": {"mean_drop": 3.474094965397745e-05, "ci_low": -2.122058127675045e-05, "ci_high": 9.070248058470535e-05}, "balanced_accuracy": {"mean_drop": 0.004460390036832263, "ci_low": -0.011067678645651521, "ci_high": 0.019988458719316045}, "macro_f1": {"mean_drop": 0.0037079431769808545, "ci_low": -0.0184903243572889, "ci_high": 0.02590621071125061}}}
+2026-10-05T22:41:50 INFO batch_split_analysis: stage summarize: done in 0s
+2026-10-05T22:41:50 INFO batch_split_analysis: ALL STAGES DONE

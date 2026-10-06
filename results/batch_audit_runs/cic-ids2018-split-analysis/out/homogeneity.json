@@ -1,0 +1,599 @@
+{
+  "split": {
+    "train_rows": 12986354,
+    "test_rows": 3246589
+  },
+  "before": {
+    "check": {
+      "check": "homogeneity_test",
+      "status": "warning",
+      "summary": "12 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['Bot', 'Infilteration', 'DoS attacks-Slowloris']; sample size isn't enough to tell for these classes",
+      "details": {
+        "per_class": {
+          "Benign": {
+            "test_near_zero_rate": 0.142,
+            "control_near_zero_rate": 0.156,
+            "rate_diff_ci_95": [
+              -0.05828484989900543,
+              0.030291189702581413
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "DDOS attack-HOIC": {
+            "test_near_zero_rate": 0.524,
+            "control_near_zero_rate": 0.552,
+            "rate_diff_ci_95": [
+              -0.08939276126577961,
+              0.033692920533365645
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "DDoS attacks-LOIC-HTTP": {
+            "test_near_zero_rate": 0.004,
+            "control_near_zero_rate": 0.004,
+            "rate_diff_ci_95": [
+              -0.01086070652813382,
+              0.01086070652813382
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DoS attacks-Hulk": {
+            "test_near_zero_rate": 0.374,
+            "control_near_zero_rate": 0.412,
+            "rate_diff_ci_95": [
+              -0.09809417680575218,
+              0.022484285745127945
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "Bot": {
+            "test_near_zero_rate": 0.46,
+            "control_near_zero_rate": 0.442,
+            "rate_diff_ci_95": [
+              -0.043536245394057,
+              0.07934403696378169
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "inconclusive"
+          },
+          "FTP-BruteForce": {
+            "test_near_zero_rate": 1.0,
+            "control_near_zero_rate": 1.0,
+            "rate_diff_ci_95": [
+              -0.007624340580914657,
+              0.007624340580914657
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "SSH-Bruteforce": {
+            "test_near_zero_rate": 0.496,
+            "control_near_zero_rate": 0.512,
+            "rate_diff_ci_95": [
+              -0.07764673191499628,
+              0.04581924004461615
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "Infilteration": {
+            "test_near_zero_rate": 0.124,
+            "control_near_zero_rate": 0.108,
+            "rate_diff_ci_95": [
+              -0.023926826169462158,
+              0.05599777013309515
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "inconclusive"
+          },
+          "DoS attacks-SlowHTTPTest": {
+            "test_near_zero_rate": 0.998,
+            "control_near_zero_rate": 0.996,
+            "rate_diff_ci_95": [
+              -0.0076857839806548384,
+              0.012594496561795208
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DoS attacks-GoldenEye": {
+            "test_near_zero_rate": 0.002,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.005800174936599509,
+              0.011240706827931778
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DoS attacks-Slowloris": {
+            "test_near_zero_rate": 0.092,
+            "control_near_zero_rate": 0.06306306306306306,
+            "rate_diff_ci_95": [
+              -0.03640591633038727,
+              0.0719505024929141
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "inconclusive"
+          },
+          "DDOS attack-LOIC-UDP": {
+            "test_near_zero_rate": 0.0,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.10151455559221921,
+              0.010980570723607228
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          }
+        },
+        "equivalence_margin": 0.05
+      }
+    },
+    "baseline": {
+      "Benign": {
+        "test_rate": 0.142,
+        "control_rate": 0.156,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.05828484989900543,
+          0.030291189702581413
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-HOIC": {
+        "test_rate": 0.524,
+        "control_rate": 0.552,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.08939276126577961,
+          0.033692920533365645
+        ],
+        "class": "cleared"
+      },
+      "DDoS attacks-LOIC-HTTP": {
+        "test_rate": 0.004,
+        "control_rate": 0.004,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.01086070652813382,
+          0.01086070652813382
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Hulk": {
+        "test_rate": 0.374,
+        "control_rate": 0.412,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.09809417680575218,
+          0.022484285745127945
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.46,
+        "control_rate": 0.442,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.043536245394057,
+          0.07934403696378169
+        ],
+        "class": "inconclusive"
+      },
+      "FTP-BruteForce": {
+        "test_rate": 1.0,
+        "control_rate": 1.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914657,
+          0.007624340580914657
+        ],
+        "class": "cleared"
+      },
+      "SSH-Bruteforce": {
+        "test_rate": 0.496,
+        "control_rate": 0.512,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.07764673191499628,
+          0.04581924004461615
+        ],
+        "class": "cleared"
+      },
+      "Infilteration": {
+        "test_rate": 0.124,
+        "control_rate": 0.108,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.023926826169462158,
+          0.05599777013309515
+        ],
+        "class": "inconclusive"
+      },
+      "DoS attacks-SlowHTTPTest": {
+        "test_rate": 0.998,
+        "control_rate": 0.996,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.0076857839806548384,
+          0.012594496561795208
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-GoldenEye": {
+        "test_rate": 0.002,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.005800174936599509,
+          0.011240706827931778
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Slowloris": {
+        "test_rate": 0.092,
+        "control_rate": 0.06306306306306306,
+        "n_test": 500,
+        "n_control": 111,
+        "ci": [
+          -0.03640591633038727,
+          0.0719505024929141
+        ],
+        "class": "inconclusive"
+      },
+      "DDOS attack-LOIC-UDP": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 346,
+        "n_control": 34,
+        "ci": [
+          -0.10151455559221921,
+          0.010980570723607228
+        ],
+        "class": "cleared"
+      }
+    },
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 6
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 3
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 6
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 2
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 12,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 4
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 9,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 11,
+        "inconclusive": 1
+      }
+    }
+  },
+  "dedup": {
+    "train_rows_raw": 12986354,
+    "train_rows_deduped": 9282585,
+    "train_duplicates_dropped": 3703769,
+    "test_rows_raw": 3246589,
+    "test_rows_deduped": 2164424,
+    "test_leakage_dropped": 1065936,
+    "test_duplicates_dropped": 16229
+  },
+  "after": {
+    "check": {
+      "check": "homogeneity_test",
+      "status": "ok",
+      "summary": "10 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
+      "details": {
+        "per_class": {
+          "Benign": {
+            "test_near_zero_rate": 0.008,
+            "control_near_zero_rate": 0.002,
+            "rate_diff_ci_95": [
+              -0.004452311164579871,
+              0.018496032168202736
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DDoS attacks-LOIC-HTTP": {
+            "test_near_zero_rate": 0.002,
+            "control_near_zero_rate": 0.004,
+            "rate_diff_ci_95": [
+              -0.012594496561795274,
+              0.007685783980654946
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DDOS attack-HOIC": {
+            "test_near_zero_rate": 0.002,
+            "control_near_zero_rate": 0.038,
+            "rate_diff_ci_95": [
+              -0.05665054546227201,
+              -0.01960734713295592
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "DoS attacks-Hulk": {
+            "test_near_zero_rate": 0.026,
+            "control_near_zero_rate": 0.064,
+            "rate_diff_ci_95": [
+              -0.06516703895907097,
+              -0.012348288123300095
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          },
+          "Bot": {
+            "test_near_zero_rate": 0.0,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.007624340580914839,
+              0.007624340580914839
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "Infilteration": {
+            "test_near_zero_rate": 0.008,
+            "control_near_zero_rate": 0.002,
+            "rate_diff_ci_95": [
+              -0.004452311164579871,
+              0.018496032168202736
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "SSH-Bruteforce": {
+            "test_near_zero_rate": 0.0,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.007624340580914839,
+              0.007624340580914839
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DoS attacks-GoldenEye": {
+            "test_near_zero_rate": 0.0,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.007624340580914839,
+              0.007624340580914839
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DoS attacks-Slowloris": {
+            "test_near_zero_rate": 0.008,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.01567287802994844,
+              0.020387035973185322
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "equivalent"
+          },
+          "DDOS attack-LOIC-UDP": {
+            "test_near_zero_rate": 0.0,
+            "control_near_zero_rate": 0.0,
+            "rate_diff_ci_95": [
+              -0.11351339476145204,
+              0.010980570723607228
+            ],
+            "equivalence_margin": 0.05,
+            "classification": "below_control"
+          }
+        },
+        "equivalence_margin": 0.05
+      }
+    },
+    "baseline": {
+      "Benign": {
+        "test_rate": 0.008,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.004452311164579871,
+          0.018496032168202736
+        ],
+        "class": "cleared"
+      },
+      "DDoS attacks-LOIC-HTTP": {
+        "test_rate": 0.002,
+        "control_rate": 0.004,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.012594496561795274,
+          0.007685783980654946
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-HOIC": {
+        "test_rate": 0.002,
+        "control_rate": 0.038,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.05665054546227201,
+          -0.01960734713295592
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Hulk": {
+        "test_rate": 0.026,
+        "control_rate": 0.064,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.06516703895907097,
+          -0.012348288123300095
+        ],
+        "class": "cleared"
+      },
+      "Bot": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "Infilteration": {
+        "test_rate": 0.008,
+        "control_rate": 0.002,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.004452311164579871,
+          0.018496032168202736
+        ],
+        "class": "cleared"
+      },
+      "SSH-Bruteforce": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-GoldenEye": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 500,
+        "ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "class": "cleared"
+      },
+      "DoS attacks-Slowloris": {
+        "test_rate": 0.008,
+        "control_rate": 0.0,
+        "n_test": 500,
+        "n_control": 162,
+        "ci": [
+          -0.01567287802994844,
+          0.020387035973185322
+        ],
+        "class": "cleared"
+      },
+      "DDOS attack-LOIC-UDP": {
+        "test_rate": 0.0,
+        "control_rate": 0.0,
+        "n_test": 346,
+        "n_control": 30,
+        "ci": [
+          -0.11351339476145204,
+          0.010980570723607228
+        ],
+        "class": "cleared"
+      }
+    },
+    "grid": {
+      "cutoff=1e-06,margin=0.025": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.05": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=1e-06,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.001,margin=0.025": {
+        "leakage": 0,
+        "cleared": 4,
+        "inconclusive": 6
+      },
+      "cutoff=0.001,margin=0.05": {
+        "leakage": 0,
+        "cleared": 6,
+        "inconclusive": 4
+      },
+      "cutoff=0.001,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      },
+      "cutoff=0.1,margin=0.025": {
+        "leakage": 0,
+        "cleared": 7,
+        "inconclusive": 3
+      },
+      "cutoff=0.1,margin=0.05": {
+        "leakage": 0,
+        "cleared": 8,
+        "inconclusive": 2
+      },
+      "cutoff=0.1,margin=0.1": {
+        "leakage": 0,
+        "cleared": 10,
+        "inconclusive": 0
+      }
+    }
+  }
+}

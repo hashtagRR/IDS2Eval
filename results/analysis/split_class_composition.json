@@ -13,5 +13,10 @@
     "seeds": 5,
     "max_abs_class_share_diff": 3.653119330460086e-05,
     "max_js_divergence": 5.491247701597713e-06
+  },
+  "cic-ids2018-fullscale": {
+    "seeds": 10,
+    "max_abs_class_share_diff": 0.00039846591445957813,
+    "max_js_divergence": 9.635038263031868e-07
   }
 }

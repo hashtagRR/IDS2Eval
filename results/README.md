@@ -32,7 +32,7 @@ Each file is written by one script in `../validation/`; re-running the script ov
 | `class_sensitive_seeds.json` | `class_sensitive_seeds.py` | Section 6.3, Table 6b | Random-vs-grouped comparison with class-sensitive metrics (RandomForest) |
 | `model_sensitivity.json` | `model_sensitivity.py` | Section 6.3 | The same comparison with LogisticRegression and XGBoost |
 | `matched_vs_novel.json` | `matched_vs_novel.py` | Section 6.2 | Accuracy on test rows reused from training vs. novel rows |
-| `split_class_composition.json` | `split_class_composition.py` | Section 6.4 | Random and grouped test splits differ by at most 0.004 percentage points in any class share |
+| `split_class_composition.json` | `split_class_composition.py` | Section 6.4 | Random and grouped test splits differ by at most 0.04 percentage points in any class share (0.004 excluding CIC-IDS2018) |
 | `class_sensitive_results.json` | `class_sensitive_metrics.py` | not cited | Earlier single-seed version of `class_sensitive_seeds.json`, kept for the record |
 
 ### `validation_results.json`: development synthetic corpus
@@ -80,7 +80,7 @@ Reproduce: `venv/bin/python3 validation/heldout_validation.py` (about 35 minutes
 
 ### `homogeneity_sensitivity.json`: `homogeneity_test` intervals and threshold grid
 
-What it tests: on six datasets' cached splits (UNSW-NB15, NSL-KDD, CIC-IDS2017 MachineLearningCSV, CICDDoS2019 cleaned subset, ToN-IoT, BoT-IoT), before and after deduplication. It computes each class's test-to-train and train-internal match rates and the 95% Newcombe-Wilson interval on their difference. It then re-classifies every class at three margins (0.025, 0.05, 0.10) and three distance cutoffs (1e-6, 1e-3, 1e-1).
+What it tests: on six datasets' cached splits (UNSW-NB15, NSL-KDD, CIC-IDS2017 MachineLearningCSV, CICDDoS2019 cleaned subset, ToN-IoT, BoT-IoT), before and after deduplication, plus the full CSE-CIC-IDS2018 split (`cic-ids2018-fullscale/...` keys, merged in from the batch run in `batch_audit_runs/cic-ids2018-split-analysis/`). It computes each class's test-to-train and train-internal match rates and the 95% Newcombe-Wilson interval on their difference. It then re-classifies every class at three margins (0.025, 0.05, 0.10) and three distance cutoffs (1e-6, 1e-3, 1e-1).
 
 Structure: keys are `<dataset>/<stage>` (`stage` is `before` or `after` deduplication), each with:
 
@@ -95,7 +95,7 @@ Reproduce: `venv/bin/python3 validation/homogeneity_sensitivity.py` (about 25 mi
 
 ### `class_sensitive_seeds.json`: class-sensitive falsification (RandomForest)
 
-What it tests: the same random-versus-grouped comparison as `repeated_seed_falsification_check` (same splits, same 200,000-row training cap, same 100-tree RandomForest, seed paired across both splits). It records balanced accuracy, macro-F1 and per-class recall as well as accuracy. Datasets: ToN-IoT and BoT-IoT (10 seeds), CIC-IDS2017-GLF (5 seeds).
+What it tests: the same random-versus-grouped comparison as `repeated_seed_falsification_check` (same splits, same 200,000-row training cap, same 100-tree RandomForest, seed paired across both splits). It records balanced accuracy, macro-F1 and per-class recall as well as accuracy. Datasets: ToN-IoT and BoT-IoT (10 seeds), CIC-IDS2017-GLF (5 seeds), run locally, and CSE-CIC-IDS2018 on all 16.2M rows (10 seeds), merged in from the batch run in `batch_audit_runs/cic-ids2018-split-analysis/`.
 
 Structure: per dataset:
 
@@ -105,13 +105,13 @@ Structure: per dataset:
 | `summary.<metric>` | `mean_drop` (random minus grouped, averaged over seeds) with `ci_low` / `ci_high`, a 95% Student-t interval |
 | `summary.per_class_recall_drop.<class>` | the same for each class's recall |
 
-Key numbers: accuracy is not materially affected for any dataset. Class-sensitive metrics are stable for ToN-IoT but inconclusive for BoT-IoT and CIC-IDS2017, whose rarest classes have only 2-95 test rows.
+Key numbers: accuracy is not materially affected for any dataset. Class-sensitive metrics are stable for ToN-IoT, within +/-0.03 for CIC-IDS2018, and inconclusive for BoT-IoT and CIC-IDS2017, whose rarest classes have only 2-95 test rows. CIC-IDS2018's three web-attack classes (17-123 test rows) are also too small to resolve.
 
 Reproduce: `venv/bin/python3 validation/class_sensitive_seeds.py ton-iot-official:10 bot-iot-official:10 cic-ids2017-glf:5` (several hours; resumes from the file if interrupted).
 
 ### `model_sensitivity.json`: other model families
 
-What it tests: the comparison above with LogisticRegression (standardized features) and XGBoost (100 trees, depth 8), on the same splits, seeds and training cap. RandomForest's numbers are in `class_sensitive_seeds.json`. Structure is the same as that file, except each seed record holds one block per model (`logistic_regression`, `xgboost`) with `accuracy`, `balanced_accuracy` and `macro_f1`, and `summary` is keyed by model.
+What it tests: the comparison above with LogisticRegression (standardized features) and XGBoost (100 trees, depth 8), on the same splits, seeds and training cap. RandomForest's numbers are in `class_sensitive_seeds.json`. The CSE-CIC-IDS2018 entry comes from the batch run, which scored all three models on the same splits. Structure is the same as that file, except each seed record holds one block per model (`logistic_regression`, `xgboost`) with `accuracy`, `balanced_accuracy` and `macro_f1`, and `summary` is keyed by model.
 
 Reproduce: `venv/bin/python3 validation/model_sensitivity.py ton-iot-official:10 bot-iot-official:10 cic-ids2017-glf:5` (about 4-5 hours on 2 vCPU; resumes if interrupted).
 
@@ -215,5 +215,21 @@ Runs made on Google Cloud Batch (spot instances, us-east1), copied verbatim from
 | `cic-ids2017-glf/` | full audit with 10-seed falsification on the GeneratedLabelledFlows release (real 5-tuple) | n2-standard-4 (4 vCPU, 16 GB) | 3.7 h | Table 6a, Section 6.3 |
 | `bot-iot-official/` | full audit with 10-seed falsification on the 5%-reduced release | n2-standard-4 (4 vCPU, 16 GB) | 2.4 h | superseded by the local re-run above |
 | `iot23/` | IoT-23 attempt: a checkpoint and a memory trace only | n2-custom-16 (384 GB) | did not complete (out of memory) | Section 6.1 (exclusion) |
+| `cic-ids2018-split-analysis/` | `validation/batch_split_analysis.py` on all 16,232,943 rows: `homogeneity_test` before and after dedup, and 10 paired seeds scoring RandomForest, LogisticRegression and XGBoost | n2-highmem-16 (16 vCPU, 128 GB), no external IP | 3.6 h including one spot preemption; peak memory 27 GB | Tables 5, 6b, 9; Sections 6.3, 8 |
 
 `memlog.txt` (in `cic-ddos2019-fullscale-resplit/` and `iot23/`) is a 10-second trace of the job's memory use, recorded to find the out-of-memory point.
+
+`cic-ids2018-split-analysis/` has a different layout from the audit runs, because it is a staged analysis, not an `ids2eval` run:
+
+| Path | Contents |
+|---|---|
+| `out/state.json` | each stage (`load`, `homogeneity`, `seeds`, `summarize`) with its status, attempts, start and finish times |
+| `out/homogeneity.json` | the audited split's sizes, dedup statistics, and for `before` and `after` dedup: the check's own output, per-class baseline, and threshold grid |
+| `out/seeds/seed_<n>.json` | one paired seed: for the `random` and `grouped` split, the RandomForest metrics (`random_forest`) and the LogisticRegression and XGBoost metrics (`other_models`), plus each unit's runtime |
+| `out/class_sensitive_seeds.json`, `out/model_sensitivity.json` | the seeds summarized in the same layout as the files in `analysis/`, into which they were merged |
+| `logs/analysis.log` | the Python log across both attempts, with one summary line per seed |
+| `logs/attempt_<n>.log` | the VM script's log per attempt (attempt 0 ended in a spot preemption) |
+| `logs/memlog.txt` | `free -m` every 10 seconds |
+| `host.txt` | VM shape of the last attempt |
+
+The cached dataset (`out/cache/combined.parquet`) was left in the bucket only (`gs://ids2eval-batch-bc67afd1/results/cic-ids2018-split-analysis/`). To rerun, see the header of `validation/batch_split_analysis.sh`: the job needs `WHEELS_URI` and a VM without external IP, because the project's org policy denies external IPs.

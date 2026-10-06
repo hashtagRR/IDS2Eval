@@ -1,0 +1,32 @@
+{
+  "load": {
+    "attempts": 1,
+    "started": "2026-10-05T19:05:16Z",
+    "status": "done",
+    "finished": "2026-10-05T19:16:12Z",
+    "rows": 16232943,
+    "columns": 80,
+    "seconds": 656.2
+  },
+  "homogeneity": {
+    "attempts": 1,
+    "started": "2026-10-05T19:16:12Z",
+    "status": "done",
+    "finished": "2026-10-05T19:22:24Z",
+    "seconds": 372.0
+  },
+  "seeds": {
+    "attempts": 2,
+    "started": "2026-10-05T19:26:38Z",
+    "status": "done",
+    "finished": "2026-10-05T22:41:50Z",
+    "seconds": 11712.4
+  },
+  "summarize": {
+    "attempts": 1,
+    "started": "2026-10-05T22:41:50Z",
+    "status": "done",
+    "finished": "2026-10-05T22:41:50Z",
+    "seconds": 0.0
+  }
+}

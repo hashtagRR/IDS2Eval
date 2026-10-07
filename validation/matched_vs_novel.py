@@ -59,7 +59,7 @@ def main() -> None:
         seed = cfg["random_seed"]
         cols = features.feature_columns(train, cfg)
         fit = train.sample(n=min(len(train), MAX_FIT_ROWS), random_state=seed)
-        x_fit, x_test = features.encode_aligned(fit, test, cols)
+        x_fit, x_test = features.encode_aligned(fit, test, cols, unseen="missing")
         clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1).fit(x_fit, fit[label])
         correct = (clf.predict(x_test) == test[label].to_numpy())
 

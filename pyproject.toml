@@ -13,7 +13,7 @@ dependencies = [
     "pyyaml",
     "pandas",
     "numpy",
-    "scikit-learn",
+    "scikit-learn>=1.4",  # tree models accept NaN (unseen categories, see features.encode_multi)
     "scipy",
     "imbalanced-learn",
     "xgboost",

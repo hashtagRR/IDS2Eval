@@ -41,7 +41,7 @@ SUMMARY_METRICS = ["accuracy", "balanced_accuracy", "macro_f1", "worst_class_rec
 def score(train_df, test_df, label_col, cfg, seed):
     cols = features.feature_columns(train_df, cfg)
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
-    x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
+    x_train, x_test = features.encode_aligned(train_fit, test_df, cols, unseen="missing")
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
     y_pred = clf.predict(x_test)

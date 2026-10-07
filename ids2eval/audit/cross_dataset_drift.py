@@ -47,7 +47,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
 
     seed = cfg["random_seed"]
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
-    x_train, (x_test, x_ref) = features.encode_multi(train_fit, [test_df, ref_df], cols)
+    x_train, (x_test, x_ref) = features.encode_multi(train_fit, [test_df, ref_df], cols, unseen="missing")
 
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])

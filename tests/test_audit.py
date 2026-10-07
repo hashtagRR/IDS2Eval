@@ -1390,3 +1390,41 @@ def test_accuracy_gap_margin_shrinks_with_test_size():
     large = _materiality.accuracy_gap_margin(0.5, 1_200_000, 0.5, 1_200_000)
     assert round(small, 4) == 0.0400
     assert large < 0.0015 < 0.01 < small
+
+
+def test_encode_aligned_unseen_categories_become_missing_only_when_asked():
+    from ids2eval.data import features
+
+    train = pd.DataFrame({"ip": ["a", "b", "a"], "x": [1.0, 2.0, 3.0]})
+    test = pd.DataFrame({"ip": ["b", "new"], "x": [1.0, 2.0]})
+    _, coded = features.encode_aligned(train, test, ["ip", "x"])
+    _, missing = features.encode_aligned(train, test, ["ip", "x"], unseen="missing")
+    assert coded["ip"].tolist() == [1, -1]
+    assert missing["ip"].iloc[0] == 1 and np.isnan(missing["ip"].iloc[1])
+    with pytest.raises(ValueError):
+        features.encode_aligned(train, test, ["ip"], unseen="other")
+
+
+def test_reference_model_is_not_steered_by_unseen_identifier_values(base_cfg):
+    # The clean flow-like dataset (pure-noise labels, 10% minority, near-unique
+    # IP strings) on which the -1 coding collapsed random-split accuracy to 0.45
+    # against a 0.90 majority: every unseen test IP followed code 0's branch.
+    # As missing values they follow the branch most training rows took.
+    from ids2eval.audit._fit_score import fit_and_score
+    from ids2eval.data import dataset
+
+    rng = np.random.default_rng(305)
+    n = 6000
+    df = pd.DataFrame(rng.normal(size=(n, 6)), columns=[f"f{i}" for i in range(6)])
+    df["label"] = rng.choice(["benign", "attack"], size=n, p=[0.9, 0.1])
+    df["src_ip"] = [f"10.{a}.{b}.{c}" for a, b, c in rng.integers(0, 255, (n, 3))]
+    df["dst_ip"] = [f"172.16.{a}.{b}" for a, b in rng.integers(0, 255, (n, 2))]
+    df["src_port"] = rng.integers(1024, 65535, n)
+    df["dst_port"] = rng.choice([22, 53, 80, 123, 443, 8080], n)
+    df["proto"] = rng.choice(["tcp", "udp"], n)
+    cfg = copy.deepcopy(base_cfg)
+    cfg["schema"]["label_column"] = "label"
+    cfg["dataset"]["split_ratio"] = 0.8
+    train, test = dataset._random_split(df, "label", cfg["dataset"], seed=0)
+    acc = fit_and_score(train, test, "label", cfg, seed=0)
+    assert acc > (test["label"] == "benign").mean() - 0.05

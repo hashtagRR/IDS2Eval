@@ -55,7 +55,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     seed = cfg["random_seed"]
     label_col = schema["label_column"]
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
-    x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
+    x_train, x_test = features.encode_aligned(train_fit, test_df, cols, unseen="missing")
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
     baseline_pred = clf.predict(x_test)
@@ -65,7 +65,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     for col in suspicious_cols:
         perturbed_test = test_df.copy()
         perturbed_test[col] = rng.permutation(perturbed_test[col].to_numpy())
-        _, x_test_perturbed = features.encode_aligned(train_fit, perturbed_test, cols)
+        _, x_test_perturbed = features.encode_aligned(train_fit, perturbed_test, cols, unseen="missing")
         perturbed_pred = clf.predict(x_test_perturbed)
         flip_rate_by_column[col] = float((perturbed_pred != baseline_pred).mean())
 

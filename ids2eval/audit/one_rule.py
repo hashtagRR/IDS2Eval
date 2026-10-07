@@ -40,7 +40,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, seed: int = 
     label_col = cfg["schema"]["label_column"]
     cols = features.feature_columns(train_df, cfg)
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
-    x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
+    x_train, x_test = features.encode_aligned(train_fit, test_df, cols, unseen="missing")
     y_train, y_test = train_fit[label_col], test_df[label_col]
 
     stump = DecisionTreeClassifier(max_depth=1, random_state=seed)

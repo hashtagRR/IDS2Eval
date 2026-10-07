@@ -37,15 +37,25 @@ def feature_columns(df: pd.DataFrame, cfg: dict) -> list[str]:
 
 
 def encode_multi(
-    base_df: pd.DataFrame, other_dfs: list[pd.DataFrame], columns: list[str]
+    base_df: pd.DataFrame, other_dfs: list[pd.DataFrame], columns: list[str], unseen: str = "code"
 ) -> tuple[pd.DataFrame, list[pd.DataFrame]]:
     """Numeric-encode `columns` in base_df and every frame in other_dfs.
 
     Categories are fit on base_df only and applied identically to every
     other frame, so a cross-dataset comparison (e.g. cross_dataset_drift)
-    uses the same encoding on all sides. Unseen categories map to -1
-    rather than raising or silently joining an existing code.
+    uses the same encoding on all sides.
+
+    unseen decides what a category absent from base_df becomes. "code"
+    maps it to -1, which suits distance-based checks: it never equals a
+    seen code, so an unseen value is never an exact match. "missing" maps
+    it to NaN, which tree models need instead: a tree cannot split -1 from
+    code 0 (no training row lies between them), so -1 would send every
+    unseen value down code 0's branch and give it that one value's
+    prediction. scikit-learn trees route a NaN they never saw in training
+    to the branch most training rows took.
     """
+    if unseen not in ("code", "missing"):
+        raise ValueError(f"unseen must be 'code' or 'missing', not {unseen!r}")
     base_out = base_df[columns].copy()
     category_maps: dict[str, pd.Index] = {}
     for col in columns:
@@ -65,7 +75,8 @@ def encode_multi(
         other_out = other_df[columns].copy()
         for col in columns:
             if col in category_maps:
-                other_out[col] = category_maps[col].get_indexer(other_out[col].astype(str))
+                codes = category_maps[col].get_indexer(other_out[col].astype(str))
+                other_out[col] = np.where(codes < 0, np.nan, codes) if unseen == "missing" else codes
             else:
                 other_out[col] = _coerce_numeric(other_out[col])
         others_out.append(other_out)
@@ -73,12 +84,12 @@ def encode_multi(
 
 
 def encode_aligned(
-    train_df: pd.DataFrame, test_df: pd.DataFrame, columns: list[str]
+    train_df: pd.DataFrame, test_df: pd.DataFrame, columns: list[str], unseen: str = "code"
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Numeric-encode `columns` in both frames, categories fit on train only.
 
-    Unseen test categories map to -1 rather than raising or silently
-    joining an existing code.
+    See encode_multi for `unseen`: "code" (-1) for distance-based use,
+    "missing" (NaN) when the encoding feeds a tree model.
     """
-    train_out, (test_out,) = encode_multi(train_df, [test_df], columns)
+    train_out, (test_out,) = encode_multi(train_df, [test_df], columns, unseen=unseen)
     return train_out, test_out

@@ -42,7 +42,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, seed: int = 
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
     test_fit = test_df
 
-    x_train, x_test = features.encode_aligned(train_fit, test_fit, cols)
+    x_train, x_test = features.encode_aligned(train_fit, test_fit, cols, unseen="missing")
     y_train, y_test = train_fit[label_col], test_fit[label_col]
 
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)

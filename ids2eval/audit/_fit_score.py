@@ -34,7 +34,7 @@ def fit_and_score(
     if cols is None:
         cols = features.feature_columns(train_df, cfg)
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
-    x_train, x_test = features.encode_aligned(train_fit, test_df, cols)
+    x_train, x_test = features.encode_aligned(train_fit, test_df, cols, unseen="missing")
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
     return float(accuracy_score(test_df[label_col], clf.predict(x_test)))

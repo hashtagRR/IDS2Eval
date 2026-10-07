@@ -9,11 +9,13 @@ the random-minus-grouped drop in accuracy, balanced accuracy and macro-F1 with
 a paired Student-t interval over seeds. Every (seed, split, cap) result is
 checkpointed, so an interrupted run resumes where it stopped.
 
-Usage: venv/bin/python3 validation/cap_sensitivity.py NAME N_SEEDS [CAP ...]
-       CAP is a row count or "full" (default: 200000 1000000 full)
+Usage: venv/bin/python3 validation/cap_sensitivity.py NAME N_SEEDS [CAP ...] [--config PATH] [--out PATH]
+       CAP is a row count or "full" (default: 200000 1000000 full); --config
+       defaults to the local configs folder, --out to results/analysis/.
 """
 from __future__ import annotations
 
+import argparse
 import gc
 import json
 import sys
@@ -65,11 +67,18 @@ def summarize(entry, caps):
 
 
 def main():
-    name, n_seeds = sys.argv[1], int(sys.argv[2])
-    caps = [c if c == "full" else int(c) for c in (sys.argv[3:] or ["200000", "1000000", "full"])]
-    results = json.loads(OUT.read_text()) if OUT.exists() else {}
+    ap = argparse.ArgumentParser()
+    ap.add_argument("name")
+    ap.add_argument("n_seeds", type=int)
+    ap.add_argument("caps", nargs="*", default=["200000", "1000000", "full"])
+    ap.add_argument("--config")
+    ap.add_argument("--out", type=Path, default=OUT)
+    args = ap.parse_args()
+    name, n_seeds, out = args.name, args.n_seeds, args.out
+    caps = [c if c == "full" else int(c) for c in args.caps]
+    results = json.loads(out.read_text()) if out.exists() else {}
     entry = results.setdefault(name, {"seeds": {}})
-    cfg = load_config(str(CONFIG_DIR / f"{name}.yaml"))
+    cfg = load_config(args.config or str(CONFIG_DIR / f"{name}.yaml"))
     label = cfg["schema"]["label_column"]
     combined = dataset.load_raw_combined(cfg["dataset"], seed=cfg["random_seed"])
     print(f"=== {name}: {len(combined):,} rows, caps {caps}", flush=True)
@@ -85,7 +94,7 @@ def main():
                 rec[split_name][str(cap)] = fit_score(train_df, test_df, label, cfg, seed, cap)
                 rec[split_name][str(cap)]["seconds"] = round(time.time() - t0, 1)
                 entry["summary"] = summarize(entry, caps)
-                OUT.write_text(json.dumps(results, indent=2))
+                out.write_text(json.dumps(results, indent=2))
                 r = rec[split_name][str(cap)]
                 print(f"  seed {seed} {split_name} cap {cap}: acc {r['accuracy']:.5f} macroF1 {r['macro_f1']:.4f} "
                       f"({r['fit_rows']:,} rows, {r['seconds']:.0f}s)", flush=True)

@@ -260,6 +260,13 @@ a drop that exceeds the threshold only within its margin as a warning
 (inconclusive). `result_robustness_check` applies the same margin to its
 flag tier.
 
+Both are screens: one comparison per condition cannot measure how much
+two separately trained models differ from each other, which the margin
+does not cover. A `warning` from either says the gap is not resolved at
+this test size; `repeated_seed_falsification_check`, which repeats the
+comparison across seeds and reports an interval, is the confirmatory
+test, and conclusions about split sensitivity should rest on it.
+
 ### `repeated_seed_falsification_check`
 `resplit_falsification`'s one blind spot: a single random-vs-grouped
 comparison is one draw from a distribution, not a settled answer. This

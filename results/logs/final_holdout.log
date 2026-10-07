@@ -1,0 +1,46 @@
+dedup_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+label_conflict_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+near_duplicate_class_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+identity_column_flag {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+low_cardinality_warning {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+port_protocol_shortcut_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+one_rule_check {'weak': {'n': 10, 'fired': 0}, 'strong': {'n': 10, 'fired': 0}, 'negative': {'n': 10, 'fired': 0}}
+row_order_leakage_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+temporal_leakage_check {'weak': {'n': 10, 'fired': 0}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+temporal_realism_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+homogeneity_test {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 3}}
+resplit_falsification {'weak': {'n': 10, 'fired': 6}, 'strong': {'n': 10, 'fired': 9}, 'negative': {'n': 10, 'fired': 2}}
+repeated_seed_falsification_check {'weak': {'n': 10, 'fired': 7}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 7}}
+result_robustness_check {'weak': {'n': 10, 'fired': 10}, 'strong': {'n': 10, 'fired': 10}, 'negative': {'n': 10, 'fired': 0}}
+skewed 910 flags: [] warnings: ['homogeneity_test']
+skewed 911 flags: [] warnings: ['homogeneity_test', 'repeated_seed_falsification_check']
+skewed 912 flags: [] warnings: ['homogeneity_test']
+skewed 913 flags: [] warnings: ['homogeneity_test']
+skewed 914 flags: [] warnings: ['homogeneity_test', 'repeated_seed_falsification_check']
+skewed 915 flags: [] warnings: ['homogeneity_test']
+skewed 916 flags: [] warnings: ['homogeneity_test', 'repeated_seed_falsification_check']
+skewed 917 flags: [] warnings: ['homogeneity_test']
+skewed 918 flags: [] warnings: ['homogeneity_test']
+skewed 919 flags: [] warnings: ['homogeneity_test', 'repeated_seed_falsification_check']
+even 910 flags: [] warnings: ['repeated_seed_falsification_check']
+even 911 flags: [] warnings: ['repeated_seed_falsification_check']
+even 912 flags: [] warnings: ['repeated_seed_falsification_check']
+even 913 flags: [] warnings: ['resplit_falsification', 'repeated_seed_falsification_check']
+even 914 flags: [] warnings: ['repeated_seed_falsification_check']
+even 915 flags: [] warnings: []
+even 916 flags: [] warnings: ['repeated_seed_falsification_check']
+even 917 flags: [] warnings: ['repeated_seed_falsification_check']
+even 918 flags: [] warnings: []
+even 919 flags: [] warnings: ['repeated_seed_falsification_check']
+rare 910 flags: [] warnings: ['class_distribution_report', 'repeated_seed_falsification_check']
+rare 911 flags: [] warnings: []
+rare 912 flags: [] warnings: ['class_distribution_report', 'repeated_seed_falsification_check']
+rare 913 flags: [] warnings: ['class_distribution_report', 'repeated_seed_falsification_check']
+rare 914 flags: [] warnings: []
+rare 915 flags: [] warnings: ['class_distribution_report']
+rare 916 flags: [] warnings: []
+rare 917 flags: [] warnings: ['class_distribution_report']
+rare 918 flags: [] warnings: ['class_distribution_report', 'repeated_seed_falsification_check']
+rare 919 flags: [] warnings: []
+clean corpora with any flag: 0/30, with any warning: 24/30
+DONE

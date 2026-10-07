@@ -1,0 +1,3800 @@
+{
+  "part1": {
+    "dedup_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "label_conflict_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "near_duplicate_class_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "identity_column_flag": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "low_cardinality_warning": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "port_protocol_shortcut_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "one_rule_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 0
+        },
+        "strong": {
+          "n": 10,
+          "fired": 0
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "row_order_leakage_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "temporal_leakage_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 0
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "temporal_realism_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "homogeneity_test": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 3
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "resplit_falsification": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 6
+        },
+        "strong": {
+          "n": 10,
+          "fired": 9
+        },
+        "negative": {
+          "n": 10,
+          "fired": 2
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    },
+    "repeated_seed_falsification_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 7
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 7
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "warning"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "warning"
+        }
+      ]
+    },
+    "result_robustness_check": {
+      "summary": {
+        "weak": {
+          "n": 10,
+          "fired": 10
+        },
+        "strong": {
+          "n": 10,
+          "fired": 10
+        },
+        "negative": {
+          "n": 10,
+          "fired": 0
+        }
+      },
+      "runs": [
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 900,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 901,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 902,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "warning"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 903,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "skewed",
+          "strength": "negative",
+          "status": "ok"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "weak",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "strong",
+          "status": "flag"
+        },
+        {
+          "seed": 904,
+          "regime": "even",
+          "strength": "negative",
+          "status": "ok"
+        }
+      ]
+    }
+  },
+  "part2": {
+    "n_datasets": 30,
+    "datasets_with_any_flag": 0,
+    "datasets_with_any_warning": 24,
+    "per_check": {
+      "dedup_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "label_conflict_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "near_duplicate_class_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "leakage_screen": {
+        "flag": 0,
+        "warning": 0
+      },
+      "one_rule_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "feature_auc_ranking_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "identity_column_flag": {
+        "flag": 0,
+        "warning": 0
+      },
+      "port_protocol_shortcut_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "temporal_realism_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "flow_group_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "row_order_leakage_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "homogeneity_test": {
+        "flag": 0,
+        "warning": 10
+      },
+      "resplit_falsification": {
+        "flag": 0,
+        "warning": 1
+      },
+      "class_distribution_report": {
+        "flag": 0,
+        "warning": 6
+      },
+      "low_cardinality_warning": {
+        "flag": 0,
+        "warning": 0
+      },
+      "schema_fingerprint_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "data_integrity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "artifact_sensitivity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "result_robustness_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "seed_sensitivity_check": {
+        "flag": 0,
+        "warning": 0
+      },
+      "repeated_seed_falsification_check": {
+        "flag": 0,
+        "warning": 16
+      }
+    },
+    "runs": [
+      {
+        "regime": "skewed",
+        "seed": 910,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 911,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0038, 95% CI=[-0.0071, +0.0147]; inconclusive: the 95% CI [-0.0071, +0.0147] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 912,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 913,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 914,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0023, 95% CI=[-0.0109, +0.0155]; inconclusive: the 95% CI [-0.0109, +0.0155] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 915,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 916,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0004, 95% CI=[-0.0134, +0.0126]; inconclusive: the 95% CI [-0.0134, +0.0126] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 917,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 918,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes"
+        }
+      },
+      {
+        "regime": "skewed",
+        "seed": 919,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "warning",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "homogeneity_test": "4 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['exfil']; sample size isn't enough to tell for these classes",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0028, 95% CI=[-0.0058, +0.0115]; inconclusive: the 95% CI [-0.0058, +0.0115] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 910,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0056, 95% CI=[-0.0358, +0.0245]; inconclusive: the 95% CI [-0.0358, +0.0245] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 911,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0032, 95% CI=[-0.0245, +0.0180]; inconclusive: the 95% CI [-0.0245, +0.0180] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 912,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0000, 95% CI=[-0.0186, +0.0186]; inconclusive: the 95% CI [-0.0186, +0.0186] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 913,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "warning",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "resplit_falsification": "random-split accuracy=0.5700, grouped-split accuracy=0.5507 (drop=+0.0193); the drop exceeds the 0.01 threshold but lies within its sampling margin (+/-0.0368) at this test size; inconclusive, see repeated_seed_falsification_check",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0132, 95% CI=[+0.0026, +0.0239]; inconclusive: the 95% CI [+0.0026, +0.0239] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 914,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0004, 95% CI=[-0.0146, +0.0138]; inconclusive: the 95% CI [-0.0146, +0.0138] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 915,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      },
+      {
+        "regime": "even",
+        "seed": 916,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0074, 95% CI=[-0.0309, +0.0161]; inconclusive: the 95% CI [-0.0309, +0.0161] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 917,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0016, 95% CI=[-0.0269, +0.0238]; inconclusive: the 95% CI [-0.0269, +0.0238] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "even",
+        "seed": 918,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      },
+      {
+        "regime": "even",
+        "seed": 919,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0113, 95% CI=[-0.0333, +0.0107]; inconclusive: the 95% CI [-0.0333, +0.0107] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 910,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 76:1; classes below 1% of train: ['exfil']",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0074, 95% CI=[+0.0003, +0.0146]; inconclusive: the 95% CI [+0.0003, +0.0146] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 911,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      },
+      {
+        "regime": "rare",
+        "seed": 912,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 71:1; classes below 1% of train: ['exfil']",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0030, 95% CI=[-0.0066, +0.0125]; inconclusive: the 95% CI [-0.0066, +0.0125] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 913,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 71:1; classes below 1% of train: ['exfil']",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=+0.0006, 95% CI=[-0.0139, +0.0151]; inconclusive: the 95% CI [-0.0139, +0.0151] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 914,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      },
+      {
+        "regime": "rare",
+        "seed": 915,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 71:1; classes below 1% of train: ['exfil']"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 916,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      },
+      {
+        "regime": "rare",
+        "seed": 917,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 79:1; classes below 1% of train: ['exfil']"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 918,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "warning",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "warning"
+        },
+        "non_ok_summaries": {
+          "class_distribution_report": "4 classes, train imbalance ratio (majority:minority) = 84:1; classes below 1% of train: ['exfil']",
+          "repeated_seed_falsification_check": "grouped-split accuracy drop across 5 seeds: mean=-0.0026, 95% CI=[-0.0165, +0.0114]; inconclusive: the 95% CI [-0.0165, +0.0114] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+        }
+      },
+      {
+        "regime": "rare",
+        "seed": 919,
+        "statuses": {
+          "dedup_check": "ok",
+          "label_conflict_check": "ok",
+          "near_duplicate_class_check": "ok",
+          "leakage_screen": "ok",
+          "one_rule_check": "ok",
+          "feature_auc_ranking_check": "ok",
+          "identity_column_flag": "ok",
+          "port_protocol_shortcut_check": "ok",
+          "temporal_leakage_check": "ok",
+          "temporal_realism_check": "ok",
+          "flow_group_leakage_check": "ok",
+          "row_order_leakage_check": "ok",
+          "homogeneity_test": "ok",
+          "resplit_falsification": "ok",
+          "class_distribution_report": "ok",
+          "low_cardinality_warning": "ok",
+          "schema_fingerprint_check": "ok",
+          "data_integrity_check": "ok",
+          "artifact_sensitivity_check": "ok",
+          "result_robustness_check": "ok",
+          "seed_sensitivity_check": "ok",
+          "repeated_seed_falsification_check": "ok"
+        },
+        "non_ok_summaries": {}
+      }
+    ]
+  }
+}

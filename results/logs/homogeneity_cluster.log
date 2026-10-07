@@ -1,0 +1,13 @@
+unsw-nb15/before: 10 classes; row-level {'cleared': np.int64(10)}; changed: none; classes with repeated vectors (test, control): 10
+unsw-nb15/after: 10 classes; row-level {'cleared': np.int64(8), 'inconclusive': np.int64(2)}; changed: {'Backdoor': 'inconclusive->cleared', 'Worms': 'inconclusive->cleared'}; classes with repeated vectors (test, control): 0
+nsl-kdd/before: 12 classes; row-level {'cleared': np.int64(5), 'leakage': np.int64(4), 'inconclusive': np.int64(3)}; changed: {'buffer_overflow': 'inconclusive->cleared'}; classes with repeated vectors (test, control): 0
+nsl-kdd/after: 12 classes; row-level {'cleared': np.int64(9), 'inconclusive': np.int64(3)}; changed: {'ipsweep': 'inconclusive->cleared', 'pod': 'inconclusive->cleared', 'buffer_overflow': 'inconclusive->cleared'}; classes with repeated vectors (test, control): 0
+cic-ids2017/before: 12 classes; row-level {'cleared': np.int64(10), 'inconclusive': np.int64(2)}; changed: {'DoS Hulk': 'cleared->inconclusive', 'DoS Slowhttptest': 'cleared->inconclusive'}; classes with repeated vectors (test, control): 8
+cic-ids2017/after: 12 classes; row-level {'cleared': np.int64(12)}; changed: none; classes with repeated vectors (test, control): 0
+cic-ddos2019/before: 2 classes; row-level {'cleared': np.int64(2)}; changed: none; classes with repeated vectors (test, control): 1
+cic-ddos2019/after: 2 classes; row-level {'cleared': np.int64(2)}; changed: none; classes with repeated vectors (test, control): 0
+ton-iot-official/before: 10 classes; row-level {'cleared': np.int64(8), 'inconclusive': np.int64(2)}; changed: none; classes with repeated vectors (test, control): 6
+ton-iot-official/after: 10 classes; row-level {'cleared': np.int64(9), 'inconclusive': np.int64(1)}; changed: none; classes with repeated vectors (test, control): 0
+bot-iot-official/before: 4 classes; row-level {'cleared': np.int64(4)}; changed: none; classes with repeated vectors (test, control): 0
+bot-iot-official/after: 4 classes; row-level {'cleared': np.int64(4)}; changed: none; classes with repeated vectors (test, control): 0
+DONE

@@ -1,0 +1,872 @@
+[
+  {
+    "balance": "balanced",
+    "seed": 300,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.495,
+      "grouped_accuracy": 0.5091666666666667,
+      "drop": -0.01416666666666666,
+      "sampling_margin": 0.040003235441260956,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4775 (identity_columns_dropped) to 0.5092 (grouped_split) across 3 conditions, a spread of 0.0317 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.03998397504872133,
+      "spread": 0.031666666666666676,
+      "accuracy_by_condition": {
+        "random_split": 0.495,
+        "grouped_split": 0.5091666666666667,
+        "identity_columns_dropped": 0.4775
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0005, 95% CI=[-0.0428, +0.0418]; inconclusive: the 95% CI [-0.0428, +0.0418] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 301,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "warning",
+      "random_accuracy": 0.49416666666666664,
+      "grouped_accuracy": 0.475,
+      "drop": 0.019166666666666665,
+      "sampling_margin": 0.039981222806650486,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4750 (grouped_split) to 0.5042 (identity_columns_dropped) across 3 conditions, a spread of 0.0292 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.039981890034246785,
+      "spread": 0.029166666666666674,
+      "accuracy_by_condition": {
+        "random_split": 0.49416666666666664,
+        "grouped_split": 0.475,
+        "identity_columns_dropped": 0.5041666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0023, 95% CI=[-0.0119, +0.0165]; inconclusive: the 95% CI [-0.0119, +0.0165] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 302,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.5025,
+      "grouped_accuracy": 0.5158333333333334,
+      "drop": -0.01333333333333342,
+      "sampling_margin": 0.039997316567592894,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.5025 (random_split) to 0.5158 (grouped_split) across 3 conditions, a spread of 0.0133 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.039997316567592894,
+      "spread": 0.01333333333333342,
+      "accuracy_by_condition": {
+        "random_split": 0.5025,
+        "grouped_split": 0.5158333333333334,
+        "identity_columns_dropped": 0.505
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0072, 95% CI=[-0.0269, +0.0126]; inconclusive: the 95% CI [-0.0269, +0.0126] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 303,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "warning",
+      "random_accuracy": 0.505,
+      "grouped_accuracy": 0.4766666666666667,
+      "drop": 0.02833333333333332,
+      "sampling_margin": 0.03998480902406859,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4767 (grouped_split) to 0.5100 (identity_columns_dropped) across 3 conditions, a spread of 0.0333 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.03998180663140619,
+      "spread": 0.033333333333333326,
+      "accuracy_by_condition": {
+        "random_split": 0.505,
+        "grouped_split": 0.4766666666666667,
+        "identity_columns_dropped": 0.51
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0030, 95% CI=[-0.0303, +0.0243]; inconclusive: the 95% CI [-0.0303, +0.0243] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 304,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.52,
+      "grouped_accuracy": 0.5133333333333333,
+      "drop": 0.00666666666666671,
+      "sampling_margin": 0.03998447543601704,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.5000 (identity_columns_dropped) to 0.5200 (random_split) across 3 conditions, a spread of 0.0200 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.03999159137759963,
+      "spread": 0.020000000000000018,
+      "accuracy_by_condition": {
+        "random_split": 0.52,
+        "grouped_split": 0.5133333333333333,
+        "identity_columns_dropped": 0.5
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0030, 95% CI=[-0.0162, +0.0222]; inconclusive: the 95% CI [-0.0162, +0.0222] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 305,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.49583333333333335,
+      "grouped_accuracy": 0.5075,
+      "drop": -0.011666666666666603,
+      "sampling_margin": 0.04000465250642168,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4958 (random_split) to 0.5250 (identity_columns_dropped) across 3 conditions, a spread of 0.0292 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.039981890034246785,
+      "spread": 0.029166666666666674,
+      "accuracy_by_condition": {
+        "random_split": 0.49583333333333335,
+        "grouped_split": 0.5075,
+        "identity_columns_dropped": 0.525
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0052, 95% CI=[-0.0194, +0.0091]; not material: even the most generous estimate in the 95% CI (+0.0091) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 306,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.48583333333333334,
+      "grouped_accuracy": 0.515,
+      "drop": -0.029166666666666674,
+      "sampling_margin": 0.03999056297994639,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4825 (identity_columns_dropped) to 0.5150 (grouped_split) across 3 conditions, a spread of 0.0325 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.0399863379336963,
+      "spread": 0.03250000000000003,
+      "accuracy_by_condition": {
+        "random_split": 0.48583333333333334,
+        "grouped_split": 0.515,
+        "identity_columns_dropped": 0.4825
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0002, 95% CI=[-0.0331, +0.0328]; inconclusive: the 95% CI [-0.0331, +0.0328] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 307,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.49,
+      "grouped_accuracy": 0.49583333333333335,
+      "drop": -0.005833333333333357,
+      "sampling_margin": 0.040002902006869075,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4800 (identity_columns_dropped) to 0.4958 (grouped_split) across 3 conditions, a spread of 0.0158 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.039990896517218086,
+      "spread": 0.015833333333333366,
+      "accuracy_by_condition": {
+        "random_split": 0.49,
+        "grouped_split": 0.49583333333333335,
+        "identity_columns_dropped": 0.48
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0095, 95% CI=[-0.0286, +0.0476]; inconclusive: the 95% CI [-0.0286, +0.0476] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 308,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "warning",
+      "random_accuracy": 0.5125,
+      "grouped_accuracy": 0.5,
+      "drop": 0.012499999999999956,
+      "sampling_margin": 0.040001345942957525,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.5000 (grouped_split) to 0.5183 (identity_columns_dropped) across 3 conditions, a spread of 0.0183 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.03999414835984468,
+      "spread": 0.018333333333333313,
+      "accuracy_by_condition": {
+        "random_split": 0.5125,
+        "grouped_split": 0.5,
+        "identity_columns_dropped": 0.5183333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0073, 95% CI=[-0.0104, +0.0251]; inconclusive: the 95% CI [-0.0104, +0.0251] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "balanced",
+    "seed": 309,
+    "majority_rate": 0.5,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.48083333333333333,
+      "grouped_accuracy": 0.48333333333333334,
+      "drop": -0.0025000000000000022,
+      "sampling_margin": 0.03998177883042066,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.4792 (identity_columns_dropped) to 0.4833 (grouped_split) across 3 conditions, a spread of 0.0042 (sampling margin +/-0.0400)",
+      "sampling_margin": 0.03997910984579796,
+      "spread": 0.004166666666666652,
+      "accuracy_by_condition": {
+        "random_split": 0.48083333333333333,
+        "grouped_split": 0.48333333333333334,
+        "identity_columns_dropped": 0.4791666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0017, 95% CI=[-0.0219, +0.0185]; inconclusive: the 95% CI [-0.0219, +0.0185] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 300,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "flag",
+      "random_accuracy": 0.8441666666666666,
+      "grouped_accuracy": 0.7025,
+      "drop": 0.1416666666666666,
+      "sampling_margin": 0.033017446716692656,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "flag",
+      "summary": "accuracy ranges from 0.7025 (grouped_split) to 0.8925 (identity_columns_dropped) across 3 conditions, a spread of 0.1900 (sampling margin +/-0.0312); the headline result depends on methodology choices as much as the classifier",
+      "sampling_margin": 0.03124373093938472,
+      "spread": 0.18999999999999995,
+      "accuracy_by_condition": {
+        "random_split": 0.8441666666666666,
+        "grouped_split": 0.7025,
+        "identity_columns_dropped": 0.8925
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0562, 95% CI=[-0.3216, +0.2093]; inconclusive: the 95% CI [-0.3216, +0.2093] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 301,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.8783333333333333,
+      "grouped_accuracy": 0.8975,
+      "drop": -0.019166666666666665,
+      "sampling_margin": 0.025230659969953145,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8783 (random_split) to 0.8975 (grouped_split) across 3 conditions, a spread of 0.0192 (sampling margin +/-0.0252)",
+      "sampling_margin": 0.025230659969953145,
+      "spread": 0.019166666666666665,
+      "accuracy_by_condition": {
+        "random_split": 0.8783333333333333,
+        "grouped_split": 0.8975,
+        "identity_columns_dropped": 0.8975
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0315, 95% CI=[-0.1676, +0.1046]; inconclusive: the 95% CI [-0.1676, +0.1046] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 302,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.8541666666666666,
+      "grouped_accuracy": 0.8933333333333333,
+      "drop": -0.03916666666666668,
+      "sampling_margin": 0.026529282701877696,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8542 (random_split) to 0.8933 (grouped_split) across 3 conditions, a spread of 0.0392 (sampling margin +/-0.0265)",
+      "sampling_margin": 0.026529282701877696,
+      "spread": 0.03916666666666668,
+      "accuracy_by_condition": {
+        "random_split": 0.8541666666666666,
+        "grouped_split": 0.8933333333333333,
+        "identity_columns_dropped": 0.8933333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0535, 95% CI=[-0.1761, +0.0691]; inconclusive: the 95% CI [-0.1761, +0.0691] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 303,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9008333333333334,
+      "grouped_accuracy": 0.8991666666666667,
+      "drop": 0.0016666666666667052,
+      "sampling_margin": 0.024004465960763124,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8992 (grouped_split) to 0.9008 (random_split) across 3 conditions, a spread of 0.0017 (sampling margin +/-0.0240)",
+      "sampling_margin": 0.024004465960763124,
+      "spread": 0.0016666666666667052,
+      "accuracy_by_condition": {
+        "random_split": 0.9008333333333334,
+        "grouped_split": 0.8991666666666667,
+        "identity_columns_dropped": 0.9008333333333334
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.1522, 95% CI=[-0.2709, +0.5752]; inconclusive: the 95% CI [-0.2709, +0.5752] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 304,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.8966666666666666,
+      "grouped_accuracy": 0.9066666666666666,
+      "drop": -0.010000000000000009,
+      "sampling_margin": 0.023822351092703944,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8967 (random_split) to 0.9067 (grouped_split) across 3 conditions, a spread of 0.0100 (sampling margin +/-0.0238)",
+      "sampling_margin": 0.023822351092703944,
+      "spread": 0.010000000000000009,
+      "accuracy_by_condition": {
+        "random_split": 0.8966666666666666,
+        "grouped_split": 0.9066666666666666,
+        "identity_columns_dropped": 0.9058333333333334
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0387, 95% CI=[-0.1585, +0.0811]; inconclusive: the 95% CI [-0.1585, +0.0811] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 305,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.4525,
+      "grouped_accuracy": 0.8991666666666667,
+      "drop": -0.44666666666666666,
+      "sampling_margin": 0.03291386527675264,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "flag",
+      "summary": "accuracy ranges from 0.4525 (random_split) to 0.8992 (grouped_split) across 3 conditions, a spread of 0.4467 (sampling margin +/-0.0329); the headline result depends on methodology choices as much as the classifier",
+      "sampling_margin": 0.03291386527675264,
+      "spread": 0.44666666666666666,
+      "accuracy_by_condition": {
+        "random_split": 0.4525,
+        "grouped_split": 0.8991666666666667,
+        "identity_columns_dropped": 0.8991666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.1390, 95% CI=[-0.3884, +0.1104]; inconclusive: the 95% CI [-0.3884, +0.1104] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 306,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "flag",
+      "random_accuracy": 0.9066666666666666,
+      "grouped_accuracy": 0.6391666666666667,
+      "drop": 0.26749999999999996,
+      "sampling_margin": 0.03176788979046577,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "flag",
+      "summary": "accuracy ranges from 0.6392 (grouped_split) to 0.9067 (random_split) across 3 conditions, a spread of 0.2675 (sampling margin +/-0.0318); the headline result depends on methodology choices as much as the classifier",
+      "sampling_margin": 0.03176788979046577,
+      "spread": 0.26749999999999996,
+      "accuracy_by_condition": {
+        "random_split": 0.9066666666666666,
+        "grouped_split": 0.6391666666666667,
+        "identity_columns_dropped": 0.9066666666666666
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.1617, 95% CI=[-0.1423, +0.4657]; inconclusive: the 95% CI [-0.1423, +0.4657] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 307,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9041666666666667,
+      "grouped_accuracy": 0.9,
+      "drop": 0.004166666666666652,
+      "sampling_margin": 0.02378008697245729,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9000 (grouped_split) to 0.9050 (identity_columns_dropped) across 3 conditions, a spread of 0.0050 (sampling margin +/-0.0237)",
+      "sampling_margin": 0.023734656914802588,
+      "spread": 0.0050000000000000044,
+      "accuracy_by_condition": {
+        "random_split": 0.9041666666666667,
+        "grouped_split": 0.9,
+        "identity_columns_dropped": 0.905
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.1397, 95% CI=[-0.5206, +0.2413]; inconclusive: the 95% CI [-0.5206, +0.2413] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 308,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.8208333333333333,
+      "grouped_accuracy": 0.8966666666666666,
+      "drop": -0.07583333333333331,
+      "sampling_margin": 0.027701991383289132,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8208 (random_split) to 0.8967 (grouped_split) across 3 conditions, a spread of 0.0758 (sampling margin +/-0.0277)",
+      "sampling_margin": 0.027701991383289132,
+      "spread": 0.07583333333333331,
+      "accuracy_by_condition": {
+        "random_split": 0.8208333333333333,
+        "grouped_split": 0.8966666666666666,
+        "identity_columns_dropped": 0.8933333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "warning",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0333, 95% CI=[-0.0772, +0.0105]; inconclusive: the 95% CI [-0.0772, +0.0105] straddles the +0.0100 materiality threshold; 5 seeds aren't enough to tell whether this gap is real or sampling noise"
+    }
+  },
+  {
+    "balance": "imbalanced_10pct",
+    "seed": 309,
+    "majority_rate": 0.9,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.8608333333333333,
+      "grouped_accuracy": 0.8941666666666667,
+      "drop": -0.033333333333333326,
+      "sampling_margin": 0.02620005562048297,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.8608 (random_split) to 0.8983 (identity_columns_dropped) across 3 conditions, a spread of 0.0375 (sampling margin +/-0.0260)",
+      "sampling_margin": 0.02599754283376394,
+      "spread": 0.03749999999999998,
+      "accuracy_by_condition": {
+        "random_split": 0.8608333333333333,
+        "grouped_split": 0.8941666666666667,
+        "identity_columns_dropped": 0.8983333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0085, 95% CI=[-0.0260, +0.0090]; not material: even the most generous estimate in the 95% CI (+0.0090) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 300,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9791666666666666,
+      "grouped_accuracy": 0.9791666666666666,
+      "drop": 0.0,
+      "sampling_margin": 0.011428261277687861,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9792 (random_split) to 0.9792 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0114)",
+      "sampling_margin": 0.011428261277687861,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9791666666666666,
+        "grouped_split": 0.9791666666666666,
+        "identity_columns_dropped": 0.9791666666666666
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0002, 95% CI=[-0.0006, +0.0003]; not material: even the most generous estimate in the 95% CI (+0.0003) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 301,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.98,
+      "grouped_accuracy": 0.98,
+      "drop": 0.0,
+      "sampling_margin": 0.011202127333190013,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9800 (random_split) to 0.9800 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0112)",
+      "sampling_margin": 0.011202127333190013,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.98,
+        "grouped_split": 0.98,
+        "identity_columns_dropped": 0.98
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0003, 95% CI=[-0.0006, +0.0013]; not material: even the most generous estimate in the 95% CI (+0.0013) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 302,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9775,
+      "grouped_accuracy": 0.9775,
+      "drop": 0.0,
+      "sampling_margin": 0.011866485457687388,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9775 (random_split) to 0.9775 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0119)",
+      "sampling_margin": 0.011866485457687388,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9775,
+        "grouped_split": 0.9775,
+        "identity_columns_dropped": 0.9775
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0003, 95% CI=[-0.0013, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 303,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9825,
+      "grouped_accuracy": 0.9825,
+      "drop": 0.0,
+      "sampling_margin": 0.01049198770811033,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9825 (random_split) to 0.9825 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0105)",
+      "sampling_margin": 0.01049198770811033,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9825,
+        "grouped_split": 0.9825,
+        "identity_columns_dropped": 0.9825
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0000, 95% CI=[+0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 304,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9816666666666667,
+      "grouped_accuracy": 0.9808333333333333,
+      "drop": 0.0008333333333333526,
+      "sampling_margin": 0.010853277094684326,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9808 (grouped_split) to 0.9817 (random_split) across 3 conditions, a spread of 0.0008 (sampling margin +/-0.0109)",
+      "sampling_margin": 0.010853277094684326,
+      "spread": 0.0008333333333333526,
+      "accuracy_by_condition": {
+        "random_split": 0.9816666666666667,
+        "grouped_split": 0.9808333333333333,
+        "identity_columns_dropped": 0.9816666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0003, 95% CI=[-0.0002, +0.0009]; not material: even the most generous estimate in the 95% CI (+0.0009) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 305,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9758333333333333,
+      "grouped_accuracy": 0.9758333333333333,
+      "drop": 0.0,
+      "sampling_margin": 0.01228764539446829,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9758 (random_split) to 0.9758 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0123)",
+      "sampling_margin": 0.01228764539446829,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9758333333333333,
+        "grouped_split": 0.9758333333333333,
+        "identity_columns_dropped": 0.9758333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0000, 95% CI=[+0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 306,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9816666666666667,
+      "grouped_accuracy": 0.9816666666666667,
+      "drop": 0.0,
+      "sampling_margin": 0.010734336584392257,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9817 (random_split) to 0.9817 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0107)",
+      "sampling_margin": 0.010734336584392257,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9816666666666667,
+        "grouped_split": 0.9816666666666667,
+        "identity_columns_dropped": 0.9816666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=+0.0003, 95% CI=[-0.0002, +0.0009]; not material: even the most generous estimate in the 95% CI (+0.0009) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 307,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9816666666666667,
+      "grouped_accuracy": 0.9825,
+      "drop": -0.0008333333333333526,
+      "sampling_margin": 0.010613853870629656,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9817 (random_split) to 0.9825 (grouped_split) across 3 conditions, a spread of 0.0008 (sampling margin +/-0.0106)",
+      "sampling_margin": 0.010613853870629656,
+      "spread": 0.0008333333333333526,
+      "accuracy_by_condition": {
+        "random_split": 0.9816666666666667,
+        "grouped_split": 0.9825,
+        "identity_columns_dropped": 0.9816666666666667
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0008, 95% CI=[-0.0016, -0.0001]; not material: even the most generous estimate in the 95% CI (-0.0001) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 308,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.9808333333333333,
+      "grouped_accuracy": 0.9808333333333333,
+      "drop": 0.0,
+      "sampling_margin": 0.010970928195963042,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9808 (random_split) to 0.9808 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0110)",
+      "sampling_margin": 0.010970928195963042,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.9808333333333333,
+        "grouped_split": 0.9808333333333333,
+        "identity_columns_dropped": 0.9808333333333333
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0008, 95% CI=[-0.0019, +0.0002]; not material: even the most generous estimate in the 95% CI (+0.0002) stays below the +0.0100 materiality threshold"
+    }
+  },
+  {
+    "balance": "imbalanced_2pct",
+    "seed": 309,
+    "majority_rate": 0.98,
+    "resplit": {
+      "status": "ok",
+      "random_accuracy": 0.98,
+      "grouped_accuracy": 0.98,
+      "drop": 0.0,
+      "sampling_margin": 0.011202127333190013,
+      "random_test_rows": 1200,
+      "grouped_test_rows": 1200
+    },
+    "robustness": {
+      "status": "ok",
+      "summary": "accuracy ranges from 0.9800 (random_split) to 0.9800 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0112)",
+      "sampling_margin": 0.011202127333190013,
+      "spread": 0.0,
+      "accuracy_by_condition": {
+        "random_split": 0.98,
+        "grouped_split": 0.98,
+        "identity_columns_dropped": 0.98
+      }
+    },
+    "repeated_seed": {
+      "status": "ok",
+      "summary": "grouped-split accuracy drop across 5 seeds: mean=-0.0002, 95% CI=[-0.0006, +0.0003]; not material: even the most generous estimate in the 95% CI (+0.0003) stays below the +0.0100 materiality threshold"
+    }
+  }
+]

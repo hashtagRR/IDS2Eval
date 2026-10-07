@@ -1,0 +1,385 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "flag",
+    "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147",
+    "details": {
+      "train_rows_raw": 175341,
+      "train_rows_deduped": 101040,
+      "train_duplicates_dropped": 74301,
+      "test_rows_raw": 82332,
+      "test_rows_deduped": 52644,
+      "test_leakage_dropped": 8541,
+      "test_duplicates_dropped": 21147,
+      "by_class": {
+        "Normal": {
+          "train_duplicate_rate": 0.07473214285714286,
+          "test_leak_rate": 0.039783783783783784
+        },
+        "Generic": {
+          "train_duplicate_rate": 0.9019,
+          "test_leak_rate": 0.09125112606645117
+        },
+        "Exploits": {
+          "train_duplicate_rate": 0.4393735213966999,
+          "test_leak_rate": 0.16187567373338124
+        },
+        "Fuzzers": {
+          "train_duplicate_rate": 0.18120325560932687,
+          "test_leak_rate": 0.04305509732761465
+        },
+        "DoS": {
+          "train_duplicate_rate": 0.7550554468362688,
+          "test_leak_rate": 0.4900953778429934
+        },
+        "Reconnaissance": {
+          "train_duplicate_rate": 0.3878562577447336,
+          "test_leak_rate": 0.3255148741418764
+        },
+        "Analysis": {
+          "train_duplicate_rate": 0.729,
+          "test_leak_rate": 0.18463810930576072
+        },
+        "Backdoor": {
+          "train_duplicate_rate": 0.7061855670103093,
+          "test_leak_rate": 0.00686106346483705
+        },
+        "Shellcode": {
+          "train_duplicate_rate": 0.038834951456310676,
+          "test_leak_rate": 0.03439153439153439
+        },
+        "Worms": {
+          "train_duplicate_rate": 0.06923076923076923,
+          "test_leak_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "flag",
+    "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test",
+    "details": {
+      "conflicting_groups": 414,
+      "conflicting_rows": 1758,
+      "cross_split_conflicting_groups": 279,
+      "by_class": {
+        "Normal": {
+          "conflicting_rate": 0.009978494623655914
+        },
+        "Generic": {
+          "conflicting_rate": 0.0
+        },
+        "Exploits": {
+          "conflicting_rate": 0.0
+        },
+        "Fuzzers": {
+          "conflicting_rate": 0.03402623113090819
+        },
+        "DoS": {
+          "conflicting_rate": 0.0
+        },
+        "Reconnaissance": {
+          "conflicting_rate": 0.0
+        },
+        "Analysis": {
+          "conflicting_rate": 0.0
+        },
+        "Backdoor": {
+          "conflicting_rate": 0.0
+        },
+        "Shellcode": {
+          "conflicting_rate": 0.0033090668431502318
+        },
+        "Worms": {
+          "conflicting_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "flag",
+    "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+    "details": {
+      "classes_tested": 10,
+      "affected_rows": 472,
+      "top_pairs": {
+        "Backdoor / DoS": 80,
+        "Analysis / DoS": 61,
+        "Backdoor / Exploits": 56,
+        "DoS / Exploits": 54,
+        "Analysis / Exploits": 44
+      }
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)",
+    "details": {
+      "top_features": {
+        "sttl": 0.17770435469711204,
+        "ct_state_ttl": 0.13203967798512553,
+        "dload": 0.06442086279231135,
+        "rate": 0.05460666834734506,
+        "dttl": 0.049063509640429374
+      },
+      "top1_share": 0.17770435469711204,
+      "top2_share": 0.3097440326822376
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train), vs. 55.1% from always predicting the majority class",
+    "details": {
+      "rule": "sttl <= 61",
+      "train_accuracy": 0.9206289458825945,
+      "test_accuracy": 0.7663241509983967,
+      "majority_baseline_accuracy": 0.5506000097167566,
+      "error_reduction_vs_baseline": 0.4800270270270268
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "ok",
+    "summary": "'sttl' alone reaches AUC 0.881 identifying '0.0'",
+    "details": {
+      "top_features": {
+        "sttl": 0.88143735021912,
+        "ct_state_ttl": 0.8706098569435483,
+        "dload": 0.8652967443532159,
+        "dmean": 0.8187984646636828,
+        "dbytes": 0.786722036014446
+      },
+      "best_feature": "sttl",
+      "best_class": "0.0"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+    "details": {
+      "port_column": null,
+      "protocol_column": "proto"
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "flag",
+    "summary": "adjacent-row label-transition rate (train=0.11, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.1071898026039579,
+        "test": 9.817419114729062e-05
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "10 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
+    "details": {
+      "per_class": {
+        "Normal": {
+          "test_near_zero_rate": 0.034,
+          "control_near_zero_rate": 0.144,
+          "rate_diff_ci_95": [
+            -0.1458053777052599,
+            -0.0756724804692081
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Generic": {
+          "test_near_zero_rate": 0.09,
+          "control_near_zero_rate": 0.98,
+          "rate_diff_ci_95": [
+            -0.9138611831314915,
+            -0.8572731730082882
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Exploits": {
+          "test_near_zero_rate": 0.168,
+          "control_near_zero_rate": 0.506,
+          "rate_diff_ci_95": [
+            -0.39105253613964314,
+            -0.2818387383382042
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Fuzzers": {
+          "test_near_zero_rate": 0.032,
+          "control_near_zero_rate": 0.214,
+          "rate_diff_ci_95": [
+            -0.22196833588144385,
+            -0.14314499012867
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "DoS": {
+          "test_near_zero_rate": 0.464,
+          "control_near_zero_rate": 0.806,
+          "rate_diff_ci_95": [
+            -0.39598176358106596,
+            -0.28468686200918053
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Reconnaissance": {
+          "test_near_zero_rate": 0.352,
+          "control_near_zero_rate": 0.47,
+          "rate_diff_ci_95": [
+            -0.17772222443173136,
+            -0.05704782200253143
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Analysis": {
+          "test_near_zero_rate": 0.17,
+          "control_near_zero_rate": 0.85,
+          "rate_diff_ci_95": [
+            -0.7217403639037736,
+            -0.630935313756365
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Backdoor": {
+          "test_near_zero_rate": 0.006,
+          "control_near_zero_rate": 0.774,
+          "rate_diff_ci_95": [
+            -0.8027165130434235,
+            -0.7276605923565954
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Shellcode": {
+          "test_near_zero_rate": 0.03439153439153439,
+          "control_near_zero_rate": 0.094,
+          "rate_diff_ci_95": [
+            -0.09168032691773959,
+            -0.026984667121778466
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        },
+        "Worms": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.1,
+          "rate_diff_ci_95": [
+            -0.16358576153595,
+            -0.010012583302782305
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        }
+      },
+      "equivalence_margin": 0.05
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "ok",
+    "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1",
+    "details": {
+      "train": {
+        "counts": {
+          "1.0": 119341,
+          "0.0": 56000
+        },
+        "shares": {
+          "1.0": 0.6806223302022916,
+          "0.0": 0.3193776697977085
+        }
+      },
+      "test": {
+        "counts": {
+          "1.0": 45332,
+          "0.0": 37000
+        },
+        "shares": {
+          "1.0": 0.5506000097167566,
+          "0.0": 0.44939999028324346
+        }
+      },
+      "imbalance_ratio": 2.131089285714286,
+      "rare_classes": []
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "no id_like_columns configured",
+    "details": {}
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "ok",
+    "summary": "no missing labels, constant features, or +-inf values found",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": []
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
+    "details": {
+      "matches": [
+        {
+          "issue": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names.",
+          "citation": "Independently verified in this project's own audit methodology"
+        }
+      ]
+    }
+  }
+]

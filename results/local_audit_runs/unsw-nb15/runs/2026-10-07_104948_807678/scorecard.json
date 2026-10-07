@@ -1,0 +1,395 @@
+{
+  "scorecard_schema_version": "1.3",
+  "generated_at": "2026-10-07T10:51:19.024848+00:00",
+  "dataset_name": "unsw-nb15",
+  "ids2eval_version": "0.1.0",
+  "ids2eval_git_commit": "be732939f476ddd4a610158630541548236b6195",
+  "audit_stage": "after",
+  "overall_status": "review_required",
+  "counts": {
+    "ok": 16,
+    "warning": 2,
+    "flag": 1
+  },
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 10 classes tested"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "ok",
+      "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train), vs. 63.9% from always predicting the majority class"
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "status": "ok",
+      "summary": "'sttl' alone reaches AUC 0.872 identifying '0.0'"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "status": "ok",
+      "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "temporal_realism_check",
+      "status": "ok",
+      "summary": "no schema.timestamp_column configured"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "ok",
+      "summary": "no schema.flow_id_columns configured"
+    },
+    {
+      "check": "row_order_leakage_check",
+      "status": "flag",
+      "summary": "adjacent-row label-transition rate (train=0.09, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "warning",
+      "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['Backdoor', 'Worms']; sample size isn't enough to tell for these classes"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "no schema.scenario_column configured"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "ok",
+      "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "no id_like_columns configured"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "ok",
+      "summary": "no missing labels, constant features, or +-inf values found"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "warning",
+      "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 74,301 (42.38%); test rows leaking a train feature-match: 8,541 (10.37%); test-internal duplicates: 21,147",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "472 of 4,630 sampled rows (10.19%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'Backdoor / DoS': 80, 'Analysis / DoS': 61, 'Backdoor / Exploits': 56, 'DoS / Exploits': 54, 'Analysis / Exploits': 44}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 10 classes tested",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=17.8%, top2=31.0%)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=15.5%, top2=28.4%)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train), vs. 55.1% from always predicting the majority class",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train), vs. 63.9% from always predicting the majority class",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "'sttl' alone reaches AUC 0.881 identifying '0.0'",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "'sttl' alone reaches AUC 0.872 identifying '0.0'",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.timestamp_column configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "adjacent-row label-transition rate (train=0.11, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "adjacent-row label-transition rate (train=0.09, test=0.00) as a share of what a randomly shuffled ordering would produce; test is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "10 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['Backdoor', 'Worms']; sample size isn't enough to tell for these classes",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no schema.scenario_column configured",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 2:1",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no id_like_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no missing labels, constant features, or +-inf values found",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "warning",
+        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "Some redistributions invert the UNSW_NB15_training-set.csv/testing-set.csv file-name-to-content mapping relative to the dataset's documented convention (82,332 vs. 175,341 rows), verify against the published per-attack-category counts before trusting file names. (Independently verified in this project's own audit methodology)",
+        "evidence": "documented"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 175341,
+    "train_rows_deduped": 101040,
+    "train_duplicates_dropped": 74301,
+    "test_rows_raw": 82332,
+    "test_rows_deduped": 52644,
+    "test_leakage_dropped": 8541,
+    "test_duplicates_dropped": 21147
+  },
+  "dataset_fingerprint": {
+    "train_rows": 175341,
+    "test_rows": 82332,
+    "feature_count": 42,
+    "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
+    "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
+  }
+}

@@ -1,0 +1,14 @@
+[queue] code be73293 start 2026-10-07T10:49:36Z
+[queue] unsw-nb15 start 10:49:36
+unsw-nb15: exit=0 wall=106s peak_rss=0.68GB
+[queue] unsw-nb15 exit 0 10:51:22
+[queue] nsl-kdd start 10:51:22
+nsl-kdd: exit=0 wall=97s peak_rss=0.54GB
+[queue] nsl-kdd exit 0 10:52:59
+[queue] ton-iot-official start 10:52:59
+ton-iot-official: exit=0 wall=1272s peak_rss=1.07GB
+[queue] ton-iot-official exit 0 11:14:11
+[queue] cic-ids2017 start 11:14:11
+cic-ids2017: exit=0 wall=1309s peak_rss=4.26GB
+[queue] cic-ids2017 exit 0 11:36:01
+[queue] done 2026-10-07T11:36:01Z

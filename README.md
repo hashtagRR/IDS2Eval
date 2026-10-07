@@ -2,6 +2,8 @@
 
 **[hashtagRR.github.io/IDS2Eval](https://hashtagRR.github.io/IDS2Eval)**
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23217300.svg)](https://doi.org/10.5281/zenodo.23217300)
+
 *IDS<sup>2</sup> - the name works both ways: **I**ntrusion **D**etection
 **S**ystems, and **I**ntrusion **D**ata **S**ets. (GitHub repo names
 can't do superscripts, hence `IDS2Eval`.)*
@@ -187,6 +189,14 @@ within the broader research codebase. IDS<sup>2</sup>Eval does not
 implement that staged architecture.
 
 Links to the papers will be added when publicly available.
+
+## Citing
+
+To cite IDS2Eval, use the DOI of the version you used. Version 0.2.0, the code, configurations and results behind the accompanying paper, is:
+
+> Relapanawa, R. (2026). *IDS2Eval v0.2.0* (Version v0.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23217301
+
+The DOI [10.5281/zenodo.23217300](https://doi.org/10.5281/zenodo.23217300) always resolves to the latest version.
 
 ## License
 

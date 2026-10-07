@@ -142,11 +142,24 @@ packet-level IP/port models hit near-100% in-dataset, lose over 90%
 cross-dataset). Low cardinality specifically generalizes Meidan et al.
 2018's ([arXiv:1805.03409](https://arxiv.org/abs/1805.03409)) N-BaIoT
 per-device overfitting finding to any dataset with a limited
-attacker/victim IP pool. When flagged, `details["by_class"]` fits one
-small one-vs-rest classifier per eligible class on the flagged column
-alone, capped at `MAX_CLASSES_FOR_BREAKDOWN` (25) classes since each is
-a real extra model fit, unlike `leakage_screen`'s per-class breakdown
-which reuses raw feature values and needs no fit at all.
+attacker/victim IP pool.
+
+`identity_column_flag` answers one question: on this split, how well
+does looking an identifier value up in the training data predict the
+test label? From the training partition only, it counts how often each
+value occurs with each class, and predicts a test row's class
+distribution from its value's counts, smoothed toward the training
+class prior (one pseudo-row). A value never seen in training gets the
+prior itself. Only equality of values is used, so the result does not
+depend on how identifiers are ordered or coded. Per column it reports
+`seen_coverage` (share of test rows whose value occurs in training),
+`standalone_auc` (weighted one-vs-rest AUC over all test rows) and
+`seen_only_auc` (the same on seen rows only), and flags on
+`standalone_auc` above 0.8. Whether a column predicts the label for
+values never seen in training is a different question, which a split
+grouped by that column answers. When flagged, `details["by_class"]`
+gives the same lookup's one-vs-rest AUC for each eligible class (up to
+`MAX_CLASSES_FOR_BREAKDOWN`, 25).
 
 ### `port_protocol_shortcut_check`
 The same standalone-AUC method as `identity_column_flag`, applied to

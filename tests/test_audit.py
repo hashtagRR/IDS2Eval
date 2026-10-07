@@ -182,6 +182,50 @@ def test_identity_column_flag_by_class_breakdown_skips_past_the_class_cap(base_c
     assert "skipped" in result["details"]["by_class"]["SrcIP"]
 
 
+def test_identity_column_flag_is_invariant_to_how_identifier_values_are_coded(base_cfg, synth_train_test):
+    # The old integer-coded RandomForest depended on the order values first
+    # appeared; a lookup on value equality must give the same answer under any
+    # one-to-one renaming of the values and any row order.
+    train_df, test_df = synth_train_test
+    cfg = _add_id_like_column(base_cfg)
+    before = identity_columns.check_predictive_power(train_df, test_df, cfg)["details"]
+    values = sorted(set(train_df["SrcIP"]) | set(test_df["SrcIP"]))
+    renamed = dict(zip(values, [f"host-{i}" for i in reversed(range(len(values)))], strict=True))
+    tr = train_df.assign(SrcIP=train_df["SrcIP"].map(renamed)).sample(frac=1, random_state=1)
+    te = test_df.assign(SrcIP=test_df["SrcIP"].map(renamed)).sample(frac=1, random_state=2)
+    after = identity_columns.check_predictive_power(tr, te, cfg)["details"]
+    for key in ("standalone_auc", "seen_only_auc", "seen_coverage"):
+        assert after[key]["SrcIP"] == pytest.approx(before[key]["SrcIP"])
+
+
+def test_identity_column_flag_scores_unseen_values_with_the_prior(base_cfg):
+    rng = np.random.RandomState(0)
+    train_df = pd.DataFrame({"SrcIP": ["a", "b"] * 200, "Label": ["Attack", "Benign"] * 200})
+    # Every test value is new, and all test rows share one class: the old
+    # integer coding sent every unseen value to the leaf of whichever value was
+    # coded first, which could look predictive; the prior carries no signal.
+    test_df = pd.DataFrame({"SrcIP": [f"new-{i}" for i in range(300)],
+                            "Label": rng.choice(["Attack", "Benign"], 300)})
+    result = identity_columns.check_predictive_power(train_df, test_df, _add_id_like_column(base_cfg))
+    d = result["details"]
+    assert result["status"] == "ok"
+    assert d["seen_coverage"]["SrcIP"] == 0.0
+    assert d["seen_only_auc"]["SrcIP"] is None
+    assert d["standalone_auc"]["SrcIP"] == pytest.approx(0.5)
+
+
+def test_identity_column_flag_reports_coverage_and_seen_only_auc_separately(base_cfg):
+    train_df = pd.DataFrame({"SrcIP": ["a", "b"] * 200, "Label": ["Attack", "Benign"] * 200})
+    seen = pd.DataFrame({"SrcIP": ["a", "b"] * 100, "Label": ["Attack", "Benign"] * 100})
+    unseen = pd.DataFrame({"SrcIP": [f"new-{i}" for i in range(200)], "Label": ["Attack", "Benign"] * 100})
+    test_df = pd.concat([seen, unseen], ignore_index=True)
+    d = identity_columns.check_predictive_power(train_df, test_df, _add_id_like_column(base_cfg))["details"]
+    assert d["seen_coverage"]["SrcIP"] == pytest.approx(0.5)
+    assert d["seen_only_auc"]["SrcIP"] == pytest.approx(1.0)
+    # Half the rows are perfectly ranked, half are tied at the prior.
+    assert 0.5 < d["standalone_auc"]["SrcIP"] < 1.0
+
+
 def test_low_cardinality_warning_on_two_unique_ips(base_cfg, synth_train_test):
     train_df, _ = synth_train_test
     cfg = _add_id_like_column(base_cfg)

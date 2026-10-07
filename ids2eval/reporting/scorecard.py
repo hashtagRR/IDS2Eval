@@ -99,9 +99,10 @@ CHECK_INFO = {
         "this ranks every feature, including ones expected to correlate with the label somewhat on their own.",
     ),
     "identity_column_flag": (
-        "How well each configured id-like column (IP, port, MAC) predicts the label on its own, as a "
-        "standalone ROC AUC.",
-        "Flag: AUC above 0.8. Always ok when no schema.id_like_columns are configured.",
+        "How well looking each id-like column's value (IP, port, MAC) up in the training data predicts the "
+        "test label, as a ROC AUC over all test rows; values never seen in training get the class prior. "
+        "Also reports the share of test rows with a seen value and the AUC on those rows alone.",
+        "Flag: all-test AUC above 0.8. Always ok when no schema.id_like_columns are configured.",
     ),
     "port_protocol_shortcut_check": (
         "How well a declared port-like column combined with a proto-like column predicts the label, as a "

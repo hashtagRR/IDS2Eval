@@ -19,8 +19,12 @@ single feature is a specific, checkable oddity worth a flag.
 
 from __future__ import annotations
 
+import os
+from concurrent.futures import ThreadPoolExecutor
+
+import numpy as np
 import pandas as pd
-from sklearn.metrics import roc_auc_score
+from scipy.stats import rankdata
 
 from ..data import features
 
@@ -32,21 +36,33 @@ TOP_N = 5
 def _best_auc(values, labels: pd.Series):
     """The best one-vs-rest AUC this column reaches against any single
     class, and which class, or None if no class has both members present.
+
+    Each class's AUC is the Mann-Whitney statistic from one ranking of the
+    column (average ranks for ties, which is how ROC AUC scores ties), so
+    the column is sorted once rather than once per class: equal to
+    roc_auc_score's value, at a fraction of the cost on tens of millions of
+    rows. A column holding +-inf is skipped, as roc_auc_score rejects it.
     """
-    best_auc, best_class = None, None
-    for cls in labels.unique():
-        y_binary = (labels == cls).to_numpy()
-        if not y_binary.any() or y_binary.all():
+    values = np.asarray(values, dtype=float)
+    if not np.isfinite(values).all():
+        return None, None
+    classes, codes = np.unique(labels.to_numpy(), return_inverse=True)
+    n = len(values)
+    n_pos = np.bincount(codes, minlength=len(classes)).astype(float)
+    rank_sum = np.bincount(codes, weights=rankdata(values), minlength=len(classes))
+    auc_by_class = {}
+    for i, cls in enumerate(classes):
+        if n_pos[i] == 0 or n_pos[i] == n:
             continue
-        try:
-            auc = roc_auc_score(y_binary, values)
-        except ValueError:
-            continue
+        auc = (rank_sum[i] - n_pos[i] * (n_pos[i] + 1) / 2) / (n_pos[i] * (n - n_pos[i]))
         # A feature can separate a class by high values or low values;
         # max() with the inverse reports separability regardless of direction.
-        auc = max(auc, 1 - auc)
-        if best_auc is None or auc > best_auc:
-            best_auc, best_class = auc, cls
+        auc_by_class[cls] = max(auc, 1 - auc)
+    best_auc, best_class = None, None
+    for cls in labels.unique():  # same tie-break order as before: first class to reach the maximum
+        auc = auc_by_class.get(cls)
+        if auc is not None and (best_auc is None or auc > best_auc):
+            best_auc, best_class = float(auc), cls
     return best_auc, best_class
 
 
@@ -61,14 +77,23 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
         }
 
     labels = train_df[label_col]
-    best_per_feature = {}
-    top_feature, top_class, top_auc = None, None, 0.0
-    for col in numeric_cols:
+
+    def score(col):
         values = train_df[col].to_numpy()
         valid = ~pd.isna(values)
         if valid.sum() < 2:
-            continue
-        auc, cls = _best_auc(values[valid], labels[valid])
+            return None, None
+        return _best_auc(values[valid], labels[valid])
+
+    # Columns are ranked in threads: numpy's sort releases the GIL, and at
+    # full scale ranking dozens of columns of tens of millions of rows one by
+    # one dominates the audit's run time.
+    with ThreadPoolExecutor(max_workers=min(len(numeric_cols), os.cpu_count() or 1, 16)) as pool:
+        scored = list(pool.map(score, numeric_cols))
+
+    best_per_feature = {}
+    top_feature, top_class, top_auc = None, None, 0.0
+    for col, (auc, cls) in zip(numeric_cols, scored, strict=True):
         if auc is None:
             continue
         best_per_feature[col] = auc

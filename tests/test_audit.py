@@ -1428,3 +1428,20 @@ def test_reference_model_is_not_steered_by_unseen_identifier_values(base_cfg):
     train, test = dataset._random_split(df, "label", cfg["dataset"], seed=0)
     acc = fit_and_score(train, test, "label", cfg, seed=0)
     assert acc > (test["label"] == "benign").mean() - 0.05
+
+
+def test_feature_auc_rank_formula_equals_roc_auc_score_including_ties():
+    from sklearn.metrics import roc_auc_score
+
+    from ids2eval.audit.feature_auc_ranking import _best_auc
+
+    rng = np.random.default_rng(3)
+    for values in (rng.normal(size=3000), rng.integers(0, 6, 3000).astype(float)):  # continuous, heavy ties
+        labels = pd.Series(rng.choice(["a", "b", "c", "d"], 3000, p=[0.7, 0.2, 0.08, 0.02]))
+        expected = {c: max(a, 1 - a) for c in labels.unique()
+                    for a in [roc_auc_score((labels == c).to_numpy(), values)]}
+        best, cls = _best_auc(values, labels)
+        top = max(expected.values())
+        assert best == pytest.approx(top, abs=1e-12)
+        assert cls == next(c for c in labels.unique() if expected[c] == pytest.approx(top, abs=1e-12))
+    assert _best_auc(np.array([1.0, np.inf, 2.0, 3.0]), pd.Series(["a", "b", "a", "b"])) == (None, None)

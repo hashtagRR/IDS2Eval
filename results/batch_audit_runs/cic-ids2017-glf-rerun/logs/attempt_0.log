@@ -1,0 +1,11 @@
+[2026-10-07T13:09:17Z] stage setup: attempt 0 on ids2eval-glf-rerun-f3672cc3-163f-482b0-group0-0-r1h9, 16 vCPU, 62 GB
+[2026-10-07T13:09:20Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic-ids2017-glf-rerun/out
+[2026-10-07T13:09:20Z] no previous output, starting fresh
+[2026-10-07T13:09:20Z] stage fetch: code, config, wheels, data
+[2026-10-07T13:09:25Z] fetched 8 data files, 266M
+[2026-10-07T13:09:25Z] stage install
+[2026-10-07T13:09:44Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-07T13:09:44Z] stage run: ids2eval --config config.yaml --skip-benchmark
+[2026-10-07T14:29:46Z] stage run: exit 0 after 4802s
+[2026-10-07T14:29:46Z] stage upload
+[2026-10-07T14:29:48Z] done

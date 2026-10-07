@@ -1,0 +1,145 @@
+===== attempt 0 2026-10-07T13:09:43Z =====
+INFO ids2eval.cli: Loading dataset 'bot-iot-official'
+INFO ids2eval.data.cache: Cached load+split+label-grouping result to /tmp/ids2eval_task/out/.cache
+INFO ids2eval.cli: Split: train=2934817 rows, test=733705 rows
+INFO ids2eval.cli: Run artifacts: /tmp/ids2eval_task/out/runs/2026-10-07_131115_277703
+INFO ids2eval.cli: Stage: audit (before dedup)
+INFO ids2eval.audit: Audit check 1/22: dedup_check ...
+INFO ids2eval.audit: Audit check 1/22 done: dedup_check -> ok (30.8s)
+INFO ids2eval.audit: Audit check 2/22: label_conflict_check ...
+INFO ids2eval.audit: Audit check 2/22 done: label_conflict_check -> ok (2.6s)
+INFO ids2eval.audit: Audit check 3/22: near_duplicate_class_check ...
+INFO ids2eval.audit: Audit check 3/22 done: near_duplicate_class_check -> ok (0.1s)
+INFO ids2eval.audit: Audit check 4/22: leakage_screen ...
+INFO ids2eval.audit: Audit check 4/22 done: leakage_screen -> ok (5.8s)
+INFO ids2eval.audit: Audit check 5/22: one_rule_check ...
+INFO ids2eval.audit: Audit check 5/22 done: one_rule_check -> flag (3.8s)
+INFO ids2eval.audit: Audit check 6/22: feature_auc_ranking_check ...
+INFO ids2eval.audit: Audit check 6/22 done: feature_auc_ranking_check -> flag (68.3s)
+INFO ids2eval.audit: Audit check 7/22: identity_column_flag ...
+INFO ids2eval.audit: Audit check 7/22 done: identity_column_flag -> flag (28.5s)
+INFO ids2eval.audit: Audit check 8/22: port_protocol_shortcut_check ...
+INFO ids2eval.audit: Audit check 8/22 done: port_protocol_shortcut_check -> ok (183.1s)
+INFO ids2eval.audit: Audit check 9/22: temporal_leakage_check ...
+INFO ids2eval.audit: Audit check 9/22 done: temporal_leakage_check -> ok (3.3s)
+INFO ids2eval.audit: Audit check 10/22: temporal_realism_check ...
+INFO ids2eval.audit: Audit check 10/22 done: temporal_realism_check -> ok (0.1s)
+INFO ids2eval.audit: Audit check 11/22: flow_group_leakage_check ...
+INFO ids2eval.audit: Audit check 11/22 done: flow_group_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 12/22: row_order_leakage_check ...
+INFO ids2eval.audit: Audit check 12/22 done: row_order_leakage_check -> ok (0.3s)
+INFO ids2eval.audit: Audit check 13/22: homogeneity_test ...
+INFO ids2eval.audit: Audit check 13/22 done: homogeneity_test -> ok (2.6s)
+INFO ids2eval.audit: Audit check 14/22: resplit_falsification ...
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808963 train / 202245 test, zero overlap confirmed.
+INFO ids2eval.audit: Audit check 14/22 done: resplit_falsification -> ok (229.5s)
+INFO ids2eval.audit: Audit check 15/22: scenario_holdout_falsification ...
+INFO ids2eval.audit: Audit check 15/22 done: scenario_holdout_falsification -> ok (0.0s)
+INFO ids2eval.audit: Audit check 16/22: class_distribution_report ...
+INFO ids2eval.audit: Audit check 16/22 done: class_distribution_report -> warning (0.0s)
+INFO ids2eval.audit: Audit check 17/22: low_cardinality_warning ...
+INFO ids2eval.audit: Audit check 17/22 done: low_cardinality_warning -> warning (0.0s)
+INFO ids2eval.audit: Audit check 18/22: schema_fingerprint_check ...
+INFO ids2eval.audit: Audit check 18/22 done: schema_fingerprint_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 19/22: data_integrity_check ...
+INFO ids2eval.audit: Audit check 19/22 done: data_integrity_check -> ok (1.6s)
+INFO ids2eval.audit: Audit check 20/22: result_robustness_check ...
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808963 train / 202245 test, zero overlap confirmed.
+INFO ids2eval.audit: Audit check 20/22 done: result_robustness_check -> ok (251.4s)
+INFO ids2eval.audit: Audit check 21/22: known_issue_lookup ...
+INFO ids2eval.audit: Audit check 21/22 done: known_issue_lookup -> warning (0.0s)
+INFO ids2eval.audit: Audit check 22/22: repeated_seed_falsification_check ...
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808963 train / 202245 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808965 train / 202243 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808965 train / 202243 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808964 train / 202244 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808972 train / 202236 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808971 train / 202237 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808966 train / 202242 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808966 train / 202242 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808965 train / 202243 test, zero overlap confirmed.
+INFO ids2eval.data.dataset: Grouped split: 1011208 groups total, 808964 train / 202244 test, zero overlap confirmed.
+INFO ids2eval.audit: Audit check 22/22 done: repeated_seed_falsification_check -> ok (2248.6s)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-07_131115_277703/audit_report_before.json
+INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0
+INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 5 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=29.4%, top2=48.4%)
+INFO ids2eval.cli: [FLAG] one_rule_check: single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train), vs. 52.5% from always predicting the majority class. This problem may be solvable without learning attack behavior
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'stime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): saddr: 0.522 (100.0%, 0.522), daddr: 0.865 (100.0%, 0.865), sport: 0.404 (100.0%, 0.404), dport: 0.536 (99.9%, 0.536). Suggest dropping: ['daddr']
+INFO ids2eval.cli: [OK] port_protocol_shortcut_check: standalone AUC of 'sport' + 'proto' combined: 0.481
+INFO ids2eval.cli: [OK] temporal_leakage_check: standalone AUC of 'stime' alone: 0.500
+INFO ids2eval.cli: [OK] temporal_realism_check: timestamp column has no usable time span to test
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce
+INFO ids2eval.cli: [OK] homogeneity_test: 4 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']
+INFO ids2eval.cli: [WARNING] low_cardinality_warning: unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior
+INFO ids2eval.cli: [OK] schema_fingerprint_check: no known extractor signature matched
+INFO ids2eval.cli: [OK] data_integrity_check: no missing labels, constant features, or +-inf values found
+INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0000)
+INFO ids2eval.cli: [WARNING] known_issue_lookup: The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Stage: dedup
+INFO ids2eval.cli: Dedup: {'train_rows_raw': 2934817, 'train_rows_deduped': 2934817, 'train_duplicates_dropped': 0, 'test_rows_raw': 733705, 'test_rows_deduped': 733705, 'test_leakage_dropped': 0, 'test_duplicates_dropped': 0}
+INFO ids2eval.cli: Stage: audit (after dedup)
+INFO ids2eval.audit: Audit check 1/16: dedup_check ...
+INFO ids2eval.audit: Audit check 1/16 done: dedup_check -> ok (39.1s)
+INFO ids2eval.audit: Audit check 2/16: label_conflict_check ...
+INFO ids2eval.audit: Audit check 2/16 done: label_conflict_check -> ok (3.0s)
+INFO ids2eval.audit: Audit check 3/16: near_duplicate_class_check ...
+INFO ids2eval.audit: Audit check 3/16 done: near_duplicate_class_check -> ok (0.2s)
+INFO ids2eval.audit: Audit check 4/16: leakage_screen ...
+INFO ids2eval.audit: Audit check 4/16 done: leakage_screen -> ok (6.7s)
+INFO ids2eval.audit: Audit check 5/16: one_rule_check ...
+INFO ids2eval.audit: Audit check 5/16 done: one_rule_check -> flag (4.3s)
+INFO ids2eval.audit: Audit check 6/16: feature_auc_ranking_check ...
+INFO ids2eval.audit: Audit check 6/16 done: feature_auc_ranking_check -> flag (71.5s)
+INFO ids2eval.audit: Audit check 7/16: identity_column_flag ...
+INFO ids2eval.audit: Audit check 7/16 done: identity_column_flag -> flag (29.4s)
+INFO ids2eval.audit: Audit check 8/16: port_protocol_shortcut_check ...
+INFO ids2eval.audit: Audit check 8/16 done: port_protocol_shortcut_check -> ok (188.1s)
+INFO ids2eval.audit: Audit check 9/16: temporal_leakage_check ...
+INFO ids2eval.audit: Audit check 9/16 done: temporal_leakage_check -> ok (3.4s)
+INFO ids2eval.audit: Audit check 10/16: temporal_realism_check ...
+INFO ids2eval.audit: Audit check 10/16 done: temporal_realism_check -> ok (0.1s)
+INFO ids2eval.audit: Audit check 11/16: flow_group_leakage_check ...
+INFO ids2eval.audit: Audit check 11/16 done: flow_group_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 12/16: row_order_leakage_check ...
+INFO ids2eval.audit: Audit check 12/16 done: row_order_leakage_check -> ok (0.3s)
+INFO ids2eval.audit: Audit check 13/16: homogeneity_test ...
+INFO ids2eval.audit: Audit check 13/16 done: homogeneity_test -> ok (3.4s)
+INFO ids2eval.audit: Audit check 14/16: class_distribution_report ...
+INFO ids2eval.audit: Audit check 14/16 done: class_distribution_report -> warning (0.0s)
+INFO ids2eval.audit: Audit check 15/16: low_cardinality_warning ...
+INFO ids2eval.audit: Audit check 15/16 done: low_cardinality_warning -> warning (0.1s)
+INFO ids2eval.audit: Audit check 16/16: data_integrity_check ...
+INFO ids2eval.audit: Audit check 16/16 done: data_integrity_check -> ok (1.6s)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-07_131115_277703/audit_report_after.json
+INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0
+INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 5 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=29.4%, top2=48.4%)
+INFO ids2eval.cli: [FLAG] one_rule_check: single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train), vs. 52.5% from always predicting the majority class. This problem may be solvable without learning attack behavior
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'stime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): saddr: 0.522 (100.0%, 0.522), daddr: 0.865 (100.0%, 0.865), sport: 0.404 (100.0%, 0.404), dport: 0.536 (99.9%, 0.536). Suggest dropping: ['daddr']
+INFO ids2eval.cli: [OK] port_protocol_shortcut_check: standalone AUC of 'sport' + 'proto' combined: 0.481
+INFO ids2eval.cli: [OK] temporal_leakage_check: standalone AUC of 'stime' alone: 0.500
+INFO ids2eval.cli: [OK] temporal_realism_check: timestamp column has no usable time span to test
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce
+INFO ids2eval.cli: [OK] homogeneity_test: 4 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature
+INFO ids2eval.cli: [OK] resplit_falsification: random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']
+INFO ids2eval.cli: [WARNING] low_cardinality_warning: unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior
+INFO ids2eval.cli: [OK] schema_fingerprint_check: no known extractor signature matched
+INFO ids2eval.cli: [OK] data_integrity_check: no missing labels, constant features, or +-inf values found
+INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0000)
+INFO ids2eval.cli: [WARNING] known_issue_lookup: The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)
+INFO ids2eval.cli: [OK] repeated_seed_falsification_check: grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold
+INFO ids2eval.cli: Intervention manifest written to /tmp/ids2eval_task/out/runs/2026-10-07_131115_277703/intervention_manifest.json (3 intervention(s))
+INFO ids2eval.cli: Scorecard: review_required -> /tmp/ids2eval_task/out/runs/2026-10-07_131115_277703/scorecard.json

@@ -1,0 +1,378 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 2934817,
+      "train_rows_deduped": 2934817,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 733705,
+      "test_rows_deduped": 733705,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "DDoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Reconnaissance": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Normal": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Theft": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 5 classes tested",
+    "details": {
+      "classes_tested": 5
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=29.4%, top2=48.4%)",
+    "details": {
+      "top_features": {
+        "stime": 0.29364869739917443,
+        "ltime": 0.1899326311226188,
+        "dur": 0.10807974037281917,
+        "daddr": 0.10192642249357897,
+        "AR_P_Proto_P_SrcIP": 0.034963595766861096
+      },
+      "top1_share": 0.29364869739917443,
+      "top2_share": 0.48358132852179325
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "flag",
+    "summary": "single rule 'ltime <= 1.528e+09' reaches 97.5% test accuracy (97.5% train), vs. 52.5% from always predicting the majority class. This problem may be solvable without learning attack behavior",
+    "details": {
+      "rule": "ltime <= 1.528e+09",
+      "train_accuracy": 0.97505,
+      "test_accuracy": 0.9750199330793712,
+      "majority_baseline_accuracy": 0.5251770125595436,
+      "error_reduction_vs_baseline": 0.9473907801825594
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'stime' alone reaches AUC 1.000 identifying 'Theft'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "stime": 1.0,
+        "ltime": 1.0,
+        "seq": 0.9997442256077903,
+        "N_IN_Conn_P_DstIP": 0.9959988368659175,
+        "sbytes": 0.9627663685680722
+      },
+      "best_feature": "stime",
+      "best_class": "Theft"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "flag",
+    "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): saddr: 0.522 (100.0%, 0.522), daddr: 0.865 (100.0%, 0.865), sport: 0.404 (100.0%, 0.404), dport: 0.536 (99.9%, 0.536). Suggest dropping: ['daddr']",
+    "details": {
+      "standalone_auc": {
+        "saddr": 0.5222837350451655,
+        "daddr": 0.8648614214331977,
+        "sport": 0.4035787321313505,
+        "dport": 0.5361735925593153
+      },
+      "seen_only_auc": {
+        "saddr": 0.5222837350451655,
+        "daddr": 0.8648602609536055,
+        "sport": 0.4035787321313505,
+        "dport": 0.5361347442490496
+      },
+      "seen_coverage": {
+        "saddr": 1.0,
+        "daddr": 0.9999931852720099,
+        "sport": 1.0,
+        "dport": 0.9989246359231572
+      },
+      "suggested_drop": [
+        "daddr"
+      ],
+      "method": "training-only value lookup, unseen values scored with the prior",
+      "by_class": {
+        "daddr": {
+          "DDoS": 0.8696943424676266,
+          "DoS": 0.8687357607453442,
+          "Reconnaissance": 0.691896121500056,
+          "Normal": 0.9707067142372363,
+          "Theft": 0.8570382852952682
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "ok",
+    "summary": "standalone AUC of 'sport' + 'proto' combined: 0.481",
+    "details": {
+      "port_column": "sport",
+      "protocol_column": "proto",
+      "standalone_auc": 0.48117726837902774
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "standalone AUC of 'stime' alone: 0.500",
+    "details": {
+      "column": "stime",
+      "standalone_auc": 0.5
+    }
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "timestamp column has no usable time span to test",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 1.0001468195135594,
+        "test": 1.0020951688680209
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "4 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
+    "details": {
+      "per_class": {
+        "DDoS": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DoS": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "Reconnaissance": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "Normal": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.11696980012918376,
+            0.038864854128766085
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
+        }
+      },
+      "equivalence_margin": 0.05
+    }
+  },
+  {
+    "check": "resplit_falsification",
+    "status": "ok",
+    "summary": "random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "details": {
+      "random_accuracy": 0.9999863705440197,
+      "grouped_accuracy": 0.9999618375232553,
+      "drop": 2.4533020764438973e-05,
+      "sampling_margin": 1.6466887899701172e-05,
+      "random_test_rows": 733705,
+      "grouped_test_rows": 733705
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft']",
+    "details": {
+      "train": {
+        "counts": {
+          "DDoS": 1541299,
+          "DoS": 1320208,
+          "Reconnaissance": 72865,
+          "Normal": 382,
+          "Theft": 63
+        },
+        "shares": {
+          "DDoS": 0.5251772086641178,
+          "DoS": 0.4498433803538687,
+          "Reconnaissance": 0.0248277831292377,
+          "Normal": 0.0001301614376637453,
+          "Theft": 2.146641511208365e-05
+        }
+      },
+      "test": {
+        "counts": {
+          "DDoS": 385325,
+          "DoS": 330052,
+          "Reconnaissance": 18217,
+          "Normal": 95,
+          "Theft": 16
+        },
+        "shares": {
+          "DDoS": 0.5251770125595436,
+          "DoS": 0.44984292051982744,
+          "Reconnaissance": 0.024828779959247926,
+          "Normal": 0.0001294798318125132,
+          "Theft": 2.1807129568423275e-05
+        }
+      },
+      "imbalance_ratio": 24465.06349206349,
+      "rare_classes": [
+        "Normal",
+        "Theft"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "warning",
+    "summary": "unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior",
+    "details": {
+      "cardinalities": {
+        "saddr": 21,
+        "daddr": 81,
+        "sport": 65541,
+        "dport": 6914
+      },
+      "flagged": [
+        "saddr"
+      ]
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "ok",
+    "summary": "no known extractor signature matched",
+    "details": {}
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "ok",
+    "summary": "no missing labels, constant features, or +-inf values found",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {},
+      "constant_features": []
+    }
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "ok",
+    "summary": "accuracy ranges from 1.0000 (grouped_split) to 1.0000 (random_split) across 3 conditions, a spread of 0.0000 (sampling margin +/-0.0000)",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.9999863705440197,
+        "grouped_split": 0.9999618375232553,
+        "identity_columns_dropped": 0.9999809187616276
+      },
+      "spread": 2.4533020764438973e-05,
+      "worst_condition": "grouped_split",
+      "best_condition": "random_split",
+      "sampling_margin": 1.6466887899701172e-05
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems)",
+    "details": {
+      "matches": [
+        {
+          "issue": "The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic.",
+          "citation": "Koroniotis et al. 2019, Future Generation Computer Systems"
+        }
+      ]
+    }
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "status": "ok",
+    "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0000, 95% CI=[-0.0000, +0.0000]; not material: even the most generous estimate in the 95% CI (+0.0000) stays below the +0.0100 materiality threshold",
+    "details": {
+      "n_seeds": 10,
+      "drops_by_seed": [
+        2.4533020764438973e-05,
+        1.362945598049059e-06,
+        -1.77182927743047e-05,
+        9.54061918623239e-06,
+        4.770309593093991e-05,
+        2.044418397040282e-05,
+        2.4533020764438973e-05,
+        1.77182927743047e-05,
+        -1.362945598049059e-06,
+        -2.1807129568340855e-05
+      ],
+      "mean_drop": 1.0494681104811221e-05,
+      "ci_95": [
+        -4.575184191020159e-06,
+        2.55645464006426e-05
+      ],
+      "materiality_threshold": 0.01,
+      "material": false
+    }
+  }
+]

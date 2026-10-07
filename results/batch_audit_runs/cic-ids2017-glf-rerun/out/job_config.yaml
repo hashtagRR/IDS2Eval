@@ -1,0 +1,31 @@
+# CIC-IDS2017 GeneratedLabelledFlows, GCP Cloud Batch path variant of
+# cic-ids2017-glf.yaml (see that file for full context/rationale). Only the file
+# paths and audit.repeated_seed_falsification_check differ.
+dataset:
+  name: cic-ids2017-glf
+  raw_files:
+    - /tmp/ids2eval_task/data/Monday-WorkingHours.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Tuesday-WorkingHours.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Wednesday-workingHours.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Friday-WorkingHours-Morning.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz
+    - /tmp/ids2eval_task/data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz
+  split_ratio: 0.8
+  chunk_size: 200000
+  group_columns: [Source IP, Source Port, Destination IP, Destination Port, Protocol]
+schema:
+  label_column: Label
+  drop_columns: [Flow ID, Timestamp]
+  id_like_columns: [Source IP, Destination IP, Source Port, Destination Port]
+audit:
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: true
+  checkpoint: true
+output:
+  dir: /tmp/ids2eval_task/out
+  save_preprocessed: false
+  write_scorecard_plot: false

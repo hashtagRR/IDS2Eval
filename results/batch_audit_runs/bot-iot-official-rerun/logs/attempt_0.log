@@ -1,0 +1,11 @@
+[2026-10-07T13:09:13Z] stage setup: attempt 0 on ids2eval-bot-rerun-d9c7e6f9-6942-4d4a0-group0-0-63ld, 8 vCPU, 62 GB
+[2026-10-07T13:09:17Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/bot-iot-official-rerun/out
+[2026-10-07T13:09:17Z] no previous output, starting fresh
+[2026-10-07T13:09:17Z] stage fetch: code, config, wheels, data
+[2026-10-07T13:09:22Z] fetched 1 data files, 99M
+[2026-10-07T13:09:22Z] stage install
+[2026-10-07T13:09:43Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-07T13:09:43Z] stage run: ids2eval --config config.yaml --skip-benchmark
+[2026-10-07T14:09:52Z] stage run: exit 0 after 3609s
+[2026-10-07T14:09:52Z] stage upload
+[2026-10-07T14:09:54Z] done

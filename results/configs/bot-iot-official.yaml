@@ -1,0 +1,23 @@
+# BoT-IoT official artifact, GCP Cloud Batch path variant of bot-iot-official.yaml
+# (see that file for full context/rationale). Only the file path differs.
+dataset:
+  name: bot-iot-official
+  raw_files:
+    - data/bot-iot-all-features.parquet
+  split_ratio: 0.8
+  group_columns: [saddr, sport, daddr, dport, proto]
+schema:
+  label_column: category
+  drop_columns: [pkSeqID, attack, subcategory]
+  id_like_columns: [saddr, daddr, sport, dport]
+  timestamp_column: stime
+audit:
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: true
+  checkpoint: true
+output:
+  dir: out
+  save_preprocessed: false
+  write_scorecard_plot: false

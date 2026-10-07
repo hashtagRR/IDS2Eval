@@ -1,0 +1,296 @@
+[
+  {
+    "dataset": "UNSW-NB15",
+    "used_for": "Tables 5, 6; Section 4",
+    "source": "GitHub mirror of the official training/testing partition: github.com/Nir-J/ML-Projects (UNSW-Network_Packet_Classification); official release at research.unsw.edu.au/projects/unsw-nb15-dataset; byte-identical to the copy Section 4 analyzed, whose file names are swapped (that copy's file named testing-set holds this training-set's bytes, Section 4.2)",
+    "files": [
+      {
+        "file": "UNSW_NB15_training-set.csv",
+        "stored_as": "unsw-nb15/UNSW_NB15_training-set.csv.gz",
+        "stored_bytes": 8245421,
+        "sha256_uncompressed": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "UNSW_NB15_testing-set.csv",
+        "stored_as": "unsw-nb15/UNSW_NB15_testing-set.csv.gz",
+        "stored_bytes": 3932375,
+        "sha256_uncompressed": "734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "NSL-KDD",
+    "used_for": "Tables 5, 6",
+    "source": "GitHub mirror github.com/defcom17/NSL_KDD (KDDTrain+.txt, KDDTest+.txt); the headerless files were given the standard KDD'99 column names at download, so the checksum covers the header line",
+    "files": [
+      {
+        "file": "KDDTrain+.csv",
+        "stored_as": "nsl-kdd/KDDTrain+.csv.gz",
+        "stored_bytes": 2281051,
+        "sha256_uncompressed": "2bd6e8546141bff488d1e1849e5b5baea5bfe9f5ac2e552f387058146a470d80",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "KDDTest+.csv",
+        "stored_as": "nsl-kdd/KDDTest+.csv.gz",
+        "stored_bytes": 417261,
+        "sha256_uncompressed": "953e8c5b82e99000d72ccd9cfcbc01dacc11ce7cdbdd257669d268264dfc7fe5",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "CIC-IDS2017 (MachineLearningCSV)",
+    "used_for": "Tables 5, 6",
+    "source": "Hugging Face mirror huggingface.co/datasets/c01dsnap/CIC-IDS2017 of the official MachineLearningCSV.zip (www.unb.ca/cic/datasets/ids-2017.html)",
+    "files": [
+      {
+        "file": "Monday-WorkingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Monday-WorkingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 52891957,
+        "sha256_uncompressed": "852c4beb34eda186f32561fa79df7a0747e92e1a6535b01270820dd9ffe17f34",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Tuesday-WorkingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Tuesday-WorkingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 39026492,
+        "sha256_uncompressed": "52b8692ae8c7d2ed04671fe2b98335693c0a92c7ab157d8c8b534d6523080851",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Wednesday-workingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Wednesday-workingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 59765013,
+        "sha256_uncompressed": "893c27dc968bf7a8adef1689f90be55ca4a4dc3088fb63d6ff247ac56856df2a",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz",
+        "stored_bytes": 14922162,
+        "sha256_uncompressed": "d67066211fb1689c78406f1506f4c44704ecb92088353d5c96d96d6474eb819d",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz",
+        "stored_bytes": 20407424,
+        "sha256_uncompressed": "6bcda3857c2504676034e3ea57762d38393cc734cb377a726bd5cb153961b1b5",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Friday-WorkingHours-Morning.pcap_ISCX.csv.gz",
+        "stored_bytes": 16599141,
+        "sha256_uncompressed": "53a41c24d570ea83b7ac55b2e94df94e7a8216aeb80a2af0246b6bc8bb543000",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz",
+        "stored_bytes": 13281056,
+        "sha256_uncompressed": "ca1824c51bfbb7b3c72290a11be04366ba8815878c6a1cc5c44cb1cee269e99b",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz",
+        "stored_bytes": 18207622,
+        "sha256_uncompressed": "6ff1580f5f81c0ae28a26f7631721018577f5f7c5e0feac28b795fcfe7b411ee",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "CIC-IDS2017 (GeneratedLabelledFlows)",
+    "used_for": "Table 6a, Section 6.3",
+    "source": "official GeneratedLabelledFlows.zip from UNB CIC (www.unb.ca/cic/datasets/ids-2017.html), extracted and gzipped",
+    "files": [
+      {
+        "file": "Monday-WorkingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Monday-WorkingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 70108896,
+        "sha256_uncompressed": "96f26aea87d513073769b48ce204c2921791149e1c6225f7db65a3fed7973820",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Tuesday-WorkingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Tuesday-WorkingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 45103627,
+        "sha256_uncompressed": "ae9c88e10c41a8eb1ff454ae98bc513454925097d0b0b57180f94e79de445815",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Wednesday-workingHours.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Wednesday-workingHours.pcap_ISCX.csv.gz",
+        "stored_bytes": 67440891,
+        "sha256_uncompressed": "ed538e85b84181e8897dedb3d37d365982f44b27eccd67c477581a8b65f3d170",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz",
+        "stored_bytes": 17050584,
+        "sha256_uncompressed": "e3deaff483d18b53b100a441dff9b8919416df8876b4edcc0f0d1e4bf48397d0",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz",
+        "stored_bytes": 23356543,
+        "sha256_uncompressed": "d74238e054023c8bd4d8056650463cadb25c100fb0e26ebd4272c07b5c022c4b",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Friday-WorkingHours-Morning.pcap_ISCX.csv.gz",
+        "stored_bytes": 18909563,
+        "sha256_uncompressed": "c061cd98f39d8054aeaed6244a5129a20b3985983d0d022b860ae8aa07fe8d21",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz",
+        "stored_bytes": 16374372,
+        "sha256_uncompressed": "7e2ddaa80a5849ba629463296b6128436c161b4a32e8034bb5beae06b0c45e08",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+        "stored_as": "cic-ids2017/glf/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz",
+        "stored_bytes": 19785724,
+        "sha256_uncompressed": "1f779b4f0d78f9225554c4de53b5a2c07912b60dcd136ee4c5c1d0d2496b7cc4",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "CSE-CIC-IDS2018",
+    "used_for": "Tables 5, 6, 6a, 6b",
+    "source": "official AWS S3 bucket cse-cic-ids2018, folder 'Processed Traffic Data for ML Algorithms'",
+    "files": [
+      {
+        "file": "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 78322029,
+        "sha256_uncompressed": "acff8bc61376ee031d80878ee6099e0b1a87a1bd711d8068298421418c9f8147",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 101394905,
+        "sha256_uncompressed": "fa2947a8256d81ee9103ae16139d62d0e17aa23e696ee80d9e76fb51c01c9c4b",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 70933295,
+        "sha256_uncompressed": "1a4919faa0c49c7af97230b0c2d076eba23ee6dd81103a3801d51ac316355d8b",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 999038485,
+        "sha256_uncompressed": "7287a4d7740a1dddbf330ceb2beb6a4889d33ba63674558a68b5eb50d16711df",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 56260833,
+        "sha256_uncompressed": "a5f4a1c2689e0aa6566c03a58466de9c407c0be0cbd3cc69306544026611be04",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 101076798,
+        "sha256_uncompressed": "da33c927018274f9d49b145baa00e4ce0526c25b3b890b34c489e247b5e24544",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-23-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 100819526,
+        "sha256_uncompressed": "d0a7f5059d9823b6e9b392b759e306481a3502d190dea7a1b5502ae079ea069b",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 54494917,
+        "sha256_uncompressed": "f15e2a12304446058a0186c8ad67de2bd15735a9ba5c70c9a1f4c4242ab06771",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 26554092,
+        "sha256_uncompressed": "b0534c5d7d8b41e03df71c6966c995d116a8ed28e61f377c8b14cdf5d28f4edf",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "Friday-02-03-2018_TrafficForML_CICFlowMeter.csv",
+        "stored_as": "cic-ids2018/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+        "stored_bytes": 83024462,
+        "sha256_uncompressed": "d96f38e7496aba83475031e6fb8c6fdf1abf6aa1b71325a917798f3c7de93de1",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "CICDDoS2019",
+    "used_for": "Tables 5, 6, 6a, Section 6.3",
+    "source": "official CSV-01-12.zip (training day) and CSV-03-11.zip (testing day) from UNB CIC (www.unb.ca/cic/datasets/ddos-2019.html); each day's CSVs merged into one file (a stray LibreOffice lock file in CSV-03-11 excluded)",
+    "files": [
+      {
+        "file": "train-full.csv",
+        "stored_as": "cic-ddos2019/train-full.csv.gz",
+        "stored_bytes": 2267865872,
+        "sha256_uncompressed": "819ee17d91e00c6ac98124550cb5f0dc10b4d16e1a5f779c556ca043784e9b68",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "test-full.csv",
+        "stored_as": "cic-ddos2019/test-full.csv.gz",
+        "stored_bytes": 889341329,
+        "sha256_uncompressed": "c981a6115889e61c19b4ac8e022970ef8e599e104a4e7ee383312c39c7e23b71",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "ToN-IoT",
+    "used_for": "Tables 5, 6, 6a, 6b",
+    "source": "official Train_Test_Network.csv from UNSW (research.unsw.edu.au/projects/toniot-datasets)",
+    "files": [
+      {
+        "file": "train_test_network.csv",
+        "stored_as": "ton-iot-official/train_test_network.csv.gz",
+        "stored_bytes": 1771516,
+        "sha256_uncompressed": "26ddc513552de36de6428b2e578efaed2b57504c716dfba847cc0109a64e1974",
+        "checksum": "computed from the stored copy"
+      }
+    ]
+  },
+  {
+    "dataset": "BoT-IoT",
+    "used_for": "Tables 5, 6, 6a, 6b",
+    "source": "OpenML dataset 42072 'bot-iot-all-features', deposited by the dataset's authors (the official 5%-reduced, all-features release), stored as parquet; checksum of the parquet file",
+    "files": [
+      {
+        "file": "bot-iot-all-features.parquet",
+        "stored_as": "bot-iot-official/bot-iot-all-features.parquet",
+        "stored_bytes": 103167892,
+        "sha256_uncompressed": "eacece166ebe94dee4a2c51bb00cce62ab6c14bea9377f477aa40003ce5b52e1",
+        "checksum": "recorded at download"
+      }
+    ]
+  }
+]

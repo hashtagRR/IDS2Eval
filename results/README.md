@@ -7,9 +7,13 @@ This folder holds every result behind the paper *IDS²Eval: A Falsification-Orie
 | `analysis/` | JSON outputs of the validation and analysis scripts in `../validation/` | about 0.3 MB | yes |
 | `logs/` | Console logs of those scripts, and the queue script that ran them | small | yes |
 | `local_audit_runs/` | Full IDS2Eval audit runs made on the local VM, one folder per dataset | about 12 MB (+20 MB archives) | yes, except `archives/` |
-| `batch_audit_runs/` | Full-scale audit runs made on Google Cloud Batch | about 3.5 MB | yes |
+| `batch_audit_runs/` | Full-scale audit runs made on Google Cloud Batch | about 5 MB | yes |
+| `configs/` | The dataset configuration behind every run the paper uses, with data paths reduced to `data/<file>` | small | yes |
+| `dataset_manifest.md`, `.json` | Source, file name, stored size and SHA-256 of the uncompressed content of every dataset file the audits read | small | yes |
 
 **Backup copy:** `gs://ids2eval-batch-bc67afd1/ids2eval_results/` (same layout, including `archives/`). Refresh with `gsutil -m rsync -r ~/projects/IDS2Eval/results gs://ids2eval-batch-bc67afd1/ids2eval_results`.
+
+**Checking a dataset download:** `dataset_manifest.md` lists each file's source and the SHA-256 of its uncompressed content. To re-run an audit, put the files in a `data/` folder and use the matching config in `configs/` (`ids2eval --config configs/<dataset>.yaml`).
 
 **Not in this folder:** the datasets themselves and the tool's cached parquet copies of them, which are inputs, not results. They live in `~/projects/IDS2Eval_data/` (raw files under each dataset name, configs in `configs/`, caches in `output/<dataset>/.cache/`). Several analysis scripts read those caches, so re-running them needs `IDS2Eval_data` in place.
 

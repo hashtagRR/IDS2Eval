@@ -1,0 +1,35 @@
+UNSW-NB15 unsw-nb15/UNSW_NB15_training-set.csv.gz bec7dd5ec88dc2a0 computed from the stored copy
+UNSW-NB15 unsw-nb15/UNSW_NB15_testing-set.csv.gz 734fe6642edf758f computed from the stored copy
+NSL-KDD nsl-kdd/KDDTrain+.csv.gz 2bd6e8546141bff4 computed from the stored copy
+NSL-KDD nsl-kdd/KDDTest+.csv.gz 953e8c5b82e99000 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Monday-WorkingHours.pcap_ISCX.csv.gz 852c4beb34eda186 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Tuesday-WorkingHours.pcap_ISCX.csv.gz 52b8692ae8c7d2ed computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Wednesday-workingHours.pcap_ISCX.csv.gz 893c27dc968bf7a8 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz d67066211fb1689c computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz 6bcda3857c250467 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Friday-WorkingHours-Morning.pcap_ISCX.csv.gz 53a41c24d570ea83 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz ca1824c51bfbb7b3 computed from the stored copy
+CIC-IDS2017 (MachineLearningCSV) cic-ids2017/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz 6ff1580f5f81c0ae computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Monday-WorkingHours.pcap_ISCX.csv.gz 96f26aea87d51307 computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Tuesday-WorkingHours.pcap_ISCX.csv.gz ae9c88e10c41a8eb computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Wednesday-workingHours.pcap_ISCX.csv.gz ed538e85b84181e8 computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv.gz e3deaff483d18b53 computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv.gz d74238e054023c8b computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Friday-WorkingHours-Morning.pcap_ISCX.csv.gz c061cd98f39d8054 computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv.gz 7e2ddaa80a5849ba computed from the stored copy
+CIC-IDS2017 (GeneratedLabelledFlows) cic-ids2017/glf/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv.gz 1f779b4f0d78f922 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz acff8bc61376ee03 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz fa2947a8256d81ee computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz 1a4919faa0c49c7a computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz 7287a4d7740a1ddd computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz a5f4a1c2689e0aa6 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz da33c927018274f9 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz d0a7f5059d9823b6 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz f15e2a1230444605 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz b0534c5d7d8b41e0 computed from the stored copy
+CSE-CIC-IDS2018 cic-ids2018/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz d96f38e7496aba83 computed from the stored copy
+CICDDoS2019 cic-ddos2019/train-full.csv.gz 819ee17d91e00c6a computed from the stored copy
+CICDDoS2019 cic-ddos2019/test-full.csv.gz c981a6115889e61c computed from the stored copy
+ToN-IoT ton-iot-official/train_test_network.csv.gz 26ddc513552de36d computed from the stored copy
+BoT-IoT bot-iot-official/bot-iot-all-features.parquet eacece166ebe94de recorded at download
+DONE

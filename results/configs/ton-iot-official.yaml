@@ -1,0 +1,32 @@
+# ToN-IoT, the OFFICIAL UNSW/Moustafa Train_Test_Network.csv artifact (research.unsw.edu.au/
+# projects/toniot-datasets), not the University of Queensland NetFlow-V2 conversion used
+# in ton-iot.yaml. This is the artifact most published ToN-IoT papers actually train and
+# report on, real Src/Dst IP + Src/Dst Port columns included (unlike the NetFlow-V2 file,
+# which drops IPs entirely). 211,043 rows total - small enough to load in full, no
+# max_rows/chunk_size sampling needed at all.
+#
+# A real, disclosable characteristic, not a defect: this file is a deliberately
+# class-balanced curated subset (50,000 normal + exactly 20,000 of each of 8 attack
+# types + 1,043 mitm), not a natural-frequency sample of the full ~13M-row ToN-IoT Network
+# capture. Verified directly: 20,569 already-visible full-row duplicates before any check
+# runs (9.7%).
+dataset:
+  name: ton-iot-official
+  raw_files:
+    - data/train_test_network.csv.gz
+  split_ratio: 0.8
+  group_columns: [src_ip, src_port, dst_ip, dst_port, proto]
+schema:
+  label_column: type
+  attack_category_column: type
+  drop_columns: [label]
+  id_like_columns: [src_ip, dst_ip, src_port, dst_port]
+audit:
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: true
+output:
+  dir: out
+  save_preprocessed: false
+  write_scorecard_plot: true

@@ -1,0 +1,35 @@
+# CSE-CIC-IDS2018 "Processed Traffic Data for ML Algorithms", FULL SCALE (all 10
+# day-files, 16.2M flows, no max_rows cap) - for GCP Cloud Batch only, this project's
+# own documented history: never completes below 64GB, preprocess needs 128GB.
+# group_columns is a Dst Port+Protocol+Timestamp proxy, not a true 5-tuple: only 1 of
+# the 10 raw day-files retains Src/Dst IP (a real, documented redistribution
+# inconsistency), so this is the coarsest defensible grouping available.
+dataset:
+  name: cic-ids2018-fullscale
+  raw_files:
+    - data/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz
+    - data/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz
+  split_ratio: 0.8
+  chunk_size: 200000
+  group_columns: [Dst Port, Protocol, Timestamp]
+schema:
+  label_column: Label
+  drop_columns: [Timestamp]
+  id_like_columns: [Dst Port]
+audit:
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: true
+output:
+  dir: out
+  save_preprocessed: false
+  write_scorecard_plot: true

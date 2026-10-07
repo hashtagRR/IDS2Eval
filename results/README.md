@@ -26,7 +26,7 @@ Each file is written by one script in `../validation/`; re-running the script ov
 | File | Script | Paper | Headline result |
 |---|---|---|---|
 | `validation_results.json` | `run_validation.py` | Section 3.6, Table 1a | 36/36 development fixture evaluations correct |
-| `heldout_validation.json` | `heldout_validation.py` | Section 3.6, Table 1a | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
+| `heldout_validation.json` | `heldout_validation.py` | Section 3.6, Table 1a (second family) | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
 | `heldout_revalidation.json` | `heldout_revalidation.py` | Section 3.6, Table 1a | After the fix, on fresh seeds: 3 of 30 clean datasets flagged, all by the two single-comparison checks |
 | `homogeneity_sensitivity.json` | `homogeneity_sensitivity.py` | Sections 3.4, 6.2, 6.3, Tables 1c and 5 | Per-class `homogeneity_test` intervals and the threshold grid |
 | `class_sensitive_seeds.json` | `class_sensitive_seeds.py` | Section 6.3, Table 6b | Random-vs-grouped comparison with class-sensitive metrics (RandomForest) |
@@ -34,6 +34,12 @@ Each file is written by one script in `../validation/`; re-running the script ov
 | `matched_vs_novel.json` | `matched_vs_novel.py` | Section 6.2 | Accuracy on test rows reused from training vs. novel rows |
 | `split_class_composition.json` | `split_class_composition.py` | Section 6.4 | Random and grouped test splits differ by at most 0.04 percentage points in any class share (0.004 excluding CIC-IDS2018) |
 | `class_sensitive_results.json` | `class_sensitive_metrics.py` | not cited | Earlier single-seed version of `class_sensitive_seeds.json`, kept for the record |
+| `identity_lookup.json` | `identity_rerun.py` | Sections 3.2, 6.3, Table 1c | `identity_column_flag` (training-only lookup) re-scored on five datasets; no flag changes, AUCs move by at most 0.04 |
+| `homogeneity_cluster.json` | `homogeneity_cluster.py` | Section 8 | Cluster bootstrap by feature vector: no leakage verdict changes on six datasets |
+| `clean_flag_diagnosis.json` | `clean_flag_diagnosis.py` | Section 3.6 | After the unseen-category fix, resplit and robustness flag none of 30 clean datasets (`..._before_encoder_fix.json`: 5 flags before) |
+| `cap_sensitivity.json` | `cap_sensitivity.py` (batch) | Section 8 | Accuracy drop unchanged at 200K, 1M and full training rows on CIC-IDS2017-GLF |
+| `ddos_unseen_ip.json` | `ddos_unseen_ip.py` | Section 3.6 | About 0.0001 of CICDDoS2019 grouped-split test rows carry an unseen IP |
+| `final_holdout.json` | `final_holdout.py` | Section 3.6, Table 1a | Final hold-out, run once after the freeze: no flag on 30 clean corpora; two detection limits |
 
 ### `validation_results.json`: development synthetic corpus
 
@@ -133,6 +139,52 @@ Reproduce: `venv/bin/python3 validation/split_class_composition.py` (seconds).
 
 ---
 
+### `identity_lookup.json`: identity check re-scored with the training-only lookup
+
+What it tests: `identity_column_flag` as redesigned (counts of each identifier value by class from the training partition only, smoothed toward the class prior, unseen values scored with the prior) on CIC-IDS2017, CIC-IDS2017-GLF, ToN-IoT, BoT-IoT and the full CSE-CIC-IDS2018 split (rebuilt from the batch run's cached data with the audit's seed-0 split), before and after dedup. Dedup is done on 64-bit row hashes with `dataset.dedup`'s order of operations and reproduces Table 6's counts exactly.
+
+Fields per dataset: `train_rows`, `test_rows`, `dedup` (the counts), and for `before` and `after`: `status`, `standalone_auc` (all test rows, the flagged value), `seen_only_auc`, `seen_coverage` (share of test rows whose value occurs in training), `suggested_drop`, `by_class`.
+
+Reproduce: `venv/bin/python3 validation/identity_rerun.py cic-ids2017 ton-iot-official ...`; for CIC-IDS2018, `cic-ids2018-fullscale:/path/to/combined.parquet` (the batch cache, 1.5 GB).
+
+### `homogeneity_cluster.json`: cluster-aware intervals for `homogeneity_test`
+
+What it tests: the same samples `homogeneity_test` draws, with a 95% percentile bootstrap that resamples whole encoded feature vectors (all rows sharing a vector together) instead of rows, next to the row-level Newcombe interval. Keys `<dataset>/<before|after>`; per class: rates, sample sizes, `test_vectors` / `control_vectors` (distinct vectors in each sample), `row_ci`, `row_class`, `cluster_ci`, `cluster_class`.
+
+Reading it: after dedup every sampled row is its own vector, so the two intervals agree in substance; where both rates are exactly 0 the bootstrap interval collapses to [0, 0] and the row-level interval is the right one. Before dedup repeated vectors widen some intervals (CIC-IDS2017 `DoS Hulk`, `DoS Slowhttptest` move from cleared to inconclusive). No leakage verdict changes.
+
+Reproduce: `venv/bin/python3 validation/homogeneity_cluster.py` (about 30 minutes).
+
+### `clean_flag_diagnosis.json`: why one-shot checks flagged clean data
+
+What it tests: the clean flow-like datasets of the second family (seeds 300-309, three balances), recording behind each verdict of `resplit_falsification` and `result_robustness_check` the accuracies, gap, sampling margin, test sizes and per-condition accuracies, with `repeated_seed_falsification_check`'s interval alongside. `clean_flag_diagnosis_before_encoder_fix.json` is the same run before the unseen-category fix: there the 10%-minority datasets reach accuracies such as 0.45 against a 0.90 majority, the signature of the bug.
+
+Reproduce: `venv/bin/python3 validation/clean_flag_diagnosis.py 300` (about 45 minutes).
+
+### `cap_sensitivity.json`: the 200,000-row training cap
+
+What it tests: on CIC-IDS2017-GLF, 5 seeds, the reference random forest fitted on 200K, 1M and all 2,264,594 training rows for both the random and the grouped split, scored on the full test set. Per seed and split, per cap: `accuracy`, `balanced_accuracy`, `macro_f1`, `fit_rows`, `seconds`; `summary.<cap>.<metric>` holds the paired mean drop and Student-t interval.
+
+Key numbers: accuracy drop -0.00001, 0.00000, +0.00001 (200K, 1M, full); macro-F1 drop about 0, +0.049, +0.046, every interval including zero.
+
+Reproduce: run on a batch VM (`batch_audit_runs/cap-sensitivity-glf/`), or locally: `venv/bin/python3 validation/cap_sensitivity.py cic-ids2017-glf 5` (many hours on 2 vCPU).
+
+### `ddos_unseen_ip.json`: unseen IPs in CICDDoS2019's grouped split
+
+What it computes: streaming both official day files, the number of distinct 5-tuple groups per Source IP and Destination IP, and from it the expected share of grouped-split test rows whose IP value never occurs in training (each group lands in test with probability about 0.2). Result: about 0.00005 per column, 0.0001 as an upper bound for either, so the unseen-category fix cannot move the published CICDDoS2019 resplit result.
+
+Reproduce: `venv/bin/python3 validation/ddos_unseen_ip.py <train-full.csv.gz> <test-full.csv.gz>` (about an hour locally).
+
+### `final_holdout.json`: the final synthetic hold-out
+
+What it is: a third generator family, committed before it ran, run once after the `paper-method-freeze` tag (the first run was stopped by a session ending after 13 results and restarted unchanged; it reproduced those 13 exactly, see `logs/`). Four classes under two prior regimes, flow-like features with a moderate class signal, new defect mechanisms. Same structure as `heldout_validation.json`, with `regime` in place of `balance`; `part2.runs[].non_ok_summaries` holds the summary of every non-ok check.
+
+Key numbers: no flag on any of 30 clean corpora (24 carry a warning); `one_rule_check` 0/10 weak and strong (a stump cannot express a three-threshold rule); `temporal_leakage_check` misses the weak defect.
+
+Reproduce: `venv/bin/python3 validation/final_holdout.py` refuses to run when the output file exists, by design.
+
+---
+
 ## 2. `logs/`
 
 | File | From |
@@ -142,6 +194,10 @@ Reproduce: `venv/bin/python3 validation/split_class_composition.py` (seconds).
 | `matched_vs_novel.log` | `matched_vs_novel.py` |
 | `heldout_validation.log`, `heldout_revalidation.log` | the two held-out runs; each clean dataset's flags and warnings are listed line by line |
 | `model_sensitivity.log` | `model_sensitivity.py`, one line per seed |
+| `clean_flag_diagnosis.log`, `clean_flag_diagnosis_before_encoder_fix.log` | `clean_flag_diagnosis.py` after and before the unseen-category fix |
+| `ddos_unseen_ip.log` | `ddos_unseen_ip.py` |
+| `final_holdout.log`, `final_holdout_interrupted_0708.log` | the final hold-out run, and the first attempt that a session ending stopped |
+| `frozen_rerun_queue.sh`, `frozen_rerun_queue.log` | the queue that re-ran the local audits at the frozen code on 2026-10-07 |
 | `run_queue.sh`, `run_queue.log` | the shell script that ran the long jobs one after another on the local VM, and its start/finish times |
 
 ---
@@ -167,29 +223,24 @@ Folders without `scorecard.json` are runs that were stopped or crashed before fi
 
 ### Which runs the paper uses
 
-The paper's Tables 5 and 6 and the dataset paragraphs of Section 6 use these runs:
+The paper's Tables 5 and 6 and the dataset paragraphs of Section 6 use runs made with the frozen code (tag `paper-method-freeze`, plus commit `f452cab`, which only speeds up `feature_auc_ranking_check` without changing its output):
 
 | Dataset | Run folder | Rows | Notes |
 |---|---|---|---|
-| UNSW-NB15 | `unsw-nb15/runs/2026-09-27_012254_090465` | 257,673 | official train/test pair |
-| NSL-KDD | `nsl-kdd/runs/2026-09-26_235055_149062` | 148,517 | official KDDTrain+/KDDTest+ |
-| CIC-IDS2017 | `cic-ids2017/runs/2026-09-26_235837_618429` | 2,830,743 | MachineLearningCSV release |
-| CSE-CIC-IDS2018 | `cic-ids2018-fullscale/runs/2026-09-28_225428_095778` | 16,232,943 | local copy of the batch run below |
-| CICDDoS2019 | `cic-ddos2019/runs/2026-09-27_022520_383342` | 431,371 | cleaned public subset (Kaggle mirror) |
-| ToN-IoT | `ton-iot-official/runs/2026-09-28_104937_694393` | 211,043 | official `Train_Test_Network.csv` |
-| BoT-IoT | `bot-iot-official/runs/2026-09-29_073418_361832` | 3,668,522 | official 5%-reduced release (local re-run; `2026-09-28_125027_031413` is a copy of the batch run) |
+| UNSW-NB15 | `local_audit_runs/unsw-nb15/runs/2026-10-07_104948_807678` | 257,673 | official train/test pair |
+| NSL-KDD | `local_audit_runs/nsl-kdd/runs/2026-10-07_105131_090470` | 148,517 | official KDDTrain+/KDDTest+ |
+| CIC-IDS2017 | `local_audit_runs/cic-ids2017/runs/2026-10-07_111725_018420` | 2,830,743 | MachineLearningCSV release |
+| CSE-CIC-IDS2018 | `batch_audit_runs/cic-ids2018-fullscale/runs/2026-09-28_225428_095778` | 16,232,943 | earlier code; it has no string features, so the encoding fix cannot change it, and its identity AUCs and `homogeneity_test` were recomputed separately (`analysis/identity_lookup.json`, `batch_audit_runs/cic-ids2018-split-analysis/`) |
+| CICDDoS2019 | `batch_audit_runs/cic-ddos2019-fullscale-main/out/runs/2026-10-07_101104_616996` | 70,427,637 | official release, official day split |
+| ToN-IoT | `local_audit_runs/ton-iot-official/runs/2026-10-07_105328_897471` | 211,043 | official `Train_Test_Network.csv` |
+| BoT-IoT | `batch_audit_runs/bot-iot-official-rerun/out/runs/2026-10-07_131115_277703` | 3,668,522 | official 5%-reduced release |
+| CIC-IDS2017-GLF (Section 6.3) | `batch_audit_runs/cic-ids2017-glf-rerun/out/runs/2026-10-07_131149_314813` | 2,830,743 | GeneratedLabelledFlows release, 10-seed falsification |
 
-The other folders are history the paper refers to: `bot-iot` and `ton-iot` (500K-row samples of the NetFlow-V2 conversions), `cic-ids2018` (500K-row sample of the official release, the source of the 13.15% duplication figure), `cic-iot2023` (500K-row sample of a dataset later excluded), and the earlier runs of each dataset as the check suite grew.
+At the frozen code these runs reproduce every Table 5 count directly, including `homogeneity_test`, which earlier runs had needed correcting by hand. Compared with the earlier runs, the only status changes are in `homogeneity_test` (the method changed); the identity redesign and the encoding fix changed no status on any dataset.
 
-### Reading these scorecards against the paper
+The other folders are history: the earlier runs of each dataset (from before the freeze), `cic-ddos2019` (the cleaned Kaggle subset an earlier pass audited), `bot-iot` and `ton-iot` (500K-row samples of the NetFlow-V2 conversions), `cic-ids2018` (500K-row sample of the official release, the source of the 13.15% duplication figure), and `cic-iot2023` (500K-row sample of a dataset later excluded).
 
-The scorecards are the tool's output at the time of each run, at the git commit recorded in `scorecard.json` (`ids2eval_git_commit`). Three later changes mean the paper's Table 5 differs from some stored counts:
-
-1. **`homogeneity_test` method:** these runs used the earlier p-value version. Table 5 instead uses the confidence-interval (Newcombe-Wilson) version from `analysis/homogeneity_sensitivity.json`. That turns NSL-KDD's and CIC-IDS2017's homogeneity `flag` into `ok`/`warning`, and adds `warning`s for ToN-IoT, UNSW-NB15 and NSL-KDD. CSE-CIC-IDS2018's homogeneity result was not recomputed (its full split exists only on the batch cluster) and is left out of its Table 5 row.
-2. **`one_rule_check`:** it now also requires beating the majority-class baseline. No stored status changes (BoT-IoT's flag still clears the new bar).
-3. **`resplit_falsification` and `result_robustness_check`:** they now apply a sampling margin. No stored status changes: these runs' test sets are large enough that the margin is negligible.
-
-The local report files were re-rendered on 2026-10-04 to show the verdict "Review Required" instead of "Failed" (scorecard schema 1.3). `archives/scorecards_backup_pre_review_required.tar.gz` keeps them as they were.
+The local report files of the earlier runs were re-rendered on 2026-10-04 to show the verdict "Review Required" instead of "Failed" (scorecard schema 1.3). `archives/scorecards_backup_pre_review_required.tar.gz` keeps them as they were.
 
 ### `archives/` (not in git)
 
@@ -206,7 +257,7 @@ New runs still write to `~/projects/IDS2Eval_data/output/` (each config's `outpu
 
 ## 4. `batch_audit_runs/`
 
-Runs made on Google Cloud Batch (spot instances, us-east1), copied verbatim from `gs://ids2eval-batch-bc67afd1/results/`, where the originals remain. Each folder has the job's `config.yaml`, its console `run.log`, `host.txt` (the VM it ran on), and `runs/<run>/` with the same files as a local run. These copies were not re-rendered, so their reports still show the earlier `failed` verdict wording (schema 1.2).
+Runs made on Google Cloud Batch (spot instances, us-east1), copied verbatim from `gs://ids2eval-batch-bc67afd1/results/`, where the originals remain. Each folder has the job's `config.yaml`, its console `run.log`, `host.txt` (the VM it ran on), and `runs/<run>/` with the same files as a local run. Folders from 2026-10-07 on use `validation/batch_run.sh`, which keeps the run under `out/` and the logs (`run.log`, one `attempt_<n>.log` per attempt, `memlog.txt`) under `logs/`; `out/.checkpoint/` holds the per-check checkpoint a resumed attempt reads. These copies were not re-rendered, so their reports still show the earlier `failed` verdict wording (schema 1.2).
 
 | Folder | What it is | Machine | Runtime | Paper |
 |---|---|---|---|---|
@@ -215,6 +266,10 @@ Runs made on Google Cloud Batch (spot instances, us-east1), copied verbatim from
 | `cic-ids2017-glf/` | full audit with 10-seed falsification on the GeneratedLabelledFlows release (real 5-tuple) | n2-standard-4 (4 vCPU, 16 GB) | 3.7 h | Table 6a, Section 6.3 |
 | `bot-iot-official/` | full audit with 10-seed falsification on the 5%-reduced release | n2-standard-4 (4 vCPU, 16 GB) | 2.4 h | superseded by the local re-run above |
 | `iot23/` | IoT-23 attempt: a checkpoint and a memory trace only | n2-custom-16 (384 GB) | did not complete (out of memory) | Section 6.1 (exclusion) |
+| `cic-ddos2019-fullscale-main/` | full default audit (19 checks) on the official release with its own day split, 50,063,112 train and 20,364,525 test rows, frozen code | n2-custom-30 (30 vCPU, 384 GB) | 3.7 h, resuming five checkpointed checks from an attempt cancelled to speed up `feature_auc_ranking_check` (its incomplete run folder `2026-10-07_075950_353883` is kept) | Tables 5, 6, 9; Section 6.1 |
+| `bot-iot-official-rerun/` | BoT-IoT full audit with 10-seed falsification at the frozen code | n2-highmem-8 (8 vCPU, 64 GB) | 1.0 h | Tables 5, 6a |
+| `cic-ids2017-glf-rerun/` | CIC-IDS2017-GLF full audit with 10-seed falsification at the frozen code | n2-standard-16 (16 vCPU, 64 GB) | 1.3 h | Table 6a, Section 6.3 |
+| `cap-sensitivity-glf/` | `validation/cap_sensitivity.py`: reference model at 200K, 1M and full training rows, 5 seeds | n2-standard-16 | 0.8 h | Section 8 |
 | `cic-ids2018-split-analysis/` | `validation/batch_split_analysis.py` on all 16,232,943 rows: `homogeneity_test` before and after dedup, and 10 paired seeds scoring RandomForest, LogisticRegression and XGBoost | n2-highmem-16 (16 vCPU, 128 GB), no external IP | 3.6 h including one spot preemption; peak memory 27 GB | Tables 5, 6b, 9; Sections 6.3, 8 |
 
 `memlog.txt` (in `cic-ddos2019-fullscale-resplit/` and `iot23/`) is a 10-second trace of the job's memory use, recorded to find the out-of-memory point.

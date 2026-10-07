@@ -1,0 +1,18 @@
+[2026-10-07T07:17:47Z] stage setup: attempt 0 on ids2eval-ddos-main-909d882d-ff50-47150-group0-0-s9wg, 30 vCPU, 377 GB
+[2026-10-07T07:17:50Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic-ddos2019-fullscale-main/out
+[2026-10-07T07:17:50Z] no previous output, starting fresh
+[2026-10-07T07:17:50Z] stage fetch: code, config, wheels, data
+[2026-10-07T07:17:56Z] fetched 2 data files, 3.0G
+[2026-10-07T07:17:56Z] stage install
+[2026-10-07T07:18:16Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-07T07:18:16Z] stage run: ids2eval --config config.yaml --skip-benchmark
+[2026-10-07T09:27:47Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic-ddos2019-fullscale-main/out
+[2026-10-07T09:27:48Z] previous output: 4 files
+[2026-10-07T09:27:48Z] stage fetch: code, config, wheels, data
+[2026-10-07T09:27:54Z] fetched 2 data files, 3.0G
+[2026-10-07T09:27:54Z] stage install
+[2026-10-07T09:28:14Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-07T09:28:14Z] stage run: ids2eval --config config.yaml --skip-benchmark
+[2026-10-07T13:06:47Z] stage run: exit 0 after 13113s
+[2026-10-07T13:06:47Z] stage upload
+[2026-10-07T13:06:49Z] done

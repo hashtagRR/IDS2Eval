@@ -1,0 +1,150 @@
+===== attempt 0 2026-10-07T07:18:16Z =====
+INFO ids2eval.cli: Loading dataset 'cic-ddos2019-fullscale'
+INFO ids2eval.data.cache: Cached load+split+label-grouping result to /tmp/ids2eval_task/out/.cache
+INFO ids2eval.cli: Split: train=50063112 rows, test=20364525 rows
+INFO ids2eval.cli: Run artifacts: /tmp/ids2eval_task/out/runs/2026-10-07_075950_353883
+INFO ids2eval.cli: Stage: audit (before dedup)
+INFO ids2eval.audit: Audit check 1/19: dedup_check ...
+INFO ids2eval.audit: Audit check 1/19 done: dedup_check -> flag (2243.0s)
+INFO ids2eval.audit: Audit check 2/19: label_conflict_check ...
+INFO ids2eval.audit: Audit check 2/19 done: label_conflict_check -> flag (131.4s)
+INFO ids2eval.audit: Audit check 3/19: near_duplicate_class_check ...
+INFO ids2eval.audit: Audit check 3/19 done: near_duplicate_class_check -> ok (20.6s)
+INFO ids2eval.audit: Audit check 4/19: leakage_screen ...
+INFO ids2eval.audit: Audit check 4/19 done: leakage_screen -> ok (14.1s)
+INFO ids2eval.audit: Audit check 5/19: one_rule_check ...
+INFO ids2eval.audit: Audit check 5/19 done: one_rule_check -> ok (53.0s)
+INFO ids2eval.audit: Audit check 6/19: feature_auc_ranking_check ...
+===== attempt 0 2026-10-07T09:28:14Z =====
+INFO ids2eval.cli: Loading dataset 'cic-ddos2019-fullscale'
+INFO ids2eval.data.cache: Cached load+split+label-grouping result to /tmp/ids2eval_task/out/.cache
+INFO ids2eval.cli: Split: train=50063112 rows, test=20364525 rows
+INFO ids2eval.cli: Run artifacts: /tmp/ids2eval_task/out/runs/2026-10-07_101104_616996
+INFO ids2eval.cli: Stage: audit (before dedup)
+INFO ids2eval.audit: Audit check 1/19 done: dedup_check -> flag (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 2/19 done: label_conflict_check -> flag (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 3/19 done: near_duplicate_class_check -> ok (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 4/19 done: leakage_screen -> ok (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 5/19 done: one_rule_check -> ok (0.0s, from checkpoint)
+INFO ids2eval.audit: Audit check 6/19: feature_auc_ranking_check ...
+INFO ids2eval.audit: Audit check 6/19 done: feature_auc_ranking_check -> flag (2523.9s)
+INFO ids2eval.audit: Audit check 7/19: identity_column_flag ...
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15411452 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 4608 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15416059 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+INFO ids2eval.audit: Audit check 7/19 done: identity_column_flag -> flag (265.9s)
+INFO ids2eval.audit: Audit check 8/19: port_protocol_shortcut_check ...
+WARNING ids2eval.audit._auc: AUC: skipped 15416060 test row(s) whose class never appeared in train
+INFO ids2eval.audit: Audit check 8/19 done: port_protocol_shortcut_check -> flag (557.4s)
+INFO ids2eval.audit: Audit check 9/19: temporal_leakage_check ...
+INFO ids2eval.audit: Audit check 9/19 done: temporal_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 10/19: temporal_realism_check ...
+INFO ids2eval.audit: Audit check 10/19 done: temporal_realism_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 11/19: flow_group_leakage_check ...
+INFO ids2eval.audit: Audit check 11/19 done: flow_group_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 12/19: row_order_leakage_check ...
+INFO ids2eval.audit: Audit check 12/19 done: row_order_leakage_check -> flag (4.7s)
+INFO ids2eval.audit: Audit check 13/19: homogeneity_test ...
+INFO ids2eval.audit: Audit check 13/19 done: homogeneity_test -> ok (27.4s)
+INFO ids2eval.audit: Audit check 14/19: scenario_holdout_falsification ...
+INFO ids2eval.audit: Audit check 14/19 done: scenario_holdout_falsification -> ok (0.0s)
+INFO ids2eval.audit: Audit check 15/19: class_distribution_report ...
+INFO ids2eval.audit: Audit check 15/19 done: class_distribution_report -> warning (0.9s)
+INFO ids2eval.audit: Audit check 16/19: low_cardinality_warning ...
+INFO ids2eval.audit: Audit check 16/19 done: low_cardinality_warning -> ok (1.6s)
+INFO ids2eval.audit: Audit check 17/19: schema_fingerprint_check ...
+INFO ids2eval.audit: Audit check 17/19 done: schema_fingerprint_check -> warning (0.0s)
+INFO ids2eval.audit: Audit check 18/19: data_integrity_check ...
+INFO ids2eval.audit: Audit check 18/19 done: data_integrity_check -> warning (34.7s)
+INFO ids2eval.audit: Audit check 19/19: known_issue_lookup ...
+INFO ids2eval.audit: Audit check 19/19 done: known_issue_lookup -> warning (0.0s)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-07_101104_616996/audit_report_before.json
+INFO ids2eval.cli: [FLAG] dedup_check: train duplicates: 2,184,498 (4.36%); test rows leaking a train feature-match: 244 (0.00%); test-internal duplicates: 650,949
+INFO ids2eval.cli: [FLAG] label_conflict_check: 83,443 feature vector(s) (200,263 rows, 0.28%) map to more than one label. The ground truth contradicts itself for these rows
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=15.4%, top2=24.0%)
+INFO ids2eval.cli: [OK] one_rule_check: single rule 'Source Port <= 6.245e+04' reaches 0.0% test accuracy (40.1% train), vs. 0.0% from always predicting the majority class
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.3%, 1.0), Source Port: 0.824 (100.0%, 0.824), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']
+INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Source Port' + 'Protocol' combined: 0.841. Port and protocol together may predict the label without attack behavior
+INFO ids2eval.cli: [OK] temporal_leakage_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] temporal_realism_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [FLAG] row_order_leakage_check: adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split
+INFO ids2eval.cli: [OK] homogeneity_test: 2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 13 classes, train imbalance ratio (majority:minority) = 45746:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']
+INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}
+INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']
+INFO ids2eval.cli: [WARNING] data_integrity_check: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)
+INFO ids2eval.cli: [WARNING] known_issue_lookup: By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)
+INFO ids2eval.cli: Stage: dedup
+INFO ids2eval.cli: Dedup: {'train_rows_raw': 50063112, 'train_rows_deduped': 47878614, 'train_duplicates_dropped': 2184498, 'test_rows_raw': 20364525, 'test_rows_deduped': 19713332, 'test_leakage_dropped': 244, 'test_duplicates_dropped': 650949}
+INFO ids2eval.cli: Stage: audit (after dedup)
+INFO ids2eval.audit: Audit check 1/16: dedup_check ...
+INFO ids2eval.audit: Audit check 1/16 done: dedup_check -> ok (2036.4s)
+INFO ids2eval.audit: Audit check 2/16: label_conflict_check ...
+INFO ids2eval.audit: Audit check 2/16 done: label_conflict_check -> ok (125.0s)
+INFO ids2eval.audit: Audit check 3/16: near_duplicate_class_check ...
+INFO ids2eval.audit: Audit check 3/16 done: near_duplicate_class_check -> ok (4.0s)
+INFO ids2eval.audit: Audit check 4/16: leakage_screen ...
+INFO ids2eval.audit: Audit check 4/16 done: leakage_screen -> ok (15.7s)
+INFO ids2eval.audit: Audit check 5/16: one_rule_check ...
+INFO ids2eval.audit: Audit check 5/16 done: one_rule_check -> ok (54.6s)
+INFO ids2eval.audit: Audit check 6/16: feature_auc_ranking_check ...
+INFO ids2eval.audit: Audit check 6/16 done: feature_auc_ranking_check -> flag (2389.0s)
+INFO ids2eval.audit: Audit check 7/16: identity_column_flag ...
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15245287 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 4589 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15249875 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+INFO ids2eval.audit: Audit check 7/16 done: identity_column_flag -> flag (253.7s)
+INFO ids2eval.audit: Audit check 8/16: port_protocol_shortcut_check ...
+WARNING ids2eval.audit._auc: AUC: skipped 15249876 test row(s) whose class never appeared in train
+INFO ids2eval.audit: Audit check 8/16 done: port_protocol_shortcut_check -> flag (535.1s)
+INFO ids2eval.audit: Audit check 9/16: temporal_leakage_check ...
+INFO ids2eval.audit: Audit check 9/16 done: temporal_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 10/16: temporal_realism_check ...
+INFO ids2eval.audit: Audit check 10/16 done: temporal_realism_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 11/16: flow_group_leakage_check ...
+INFO ids2eval.audit: Audit check 11/16 done: flow_group_leakage_check -> ok (0.0s)
+INFO ids2eval.audit: Audit check 12/16: row_order_leakage_check ...
+INFO ids2eval.audit: Audit check 12/16 done: row_order_leakage_check -> flag (4.5s)
+INFO ids2eval.audit: Audit check 13/16: homogeneity_test ...
+INFO ids2eval.audit: Audit check 13/16 done: homogeneity_test -> ok (23.9s)
+INFO ids2eval.audit: Audit check 14/16: class_distribution_report ...
+INFO ids2eval.audit: Audit check 14/16 done: class_distribution_report -> warning (0.9s)
+INFO ids2eval.audit: Audit check 15/16: low_cardinality_warning ...
+INFO ids2eval.audit: Audit check 15/16 done: low_cardinality_warning -> ok (1.5s)
+INFO ids2eval.audit: Audit check 16/16: data_integrity_check ...
+INFO ids2eval.audit: Audit check 16/16 done: data_integrity_check -> warning (32.6s)
+INFO ids2eval.cli: Audit report written to /tmp/ids2eval_task/out/runs/2026-10-07_101104_616996/audit_report_after.json
+INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0
+INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label
+INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested
+INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=15.4%, top2=24.2%)
+INFO ids2eval.cli: [OK] one_rule_check: single rule 'Source Port <= 6.246e+04' reaches 0.0% test accuracy (39.1% train), vs. 0.0% from always predicting the majority class
+INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact
+INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.2%, 1.0), Source Port: 0.825 (100.0%, 0.825), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']
+INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Source Port' + 'Protocol' combined: 0.839. Port and protocol together may predict the label without attack behavior
+INFO ids2eval.cli: [OK] temporal_leakage_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] temporal_realism_check: no schema.timestamp_column configured
+INFO ids2eval.cli: [OK] flow_group_leakage_check: no schema.flow_id_columns configured
+INFO ids2eval.cli: [FLAG] row_order_leakage_check: adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split
+INFO ids2eval.cli: [OK] homogeneity_test: 2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature
+INFO ids2eval.cli: [OK] scenario_holdout_falsification: no schema.scenario_column configured
+INFO ids2eval.cli: [WARNING] class_distribution_report: 13 classes, train imbalance ratio (majority:minority) = 41936:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']
+INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}
+INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']
+INFO ids2eval.cli: [WARNING] data_integrity_check: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)
+INFO ids2eval.cli: [WARNING] known_issue_lookup: By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)
+INFO ids2eval.cli: Scorecard: review_required -> /tmp/ids2eval_task/out/runs/2026-10-07_101104_616996/scorecard.json

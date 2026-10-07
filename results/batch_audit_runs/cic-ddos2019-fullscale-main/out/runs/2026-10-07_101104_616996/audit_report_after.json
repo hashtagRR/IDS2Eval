@@ -1,0 +1,391 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 47878614,
+      "train_rows_deduped": 47878614,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 19713332,
+      "test_rows_deduped": 19713332,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "TFTP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_SNMP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_DNS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_MSSQL": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_NetBIOS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_UDP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_SSDP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "DrDoS_LDAP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "Syn": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DrDoS_NTP": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "UDP-lag": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        },
+        "BENIGN": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "WebDDoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": null
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 13 classes tested",
+    "details": {
+      "classes_tested": 13
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=15.4%, top2=24.2%)",
+    "details": {
+      "top_features": {
+        "Source Port": 0.15392733779784204,
+        "Destination Port": 0.08832464590844533,
+        "Fwd Packet Length Max": 0.07041132019848967,
+        "Avg Fwd Segment Size": 0.06342141524741024,
+        "Packet Length Mean": 0.0587160297557853
+      },
+      "top1_share": 0.15392733779784204,
+      "top2_share": 0.24225198370628737
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'Source Port <= 6.246e+04' reaches 0.0% test accuracy (39.1% train), vs. 0.0% from always predicting the majority class",
+    "details": {
+      "rule": "Source Port <= 6.246e+04",
+      "train_accuracy": 0.390895,
+      "test_accuracy": 0.0,
+      "majority_baseline_accuracy": 0.0,
+      "error_reduction_vs_baseline": 0.0
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Total Length of Fwd Packets": 0.9945731293165747,
+        "Subflow Fwd Bytes": 0.9945731293165747,
+        "Average Packet Size": 0.9945712731503029,
+        "Packet Length Mean": 0.994570977424411,
+        "Fwd Packet Length Mean": 0.9945634721665545
+      },
+      "best_feature": "Total Length of Fwd Packets",
+      "best_class": "Syn"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "flag",
+    "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.2%, 1.0), Source Port: 0.825 (100.0%, 0.825), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']",
+    "details": {
+      "standalone_auc": {
+        "Source IP": 0.9999719628174693,
+        "Destination IP": 0.8887898206195568,
+        "Source Port": 0.8253120303068502,
+        "Destination Port": 0.9348019167290923
+      },
+      "seen_only_auc": {
+        "Source IP": 1.0,
+        "Destination IP": 1.0,
+        "Source Port": 0.8253205155838859,
+        "Destination Port": 0.9348019167290923
+      },
+      "seen_coverage": {
+        "Source IP": 0.9993665200788989,
+        "Destination IP": 0.0024101455806659166,
+        "Source Port": 0.9999953838346557,
+        "Destination Port": 1.0
+      },
+      "suggested_drop": [
+        "Source IP",
+        "Destination IP",
+        "Source Port",
+        "Destination Port"
+      ],
+      "method": "training-only value lookup, unseen values scored with the prior",
+      "by_class": {
+        "Source IP": {
+          "Syn": 0.5015953317021155,
+          "BENIGN": 0.9999812291111525
+        },
+        "Destination IP": {
+          "Syn": 0.5012153878792026,
+          "BENIGN": 0.8887705382354225
+        },
+        "Source Port": {
+          "Syn": 0.7582611426692029,
+          "BENIGN": 0.8375062442513306
+        },
+        "Destination Port": {
+          "Syn": 0.5021681955000156,
+          "BENIGN": 0.936393572818156
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "flag",
+    "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.839. Port and protocol together may predict the label without attack behavior",
+    "details": {
+      "port_column": "Source Port",
+      "protocol_column": "Protocol",
+      "standalone_auc": 0.839308818107997
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "ok",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "ok",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "flag",
+    "summary": "adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+    "details": {
+      "contiguity_ratio": {
+        "train": 0.000809419785156761,
+        "test": 0.0012123066042078578
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
+    "details": {
+      "per_class": {
+        "Syn": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "BENIGN": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.01434228628137247,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        }
+      },
+      "equivalence_margin": 0.05
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "ok",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "13 classes, train imbalance ratio (majority:minority) = 41936:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']",
+    "details": {
+      "train": {
+        "counts": {
+          "TFTP": 18410120,
+          "DrDoS_SNMP": 5015233,
+          "DrDoS_DNS": 4935090,
+          "DrDoS_MSSQL": 4518549,
+          "DrDoS_NetBIOS": 3922993,
+          "DrDoS_UDP": 3133851,
+          "DrDoS_SSDP": 2608806,
+          "DrDoS_LDAP": 2128095,
+          "Syn": 1582047,
+          "DrDoS_NTP": 1202516,
+          "UDP-lag": 364853,
+          "BENIGN": 56022,
+          "WebDDoS": 439
+        },
+        "shares": {
+          "TFTP": 0.38451656098482717,
+          "DrDoS_SNMP": 0.10474891775271523,
+          "DrDoS_DNS": 0.10307503888897035,
+          "DrDoS_MSSQL": 0.09437510033185172,
+          "DrDoS_NetBIOS": 0.08193622731017235,
+          "DrDoS_UDP": 0.06545408770604763,
+          "DrDoS_SSDP": 0.054487918133971046,
+          "DrDoS_LDAP": 0.0444477152158164,
+          "Syn": 0.03304287379747459,
+          "DrDoS_NTP": 0.025115931718491268,
+          "UDP-lag": 0.007620375142856056,
+          "BENIGN": 0.0011700839961658039,
+          "WebDDoS": 9.169020640405338e-06
+        }
+      },
+      "test": {
+        "counts": {
+          "MSSQL": 5784308,
+          "Syn": 4411222,
+          "UDP": 3867071,
+          "NetBIOS": 3561394,
+          "LDAP": 1878736,
+          "Portmap": 156497,
+          "BENIGN": 52234,
+          "UDPLag": 1870
+        },
+        "shares": {
+          "MSSQL": 0.29342112231458384,
+          "Syn": 0.22376846288592916,
+          "UDP": 0.19616526521239536,
+          "NetBIOS": 0.18065916000400134,
+          "LDAP": 0.0953028133447963,
+          "Portmap": 0.007938637669167243,
+          "BENIGN": 0.002649678907654982,
+          "UDPLag": 9.485966147173903e-05
+        }
+      },
+      "imbalance_ratio": 41936.492027334854,
+      "rare_classes": [
+        "UDP-lag",
+        "BENIGN",
+        "WebDDoS"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}",
+    "details": {
+      "cardinalities": {
+        "Source IP": 550,
+        "Destination IP": 598,
+        "Source Port": 61063,
+        "Destination Port": 65535
+      },
+      "flagged": []
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "warning",
+    "summary": "matched extractor signature(s): ['CICFlowMeter']",
+    "details": {
+      "CICFlowMeter": {
+        "match_share": 1.0,
+        "warning": "CICFlowMeter is known to have miscalculated ~34 features in early releases (Rosay et al. 2021), motivating the corrected LYCOS-IDS2017 release. Verify which extractor version produced this data before trusting derived-rate/duration features."
+      }
+    }
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {
+        "Flow Bytes/s": 248936
+      },
+      "inf_by_feature": {
+        "Flow Bytes/s": 1097136,
+        "Flow Packets/s": 1346072
+      },
+      "constant_features": [
+        "Bwd PSH Flags",
+        "Fwd URG Flags",
+        "Bwd URG Flags",
+        "FIN Flag Count",
+        "PSH Flag Count",
+        "ECE Flag Count",
+        "Fwd Avg Bytes/Bulk",
+        "Fwd Avg Packets/Bulk",
+        "Fwd Avg Bulk Rate",
+        "Bwd Avg Bytes/Bulk",
+        "Bwd Avg Packets/Bulk",
+        "Bwd Avg Bulk Rate"
+      ]
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology)",
+    "details": {
+      "matches": [
+        {
+          "issue": "By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types.",
+          "citation": "Sharafaldin et al. 2019, IEEE ICCST"
+        },
+        {
+          "issue": "The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally.",
+          "citation": "Independently verified in this project's own audit methodology"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,8 @@
+30
+               total        used        free      shared  buff/cache   available
+Mem:             377           3         376           0           0         374
+Swap:              0           0           0
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        99G  3.2G   91G   4% /
+Linux ids2eval-ddos-main-5dac76e5-8e56-4ca10-group0-0-10rb 6.1.0-53-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.187-1 (2026-09-07) x86_64 GNU/Linux
+attempt 0

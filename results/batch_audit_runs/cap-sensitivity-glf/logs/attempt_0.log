@@ -1,0 +1,11 @@
+[2026-10-07T06:00:18Z] stage setup: attempt 0 on ids2eval-cap-glf-1-259a63b7-7a02-4d7b0-group0-0-f30t, 16 vCPU, 62 GB
+[2026-10-07T06:00:21Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cap-sensitivity-glf/out
+[2026-10-07T06:00:22Z] no previous output, starting fresh
+[2026-10-07T06:00:22Z] stage fetch: code, config, wheels, data
+[2026-10-07T06:00:26Z] fetched 8 data files, 266M
+[2026-10-07T06:00:26Z] stage install
+[2026-10-07T06:00:46Z] Python 3.11.2, ids2eval 0.1.0
+[2026-10-07T06:00:46Z] stage run: python ids2eval_src/validation/cap_sensitivity.py cic-ids2017-glf 5 --config config.yaml --out "$OUT/cap_sensitivity.json"
+[2026-10-07T06:49:28Z] stage run: exit 0 after 2922s
+[2026-10-07T06:49:28Z] stage upload
+[2026-10-07T06:49:30Z] done

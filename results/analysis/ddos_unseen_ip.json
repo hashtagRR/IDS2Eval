@@ -1,0 +1,17 @@
+{
+  "rows": 70427637,
+  "q": 0.2,
+  "Source IP": {
+    "distinct_ips": 1577,
+    "ips_in_one_group": 643,
+    "rows_of_ips_in_one_group": 2962,
+    "expected_unseen_share_of_test_rows": 4.767150177535816e-05
+  },
+  "Destination IP": {
+    "distinct_ips": 1655,
+    "ips_in_one_group": 647,
+    "rows_of_ips_in_one_group": 2852,
+    "expected_unseen_share_of_test_rows": 5.1964911055557885e-05
+  },
+  "upper_bound_either_unseen": 9.963641283091605e-05
+}

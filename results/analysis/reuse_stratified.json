@@ -1,0 +1,1684 @@
+{
+  "unsw-nb15": {
+    "stratum": "attack_cat",
+    "test_rows": 82332,
+    "reused_rows": 8541,
+    "mean_over_seeds": {
+      "accuracy_all": 0.8723315357333721,
+      "accuracy_reused": 0.9437536588221519,
+      "accuracy_novel": 0.8640647233402448,
+      "raw_advantage": 0.07968893548190722,
+      "raw_contribution": 0.008266812393127454,
+      "adjusted_advantage": -0.005631210202831816,
+      "adjusted_contribution": -0.0005841734239710749
+    },
+    "seed0_bootstrap": {
+      "raw_advantage_ci": [
+        0.07345762086663499,
+        0.08465618313757996
+      ],
+      "adjusted_advantage_ci": [
+        -0.010699844789666,
+        -0.0018867829997261743
+      ]
+    },
+    "runs": [
+      {
+        "reused_share": 0.10373852208132925,
+        "accuracy_all": 0.8724675703250255,
+        "accuracy_reused": 0.9432150802013816,
+        "accuracy_novel": 0.8642788415931482,
+        "raw_advantage": 0.0789362386082334,
+        "raw_contribution": 0.008188728731877294,
+        "adjusted": {
+          "reused_accuracy": 0.9432150802013817,
+          "novel_accuracy_reweighted": 0.9495483231887786,
+          "advantage": -0.006333242987396903,
+          "reused_rows_covered": 8541,
+          "reused_rows_total": 8541,
+          "per_stratum": {
+            "Analysis": {
+              "mean_novel": 0.9873188405797102,
+              "mean_reused": 1.0,
+              "size_novel": 552,
+              "size_reused": 125
+            },
+            "Backdoor": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 579,
+              "size_reused": 4
+            },
+            "DoS": {
+              "mean_novel": 0.9976019184652278,
+              "mean_reused": 1.0,
+              "size_novel": 2085,
+              "size_reused": 2004
+            },
+            "Exploits": {
+              "mean_novel": 0.994962486602358,
+              "mean_reused": 1.0,
+              "size_novel": 9330,
+              "size_reused": 1802
+            },
+            "Fuzzers": {
+              "mean_novel": 0.9026029994828478,
+              "mean_reused": 0.9310344827586207,
+              "size_novel": 5801,
+              "size_reused": 261
+            },
+            "Generic": {
+              "mean_novel": 0.999941687561957,
+              "mean_reused": 1.0,
+              "size_novel": 17149,
+              "size_reused": 1722
+            },
+            "Normal": {
+              "mean_novel": 0.7358140058545373,
+              "mean_reused": 0.6827445652173914,
+              "size_novel": 35528,
+              "size_reused": 1472
+            },
+            "Reconnaissance": {
+              "mean_novel": 0.9991518235793045,
+              "mean_reused": 1.0,
+              "size_novel": 2358,
+              "size_reused": 1138
+            },
+            "Shellcode": {
+              "mean_novel": 0.9945205479452055,
+              "mean_reused": 1.0,
+              "size_novel": 365,
+              "size_reused": 13
+            },
+            "Worms": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 44,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.006333242987396903,
+        "adjusted_contribution": -0.0006570012674944973
+      },
+      {
+        "reused_share": 0.10373852208132925,
+        "accuracy_all": 0.8718481270951757,
+        "accuracy_reused": 0.943683409436834,
+        "accuracy_novel": 0.8635334932444336,
+        "raw_advantage": 0.08014991619240042,
+        "raw_contribution": 0.008314633850742019,
+        "adjusted": {
+          "reused_accuracy": 0.943683409436834,
+          "novel_accuracy_reweighted": 0.949148303500036,
+          "advantage": -0.005464894063201942,
+          "reused_rows_covered": 8541,
+          "reused_rows_total": 8541,
+          "per_stratum": {
+            "Analysis": {
+              "mean_novel": 0.9891304347826086,
+              "mean_reused": 1.0,
+              "size_novel": 552,
+              "size_reused": 125
+            },
+            "Backdoor": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 579,
+              "size_reused": 4
+            },
+            "DoS": {
+              "mean_novel": 0.9971223021582734,
+              "mean_reused": 1.0,
+              "size_novel": 2085,
+              "size_reused": 2004
+            },
+            "Exploits": {
+              "mean_novel": 0.9947481243301179,
+              "mean_reused": 1.0,
+              "size_novel": 9330,
+              "size_reused": 1802
+            },
+            "Fuzzers": {
+              "mean_novel": 0.8977762454749181,
+              "mean_reused": 0.9310344827586207,
+              "size_novel": 5801,
+              "size_reused": 261
+            },
+            "Generic": {
+              "mean_novel": 0.999941687561957,
+              "mean_reused": 1.0,
+              "size_novel": 17149,
+              "size_reused": 1722
+            },
+            "Normal": {
+              "mean_novel": 0.7351103355100203,
+              "mean_reused": 0.6854619565217391,
+              "size_novel": 35528,
+              "size_reused": 1472
+            },
+            "Reconnaissance": {
+              "mean_novel": 0.9991518235793045,
+              "mean_reused": 1.0,
+              "size_novel": 2358,
+              "size_reused": 1138
+            },
+            "Shellcode": {
+              "mean_novel": 0.9945205479452055,
+              "mean_reused": 1.0,
+              "size_novel": 365,
+              "size_reused": 13
+            },
+            "Worms": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 44,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.005464894063201942,
+        "adjusted_contribution": -0.0005669200334475998
+      },
+      {
+        "reused_share": 0.10373852208132925,
+        "accuracy_all": 0.8723461108681922,
+        "accuracy_reused": 0.9440346563634235,
+        "accuracy_novel": 0.8640484611944546,
+        "raw_advantage": 0.07998619516896899,
+        "raw_contribution": 0.0082976496737376,
+        "adjusted": {
+          "reused_accuracy": 0.9440346563634234,
+          "novel_accuracy_reweighted": 0.9494951859401338,
+          "advantage": -0.005460529576710393,
+          "reused_rows_covered": 8541,
+          "reused_rows_total": 8541,
+          "per_stratum": {
+            "Analysis": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 552,
+              "size_reused": 125
+            },
+            "Backdoor": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 579,
+              "size_reused": 4
+            },
+            "DoS": {
+              "mean_novel": 0.9971223021582734,
+              "mean_reused": 1.0,
+              "size_novel": 2085,
+              "size_reused": 2004
+            },
+            "Exploits": {
+              "mean_novel": 0.9952840300107181,
+              "mean_reused": 1.0,
+              "size_novel": 9330,
+              "size_reused": 1802
+            },
+            "Fuzzers": {
+              "mean_novel": 0.8958800206860886,
+              "mean_reused": 0.9310344827586207,
+              "size_novel": 5801,
+              "size_reused": 261
+            },
+            "Generic": {
+              "mean_novel": 0.999941687561957,
+              "mean_reused": 1.0,
+              "size_novel": 17149,
+              "size_reused": 1722
+            },
+            "Normal": {
+              "mean_novel": 0.7362080612474667,
+              "mean_reused": 0.6875,
+              "size_novel": 35528,
+              "size_reused": 1472
+            },
+            "Reconnaissance": {
+              "mean_novel": 0.9987277353689568,
+              "mean_reused": 1.0,
+              "size_novel": 2358,
+              "size_reused": 1138
+            },
+            "Shellcode": {
+              "mean_novel": 0.9945205479452055,
+              "mean_reused": 1.0,
+              "size_novel": 365,
+              "size_reused": 13
+            },
+            "Worms": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 44,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.005460529576710393,
+        "adjusted_contribution": -0.0005664672680693226
+      },
+      {
+        "reused_share": 0.10373852208132925,
+        "accuracy_all": 0.8726740514016421,
+        "accuracy_reused": 0.944502985598876,
+        "accuracy_novel": 0.864360152322099,
+        "raw_advantage": 0.08014283327677707,
+        "raw_contribution": 0.008313899079543226,
+        "adjusted": {
+          "reused_accuracy": 0.944502985598876,
+          "novel_accuracy_reweighted": 0.9493448343176513,
+          "advantage": -0.0048418487187752435,
+          "reused_rows_covered": 8541,
+          "reused_rows_total": 8541,
+          "per_stratum": {
+            "Analysis": {
+              "mean_novel": 0.9909420289855072,
+              "mean_reused": 1.0,
+              "size_novel": 552,
+              "size_reused": 125
+            },
+            "Backdoor": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 579,
+              "size_reused": 4
+            },
+            "DoS": {
+              "mean_novel": 0.996642685851319,
+              "mean_reused": 1.0,
+              "size_novel": 2085,
+              "size_reused": 2004
+            },
+            "Exploits": {
+              "mean_novel": 0.9946409431939979,
+              "mean_reused": 1.0,
+              "size_novel": 9330,
+              "size_reused": 1802
+            },
+            "Fuzzers": {
+              "mean_novel": 0.8967419410446474,
+              "mean_reused": 0.9310344827586207,
+              "size_novel": 5801,
+              "size_reused": 261
+            },
+            "Generic": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 17149,
+              "size_reused": 1722
+            },
+            "Normal": {
+              "mean_novel": 0.7369961720333258,
+              "mean_reused": 0.6902173913043478,
+              "size_novel": 35528,
+              "size_reused": 1472
+            },
+            "Reconnaissance": {
+              "mean_novel": 0.9991518235793045,
+              "mean_reused": 1.0,
+              "size_novel": 2358,
+              "size_reused": 1138
+            },
+            "Shellcode": {
+              "mean_novel": 0.9945205479452055,
+              "mean_reused": 1.0,
+              "size_novel": 365,
+              "size_reused": 13
+            },
+            "Worms": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 44,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.0048418487187752435,
+        "adjusted_contribution": -0.0005022862302271213
+      },
+      {
+        "reused_share": 0.10373852208132925,
+        "accuracy_all": 0.8723218189768255,
+        "accuracy_reused": 0.9433321625102447,
+        "accuracy_novel": 0.8641026683470884,
+        "raw_advantage": 0.07922949416315628,
+        "raw_contribution": 0.008219150629737134,
+        "adjusted": {
+          "reused_accuracy": 0.9433321625102447,
+          "novel_accuracy_reweighted": 0.9493876981783193,
+          "advantage": -0.006055535668074596,
+          "reused_rows_covered": 8541,
+          "reused_rows_total": 8541,
+          "per_stratum": {
+            "Analysis": {
+              "mean_novel": 0.9909420289855072,
+              "mean_reused": 1.0,
+              "size_novel": 552,
+              "size_reused": 125
+            },
+            "Backdoor": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 579,
+              "size_reused": 4
+            },
+            "DoS": {
+              "mean_novel": 0.9971223021582734,
+              "mean_reused": 1.0,
+              "size_novel": 2085,
+              "size_reused": 2004
+            },
+            "Exploits": {
+              "mean_novel": 0.9947481243301179,
+              "mean_reused": 1.0,
+              "size_novel": 9330,
+              "size_reused": 1802
+            },
+            "Fuzzers": {
+              "mean_novel": 0.9007067746940183,
+              "mean_reused": 0.9310344827586207,
+              "size_novel": 5801,
+              "size_reused": 261
+            },
+            "Generic": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 17149,
+              "size_reused": 1722
+            },
+            "Normal": {
+              "mean_novel": 0.735757712226976,
+              "mean_reused": 0.6834239130434783,
+              "size_novel": 35528,
+              "size_reused": 1472
+            },
+            "Reconnaissance": {
+              "mean_novel": 0.9991518235793045,
+              "mean_reused": 1.0,
+              "size_novel": 2358,
+              "size_reused": 1138
+            },
+            "Shellcode": {
+              "mean_novel": 0.9945205479452055,
+              "mean_reused": 1.0,
+              "size_novel": 365,
+              "size_reused": 13
+            },
+            "Worms": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 44,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.006055535668074596,
+        "adjusted_contribution": -0.0006281923206168334
+      }
+    ]
+  },
+  "nsl-kdd": {
+    "stratum": "label",
+    "test_rows": 22544,
+    "reused_rows": 664,
+    "mean_over_seeds": {
+      "accuracy_all": 0.7223030518097941,
+      "accuracy_reused": 0.9165662650602409,
+      "accuracy_novel": 0.7164076782449725,
+      "raw_advantage": 0.20015858681526835,
+      "raw_contribution": 0.0058953735648216024,
+      "adjusted_advantage": -0.010099516198493984,
+      "adjusted_contribution": -0.0002947782850695991
+    },
+    "seed0_bootstrap": {
+      "raw_advantage_ci": [
+        0.17683864342195102,
+        0.2216626010440299
+      ],
+      "adjusted_advantage_ci": [
+        -0.0276622181462055,
+        0.006990094038839036
+      ]
+    },
+    "runs": [
+      {
+        "reused_share": 0.029453513129879347,
+        "accuracy_all": 0.7228087295954577,
+        "accuracy_reused": 0.9171686746987951,
+        "accuracy_novel": 0.7169104204753199,
+        "raw_advantage": 0.2002582542234752,
+        "raw_contribution": 0.005898309120137843,
+        "adjusted": {
+          "reused_accuracy": 0.9164133738601825,
+          "novel_accuracy_reweighted": 0.9252607890447451,
+          "advantage": -0.008847415184562557,
+          "reused_rows_covered": 658,
+          "reused_rows_total": 664,
+          "per_stratum": {
+            "apache2": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 737,
+              "size_reused": 0
+            },
+            "back": {
+              "mean_novel": 0.9738372093023255,
+              "mean_reused": 1.0,
+              "size_novel": 344,
+              "size_reused": 15
+            },
+            "buffer_overflow": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 20,
+              "size_reused": 0
+            },
+            "ftp_write": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 3,
+              "size_reused": 0
+            },
+            "guess_passwd": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1231,
+              "size_reused": 0
+            },
+            "httptunnel": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 133,
+              "size_reused": 0
+            },
+            "imap": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1,
+              "size_reused": 0
+            },
+            "ipsweep": {
+              "mean_novel": 0.9318181818181818,
+              "mean_reused": 1.0,
+              "size_novel": 44,
+              "size_reused": 97
+            },
+            "land": {
+              "mean_novel": 0.25,
+              "mean_reused": 1.0,
+              "size_novel": 4,
+              "size_reused": 3
+            },
+            "loadmodule": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "mailbomb": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 293,
+              "size_reused": 0
+            },
+            "mscan": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 996,
+              "size_reused": 0
+            },
+            "multihop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 18,
+              "size_reused": 0
+            },
+            "named": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 17,
+              "size_reused": 0
+            },
+            "neptune": {
+              "mean_novel": 0.9984451354953354,
+              "mean_reused": 1.0,
+              "size_novel": 4502,
+              "size_reused": 155
+            },
+            "nmap": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 73,
+              "size_reused": 0
+            },
+            "normal": {
+              "mean_novel": 0.9773058505100979,
+              "mean_reused": 0.8285714285714286,
+              "size_novel": 9606,
+              "size_reused": 105
+            },
+            "perl": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "phf": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "pod": {
+              "mean_novel": 0.85,
+              "mean_reused": 0.9523809523809523,
+              "size_novel": 20,
+              "size_reused": 21
+            },
+            "portsweep": {
+              "mean_novel": 0.9784172661870504,
+              "mean_reused": 1.0,
+              "size_novel": 139,
+              "size_reused": 18
+            },
+            "processtable": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 685,
+              "size_reused": 0
+            },
+            "ps": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 15,
+              "size_reused": 0
+            },
+            "rootkit": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            },
+            "saint": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 312,
+              "size_reused": 7
+            },
+            "satan": {
+              "mean_novel": 0.9986244841815681,
+              "mean_reused": 1.0,
+              "size_novel": 727,
+              "size_reused": 8
+            },
+            "sendmail": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 14,
+              "size_reused": 0
+            },
+            "smurf": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 462,
+              "size_reused": 203
+            },
+            "snmpgetattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 150,
+              "size_reused": 28
+            },
+            "snmpguess": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 331,
+              "size_reused": 0
+            },
+            "sqlattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "teardrop": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 9,
+              "size_reused": 3
+            },
+            "udpstorm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "warezmaster": {
+              "mean_novel": 0.0010604453870625664,
+              "mean_reused": 0.0,
+              "size_novel": 943,
+              "size_reused": 1
+            },
+            "worm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "xlock": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 9,
+              "size_reused": 0
+            },
+            "xsnoop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 4,
+              "size_reused": 0
+            },
+            "xterm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.008847415184562557,
+        "adjusted_contribution": -0.00025823275334644084
+      },
+      {
+        "reused_share": 0.029453513129879347,
+        "accuracy_all": 0.7217885024840313,
+        "accuracy_reused": 0.9186746987951807,
+        "accuracy_novel": 0.7158135283363802,
+        "raw_advantage": 0.20286117045880048,
+        "raw_contribution": 0.005974974147650972,
+        "adjusted": {
+          "reused_accuracy": 0.9179331306990881,
+          "novel_accuracy_reweighted": 0.9261843425227487,
+          "advantage": -0.00825121182366062,
+          "reused_rows_covered": 658,
+          "reused_rows_total": 664,
+          "per_stratum": {
+            "apache2": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 737,
+              "size_reused": 0
+            },
+            "back": {
+              "mean_novel": 0.9505813953488372,
+              "mean_reused": 1.0,
+              "size_novel": 344,
+              "size_reused": 15
+            },
+            "buffer_overflow": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 20,
+              "size_reused": 0
+            },
+            "ftp_write": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 3,
+              "size_reused": 0
+            },
+            "guess_passwd": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1231,
+              "size_reused": 0
+            },
+            "httptunnel": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 133,
+              "size_reused": 0
+            },
+            "imap": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1,
+              "size_reused": 0
+            },
+            "ipsweep": {
+              "mean_novel": 0.9318181818181818,
+              "mean_reused": 1.0,
+              "size_novel": 44,
+              "size_reused": 97
+            },
+            "land": {
+              "mean_novel": 0.0,
+              "mean_reused": 1.0,
+              "size_novel": 4,
+              "size_reused": 3
+            },
+            "loadmodule": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "mailbomb": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 293,
+              "size_reused": 0
+            },
+            "mscan": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 996,
+              "size_reused": 0
+            },
+            "multihop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 18,
+              "size_reused": 0
+            },
+            "named": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 17,
+              "size_reused": 0
+            },
+            "neptune": {
+              "mean_novel": 0.9991115059973346,
+              "mean_reused": 1.0,
+              "size_novel": 4502,
+              "size_reused": 155
+            },
+            "nmap": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 73,
+              "size_reused": 0
+            },
+            "normal": {
+              "mean_novel": 0.9754320216531335,
+              "mean_reused": 0.8285714285714286,
+              "size_novel": 9606,
+              "size_reused": 105
+            },
+            "perl": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "phf": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "pod": {
+              "mean_novel": 0.9,
+              "mean_reused": 1.0,
+              "size_novel": 20,
+              "size_reused": 21
+            },
+            "portsweep": {
+              "mean_novel": 0.9784172661870504,
+              "mean_reused": 1.0,
+              "size_novel": 139,
+              "size_reused": 18
+            },
+            "processtable": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 685,
+              "size_reused": 0
+            },
+            "ps": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 15,
+              "size_reused": 0
+            },
+            "rootkit": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            },
+            "saint": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 312,
+              "size_reused": 7
+            },
+            "satan": {
+              "mean_novel": 0.9986244841815681,
+              "mean_reused": 1.0,
+              "size_novel": 727,
+              "size_reused": 8
+            },
+            "sendmail": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 14,
+              "size_reused": 0
+            },
+            "smurf": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 462,
+              "size_reused": 203
+            },
+            "snmpgetattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 150,
+              "size_reused": 28
+            },
+            "snmpguess": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 331,
+              "size_reused": 0
+            },
+            "sqlattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "teardrop": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 9,
+              "size_reused": 3
+            },
+            "udpstorm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "warezmaster": {
+              "mean_novel": 0.0010604453870625664,
+              "mean_reused": 0.0,
+              "size_novel": 943,
+              "size_reused": 1
+            },
+            "worm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "xlock": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 9,
+              "size_reused": 0
+            },
+            "xsnoop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 4,
+              "size_reused": 0
+            },
+            "xterm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.00825121182366062,
+        "adjusted_contribution": -0.0002408311470887459
+      },
+      {
+        "reused_share": 0.029453513129879347,
+        "accuracy_all": 0.7220990063875089,
+        "accuracy_reused": 0.9156626506024096,
+        "accuracy_novel": 0.7162248628884826,
+        "raw_advantage": 0.19943778771392695,
+        "raw_contribution": 0.005874143499026237,
+        "adjusted": {
+          "reused_accuracy": 0.9179331306990881,
+          "novel_accuracy_reweighted": 0.9296152872926582,
+          "advantage": -0.011682156593570081,
+          "reused_rows_covered": 658,
+          "reused_rows_total": 664,
+          "per_stratum": {
+            "apache2": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 737,
+              "size_reused": 0
+            },
+            "back": {
+              "mean_novel": 0.9505813953488372,
+              "mean_reused": 1.0,
+              "size_novel": 344,
+              "size_reused": 15
+            },
+            "buffer_overflow": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 20,
+              "size_reused": 0
+            },
+            "ftp_write": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 3,
+              "size_reused": 0
+            },
+            "guess_passwd": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1231,
+              "size_reused": 0
+            },
+            "httptunnel": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 133,
+              "size_reused": 0
+            },
+            "imap": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1,
+              "size_reused": 0
+            },
+            "ipsweep": {
+              "mean_novel": 0.9545454545454546,
+              "mean_reused": 1.0,
+              "size_novel": 44,
+              "size_reused": 97
+            },
+            "land": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.3333333333333333,
+              "size_novel": 4,
+              "size_reused": 3
+            },
+            "loadmodule": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "mailbomb": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 293,
+              "size_reused": 0
+            },
+            "mscan": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 996,
+              "size_reused": 0
+            },
+            "multihop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 18,
+              "size_reused": 0
+            },
+            "named": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 17,
+              "size_reused": 0
+            },
+            "neptune": {
+              "mean_novel": 0.9988893824966681,
+              "mean_reused": 1.0,
+              "size_novel": 4502,
+              "size_reused": 155
+            },
+            "nmap": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 73,
+              "size_reused": 0
+            },
+            "normal": {
+              "mean_novel": 0.9762648344784509,
+              "mean_reused": 0.8285714285714286,
+              "size_novel": 9606,
+              "size_reused": 105
+            },
+            "perl": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "phf": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "pod": {
+              "mean_novel": 0.9,
+              "mean_reused": 1.0,
+              "size_novel": 20,
+              "size_reused": 21
+            },
+            "portsweep": {
+              "mean_novel": 0.9784172661870504,
+              "mean_reused": 1.0,
+              "size_novel": 139,
+              "size_reused": 18
+            },
+            "processtable": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 685,
+              "size_reused": 0
+            },
+            "ps": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 15,
+              "size_reused": 0
+            },
+            "rootkit": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            },
+            "saint": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 312,
+              "size_reused": 7
+            },
+            "satan": {
+              "mean_novel": 0.9986244841815681,
+              "mean_reused": 1.0,
+              "size_novel": 727,
+              "size_reused": 8
+            },
+            "sendmail": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 14,
+              "size_reused": 0
+            },
+            "smurf": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 462,
+              "size_reused": 203
+            },
+            "snmpgetattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 150,
+              "size_reused": 28
+            },
+            "snmpguess": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 331,
+              "size_reused": 0
+            },
+            "sqlattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "teardrop": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 9,
+              "size_reused": 3
+            },
+            "udpstorm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "warezmaster": {
+              "mean_novel": 0.0010604453870625664,
+              "mean_reused": 0.0,
+              "size_novel": 943,
+              "size_reused": 1
+            },
+            "worm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "xlock": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 9,
+              "size_reused": 0
+            },
+            "xsnoop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 4,
+              "size_reused": 0
+            },
+            "xterm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.011682156593570081,
+        "adjusted_contribution": -0.0003409713909940167
+      },
+      {
+        "reused_share": 0.029453513129879347,
+        "accuracy_all": 0.7224538679914834,
+        "accuracy_reused": 0.9141566265060241,
+        "accuracy_novel": 0.716636197440585,
+        "raw_advantage": 0.1975204290654391,
+        "raw_contribution": 0.005817670550898313,
+        "adjusted": {
+          "reused_accuracy": 0.9164133738601825,
+          "novel_accuracy_reweighted": 0.9297640182160827,
+          "advantage": -0.013350644355900165,
+          "reused_rows_covered": 658,
+          "reused_rows_total": 664,
+          "per_stratum": {
+            "apache2": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 737,
+              "size_reused": 0
+            },
+            "back": {
+              "mean_novel": 0.9622093023255814,
+              "mean_reused": 1.0,
+              "size_novel": 344,
+              "size_reused": 15
+            },
+            "buffer_overflow": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 20,
+              "size_reused": 0
+            },
+            "ftp_write": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 3,
+              "size_reused": 0
+            },
+            "guess_passwd": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1231,
+              "size_reused": 0
+            },
+            "httptunnel": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 133,
+              "size_reused": 0
+            },
+            "imap": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1,
+              "size_reused": 0
+            },
+            "ipsweep": {
+              "mean_novel": 0.9545454545454546,
+              "mean_reused": 1.0,
+              "size_novel": 44,
+              "size_reused": 97
+            },
+            "land": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.3333333333333333,
+              "size_novel": 4,
+              "size_reused": 3
+            },
+            "loadmodule": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "mailbomb": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 293,
+              "size_reused": 0
+            },
+            "mscan": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 996,
+              "size_reused": 0
+            },
+            "multihop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 18,
+              "size_reused": 0
+            },
+            "named": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 17,
+              "size_reused": 0
+            },
+            "neptune": {
+              "mean_novel": 0.9986672589960017,
+              "mean_reused": 1.0,
+              "size_novel": 4502,
+              "size_reused": 155
+            },
+            "nmap": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 73,
+              "size_reused": 0
+            },
+            "normal": {
+              "mean_novel": 0.9772017489069331,
+              "mean_reused": 0.8285714285714286,
+              "size_novel": 9606,
+              "size_reused": 105
+            },
+            "perl": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "phf": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "pod": {
+              "mean_novel": 0.9,
+              "mean_reused": 0.9523809523809523,
+              "size_novel": 20,
+              "size_reused": 21
+            },
+            "portsweep": {
+              "mean_novel": 0.9712230215827338,
+              "mean_reused": 1.0,
+              "size_novel": 139,
+              "size_reused": 18
+            },
+            "processtable": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 685,
+              "size_reused": 0
+            },
+            "ps": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 15,
+              "size_reused": 0
+            },
+            "rootkit": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            },
+            "saint": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 312,
+              "size_reused": 7
+            },
+            "satan": {
+              "mean_novel": 0.9972489683631361,
+              "mean_reused": 1.0,
+              "size_novel": 727,
+              "size_reused": 8
+            },
+            "sendmail": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 14,
+              "size_reused": 0
+            },
+            "smurf": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 462,
+              "size_reused": 203
+            },
+            "snmpgetattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 150,
+              "size_reused": 28
+            },
+            "snmpguess": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 331,
+              "size_reused": 0
+            },
+            "sqlattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "teardrop": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 9,
+              "size_reused": 3
+            },
+            "udpstorm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "warezmaster": {
+              "mean_novel": 0.0010604453870625664,
+              "mean_reused": 0.0,
+              "size_novel": 943,
+              "size_reused": 1
+            },
+            "worm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "xlock": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 9,
+              "size_reused": 0
+            },
+            "xsnoop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 4,
+              "size_reused": 0
+            },
+            "xterm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.013350644355900165,
+        "adjusted_contribution": -0.0003896701555261847
+      },
+      {
+        "reused_share": 0.029453513129879347,
+        "accuracy_all": 0.7223651525904897,
+        "accuracy_reused": 0.9171686746987951,
+        "accuracy_novel": 0.716453382084095,
+        "raw_advantage": 0.2007152926147001,
+        "raw_contribution": 0.005911770506394645,
+        "adjusted": {
+          "reused_accuracy": 0.9179331306990881,
+          "novel_accuracy_reweighted": 0.9262992837338646,
+          "advantage": -0.008366153034776502,
+          "reused_rows_covered": 658,
+          "reused_rows_total": 664,
+          "per_stratum": {
+            "apache2": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 737,
+              "size_reused": 0
+            },
+            "back": {
+              "mean_novel": 0.9593023255813954,
+              "mean_reused": 1.0,
+              "size_novel": 344,
+              "size_reused": 15
+            },
+            "buffer_overflow": {
+              "mean_novel": 0.05,
+              "mean_reused": 0.0,
+              "size_novel": 20,
+              "size_reused": 0
+            },
+            "ftp_write": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 3,
+              "size_reused": 0
+            },
+            "guess_passwd": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1231,
+              "size_reused": 0
+            },
+            "httptunnel": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 133,
+              "size_reused": 0
+            },
+            "imap": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 1,
+              "size_reused": 0
+            },
+            "ipsweep": {
+              "mean_novel": 0.9318181818181818,
+              "mean_reused": 1.0,
+              "size_novel": 44,
+              "size_reused": 97
+            },
+            "land": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.6666666666666666,
+              "size_novel": 4,
+              "size_reused": 3
+            },
+            "loadmodule": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "mailbomb": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 293,
+              "size_reused": 0
+            },
+            "mscan": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 996,
+              "size_reused": 0
+            },
+            "multihop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 18,
+              "size_reused": 0
+            },
+            "named": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 17,
+              "size_reused": 0
+            },
+            "neptune": {
+              "mean_novel": 0.9975566414926699,
+              "mean_reused": 1.0,
+              "size_novel": 4502,
+              "size_reused": 155
+            },
+            "nmap": {
+              "mean_novel": 1.0,
+              "mean_reused": 0.0,
+              "size_novel": 73,
+              "size_reused": 0
+            },
+            "normal": {
+              "mean_novel": 0.9772017489069331,
+              "mean_reused": 0.8285714285714286,
+              "size_novel": 9606,
+              "size_reused": 105
+            },
+            "perl": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "phf": {
+              "mean_novel": 0.5,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "pod": {
+              "mean_novel": 0.9,
+              "mean_reused": 1.0,
+              "size_novel": 20,
+              "size_reused": 21
+            },
+            "portsweep": {
+              "mean_novel": 0.9784172661870504,
+              "mean_reused": 1.0,
+              "size_novel": 139,
+              "size_reused": 18
+            },
+            "processtable": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 685,
+              "size_reused": 0
+            },
+            "ps": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 15,
+              "size_reused": 0
+            },
+            "rootkit": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            },
+            "saint": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 312,
+              "size_reused": 7
+            },
+            "satan": {
+              "mean_novel": 0.9986244841815681,
+              "mean_reused": 1.0,
+              "size_novel": 727,
+              "size_reused": 8
+            },
+            "sendmail": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 14,
+              "size_reused": 0
+            },
+            "smurf": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 462,
+              "size_reused": 203
+            },
+            "snmpgetattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 150,
+              "size_reused": 28
+            },
+            "snmpguess": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 331,
+              "size_reused": 0
+            },
+            "sqlattack": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "teardrop": {
+              "mean_novel": 1.0,
+              "mean_reused": 1.0,
+              "size_novel": 9,
+              "size_reused": 3
+            },
+            "udpstorm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "warezmaster": {
+              "mean_novel": 0.0010604453870625664,
+              "mean_reused": 0.0,
+              "size_novel": 943,
+              "size_reused": 1
+            },
+            "worm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 2,
+              "size_reused": 0
+            },
+            "xlock": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 9,
+              "size_reused": 0
+            },
+            "xsnoop": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 4,
+              "size_reused": 0
+            },
+            "xterm": {
+              "mean_novel": 0.0,
+              "mean_reused": 0.0,
+              "size_novel": 13,
+              "size_reused": 0
+            }
+          }
+        },
+        "adjusted_advantage": -0.008366153034776502,
+        "adjusted_contribution": -0.0002441859783926073
+      }
+    ]
+  }
+}

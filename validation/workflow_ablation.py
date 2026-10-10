@@ -72,7 +72,7 @@ from ids2eval.audit import dedup as dedup_mod  # noqa: E402
 from ids2eval.audit import homogeneity, repeated_seed_falsification  # noqa: E402
 from ids2eval.audit._materiality import accuracy_gap_margin  # noqa: E402
 from ids2eval.config import DEFAULTS  # noqa: E402
-from ids2eval.data import dataset, features  # noqa: E402
+from ids2eval.data import dataset  # noqa: E402
 
 N_ROWS = 10_000
 N_DEPLOY = 5_000
@@ -163,7 +163,7 @@ class Scenario:
         y = self.rng.choice(CLASSES, size=n, p=PRIORS)
         pick = self.rng.integers(0, 40, size=n)
         df = tuples(self._gids(n))
-        df[FEATS] = np.array([self.templates[c][j] for c, j in zip(y, pick)])
+        df[FEATS] = np.array([self.templates[c][j] for c, j in zip(y, pick, strict=True)])
         df["label"] = y
         return df
 
@@ -255,7 +255,7 @@ def run_one(name: str, seed: int) -> dict:
         margin = accuracy_gap_margin(np.mean(a_full), len(test), np.mean(a_nov), len(novel))
         m, lo_r, hi_r = t_interval(drops, extra=margin)
         interventions["reuse"] = {"mean": m, "ci": [lo_r, hi_r], "verdict": verdict(lo_r, hi_r),
-                                  "novel_rows": int(len(novel))}
+                                  "novel_rows": len(novel)}
     vs = [v["verdict"] for v in interventions.values()]
     w3 = "material" if "material" in vs else ("not material" if all(v == "not material" for v in vs)
                                               else "inconclusive")
@@ -300,7 +300,7 @@ def main():
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(json.dumps(result, indent=2, default=float))
     for name, e in result["summary"].items():
-        print(name, e["truth"], "gap mean %.4f sd %.4f" % (e["true_gap_mean"], e["true_gap_sd"]),
+        print(name, e["truth"], f"gap mean {e['true_gap_mean']:.4f} sd {e['true_gap_sd']:.4f}",
               {w: e[w] for w in ("W1", "W2", "W3")}, flush=True)
     print("DONE")
 

@@ -139,7 +139,7 @@ def interventions(sc, cfg, train, test):
             drops.append(a_full[-1] - a_nov[-1])
         margin = accuracy_gap_margin(np.mean(a_full), len(test), np.mean(a_nov), len(novel))
         m, lo_r, hi_r = v1.t_interval(drops, extra=margin)
-        out["reuse"] = {"mean": m, "ci": [lo_r, hi_r], "verdict": v1.verdict(lo_r, hi_r), "novel_rows": int(len(novel))}
+        out["reuse"] = {"mean": m, "ci": [lo_r, hi_r], "verdict": v1.verdict(lo_r, hi_r), "novel_rows": len(novel)}
     vs = [v["verdict"] for v in out.values()]
     combined = "material" if "material" in vs else ("not material" if all(v == "not material" for v in vs)
                                                      else "inconclusive")
@@ -183,8 +183,8 @@ def fit_cutoff(rows):
 
 
 def tally(calls, truth):
-    return {"correct": sum(c == t for c, t in zip(calls, truth)),
-            "wrong": sum(c not in (t, "inconclusive") for c, t in zip(calls, truth)),
+    return {"correct": sum(c == t for c, t in zip(calls, truth, strict=True)),
+            "wrong": sum(c not in (t, "inconclusive") for c, t in zip(calls, truth, strict=True)),
             "inconclusive": sum(c == "inconclusive" for c in calls)}
 
 
@@ -203,7 +203,8 @@ def summarize(rows):
             "truth": TRUTH[name], "gap_mean": float(np.mean(gaps)), "gap_sd": float(np.std(gaps, ddof=1)),
             "evidence": {
                 "dedup": {"target_present": REUSE[name], "detected": sum(r["evidence"]["dedup"] for r in rs), "n": len(rs)},
-                "homogeneity": {"target_present": EXCESS[name], "detected": sum(r["evidence"]["homogeneity"] for r in rs), "n": len(rs)},
+                "homogeneity": {"target_present": EXCESS[name],
+                                "detected": sum(r["evidence"]["homogeneity"] for r in rs), "n": len(rs)},
                 "intervention": tally([r["evidence"]["intervention"] for r in rs], [TRUTH[name]] * len(rs)),
             },
             "decision_heldout": {k: tally([r[k] for r in ev], [r["truth"] for r in ev]) for k in ("D1", "D2", "D3")},
@@ -229,7 +230,7 @@ def main():
                                          indent=2, default=float))
     print("D1 cutoff", summary["d1_cutoff"])
     for name, e in summary["scenarios"].items():
-        print(name, e["truth"], "gap %.3f (%.3f)" % (e["gap_mean"], e["gap_sd"]), "evidence", e["evidence"],
+        print(name, e["truth"], f"gap {e['gap_mean']:.3f} ({e['gap_sd']:.3f})", "evidence", e["evidence"],
               "held-out", e["decision_heldout"], "D3 ran", e["D3_interventions_run"], flush=True)
     print("DONE")
 

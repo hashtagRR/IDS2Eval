@@ -30,7 +30,8 @@ the agreement on classes one feature separates almost perfectly (Flood F1 >=
 machine. It does not score either tool against a ground truth.
 
 Artifacts: ToN-IoT Train_Test_Network.csv (Flood's own ToN metadata, with drop
-fields the file does not contain, such as ts, removed and recorded) and the UNSW-NB15 train/test partitions (Flood's UNSW metadata
+fields the file does not contain, such as ts, removed and recorded) and the UNSW-NB15 train/test
+partitions (Flood's UNSW metadata
 targets the raw capture files, so an adapted copy is used: label attack_cat,
 benign "Normal", categorical proto/state/service, id and label dropped; the
 partitions have no destination port, so PortTest is skipped and a constant
@@ -41,7 +42,6 @@ Usage: venv/bin/python3 validation/flood_comparison.py FLOOD_DIR NAME [NAME ...]
 """
 from __future__ import annotations
 
-import copy
 import glob
 import json
 import os
@@ -53,14 +53,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
-from sklearn.metrics import roc_auc_score  # noqa: E402
+import numpy as np
+import pandas as pd
+from sklearn.metrics import roc_auc_score
 
-from ids2eval.audit import dedup as dedup_mod  # noqa: E402
-from ids2eval.audit import feature_auc_ranking, homogeneity, label_conflict  # noqa: E402
-from ids2eval.config import load_config  # noqa: E402
-from ids2eval.data import dataset, features  # noqa: E402
+from ids2eval.audit import dedup as dedup_mod
+from ids2eval.audit import feature_auc_ranking, homogeneity, label_conflict
+from ids2eval.config import load_config
+from ids2eval.data import dataset, features
 
 DATA = Path(os.environ.get("IDS2EVAL_DATA", "/home/tango/projects/IDS2Eval_data"))
 CONFIG_DIR = Path(__file__).resolve().parent.parent / "results" / "configs"
@@ -85,7 +85,8 @@ def load(name):
         cfg["dataset"]["train_file"] = str(DATA / "unsw-nb15/UNSW_NB15_testing-set.csv")
         cfg["dataset"]["test_file"] = str(DATA / "unsw-nb15/UNSW_NB15_training-set.csv")
         train, test = dataset.load_split(cfg)
-        assert len(train) == 175_341 and len(test) == 82_332, (len(train), len(test))
+        if (len(train), len(test)) != (175_341, 82_332):
+            raise RuntimeError(f"unexpected UNSW-NB15 partition sizes {len(train)}, {len(test)}")
         flood_frame = pd.concat([pd.read_csv(cfg["dataset"]["train_file"]),
                                  pd.read_csv(cfg["dataset"]["test_file"])], ignore_index=True)
         flood_frame["dstport"] = 0
@@ -143,13 +144,13 @@ def flood_side(flood_dir, name, frame, meta, tests, benign, label_field):
     meta_path = work / "metadata.json"
     meta_path.write_text(json.dumps(adapted))
     classes = sorted(c for c in frame[label_field].astype(str).str.strip().unique() if c != benign)
-    per_class, timings = {}, {t: 0.0 for t in tests}
+    per_class, timings = {}, dict.fromkeys(tests, 0.0)
     for cls in classes:
         per_class[cls] = {}
         for t in tests:
             res_dir = work / "results"
             t0 = time.time()
-            proc = subprocess.run(
+            proc = subprocess.run(  # noqa: S603 - fixed argument list, no shell
                 [FLOOD_PY, str(Path(flood_dir) / "src" / "netstats.py"), "--metadata", str(meta_path),
                  "--results", str(res_dir) + "/", "--target", cls, "--folder", "--csv", str(work / "csv") + "/",
                  "--test", t], capture_output=True, text=True, cwd=str(work))
@@ -159,7 +160,7 @@ def flood_side(flood_dir, name, frame, meta, tests, benign, label_field):
                 per_class[cls][t] = {"error": (proc.stderr or proc.stdout)[-400:]}
                 continue
             per_class[cls][t] = json.loads(Path(found[-1]).read_text()).get(t)
-    return {"timings_s": timings, "per_class": per_class, "rows_given": int(len(frame)),
+    return {"timings_s": timings, "per_class": per_class, "rows_given": len(frame),
             "metadata_used": adapted, "drop_fields_absent_from_artifact": removed}
 
 

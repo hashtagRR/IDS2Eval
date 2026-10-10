@@ -105,8 +105,8 @@ def cross_validate(df, label_col, cfg, splitter, groups, seed):
                 raise RuntimeError(f"{len(overlap)} hosts on both sides of a fold")
         for v in VARIANTS:
             preds[v][test_idx] = fold_predict(df, train_idx, test_idx, label_col, cfg, seed, v == "ids_dropped")
-        folds.append({"test_rows": int(len(test_idx)),
-                      "test_hosts": None if groups is None else int(len(set(groups[test_idx]))),
+        folds.append({"test_rows": len(test_idx),
+                      "test_hosts": None if groups is None else len(set(groups[test_idx])),
                       "classes_without_training_rows": sorted(str(c) for c in missing)})
         gc.collect()
     return {"folds": folds, **{v: metrics(y, preds[v].astype(y.dtype), unpredictable) for v in VARIANTS}}
@@ -126,7 +126,7 @@ def main():
         if done >= n_repeats:
             continue
         df = dataset.load_raw_combined(cfg["dataset"], seed=cfg["random_seed"]).reset_index(drop=True)
-        entry["rows"] = int(len(df))
+        entry["rows"] = len(df)
         print(f"=== {name}: {len(df):,} rows, repeats {done}..{n_repeats - 1}", flush=True)
         for seed in range(done, n_repeats):
             row = {"seed": seed, "random": cross_validate(

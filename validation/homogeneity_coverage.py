@@ -105,7 +105,7 @@ def one(name, spec, sim):
     if spec.get("leak"):
         for cls in ("benign", "attack"):
             idx = np.flatnonzero(test["label"].to_numpy() == cls)
-            k = int(round(spec["leak"] * len(idx)))
+            k = round(spec["leak"] * len(idx))
             pick = rng.choice(idx, k, replace=False)
             src = train[train["label"] == cls].sample(n=k, random_state=sim)
             test.iloc[pick] = src.to_numpy()

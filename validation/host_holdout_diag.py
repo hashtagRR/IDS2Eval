@@ -45,14 +45,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import host_holdout as hh  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
-from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, recall_score  # noqa: E402
-from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold  # noqa: E402
+import host_holdout as hh
+import numpy as np
+import pandas as pd
+from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score, recall_score
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 
-from ids2eval.config import load_config  # noqa: E402
-from ids2eval.data import dataset  # noqa: E402
+from ids2eval.config import load_config
+from ids2eval.data import dataset
 
 SEED = 0
 B = 2000
@@ -71,7 +71,7 @@ def components(src, dst):
             i = parent[i]
         return i
 
-    for a, b in zip(hosts.get_indexer(src), hosts.get_indexer(dst)):
+    for a, b in zip(hosts.get_indexer(src), hosts.get_indexer(dst), strict=True):
         ra, rb = find(a), find(b)
         if ra != rb:
             parent[ra] = rb
@@ -84,7 +84,7 @@ def fold_metrics(y, pred, labels):
     return {"accuracy": float(accuracy_score(y, pred)),
             "balanced_accuracy": float(balanced_accuracy_score(y, pred)),
             "macro_f1": float(f1_score(y, pred, labels=labels, average="macro", zero_division=0)),
-            "recall": {str(c): float(r) for c, r in zip(labels, rec)}}
+            "recall": {str(c): float(r) for c, r in zip(labels, rec, strict=True)}}
 
 
 def run_design(df, y, label_col, cfg, splitter, groups, id_cols, src, dst, other_role):
@@ -92,18 +92,18 @@ def run_design(df, y, label_col, cfg, splitter, groups, id_cols, src, dst, other
     preds = {v: np.empty(len(df), dtype=object) for v in hh.VARIANTS}
     folds = []
     for k, (tr, te) in enumerate(splitter.split(df, y, groups)):
-        f = {"fold": k, "test_rows": int(len(te)), "per_class": {}}
+        f = {"fold": k, "test_rows": len(te), "per_class": {}}
         for c in labels:
             trc, tec = tr[y[tr] == c], te[y[te] == c]
             f["per_class"][str(c)] = {
-                "train_rows": int(len(trc)), "test_rows": int(len(tec)),
-                "train_src_hosts": int(len(set(src[trc]))), "test_src_hosts": int(len(set(src[tec]))),
-                "train_dst_hosts": int(len(set(dst[trc]))), "test_dst_hosts": int(len(set(dst[tec])))}
+                "train_rows": len(trc), "test_rows": len(tec),
+                "train_src_hosts": len(set(src[trc])), "test_src_hosts": len(set(src[tec])),
+                "train_dst_hosts": len(set(dst[trc])), "test_dst_hosts": len(set(dst[tec]))}
         if groups is not None:
             test_hosts = set(groups[te])
             other_train = set((dst if other_role == "dst" else src)[tr])
-            f["held_out_hosts"] = int(len(test_hosts))
-            f["held_out_hosts_seen_in_training_in_other_role"] = int(len(test_hosts & other_train))
+            f["held_out_hosts"] = len(test_hosts)
+            f["held_out_hosts_seen_in_training_in_other_role"] = len(test_hosts & other_train)
         f["unseen_id_share"] = {}
         for col in id_cols:
             seen = set(df[col].iloc[tr].astype(str))
@@ -152,18 +152,18 @@ def main():
         id_cols = [c for c in (cfg["schema"].get("id_like_columns") or []) if c in df.columns]
         print(f"=== {name}: {len(df):,} rows, {len(set(src))} source hosts, {len(set(dst))} destination hosts", flush=True)
 
-        entry = {"rows": int(len(df)), "source_hosts": int(len(set(src))), "destination_hosts": int(len(set(dst))),
+        entry = {"rows": len(df), "source_hosts": len(set(src)), "destination_hosts": len(set(dst)),
                  "id_columns": id_cols, "per_class_hosts": {}}
         for c in sorted(np.unique(y)):
             m = y == c
             top = pd.Series(src[m]).value_counts()
             entry["per_class_hosts"][str(c)] = {
-                "rows": int(m.sum()), "src_hosts": int(len(top)), "dst_hosts": int(len(set(dst[m]))),
+                "rows": int(m.sum()), "src_hosts": len(top), "dst_hosts": len(set(dst[m])),
                 "top_src_host_share": float(top.iloc[0] / m.sum())}
 
         comp = components(src, dst)
         sizes = pd.Series(comp).value_counts()
-        entry["endpoint_components"] = {"count": int(len(sizes)), "largest_share": float(sizes.iloc[0] / len(df)),
+        entry["endpoint_components"] = {"count": len(sizes), "largest_share": float(sizes.iloc[0] / len(df)),
                                         "largest_sizes": [int(x) for x in sizes.iloc[:10]]}
 
         designs = {"random": (StratifiedKFold(hh.N_FOLDS, shuffle=True, random_state=SEED), None, None),
@@ -183,7 +183,8 @@ def main():
             folds, pooled, confusion, p = run_design(df, y, label_col, cfg, splitter, groups, id_cols, src, dst, other)
             entry["designs"][dname] = {"folds": folds, "pooled": pooled, "confusion": confusion}
             preds[dname] = p
-            print(f"    pooled accuracy kept {pooled['ids_kept']['accuracy']:.4f} dropped {pooled['ids_dropped']['accuracy']:.4f}", flush=True)
+            kept, dropped = pooled["ids_kept"]["accuracy"], pooled["ids_dropped"]["accuracy"]
+            print(f"    pooled accuracy kept {kept:.4f} dropped {dropped:.4f}", flush=True)
 
         rng = np.random.default_rng(SEED)
         entry["clustered"] = {}

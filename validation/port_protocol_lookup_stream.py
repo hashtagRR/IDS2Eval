@@ -151,7 +151,8 @@ def score(train, test, cfg, name, stage):
     return {"port_column": frozen["details"]["port_column"], "protocol_column": frozen["details"]["protocol_column"],
             "frozen_status": frozen["status"], "frozen_auc": frozen["details"]["standalone_auc"],
             "lookup_status": lookup["status"],
-            "lookup": {k: d[k]["_key"] for k in ("standalone_auc", "seen_only_auc", "seen_coverage") if "_key" in d.get(k, {})}}
+            "lookup": {k: d[k]["_key"] for k in ("standalone_auc", "seen_only_auc", "seen_coverage")
+                       if "_key" in d.get(k, {})}}
 
 
 def main():
@@ -163,7 +164,7 @@ def main():
     if run["split"] == "random":
         files = run["files"]
         all_columns = list(dict.fromkeys(c for p in files for c in header(p)))
-        combined, port, proto = reduce(files, cfg, chunk_size, all_columns)
+        combined, _port, _proto = reduce(files, cfg, chunk_size, all_columns)
         print(f"  {len(combined):,} rows", flush=True)
         train, test = train_test_split(combined, test_size=1.0 - cfg["dataset"]["split_ratio"],
                                        random_state=cfg["random_seed"], stratify=combined[label])
@@ -171,7 +172,7 @@ def main():
         train, test = train.reset_index(drop=True), test.reset_index(drop=True)
     else:
         all_columns = list(dict.fromkeys(c for p in run["train"] + run["test"] for c in header(p)))
-        train, port, proto = reduce(run["train"], cfg, chunk_size, all_columns)
+        train, _port, _proto = reduce(run["train"], cfg, chunk_size, all_columns)
         test, _, _ = reduce(run["test"], cfg, chunk_size, all_columns)
     result = {"before_dedup": score(train, test, cfg, name, "before")}
     print("  before dedup:", result["before_dedup"], flush=True)

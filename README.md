@@ -4,6 +4,11 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23217300.svg)](https://doi.org/10.5281/zenodo.23217300)
 
+<p align="center">
+  <img src="docs/img/ids2eval-overview.svg" width="100%"
+       alt="IDS2Eval overview: a NIDS dataset and a YAML config go through four kinds of check (diagnose, 18 checks; control, 1; intervene, 8; look up known issues, 1), run on the raw data and again after removing duplicates, and every verdict lands in one scorecard. ids2eval recommend suggests config fixes for flagged checks.">
+</p>
+
 *IDS<sup>2</sup> - the name works both ways: **I**ntrusion **D**etection
 **S**ystems, and **I**ntrusion **D**ata **S**ets. (GitHub repo names
 can't do superscripts, hence `IDS2Eval`.)*

@@ -1,0 +1,3628 @@
+{
+  "threshold": 0.01,
+  "runs": [
+    {
+      "scenario": "clean",
+      "seed": 3000,
+      "rep": 0,
+      "truth": "not material",
+      "true_gap": 0.004579999999999962,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.00044999999999999484,
+          "ci": [
+            -0.00881191060921287,
+            0.00791191060921288
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3001,
+      "rep": 1,
+      "truth": "not material",
+      "true_gap": -0.006679999999999986,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.000900000000000023,
+          "ci": [
+            -0.00729790233463764,
+            0.0054979023346375935
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3002,
+      "rep": 2,
+      "truth": "not material",
+      "true_gap": -0.012209999999999988,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.001041554222888552,
+          "ci": [
+            -0.00438755868348826,
+            0.006470667129265364
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3003,
+      "rep": 3,
+      "truth": "not material",
+      "true_gap": -0.0035099999999999797,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.004750000000000009,
+          "ci": [
+            -0.0002808632541458078,
+            0.009780863254145827
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3004,
+      "rep": 4,
+      "truth": "not material",
+      "true_gap": -0.005959999999999998,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.002674662668665684,
+          "ci": [
+            -0.0009228421894003805,
+            0.006272167526731749
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3005,
+      "rep": 5,
+      "truth": "not material",
+      "true_gap": -0.0009100000000000108,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0035499999999999976,
+          "ci": [
+            -0.0027373003835554086,
+            0.009837300383555403
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3006,
+      "rep": 6,
+      "truth": "not material",
+      "true_gap": 0.0035399999999999763,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.003955872063968013,
+          "ci": [
+            -0.008533281187810628,
+            0.0006215370598746011
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3007,
+      "rep": 7,
+      "truth": "not material",
+      "true_gap": -0.018609999999999995,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0002999999999999892,
+          "ci": [
+            -0.008673377445813714,
+            0.008073377445813735
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3008,
+      "rep": 8,
+      "truth": "not material",
+      "true_gap": -0.004519999999999991,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.004997101449275376,
+          "ci": [
+            0.0006520517109539492,
+            0.009342151187596803
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3009,
+      "rep": 9,
+      "truth": "not material",
+      "true_gap": 0.02075,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0004321089455272542,
+          "ci": [
+            -0.005276440551587579,
+            0.006140658442642087
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3100,
+      "rep": 0,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3101,
+      "rep": 1,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3102,
+      "rep": 2,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3103,
+      "rep": 3,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3104,
+      "rep": 4,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3105,
+      "rep": 5,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3106,
+      "rep": 6,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3107,
+      "rep": 7,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3108,
+      "rep": 8,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3109,
+      "rep": 9,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3200,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.46284000000000003,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.41243210368893324,
+          "ci": [
+            0.39417383700372377,
+            0.4306903703741427
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3201,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.43779,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4241950149551346,
+          "ci": [
+            0.40698517462743394,
+            0.4414048552828353
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3202,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.48762999999999995,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4847270942166817,
+          "ci": [
+            0.46871658841223407,
+            0.5007376000211293
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3203,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.49272,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5073058823529413,
+          "ci": [
+            0.48365876971145644,
+            0.530952994994426
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3204,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.47974000000000006,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48132459313601483,
+          "ci": [
+            0.4678254594474396,
+            0.4948237268245901
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3205,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": 0.4787800000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4785784147557328,
+          "ci": [
+            0.46770246473770066,
+            0.48945436477376497
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3206,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": 0.45036000000000004,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4026603688933201,
+          "ci": [
+            0.39033257824540785,
+            0.4149881595412323
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3207,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.4396,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48780314057826524,
+          "ci": [
+            0.47065649889646666,
+            0.5049497822600638
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3208,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.44795000000000007,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4690681954137587,
+          "ci": [
+            0.4456903123336672,
+            0.49244607849385025
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3209,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.45708000000000004,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4638247009288413,
+          "ci": [
+            0.4471370205795384,
+            0.4805123812781442
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3300,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.46799999999999997,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.44745762711864406,
+          "ci": [
+            0.42375324010774745,
+            0.4711620141295407
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3301,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.4952,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4949152542372881,
+          "ci": [
+            0.46777350843825627,
+            0.5220570000363199
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3302,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.4368,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5037459051417177,
+          "ci": [
+            0.47590705172936065,
+            0.5315847585540747
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3303,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.43520000000000003,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4496456190885447,
+          "ci": [
+            0.43562589470350677,
+            0.4636653434735827
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3304,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.46020000000000005,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.488135593220339,
+          "ci": [
+            0.46385255022984984,
+            0.5124186362108282
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3305,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": 0.48339999999999994,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4507580740365967,
+          "ci": [
+            0.4290262358109698,
+            0.47248991226222353
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3306,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": 0.48019999999999996,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5177966101694915,
+          "ci": [
+            0.496708704414593,
+            0.53888451592439
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3307,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.4431999999999999,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4483050847457627,
+          "ci": [
+            0.4231546659602667,
+            0.4734555035312587
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3308,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.4798,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48494308120414875,
+          "ci": [
+            0.4599726602106262,
+            0.5099135021976713
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3309,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.40800000000000003,
+      "reuse_share": 1.0,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4122544809125058,
+          "ci": [
+            0.38623479382514697,
+            0.4382741679998647
+          ],
+          "verdict": "material"
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": false,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3400,
+      "rep": 0,
+      "truth": "not material",
+      "true_gap": 0.0004099999999999882,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.00014999999999998348,
+          "ci": [
+            -0.0006845268834495229,
+            0.00038452688344955597
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3401,
+      "rep": 1,
+      "truth": "not material",
+      "true_gap": -0.0010299999999999864,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0001499999999999946,
+          "ci": [
+            -0.0016819748924725684,
+            0.0019819748924725577
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.002587500000000009,
+          "ci": [
+            -0.004659403010936723,
+            0.009834403010936741
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3402,
+      "rep": 2,
+      "truth": "not material",
+      "true_gap": -0.0006799999999999695,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.00024990004997501594,
+          "ci": [
+            -0.0005974028746468215,
+            0.0010972029745968533
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00017500000000001404,
+          "ci": [
+            -0.0017265814574638,
+            0.002076581457463828
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3403,
+      "rep": 3,
+      "truth": "not material",
+      "true_gap": 4.999999999999449e-05,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -9.999999999998899e-05,
+          "ci": [
+            -0.00032621571627978454,
+            0.00012621571627980657
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3404,
+      "rep": 4,
+      "truth": "not material",
+      "true_gap": 0.00037999999999995817,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.00020000000000000017,
+          "ci": [
+            -0.00031142321172624343,
+            0.0007114232117262438
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3405,
+      "rep": 5,
+      "truth": "not material",
+      "true_gap": 0.003870000000000029,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0027984257871064623,
+          "ci": [
+            0.00021142712999515714,
+            0.005385424444217767
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0037125000000000187,
+          "ci": [
+            -0.004858010981671204,
+            0.012283010981671241
+          ],
+          "verdict": "inconclusive",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "inconclusive"
+      },
+      "D2": "inconclusive",
+      "D3": "inconclusive",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3406,
+      "rep": 6,
+      "truth": "not material",
+      "true_gap": 0.0006800000000000472,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 5.00000000000167e-05,
+          "ci": [
+            -0.00026318147783615397,
+            0.0003631814778361874
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00012500000000004174,
+          "ci": [
+            -0.0014432845906588005,
+            0.001693284590658884
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3407,
+      "rep": 7,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3408,
+      "rep": 8,
+      "truth": "not material",
+      "true_gap": -4.999999999999449e-05,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3409,
+      "rep": 9,
+      "truth": "not material",
+      "true_gap": -0.00034999999999996145,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0001499999999999946,
+          "ci": [
+            -0.0002647288131796664,
+            0.0005647288131796556
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00011250000000003756,
+          "ci": [
+            -0.0014036252515036362,
+            0.0016286252515037114
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3500,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.08005000000000002,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.025990629685157408,
+          "ci": [
+            0.01848740483717848,
+            0.03349385453313634
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.08033749999999999,
+          "ci": [
+            0.04829334780330216,
+            0.11238165219669782
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3501,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.06848999999999997,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02549572713643178,
+          "ci": [
+            0.01769003037581488,
+            0.033301423897048675
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07576249999999997,
+          "ci": [
+            0.04403637803471877,
+            0.10748862196528117
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3502,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.08634999999999998,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.027500000000000014,
+          "ci": [
+            0.018566786205102596,
+            0.03643321379489743
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0705125,
+          "ci": [
+            0.039078002832121234,
+            0.10194699716787878
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3503,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.07490999999999998,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.021580709645177408,
+          "ci": [
+            0.012598240238975518,
+            0.0305631790513793
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07363749999999998,
+          "ci": [
+            0.04210574130424772,
+            0.10516925869575225
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3504,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.07380000000000002,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02775000000000003,
+          "ci": [
+            0.020580056085935536,
+            0.03491994391406453
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0828,
+          "ci": [
+            0.050361837100278924,
+            0.11523816289972108
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3505,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": 0.05639999999999999,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.009822838580709637,
+          "ci": [
+            0.00044279114946376395,
+            0.01920288601195551
+          ],
+          "verdict": "inconclusive"
+        },
+        "reuse": {
+          "mean": 0.056174999999999975,
+          "ci": [
+            0.02711475496247509,
+            0.08523524503752486
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3506,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": 0.058629999999999995,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02469615192403799,
+          "ci": [
+            0.01779239642254773,
+            0.03159990742552825
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0732625,
+          "ci": [
+            0.04162978686929941,
+            0.10489521313070058
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3507,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.07581999999999998,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.023432433783108463,
+          "ci": [
+            0.013072028560208716,
+            0.03379283900600821
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07264999999999999,
+          "ci": [
+            0.04104613782314036,
+            0.10425386217685963
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3508,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.06428000000000003,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.01845,
+          "ci": [
+            0.01147460783072897,
+            0.025425392169271033
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.06602499999999997,
+          "ci": [
+            0.03532947918798776,
+            0.09672052081201218
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3509,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.0857,
+      "reuse_share": 0.2,
+      "dedup_status": "flag",
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.023531709145427293,
+          "ci": [
+            0.013096121545475,
+            0.033967296745379585
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07379999999999998,
+          "ci": [
+            0.0423533086997038,
+            0.10524669130029615
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "evidence": {
+        "dedup": true,
+        "homogeneity": true,
+        "intervention": "material"
+      },
+      "D2": "material",
+      "D3": "material",
+      "D3_ran_interventions": true,
+      "D1": "material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3600,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.5122,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0001499999999999946,
+          "ci": [
+            -0.0004444668707932237,
+            0.0001444668707932345
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3601,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.47386999999999996,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            -0.00016861123972680957,
+            0.00016861123972680957
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3602,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.5508,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 4.999999999999449e-05,
+          "ci": [
+            -6.310785813990328e-05,
+            0.00016310785813989227
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3603,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.5047200000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            -0.00029204323393401004,
+            0.00029204323393401004
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3604,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.4600200000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -9.999999999998899e-05,
+          "ci": [
+            -0.0002508104775198527,
+            5.0810477519874726e-05
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3605,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": 0.63304,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0001500499750124895,
+          "ci": [
+            -0.001104599596989777,
+            0.0008044996469647979
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3606,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": 0.64688,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -5.000000000000559e-05,
+          "ci": [
+            -0.0003631814778361672,
+            0.000263181477836156
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3607,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.55982,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -4.999999999999449e-05,
+          "ci": [
+            -0.00016310785813989227,
+            6.310785813990328e-05
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3608,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.6170000000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0002500249875062255,
+          "ci": [
+            -0.000553958170238153,
+            5.390819522570195e-05
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "host_memo",
+      "seed": 3609,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.6252200000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 5.000000000000559e-05,
+          "ci": [
+            -0.00021391833565977863,
+            0.00031391833565978984
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3700,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.15753000000000003,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.001508670664667655,
+          "ci": [
+            -0.008482394048327048,
+            0.005465052718991737
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3701,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.013430000000000008,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0014500000000000068,
+          "ci": [
+            -0.00541860603810501,
+            0.008318606038105024
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3702,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.16898,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0035499999999999976,
+          "ci": [
+            -0.004398817411918667,
+            0.011498817411918662
+          ],
+          "verdict": "inconclusive"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "inconclusive"
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3703,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.010890000000000021,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0004928285857071391,
+          "ci": [
+            -0.004072635393210715,
+            0.005058292564624992
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3704,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.06109000000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0006212393803098348,
+          "ci": [
+            -0.008313149391886227,
+            0.007070670631266557
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3705,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": -0.03713000000000003,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0022903298350824717,
+          "ci": [
+            -0.003978051605314594,
+            0.008558711275479539
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3706,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": -0.011160000000000014,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.004605572213893039,
+          "ci": [
+            -0.011837099668584584,
+            0.0026259552407985054
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3707,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.08531000000000001,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.003192578710644689,
+          "ci": [
+            -0.002678959042172443,
+            0.009064116463461822
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3708,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.06971,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.001000000000000012,
+          "ci": [
+            -0.004150238528587699,
+            0.006150238528587724
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "drift",
+      "seed": 3709,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.04735999999999997,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0032926536731633926,
+          "ci": [
+            -0.0003980551716184495,
+            0.006983362517945235
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3800,
+      "rep": 0,
+      "truth": "material",
+      "true_gap": 0.06721000000000003,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.006642603698150918,
+          "ci": [
+            0.0006307354123850761,
+            0.01265447198391676
+          ],
+          "verdict": "inconclusive"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "inconclusive"
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3801,
+      "rep": 1,
+      "truth": "material",
+      "true_gap": 0.09132,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.004506496751624178,
+          "ci": [
+            -0.01024489850830468,
+            0.0012319050050563236
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3802,
+      "rep": 2,
+      "truth": "material",
+      "true_gap": 0.016890000000000006,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0010934782608695514,
+          "ci": [
+            -0.0018006198402655189,
+            0.003987576362004622
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3803,
+      "rep": 3,
+      "truth": "material",
+      "true_gap": 0.07068999999999998,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.002100000000000002,
+          "ci": [
+            -0.003517057657709194,
+            0.007717057657709198
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3804,
+      "rep": 4,
+      "truth": "material",
+      "true_gap": 0.06356,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.003550000000000031,
+          "ci": [
+            -0.0014870755932655196,
+            0.008587075593265582
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3805,
+      "rep": 5,
+      "truth": "material",
+      "true_gap": 0.02252999999999996,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -5.269865067467627e-05,
+          "ci": [
+            -0.003950378058077101,
+            0.003844980756727749
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3806,
+      "rep": 6,
+      "truth": "material",
+      "true_gap": 0.07793,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0017000000000000127,
+          "ci": [
+            -0.005533009487655427,
+            0.008933009487655451
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3807,
+      "rep": 7,
+      "truth": "material",
+      "true_gap": 0.11074000000000002,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0016499999999999959,
+          "ci": [
+            -0.009741670786129133,
+            0.006441670786129142
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3808,
+      "rep": 8,
+      "truth": "material",
+      "true_gap": 0.10976,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0017946276861569243,
+          "ci": [
+            -0.0048228761577393964,
+            0.008412131530053244
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    },
+    {
+      "scenario": "prior_shift",
+      "seed": 3809,
+      "rep": 9,
+      "truth": "material",
+      "true_gap": 0.03750000000000002,
+      "reuse_share": 0.0,
+      "dedup_status": "ok",
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 9.277861069464377e-05,
+          "ci": [
+            -0.0049033235741274975,
+            0.005088880795516786
+          ],
+          "verdict": "not material"
+        }
+      },
+      "evidence": {
+        "dedup": false,
+        "homogeneity": false,
+        "intervention": "not material"
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D3_ran_interventions": false,
+      "D1": "not material"
+    }
+  ],
+  "summary": {
+    "d1_cutoff": 0.0,
+    "scenarios": {
+      "clean": {
+        "truth": "not material",
+        "gap_mean": -0.0023530000000000005,
+        "gap_sd": 0.010634551706583586,
+        "evidence": {
+          "dedup": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 0
+      },
+      "repetitive": {
+        "truth": "not material",
+        "gap_mean": 0.0,
+        "gap_sd": 0.0,
+        "evidence": {
+          "dedup": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 10
+      },
+      "group_noisy": {
+        "truth": "material",
+        "gap_mean": 0.46344900000000006,
+        "gap_sd": 0.020059864544795792,
+        "evidence": {
+          "dedup": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 0
+      },
+      "group_exact": {
+        "truth": "material",
+        "gap_mean": 0.4590000000000001,
+        "gap_sd": 0.02744740424885382,
+        "evidence": {
+          "dedup": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 10
+      },
+      "presplit_easy": {
+        "truth": "not material",
+        "gap_mean": 0.00032800000000001047,
+        "gap_sd": 0.001346879521131884,
+        "evidence": {
+          "dedup": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 9,
+            "wrong": 0,
+            "inconclusive": 1
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 4,
+            "wrong": 0,
+            "inconclusive": 1
+          },
+          "D3": {
+            "correct": 4,
+            "wrong": 0,
+            "inconclusive": 1
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 9,
+            "wrong": 0,
+            "inconclusive": 1
+          },
+          "D3": {
+            "correct": 9,
+            "wrong": 0,
+            "inconclusive": 1
+          }
+        },
+        "D3_interventions_run": 10
+      },
+      "presplit_hard": {
+        "truth": "material",
+        "gap_mean": 0.072443,
+        "gap_sd": 0.010417871450327822,
+        "evidence": {
+          "dedup": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": true,
+            "detected": 10,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 10,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 10
+      },
+      "host_memo": {
+        "truth": "material",
+        "gap_mean": 0.558357,
+        "gap_sd": 0.06928074769451549,
+        "evidence": {
+          "dedup": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 0
+      },
+      "drift": {
+        "truth": "material",
+        "gap_mean": 0.056601,
+        "gap_sd": 0.06769833962349282,
+        "evidence": {
+          "dedup": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 0,
+            "wrong": 9,
+            "inconclusive": 1
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 0,
+            "wrong": 9,
+            "inconclusive": 1
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 0
+      },
+      "prior_shift": {
+        "truth": "material",
+        "gap_mean": 0.06681299999999998,
+        "gap_sd": 0.03305974324360874,
+        "evidence": {
+          "dedup": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "homogeneity": {
+            "target_present": false,
+            "detected": 0,
+            "n": 10
+          },
+          "intervention": {
+            "correct": 0,
+            "wrong": 9,
+            "inconclusive": 1
+          }
+        },
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          }
+        },
+        "decision_all": {
+          "D2": {
+            "correct": 0,
+            "wrong": 9,
+            "inconclusive": 1
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 10,
+            "inconclusive": 0
+          }
+        },
+        "D3_interventions_run": 0
+      }
+    }
+  }
+}

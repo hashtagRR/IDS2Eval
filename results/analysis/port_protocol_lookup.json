@@ -1,0 +1,32 @@
+{
+  "ton-iot-official": {
+    "before_dedup": {
+      "port_column": "src_port",
+      "protocol_column": "proto",
+      "frozen_status": "flag",
+      "frozen_auc": 0.8806447514067022,
+      "frozen_summary": "standalone AUC of 'src_port' + 'proto' combined: 0.881. Port and protocol together may predict the label without attack behavior",
+      "lookup_status": "flag",
+      "lookup_summary": "standalone AUC by column (seen-value coverage, AUC on seen values): _port_proto: 0.902 (94.2%, 0.908). Suggest dropping: ['_port_proto']",
+      "lookup_details": {
+        "standalone_auc": 0.9018802009713723,
+        "seen_only_auc": 0.9079888628284998,
+        "seen_coverage": 0.9419555071193347
+      }
+    },
+    "after_dedup": {
+      "port_column": "src_port",
+      "protocol_column": "proto",
+      "frozen_status": "flag",
+      "frozen_auc": 0.8651945233604921,
+      "frozen_summary": "standalone AUC of 'src_port' + 'proto' combined: 0.865. Port and protocol together may predict the label without attack behavior",
+      "lookup_status": "flag",
+      "lookup_summary": "standalone AUC by column (seen-value coverage, AUC on seen values): _port_proto: 0.884 (93.4%, 0.89). Suggest dropping: ['_port_proto']",
+      "lookup_details": {
+        "standalone_auc": 0.8837108385949779,
+        "seen_only_auc": 0.8904444279771829,
+        "seen_coverage": 0.9335198869810911
+      }
+    }
+  }
+}

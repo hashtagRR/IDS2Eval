@@ -1,0 +1,1242 @@
+{
+  "ton-iot-official": {
+    "repeats": [
+      {
+        "seed": 0,
+        "random": {
+          "folds": [
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9954037802722668,
+            "balanced_accuracy": 0.9881884496644295,
+            "macro_f1": 0.9861094703814016,
+            "per_class_recall": {
+              "backdoor": 0.99995,
+              "ddos": 0.99095,
+              "dos": 0.99085,
+              "injection": 0.99025,
+              "mitm": 0.9261744966442953,
+              "normal": 0.99976,
+              "password": 0.99325,
+              "ransomware": 0.99995,
+              "scanning": 0.9909,
+              "xss": 0.99985
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9770615466990139,
+            "balanced_accuracy": 0.9566335081495685,
+            "macro_f1": 0.9531531221511031,
+            "per_class_recall": {
+              "backdoor": 0.99965,
+              "ddos": 0.9741,
+              "dos": 0.9819,
+              "injection": 0.9664,
+              "mitm": 0.7929050814956855,
+              "normal": 0.99688,
+              "password": 0.9784,
+              "ransomware": 0.98045,
+              "scanning": 0.98765,
+              "xss": 0.908
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "source_host": {
+          "folds": [
+            {
+              "test_rows": 68299,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 31343,
+              "test_hosts": 4,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41632,
+              "test_hosts": 8,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 32151,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 37618,
+              "test_hosts": 17,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.6681292438033956,
+            "balanced_accuracy": 0.6238507746883988,
+            "macro_f1": 0.5701429049493665,
+            "per_class_recall": {
+              "backdoor": 0.0066,
+              "ddos": 0.7833,
+              "dos": 0.1028,
+              "injection": 0.96525,
+              "mitm": 0.4314477468839885,
+              "normal": 0.81376,
+              "password": 0.99065,
+              "ransomware": 0.83945,
+              "scanning": 0.98645,
+              "xss": 0.3188
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.7095426050615278,
+            "balanced_accuracy": 0.666735384467881,
+            "macro_f1": 0.6066430219884714,
+            "per_class_recall": {
+              "backdoor": 0.0066,
+              "ddos": 0.92835,
+              "dos": 0.0993,
+              "injection": 0.9485,
+              "mitm": 0.5829338446788112,
+              "normal": 0.91492,
+              "password": 0.9767,
+              "ransomware": 0.93875,
+              "scanning": 0.98715,
+              "xss": 0.28415
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "destination_host": {
+          "folds": [
+            {
+              "test_rows": 51554,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 46656,
+              "test_hosts": 9,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41945,
+              "test_hosts": 42,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 40203,
+              "test_hosts": 116,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 30685,
+              "test_hosts": 568,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.8661362850224835,
+            "balanced_accuracy": 0.8054202790028763,
+            "macro_f1": 0.8251899553719818,
+            "per_class_recall": {
+              "backdoor": 0.97345,
+              "ddos": 0.40015,
+              "dos": 0.92155,
+              "injection": 0.9449,
+              "mitm": 0.38063279002876316,
+              "normal": 0.96412,
+              "password": 0.82135,
+              "ransomware": 0.753,
+              "scanning": 0.9654,
+              "xss": 0.92965
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.8177385651265382,
+            "balanced_accuracy": 0.761845610738255,
+            "macro_f1": 0.7763365270419741,
+            "per_class_recall": {
+              "backdoor": 0.99285,
+              "ddos": 0.5608,
+              "dos": 0.91865,
+              "injection": 0.85655,
+              "mitm": 0.3624161073825503,
+              "normal": 0.90264,
+              "password": 0.71365,
+              "ransomware": 0.56895,
+              "scanning": 0.927,
+              "xss": 0.81495
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        }
+      },
+      {
+        "seed": 1,
+        "random": {
+          "folds": [
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9952805826300801,
+            "balanced_accuracy": 0.9894096088207096,
+            "macro_f1": 0.9863344408086905,
+            "per_class_recall": {
+              "backdoor": 0.99985,
+              "ddos": 0.9907,
+              "dos": 0.9905,
+              "injection": 0.98925,
+              "mitm": 0.9405560882070949,
+              "normal": 0.99984,
+              "password": 0.9928,
+              "ransomware": 1.0,
+              "scanning": 0.991,
+              "xss": 0.9996
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9771136687784006,
+            "balanced_accuracy": 0.9567883854266539,
+            "macro_f1": 0.9540832411041793,
+            "per_class_recall": {
+              "backdoor": 0.99945,
+              "ddos": 0.97335,
+              "dos": 0.9814,
+              "injection": 0.96665,
+              "mitm": 0.7938638542665388,
+              "normal": 0.99682,
+              "password": 0.9788,
+              "ransomware": 0.98045,
+              "scanning": 0.9881,
+              "xss": 0.909
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "source_host": {
+          "folds": [
+            {
+              "test_rows": 68299,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 31343,
+              "test_hosts": 4,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41632,
+              "test_hosts": 8,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 32151,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 37618,
+              "test_hosts": 17,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.6722042427372621,
+            "balanced_accuracy": 0.6353977248322147,
+            "macro_f1": 0.5704484838061601,
+            "per_class_recall": {
+              "backdoor": 0.00665,
+              "ddos": 0.7591,
+              "dos": 0.10285,
+              "injection": 0.9536,
+              "mitm": 0.46308724832214765,
+              "normal": 0.78544,
+              "password": 0.99015,
+              "ransomware": 0.9807,
+              "scanning": 0.9871,
+              "xss": 0.3253
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.6778950261321153,
+            "balanced_accuracy": 0.653944016299137,
+            "macro_f1": 0.5904579317224097,
+            "per_class_recall": {
+              "backdoor": 0.0066,
+              "ddos": 0.93025,
+              "dos": 0.09935,
+              "injection": 0.94805,
+              "mitm": 0.585810162991371,
+              "normal": 0.77938,
+              "password": 0.9771,
+              "ransomware": 0.93875,
+              "scanning": 0.98725,
+              "xss": 0.2869
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "destination_host": {
+          "folds": [
+            {
+              "test_rows": 51554,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 46656,
+              "test_hosts": 9,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41945,
+              "test_hosts": 42,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 40203,
+              "test_hosts": 116,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 30685,
+              "test_hosts": 568,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.8363840544344043,
+            "balanced_accuracy": 0.7723672109300096,
+            "macro_f1": 0.7827983431709027,
+            "per_class_recall": {
+              "backdoor": 0.51255,
+              "ddos": 0.30385,
+              "dos": 0.9212,
+              "injection": 0.93835,
+              "mitm": 0.4046021093000959,
+              "normal": 0.99032,
+              "password": 0.8836,
+              "ransomware": 0.8755,
+              "scanning": 0.9665,
+              "xss": 0.9272
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.8281203356661913,
+            "balanced_accuracy": 0.7713587152444871,
+            "macro_f1": 0.7852256975857894,
+            "per_class_recall": {
+              "backdoor": 0.99285,
+              "ddos": 0.5808,
+              "dos": 0.9186,
+              "injection": 0.8881,
+              "mitm": 0.3537871524448706,
+              "normal": 0.9068,
+              "password": 0.7294,
+              "ransomware": 0.56895,
+              "scanning": 0.927,
+              "xss": 0.8473
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        }
+      },
+      {
+        "seed": 2,
+        "random": {
+          "folds": [
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42209,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 42208,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9954179953848268,
+            "balanced_accuracy": 0.9880366951102589,
+            "macro_f1": 0.9862323979594307,
+            "per_class_recall": {
+              "backdoor": 0.99995,
+              "ddos": 0.99115,
+              "dos": 0.99115,
+              "injection": 0.9903,
+              "mitm": 0.9242569511025887,
+              "normal": 0.99966,
+              "password": 0.99315,
+              "ransomware": 0.99995,
+              "scanning": 0.9909,
+              "xss": 0.9999
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9771184071492539,
+            "balanced_accuracy": 0.9568023854266539,
+            "macro_f1": 0.9538632397583282,
+            "per_class_recall": {
+              "backdoor": 0.99945,
+              "ddos": 0.97375,
+              "dos": 0.98245,
+              "injection": 0.96725,
+              "mitm": 0.7938638542665388,
+              "normal": 0.99676,
+              "password": 0.97875,
+              "ransomware": 0.98045,
+              "scanning": 0.98735,
+              "xss": 0.90795
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "source_host": {
+          "folds": [
+            {
+              "test_rows": 68299,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 31343,
+              "test_hosts": 4,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41632,
+              "test_hosts": 8,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 32151,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 37618,
+              "test_hosts": 17,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.6399027686300897,
+            "balanced_accuracy": 0.6084238753595398,
+            "macro_f1": 0.5462768112936088,
+            "per_class_recall": {
+              "backdoor": 0.0066,
+              "ddos": 0.76385,
+              "dos": 0.1031,
+              "injection": 0.94825,
+              "mitm": 0.5790987535953979,
+              "normal": 0.81134,
+              "password": 0.98155,
+              "ransomware": 0.83975,
+              "scanning": 0.9891,
+              "xss": 0.0616
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.677478049497022,
+            "balanced_accuracy": 0.6559451936720998,
+            "macro_f1": 0.5919468725664407,
+            "per_class_recall": {
+              "backdoor": 0.0066,
+              "ddos": 0.93025,
+              "dos": 0.09965,
+              "injection": 0.9476,
+              "mitm": 0.6078619367209971,
+              "normal": 0.77704,
+              "password": 0.977,
+              "ransomware": 0.93875,
+              "scanning": 0.98735,
+              "xss": 0.28735
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        },
+        "destination_host": {
+          "folds": [
+            {
+              "test_rows": 51554,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 46656,
+              "test_hosts": 9,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 41945,
+              "test_hosts": 42,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 40203,
+              "test_hosts": 116,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 30685,
+              "test_hosts": 568,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.8485900977525908,
+            "balanced_accuracy": 0.7841934199424736,
+            "macro_f1": 0.7977383285490859,
+            "per_class_recall": {
+              "backdoor": 0.51205,
+              "ddos": 0.406,
+              "dos": 0.92175,
+              "injection": 0.947,
+              "mitm": 0.38734419942473636,
+              "normal": 0.98644,
+              "password": 0.8916,
+              "ransomware": 0.89345,
+              "scanning": 0.96665,
+              "xss": 0.92965
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.8222163255829381,
+            "balanced_accuracy": 0.7651077152444871,
+            "macro_f1": 0.7800878381204814,
+            "per_class_recall": {
+              "backdoor": 0.99285,
+              "ddos": 0.57035,
+              "dos": 0.9184,
+              "injection": 0.8937,
+              "mitm": 0.3537871524448706,
+              "normal": 0.90694,
+              "password": 0.67495,
+              "ransomware": 0.56895,
+              "scanning": 0.927,
+              "xss": 0.84415
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "backdoor": 0,
+              "ddos": 0,
+              "dos": 0,
+              "injection": 0,
+              "mitm": 0,
+              "normal": 0,
+              "password": 0,
+              "ransomware": 0,
+              "scanning": 0,
+              "xss": 0
+            }
+          }
+        }
+      }
+    ],
+    "rows": 211043
+  },
+  "bot-iot-official": {
+    "repeats": [
+      {
+        "seed": 0,
+        "random": {
+          "folds": [
+            {
+              "test_rows": 733705,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733705,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9999689248149527,
+            "balanced_accuracy": 0.924304904926176,
+            "macro_f1": 0.958073450077138,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9999975761395175,
+              "Normal": 0.7987421383647799,
+              "Reconnaissance": 1.0,
+              "Theft": 0.8227848101265823
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9999672892788976,
+            "balanced_accuracy": 0.9243021205220086,
+            "macro_f1": 0.9566270889392445,
+            "per_class_recall": {
+              "DDoS": 0.9999994809573638,
+              "DoS": 0.9999951522790348,
+              "Normal": 0.7987421383647799,
+              "Reconnaissance": 0.9999890208822819,
+              "Theft": 0.8227848101265823
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        },
+        "source_host": {
+          "folds": [
+            {
+              "test_rows": 923345,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 890496,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 890283,
+              "test_hosts": 4,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 13399,
+              "test_hosts": 2,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 950999,
+              "test_hosts": 3,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9950639521856486,
+            "balanced_accuracy": 0.7067564026416802,
+            "macro_f1": 0.7133774545383533,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.989235635596815,
+              "Normal": 0.5450733752620545,
+              "Reconnaissance": 0.9994730023495312,
+              "Theft": 0.0
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.980831244844654,
+            "balanced_accuracy": 0.7421441859453421,
+            "macro_f1": 0.6309738501142979,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9579599578248276,
+              "Normal": 0.7610062893081762,
+              "Reconnaissance": 0.9917546825937068,
+              "Theft": 0.0
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        },
+        "destination_host": {
+          "folds": [
+            {
+              "test_rows": 2375804,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 451773,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 418060,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 412305,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 10580,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.47896945963524273,
+            "balanced_accuracy": 0.5474880338225798,
+            "macro_f1": 0.49710565557265873,
+            "per_class_recall": {
+              "DDoS": 0.008067998737688308,
+              "DoS": 0.9999981821046381,
+              "Normal": 0.42557651991614254,
+              "Reconnaissance": 1.0,
+              "Theft": 0.3037974683544304
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9762945404170944,
+            "balanced_accuracy": 0.7947570246456703,
+            "macro_f1": 0.7935770594223819,
+            "per_class_recall": {
+              "DDoS": 0.9549751274768714,
+              "DoS": 0.9999987880697587,
+              "Normal": 0.6771488469601677,
+              "Reconnaissance": 0.999890208822819,
+              "Theft": 0.34177215189873417
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        }
+      },
+      {
+        "seed": 1,
+        "random": {
+          "folds": [
+            {
+              "test_rows": 733705,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733705,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 733704,
+              "test_hosts": null,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9999708329403504,
+            "balanced_accuracy": 0.9179356216751028,
+            "macro_f1": 0.9540113694236885,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9999957582441554,
+              "Normal": 0.8301886792452831,
+              "Reconnaissance": 1.0,
+              "Theft": 0.759493670886076
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9999771024952283,
+            "balanced_accuracy": 0.9254813228210249,
+            "macro_f1": 0.9582407535962357,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9999993940348794,
+              "Normal": 0.8679245283018868,
+              "Reconnaissance": 0.9999890208822819,
+              "Theft": 0.759493670886076
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        },
+        "source_host": {
+          "folds": [
+            {
+              "test_rows": 923345,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 890496,
+              "test_hosts": 6,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 890283,
+              "test_hosts": 4,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 13399,
+              "test_hosts": 2,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 950999,
+              "test_hosts": 3,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.9816487402828714,
+            "balanced_accuracy": 0.7306108861355448,
+            "macro_f1": 0.7020137367533354,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9593536776023172,
+              "Normal": 0.6939203354297694,
+              "Reconnaissance": 0.999780417645638,
+              "Theft": 0.0
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9999424836487283,
+            "balanced_accuracy": 0.7492649142561895,
+            "macro_f1": 0.7708019263354637,
+            "per_class_recall": {
+              "DDoS": 1.0,
+              "DoS": 0.9999933343836729,
+              "Normal": 0.7463312368972747,
+              "Reconnaissance": 1.0,
+              "Theft": 0.0
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        },
+        "destination_host": {
+          "folds": [
+            {
+              "test_rows": 2375804,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 451773,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 418060,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 412305,
+              "test_hosts": 16,
+              "classes_without_training_rows": []
+            },
+            {
+              "test_rows": 10580,
+              "test_hosts": 18,
+              "classes_without_training_rows": []
+            }
+          ],
+          "ids_kept": {
+            "accuracy": 0.47862000009813216,
+            "balanced_accuracy": 0.6223824452291303,
+            "macro_f1": 0.5528442567582667,
+            "per_class_recall": {
+              "DDoS": 0.007380786287308785,
+              "DoS": 0.9999987880697587,
+              "Normal": 0.4716981132075472,
+              "Reconnaissance": 0.9999231461759733,
+              "Theft": 0.6329113924050633
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          },
+          "ids_dropped": {
+            "accuracy": 0.9618830144674068,
+            "balanced_accuracy": 0.861775496033896,
+            "macro_f1": 0.8398465942315516,
+            "per_class_recall": {
+              "DDoS": 0.9275027197834139,
+              "DoS": 1.0,
+              "Normal": 0.7358490566037735,
+              "Reconnaissance": 0.9999560835291276,
+              "Theft": 0.6455696202531646
+            },
+            "rows_whose_class_had_no_training_rows": 0,
+            "per_class_rows_without_training_rows": {
+              "DDoS": 0,
+              "DoS": 0,
+              "Normal": 0,
+              "Reconnaissance": 0,
+              "Theft": 0
+            }
+          }
+        }
+      }
+    ],
+    "rows": 3668522
+  }
+}

@@ -1,0 +1,1785 @@
+{
+  "ton-iot-official": {
+    "ids2eval": {
+      "timings_s": {
+        "dedup_check": 0.6832497119903564,
+        "label_conflict_check": 0.14498281478881836,
+        "feature_auc_ranking_check": 1.0935471057891846,
+        "homogeneity_test": 1.3084120750427246
+      },
+      "statuses": {
+        "dedup_check": "flag",
+        "label_conflict_check": "ok",
+        "feature_auc_ranking_check": "flag",
+        "homogeneity_test": "warning"
+      },
+      "label_conflict_summary": "no feature vector maps to more than one label",
+      "per_class": {
+        "backdoor": {
+          "best_single_feature": "src_ip_bytes",
+          "best_single_feature_auc": 0.7282769849558999,
+          "dedup": {
+            "train_duplicate_rate": 0.0521875,
+            "test_leak_rate": 0.10175
+          },
+          "homogeneity": "equivalent"
+        },
+        "ddos": {
+          "best_single_feature": "dst_ip_bytes",
+          "best_single_feature_auc": 0.6996096044155751,
+          "dedup": {
+            "train_duplicate_rate": 0.000375,
+            "test_leak_rate": 0.00025
+          },
+          "homogeneity": "equivalent"
+        },
+        "dos": {
+          "best_single_feature": "src_port",
+          "best_single_feature_auc": 0.9520772373948205,
+          "dedup": {
+            "train_duplicate_rate": 0.0396875,
+            "test_leak_rate": 0.08525
+          },
+          "homogeneity": "inconclusive"
+        },
+        "injection": {
+          "best_single_feature": "dst_ip_bytes",
+          "best_single_feature_auc": 0.9387366912385333,
+          "dedup": {
+            "train_duplicate_rate": 0.0015,
+            "test_leak_rate": 0.003
+          },
+          "homogeneity": "equivalent"
+        },
+        "mitm": {
+          "best_single_feature": "dst_ip_bytes",
+          "best_single_feature_auc": 0.819834343239694,
+          "dedup": {
+            "train_duplicate_rate": 0.002398081534772182,
+            "test_leak_rate": 0.0
+          },
+          "homogeneity": "equivalent"
+        },
+        "normal": {
+          "best_single_feature": "dst_pkts",
+          "best_single_feature_auc": 0.7500759567544282,
+          "dedup": {
+            "train_duplicate_rate": 0.157525,
+            "test_leak_rate": 0.1656
+          },
+          "homogeneity": "inconclusive"
+        },
+        "password": {
+          "best_single_feature": "dst_pkts",
+          "best_single_feature_auc": 0.832978778854836,
+          "dedup": {
+            "train_duplicate_rate": 0.00575,
+            "test_leak_rate": 0.01075
+          },
+          "homogeneity": "equivalent"
+        },
+        "ransomware": {
+          "best_single_feature": "duration",
+          "best_single_feature_auc": 0.8954519282358637,
+          "dedup": {
+            "train_duplicate_rate": 0.246875,
+            "test_leak_rate": 0.32
+          },
+          "homogeneity": "below_control"
+        },
+        "scanning": {
+          "best_single_feature": "src_ip_bytes",
+          "best_single_feature_auc": 0.8053261019717471,
+          "dedup": {
+            "train_duplicate_rate": 0.0,
+            "test_leak_rate": 0.0
+          },
+          "homogeneity": "equivalent"
+        },
+        "xss": {
+          "best_single_feature": "dst_port",
+          "best_single_feature_auc": 0.5956170191187825,
+          "dedup": {
+            "train_duplicate_rate": 0.2076875,
+            "test_leak_rate": 0.36125
+          },
+          "homogeneity": "below_control"
+        }
+      },
+      "total_s": 6.2045981884002686
+    },
+    "flood": {
+      "timings_s": {
+        "CosineTest": 43.906450271606445,
+        "SingleFeatureEfficacyTest": 34.34343385696411,
+        "NearestNeighboursTest": 32.49026417732239,
+        "PortTest": 12.031294584274292
+      },
+      "per_class": {
+        "backdoor": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9969999999837981,
+              0.9987023515691353,
+              0.9704212688761331
+            ],
+            "Cosine Weighted Average": 0.9969963224145055,
+            "Largest Cluster Percentage": 0.9932170542635659,
+            "Cutoff Percentages": {
+              "1": 0.997,
+              "2": 1.0,
+              "3": 0.803
+            },
+            "Cluster Sizes": [
+              9225,
+              58,
+              5
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "http_response_body_len": 0.4086241300433153,
+              "missed_bytes": 0.4096805962562125,
+              "http_request_body_len": 0.4086241300433153,
+              "dns_rcode": 0.4086241300433153,
+              "dst_bytes": 0.41192992710210574,
+              "src_bytes": 0.4193682622690977,
+              "dns_qtype": 0.6957897155006922,
+              "dns_qclass": 0.6957897155006922,
+              "service": 0.7827161670609246,
+              "proto": 0.803247614135874,
+              "src_pkts": 0.8234952514930248,
+              "dst_pkts": 0.8931960130028984,
+              "duration": 0.9030624006770545,
+              "dst_ip_bytes": 0.9986516393606346,
+              "src_ip_bytes": 0.9974984710177495,
+              "conn_state": 0.9986512427842275
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 10,
+            "Percentage": 0.0005344449788894233
+          },
+          "PortTest": {
+            "MislabelPorts": 10,
+            "MislabelPortsPercent": 0.0005344449788894233
+          }
+        },
+        "ddos": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.5801131627168377,
+              0.9589069964418026
+            ],
+            "Cosine Weighted Average": 0.6789105383693459,
+            "Largest Cluster Percentage": 0.7391790286527129,
+            "Cutoff Percentages": {
+              "1": 0.547,
+              "2": 0.811
+            },
+            "Cluster Sizes": [
+              7275,
+              2567
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "http_request_body_len": 0.40454021885198693,
+              "http_response_body_len": 0.405081566033103,
+              "dns_rcode": 0.568864322689558,
+              "missed_bytes": 0.47030342993445295,
+              "dns_qclass": 0.40454021885198693,
+              "service": 0.6762865620768885,
+              "dns_qtype": 0.40454021885198693,
+              "proto": 0.7107979082031477,
+              "src_pkts": 0.5762384457390565,
+              "dst_bytes": 0.6882801025839322,
+              "src_bytes": 0.6373149809716245,
+              "dst_pkts": 0.8122884063953746,
+              "duration": 0.8030932942254958,
+              "conn_state": 0.8716297846740049,
+              "src_ip_bytes": 0.9565942277514975,
+              "dst_ip_bytes": 0.9802397325575116
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 58,
+            "Percentage": 0.0029010153553743812
+          },
+          "PortTest": {
+            "MislabelPorts": 5270,
+            "MislabelPortsPercent": 0.26359225729005153
+          }
+        },
+        "dos": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8736554067921787,
+              0.9534598071776968
+            ],
+            "Cosine Weighted Average": 0.8798300053016487,
+            "Largest Cluster Percentage": 0.9226283453087577,
+            "Cutoff Percentages": {
+              "1": 0.784,
+              "2": 0.72
+            },
+            "Cluster Sizes": [
+              8860,
+              743
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "http_request_body_len": 0.407743437970016,
+              "http_response_body_len": 0.407743437970016,
+              "missed_bytes": 0.4090681436199503,
+              "dns_rcode": 0.407743437970016,
+              "dst_bytes": 0.4790634044718833,
+              "dns_qclass": 0.407743437970016,
+              "dns_qtype": 0.407743437970016,
+              "src_bytes": 0.46973851265493255,
+              "service": 0.7537700669411251,
+              "src_pkts": 0.7523580876371718,
+              "proto": 0.7779618334141908,
+              "dst_pkts": 0.8509807297849474,
+              "duration": 0.7947139405436632,
+              "conn_state": 0.9509961599662966,
+              "dst_ip_bytes": 0.9740673713312057,
+              "src_ip_bytes": 0.9686763064369202
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 78,
+            "Percentage": 0.004106992417860151
+          },
+          "PortTest": {
+            "MislabelPorts": 2055,
+            "MislabelPortsPercent": 0.10820345408593092
+          }
+        },
+        "injection": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8250687539588937,
+              0.994800930676085,
+              0.9446893032244964
+            ],
+            "Cosine Weighted Average": 0.8716904827628346,
+            "Largest Cluster Percentage": 0.7156369490843228,
+            "Cutoff Percentages": {
+              "1": 0.47,
+              "2": 0.969,
+              "3": 0.676
+            },
+            "Cluster Sizes": [
+              7112,
+              2500,
+              326
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "http_request_body_len": 0.4047996160307175,
+              "http_response_body_len": 0.4047996160307175,
+              "dns_rcode": 0.4047996160307175,
+              "missed_bytes": 0.45573386967045204,
+              "dns_qtype": 0.6923319920466137,
+              "dns_qclass": 0.6923319920466137,
+              "proto": 0.793103010819947,
+              "duration": 0.7655027265327965,
+              "conn_state": 0.8766471071528322,
+              "service": 0.9244676343673267,
+              "src_pkts": 0.9348681347347421,
+              "dst_pkts": 0.9412410886701963,
+              "src_bytes": 0.9561785638671861,
+              "dst_bytes": 0.9709789400460581,
+              "src_ip_bytes": 0.9661308847095873,
+              "dst_ip_bytes": 0.9922205563287572
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 57,
+            "Percentage": 0.002855139250651172
+          },
+          "PortTest": {
+            "MislabelPorts": 721,
+            "MislabelPortsPercent": 0.03611500701262272
+          }
+        },
+        "mitm": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9691740597029636,
+              0.9175132347836037,
+              0.5909760819266768
+            ],
+            "Cosine Weighted Average": 0.8941031002115911,
+            "Largest Cluster Percentage": 0.5365344467640919,
+            "Cutoff Percentages": {
+              "1": 0.859,
+              "2": 0.476,
+              "3": 0.206
+            },
+            "Cluster Sizes": [
+              257,
+              147,
+              75
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "dns_qclass": 0.4938916950546223,
+              "http_response_body_len": 0.4938916950546223,
+              "http_request_body_len": 0.4938916950546223,
+              "dns_rcode": 0.4938916950546223,
+              "missed_bytes": 0.4938619676945668,
+              "proto": 0.4938916950546223,
+              "dns_qtype": 0.4938916950546223,
+              "service": 0.6764192584594838,
+              "src_pkts": 0.5458608908588324,
+              "conn_state": 0.4938916950546223,
+              "duration": 0.6580381529170272,
+              "dst_pkts": 0.5660920227903183,
+              "src_ip_bytes": 0.7774272097331812,
+              "src_bytes": 0.8011359556900353,
+              "dst_bytes": 0.8375256552917903,
+              "dst_ip_bytes": 0.8541599541293473
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 78,
+            "Percentage": 0.07492795389048991
+          },
+          "PortTest": {
+            "MislabelPorts": 595,
+            "MislabelPortsPercent": 0.5715658021133525
+          }
+        },
+        "password": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.6355369216826771,
+              0.9297238688348564,
+              0.9745903455553064
+            ],
+            "Cosine Weighted Average": 0.6548722010942656,
+            "Largest Cluster Percentage": 0.9355884140166093,
+            "Cutoff Percentages": {
+              "1": 0.628,
+              "2": 0.504,
+              "3": 0.841
+            },
+            "Cluster Sizes": [
+              9238,
+              551,
+              85
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "missed_bytes": 0.40392019123352835,
+              "http_response_body_len": 0.4044280854781267,
+              "http_request_body_len": 0.40341155495590997,
+              "dns_rcode": 0.40341155495590997,
+              "dns_qtype": 0.6929010975267382,
+              "dns_qclass": 0.6928175335626195,
+              "proto": 0.8013820612851151,
+              "duration": 0.8479122183373626,
+              "dst_bytes": 0.9033496096878003,
+              "service": 0.8883794890404026,
+              "conn_state": 0.8864142374212165,
+              "src_pkts": 0.8892027848913189,
+              "src_bytes": 0.9041264341201269,
+              "dst_pkts": 0.888110647558221,
+              "dst_ip_bytes": 0.9907718818128273,
+              "src_ip_bytes": 0.9877935808868137
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 43,
+            "Percentage": 0.002165047077186446
+          },
+          "PortTest": {
+            "MislabelPorts": 180,
+            "MislabelPortsPercent": 0.009062987764966517
+          }
+        },
+        "ransomware": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8992954855697469,
+              0.9133102103322951
+            ],
+            "Cosine Weighted Average": 0.9037867343175359,
+            "Largest Cluster Percentage": 0.6795335745878569,
+            "Cutoff Percentages": {
+              "1": 0.515,
+              "2": 0.514
+            },
+            "Cluster Sizes": [
+              5070,
+              2391
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "missed_bytes": 0.4249759457132729,
+              "http_request_body_len": 0.4249759457132729,
+              "http_response_body_len": 0.4249759457132729,
+              "dns_rcode": 0.4249759457132729,
+              "dst_pkts": 0.4249759457132729,
+              "dst_bytes": 0.4249759457132729,
+              "dst_ip_bytes": 0.6858688024614721,
+              "src_bytes": 0.4249759457132729,
+              "dns_qclass": 0.4249759457132729,
+              "dns_qtype": 0.4249759457132729,
+              "src_pkts": 0.6937686205303625,
+              "service": 0.7609932526412083,
+              "proto": 0.7836596527691193,
+              "duration": 0.8961306104838069,
+              "src_ip_bytes": 0.8469545759133865,
+              "conn_state": 0.9486523953437456
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 6,
+            "Percentage": 0.0004071937563624024
+          },
+          "PortTest": {
+            "MislabelPorts": 14,
+            "MislabelPortsPercent": 0.0009501187648456057
+          }
+        },
+        "scanning": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9865665020691982,
+              0.8954285831449895
+            ],
+            "Cosine Weighted Average": 0.9839526038208939,
+            "Largest Cluster Percentage": 0.97131931166348,
+            "Cutoff Percentages": {
+              "1": 0.987,
+              "2": 0.391
+            },
+            "Cluster Sizes": [
+              9652,
+              285
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "missed_bytes": 0.40075340481019994,
+              "http_request_body_len": 0.40075340481019994,
+              "http_response_body_len": 0.40075340481019994,
+              "dns_rcode": 0.40075340481019994,
+              "dst_pkts": 0.40122037344812067,
+              "dst_bytes": 0.42931950434266747,
+              "conn_state": 0.5769130763143631,
+              "dst_ip_bytes": 0.5995641472461267,
+              "dns_qclass": 0.6939340476849041,
+              "dns_qtype": 0.6939340476849041,
+              "src_bytes": 0.42794412056329895,
+              "service": 0.7744979469951474,
+              "proto": 0.7972299074858185,
+              "src_pkts": 0.8119376095912181,
+              "duration": 0.83585361471722,
+              "src_ip_bytes": 0.9907350727848341
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 18,
+            "Percentage": 0.0009
+          },
+          "PortTest": {
+            "MislabelPorts": 738,
+            "MislabelPortsPercent": 0.0369
+          }
+        },
+        "xss": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8721118185183834,
+              0.9612493911837252,
+              0.8923644396554894
+            ],
+            "Cosine Weighted Average": 0.9012760951094719,
+            "Largest Cluster Percentage": 0.6021094264996704,
+            "Cutoff Percentages": {
+              "1": 0.357,
+              "2": 0.677,
+              "3": 0.632
+            },
+            "Cluster Sizes": [
+              4567,
+              2324,
+              694
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "http_request_body_len": 0.4220155665622157,
+              "http_response_body_len": 0.4220155665622157,
+              "missed_bytes": 0.440722290487367,
+              "dns_rcode": 0.42580214040176717,
+              "dns_qclass": 0.4220155665622157,
+              "dst_pkts": 0.6875199102195354,
+              "dns_qtype": 0.4220155665622157,
+              "src_pkts": 0.6805151892008264,
+              "service": 0.6602169800195856,
+              "proto": 0.7553514831901377,
+              "dst_bytes": 0.7570012172643796,
+              "dst_ip_bytes": 0.781514184308042,
+              "src_bytes": 0.7351086982234523,
+              "duration": 0.8066237032419424,
+              "conn_state": 0.8745716376831905,
+              "src_ip_bytes": 0.9573378516999252
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 53,
+            "Percentage": 0.003501354297416925
+          },
+          "PortTest": {
+            "MislabelPorts": 1400,
+            "MislabelPortsPercent": 0.09248860408271124
+          }
+        }
+      },
+      "rows_given": 211043,
+      "metadata_used": {
+        "drop_fields": [
+          "src_ip",
+          "src_port",
+          "dst_ip",
+          "dst_port",
+          "label",
+          "dns_AA",
+          "dns_RD",
+          "dns_RA",
+          "dns_rejected",
+          "ssl_version",
+          "ssl_cipher",
+          "ssl_resumed",
+          "ssl_established",
+          "ssl_subject",
+          "ssl_issuer",
+          "http_trans_depth",
+          "http_method",
+          "http_uri",
+          "http_version",
+          "http_status_code",
+          "http_user_agent",
+          "http_orig_mime_types",
+          "http_resp_mime_types",
+          "weird_name",
+          "weird_addl",
+          "weird_notice",
+          "dns_query"
+        ],
+        "unique_fields": [
+          "proto",
+          "service",
+          "conn_state"
+        ],
+        "label_field": "type",
+        "benign_label": "normal",
+        "dst_port": "dst_port",
+        "ignore_ports": [
+          -1,
+          0,
+          53,
+          67,
+          68,
+          111,
+          123,
+          161,
+          179,
+          389,
+          427,
+          520,
+          1723,
+          1900
+        ]
+      },
+      "drop_fields_absent_from_artifact": [
+        "ts"
+      ],
+      "total_s": 123.40186333656311
+    },
+    "per_class": {
+      "backdoor": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.9986516393606346,
+        "flood_identical_share": 0.9969142980189492,
+        "flood_largest_cluster_share": 0.9932170542635659,
+        "flood_nn_mislabel_share": 0.0005344449788894233,
+        "flood_port_share": 0.0005344449788894233,
+        "ids2eval_top_feature": "src_ip_bytes",
+        "ids2eval_top_auc": 0.7282769849558999,
+        "ids2eval_train_dup_rate": 0.0521875,
+        "ids2eval_test_reuse_rate": 0.10175,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": true,
+          "ids2eval": false
+        }
+      },
+      "ddos": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.9802397325575116,
+        "flood_identical_share": 0.6158567364356838,
+        "flood_largest_cluster_share": 0.7391790286527129,
+        "flood_nn_mislabel_share": 0.0029010153553743812,
+        "flood_port_share": 0.26359225729005153,
+        "ids2eval_top_feature": "dst_ip_bytes",
+        "ids2eval_top_auc": 0.6996096044155751,
+        "ids2eval_train_dup_rate": 0.000375,
+        "ids2eval_test_reuse_rate": 0.00025,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "dos": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.9740673713312057,
+        "flood_identical_share": 0.7790482140997605,
+        "flood_largest_cluster_share": 0.9226283453087577,
+        "flood_nn_mislabel_share": 0.004106992417860151,
+        "flood_port_share": 0.10820345408593092,
+        "ids2eval_top_feature": "src_port",
+        "ids2eval_top_auc": 0.9520772373948205,
+        "ids2eval_train_dup_rate": 0.0396875,
+        "ids2eval_test_reuse_rate": 0.08525,
+        "ids2eval_homogeneity": "inconclusive",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "injection": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.9922205563287572,
+        "flood_identical_share": 0.6022857717850674,
+        "flood_largest_cluster_share": 0.7156369490843228,
+        "flood_nn_mislabel_share": 0.002855139250651172,
+        "flood_port_share": 0.03611500701262272,
+        "ids2eval_top_feature": "dst_ip_bytes",
+        "ids2eval_top_auc": 0.9387366912385333,
+        "ids2eval_train_dup_rate": 0.0015,
+        "ids2eval_test_reuse_rate": 0.003,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": true,
+          "ids2eval": false
+        }
+      },
+      "mitm": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.8541599541293473,
+        "flood_identical_share": 0.6392171189979123,
+        "flood_largest_cluster_share": 0.5365344467640919,
+        "flood_nn_mislabel_share": 0.07492795389048991,
+        "flood_port_share": 0.5715658021133525,
+        "ids2eval_top_feature": "dst_ip_bytes",
+        "ids2eval_top_auc": 0.819834343239694,
+        "ids2eval_train_dup_rate": 0.002398081534772182,
+        "ids2eval_test_reuse_rate": 0.0,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "password": {
+        "flood_top_feature": "dst_ip_bytes",
+        "flood_top_f1": 0.9907718818128273,
+        "flood_identical_share": 0.6229140166092768,
+        "flood_largest_cluster_share": 0.9355884140166093,
+        "flood_nn_mislabel_share": 0.002165047077186446,
+        "flood_port_share": 0.009062987764966517,
+        "ids2eval_top_feature": "dst_pkts",
+        "ids2eval_top_auc": 0.832978778854836,
+        "ids2eval_train_dup_rate": 0.00575,
+        "ids2eval_test_reuse_rate": 0.01075,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": true,
+          "ids2eval": false
+        }
+      },
+      "ransomware": {
+        "flood_top_feature": "conn_state",
+        "flood_top_f1": 0.9486523953437456,
+        "flood_identical_share": 0.514679533574588,
+        "flood_largest_cluster_share": 0.6795335745878569,
+        "flood_nn_mislabel_share": 0.0004071937563624024,
+        "flood_port_share": 0.0009501187648456057,
+        "ids2eval_top_feature": "duration",
+        "ids2eval_top_auc": 0.8954519282358637,
+        "ids2eval_train_dup_rate": 0.246875,
+        "ids2eval_test_reuse_rate": 0.32,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "scanning": {
+        "flood_top_feature": "src_ip_bytes",
+        "flood_top_f1": 0.9907350727848341,
+        "flood_identical_share": 0.9699063097514339,
+        "flood_largest_cluster_share": 0.97131931166348,
+        "flood_nn_mislabel_share": 0.0009,
+        "flood_port_share": 0.0369,
+        "ids2eval_top_feature": "src_ip_bytes",
+        "ids2eval_top_auc": 0.8053261019717471,
+        "ids2eval_train_dup_rate": 0.0,
+        "ids2eval_test_reuse_rate": 0.0,
+        "ids2eval_homogeneity": "equivalent",
+        "separable_agreement": {
+          "flood": true,
+          "ids2eval": false
+        }
+      },
+      "xss": {
+        "flood_top_feature": "src_ip_bytes",
+        "flood_top_f1": 0.9573378516999252,
+        "flood_identical_share": 0.4802076466710613,
+        "flood_largest_cluster_share": 0.6021094264996704,
+        "flood_nn_mislabel_share": 0.003501354297416925,
+        "flood_port_share": 0.09248860408271124,
+        "ids2eval_top_feature": "dst_port",
+        "ids2eval_top_auc": 0.5956170191187825,
+        "ids2eval_train_dup_rate": 0.2076875,
+        "ids2eval_test_reuse_rate": 0.36125,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      }
+    },
+    "separable": {
+      "both": 0,
+      "flood_only": 4,
+      "ids2eval_only": 0,
+      "neither": 5
+    }
+  },
+  "unsw-nb15": {
+    "ids2eval": {
+      "timings_s": {
+        "dedup_check": 0.6546759605407715,
+        "label_conflict_check": 0.08231997489929199,
+        "feature_auc_ranking_check": 0.08312058448791504,
+        "homogeneity_test": 1.193450689315796
+      },
+      "statuses": {
+        "dedup_check": "flag",
+        "label_conflict_check": "flag",
+        "feature_auc_ranking_check": "ok",
+        "homogeneity_test": "ok"
+      },
+      "label_conflict_summary": "414 feature vector(s) (1,758 rows, 0.68%) map to more than one label. The ground truth contradicts itself for these rows; 279 of these span train and test",
+      "per_class": {
+        "Analysis": {
+          "best_single_feature": "smean",
+          "best_single_feature_auc": 0.6721208182138099,
+          "dedup": {
+            "train_duplicate_rate": 0.729,
+            "test_leak_rate": 0.18463810930576072
+          },
+          "homogeneity": "below_control"
+        },
+        "Backdoor": {
+          "best_single_feature": "dload",
+          "best_single_feature_auc": 0.6881633997078227,
+          "dedup": {
+            "train_duplicate_rate": 0.7061855670103093,
+            "test_leak_rate": 0.00686106346483705
+          },
+          "homogeneity": "below_control"
+        },
+        "DoS": {
+          "best_single_feature": "smean",
+          "best_single_feature_auc": 0.7006986694694519,
+          "dedup": {
+            "train_duplicate_rate": 0.7550554468362688,
+            "test_leak_rate": 0.4900953778429934
+          },
+          "homogeneity": "below_control"
+        },
+        "Exploits": {
+          "best_single_feature": "ct_srv_src",
+          "best_single_feature_auc": 0.7755471742270827,
+          "dedup": {
+            "train_duplicate_rate": 0.4393735213966999,
+            "test_leak_rate": 0.16187567373338124
+          },
+          "homogeneity": "below_control"
+        },
+        "Fuzzers": {
+          "best_single_feature": "sttl",
+          "best_single_feature_auc": 0.690865775150868,
+          "dedup": {
+            "train_duplicate_rate": 0.18120325560932687,
+            "test_leak_rate": 0.04305509732761465
+          },
+          "homogeneity": "below_control"
+        },
+        "Generic": {
+          "best_single_feature": "ct_dst_sport_ltm",
+          "best_single_feature_auc": 0.9834615789007026,
+          "dedup": {
+            "train_duplicate_rate": 0.9019,
+            "test_leak_rate": 0.09125112606645117
+          },
+          "homogeneity": "below_control"
+        },
+        "Normal": {
+          "best_single_feature": "sttl",
+          "best_single_feature_auc": 0.88143735021912,
+          "dedup": {
+            "train_duplicate_rate": 0.07473214285714286,
+            "test_leak_rate": 0.039783783783783784
+          },
+          "homogeneity": "below_control"
+        },
+        "Reconnaissance": {
+          "best_single_feature": "ct_srv_dst",
+          "best_single_feature_auc": 0.7942447944245117,
+          "dedup": {
+            "train_duplicate_rate": 0.3878562577447336,
+            "test_leak_rate": 0.3255148741418764
+          },
+          "homogeneity": "below_control"
+        },
+        "Shellcode": {
+          "best_single_feature": "ct_dst_src_ltm",
+          "best_single_feature_auc": 0.8358084681760141,
+          "dedup": {
+            "train_duplicate_rate": 0.038834951456310676,
+            "test_leak_rate": 0.03439153439153439
+          },
+          "homogeneity": "below_control"
+        },
+        "Worms": {
+          "best_single_feature": "ct_flw_http_mthd",
+          "best_single_feature_auc": 0.8467950291143469,
+          "dedup": {
+            "train_duplicate_rate": 0.06923076923076923,
+            "test_leak_rate": 0.0
+          },
+          "homogeneity": "below_control"
+        }
+      },
+      "total_s": 9.753867149353027
+    },
+    "flood": {
+      "timings_s": {
+        "CosineTest": 50.97736978530884,
+        "SingleFeatureEfficacyTest": 276.891592502594,
+        "NearestNeighboursTest": 49.915977478027344
+      },
+      "per_class": {
+        "Analysis": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.846578060031544,
+              0.8935982163775265
+            ],
+            "Cosine Weighted Average": 0.8565416925809104,
+            "Largest Cluster Percentage": 0.7880986937590712,
+            "Cutoff Percentages": {
+              "1": 0.183,
+              "2": 0.327
+            },
+            "Cluster Sizes": [
+              1086,
+              292
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "ct_dst_ltm": 0.49283082876149586,
+              "ct_ftp_cmd": 0.49283082876149586,
+              "trans_depth": 0.49283082876149586,
+              "is_sm_ips_ports": 0.49283082876149586,
+              "is_ftp_login": 0.49283082876149586,
+              "ct_src_ltm": 0.4946720693525949,
+              "ct_srv_src": 0.49283082876149586,
+              "ct_flw_http_mthd": 0.5109257254178643,
+              "ct_srv_dst": 0.49283082876149586,
+              "response_body_len": 0.5018436274291951,
+              "service": 0.49283082876149586,
+              "ct_dst_src_ltm": 0.49283082876149586,
+              "stcpb": 0.5617864420928577,
+              "ct_src_dport_ltm": 0.49283082876149586,
+              "dtcpb": 0.5633252157519659,
+              "tcprtt": 0.5633252157519659,
+              "dwin": 0.49283082876149586,
+              "sjit": 0.5663041076382922,
+              "synack": 0.564615370158851,
+              "swin": 0.49283082876149586,
+              "ackdat": 0.5623850202577679,
+              "djit": 0.5615546697733245,
+              "sloss": 0.49283082876149586,
+              "dloss": 0.49283082876149586,
+              "spkts": 0.49283082876149586,
+              "sinpkt": 0.5720011553856099,
+              "sttl": 0.49283082876149586,
+              "dinpkt": 0.5679298707703986,
+              "dttl": 0.49283082876149586,
+              "state": 0.49283082876149586,
+              "dpkts": 0.49283082876149586,
+              "ct_state_ttl": 0.49283082876149586,
+              "dload": 0.5686995395753378,
+              "dur": 0.5674361554870676,
+              "rate": 0.5683130699088146,
+              "ct_dst_sport_ltm": 0.6639396633047467,
+              "dmean": 0.49649979342174094,
+              "dbytes": 0.5036454264527772,
+              "sload": 0.9080971748383148,
+              "proto": 0.9275298028847176,
+              "smean": 0.9035971571034269,
+              "sbytes": 0.9160862624666607
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 418,
+            "Percentage": 0.1561449383638401
+          }
+        },
+        "Backdoor": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8838749237109323,
+              0.8029389374750133
+            ],
+            "Cosine Weighted Average": 0.8730404078229681,
+            "Largest Cluster Percentage": 0.8661347517730497,
+            "Cutoff Percentages": {
+              "1": 0.178,
+              "2": 0.154
+            },
+            "Cluster Sizes": [
+              977,
+              151
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "trans_depth": 0.49339710375979806,
+              "ct_ftp_cmd": 0.49339710375979806,
+              "is_ftp_login": 0.49339710375979806,
+              "is_sm_ips_ports": 0.49339710375979806,
+              "ct_flw_http_mthd": 0.49339710375979806,
+              "ct_src_ltm": 0.49339710375979806,
+              "ct_dst_ltm": 0.49339710375979806,
+              "response_body_len": 0.5073777801400848,
+              "service": 0.4973670028893196,
+              "ct_srv_dst": 0.49339710375979806,
+              "ct_srv_src": 0.49339710375979806,
+              "ct_dst_src_ltm": 0.49339710375979806,
+              "ct_src_dport_ltm": 0.49339710375979806,
+              "sjit": 0.5122330485556185,
+              "dtcpb": 0.4983818147103985,
+              "stcpb": 0.4960731634406115,
+              "dloss": 0.49339710375979806,
+              "djit": 0.4961921948767401,
+              "spkts": 0.4974313413050958,
+              "ackdat": 0.49637224783624656,
+              "tcprtt": 0.5075210603673561,
+              "sloss": 0.49339710375979806,
+              "dwin": 0.49339710375979806,
+              "synack": 0.5032916198484904,
+              "swin": 0.49339710375979806,
+              "sinpkt": 0.5254023730100987,
+              "sttl": 0.49339710375979806,
+              "dpkts": 0.49339710375979806,
+              "state": 0.49339710375979806,
+              "dload": 0.4959942399288235,
+              "dinpkt": 0.49819364160105034,
+              "ct_state_ttl": 0.49339710375979806,
+              "dmean": 0.5496396885664242,
+              "dbytes": 0.5693743325539921,
+              "ct_dst_sport_ltm": 0.6729227327442281,
+              "dttl": 0.49339710375979806,
+              "dur": 0.5286690202480938,
+              "rate": 0.5248516238084532,
+              "sload": 0.8877292634523213,
+              "smean": 0.9180466465628112,
+              "sbytes": 0.9405890869726925,
+              "proto": 0.9524031932431354
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 335,
+            "Percentage": 0.14383855732073852
+          }
+        },
+        "DoS": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8692791560035864,
+              0.8771987009987811
+            ],
+            "Cosine Weighted Average": 0.8709316895899601,
+            "Largest Cluster Percentage": 0.7913347815592566,
+            "Cutoff Percentages": {
+              "1": 0.306,
+              "2": 0.16
+            },
+            "Cluster Sizes": [
+              6557,
+              1729
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "trans_depth": 0.4593345199248492,
+              "ct_flw_http_mthd": 0.4593345199248492,
+              "ct_ftp_cmd": 0.4593345199248492,
+              "ct_src_ltm": 0.4692107333899161,
+              "is_sm_ips_ports": 0.4593345199248492,
+              "is_ftp_login": 0.4593345199248492,
+              "ct_srv_dst": 0.4593345199248492,
+              "ct_dst_ltm": 0.4593345199248492,
+              "ct_srv_src": 0.4593345199248492,
+              "response_body_len": 0.5065070562401546,
+              "service": 0.468353629455438,
+              "ct_dst_src_ltm": 0.4957645294978764,
+              "ct_src_dport_ltm": 0.4596497342659028,
+              "dtcpb": 0.4655806883783584,
+              "stcpb": 0.4649468006058529,
+              "dwin": 0.4593345199248492,
+              "swin": 0.4593345199248492,
+              "dloss": 0.4709328664341664,
+              "sjit": 0.5389685312279494,
+              "sloss": 0.4732522727427675,
+              "djit": 0.4807018006799401,
+              "spkts": 0.48681613686308833,
+              "ct_dst_sport_ltm": 0.673974639732706,
+              "ackdat": 0.49046727257455414,
+              "tcprtt": 0.5089614205879853,
+              "synack": 0.5096473574878672,
+              "sinpkt": 0.6042400591485446,
+              "sttl": 0.46120913031784366,
+              "state": 0.7804570759835885,
+              "dpkts": 0.4721941457491793,
+              "dinpkt": 0.4834602825919777,
+              "dload": 0.48786964188281395,
+              "ct_state_ttl": 0.7833490593254373,
+              "dmean": 0.5233080153329844,
+              "dttl": 0.4801255299012948,
+              "dbytes": 0.5547018384508603,
+              "rate": 0.7941572207409724,
+              "dur": 0.7972052475396447,
+              "sload": 0.8741041742025892,
+              "proto": 0.922156133695673,
+              "smean": 0.9004982659284408,
+              "sbytes": 0.9280306194333259
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 1470,
+            "Percentage": 0.08989176297926986
+          }
+        },
+        "Exploits": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.892701659412501,
+              0.8499143384411015
+            ],
+            "Cosine Weighted Average": 0.8761915218198757,
+            "Largest Cluster Percentage": 0.6141348133560111,
+            "Cutoff Percentages": {
+              "1": 0.171,
+              "2": 0.274
+            },
+            "Cluster Sizes": [
+              13721,
+              8621
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "ct_ftp_cmd": 0.44346342160101787,
+              "is_ftp_login": 0.4434461404524832,
+              "dtcpb": 0.5161744786668558,
+              "swin": 0.4038665770822948,
+              "dwin": 0.4038665770822948,
+              "ct_src_dport_ltm": 0.4335755790656931,
+              "is_sm_ips_ports": 0.4038665770822948,
+              "stcpb": 0.5299781203341137,
+              "trans_depth": 0.5603544973676255,
+              "ct_flw_http_mthd": 0.5619038037523503,
+              "ct_dst_src_ltm": 0.4329290570776764,
+              "ct_src_ltm": 0.42861600930733323,
+              "ct_dst_sport_ltm": 0.5169767572443206,
+              "sloss": 0.4741903769450771,
+              "response_body_len": 0.519154470974599,
+              "ct_dst_ltm": 0.40495888528893087,
+              "state": 0.6278482750314957,
+              "service": 0.6571519041721793,
+              "spkts": 0.5206526133293006,
+              "ct_srv_src": 0.7070262401636913,
+              "dloss": 0.6064484786090526,
+              "sjit": 0.6149512932628607,
+              "djit": 0.6021953908499666,
+              "ct_srv_dst": 0.7364797284949998,
+              "dload": 0.6881222999135672,
+              "sinpkt": 0.6552908022107783,
+              "dpkts": 0.7015962411903873,
+              "ackdat": 0.6480866115879255,
+              "proto": 0.6972964349254713,
+              "dinpkt": 0.7033051515298494,
+              "synack": 0.6635937058848748,
+              "tcprtt": 0.6607078697396521,
+              "dur": 0.7192416053372503,
+              "rate": 0.7311744702551943,
+              "dttl": 0.730528683132606,
+              "ct_state_ttl": 0.7630728774989677,
+              "sload": 0.7427920065216538,
+              "dmean": 0.7755636147624447,
+              "sttl": 0.6966468950128166,
+              "smean": 0.8162748663451999,
+              "dbytes": 0.8099770049783724,
+              "sbytes": 0.9019508821628199
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 3126,
+            "Percentage": 0.07020774845592363
+          }
+        },
+        "Fuzzers": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.8314515536375306,
+              0.9254076569734664
+            ],
+            "Cosine Weighted Average": 0.8653758553352805,
+            "Largest Cluster Percentage": 0.6389345609996712,
+            "Cutoff Percentages": {
+              "1": 0.233,
+              "2": 0.397
+            },
+            "Cluster Sizes": [
+              7772,
+              4392
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "ct_ftp_cmd": 0.4414671906633321,
+              "ct_srv_dst": 0.44398756766762315,
+              "is_ftp_login": 0.44166777830035897,
+              "dwin": 0.4414671906633321,
+              "is_sm_ips_ports": 0.4414671906633321,
+              "trans_depth": 0.4414671906633321,
+              "swin": 0.4414671906633321,
+              "stcpb": 0.5372988521450718,
+              "ct_dst_src_ltm": 0.44398756766762315,
+              "dtcpb": 0.5310822920552725,
+              "ct_flw_http_mthd": 0.4424819869216203,
+              "ct_srv_src": 0.4548054400893909,
+              "ct_src_ltm": 0.4451368822992617,
+              "response_body_len": 0.4414538871951219,
+              "ct_src_dport_ltm": 0.45709809052671824,
+              "ct_dst_sport_ltm": 0.5156301303272426,
+              "ct_dst_ltm": 0.4422954890030533,
+              "service": 0.4414671906633321,
+              "proto": 0.5440634903876175,
+              "sloss": 0.48558741180661846,
+              "state": 0.4414671906633321,
+              "dloss": 0.44336227629342145,
+              "djit": 0.5857523598665314,
+              "sjit": 0.5942618473752506,
+              "spkts": 0.5876835069772961,
+              "sinpkt": 0.6014516770621354,
+              "synack": 0.6140663617551556,
+              "ackdat": 0.6157604916326813,
+              "tcprtt": 0.6170432794582241,
+              "dpkts": 0.45881053936575583,
+              "sload": 0.6643528147141085,
+              "dur": 0.657628207265399,
+              "dinpkt": 0.6053563857362017,
+              "rate": 0.6501909586930447,
+              "dmean": 0.5416766820373035,
+              "dload": 0.6168527153325079,
+              "dttl": 0.4414671906633321,
+              "ct_state_ttl": 0.4416811232052134,
+              "smean": 0.7347654824731195,
+              "dbytes": 0.6414577411991701,
+              "sttl": 0.44189497350756135,
+              "sbytes": 0.7766201537308332
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 9660,
+            "Percentage": 0.3984162336055432
+          }
+        },
+        "Generic": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9282836542643439,
+              0.9655673825404552,
+              0.8674105640598391
+            ],
+            "Cosine Weighted Average": 0.9451006561236241,
+            "Largest Cluster Percentage": 0.5032977493710478,
+            "Cutoff Percentages": {
+              "1": 0.462,
+              "2": 0.807,
+              "3": 0.13
+            },
+            "Cluster Sizes": [
+              14804,
+              14100,
+              510
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "is_ftp_login": 0.3799122180259263,
+              "ct_ftp_cmd": 0.3799122180259263,
+              "is_sm_ips_ports": 0.3799122180259263,
+              "ct_flw_http_mthd": 0.3799122180259263,
+              "trans_depth": 0.3799122180259263,
+              "response_body_len": 0.3844150913724225,
+              "stcpb": 0.8000554331030589,
+              "dloss": 0.803968761579112,
+              "dwin": 0.8053427492095562,
+              "dtcpb": 0.8001528692318796,
+              "ackdat": 0.7998405435507657,
+              "synack": 0.8010865516644101,
+              "tcprtt": 0.8013789356539887,
+              "djit": 0.8127382574152403,
+              "sloss": 0.8211829275147915,
+              "swin": 0.8215345335282399,
+              "sttl": 0.8231342406987388,
+              "sjit": 0.834433097156407,
+              "proto": 0.8472743498011385,
+              "ct_src_ltm": 0.8563219982702177,
+              "spkts": 0.8674185952123478,
+              "ct_dst_ltm": 0.8721875973160984,
+              "sinpkt": 0.8669504936734433,
+              "ct_srv_src": 0.8880680075679497,
+              "ct_srv_dst": 0.8936835898639681,
+              "ct_dst_src_ltm": 0.8980700083219042,
+              "dinpkt": 0.9016064983501235,
+              "dload": 0.901829537115022,
+              "dpkts": 0.9068056786821113,
+              "dttl": 0.9054350764794075,
+              "dmean": 0.9082600788008959,
+              "dbytes": 0.9096577078464139,
+              "service": 0.9189987718877343,
+              "state": 0.923988064542612,
+              "ct_state_ttl": 0.9256380908437847,
+              "ct_src_dport_ltm": 0.9280010060994781,
+              "dur": 0.934883184607265,
+              "rate": 0.935439686933,
+              "ct_dst_sport_ltm": 0.9762274260474346,
+              "smean": 0.9816515062451907,
+              "sload": 0.9842843712839546,
+              "sbytes": 0.9922236587297089
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 554,
+            "Percentage": 0.009410405802517369
+          }
+        },
+        "Reconnaissance": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9139527265172253,
+              0.9187087387643611
+            ],
+            "Cosine Weighted Average": 0.9163263055923031,
+            "Largest Cluster Percentage": 0.5009308320206215,
+            "Cutoff Percentages": {
+              "1": 0.539,
+              "2": 0.379
+            },
+            "Cluster Sizes": [
+              3498,
+              3485
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "trans_depth": 0.4646350921964522,
+              "ct_flw_http_mthd": 0.4646350921964522,
+              "is_ftp_login": 0.4646350921964522,
+              "ct_ftp_cmd": 0.4646350921964522,
+              "response_body_len": 0.4657025008948732,
+              "stcpb": 0.4870088617169647,
+              "dtcpb": 0.4829825473285837,
+              "is_sm_ips_ports": 0.4646350921964522,
+              "ct_src_dport_ltm": 0.4646350921964522,
+              "dwin": 0.4646350921964522,
+              "swin": 0.4646350921964522,
+              "ct_dst_sport_ltm": 0.48762321487788673,
+              "service": 0.4700875042188736,
+              "ct_src_ltm": 0.4676519916738416,
+              "proto": 0.5959912871432984,
+              "ct_srv_src": 0.4646350921964522,
+              "ct_dst_src_ltm": 0.4646350921964522,
+              "state": 0.4646350921964522,
+              "ct_dst_ltm": 0.4649868042867426,
+              "djit": 0.5513928703881783,
+              "ackdat": 0.5592696155363904,
+              "sjit": 0.5777002018842531,
+              "sloss": 0.4646350921964522,
+              "dloss": 0.46536530672445986,
+              "synack": 0.5953376106439832,
+              "sinpkt": 0.5614806963135295,
+              "tcprtt": 0.5969718866254645,
+              "ct_srv_dst": 0.4646350921964522,
+              "spkts": 0.46535166198689387,
+              "dttl": 0.4646350921964522,
+              "dinpkt": 0.5554033169379279,
+              "dur": 0.6435040263243141,
+              "dload": 0.5602187083141932,
+              "ct_state_ttl": 0.46500032416314946,
+              "rate": 0.6507271898962224,
+              "dpkts": 0.46536530672445986,
+              "sttl": 0.46462169735788633,
+              "dmean": 0.4714062089398935,
+              "dbytes": 0.6867869481453326,
+              "sload": 0.7988336605601913,
+              "smean": 0.8909532113170924,
+              "sbytes": 0.9430248560843757
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 1415,
+            "Percentage": 0.10116536784156717
+          }
+        },
+        "Shellcode": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.9558184404083909,
+              0.9340496814016623
+            ],
+            "Cosine Weighted Average": 0.945156797184086,
+            "Largest Cluster Percentage": 0.5102319236016372,
+            "Cutoff Percentages": {
+              "1": 0.679,
+              "2": 0.599
+            },
+            "Cluster Sizes": [
+              374,
+              359
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "is_ftp_login": 0.49555680089664556,
+              "stcpb": 0.5056491624996731,
+              "is_sm_ips_ports": 0.49555680089664556,
+              "response_body_len": 0.49555680089664556,
+              "ct_ftp_cmd": 0.49555680089664556,
+              "proto": 0.49555680089664556,
+              "ct_flw_http_mthd": 0.49555680089664556,
+              "trans_depth": 0.49555680089664556,
+              "dtcpb": 0.4939633248561103,
+              "dwin": 0.49555680089664556,
+              "ct_dst_sport_ltm": 0.49555680089664556,
+              "swin": 0.49555680089664556,
+              "ct_src_dport_ltm": 0.49555680089664556,
+              "service": 0.49555680089664556,
+              "ct_src_ltm": 0.49555680089664556,
+              "state": 0.49555680089664556,
+              "djit": 0.5050320084991179,
+              "ct_srv_src": 0.49555680089664556,
+              "sjit": 0.5046969161099917,
+              "ackdat": 0.5123988730653215,
+              "sinpkt": 0.50760092848439,
+              "sloss": 0.49555680089664556,
+              "dloss": 0.49555680089664556,
+              "ct_dst_src_ltm": 0.49555680089664556,
+              "ct_dst_ltm": 0.49555680089664556,
+              "tcprtt": 0.5458386275172378,
+              "synack": 0.5472989381104291,
+              "spkts": 0.49555680089664556,
+              "dload": 0.5078204587279066,
+              "dinpkt": 0.5126139893363583,
+              "dur": 0.508968968600794,
+              "dttl": 0.49555680089664556,
+              "rate": 0.510842118739405,
+              "ct_srv_dst": 0.49555680089664556,
+              "ct_state_ttl": 0.49555680089664556,
+              "dpkts": 0.49555680089664556,
+              "dmean": 0.49555680089664556,
+              "dbytes": 0.49554333902647313,
+              "sttl": 0.49555680089664556,
+              "smean": 0.6143876129277589,
+              "sload": 0.6457492782618907,
+              "sbytes": 0.7791240608908935
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 720,
+            "Percentage": 0.47650562541363334
+          }
+        },
+        "Worms": {
+          "CosineTest": {
+            "Cosine Similarities": [
+              0.906889773569889,
+              0.9132793878687084,
+              0.8928870962133307
+            ],
+            "Cosine Weighted Average": 0.9066178841883349,
+            "Largest Cluster Percentage": 0.7349397590361446,
+            "Cutoff Percentages": {
+              "1": 0.296,
+              "2": 0.391,
+              "3": 0.213
+            },
+            "Cluster Sizes": [
+              61,
+              14,
+              8
+            ]
+          },
+          "SingleFeatureEfficacyTest": {
+            "F1Scores": {
+              "ct_ftp_cmd": 0.4994762429158497,
+              "is_sm_ips_ports": 0.4994762429158497,
+              "dtcpb": 0.49915338511570406,
+              "proto": 0.4994762429158497,
+              "is_ftp_login": 0.4994762429158497,
+              "stcpb": 0.4991264614971106,
+              "state": 0.4994762429158497,
+              "djit": 0.49915338511570406,
+              "sjit": 0.4990591397849462,
+              "dinpkt": 0.4991129986023009,
+              "ct_src_ltm": 0.4994762429158497,
+              "rate": 0.4991937651169041,
+              "dload": 0.4991668458396044,
+              "sinpkt": 0.49930141329464234,
+              "dloss": 0.5904255578945312,
+              "ackdat": 0.49907260557511895,
+              "spkts": 0.4994762429158497,
+              "ct_src_dport_ltm": 0.4994762429158497,
+              "response_body_len": 0.6131796935670573,
+              "dur": 0.4992072236704201,
+              "sloss": 0.4994762429158497,
+              "sload": 0.5145379549895073,
+              "dpkts": 0.5692704907228499,
+              "synack": 0.517819894270883,
+              "dbytes": 0.5904255578945312,
+              "ct_state_ttl": 0.4994762429158497,
+              "tcprtt": 0.49915338511570406,
+              "ct_dst_ltm": 0.4994762429158497,
+              "ct_srv_src": 0.4994762429158497,
+              "service": 0.4994762429158497,
+              "ct_dst_sport_ltm": 0.4994762429158497,
+              "ct_dst_src_ltm": 0.4994762429158497,
+              "trans_depth": 0.4994762429158497,
+              "ct_flw_http_mthd": 0.4994762429158497,
+              "dttl": 0.4994762429158497,
+              "dmean": 0.5676714222220052,
+              "swin": 0.4994762429158497,
+              "ct_srv_dst": 0.4994762429158497,
+              "dwin": 0.4994762429158497,
+              "sttl": 0.4994762429158497,
+              "smean": 0.5904255578945312,
+              "sbytes": 0.8073563313450427
+            }
+          },
+          "NearestNeighboursTest": {
+            "Mislabelled": 79,
+            "Percentage": 0.4540229885057471
+          }
+        }
+      },
+      "rows_given": 257673,
+      "metadata_used": {
+        "drop_fields": [
+          "id",
+          "label",
+          "dstport"
+        ],
+        "unique_fields": [
+          "proto",
+          "state",
+          "service"
+        ],
+        "label_field": "attack_cat",
+        "benign_label": "Normal",
+        "dst_port": "dstport",
+        "ignore_ports": []
+      },
+      "drop_fields_absent_from_artifact": [],
+      "total_s": 379.3667929172516
+    },
+    "per_class": {
+      "Analysis": {
+        "flood_top_feature": "proto",
+        "flood_top_f1": 0.9275298028847176,
+        "flood_identical_share": 0.21351378809869376,
+        "flood_largest_cluster_share": 0.7880986937590712,
+        "flood_nn_mislabel_share": 0.1561449383638401,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "smean",
+        "ids2eval_top_auc": 0.6721208182138099,
+        "ids2eval_train_dup_rate": 0.729,
+        "ids2eval_test_reuse_rate": 0.18463810930576072,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Backdoor": {
+        "flood_top_feature": "proto",
+        "flood_top_f1": 0.9524031932431354,
+        "flood_identical_share": 0.1747872340425532,
+        "flood_largest_cluster_share": 0.8661347517730497,
+        "flood_nn_mislabel_share": 0.14383855732073852,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "dload",
+        "ids2eval_top_auc": 0.6881633997078227,
+        "ids2eval_train_dup_rate": 0.7061855670103093,
+        "ids2eval_test_reuse_rate": 0.00686106346483705,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "DoS": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.9280306194333259,
+        "flood_identical_share": 0.2755348781076514,
+        "flood_largest_cluster_share": 0.7913347815592566,
+        "flood_nn_mislabel_share": 0.08989176297926986,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "smean",
+        "ids2eval_top_auc": 0.7006986694694519,
+        "ids2eval_train_dup_rate": 0.7550554468362688,
+        "ids2eval_test_reuse_rate": 0.4900953778429934,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Exploits": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.9019508821628199,
+        "flood_identical_share": 0.21074411422433084,
+        "flood_largest_cluster_share": 0.6141348133560111,
+        "flood_nn_mislabel_share": 0.07020774845592363,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "ct_srv_src",
+        "ids2eval_top_auc": 0.7755471742270827,
+        "ids2eval_train_dup_rate": 0.4393735213966999,
+        "ids2eval_test_reuse_rate": 0.16187567373338124,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Fuzzers": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.7766201537308332,
+        "flood_identical_share": 0.2922147319960539,
+        "flood_largest_cluster_share": 0.6389345609996712,
+        "flood_nn_mislabel_share": 0.3984162336055432,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "sttl",
+        "ids2eval_top_auc": 0.690865775150868,
+        "ids2eval_train_dup_rate": 0.18120325560932687,
+        "ids2eval_test_reuse_rate": 0.04305509732761465,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Generic": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.9922236587297089,
+        "flood_identical_share": 0.6216239885768682,
+        "flood_largest_cluster_share": 0.5032977493710478,
+        "flood_nn_mislabel_share": 0.009410405802517369,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "ct_dst_sport_ltm",
+        "ids2eval_top_auc": 0.9834615789007026,
+        "ids2eval_train_dup_rate": 0.9019,
+        "ids2eval_test_reuse_rate": 0.09125112606645117,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": true,
+          "ids2eval": false
+        }
+      },
+      "Reconnaissance": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.9430248560843757,
+        "flood_identical_share": 0.45914893312329946,
+        "flood_largest_cluster_share": 0.5009308320206215,
+        "flood_nn_mislabel_share": 0.10116536784156717,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "ct_srv_dst",
+        "ids2eval_top_auc": 0.7942447944245117,
+        "ids2eval_train_dup_rate": 0.3878562577447336,
+        "ids2eval_test_reuse_rate": 0.3255148741418764,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Shellcode": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.7791240608908935,
+        "flood_identical_share": 0.639818553888131,
+        "flood_largest_cluster_share": 0.5102319236016372,
+        "flood_nn_mislabel_share": 0.47650562541363334,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "ct_dst_src_ltm",
+        "ids2eval_top_auc": 0.8358084681760141,
+        "ids2eval_train_dup_rate": 0.038834951456310676,
+        "ids2eval_test_reuse_rate": 0.03439153439153439,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      },
+      "Worms": {
+        "flood_top_feature": "sbytes",
+        "flood_top_f1": 0.8073563313450427,
+        "flood_identical_share": 0.3040240963855421,
+        "flood_largest_cluster_share": 0.7349397590361446,
+        "flood_nn_mislabel_share": 0.4540229885057471,
+        "flood_port_share": null,
+        "ids2eval_top_feature": "ct_flw_http_mthd",
+        "ids2eval_top_auc": 0.8467950291143469,
+        "ids2eval_train_dup_rate": 0.06923076923076923,
+        "ids2eval_test_reuse_rate": 0.0,
+        "ids2eval_homogeneity": "below_control",
+        "separable_agreement": {
+          "flood": false,
+          "ids2eval": false
+        }
+      }
+    },
+    "separable": {
+      "both": 0,
+      "flood_only": 1,
+      "ids2eval_only": 0,
+      "neither": 8
+    }
+  },
+  "_class_vs_benign_auc": {
+    "ton-iot-official": {
+      "backdoor": {
+        "auc_vs_benign": 0.874,
+        "feature": "src_ip_bytes",
+        "flood_f1": 0.9986516393606346
+      },
+      "ddos": {
+        "auc_vs_benign": 0.826,
+        "feature": "dst_pkts",
+        "flood_f1": 0.9802397325575116
+      },
+      "dos": {
+        "auc_vs_benign": 0.794,
+        "feature": "dst_pkts",
+        "flood_f1": 0.9740673713312057
+      },
+      "injection": {
+        "auc_vs_benign": 0.965,
+        "feature": "dst_pkts",
+        "flood_f1": 0.9922205563287572
+      },
+      "mitm": {
+        "auc_vs_benign": 0.911,
+        "feature": "dst_pkts",
+        "flood_f1": 0.8541599541293473
+      },
+      "password": {
+        "auc_vs_benign": 0.929,
+        "feature": "dst_pkts",
+        "flood_f1": 0.9907718818128273
+      },
+      "ransomware": {
+        "auc_vs_benign": 0.943,
+        "feature": "duration",
+        "flood_f1": 0.9486523953437456
+      },
+      "scanning": {
+        "auc_vs_benign": 0.862,
+        "feature": "src_ip_bytes",
+        "flood_f1": 0.9907350727848341
+      },
+      "xss": {
+        "auc_vs_benign": 0.746,
+        "feature": "dns_qtype",
+        "flood_f1": 0.9573378516999252
+      }
+    },
+    "unsw-nb15": {
+      "Analysis": {
+        "auc_vs_benign": 0.86,
+        "feature": "dload",
+        "flood_f1": 0.9275298028847176
+      },
+      "Backdoor": {
+        "auc_vs_benign": 0.889,
+        "feature": "dload",
+        "flood_f1": 0.9524031932431354
+      },
+      "DoS": {
+        "auc_vs_benign": 0.861,
+        "feature": "dload",
+        "flood_f1": 0.9280306194333259
+      },
+      "Exploits": {
+        "auc_vs_benign": 0.781,
+        "feature": "ct_state_ttl",
+        "flood_f1": 0.9019508821628199
+      },
+      "Fuzzers": {
+        "auc_vs_benign": 0.858,
+        "feature": "sttl",
+        "flood_f1": 0.7766201537308332
+      },
+      "Generic": {
+        "auc_vs_benign": 0.981,
+        "feature": "ct_dst_sport_ltm",
+        "flood_f1": 0.9922236587297089
+      },
+      "Reconnaissance": {
+        "auc_vs_benign": 0.857,
+        "feature": "sttl",
+        "flood_f1": 0.9430248560843757
+      },
+      "Shellcode": {
+        "auc_vs_benign": 0.86,
+        "feature": "ct_srv_dst",
+        "flood_f1": 0.7791240608908935
+      },
+      "Worms": {
+        "auc_vs_benign": 0.889,
+        "feature": "ct_srv_dst",
+        "flood_f1": 0.8073563313450427
+      }
+    }
+  }
+}

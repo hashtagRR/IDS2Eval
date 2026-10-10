@@ -1,0 +1,1954 @@
+{
+  "threshold": 0.01,
+  "n_rows": 10000,
+  "n_seeds": 10,
+  "runs": [
+    {
+      "scenario": "clean",
+      "seed": 3000,
+      "truth": "not material",
+      "true_gap": 0.004579999999999962,
+      "published_acc": 0.7646,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.00044999999999999484,
+          "ci": [
+            -0.00881191060921287,
+            0.00791191060921288
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3001,
+      "truth": "not material",
+      "true_gap": -0.006679999999999986,
+      "published_acc": 0.9152999999999999,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.000900000000000023,
+          "ci": [
+            -0.00729790233463764,
+            0.0054979023346375935
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3002,
+      "truth": "not material",
+      "true_gap": -0.012209999999999988,
+      "published_acc": 0.9045499999999999,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.001041554222888552,
+          "ci": [
+            -0.00438755868348826,
+            0.006470667129265364
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3003,
+      "truth": "not material",
+      "true_gap": -0.0035099999999999797,
+      "published_acc": 0.85015,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.004750000000000009,
+          "ci": [
+            -0.0002808632541458078,
+            0.009780863254145827
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3004,
+      "truth": "not material",
+      "true_gap": -0.005959999999999998,
+      "published_acc": 0.8336,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.002674662668665684,
+          "ci": [
+            -0.0009228421894003805,
+            0.006272167526731749
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3005,
+      "truth": "not material",
+      "true_gap": -0.0009100000000000108,
+      "published_acc": 0.82865,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0035499999999999976,
+          "ci": [
+            -0.0027373003835554086,
+            0.009837300383555403
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3006,
+      "truth": "not material",
+      "true_gap": 0.0035399999999999763,
+      "published_acc": 0.8905,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.003955872063968013,
+          "ci": [
+            -0.008533281187810628,
+            0.0006215370598746011
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3007,
+      "truth": "not material",
+      "true_gap": -0.018609999999999995,
+      "published_acc": 0.7358499999999999,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.0002999999999999892,
+          "ci": [
+            -0.008673377445813714,
+            0.008073377445813735
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3008,
+      "truth": "not material",
+      "true_gap": -0.004519999999999991,
+      "published_acc": 0.9460999999999998,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.004997101449275376,
+          "ci": [
+            0.0006520517109539492,
+            0.009342151187596803
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "clean",
+      "seed": 3009,
+      "truth": "not material",
+      "true_gap": 0.02075,
+      "published_acc": 0.88605,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0004321089455272542,
+          "ci": [
+            -0.005276440551587579,
+            0.006140658442642087
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3100,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3101,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3102,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3103,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3104,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3105,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3106,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3107,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3108,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "repetitive",
+      "seed": 3109,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3200,
+      "truth": "material",
+      "true_gap": 0.46284000000000003,
+      "published_acc": 0.9902000000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.41243210368893324,
+          "ci": [
+            0.39417383700372377,
+            0.4306903703741427
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3201,
+      "truth": "material",
+      "true_gap": 0.43779,
+      "published_acc": 0.98905,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4241950149551346,
+          "ci": [
+            0.40698517462743394,
+            0.4414048552828353
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3202,
+      "truth": "material",
+      "true_gap": 0.48762999999999995,
+      "published_acc": 0.9932500000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4847270942166817,
+          "ci": [
+            0.46871658841223407,
+            0.5007376000211293
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3203,
+      "truth": "material",
+      "true_gap": 0.49272,
+      "published_acc": 0.9943000000000002,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5073058823529413,
+          "ci": [
+            0.48365876971145644,
+            0.530952994994426
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3204,
+      "truth": "material",
+      "true_gap": 0.47974000000000006,
+      "published_acc": 0.9919,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48132459313601483,
+          "ci": [
+            0.4678254594474396,
+            0.4948237268245901
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3205,
+      "truth": "material",
+      "true_gap": 0.4787800000000001,
+      "published_acc": 0.9905999999999999,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4785784147557328,
+          "ci": [
+            0.46770246473770066,
+            0.48945436477376497
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3206,
+      "truth": "material",
+      "true_gap": 0.45036000000000004,
+      "published_acc": 0.9934000000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4026603688933201,
+          "ci": [
+            0.39033257824540785,
+            0.4149881595412323
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3207,
+      "truth": "material",
+      "true_gap": 0.4396,
+      "published_acc": 0.9867000000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48780314057826524,
+          "ci": [
+            0.47065649889646666,
+            0.5049497822600638
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3208,
+      "truth": "material",
+      "true_gap": 0.44795000000000007,
+      "published_acc": 0.9938500000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4690681954137587,
+          "ci": [
+            0.4456903123336672,
+            0.49244607849385025
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_noisy",
+      "seed": 3209,
+      "truth": "material",
+      "true_gap": 0.45708000000000004,
+      "published_acc": 0.9893000000000001,
+      "dedup_status": "ok",
+      "test_reuse_rows": 0,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4638247009288413,
+          "ci": [
+            0.4471370205795384,
+            0.4805123812781442
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "not material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3300,
+      "truth": "material",
+      "true_gap": 0.46799999999999997,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.44745762711864406,
+          "ci": [
+            0.42375324010774745,
+            0.4711620141295407
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3301,
+      "truth": "material",
+      "true_gap": 0.4952,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4949152542372881,
+          "ci": [
+            0.46777350843825627,
+            0.5220570000363199
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3302,
+      "truth": "material",
+      "true_gap": 0.4368,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5037459051417177,
+          "ci": [
+            0.47590705172936065,
+            0.5315847585540747
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3303,
+      "truth": "material",
+      "true_gap": 0.43520000000000003,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4496456190885447,
+          "ci": [
+            0.43562589470350677,
+            0.4636653434735827
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3304,
+      "truth": "material",
+      "true_gap": 0.46020000000000005,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.488135593220339,
+          "ci": [
+            0.46385255022984984,
+            0.5124186362108282
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3305,
+      "truth": "material",
+      "true_gap": 0.48339999999999994,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4507580740365967,
+          "ci": [
+            0.4290262358109698,
+            0.47248991226222353
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3306,
+      "truth": "material",
+      "true_gap": 0.48019999999999996,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.5177966101694915,
+          "ci": [
+            0.496708704414593,
+            0.53888451592439
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3307,
+      "truth": "material",
+      "true_gap": 0.4431999999999999,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4483050847457627,
+          "ci": [
+            0.4231546659602667,
+            0.4734555035312587
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3308,
+      "truth": "material",
+      "true_gap": 0.4798,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.48494308120414875,
+          "ci": [
+            0.4599726602106262,
+            0.5099135021976713
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "group_exact",
+      "seed": 3309,
+      "truth": "material",
+      "true_gap": 0.40800000000000003,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 2000,
+      "homogeneity_classes": [
+        "equivalent",
+        "equivalent",
+        "equivalent"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.4122544809125058,
+          "ci": [
+            0.38623479382514697,
+            0.4382741679998647
+          ],
+          "verdict": "material"
+        }
+      },
+      "W1": "material",
+      "W2": "not material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3400,
+      "truth": "not material",
+      "true_gap": 0.0004099999999999882,
+      "published_acc": 0.9999500000000001,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -0.00014999999999998348,
+          "ci": [
+            -0.0006845268834495229,
+            0.00038452688344955597
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3401,
+      "truth": "not material",
+      "true_gap": -0.0010299999999999864,
+      "published_acc": 0.9896499999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0001499999999999946,
+          "ci": [
+            -0.0016819748924725684,
+            0.0019819748924725577
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.002587500000000009,
+          "ci": [
+            -0.004659403010936723,
+            0.009834403010936741
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3402,
+      "truth": "not material",
+      "true_gap": -0.0006799999999999695,
+      "published_acc": 0.9992999999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.00024990004997501594,
+          "ci": [
+            -0.0005974028746468215,
+            0.0010972029745968533
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00017500000000001404,
+          "ci": [
+            -0.0017265814574638,
+            0.002076581457463828
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3403,
+      "truth": "not material",
+      "true_gap": 4.999999999999449e-05,
+      "published_acc": 0.9999500000000001,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": -9.999999999998899e-05,
+          "ci": [
+            -0.00032621571627978454,
+            0.00012621571627980657
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3404,
+      "truth": "not material",
+      "true_gap": 0.00037999999999995817,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.00020000000000000017,
+          "ci": [
+            -0.00031142321172624343,
+            0.0007114232117262438
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3405,
+      "truth": "not material",
+      "true_gap": 0.003870000000000029,
+      "published_acc": 0.9851500000000002,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0027984257871064623,
+          "ci": [
+            0.00021142712999515714,
+            0.005385424444217767
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0037125000000000187,
+          "ci": [
+            -0.004858010981671204,
+            0.012283010981671241
+          ],
+          "verdict": "inconclusive",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "inconclusive"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3406,
+      "truth": "not material",
+      "true_gap": 0.0006800000000000472,
+      "published_acc": 0.9994999999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 5.00000000000167e-05,
+          "ci": [
+            -0.00026318147783615397,
+            0.0003631814778361874
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00012500000000004174,
+          "ci": [
+            -0.0014432845906588005,
+            0.001693284590658884
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3407,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "published_acc": 1.0,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3408,
+      "truth": "not material",
+      "true_gap": -4.999999999999449e-05,
+      "published_acc": 0.9999500000000001,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 1.2500000000004175e-05,
+          "ci": [
+            -0.0005118407499470955,
+            0.0005368407499471038
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_easy",
+      "seed": 3409,
+      "truth": "not material",
+      "true_gap": -0.00034999999999996145,
+      "published_acc": 0.9995499999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.0001499999999999946,
+          "ci": [
+            -0.0002647288131796664,
+            0.0005647288131796556
+          ],
+          "verdict": "not material"
+        },
+        "reuse": {
+          "mean": 0.00011250000000003756,
+          "ci": [
+            -0.0014036252515036362,
+            0.0016286252515037114
+          ],
+          "verdict": "not material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "not material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3500,
+      "truth": "material",
+      "true_gap": 0.08005000000000002,
+      "published_acc": 0.67865,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.025990629685157408,
+          "ci": [
+            0.01848740483717848,
+            0.03349385453313634
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.08033749999999999,
+          "ci": [
+            0.04829334780330216,
+            0.11238165219669782
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3501,
+      "truth": "material",
+      "true_gap": 0.06848999999999997,
+      "published_acc": 0.69695,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02549572713643178,
+          "ci": [
+            0.01769003037581488,
+            0.033301423897048675
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07576249999999997,
+          "ci": [
+            0.04403637803471877,
+            0.10748862196528117
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3502,
+      "truth": "material",
+      "true_gap": 0.08634999999999998,
+      "published_acc": 0.71795,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.027500000000000014,
+          "ci": [
+            0.018566786205102596,
+            0.03643321379489743
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0705125,
+          "ci": [
+            0.039078002832121234,
+            0.10194699716787878
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3503,
+      "truth": "material",
+      "true_gap": 0.07490999999999998,
+      "published_acc": 0.7054499999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.021580709645177408,
+          "ci": [
+            0.012598240238975518,
+            0.0305631790513793
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07363749999999998,
+          "ci": [
+            0.04210574130424772,
+            0.10516925869575225
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3504,
+      "truth": "material",
+      "true_gap": 0.07380000000000002,
+      "published_acc": 0.6688000000000001,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02775000000000003,
+          "ci": [
+            0.020580056085935536,
+            0.03491994391406453
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0828,
+          "ci": [
+            0.050361837100278924,
+            0.11523816289972108
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3505,
+      "truth": "material",
+      "true_gap": 0.05639999999999999,
+      "published_acc": 0.7753,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.009822838580709637,
+          "ci": [
+            0.00044279114946376395,
+            0.01920288601195551
+          ],
+          "verdict": "inconclusive"
+        },
+        "reuse": {
+          "mean": 0.056174999999999975,
+          "ci": [
+            0.02711475496247509,
+            0.08523524503752486
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3506,
+      "truth": "material",
+      "true_gap": 0.058629999999999995,
+      "published_acc": 0.7069500000000001,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.02469615192403799,
+          "ci": [
+            0.01779239642254773,
+            0.03159990742552825
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.0732625,
+          "ci": [
+            0.04162978686929941,
+            0.10489521313070058
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3507,
+      "truth": "material",
+      "true_gap": 0.07581999999999998,
+      "published_acc": 0.7093999999999999,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.023432433783108463,
+          "ci": [
+            0.013072028560208716,
+            0.03379283900600821
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07264999999999999,
+          "ci": [
+            0.04104613782314036,
+            0.10425386217685963
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3508,
+      "truth": "material",
+      "true_gap": 0.06428000000000003,
+      "published_acc": 0.7359,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.01845,
+          "ci": [
+            0.01147460783072897,
+            0.025425392169271033
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.06602499999999997,
+          "ci": [
+            0.03532947918798776,
+            0.09672052081201218
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    },
+    {
+      "scenario": "presplit_hard",
+      "seed": 3509,
+      "truth": "material",
+      "true_gap": 0.0857,
+      "published_acc": 0.7048,
+      "dedup_status": "flag",
+      "test_reuse_rows": 400,
+      "homogeneity_classes": [
+        "leakage",
+        "leakage",
+        "leakage"
+      ],
+      "interventions": {
+        "grouped_resplit": {
+          "mean": 0.023531709145427293,
+          "ci": [
+            0.013096121545475,
+            0.033967296745379585
+          ],
+          "verdict": "material"
+        },
+        "reuse": {
+          "mean": 0.07379999999999998,
+          "ci": [
+            0.0423533086997038,
+            0.10524669130029615
+          ],
+          "verdict": "material",
+          "novel_rows": 1600
+        }
+      },
+      "W1": "material",
+      "W2": "material",
+      "W3": "material"
+    }
+  ],
+  "summary": {
+    "clean": {
+      "truth": "not material",
+      "true_gap_mean": -0.0023530000000000005,
+      "true_gap_sd": 0.010634551706583586,
+      "true_gap_range": [
+        -0.018609999999999995,
+        0.02075
+      ],
+      "W1": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      }
+    },
+    "repetitive": {
+      "truth": "not material",
+      "true_gap_mean": 0.0,
+      "true_gap_sd": 0.0,
+      "true_gap_range": [
+        0.0,
+        0.0
+      ],
+      "W1": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      }
+    },
+    "group_noisy": {
+      "truth": "material",
+      "true_gap_mean": 0.46344900000000006,
+      "true_gap_sd": 0.020059864544795792,
+      "true_gap_range": [
+        0.43779,
+        0.49272
+      ],
+      "W1": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      }
+    },
+    "group_exact": {
+      "truth": "material",
+      "true_gap_mean": 0.4590000000000001,
+      "true_gap_sd": 0.02744740424885382,
+      "true_gap_range": [
+        0.40800000000000003,
+        0.4952
+      ],
+      "W1": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      }
+    },
+    "presplit_easy": {
+      "truth": "not material",
+      "true_gap_mean": 0.00032800000000001047,
+      "true_gap_sd": 0.001346879521131884,
+      "true_gap_range": [
+        -0.0010299999999999864,
+        0.003870000000000029
+      ],
+      "W1": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 0,
+        "wrong": 10,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 9,
+        "wrong": 0,
+        "inconclusive": 1
+      }
+    },
+    "presplit_hard": {
+      "truth": "material",
+      "true_gap_mean": 0.072443,
+      "true_gap_sd": 0.010417871450327822,
+      "true_gap_range": [
+        0.05639999999999999,
+        0.08634999999999998
+      ],
+      "W1": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W2": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      },
+      "W3": {
+        "correct": 10,
+        "wrong": 0,
+        "inconclusive": 0
+      }
+    }
+  },
+  "note": "truth set by scenario design after the batch run (job ids2eval-synth-1010-1206); runs unchanged"
+}

@@ -13,7 +13,7 @@
 dataset:
   name: ton-iot-official
   raw_files:
-    - train_test_network.csv.gz
+    - data/train_test_network.csv.gz
   split_ratio: 0.8
   group_columns: [src_ip, src_port, dst_ip, dst_port, proto]
 schema:
@@ -27,5 +27,6 @@ audit:
   repeated_seed_falsification_check: true
   known_issue_lookup: true
 output:
+  dir: out
   save_preprocessed: false
   write_scorecard_plot: true

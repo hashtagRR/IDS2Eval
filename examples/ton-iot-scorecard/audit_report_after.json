@@ -88,11 +88,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train)",
+    "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train), vs. 22.7% from always predicting the majority class",
     "details": {
       "rule": "src_ip <= 3.5",
       "train_accuracy": 0.30463472726562807,
-      "test_accuracy": 0.3169419691371441
+      "test_accuracy": 0.3169419691371441,
+      "majority_baseline_accuracy": 0.22660834601173657,
+      "error_reduction_vs_baseline": 0.11680191098464891
     }
   },
   {
@@ -101,7 +103,7 @@
     "summary": "'src_port' alone reaches AUC 0.952 identifying 'dos'; a single feature this separable is worth checking for a leakage artifact",
     "details": {
       "top_features": {
-        "src_port": 0.9522616199357262,
+        "src_port": 0.9522616199357263,
         "dst_ip_bytes": 0.9334677864716313,
         "dst_pkts": 0.9218572113835652,
         "duration": 0.9215095751892441,
@@ -114,13 +116,25 @@
   {
     "check": "identity_column_flag",
     "status": "flag",
-    "summary": "standalone AUC by column: {'src_ip': 0.911, 'dst_ip': 0.891, 'src_port': 0.816, 'dst_port': 0.925}. Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
+    "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): src_ip: 0.911 (100.0%, 0.911), dst_ip: 0.891 (99.8%, 0.891), src_port: 0.856 (96.6%, 0.86), dst_port: 0.924 (99.9%, 0.924). Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
     "details": {
       "standalone_auc": {
-        "src_ip": 0.911456536181547,
-        "dst_ip": 0.8905572940073948,
-        "src_port": 0.8156810453919255,
-        "dst_port": 0.9246829673599992
+        "src_ip": 0.9114502876500724,
+        "dst_ip": 0.8909978486419818,
+        "src_port": 0.8555260315052545,
+        "dst_port": 0.9244539075023779
+      },
+      "seen_only_auc": {
+        "src_ip": 0.9114502876500724,
+        "dst_ip": 0.8911952303109157,
+        "src_port": 0.8603548161648432,
+        "dst_port": 0.9244140387004899
+      },
+      "seen_coverage": {
+        "src_ip": 1.0,
+        "dst_ip": 0.9982884155618343,
+        "src_port": 0.9656868072158227,
+        "dst_port": 0.9992936318191697
       },
       "suggested_drop": [
         "src_ip",
@@ -128,54 +142,55 @@
         "src_port",
         "dst_port"
       ],
+      "method": "training-only value lookup, unseen values scored with the prior",
       "by_class": {
         "src_ip": {
-          "normal": 0.9966299104728803,
-          "scanning": 0.8051401411241161,
-          "ddos": 0.8353485472773294,
-          "injection": 0.8614454958415771,
-          "password": 0.8342966163484711,
-          "dos": 0.8667115167930345,
-          "backdoor": 0.9914303156979286,
-          "xss": 0.9783528419306552,
-          "ransomware": 0.9964892042703877,
-          "mitm": 0.9567820963027333
+          "normal": 0.9966017437421584,
+          "scanning": 0.8051399506217995,
+          "ddos": 0.835348379598481,
+          "injection": 0.8614575291994203,
+          "password": 0.834296616348471,
+          "dos": 0.8667060742198962,
+          "backdoor": 0.9914252286695558,
+          "xss": 0.9783528419306553,
+          "ransomware": 0.9964885493933628,
+          "mitm": 0.9567721606114947
         },
         "dst_ip": {
-          "normal": 0.8734862272162242,
-          "scanning": 0.9819497226286271,
-          "ddos": 0.8861686184141664,
-          "injection": 0.8797713715491385,
-          "password": 0.7808872729691821,
-          "dos": 0.7907845720118776,
-          "backdoor": 0.997521150422649,
-          "xss": 0.8971688449925724,
-          "ransomware": 0.9760824394125514,
-          "mitm": 0.9268856013662099
+          "normal": 0.874775015184997,
+          "scanning": 0.9815718879541576,
+          "ddos": 0.8858463244236185,
+          "injection": 0.8792371363022644,
+          "password": 0.7809506334955434,
+          "dos": 0.7908544779169341,
+          "backdoor": 0.997396123982819,
+          "xss": 0.8964970268443223,
+          "ransomware": 0.9770185861194122,
+          "mitm": 0.9722201994956068
         },
         "src_port": {
-          "normal": 0.8350798980608617,
-          "scanning": 0.9620627781333821,
-          "ddos": 0.5848814606955709,
-          "injection": 0.6919408476801518,
-          "password": 0.6963552990986043,
-          "dos": 0.9584888050051266,
-          "backdoor": 0.9922658685865248,
-          "xss": 0.6639096038538119,
-          "ransomware": 0.9720164116548246,
-          "mitm": 0.5777125319527254
+          "normal": 0.8902357581051779,
+          "scanning": 0.9770448175749816,
+          "ddos": 0.6669680541535,
+          "injection": 0.7367202154910801,
+          "password": 0.735570579480098,
+          "dos": 0.9722495701135827,
+          "backdoor": 0.9930125680462112,
+          "xss": 0.7192656629751344,
+          "ransomware": 0.9953888089484143,
+          "mitm": 0.7387513267742956
         },
         "dst_port": {
-          "normal": 0.9709247637604956,
-          "scanning": 0.9882991000670568,
-          "ddos": 0.8302523145187833,
-          "injection": 0.8617730094610462,
-          "password": 0.8910193056343861,
-          "dos": 0.9764028018300042,
-          "backdoor": 0.9209749515401199,
-          "xss": 0.82427274732745,
-          "ransomware": 0.9986903550966978,
-          "mitm": 0.9020910185142453
+          "normal": 0.9718976383438692,
+          "scanning": 0.9881832898988052,
+          "ddos": 0.8300840564159755,
+          "injection": 0.8613534769451561,
+          "password": 0.8898750664240297,
+          "dos": 0.97417253506922,
+          "backdoor": 0.920651221532862,
+          "xss": 0.8239209795294645,
+          "ransomware": 0.9989939342561315,
+          "mitm": 0.90244393165238
         }
       }
     }
@@ -187,7 +202,7 @@
     "details": {
       "port_column": "src_port",
       "protocol_column": "proto",
-      "standalone_auc": 0.8651933309335379
+      "standalone_auc": 0.8651941642993868
     }
   },
   {
@@ -221,81 +236,125 @@
   },
   {
     "check": "homogeneity_test",
-    "status": "ok",
-    "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "status": "warning",
+    "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['dos']; sample size isn't enough to tell for these classes",
     "details": {
       "per_class": {
         "normal": {
           "test_near_zero_rate": 0.082,
           "control_near_zero_rate": 0.084,
-          "p_value": 0.23835848934135845,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.03666872920746175,
+            0.03264246035069353
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "scanning": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9916513888339384,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "ddos": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.002,
-          "p_value": 0.8665789134779814,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.011240706827931778,
+            0.005800174936599509
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "injection": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.6270235114866968,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "password": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.299143641843002,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "dos": {
           "test_near_zero_rate": 0.768,
           "control_near_zero_rate": 0.758,
-          "p_value": 0.30371805366196175,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.04269407551655678,
+            0.06262716779991748
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "backdoor": {
           "test_near_zero_rate": 0.948,
           "control_near_zero_rate": 0.942,
-          "p_value": 0.6800633151548174,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.022870678939818208,
+            0.035041426640945623
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "xss": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9989851957183952,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "ransomware": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9348225960541419,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "mitm": {
           "test_near_zero_rate": 0.014354066985645933,
           "control_near_zero_rate": 0.008,
-          "p_value": 0.373066559468728,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.00923251328635464,
+            0.03378341731811936
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {
     "check": "resplit_falsification",
     "status": "ok",
-    "summary": "random-split accuracy=0.9949, grouped-split accuracy=0.9945 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+    "summary": "random-split accuracy=0.9951, grouped-split accuracy=0.9947 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
     "details": {
-      "random_accuracy": 0.9948589163448553,
-      "grouped_accuracy": 0.9944560272934041,
-      "drop": 0.00040288905145124954
+      "random_accuracy": 0.9950958326423275,
+      "grouped_accuracy": 0.9946929492039424,
+      "drop": 0.0004028834383851265,
+      "sampling_margin": 0.0009615542017258522,
+      "random_test_rows": 42209,
+      "grouped_test_rows": 42208
     }
   },
   {
@@ -401,17 +460,18 @@
   {
     "check": "result_robustness_check",
     "status": "ok",
-    "summary": "accuracy ranges from 0.9758 (identity_columns_dropped) to 0.9949 (random_split) across 4 conditions, a spread of 0.0190",
+    "summary": "accuracy ranges from 0.9759 (identity_columns_dropped) to 0.9951 (random_split) across 4 conditions, a spread of 0.0192 (sampling margin +/-0.0016)",
     "details": {
       "accuracy_by_condition": {
-        "random_split": 0.9948589163448553,
-        "grouped_split": 0.9944560272934041,
-        "deduplicated": 0.9941860465116279,
-        "identity_columns_dropped": 0.9758345376578454
+        "random_split": 0.9950958326423275,
+        "grouped_split": 0.9946929492039424,
+        "deduplicated": 0.994484894588133,
+        "identity_columns_dropped": 0.9759056125470871
       },
-      "spread": 0.019024378687009902,
+      "spread": 0.019190220095240407,
       "worst_condition": "identity_columns_dropped",
-      "best_condition": "random_split"
+      "best_condition": "random_split",
+      "sampling_margin": 0.0016075281249351404
     }
   },
   {
@@ -425,25 +485,25 @@
   {
     "check": "repeated_seed_falsification_check",
     "status": "ok",
-    "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0002, 95% CI=[-0.0002, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
+    "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0001, 95% CI=[-0.0003, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
     "details": {
       "n_seeds": 10,
       "drops_by_seed": [
-        0.00040288905145124954,
-        0.0003553744462081454,
-        0.0005450326555618279,
-        0.001231964746854941,
-        -0.00021322466772499826,
-        -4.72687529442517e-05,
-        2.3813433283392804e-05,
-        -0.0007580165227473179,
-        0.0003316828164608987,
-        0.00011845814873612248
+        0.0004028834383851265,
+        0.000307991186713763,
+        0.0008530238422754799,
+        0.001160889857613312,
+        0.0,
+        -0.00021311689685410418,
+        -2.3574877970555796e-05,
+        -0.0010660172516735456,
+        2.369162974713568e-05,
+        -4.73832594944934e-05
       ],
-      "mean_drop": 0.000199070535514001,
+      "mean_drop": 0.00013983876687421182,
       "ci_95": [
-        -0.00017447232736502913,
-        0.0005726133983930312
+        -0.00029478028391589765,
+        0.0005744578176643213
       ],
       "materiality_threshold": 0.01,
       "material": false

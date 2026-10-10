@@ -45,7 +45,7 @@ Windows and troubleshooting: [INSTALL.md](INSTALL.md).
 | [Config fields](configs/README.md) | every config field, with its default and an example |
 | [Configuration notes](guide/configuration.md) | the reasoning behind non-obvious fields, and larger worked examples |
 | [Checks](guide/checks.md) | what each of the 28 checks does, the research behind it, and the scorecard's verdict rule |
-| [Example scorecards](examples/) | real scorecards for eight widely used datasets, from UNSW-NB15 to BoT-IoT |
+| [Example scorecards](examples/README.md) | the real audit runs behind the paper, on seven widely used NIDS benchmarks |
 | [Paper results](results/README.md) | configurations, scorecards and analysis outputs behind the accompanying paper |
 | [Known issues](guide/contributing-known-issues.md) | how to add a curated known issue or extractor fingerprint |
 | [Install guide](INSTALL.md) | platform setup, extras, tests and lint, including Windows |

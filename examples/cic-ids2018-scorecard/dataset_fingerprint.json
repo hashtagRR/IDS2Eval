@@ -1,42 +1,43 @@
 {
-  "train_rows": 400000,
-  "test_rows": 100000,
+  "train_rows": 12986354,
+  "test_rows": 3246589,
   "feature_count": 78,
   "train_class_distribution": {
-    "Benign": 332069,
-    "DDOS attack-HOIC": 16923,
-    "DDoS attacks-LOIC-HTTP": 14394,
-    "DoS attacks-Hulk": 11281,
-    "Bot": 7032,
-    "FTP-BruteForce": 4736,
-    "SSH-Bruteforce": 4670,
-    "Infilteration": 4006,
-    "DoS attacks-SlowHTTPTest": 3482,
-    "DoS attacks-GoldenEye": 1066,
-    "DoS attacks-Slowloris": 276,
-    "DDOS attack-LOIC-UDP": 41,
-    "Brute Force -Web": 17,
-    "Brute Force -XSS": 5,
-    "SQL Injection": 2
+    "Benign": 10787766,
+    "DDOS attack-HOIC": 548809,
+    "DDoS attacks-LOIC-HTTP": 460953,
+    "DoS attacks-Hulk": 369530,
+    "Bot": 228953,
+    "FTP-BruteForce": 154688,
+    "SSH-Bruteforce": 150071,
+    "Infilteration": 129547,
+    "DoS attacks-SlowHTTPTest": 111912,
+    "DoS attacks-GoldenEye": 33206,
+    "DoS attacks-Slowloris": 8792,
+    "DDOS attack-LOIC-UDP": 1384,
+    "Brute Force -Web": 489,
+    "Brute Force -XSS": 184,
+    "SQL Injection": 70
   },
   "test_class_distribution": {
-    "Benign": 83017,
-    "DDOS attack-HOIC": 4231,
-    "DDoS attacks-LOIC-HTTP": 3599,
-    "DoS attacks-Hulk": 2820,
-    "Bot": 1758,
-    "FTP-BruteForce": 1184,
-    "SSH-Bruteforce": 1167,
-    "Infilteration": 1002,
-    "DoS attacks-SlowHTTPTest": 871,
-    "DoS attacks-GoldenEye": 266,
-    "DoS attacks-Slowloris": 69,
-    "DDOS attack-LOIC-UDP": 11,
-    "Brute Force -Web": 4,
-    "Brute Force -XSS": 1
+    "Benign": 2696942,
+    "DDOS attack-HOIC": 137203,
+    "DDoS attacks-LOIC-HTTP": 115238,
+    "DoS attacks-Hulk": 92382,
+    "Bot": 57238,
+    "FTP-BruteForce": 38672,
+    "SSH-Bruteforce": 37518,
+    "Infilteration": 32387,
+    "DoS attacks-SlowHTTPTest": 27978,
+    "DoS attacks-GoldenEye": 8302,
+    "DoS attacks-Slowloris": 2198,
+    "DDOS attack-LOIC-UDP": 346,
+    "Brute Force -Web": 122,
+    "Brute Force -XSS": 46,
+    "SQL Injection": 17
   },
-  "train_content_hash": "d659a2f4841244f0beca91dbcf0f247f0ea8b4321167c34322a68319961cc886",
-  "test_content_hash": "a993f8e271abf51a2d9ceb601b871397dbd5c8f202230779356987433c3cf281",
+  "train_content_hash": "0cd88f1a0e407aee7839868efef0d10897fb919ba6a967dcbea2a7b3fc22c14a",
+  "test_content_hash": "dcd3fc750b558cdede9a8afe3397ab7171289d9a5c05cc6e92698534d0175324",
   "columns": [
     "Dst Port",
     "Protocol",
@@ -121,52 +122,52 @@
   ],
   "source_files": [
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 78322029,
       "sha256": "348039a09bf3b3a7b7f81496132cb0e5deac89d03468c23c8d51bb3a7ab8549b"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 101394905,
       "sha256": "dcc09233ad535797ee6e9ef97cb695be6ae1d5147a5f1758db1d6fe8bb14f4ad"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Friday-16-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 70933295,
       "sha256": "f9b95e2d43ef1d7c61ecd3ed9cd9c7bc23131937a2a2d48de0c75d7d1304f689"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 999038485,
       "sha256": "066f307b8547ee52af3c36003befd4231ade339540d42eb6d4e2dba14788d94a"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 56260833,
       "sha256": "451eaf2e66be4ff2cad8eb32519efff54d15f3311e693d99d852e15bf114f2dd"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 101076798,
       "sha256": "ff4960c524559198885ce5b35107e87f1930a236c444645d425b330cb84caca3"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Friday-23-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 100819526,
       "sha256": "d309079145423c58bf86640a2a0d1ea99d0b3dbd823d728257ed417c2c0da8f4"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 54494917,
       "sha256": "536f9c6b62d50dd23e6ec12beddd30e419ff09c50e7fc9b6a818abf64f6549ef"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 26554092,
       "sha256": "40babb697360da8022dc79aeeb5678a1793d432edd383214aaecc46e55b23296"
     },
     {
-      "path": "/home/tango/projects/IDS2Eval_data/cic-ids2018/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz",
+      "path": "/tmp/ids2eval_task/data/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv.gz",
       "size_bytes": 83024462,
       "sha256": "96cb6ce16567c75d3dcd8045849d13cefd9e82c936d63b58464306d5b048cccc"
     }

@@ -1,5 +1,7 @@
 # Example: CIC-IoT2023 scorecard
 
+> **Older-code example.** This run was made on 2026-09-26, before the method freeze, and the dataset was later excluded from the paper because its release has no IP, port or timestamp column. The other examples are the frozen-code runs the paper uses.
+
 A real IDS<sup>2</sup>Eval run against
 [CIC-IoT2023](https://www.unb.ca/cic/datasets/iotdataset-2023.html)
 (46.8M flows, 34 fine-grained attack labels across 8 coarser

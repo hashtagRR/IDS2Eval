@@ -185,11 +185,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train)",
+    "summary": "single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train), vs. 43.1% from always predicting the majority class",
     "details": {
       "rule": "same_srv_rate <= 0.495",
       "train_accuracy": 0.8395767346971177,
-      "test_accuracy": 0.6269517388218595
+      "test_accuracy": 0.6269517388218595,
+      "majority_baseline_accuracy": 0.43075762952448543,
+      "error_reduction_vs_baseline": 0.3446583028130602
     }
   },
   {
@@ -198,10 +200,10 @@
     "summary": "'wrong_fragment' alone reaches AUC 1.000 identifying 'teardrop'; a single feature this separable is worth checking for a leakage artifact",
     "details": {
       "top_features": {
-        "wrong_fragment": 0.9999929014608399,
-        "land": 0.9999722122980429,
+        "wrong_fragment": 0.99999290146084,
+        "land": 0.999972212298043,
         "num_shells": 0.9998055092482337,
-        "root_shell": 0.9993450769633798,
+        "root_shell": 0.9993450769633799,
         "num_file_creations": 0.9990950226244344
       },
       "best_feature": "wrong_fragment",
@@ -255,82 +257,131 @@
   {
     "check": "homogeneity_test",
     "status": "flag",
-    "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf']",
+    "summary": "12 classes tested; leakage signature (95% CI lower bound exceeds the +0.05 margin) in: ['ipsweep', 'portsweep', 'smurf', 'pod']",
     "details": {
       "per_class": {
         "normal": {
           "test_near_zero_rate": 0.024,
           "control_near_zero_rate": 0.036,
-          "p_value": 0.3611435343972467,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.03462362911343273,
+            0.009847009588788296
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "neptune": {
           "test_near_zero_rate": 0.038,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999999999999964,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            0.02246104975767641,
+            0.05858477272504103
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "satan": {
           "test_near_zero_rate": 0.012,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            0.001988119390231847,
+            0.025930361265228637
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "ipsweep": {
           "test_near_zero_rate": 0.6879432624113475,
           "control_near_zero_rate": 0.0,
-          "p_value": 9.150868557394903e-28,
-          "leakage_signature": true
+          "rate_diff_ci_95": [
+            0.6069782521121857,
+            0.7585792933919117
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "leakage"
         },
         "portsweep": {
           "test_near_zero_rate": 0.11464968152866242,
           "control_near_zero_rate": 0.002,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            0.07073200656778945,
+            0.17196602350856655
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "leakage"
         },
         "smurf": {
           "test_near_zero_rate": 0.312,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.7893841009731437e-32,
-          "leakage_signature": true
+          "rate_diff_ci_95": [
+            0.27221554567964684,
+            0.35391380362796615
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "leakage"
         },
         "nmap": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.008,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.020387035973185322,
+            0.04223008142894818
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "back": {
           "test_near_zero_rate": 0.04178272980501393,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            0.023786910784229256,
+            0.06778605211286995
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "pod": {
           "test_near_zero_rate": 0.5121951219512195,
           "control_near_zero_rate": 0.004975124378109453,
-          "p_value": 0.12179042815601371,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            0.3581373077272032,
+            0.6525383282595627
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "leakage"
         },
         "guess_passwd": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.06758198957064511,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "buffer_overflow": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999892420246862,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.11351339476145204,
+            0.16112516018512965
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "warezmaster": {
           "test_near_zero_rate": 0.002,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999999981642184,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.15913357627891045,
+            0.011240706827931778
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {

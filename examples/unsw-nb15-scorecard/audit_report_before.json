@@ -132,11 +132,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train)",
+    "summary": "single rule 'sttl <= 61' reaches 76.6% test accuracy (92.1% train), vs. 55.1% from always predicting the majority class",
     "details": {
       "rule": "sttl <= 61",
       "train_accuracy": 0.9206289458825945,
-      "test_accuracy": 0.7663241509983967
+      "test_accuracy": 0.7663241509983967,
+      "majority_baseline_accuracy": 0.5506000097167566,
+      "error_reduction_vs_baseline": 0.4800270270270268
     }
   },
   {
@@ -146,8 +148,8 @@
     "details": {
       "top_features": {
         "sttl": 0.88143735021912,
-        "ct_state_ttl": 0.8706098569435484,
-        "dload": 0.865296744353216,
+        "ct_state_ttl": 0.8706098569435483,
+        "dload": 0.8652967443532159,
         "dmean": 0.8187984646636828,
         "dbytes": 0.786722036014446
       },
@@ -202,70 +204,111 @@
   {
     "check": "homogeneity_test",
     "status": "ok",
-    "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "summary": "10 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
     "details": {
       "per_class": {
         "Normal": {
           "test_near_zero_rate": 0.034,
           "control_near_zero_rate": 0.144,
-          "p_value": 0.9999999999999986,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.1458053777052599,
+            -0.0756724804692081
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Generic": {
           "test_near_zero_rate": 0.09,
           "control_near_zero_rate": 0.98,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.9138611831314915,
+            -0.8572731730082882
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Exploits": {
           "test_near_zero_rate": 0.168,
           "control_near_zero_rate": 0.506,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.39105253613964314,
+            -0.2818387383382042
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Fuzzers": {
           "test_near_zero_rate": 0.032,
           "control_near_zero_rate": 0.214,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.22196833588144385,
+            -0.14314499012867
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "DoS": {
           "test_near_zero_rate": 0.464,
           "control_near_zero_rate": 0.806,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.39598176358106596,
+            -0.28468686200918053
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Reconnaissance": {
           "test_near_zero_rate": 0.352,
           "control_near_zero_rate": 0.47,
-          "p_value": 0.999332658782836,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.17772222443173136,
+            -0.05704782200253143
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Analysis": {
           "test_near_zero_rate": 0.17,
           "control_near_zero_rate": 0.85,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.7217403639037736,
+            -0.630935313756365
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Backdoor": {
           "test_near_zero_rate": 0.006,
           "control_near_zero_rate": 0.774,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.8027165130434235,
+            -0.7276605923565954
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Shellcode": {
           "test_near_zero_rate": 0.03439153439153439,
           "control_near_zero_rate": 0.094,
-          "p_value": 0.9594594876471363,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.09168032691773959,
+            -0.026984667121778466
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "Worms": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.1,
-          "p_value": 0.8062074882286356,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.16358576153595,
+            -0.010012583302782305
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {

@@ -1,13 +1,15 @@
 # IDS2Eval Scorecard
 
 **Dataset:** nsl-kdd
-**Overall status:** 🚩 Review Required, 14 ok, 3 warning(s), 2 flag(s)
-**Generated:** 2026-09-26T23:53:01.112494+00:00
-**IDS2Eval version:** 0.1.0 (git ad380be)
+**Overall status:** 🚩 Review Required, 14 ok, 4 warning(s), 1 flag(s)
+**Generated:** 2026-10-07T10:52:53.927224+00:00
+**IDS2Eval version:** 0.1.0 (git be73293)
 **Scorecard schema version:** 1.3
 **Verdict judged on:** cleaned data (exact duplicates removed)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
+
+<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 
@@ -19,7 +21,7 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 2 | `label_conflict_check` | 🚩 flag | ✅ pass | *Evidence: statistical.* no feature vector maps to more than one label<br>*raw data:* 116 feature vector(s) (247 rows, 0.17%) map to more than one label. The ground truth contradicts itself for these rows; 58 of these span train and test |
 | 3 | `near_duplicate_class_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no near-zero-distance feature vectors found across 14 classes tested |
 | 4 | `leakage_screen` | ✅ pass | ✅ pass | *Evidence: statistical.* no single feature or pair dominates importance (top1=14.2%, top2=25.6%)<br>*raw data:* no single feature or pair dominates importance (top1=14.1%, top2=25.0%) |
-| 5 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)<br>*raw data:* single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train) |
+| 5 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train), vs. 43.9% from always predicting the majority class<br>*raw data:* single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train), vs. 43.1% from always predicting the majority class |
 | 6 | `feature_auc_ranking_check` | 🚩 flag | 🚩 flag | *Evidence: statistical.* 'wrong_fragment' alone reaches AUC 1.000 identifying 'teardrop'; a single feature this separable is worth checking for a leakage artifact |
 | 7 | `identity_column_flag` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
 | 8 | `port_protocol_shortcut_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both |
@@ -27,7 +29,7 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 10 | `temporal_realism_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
 | 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce |
-| 13 | `homogeneity_test` | 🚩 flag | 🚩 flag | *Evidence: statistical.* 12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']<br>*raw data:* 12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['ipsweep', 'smurf'] |
+| 13 | `homogeneity_test` | 🚩 flag | ⚠️ warn | *Evidence: statistical.* 12 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['ipsweep', 'pod', 'buffer_overflow']; sample size isn't enough to tell for these classes<br>*raw data:* 12 classes tested; leakage signature (95% CI lower bound exceeds the +0.05 margin) in: ['ipsweep', 'portsweep', 'smurf', 'pod'] |
 | 14 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
 | 15 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']<br>*raw data:* 23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy'] |
 | 16 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
@@ -47,11 +49,6 @@ Documented facts about this dataset or the tool that produced it, from published
 - Train: 125,973 → 125,957 rows (16 duplicates dropped)
 - Test: 22,544 → 21,833 rows (664 train-leaking rows and 47 test-internal duplicates dropped)
 
-## Compared to the previous run
-
-Compared to `2026-09-25_173918_112471` (2026-09-25T17:40:01.671047+00:00).
-No check's status changed since the previous run.
-
 ## Dataset fingerprint
 
 - Train rows: 125,973 · test rows: 22,544 · features: 41
@@ -60,7 +57,7 @@ No check's status changed since the previous run.
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 14 ok, 3 warning(s), 2 flag(s) across 19 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 14 ok, 4 warning(s), 1 flag(s) across 19 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
 
 Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
 

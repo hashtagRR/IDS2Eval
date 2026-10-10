@@ -2,8 +2,8 @@
 # headerless; the standard KDD'99 column names were added at download time.
 dataset:
   name: nsl-kdd
-  train_file: KDDTrain+.csv.gz
-  test_file: KDDTest+.csv.gz
+  train_file: data/KDDTrain+.csv.gz
+  test_file: data/KDDTest+.csv.gz
 schema:
   label_column: label              # per-attack name (normal, neptune, smurf, ...)
   drop_columns: [difficulty]       # annotator difficulty score, not a traffic feature
@@ -11,5 +11,6 @@ audit:
   resplit_falsification: false     # no session/IP columns
   known_issue_lookup: true
 output:
+  dir: out
   save_preprocessed: false
   write_scorecard_plot: true

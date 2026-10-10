@@ -1,64 +1,25 @@
 # Example: CIC-IDS2017 scorecard
 
-A real IDS<sup>2</sup>Eval audit of [CIC-IDS2017](https://www.unb.ca/cic/datasets/ids-2017.html)'s
-`MachineLearningCSV` release - all 8 day-files, all 2,830,743 flows, loaded in full
-(no sampling) and split 80/20 at random, stratified by label. Produced with
-`config.yaml` in this folder; open [SCORECARD.html](SCORECARD.html) in a browser for
-the full result, or read [SCORECARD.md](SCORECARD.md).
+A real IDS<sup>2</sup>Eval run on CIC-IDS2017: the MachineLearningCSV day-files (Hugging Face mirror), split 80/20 at random by IDS2Eval, 2,830,743 rows. It is the run behind the paper's Tables 9 and 10 (Section 6), made on 2026-10-07 at commit `be73293` with the frozen method (tag `paper-method-freeze`).
+`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
 
-**Result: review required** - 11 ok, 4 warnings, 4 flags after dedup, across 19 checks.
+**Result: review required.** After deduplication, 19 checks ran: 7 `ok`, 4 `warning`, 3 `flag`, and 5 not applicable (the tool reports these as `ok`; see below).
 
-What it found:
+**Deduplication** dropped 247,799 training rows, 81,604 test rows that reuse a training feature vector, and 2,516 test-internal duplicates.
 
-- **`feature_auc_ranking_check` finds `Bwd Packet Length Max` alone reaches AUC
-  1.000 identifying `Heartbleed`, and it survives dedup.** Read this one with the
-  same caution as `known_issue_lookup`'s note below: `Heartbleed` is only 11 rows
-  total (0.022% of the dataset), and a single feature perfectly separating a class
-  that small is at least as likely to be a small-sample artifact as a genuine
-  shortcut - there's no way to tell the two apart with this few examples either way.
-- **`near_duplicate_class_check` finds 2 of 6,029 sampled rows (0.03%) with a
-  near-zero-distance neighbor under a different label**, both `DoS Slowhttptest` /
-  `DoS slowloris`, unchanged after dedup. A tiny share, but the same pattern
-  `label_conflict_check` finds at much larger scale below: two labels that are
-  hard to tell apart from features alone.
-- **`label_conflict_check` finds 719 feature vectors (7,144 rows, 0.25%) mapped to
-  more than one label, before dedup**; 335 of these span train and test, so a row's
-  label there depends on which copy happened to land where.
-- **`one_rule_check` finds `Bwd Packet Length Std <= 1495` alone reaches 85.6% test
-  accuracy** (85.6% train), below the 95% flag threshold.
-- **`Destination Port` alone predicts the label at AUC 0.929** (`identity_column_flag`),
-  reproducing the published finding that destination port is a severe shortcut
-  feature across the CIC family (Flood et al. 2024), the same one this tool found
-  on CIC-IDS2018.
-- **Heavy duplication**: 247,799 train rows (10.94%) are duplicates, and 81,604 test
-  rows (14.41%) exactly match a train row - scores on those measure memorization.
-- **Known CIC-IDS2017 data defects**, all caught by `data_integrity_check`: 8 constant
-  features (`Bwd PSH Flags`, `Bwd URG Flags`, and all six `*Bulk*` features), ±inf in
-  `Flow Bytes/s` and `Flow Packets/s`, and missing values in `Flow Bytes/s`.
-- **CICFlowMeter signature matched** (`schema_fingerprint_check`): early CICFlowMeter
-  releases miscalculated ~34 features (Engelen et al. 2021; Rosay et al. 2021) -
-  check the extractor version before trusting rate/duration features.
-- **`homogeneity_test` flags `DoS Slowhttptest`** at p=0.0056 (and `Bot` on the raw data).
-  Treat this one as weak: 12 classes are each tested at p<0.05 with no
-  multiple-comparison correction, so about one false positive is expected by
-  chance, and a Bonferroni cutoff (≈0.004) would not flag it.
-- **Imbalance of 185,530:1**, with 11 of 15 classes under 1% of train.
-- **`known_issue_lookup` now carries two curated entries for this dataset**: the
-  traffic capture itself has packet misorder and duplication, with some launched
-  attacks left unlabeled in the released CSVs (Engelen et al. 2021), and an
-  independent re-labeling audit measured 6.67% overall label corruption, some
-  classes above 75%, with Heartbleed at only 11 rows (0.022% of the dataset), too
-  few to evaluate reliably regardless of labeling accuracy (Cantone et al. 2024).
+**Flags**
 
-How the data was obtained: the 8 `MachineLearningCSV` files from a Hugging Face
-mirror (`c01dsnap/CIC-IDS2017`), downloaded 2026-09-24; every file's SHA-256 matched
-the mirror's published checksum. The official UNB download link returned an HTML
-page rather than the archive. In this copy the Web Attack labels carry a Unicode
-replacement character (`Web Attack � Brute Force`) where the original has an
-invalid byte - the labels are otherwise unchanged.
+- `near_duplicate_class_check`: 2 of 6,029 sampled rows (0.03%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'DoS Slowhttptest / DoS slowloris': 2}.
+- `feature_auc_ranking_check`: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact.
+- `identity_column_flag`: standalone AUC by column (seen-value coverage, AUC on seen values): Destination Port: 0.936 (99.4%, 0.935). Suggest dropping: ['Destination Port'].
 
-Run on a 4-vCPU / 15GB VM, audit only (`--skip-benchmark`). Re-run 2026-09-26 to
-pick up `feature_auc_ranking_check`, `row_order_leakage_check`, and
-`temporal_realism_check` (the last two no-op here, no `schema.timestamp_column`
-configured), which is why the check count reads 19; every other finding is
-unchanged from the original run. Produced with IDS2Eval at commit f50c423.
+**Warnings**
+
+- `class_distribution_report`: 15 classes, train imbalance ratio (majority:minority) = 185530:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS slowloris', 'DoS Slowhttptest', 'SSH-Patator', 'Bot', 'Web Attack � Brute Force', 'Web Attack � XSS', 'Infiltration', 'Web Attack � Sql Injection', 'Heartbleed'].
+- `schema_fingerprint_check`: matched extractor signature(s): ['CICFlowMeter'].
+- `data_integrity_check`: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s).
+- `known_issue_lookup`: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access, Table 1).
+
+**Not applicable** (the config gives these checks no input column): `port_protocol_shortcut_check`, `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
+
+Files: `config.yaml` (input); `audit_report_before.json` and `audit_report_after.json` (every check's full output); `dataset_fingerprint.json` and `environment.json` (provenance); `scorecard.json`, `SCORECARD.md` and `SCORECARD.html` (the citable summary, format in [guide/checks.md](../../guide/checks.md#the-scorecard)).

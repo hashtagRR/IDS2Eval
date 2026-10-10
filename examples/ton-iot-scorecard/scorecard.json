@@ -1,14 +1,14 @@
 {
   "scorecard_schema_version": "1.3",
-  "generated_at": "2026-09-28T11:36:44.267288+00:00",
+  "generated_at": "2026-10-07T11:14:07.683906+00:00",
   "dataset_name": "ton-iot-official",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "e47f6e960cef08741336884e6b850adddf731a04",
+  "ids2eval_git_commit": "be732939f476ddd4a610158630541548236b6195",
   "audit_stage": "after",
   "overall_status": "review_required",
   "counts": {
-    "ok": 18,
-    "warning": 1,
+    "ok": 17,
+    "warning": 2,
     "flag": 3
   },
   "findings": [
@@ -35,7 +35,7 @@
     {
       "check": "one_rule_check",
       "status": "ok",
-      "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train)"
+      "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train), vs. 22.7% from always predicting the majority class"
     },
     {
       "check": "feature_auc_ranking_check",
@@ -45,7 +45,7 @@
     {
       "check": "identity_column_flag",
       "status": "flag",
-      "summary": "standalone AUC by column: {'src_ip': 0.911, 'dst_ip': 0.891, 'src_port': 0.816, 'dst_port': 0.925}. Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']"
+      "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): src_ip: 0.911 (100.0%, 0.911), dst_ip: 0.891 (99.8%, 0.891), src_port: 0.856 (96.6%, 0.86), dst_port: 0.924 (99.9%, 0.924). Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']"
     },
     {
       "check": "port_protocol_shortcut_check",
@@ -74,13 +74,13 @@
     },
     {
       "check": "homogeneity_test",
-      "status": "ok",
-      "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      "status": "warning",
+      "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['dos']; sample size isn't enough to tell for these classes"
     },
     {
       "check": "resplit_falsification",
       "status": "ok",
-      "summary": "random-split accuracy=0.9949, grouped-split accuracy=0.9945 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
+      "summary": "random-split accuracy=0.9951, grouped-split accuracy=0.9947 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation"
     },
     {
       "check": "scenario_holdout_falsification",
@@ -110,7 +110,7 @@
     {
       "check": "result_robustness_check",
       "status": "ok",
-      "summary": "accuracy ranges from 0.9758 (identity_columns_dropped) to 0.9949 (random_split) across 4 conditions, a spread of 0.0190"
+      "summary": "accuracy ranges from 0.9759 (identity_columns_dropped) to 0.9951 (random_split) across 4 conditions, a spread of 0.0192 (sampling margin +/-0.0016)"
     },
     {
       "check": "known_issue_lookup",
@@ -120,7 +120,7 @@
     {
       "check": "repeated_seed_falsification_check",
       "status": "ok",
-      "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0002, 95% CI=[-0.0002, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold"
+      "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0001, 95% CI=[-0.0003, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold"
     }
   ],
   "checks": [
@@ -185,12 +185,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'src_ip <= 7.5' reaches 23.7% test accuracy (23.7% train)",
+        "summary": "single rule 'src_ip <= 7.5' reaches 23.7% test accuracy (23.7% train), vs. 23.7% from always predicting the majority class",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train)",
+        "summary": "single rule 'src_ip <= 3.5' reaches 31.7% test accuracy (30.5% train), vs. 22.7% from always predicting the majority class",
         "evidence": "statistical"
       }
     },
@@ -213,12 +213,12 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'src_ip': 0.925, 'dst_ip': 0.896, 'src_port': 0.838, 'dst_port': 0.931}. Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): src_ip: 0.925 (100.0%, 0.925), dst_ip: 0.896 (99.9%, 0.897), src_port: 0.878 (97.0%, 0.882), dst_port: 0.931 (99.9%, 0.931). Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
         "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "standalone AUC by column: {'src_ip': 0.911, 'dst_ip': 0.891, 'src_port': 0.816, 'dst_port': 0.925}. Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): src_ip: 0.911 (100.0%, 0.911), dst_ip: 0.891 (99.8%, 0.891), src_port: 0.856 (96.6%, 0.86), dst_port: 0.924 (99.9%, 0.924). Suggest dropping: ['src_ip', 'dst_ip', 'src_port', 'dst_port']",
         "evidence": "statistical"
       }
     },
@@ -296,13 +296,13 @@
       "check": "homogeneity_test",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "status": "warning",
+        "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['normal', 'dos']; sample size isn't enough to tell for these classes",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "status": "warning",
+        "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['dos']; sample size isn't enough to tell for these classes",
         "evidence": "statistical"
       }
     },
@@ -311,12 +311,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "random-split accuracy=0.9949, grouped-split accuracy=0.9945 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "summary": "random-split accuracy=0.9951, grouped-split accuracy=0.9947 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
         "evidence": "direct-experiment"
       },
       "after": {
         "status": "ok",
-        "summary": "random-split accuracy=0.9949, grouped-split accuracy=0.9945 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
+        "summary": "random-split accuracy=0.9951, grouped-split accuracy=0.9947 (drop=+0.0004); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation",
         "evidence": "direct-experiment"
       }
     },
@@ -395,12 +395,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "accuracy ranges from 0.9758 (identity_columns_dropped) to 0.9949 (random_split) across 4 conditions, a spread of 0.0190",
+        "summary": "accuracy ranges from 0.9759 (identity_columns_dropped) to 0.9951 (random_split) across 4 conditions, a spread of 0.0192 (sampling margin +/-0.0016)",
         "evidence": "direct-experiment"
       },
       "after": {
         "status": "ok",
-        "summary": "accuracy ranges from 0.9758 (identity_columns_dropped) to 0.9949 (random_split) across 4 conditions, a spread of 0.0190",
+        "summary": "accuracy ranges from 0.9759 (identity_columns_dropped) to 0.9951 (random_split) across 4 conditions, a spread of 0.0192 (sampling margin +/-0.0016)",
         "evidence": "direct-experiment"
       }
     },
@@ -423,12 +423,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0002, 95% CI=[-0.0002, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0001, 95% CI=[-0.0003, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
         "evidence": "direct-experiment"
       },
       "after": {
         "status": "ok",
-        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0002, 95% CI=[-0.0002, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
+        "summary": "grouped-split accuracy drop across 10 seeds: mean=+0.0001, 95% CI=[-0.0003, +0.0006]; not material: even the most generous estimate in the 95% CI (+0.0006) stays below the +0.0100 materiality threshold",
         "evidence": "direct-experiment"
       }
     }

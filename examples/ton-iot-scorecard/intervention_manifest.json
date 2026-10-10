@@ -1,0 +1,128 @@
+[
+  {
+    "finding": {
+      "check": "resplit_falsification",
+      "status": "ok",
+      "evidence": {
+        "random_accuracy": 0.9950958326423275,
+        "grouped_accuracy": 0.9946929492039424,
+        "drop": 0.0004028834383851265,
+        "sampling_margin": 0.0009615542017258522,
+        "random_test_rows": 42209,
+        "grouped_test_rows": 42208
+      }
+    },
+    "intervention": {
+      "type": "resplit_falsification",
+      "description": "session/time-grouped resplit",
+      "performed": true
+    },
+    "consequence": {
+      "random_accuracy": 0.9950958326423275,
+      "grouped_accuracy": 0.9946929492039424,
+      "drop": 0.0004028834383851265,
+      "sampling_margin": 0.0009615542017258522,
+      "random_test_rows": 42209,
+      "grouped_test_rows": 42208
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  },
+  {
+    "finding": {
+      "check": "result_robustness_check",
+      "status": "ok",
+      "evidence": {
+        "accuracy_by_condition": {
+          "random_split": 0.9950958326423275,
+          "grouped_split": 0.9946929492039424,
+          "deduplicated": 0.994484894588133,
+          "identity_columns_dropped": 0.9759056125470871
+        },
+        "spread": 0.019190220095240407,
+        "worst_condition": "identity_columns_dropped",
+        "best_condition": "random_split",
+        "sampling_margin": 0.0016075281249351404
+      }
+    },
+    "intervention": {
+      "type": "result_robustness_check",
+      "description": "refit under each buildable condition (split, dedup, identity columns)",
+      "performed": true
+    },
+    "consequence": {
+      "accuracy_by_condition": {
+        "random_split": 0.9950958326423275,
+        "grouped_split": 0.9946929492039424,
+        "deduplicated": 0.994484894588133,
+        "identity_columns_dropped": 0.9759056125470871
+      },
+      "spread": 0.019190220095240407,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "random_split",
+      "sampling_margin": 0.0016075281249351404
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  },
+  {
+    "finding": {
+      "check": "repeated_seed_falsification_check",
+      "status": "ok",
+      "evidence": {
+        "n_seeds": 10,
+        "drops_by_seed": [
+          0.0004028834383851265,
+          0.000307991186713763,
+          0.0008530238422754799,
+          0.001160889857613312,
+          0.0,
+          -0.00021311689685410418,
+          -2.3574877970555796e-05,
+          -0.0010660172516735456,
+          2.369162974713568e-05,
+          -4.73832594944934e-05
+        ],
+        "mean_drop": 0.00013983876687421182,
+        "ci_95": [
+          -0.00029478028391589765,
+          0.0005744578176643213
+        ],
+        "materiality_threshold": 0.01,
+        "material": false
+      }
+    },
+    "intervention": {
+      "type": "repeated_seed_falsification_check",
+      "description": "session/time-grouped resplit, repeated across seeds",
+      "performed": true
+    },
+    "consequence": {
+      "n_seeds": 10,
+      "drops_by_seed": [
+        0.0004028834383851265,
+        0.000307991186713763,
+        0.0008530238422754799,
+        0.001160889857613312,
+        0.0,
+        -0.00021311689685410418,
+        -2.3574877970555796e-05,
+        -0.0010660172516735456,
+        2.369162974713568e-05,
+        -4.73832594944934e-05
+      ],
+      "mean_drop": 0.00013983876687421182,
+      "ci_95": [
+        -0.00029478028391589765,
+        0.0005744578176643213
+      ],
+      "materiality_threshold": 0.01,
+      "material": false
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  }
+]

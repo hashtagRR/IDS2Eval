@@ -1,18 +1,32 @@
-# CICDDoS2019 (dhoogla's cleaned Kaggle mirror, per-attack-type CSV/parquet subset
-# of the official release, not a sample of the full multi-GB pcap-derived data).
-# Pre-split as the original collection actually ran: the training day's 8 files
-# concatenated into train, the testing day's 12 files concatenated into test - see
-# known_issue_lookup below for why those two days aren't directly comparable.
+# CICDDoS2019, TRUE full official release (CIC's own "CSV-01-12"/"CSV-03-11" day-zips,
+# not the previous dhoogla curated Kaggle subset used in cic-ddos2019.yaml). Preserves
+# the same official training-day/testing-day split convention this project's own
+# cic-ddos2019.yaml already used, just at full scale: 01-12's 11 real CSVs merged into
+# one train file, 03-11's 7 real CSVs merged into one test file (excluding a stray
+# LibreOffice lock file, "03-11/.~lock.UDPLag.csv#", found in that zip - not real data).
+# Row counts verified directly by decompressing and counting before this config was
+# written: 50,063,112 train rows, 20,364,525 test rows - both match the dataset's own
+# published per-day totals exactly.
+#
+# resplit_falsification/repeated_seed_falsification_check are NOT enabled here: they
+# need dataset.raw_files (they build their own random-vs-grouped comparison split from
+# scratch), which is incompatible with preserving this fixed official train/test pair.
+# See cic-ddos2019-fullscale-resplit.yaml for the separate falsification-only variant,
+# same pattern as cic-ids2017.yaml / cic-ids2017-glf.yaml.
 dataset:
-  name: cic-ddos2019
-  train_file: /home/tango/projects/IDS2Eval_data/cic-ddos2019/train.csv.gz
-  test_file: /home/tango/projects/IDS2Eval_data/cic-ddos2019/test.csv.gz
+  name: cic-ddos2019-fullscale
+  train_file: data/train-full.csv.gz
+  test_file: data/test-full.csv.gz
+  chunk_size: 200000
 schema:
   label_column: Label
+  drop_columns: ["Unnamed: 0", Flow ID, Timestamp, SimillarHTTP]
+  id_like_columns: [Source IP, Destination IP, Source Port, Destination Port]
 audit:
-  resplit_falsification: false   # pre-split by collection day, not a groupable random split
+  resplit_falsification: false
   known_issue_lookup: true
+  checkpoint: true        # a preempted spot VM resumes from out/.checkpoint
 output:
-  dir: /home/tango/projects/IDS2Eval_data/output/cic-ddos2019
+  dir: out
   save_preprocessed: false
-  write_scorecard_plot: false
+  write_scorecard_plot: false   # the offline batch wheels have no matplotlib

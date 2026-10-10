@@ -1,15 +1,15 @@
 {
   "scorecard_schema_version": "1.3",
-  "generated_at": "2026-09-27T02:28:01.610408+00:00",
-  "dataset_name": "cic-ddos2019",
+  "generated_at": "2026-10-07T13:06:46.537339+00:00",
+  "dataset_name": "cic-ddos2019-fullscale",
   "ids2eval_version": "0.1.0",
-  "ids2eval_git_commit": "bbbaa093081908c2824ae9ce62946b0518e4a4ec",
+  "ids2eval_git_commit": null,
   "audit_stage": "after",
   "overall_status": "review_required",
   "counts": {
-    "ok": 12,
+    "ok": 11,
     "warning": 4,
-    "flag": 3
+    "flag": 4
   },
   "findings": [
     {
@@ -24,33 +24,33 @@
     },
     {
       "check": "near_duplicate_class_check",
-      "status": "flag",
-      "summary": "98 of 3,447 sampled rows (2.84%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 92, 'LDAP / MSSQL': 6}"
+      "status": "ok",
+      "summary": "no near-zero-distance feature vectors found across 13 classes tested"
     },
     {
       "check": "leakage_screen",
       "status": "ok",
-      "summary": "no single feature or pair dominates importance (top1=8.3%, top2=14.5%)"
+      "summary": "no single feature or pair dominates importance (top1=15.4%, top2=24.2%)"
     },
     {
       "check": "one_rule_check",
       "status": "ok",
-      "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.5% test accuracy (68.1% train)"
+      "summary": "single rule 'Source Port <= 6.246e+04' reaches 0.0% test accuracy (39.1% train), vs. 0.0% from always predicting the majority class"
     },
     {
       "check": "feature_auc_ranking_check",
       "status": "flag",
-      "summary": "'Packet Length Min' alone reaches AUC 0.997 identifying 'LDAP'; a single feature this separable is worth checking for a leakage artifact"
+      "summary": "'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact"
     },
     {
       "check": "identity_column_flag",
-      "status": "ok",
-      "summary": "no id_like_columns configured"
+      "status": "flag",
+      "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.2%, 1.0), Source Port: 0.825 (100.0%, 0.825), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']"
     },
     {
       "check": "port_protocol_shortcut_check",
-      "status": "ok",
-      "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both"
+      "status": "flag",
+      "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.839. Port and protocol together may predict the label without attack behavior"
     },
     {
       "check": "temporal_leakage_check",
@@ -70,12 +70,12 @@
     {
       "check": "row_order_leakage_check",
       "status": "flag",
-      "summary": "adjacent-row label-transition rate (train=0.05, test=0.18) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split"
+      "summary": "adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split"
     },
     {
       "check": "homogeneity_test",
       "status": "ok",
-      "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)"
+      "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature"
     },
     {
       "check": "scenario_holdout_falsification",
@@ -85,12 +85,12 @@
     {
       "check": "class_distribution_report",
       "status": "warning",
-      "summary": "8 classes, train imbalance ratio (majority:minority) = 1312:1; classes below 1% of train: ['NetBIOS', 'Portmap', 'UDPLag']"
+      "summary": "13 classes, train imbalance ratio (majority:minority) = 41936:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']"
     },
     {
       "check": "low_cardinality_warning",
       "status": "ok",
-      "summary": "no id_like_columns configured"
+      "summary": "unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}"
     },
     {
       "check": "schema_fingerprint_check",
@@ -100,7 +100,7 @@
     {
       "check": "data_integrity_check",
       "status": "warning",
-      "summary": "12 constant/near-constant feature(s)"
+      "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)"
     },
     {
       "check": "known_issue_lookup",
@@ -114,7 +114,7 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "train duplicates: 4,083 (3.26%); test rows leaking a train feature-match: 6,763 (2.21%); test-internal duplicates: 2,409",
+        "summary": "train duplicates: 2,184,498 (4.36%); test rows leaking a train feature-match: 244 (0.00%); test-internal duplicates: 650,949",
         "evidence": "statistical"
       },
       "after": {
@@ -128,7 +128,7 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "5,623 feature vector(s) (13,758 rows, 3.19%) map to more than one label. The ground truth contradicts itself for these rows; 4,853 of these span train and test",
+        "summary": "83,443 feature vector(s) (200,263 rows, 0.28%) map to more than one label. The ground truth contradicts itself for these rows",
         "evidence": "statistical"
       },
       "after": {
@@ -141,13 +141,13 @@
       "check": "near_duplicate_class_check",
       "category": "audit",
       "before": {
-        "status": "flag",
-        "summary": "341 of 3,555 sampled rows (9.59%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 316, 'LDAP / MSSQL': 9, 'MSSQL / Portmap': 5, 'UDP / UDPLag': 4, 'MSSQL / UDP': 4}",
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 13 classes tested",
         "evidence": "statistical"
       },
       "after": {
-        "status": "flag",
-        "summary": "98 of 3,447 sampled rows (2.84%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NetBIOS / Portmap': 92, 'LDAP / MSSQL': 6}",
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 13 classes tested",
         "evidence": "statistical"
       }
     },
@@ -156,12 +156,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=7.3%, top2=14.4%)",
+        "summary": "no single feature or pair dominates importance (top1=15.4%, top2=24.0%)",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no single feature or pair dominates importance (top1=8.3%, top2=14.5%)",
+        "summary": "no single feature or pair dominates importance (top1=15.4%, top2=24.2%)",
         "evidence": "statistical"
       }
     },
@@ -170,12 +170,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.4% test accuracy (68.0% train)",
+        "summary": "single rule 'Source Port <= 6.245e+04' reaches 0.0% test accuracy (40.1% train), vs. 0.0% from always predicting the majority class",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "single rule 'Avg Packet Size <= 7.625' reaches 11.5% test accuracy (68.1% train)",
+        "summary": "single rule 'Source Port <= 6.246e+04' reaches 0.0% test accuracy (39.1% train), vs. 0.0% from always predicting the majority class",
         "evidence": "statistical"
       }
     },
@@ -184,12 +184,12 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "'Packet Length Min' alone reaches AUC 0.997 identifying 'LDAP'; a single feature this separable is worth checking for a leakage artifact",
+        "summary": "'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact",
         "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "'Packet Length Min' alone reaches AUC 0.997 identifying 'LDAP'; a single feature this separable is worth checking for a leakage artifact",
+        "summary": "'Total Length of Fwd Packets' alone reaches AUC 0.995 identifying 'Syn'; a single feature this separable is worth checking for a leakage artifact",
         "evidence": "statistical"
       }
     },
@@ -197,13 +197,13 @@
       "check": "identity_column_flag",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "no id_like_columns configured",
+        "status": "flag",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.3%, 1.0), Source Port: 0.824 (100.0%, 0.824), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "no id_like_columns configured",
+        "status": "flag",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Source IP: 1.0 (99.9%, 1.0), Destination IP: 0.889 (0.2%, 1.0), Source Port: 0.825 (100.0%, 0.825), Destination Port: 0.935 (100.0%, 0.935). Suggest dropping: ['Source IP', 'Destination IP', 'Source Port', 'Destination Port']",
         "evidence": "statistical"
       }
     },
@@ -211,13 +211,13 @@
       "check": "port_protocol_shortcut_check",
       "category": "audit",
       "before": {
-        "status": "ok",
-        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "status": "flag",
+        "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.841. Port and protocol together may predict the label without attack behavior",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
-        "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
+        "status": "flag",
+        "summary": "standalone AUC of 'Source Port' + 'Protocol' combined: 0.839. Port and protocol together may predict the label without attack behavior",
         "evidence": "statistical"
       }
     },
@@ -268,12 +268,12 @@
       "category": "audit",
       "before": {
         "status": "flag",
-        "summary": "adjacent-row label-transition rate (train=0.06, test=0.17) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+        "summary": "adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
         "evidence": "statistical"
       },
       "after": {
         "status": "flag",
-        "summary": "adjacent-row label-transition rate (train=0.05, test=0.18) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
+        "summary": "adjacent-row label-transition rate (train=0.00, test=0.00) as a share of what a randomly shuffled ordering would produce; train is the most contiguous, consistent with rows still in collection order rather than shuffled before this split",
         "evidence": "statistical"
       }
     },
@@ -282,12 +282,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "2 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+        "summary": "2 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature",
         "evidence": "statistical"
       }
     },
@@ -310,12 +310,12 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "8 classes, train imbalance ratio (majority:minority) = 888:1; classes below 1% of train: ['Portmap', 'NetBIOS', 'UDPLag']",
+        "summary": "13 classes, train imbalance ratio (majority:minority) = 45746:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']",
         "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "8 classes, train imbalance ratio (majority:minority) = 1312:1; classes below 1% of train: ['NetBIOS', 'Portmap', 'UDPLag']",
+        "summary": "13 classes, train imbalance ratio (majority:minority) = 41936:1; classes below 1% of train: ['UDP-lag', 'BENIGN', 'WebDDoS']",
         "evidence": "statistical"
       }
     },
@@ -324,12 +324,12 @@
       "category": "audit",
       "before": {
         "status": "ok",
-        "summary": "no id_like_columns configured",
+        "summary": "unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}",
         "evidence": "statistical"
       },
       "after": {
         "status": "ok",
-        "summary": "no id_like_columns configured",
+        "summary": "unique values by column: {'Source IP': 550, 'Destination IP': 598, 'Source Port': 61063, 'Destination Port': 65535}",
         "evidence": "statistical"
       }
     },
@@ -352,12 +352,12 @@
       "category": "audit",
       "before": {
         "status": "warning",
-        "summary": "12 constant/near-constant feature(s)",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)",
         "evidence": "statistical"
       },
       "after": {
         "status": "warning",
-        "summary": "12 constant/near-constant feature(s)",
+        "summary": "missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s)",
         "evidence": "statistical"
       }
     },
@@ -377,26 +377,19 @@
     }
   ],
   "dedup_effect": {
-    "train_rows_raw": 125170,
-    "train_rows_deduped": 121087,
-    "train_duplicates_dropped": 4083,
-    "test_rows_raw": 306201,
-    "test_rows_deduped": 297029,
-    "test_leakage_dropped": 6763,
-    "test_duplicates_dropped": 2409
+    "train_rows_raw": 50063112,
+    "train_rows_deduped": 47878614,
+    "train_duplicates_dropped": 2184498,
+    "test_rows_raw": 20364525,
+    "test_rows_deduped": 19713332,
+    "test_leakage_dropped": 244,
+    "test_duplicates_dropped": 650949
   },
   "dataset_fingerprint": {
-    "train_rows": 125170,
-    "test_rows": 306201,
-    "feature_count": 77,
-    "train_content_hash": "0d2aca1b3453d9b224be088b6e2000ab2181a32a14bd331d4349f1620148ec63",
-    "test_content_hash": "71b75ac9db06a3be8a7d6d0479191e6c40af349a3a5fca22402baa55c95df308"
-  },
-  "previous_run_comparison": {
-    "previous_run": "2026-09-25_153943_449369",
-    "previous_generated_at": "2026-09-25T15:40:39.405627+00:00",
-    "previous_verdict": "passed_with_warnings",
-    "fingerprint_changed": false,
-    "changed_checks": []
+    "train_rows": 50063112,
+    "test_rows": 20364525,
+    "feature_count": 83,
+    "train_content_hash": "5899cb127b7cd6fe96b220054b775c9f78d2b89fcf2599f1841abe356e5a2b92",
+    "test_content_hash": "29434b745e79629d042e8f0963a7f6c26bb97f89b6bcc503aedf6eba5786cbd3"
   }
 }

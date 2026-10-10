@@ -152,11 +152,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 85.6% test accuracy (85.6% train)",
+    "summary": "single rule 'Bwd Packet Length Std <= 1495' reaches 85.6% test accuracy (85.6% train), vs. 80.3% from always predicting the majority class",
     "details": {
       "rule": "Bwd Packet Length Std <= 1495",
       "train_accuracy": 0.856275,
-      "test_accuracy": 0.8562533891254775
+      "test_accuracy": 0.8562533891254775,
+      "majority_baseline_accuracy": 0.8030041561497062,
+      "error_reduction_vs_baseline": 0.2703063777134196
     }
   },
   {
@@ -166,10 +168,10 @@
     "details": {
       "top_features": {
         "Bwd Packet Length Max": 0.9999990923036426,
-        "Max Packet Length": 0.9999495369889948,
-        "Fwd Header Length": 0.9999061392901765,
-        "Fwd Header Length.1": 0.9999061392901765,
-        "Total Length of Bwd Packets": 0.9998853358709581
+        "Max Packet Length": 0.9999495369889946,
+        "Fwd Header Length": 0.9999061392901766,
+        "Fwd Header Length.1": 0.9999061392901766,
+        "Total Length of Bwd Packets": 0.999885335870958
       },
       "best_feature": "Bwd Packet Length Max",
       "best_class": "Heartbleed"
@@ -178,29 +180,36 @@
   {
     "check": "identity_column_flag",
     "status": "flag",
-    "summary": "standalone AUC by column: {'Destination Port': 0.931}. Suggest dropping: ['Destination Port']",
+    "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Destination Port: 0.936 (99.5%, 0.936). Suggest dropping: ['Destination Port']",
     "details": {
       "standalone_auc": {
-        "Destination Port": 0.9310855640288107
+        "Destination Port": 0.9359185914013122
+      },
+      "seen_only_auc": {
+        "Destination Port": 0.9355539296701691
+      },
+      "seen_coverage": {
+        "Destination Port": 0.9949394947266532
       },
       "suggested_drop": [
         "Destination Port"
       ],
+      "method": "training-only value lookup, unseen values scored with the prior",
       "by_class": {
         "Destination Port": {
-          "BENIGN": 0.9293811413902378,
+          "BENIGN": 0.9351818328719823,
           "DoS Hulk": 0.9254636165359449,
-          "PortScan": 0.9825547764613569,
-          "DDoS": 0.9092403379564623,
-          "DoS GoldenEye": 0.8921590526334451,
+          "PortScan": 0.9839024361601856,
+          "DDoS": 0.9092421879480448,
+          "DoS GoldenEye": 0.892159052633445,
           "FTP-Patator": 0.9990107357752307,
           "SSH-Patator": 0.9980547639697683,
           "DoS slowloris": 0.8915343634400609,
-          "DoS Slowhttptest": 0.8914934810963298,
-          "Bot": 0.8232733203195143,
+          "DoS Slowhttptest": 0.8914934810963296,
+          "Bot": 0.9663166906738152,
           "Web Attack \ufffd Brute Force": 0.8909406766481458,
           "Web Attack \ufffd XSS": 0.8908225695603859,
-          "Infiltration": 0.999949659272762
+          "Infiltration": 0.9999496592727619
         }
       }
     }
@@ -245,83 +254,132 @@
   },
   {
     "check": "homogeneity_test",
-    "status": "flag",
-    "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['Bot']",
+    "status": "warning",
+    "summary": "12 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['FTP-Patator', 'SSH-Patator']; sample size isn't enough to tell for these classes",
     "details": {
       "per_class": {
         "BENIGN": {
           "test_near_zero_rate": 0.068,
           "control_near_zero_rate": 0.08,
-          "p_value": 0.7702992048254049,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.04506402209856108,
+            0.020861603135542167
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "DoS Hulk": {
           "test_near_zero_rate": 0.242,
           "control_near_zero_rate": 0.264,
-          "p_value": 0.9805580346060336,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.07571744599913552,
+            0.03187857636395881
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "PortScan": {
           "test_near_zero_rate": 0.108,
           "control_near_zero_rate": 0.124,
-          "p_value": 0.7034061752317788,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.05599777013309515,
+            0.023926826169462158
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "DDoS": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9356402358589765,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "DoS GoldenEye": {
           "test_near_zero_rate": 0.004,
           "control_near_zero_rate": 0.01,
-          "p_value": 0.7077016081084353,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.01950857629827077,
+            0.005927441256862705
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "FTP-Patator": {
           "test_near_zero_rate": 0.25,
           "control_near_zero_rate": 0.232,
-          "p_value": 0.1987872710769516,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.03501122778396117,
+            0.07088780373327566
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "SSH-Patator": {
           "test_near_zero_rate": 0.402,
           "control_near_zero_rate": 0.3864168618266979,
-          "p_value": 0.1770078874081905,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.04749782215844474,
+            0.07820007837075527
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "DoS slowloris": {
           "test_near_zero_rate": 0.03,
           "control_near_zero_rate": 0.03940886699507389,
-          "p_value": 0.8303540194544109,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.035804132958564855,
+            0.014728016818156098
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "DoS Slowhttptest": {
           "test_near_zero_rate": 0.042,
           "control_near_zero_rate": 0.04,
-          "p_value": 0.4052603853292138,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.026783252001585375,
+            0.028450430263504054
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Bot": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.022960775178268653,
-          "leakage_signature": true
+          "rate_diff_ci_95": [
+            -0.026339964717595556,
+            0.00968008456607621
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Web Attack \ufffd Brute Force": {
           "test_near_zero_rate": 0.006644518272425249,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.7380421125413192,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.027441989393873358,
+            0.02389901049855985
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Web Attack \ufffd XSS": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.24213966270304615,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.09641862996887933,
+            0.028701561634224194
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {
@@ -473,7 +531,7 @@
   {
     "check": "known_issue_lookup",
     "status": "warning",
-    "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access)",
+    "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access, Table 1)",
     "details": {
       "matches": [
         {
@@ -481,8 +539,12 @@
           "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)"
         },
         {
-          "issue": "An independent re-labeling audit measured a 6.67% overall label corruption rate, with some individual attack classes above 75%; Heartbleed alone is only 11 rows (about 0.022% of the dataset), too few to evaluate reliably regardless of labeling accuracy.",
-          "citation": "Cantone et al. 2024, IEEE Access"
+          "issue": "A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes.",
+          "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)"
+        },
+        {
+          "issue": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy.",
+          "citation": "Cantone et al. 2024, IEEE Access, Table 1"
         }
       ]
     }

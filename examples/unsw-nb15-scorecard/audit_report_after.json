@@ -88,11 +88,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train)",
+    "summary": "single rule 'sttl <= 61' reaches 68.0% test accuracy (88.1% train), vs. 63.9% from always predicting the majority class",
     "details": {
       "rule": "sttl <= 61",
       "train_accuracy": 0.8811856690419636,
-      "test_accuracy": 0.6800964972266546
+      "test_accuracy": 0.6800964972266546,
+      "majority_baseline_accuracy": 0.6394270952055315,
+      "error_reduction_vs_baseline": 0.11279106521968181
     }
   },
   {
@@ -157,71 +159,112 @@
   },
   {
     "check": "homogeneity_test",
-    "status": "ok",
-    "summary": "10 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage)",
+    "status": "warning",
+    "summary": "10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['Backdoor', 'Worms']; sample size isn't enough to tell for these classes",
     "details": {
       "per_class": {
         "Normal": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.004,
-          "p_value": 0.9999956756016382,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.014465715343449847,
+            0.004158082981553436
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Exploits": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.8200207211527657,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Fuzzers": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Reconnaissance": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.38828272249881096,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Generic": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "DoS": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9274391344342604,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Shellcode": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9649187000010405,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.010443246101129823
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Analysis": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.012897663393553966
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "Backdoor": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9080014649074032,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.05202306318827402
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "Worms": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.3724887203073896,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.030770698417971906,
+            0.08200980441345543
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {

@@ -104,11 +104,13 @@
   {
     "check": "one_rule_check",
     "status": "ok",
-    "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train)",
+    "summary": "single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train), vs. 43.9% from always predicting the majority class",
     "details": {
       "rule": "same_srv_rate <= 0.495",
       "train_accuracy": 0.8396516271425963,
-      "test_accuracy": 0.6343608299363349
+      "test_accuracy": 0.6343608299363349,
+      "majority_baseline_accuracy": 0.43887692941876977,
+      "error_reduction_vs_baseline": 0.34837972410415474
     }
   },
   {
@@ -120,7 +122,7 @@
         "wrong_fragment": 0.9999929005526992,
         "land": 0.9999761795112035,
         "num_shells": 0.9998054845419756,
-        "root_shell": 0.9993449937675164,
+        "root_shell": 0.9993449937675165,
         "num_file_creations": 0.999094907664703
       },
       "best_feature": "wrong_fragment",
@@ -173,83 +175,132 @@
   },
   {
     "check": "homogeneity_test",
-    "status": "flag",
-    "summary": "12 classes tested; leakage signature (test significantly closer than control, p<0.05) in: ['smurf']",
+    "status": "warning",
+    "summary": "12 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['ipsweep', 'pod', 'buffer_overflow']; sample size isn't enough to tell for these classes",
     "details": {
       "per_class": {
         "normal": {
           "test_near_zero_rate": 0.024,
           "control_near_zero_rate": 0.034,
-          "p_value": 0.6661111512043575,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.03225597521197418,
+            0.011583835017746551
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "neptune": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999999999999999,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "satan": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "ipsweep": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.002,
-          "p_value": 0.9950415743837754,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.011240706827931778,
+            0.07831249174180302
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "portsweep": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.026893164711292442
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "smurf": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.995325460395144e-08,
-          "leakage_signature": true
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.008246279518618086
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "nmap": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.04999200870496552
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "back": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.011043706215040148
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
         },
         "pod": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.999999998724733,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.018753327096357457,
+            0.16112516018512965
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "guess_passwd": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 1.0,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.06758198957064511,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         },
         "buffer_overflow": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999871711736311,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.11351339476145204,
+            0.16112516018512965
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "inconclusive"
         },
         "warezmaster": {
           "test_near_zero_rate": 0.0,
           "control_near_zero_rate": 0.0,
-          "p_value": 0.9999999991266273,
-          "leakage_signature": false
+          "rate_diff_ci_95": [
+            -0.16112516018512965,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "below_control"
         }
-      }
+      },
+      "equivalence_margin": 0.05
     }
   },
   {

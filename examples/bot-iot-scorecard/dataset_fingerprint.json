@@ -68,7 +68,7 @@
   ],
   "source_files": [
     {
-      "path": "/home/tango/projects/IDS2Eval_data/bot-iot-official/bot-iot-all-features.parquet",
+      "path": "/tmp/ids2eval_task/data/bot-iot-all-features.parquet",
       "size_bytes": 103167892,
       "sha256": "eacece166ebe94dee4a2c51bb00cce62ab6c14bea9377f477aa40003ce5b52e1"
     }

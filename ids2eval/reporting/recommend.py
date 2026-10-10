@@ -72,8 +72,8 @@ _NOT_FIXABLE_NOTES = {
         "reshuffles it, only obtaining the combined unsplit data instead."
     ),
     "homogeneity_test": (
-        "Tests whether train/test proximity is just inherent class "
-        "homogeneity. A property of the data, not a config problem."
+        "Tests whether test rows sit closer to training rows than training rows "
+        "sit to each other. A property of the data, not a config problem."
     ),
     "resplit_falsification": (
         "Tests whether a session-grouped split costs accuracy. A flag here "

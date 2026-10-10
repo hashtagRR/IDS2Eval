@@ -78,8 +78,8 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
         )
     else:
         status, verdict = "ok", (
-            "grouped split reproduces random-split accuracy, consistent with inherent class "
-            "homogeneity rather than a split-artifact explanation"
+            "grouped split reproduces random-split accuracy: no evidence that information tied "
+            "to the grouping key drives the result (other grouping keys and shortcuts are not tested)"
         )
     summary = (
         f"random-split accuracy={random_acc:.4f}, grouped-split accuracy={grouped_acc:.4f} "

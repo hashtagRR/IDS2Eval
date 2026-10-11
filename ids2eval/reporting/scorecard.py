@@ -19,7 +19,10 @@ not that the dataset is unusable. upgrade() converts older scorecards.
 this input; see ids2eval.audit._status), a "not_applicable" entry in "counts",
 and "checks_not_run": the known checks this run's config left disabled. A
 not_applicable finding never raises the verdict. Earlier scorecards reported
-such findings as "ok"; their "summary" text still says why.
+such findings as "ok"; their "summary" text still says why. When no check
+produced a substantive result (every finding not_applicable, or none at all),
+overall_status is "not_evaluated" instead of "passed": an audit that tested
+nothing must not read as a pass.
 "checks" has one entry per check: {check, category, before, after} - category is
 "audit" or "known_issue" (see ids2eval.audit.KNOWN_ISSUE_CHECKS) - each side
 {status, summary, evidence} or null - "after" is null throughout when dedup
@@ -47,7 +50,8 @@ EVIDENCE_LABEL = {
 }
 
 _STATUS_RANK = {"not_applicable": -1, "ok": 0, "warning": 1, "flag": 2}
-_OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "review_required"}
+_OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "review_required",
+                   "not_applicable": "not_evaluated"}
 _LEGACY_VERDICTS = {"failed": "review_required"}
 _STATUS_EMOJI = {"ok": "✅", "warning": "⚠️", "flag": "🚩", "not_applicable": "⚪"}
 _STATUS_BADGE = {"ok": "pass", "warning": "warn", "flag": "flag", "not_applicable": "n/a"}
@@ -55,9 +59,12 @@ _VERDICT_LABEL = {
     "passed": "✅ Passed",
     "passed_with_warnings": "⚠️ Passed with warnings",
     "review_required": "🚩 Review Required",
+    "not_evaluated": "⚪ Not evaluated",
 }
-_VERDICT_PLAIN = {"passed": "Passed", "passed_with_warnings": "Passed with warnings", "review_required": "Review Required"}
-_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag"}
+_VERDICT_PLAIN = {"passed": "Passed", "passed_with_warnings": "Passed with warnings", "review_required": "Review Required",
+                  "not_evaluated": "Not evaluated"}
+_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag",
+                   "not_evaluated": "not_applicable"}
 
 # Hover text for each check in SCORECARD.html: what it measures, and the exact
 # rule that turns a measurement into ok/warning/flag. Keep the rules in sync
@@ -257,7 +264,7 @@ _NOT_RUN_NOTE = (
 )
 
 _VERDICT_RULE = ("any flag → review required · warnings only → passed with warnings · all ok → passed; "
-                 "not applicable checks never change the verdict")
+                 "not applicable checks never change the verdict; if no check produced a result → not evaluated")
 _PRIOR_ART = (
     "Scorecard format inspired by structured dataset-documentation practices. Datasheets for "
     "Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143)."
@@ -331,9 +338,8 @@ def build_scorecard(
     never the verdict - a flag dedup has already fixed isn't a flag on the
     data this run shipped.
     """
-    worst = max((f["status"] for f in findings), key=lambda s: _STATUS_RANK[s], default="ok")
-    if worst == "not_applicable":
-        worst = "ok"
+    # No finding, or only not_applicable ones, leaves worst at not_applicable: not_evaluated.
+    worst = max((f["status"] for f in findings), key=lambda s: _STATUS_RANK[s], default="not_applicable")
     version = version_info.get_version_info()
     counts = {"ok": 0, "warning": 0, "flag": 0, "not_applicable": 0}
     for f in findings:
@@ -676,7 +682,7 @@ tr.moved{background:color-mix(in srgb,var(--accent) 4%,transparent)}tr.moved td{
 @media print{body{background:#fff}.page{margin:0;max-width:none}.sheet{border-radius:0}.info,.tip{display:none}}
 """
 
-_ACCENT = {"ok": "#1a8a5a", "warning": "#c07a10", "flag": "#c0392b"}
+_ACCENT = {"ok": "#1a8a5a", "warning": "#c07a10", "flag": "#c0392b", "not_applicable": "#8a8f99"}
 
 
 def _info_html(check: str, row: int) -> str:

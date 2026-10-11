@@ -49,9 +49,9 @@ def test_upgrade_leaves_current_verdicts_alone():
     assert sc["overall_status"] == "passed"
 
 
-def test_no_findings_defaults_to_passed(base_cfg):
+def test_no_findings_is_not_evaluated(base_cfg):
     sc = scorecard.build_scorecard([], "before", base_cfg, _fingerprint())
-    assert sc["overall_status"] == "passed"
+    assert sc["overall_status"] == "not_evaluated"
 
 
 def test_scorecard_carries_version_and_fingerprint_info(base_cfg):
@@ -360,10 +360,23 @@ def test_not_applicable_never_raises_the_verdict_and_is_counted_apart(base_cfg):
     assert sc["counts"] == {"ok": 1, "warning": 0, "flag": 0, "not_applicable": 1}
 
 
-def test_only_not_applicable_findings_still_pass(base_cfg):
+def test_only_not_applicable_findings_are_not_evaluated(base_cfg):
     sc = scorecard.build_scorecard([_finding("temporal_leakage_check", "not_applicable")], "before",
                                    base_cfg, _fingerprint())
+    assert sc["overall_status"] == "not_evaluated"
+
+
+def test_one_substantive_result_among_not_applicable_ones_passes(base_cfg):
+    findings = [_finding("temporal_leakage_check", "not_applicable"), _finding("dedup_check", "ok")]
+    sc = scorecard.build_scorecard(findings, "before", base_cfg, _fingerprint())
     assert sc["overall_status"] == "passed"
+
+
+def test_not_evaluated_renders_in_markdown_and_html(base_cfg):
+    sc = scorecard.build_scorecard([_finding("temporal_leakage_check", "not_applicable")], "before",
+                                   base_cfg, _fingerprint())
+    assert "**Overall status:** ⚪ Not evaluated" in scorecard.render_markdown(sc)
+    assert "Not evaluated" in scorecard.render_html(sc)
 
 
 def test_checks_not_run_lists_every_known_check_absent_from_both_passes(base_cfg):

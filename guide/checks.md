@@ -441,7 +441,7 @@ passed the following IDS2Eval checks."*
 
 **The verdict is an explicit, fixed rule**, since it becomes a citable
 claim: any `flag` gives `review_required`; no flags but any `warning` gives
-`passed_with_warnings`; all `ok` gives `passed`. The scorecard reflects
+`passed_with_warnings`; all `ok` gives `passed`. `not_applicable` findings never change this, and if no check produced a result at all (every finding `not_applicable`, or none), the verdict is `not_evaluated`: an audit that tested nothing does not read as a pass. The scorecard reflects
 whichever audit pass describes the data actually shipped in the run,
 after dedup if `preprocessing.dedup` ran, otherwise the only pass there
 was.
@@ -525,7 +525,7 @@ Schema 1.3 renames the `failed` verdict to `review_required`. Schema 1.4
 adds the `not_applicable` status, a `not_applicable` entry in `counts`,
 and `checks_not_run`: the known checks this run's config left disabled,
 listed under "Not run" so that a reader can tell a check that passed
-from one that never ran. `findings` is still the final pass.
+from one that never ran. Schema 1.4 also adds the `not_evaluated` verdict. `findings` is still the final pass.
 
 **Evidence levels.** Each side of a `checks` row also carries an
 `evidence` value, a fixed classification of how that check's status

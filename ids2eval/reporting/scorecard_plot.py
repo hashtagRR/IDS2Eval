@@ -30,8 +30,10 @@ matplotlib.use("Agg")  # headless - never touches a display, safe in CI/servers
 import matplotlib.pyplot as plt
 
 _STATUS_COLOR = {"ok": "#1a7f4e", "warning": "#a15c00", "flag": "#b3261e", "not_applicable": "#8a8f99"}
-_VERDICT_TEXT = {"passed": "PASSED", "passed_with_warnings": "PASSED WITH WARNINGS", "review_required": "REVIEW REQUIRED"}
-_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag"}
+_VERDICT_TEXT = {"passed": "PASSED", "passed_with_warnings": "PASSED WITH WARNINGS", "review_required": "REVIEW REQUIRED",
+                 "not_evaluated": "NOT EVALUATED"}
+_VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag",
+                   "not_evaluated": "not_applicable"}
 _INK = "#16181c"
 _MUTED = "#5b5f6a"
 _ACCENT = "#0d8f82"

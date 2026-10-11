@@ -37,7 +37,8 @@ const STATUS = {ok: {label: "OK", icon: "✓"}, warning: {label: "Warning", icon
                 not_applicable: {label: "Not applicable", icon: "○"}};
 const VERDICT = {passed: {label: "Passed", status: "ok"},
                  passed_with_warnings: {label: "Passed with warnings", status: "warning"},
-                 review_required: {label: "Review Required", status: "flag"}};
+                 review_required: {label: "Review Required", status: "flag"},
+                 not_evaluated: {label: "Not evaluated", status: "not_applicable"}};
 const RANK = {not_applicable: -1, ok: 0, warning: 1, flag: 2};
 // Display grouping only - the audit itself has no families. A check missing
 // here (a new one) lands in "Other" rather than disappearing.
@@ -357,7 +358,7 @@ function renderRuns(main) {
   const search = el("input", {type: "search", placeholder: "Filter by dataset or run…", value: filter.q,
     "aria-label": "Filter runs", oninput: () => { filter.q = search.value; store.set("ids2eval.runs.q", search.value); draw(); }});
   const opts = [["all", "All"], ["review_required", "Review Required"], ["passed_with_warnings", "Warnings"], ["passed", "Passed"],
-                ["crashed", "Crashed"]];
+                ["not_evaluated", "Not evaluated"], ["crashed", "Crashed"]];
   const chipBox = el("div", {class: "chips"});
   function draw() {
     chipBox.replaceChildren(...opts.map(([k, t]) => el("button", {class: "chip" + (filter.v === k ? " on" : ""), text: t,

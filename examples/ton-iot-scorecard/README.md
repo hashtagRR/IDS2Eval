@@ -1,9 +1,9 @@
 # Example: ToN-IoT scorecard
 
 A real IDS<sup>2</sup>Eval run on ToN-IoT: the official `Train_Test_Network.csv`, split 80/20 at random by IDS2Eval, with 10-seed falsification, 211,043 rows. It is the run behind the paper's Tables 9 and 10 (Section 6), made on 2026-10-07 at commit `be73293` with the frozen method (tag `paper-method-freeze`).
-`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
+`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Statuses follow the v0.2.1 rule, which reports a check with no input as `not_applicable` instead of `ok`; they were rescored from this run's archived audit reports by [validation/rescore_statuses.py](../../validation/rescore_statuses.py), with no statistic recomputed. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
 
-**Result: review required.** After deduplication, 22 checks ran: 13 `ok`, 2 `warning`, 3 `flag`, and 4 not applicable (the tool reports these as `ok`; see below).
+**Result: review required.** After deduplication, 22 checks ran: 13 `ok`, 2 `warning`, 3 `flag`, and 4 `not_applicable`.
 
 **Deduplication** dropped 15,168 training rows, 5,185 test rows that reuse a training feature vector, and 216 test-internal duplicates.
 
@@ -18,6 +18,6 @@ A real IDS<sup>2</sup>Eval run on ToN-IoT: the official `Train_Test_Network.csv`
 - `homogeneity_test`: 10 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['dos']; sample size isn't enough to tell for these classes.
 - `class_distribution_report`: 10 classes, train imbalance ratio (majority:minority) = 41:1; classes below 1% of train: ['mitm'].
 
-**Not applicable** (the config gives these checks no input column): `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
+**Not applicable** (no input to test, such as an unconfigured column): `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
 
 Files: `config.yaml` (input); `audit_report_before.json` and `audit_report_after.json` (every check's full output); `dataset_fingerprint.json` and `environment.json` (provenance); `scorecard.json`, `SCORECARD.md` and `SCORECARD.html` (the citable summary, format in [guide/checks.md](../../guide/checks.md#the-scorecard)); `intervention_manifest.json` (the falsification checks' conditions).

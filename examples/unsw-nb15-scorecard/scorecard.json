@@ -1,5 +1,5 @@
 {
-  "scorecard_schema_version": "1.3",
+  "scorecard_schema_version": "1.4",
   "generated_at": "2026-10-07T10:51:19.024848+00:00",
   "dataset_name": "unsw-nb15",
   "ids2eval_version": "0.1.0",
@@ -7,10 +7,22 @@
   "audit_stage": "after",
   "overall_status": "review_required",
   "counts": {
-    "ok": 16,
+    "ok": 9,
     "warning": 2,
-    "flag": 1
+    "flag": 1,
+    "not_applicable": 7
   },
+  "checks_not_run": [
+    "resplit_falsification",
+    "synthetic_realism_check",
+    "cross_dataset_drift_check",
+    "cross_capture_matrix_check",
+    "feature_category_ablation_check",
+    "artifact_sensitivity_check",
+    "result_robustness_check",
+    "seed_sensitivity_check",
+    "repeated_seed_falsification_check"
+  ],
   "findings": [
     {
       "check": "dedup_check",
@@ -44,27 +56,27 @@
     },
     {
       "check": "identity_column_flag",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no id_like_columns configured"
     },
     {
       "check": "port_protocol_shortcut_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both"
     },
     {
       "check": "temporal_leakage_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.timestamp_column configured"
     },
     {
       "check": "temporal_realism_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.timestamp_column configured"
     },
     {
       "check": "flow_group_leakage_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.flow_id_columns configured"
     },
     {
@@ -79,7 +91,7 @@
     },
     {
       "check": "scenario_holdout_falsification",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.scenario_column configured"
     },
     {
@@ -89,7 +101,7 @@
     },
     {
       "check": "low_cardinality_warning",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no id_like_columns configured"
     },
     {
@@ -197,12 +209,12 @@
       "check": "identity_column_flag",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no id_like_columns configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no id_like_columns configured",
         "evidence": "statistical"
       }
@@ -211,12 +223,12 @@
       "check": "port_protocol_shortcut_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both",
         "evidence": "statistical"
       }
@@ -225,12 +237,12 @@
       "check": "temporal_leakage_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       }
@@ -239,12 +251,12 @@
       "check": "temporal_realism_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       }
@@ -253,12 +265,12 @@
       "check": "flow_group_leakage_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.flow_id_columns configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.flow_id_columns configured",
         "evidence": "statistical"
       }
@@ -295,12 +307,12 @@
       "check": "scenario_holdout_falsification",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.scenario_column configured",
         "evidence": "direct-experiment"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.scenario_column configured",
         "evidence": "direct-experiment"
       }
@@ -323,12 +335,12 @@
       "check": "low_cardinality_warning",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no id_like_columns configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no id_like_columns configured",
         "evidence": "statistical"
       }
@@ -391,5 +403,6 @@
     "feature_count": 42,
     "train_content_hash": "61a614f1bec7803fef860f60c2287b8b2d800783068a4d4b9ac8121d849734fa",
     "test_content_hash": "486331c750ec819f7a9a5c2f4b4184879fe70b3261ceb40b2475348d61c00553"
-  }
+  },
+  "status_rule": "v0.2.1 (rescored from the archived audit reports by validation/rescore_statuses.py)"
 }

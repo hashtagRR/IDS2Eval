@@ -1,9 +1,9 @@
 # Example: BoT-IoT scorecard
 
 A real IDS<sup>2</sup>Eval run on BoT-IoT: the authors' 5%-reduced, all-features release (OpenML), split 80/20 at random by IDS2Eval, with 10-seed falsification, 3,668,522 rows. It is the run behind the paper's Tables 9 and 10 (Section 6), made on 2026-10-07 with the frozen method (tag `paper-method-freeze`).
-`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
+`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Statuses follow the v0.2.1 rule, which reports a check with no input as `not_applicable` instead of `ok`; they were rescored from this run's archived audit reports by [validation/rescore_statuses.py](../../validation/rescore_statuses.py), with no statistic recomputed. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
 
-**Result: review required.** After deduplication, 22 checks ran: 14 `ok`, 3 `warning`, 3 `flag`, and 2 not applicable (the tool reports these as `ok`; see below).
+**Result: review required.** After deduplication, 22 checks ran: 13 `ok`, 3 `warning`, 3 `flag`, and 3 `not_applicable`.
 
 **Deduplication** dropped 0 training rows, 0 test rows that reuse a training feature vector, and 0 test-internal duplicates.
 
@@ -19,6 +19,6 @@ A real IDS<sup>2</sup>Eval run on BoT-IoT: the authors' 5%-reduced, all-features
 - `low_cardinality_warning`: unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior.
 - `known_issue_lookup`: The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems).
 
-**Not applicable** (the config gives these checks no input column): `flow_group_leakage_check`, `scenario_holdout_falsification`.
+**Not applicable** (no input to test, such as an unconfigured column): `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
 
 Files: `config.yaml` (input); `audit_report_before.json` and `audit_report_after.json` (every check's full output); `dataset_fingerprint.json` and `environment.json` (provenance); `scorecard.json`, `SCORECARD.md` and `SCORECARD.html` (the citable summary, format in [guide/checks.md](../../guide/checks.md#the-scorecard)); `intervention_manifest.json` (the falsification checks' conditions).

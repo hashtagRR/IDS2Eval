@@ -1,16 +1,25 @@
 {
-  "scorecard_schema_version": "1.2",
+  "scorecard_schema_version": "1.4",
   "generated_at": "2026-09-29T08:26:32.674483+00:00",
   "dataset_name": "cic-ids2018-fullscale",
   "ids2eval_version": "0.1.0",
   "ids2eval_git_commit": null,
   "audit_stage": "after",
-  "overall_status": "failed",
+  "overall_status": "review_required",
   "counts": {
-    "ok": 16,
+    "ok": 12,
     "warning": 3,
-    "flag": 3
+    "flag": 3,
+    "not_applicable": 4
   },
+  "checks_not_run": [
+    "synthetic_realism_check",
+    "cross_dataset_drift_check",
+    "cross_capture_matrix_check",
+    "feature_category_ablation_check",
+    "artifact_sensitivity_check",
+    "seed_sensitivity_check"
+  ],
   "findings": [
     {
       "check": "dedup_check",
@@ -54,17 +63,17 @@
     },
     {
       "check": "temporal_leakage_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.timestamp_column configured"
     },
     {
       "check": "temporal_realism_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.timestamp_column configured"
     },
     {
       "check": "flow_group_leakage_check",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.flow_id_columns configured"
     },
     {
@@ -84,7 +93,7 @@
     },
     {
       "check": "scenario_holdout_falsification",
-      "status": "ok",
+      "status": "not_applicable",
       "summary": "no schema.scenario_column configured"
     },
     {
@@ -240,12 +249,12 @@
       "check": "temporal_leakage_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       }
@@ -254,12 +263,12 @@
       "check": "temporal_realism_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.timestamp_column configured",
         "evidence": "statistical"
       }
@@ -268,12 +277,12 @@
       "check": "flow_group_leakage_check",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.flow_id_columns configured",
         "evidence": "statistical"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.flow_id_columns configured",
         "evidence": "statistical"
       }
@@ -324,12 +333,12 @@
       "check": "scenario_holdout_falsification",
       "category": "audit",
       "before": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.scenario_column configured",
         "evidence": "direct-experiment"
       },
       "after": {
-        "status": "ok",
+        "status": "not_applicable",
         "summary": "no schema.scenario_column configured",
         "evidence": "direct-experiment"
       }
@@ -448,5 +457,6 @@
     "feature_count": 78,
     "train_content_hash": "0cd88f1a0e407aee7839868efef0d10897fb919ba6a967dcbea2a7b3fc22c14a",
     "test_content_hash": "dcd3fc750b558cdede9a8afe3397ab7171289d9a5c05cc6e92698534d0175324"
-  }
+  },
+  "status_rule": "v0.2.1 (rescored from the archived audit reports by validation/rescore_statuses.py)"
 }

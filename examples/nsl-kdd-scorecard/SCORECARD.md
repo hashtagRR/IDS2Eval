@@ -1,15 +1,14 @@
 # IDS2Eval Scorecard
 
 **Dataset:** nsl-kdd
-**Overall status:** 🚩 Review Required, 14 ok, 4 warning(s), 1 flag(s)
+**Overall status:** 🚩 Review Required, 7 ok, 4 warning(s), 1 flag(s), 7 not applicable
 **Generated:** 2026-10-07T10:52:53.927224+00:00
 **IDS2Eval version:** 0.1.0 (git be73293)
-**Scorecard schema version:** 1.3
+**Scorecard schema version:** 1.4
 **Verdict judged on:** cleaned data (exact duplicates removed)
+**Status rule:** v0.2.1 (rescored from the archived audit reports by validation/rescore_statuses.py)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
-
-<img src="scorecard.png" alt="IDS2Eval Scorecard" width="760">
 
 ## Checks
 
@@ -23,16 +22,16 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 4 | `leakage_screen` | ✅ pass | ✅ pass | *Evidence: statistical.* no single feature or pair dominates importance (top1=14.2%, top2=25.6%)<br>*raw data:* no single feature or pair dominates importance (top1=14.1%, top2=25.0%) |
 | 5 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'same_srv_rate <= 0.495' reaches 63.4% test accuracy (84.0% train), vs. 43.9% from always predicting the majority class<br>*raw data:* single rule 'same_srv_rate <= 0.495' reaches 62.7% test accuracy (84.0% train), vs. 43.1% from always predicting the majority class |
 | 6 | `feature_auc_ranking_check` | 🚩 flag | 🚩 flag | *Evidence: statistical.* 'wrong_fragment' alone reaches AUC 1.000 identifying 'teardrop'; a single feature this separable is worth checking for a leakage artifact |
-| 7 | `identity_column_flag` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
-| 8 | `port_protocol_shortcut_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both |
-| 9 | `temporal_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
-| 10 | `temporal_realism_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
-| 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
+| 7 | `identity_column_flag` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no id_like_columns configured |
+| 8 | `port_protocol_shortcut_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both |
+| 9 | `temporal_leakage_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.timestamp_column configured |
+| 10 | `temporal_realism_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.timestamp_column configured |
+| 11 | `flow_group_leakage_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce |
 | 13 | `homogeneity_test` | 🚩 flag | ⚠️ warn | *Evidence: statistical.* 12 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['ipsweep', 'pod', 'buffer_overflow']; sample size isn't enough to tell for these classes<br>*raw data:* 12 classes tested; leakage signature (95% CI lower bound exceeds the +0.05 margin) in: ['ipsweep', 'portsweep', 'smurf', 'pod'] |
-| 14 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
+| 14 | `scenario_holdout_falsification` | ⚪ n/a (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
 | 15 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 23 classes, train imbalance ratio (majority:minority) = 33670:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy']<br>*raw data:* 23 classes, train imbalance ratio (majority:minority) = 33672:1; classes below 1% of train: ['back', 'teardrop', 'warezclient', 'pod', 'guess_passwd', 'buffer_overflow', 'warezmaster', 'land', 'imap', 'rootkit', 'loadmodule', 'ftp_write', 'multihop', 'phf', 'perl', 'spy'] |
-| 16 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
+| 16 | `low_cardinality_warning` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no id_like_columns configured |
 | 17 | `data_integrity_check` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 1 constant/near-constant feature(s) |
 
 ## Known issues
@@ -43,6 +42,10 @@ Documented facts about this dataset or the tool that produced it, from published
 |---|---|---|---|
 | 1 | `schema_fingerprint_check` | ✅ pass | *Evidence: documented.* no known extractor signature matched |
 | 2 | `known_issue_lookup` | ⚠️ warn | *Evidence: documented.* The test set intentionally includes attack types absent from the training set, by design, to test generalization to unknown attacks rather than memorization; this project's own audit of the official partition finds 17 such test-only attack types. (Tavallaee et al. 2009, IEEE CISDA) |
+
+## Not run
+
+Disabled in this run's config, so they produced no result and say nothing about the dataset. Checks marked n/a above ran but had no input to test. `resplit_falsification`, `synthetic_realism_check`, `cross_dataset_drift_check`, `cross_capture_matrix_check`, `feature_category_ablation_check`, `artifact_sensitivity_check`, `result_robustness_check`, `seed_sensitivity_check`, `repeated_seed_falsification_check`.
 
 ## What cleaning removed
 
@@ -57,9 +60,9 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 14 ok, 4 warning(s), 1 flag(s) across 19 checks. Full report: audit_report_after.json. A vector figure of this chart is at `scorecard.pdf`, ready to cite directly.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.4), which reported review required, 7 ok, 4 warning(s), 1 flag(s), 7 not applicable across 19 checks. Full report: audit_report_after.json.
 
-Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
+Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed; not applicable checks never change the verdict.
 
 ---
 *Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and scorecards for synthetic data evaluation ([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)).*

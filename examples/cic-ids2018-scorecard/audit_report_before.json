@@ -232,19 +232,19 @@
   },
   {
     "check": "temporal_leakage_check",
-    "status": "ok",
+    "status": "not_applicable",
     "summary": "no schema.timestamp_column configured",
     "details": {}
   },
   {
     "check": "temporal_realism_check",
-    "status": "ok",
+    "status": "not_applicable",
     "summary": "no schema.timestamp_column configured",
     "details": {}
   },
   {
     "check": "flow_group_leakage_check",
-    "status": "ok",
+    "status": "not_applicable",
     "summary": "no schema.flow_id_columns configured",
     "details": {}
   },
@@ -352,7 +352,7 @@
   },
   {
     "check": "scenario_holdout_falsification",
-    "status": "ok",
+    "status": "not_applicable",
     "summary": "no schema.scenario_column configured",
     "details": {}
   },

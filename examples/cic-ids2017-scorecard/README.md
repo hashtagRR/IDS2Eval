@@ -1,9 +1,9 @@
 # Example: CIC-IDS2017 scorecard
 
 A real IDS<sup>2</sup>Eval run on CIC-IDS2017: the MachineLearningCSV day-files (Hugging Face mirror), split 80/20 at random by IDS2Eval, 2,830,743 rows. It is the run behind the paper's Tables 9 and 10 (Section 6), made on 2026-10-07 at commit `be73293` with the frozen method (tag `paper-method-freeze`).
-`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
+`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Statuses follow the v0.2.1 rule, which reports a check with no input as `not_applicable` instead of `ok`; they were rescored from this run's archived audit reports by [validation/rescore_statuses.py](../../validation/rescore_statuses.py), with no statistic recomputed. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
 
-**Result: review required.** After deduplication, 19 checks ran: 7 `ok`, 4 `warning`, 3 `flag`, and 5 not applicable (the tool reports these as `ok`; see below).
+**Result: review required.** After deduplication, 19 checks ran: 7 `ok`, 4 `warning`, 3 `flag`, and 5 `not_applicable`.
 
 **Deduplication** dropped 247,799 training rows, 81,604 test rows that reuse a training feature vector, and 2,516 test-internal duplicates.
 
@@ -20,6 +20,6 @@ A real IDS<sup>2</sup>Eval run on CIC-IDS2017: the MachineLearningCSV day-files 
 - `data_integrity_check`: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 8 constant/near-constant feature(s).
 - `known_issue_lookup`: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (Engelen et al. 2021, IEEE S&P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (Cantone et al. 2024, IEEE Access, Table 1).
 
-**Not applicable** (the config gives these checks no input column): `port_protocol_shortcut_check`, `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
+**Not applicable** (no input to test, such as an unconfigured column): `port_protocol_shortcut_check`, `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
 
 Files: `config.yaml` (input); `audit_report_before.json` and `audit_report_after.json` (every check's full output); `dataset_fingerprint.json` and `environment.json` (provenance); `scorecard.json`, `SCORECARD.md` and `SCORECARD.html` (the citable summary, format in [guide/checks.md](../../guide/checks.md#the-scorecard)).

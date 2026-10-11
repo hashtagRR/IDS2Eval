@@ -11,9 +11,11 @@ folder; see [SCORECARD.md](SCORECARD.md) for the full result, or
 download [SCORECARD.html](SCORECARD.html) and open it in a browser for
 the styled version.
 
-**Result: review required** - 17 of 19 checks `ok`, one `warning`
-(`class_distribution_report`), one `flag`
-(`feature_auc_ranking_check`, described below), after dedup.
+**Result: review required.** After dedup, 19 checks ran: 10 `ok`, one `warning`
+(`class_distribution_report`), one `flag` (`feature_auc_ranking_check`, described
+below), and 7 `not_applicable` (no identifier, port, timestamp, flow or scenario
+column to test). Statuses were rescored from the archived audit reports under the
+v0.2.1 rule by [validation/rescore_statuses.py](../../validation/rescore_statuses.py).
 
 Three things worth pointing out about what's actually in here:
 

@@ -1,11 +1,12 @@
 # IDS2Eval Scorecard
 
 **Dataset:** bot-iot-official
-**Overall status:** 🚩 Review Required, 16 ok, 3 warning(s), 3 flag(s)
+**Overall status:** 🚩 Review Required, 13 ok, 3 warning(s), 3 flag(s), 3 not applicable
 **Generated:** 2026-10-07T14:09:52.308433+00:00
 **IDS2Eval version:** 0.1.0
-**Scorecard schema version:** 1.3
+**Scorecard schema version:** 1.4
 **Verdict judged on:** cleaned data (exact duplicates removed)
+**Status rule:** v0.2.1 (rescored from the archived audit reports by validation/rescore_statuses.py)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
 
@@ -24,12 +25,12 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 7 | `identity_column_flag` | 🚩 flag | 🚩 flag | *Evidence: statistical.* standalone AUC by column (seen-value coverage, AUC on seen values): saddr: 0.522 (100.0%, 0.522), daddr: 0.865 (100.0%, 0.865), sport: 0.404 (100.0%, 0.404), dport: 0.536 (99.9%, 0.536). Suggest dropping: ['daddr'] |
 | 8 | `port_protocol_shortcut_check` | ✅ pass | ✅ pass | *Evidence: statistical.* standalone AUC of 'sport' + 'proto' combined: 0.481 |
 | 9 | `temporal_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* standalone AUC of 'stime' alone: 0.500 |
-| 10 | `temporal_realism_check` | ✅ pass | ✅ pass | *Evidence: statistical.* timestamp column has no usable time span to test |
-| 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
+| 10 | `temporal_realism_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* timestamp column has no usable time span to test |
+| 11 | `flow_group_leakage_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce |
 | 13 | `homogeneity_test` | ✅ pass | ✅ pass | *Evidence: statistical.* 4 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows a train/test leakage signature |
 | 14 | `resplit_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* random-split accuracy=1.0000, grouped-split accuracy=1.0000 (drop=+0.0000); grouped split reproduces random-split accuracy, consistent with inherent class homogeneity rather than a split-artifact explanation |
-| 15 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
+| 15 | `scenario_holdout_falsification` | ⚪ n/a (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
 | 16 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 5 classes, train imbalance ratio (majority:minority) = 24465:1; classes below 1% of train: ['Normal', 'Theft'] |
 | 17 | `low_cardinality_warning` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* unique values by column: {'saddr': 21, 'daddr': 81, 'sport': 65541, 'dport': 6914}. ['saddr'] have fewer than 50 unique values, risk of memorizing specific hosts rather than learning attack behavior |
 | 18 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
@@ -45,6 +46,10 @@ Documented facts about this dataset or the tool that produced it, from published
 | 1 | `schema_fingerprint_check` | ✅ pass | *Evidence: documented.* no known extractor signature matched |
 | 2 | `known_issue_lookup` | ⚠️ warn | *Evidence: documented.* The full original (non-NetFlow) release is over 99.9% attack traffic (benign flows are 477 of 3,668,522 rows, 0.013%), even more skewed than the NetFlow-V2 conversion of this dataset; a classifier's accuracy on this data mostly reflects its attack-vs-attack discrimination, not its ability to recognize normal traffic. (Koroniotis et al. 2019, Future Generation Computer Systems) |
 
+## Not run
+
+Disabled in this run's config, so they produced no result and say nothing about the dataset. Checks marked n/a above ran but had no input to test. `synthetic_realism_check`, `cross_dataset_drift_check`, `cross_capture_matrix_check`, `feature_category_ablation_check`, `artifact_sensitivity_check`, `seed_sensitivity_check`.
+
 ## What cleaning removed
 
 - Train: 2,934,817 → 2,934,817 rows (0 duplicates dropped)
@@ -58,9 +63,9 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 16 ok, 3 warning(s), 3 flag(s) across 22 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.4), which reported review required, 13 ok, 3 warning(s), 3 flag(s), 3 not applicable across 22 checks. Full report: audit_report_after.json.
 
-Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
+Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed; not applicable checks never change the verdict.
 
 ---
 *Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and scorecards for synthetic data evaluation ([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)).*

@@ -1,11 +1,12 @@
 # IDS2Eval Scorecard
 
 **Dataset:** cic-iot2023
-**Overall status:** 🚩 Review Required, 17 ok, 1 warning(s), 1 flag(s)
+**Overall status:** 🚩 Review Required, 10 ok, 1 warning(s), 1 flag(s), 7 not applicable
 **Generated:** 2026-09-26T23:48:52.431922+00:00
 **IDS2Eval version:** 0.1.0 (git ad380be)
-**Scorecard schema version:** 1.3
+**Scorecard schema version:** 1.4
 **Verdict judged on:** cleaned data (exact duplicates removed)
+**Status rule:** v0.2.1 (rescored from the archived audit reports by validation/rescore_statuses.py)
 
 A full, styled version of this scorecard is in `SCORECARD.html`.
 
@@ -21,16 +22,16 @@ Findings from this run's own data. Each one can, in principle, be reacted to - b
 | 4 | `leakage_screen` | ✅ pass | ✅ pass | *Evidence: statistical.* no single feature or pair dominates importance (top1=9.2%, top2=16.1%)<br>*raw data:* no single feature or pair dominates importance (top1=9.0%, top2=16.6%) |
 | 5 | `one_rule_check` | ✅ pass | ✅ pass | *Evidence: statistical.* single rule 'icmp <= 0.9592' reaches 22.6% test accuracy (24.5% train)<br>*raw data:* single rule 'icmp <= 0.955' reaches 26.8% test accuracy (26.9% train) |
 | 6 | `feature_auc_ranking_check` | 🚩 flag | 🚩 flag | *Evidence: statistical.* 'fin_count' alone reaches AUC 0.999 identifying 'DDoS-RSTFINFlood'; a single feature this separable is worth checking for a leakage artifact |
-| 7 | `identity_column_flag` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
-| 8 | `port_protocol_shortcut_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both |
-| 9 | `temporal_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
-| 10 | `temporal_realism_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.timestamp_column configured |
-| 11 | `flow_group_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no schema.flow_id_columns configured |
+| 7 | `identity_column_flag` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no id_like_columns configured |
+| 8 | `port_protocol_shortcut_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no port-like entry in schema.id_like_columns and/or no proto-like column found, this check needs both |
+| 9 | `temporal_leakage_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.timestamp_column configured |
+| 10 | `temporal_realism_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.timestamp_column configured |
+| 11 | `flow_group_leakage_check` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no schema.flow_id_columns configured |
 | 12 | `row_order_leakage_check` | ✅ pass | ✅ pass | *Evidence: statistical.* adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce |
 | 13 | `homogeneity_test` | ✅ pass | ✅ pass | *Evidence: statistical.* 8 classes tested; test-to-train and train-internal proximity statistically indistinguishable for every class (consistent with inherent class homogeneity, not train/test leakage) |
-| 14 | `scenario_holdout_falsification` | ✅ pass (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
+| 14 | `scenario_holdout_falsification` | ⚪ n/a (same on raw and cleaned data) | *Evidence: direct experiment.* no schema.scenario_column configured |
 | 15 | `class_distribution_report` | ⚠️ warn | ⚠️ warn | *Evidence: statistical.* 34 classes, train imbalance ratio (majority:minority) = 3030:1; classes below 1% of train: ['VulnerabilityScan', 'MITM-ArpSpoofing', 'DDoS-UDP_Fragmentation', 'DDoS-ACK_Fragmentation', 'DNS_Spoofing', 'Recon-HostDiscovery', 'Recon-OSScan', 'Recon-PortScan', 'DoS-HTTP_Flood', 'DDoS-HTTP_Flood', 'DDoS-SlowLoris', 'DictionaryBruteForce', 'BrowserHijacking', 'CommandInjection', 'SqlInjection', 'Backdoor_Malware', 'XSS', 'Recon-PingSweep', 'Uploading_Attack']<br>*raw data:* 34 classes, train imbalance ratio (majority:minority) = 4394:1; classes below 1% of train: ['DDoS-ICMP_Fragmentation', 'VulnerabilityScan', 'MITM-ArpSpoofing', 'DDoS-UDP_Fragmentation', 'DDoS-ACK_Fragmentation', 'DNS_Spoofing', 'Recon-HostDiscovery', 'Recon-OSScan', 'Recon-PortScan', 'DoS-HTTP_Flood', 'DDoS-HTTP_Flood', 'DDoS-SlowLoris', 'DictionaryBruteForce', 'BrowserHijacking', 'CommandInjection', 'SqlInjection', 'Backdoor_Malware', 'XSS', 'Recon-PingSweep', 'Uploading_Attack'] |
-| 16 | `low_cardinality_warning` | ✅ pass | ✅ pass | *Evidence: statistical.* no id_like_columns configured |
+| 16 | `low_cardinality_warning` | ⚪ n/a | ⚪ n/a | *Evidence: statistical.* no id_like_columns configured |
 | 17 | `data_integrity_check` | ✅ pass | ✅ pass | *Evidence: statistical.* no missing labels, constant features, or +-inf values found |
 
 ## Known issues
@@ -41,6 +42,10 @@ Documented facts about this dataset or the tool that produced it, from published
 |---|---|---|---|
 | 1 | `schema_fingerprint_check` | ✅ pass | *Evidence: documented.* no known extractor signature matched |
 | 2 | `known_issue_lookup` | ✅ pass | *Evidence: documented.* no curated known issues for dataset 'cic-iot2023' |
+
+## Not run
+
+Disabled in this run's config, so they produced no result and say nothing about the dataset. Checks marked n/a above ran but had no input to test. `resplit_falsification`, `synthetic_realism_check`, `cross_dataset_drift_check`, `cross_capture_matrix_check`, `feature_category_ablation_check`, `artifact_sensitivity_check`, `result_robustness_check`, `seed_sensitivity_check`, `repeated_seed_falsification_check`.
 
 ## What cleaning removed
 
@@ -55,9 +60,9 @@ Documented facts about this dataset or the tool that produced it, from published
 
 ## Citing this result
 
-> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.3), which reported review required, 17 ok, 1 warning(s), 1 flag(s) across 19 checks. Full report: audit_report_after.json.
+> This result was obtained on a dataset audited with IDS2Eval v0.1.0 (scorecard schema 1.4), which reported review required, 10 ok, 1 warning(s), 1 flag(s), 7 not applicable across 19 checks. Full report: audit_report_after.json.
 
-Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed.
+Verdict rule: any flag → review required · warnings only → passed with warnings · all ok → passed; not applicable checks never change the verdict.
 
 ---
 *Scorecard format inspired by structured dataset-documentation practices. Datasheets for Datasets ([arXiv:1803.09010](https://arxiv.org/abs/1803.09010)) and scorecards for synthetic data evaluation ([arXiv:2406.11143](https://arxiv.org/abs/2406.11143)).*

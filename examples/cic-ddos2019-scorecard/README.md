@@ -1,9 +1,9 @@
 # Example: CICDDoS2019 scorecard
 
 A real IDS<sup>2</sup>Eval run on CICDDoS2019: the full official release, training day against testing day, 70,427,637 rows. It is the run behind the paper's Tables 9 and 10 (Section 6), made on 2026-10-07 with the frozen method (tag `paper-method-freeze`).
-`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
+`config.yaml` is the configuration it used, with data paths reduced to `data/<file>`. Statuses follow the v0.2.1 rule, which reports a check with no input as `not_applicable` instead of `ok`; they were rescored from this run's archived audit reports by [validation/rescore_statuses.py](../../validation/rescore_statuses.py), with no statistic recomputed. Read [SCORECARD.md](SCORECARD.md), or open [SCORECARD.html](SCORECARD.html) in a browser.
 
-**Result: review required.** After deduplication, 19 checks ran: 7 `ok`, 4 `warning`, 4 `flag`, and 4 not applicable (the tool reports these as `ok`; see below).
+**Result: review required.** After deduplication, 19 checks ran: 7 `ok`, 4 `warning`, 4 `flag`, and 4 `not_applicable`.
 
 **Deduplication** dropped 2,184,498 training rows, 244 test rows that reuse a training feature vector, and 650,949 test-internal duplicates.
 
@@ -21,6 +21,6 @@ A real IDS<sup>2</sup>Eval run on CICDDoS2019: the full official release, traini
 - `data_integrity_check`: missing values in 1 feature column(s); +-inf values in 2 feature column(s); 12 constant/near-constant feature(s).
 - `known_issue_lookup`: By design, the two collection days cover different attack sets: the testing day includes several DDoS types absent from the training day (e.g. DNS, NTP, SNMP, TFTP, WebDDoS reflection attacks), so a classifier trained only on the training day has never seen those attack types. (Sharafaldin et al. 2019, IEEE ICCST); The same attack type is labeled inconsistently between the two days (e.g. training's 'UDPLag'/'MSSQL' vs. testing's 'UDP-lag'/'DrDoS_MSSQL'), so label strings must be remapped before any train/test comparison, not matched literally. (Independently verified in this project's own audit methodology).
 
-**Not applicable** (the config gives these checks no input column): `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
+**Not applicable** (no input to test, such as an unconfigured column): `temporal_leakage_check`, `temporal_realism_check`, `flow_group_leakage_check`, `scenario_holdout_falsification`.
 
 Files: `config.yaml` (input); `audit_report_before.json` and `audit_report_after.json` (every check's full output); `dataset_fingerprint.json` and `environment.json` (provenance); `scorecard.json`, `SCORECARD.md` and `SCORECARD.html` (the citable summary, format in [guide/checks.md](../../guide/checks.md#the-scorecard)).

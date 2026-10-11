@@ -6,7 +6,7 @@ The datasets are not redistributed here; download them from the sources below. T
 
 Source: GitHub mirror of the official training/testing partition: github.com/Nir-J/ML-Projects (UNSW-Network_Packet_Classification); official release at research.unsw.edu.au/projects/unsw-nb15-dataset; byte-identical to the copy Section 4 analyzed, whose file names are swapped (that copy's file named testing-set holds this training-set's bytes, Section 4.2)
 
-Used for: Tables 5, 6; Section 4
+Used for: Tables 5, 9, 10; Section 4
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -17,7 +17,7 @@ Used for: Tables 5, 6; Section 4
 
 Source: GitHub mirror github.com/defcom17/NSL_KDD (KDDTrain+.txt, KDDTest+.txt); the headerless files were given the standard KDD'99 column names at download, so the checksum covers the header line
 
-Used for: Tables 5, 6
+Used for: Tables 9, 10
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -28,7 +28,7 @@ Used for: Tables 5, 6
 
 Source: Hugging Face mirror huggingface.co/datasets/c01dsnap/CIC-IDS2017 of the official MachineLearningCSV.zip (www.unb.ca/cic/datasets/ids-2017.html)
 
-Used for: Tables 5, 6
+Used for: Tables 6, 9, 10
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -45,7 +45,7 @@ Used for: Tables 5, 6
 
 Source: official GeneratedLabelledFlows.zip from UNB CIC (www.unb.ca/cic/datasets/ids-2017.html), extracted and gzipped
 
-Used for: Table 6a, Section 6.3
+Used for: Tables 6, 11, S4; Section 6.3
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -62,7 +62,7 @@ Used for: Table 6a, Section 6.3
 
 Source: official AWS S3 bucket cse-cic-ids2018, folder 'Processed Traffic Data for ML Algorithms'
 
-Used for: Tables 5, 6, 6a, 6b
+Used for: Tables 9, 10, 11, S4
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -81,7 +81,7 @@ Used for: Tables 5, 6, 6a, 6b
 
 Source: official CSV-01-12.zip (training day) and CSV-03-11.zip (testing day) from UNB CIC (www.unb.ca/cic/datasets/ddos-2019.html); each day's CSVs merged into one file (a stray LibreOffice lock file in CSV-03-11 excluded)
 
-Used for: Tables 5, 6, 6a, Section 6.3
+Used for: Tables 9, 10, 11; Section 6.3
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -92,7 +92,7 @@ Used for: Tables 5, 6, 6a, Section 6.3
 
 Source: official Train_Test_Network.csv from UNSW (research.unsw.edu.au/projects/toniot-datasets)
 
-Used for: Tables 5, 6, 6a, 6b
+Used for: Tables 9, 10, 11, S4
 
 | File | SHA-256 (uncompressed) |
 |---|---|
@@ -102,8 +102,22 @@ Used for: Tables 5, 6, 6a, 6b
 
 Source: OpenML dataset 42072 'bot-iot-all-features', deposited by the dataset's authors (the official 5%-reduced, all-features release), stored as parquet; checksum of the parquet file
 
-Used for: Tables 5, 6, 6a, 6b
+Used for: Tables 9, 10, 11, S4
 
 | File | SHA-256 (uncompressed) |
 |---|---|
 | `bot-iot-all-features.parquet` | `eacece166ebe94dee4a2c51bb00cce62ab6c14bea9377f477aa40003ce5b52e1` |
+
+## CIC-IDS2017, corrected release
+
+Source: CICIDS2017_improved.zip, the relabeled re-extraction distributed by the KU Leuven DistriNet group with Liu et al. (2022), building on Engelen, Rimmer and Joosen (2021); archive SHA-256 97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883
+
+Used for: Section 5; Tables 6, 7, 8
+
+| File | SHA-256 (uncompressed) |
+|---|---|
+| `monday.csv` | `51fe5dc962626efb4ae70dce0303072fb780da0932822b651202ee9c2fbc1aff` |
+| `tuesday.csv` | `e2a0a5b631dfc6b455cc9f9a88b944110637d70a7f74171473925f76f38b6b0c` |
+| `wednesday.csv` | `bf46c5f3c792e8817381f724511229569606918eaf07ac986d7a2592b6341bc2` |
+| `thursday.csv` | `78a4d11eaf473d099e30e71ddb01e0f38218e844c0a9cdd36602145d674af482` |
+| `friday.csv` | `ebd499e6f23bd59f9cb81bec28178491b02b925fa5640a24215c9437d79482d0` |

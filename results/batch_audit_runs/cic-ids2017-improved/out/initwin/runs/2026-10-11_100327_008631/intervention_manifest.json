@@ -1,0 +1,70 @@
+[
+  {
+    "finding": {
+      "check": "resplit_falsification",
+      "status": "ok",
+      "evidence": {
+        "random_accuracy": 0.9994595186620825,
+        "grouped_accuracy": 0.9996404701983128,
+        "drop": -0.00018095153623032267,
+        "sampling_margin": 9.070858413146484e-05,
+        "random_test_rows": 419996,
+        "grouped_test_rows": 419993
+      }
+    },
+    "intervention": {
+      "type": "resplit_falsification",
+      "description": "session/time-grouped resplit",
+      "performed": true
+    },
+    "consequence": {
+      "random_accuracy": 0.9994595186620825,
+      "grouped_accuracy": 0.9996404701983128,
+      "drop": -0.00018095153623032267,
+      "sampling_margin": 9.070858413146484e-05,
+      "random_test_rows": 419996,
+      "grouped_test_rows": 419993
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  },
+  {
+    "finding": {
+      "check": "result_robustness_check",
+      "status": "ok",
+      "evidence": {
+        "accuracy_by_condition": {
+          "random_split": 0.9994595186620825,
+          "grouped_split": 0.9996404701983128,
+          "deduplicated": 0.9994725472849372,
+          "identity_columns_dropped": 0.9940856579586472
+        },
+        "spread": 0.005554812239665585,
+        "worst_condition": "identity_columns_dropped",
+        "best_condition": "grouped_split",
+        "sampling_margin": 0.00023887728560130123
+      }
+    },
+    "intervention": {
+      "type": "result_robustness_check",
+      "description": "refit under each buildable condition (split, dedup, identity columns)",
+      "performed": true
+    },
+    "consequence": {
+      "accuracy_by_condition": {
+        "random_split": 0.9994595186620825,
+        "grouped_split": 0.9996404701983128,
+        "deduplicated": 0.9994725472849372,
+        "identity_columns_dropped": 0.9940856579586472
+      },
+      "spread": 0.005554812239665585,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "grouped_split",
+      "sampling_margin": 0.00023887728560130123
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  }
+]

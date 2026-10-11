@@ -1,0 +1,26 @@
+{
+  "input_sha256": {
+    "UNSW_NB15_testing-set.csv": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa",
+    "UNSW_NB15_training-set.csv": "734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559"
+  },
+  "train_rows": 175341,
+  "test_rows": 82332,
+  "pre_fix": {
+    "columns_compared": 44,
+    "train_duplicates": 67601,
+    "train_rate": 0.38554017599990875,
+    "test_within_duplicates": 26387,
+    "test_within_rate": 0.32049506874605255,
+    "test_within_or_matching_train": 27327,
+    "test_within_or_matching_train_rate": 0.3319122576883836
+  },
+  "post_fix": {
+    "columns_compared": 42,
+    "train_duplicates": 74301,
+    "train_rate": 0.4237514329221346,
+    "test_within_duplicates": 28386,
+    "test_within_rate": 0.34477481416703104,
+    "test_within_or_matching_train": 29688,
+    "test_within_or_matching_train_rate": 0.3605888354467279
+  }
+}

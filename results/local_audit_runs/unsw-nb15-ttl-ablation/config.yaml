@@ -1,0 +1,19 @@
+# UNSW-NB15 official partitions with a TTL feature-category ablation (paper Section 4.4).
+# The local mirror's file names are inverted (Section 4.2): files are chosen by content.
+dataset:
+  name: unsw-nb15
+  train_file: data/UNSW_NB15_testing-set.csv
+  test_file: data/UNSW_NB15_training-set.csv
+schema:
+  label_column: label
+  attack_category_column: attack_cat
+  drop_columns: [id]
+  feature_categories: {sttl: ttl, dttl: ttl, ct_state_ttl: ttl}
+audit:
+  resplit_falsification: false
+  known_issue_lookup: true
+  feature_category_ablation_check: true
+output:
+  dir: out
+  save_preprocessed: false
+  write_scorecard_plot: false

@@ -1,0 +1,36 @@
+# Corrected CIC-IDS2017 (Engelen et al. 2021 re-extraction, DistriNet CICIDS2017_improved),
+# audited with IDS2Eval for paper Section 5. Labels as released, including the "- Attempted"
+# categories. "Attempted Category" is derived from the label and is dropped with the other
+# non-feature columns; the two initial-window columns are dropped by default (Section 5.4
+# reruns the audit with them kept).
+dataset:
+  name: cic-ids2017-improved
+  raw_files:
+    - data/monday.csv.gz
+    - data/tuesday.csv.gz
+    - data/wednesday.csv.gz
+    - data/thursday.csv.gz
+    - data/friday.csv.gz
+  split_ratio: 0.8
+  chunk_size: 200000
+  group_columns: [Src IP, Src Port, Dst IP, Dst Port, Protocol]
+schema:
+  label_column: Label
+  drop_columns:
+    - id
+    - Flow ID
+    - Timestamp
+    - Attempted Category
+    - FWD Init Win Bytes
+    - Bwd Init Win Bytes
+  id_like_columns: [Src IP, Dst IP, Src Port, Dst Port]
+audit:
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: true
+  checkpoint: true
+output:
+  dir: /tmp/ids2eval_task/out/main
+  save_preprocessed: false
+  write_scorecard_plot: false

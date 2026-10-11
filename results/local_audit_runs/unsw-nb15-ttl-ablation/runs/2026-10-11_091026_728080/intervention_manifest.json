@@ -1,0 +1,28 @@
+[
+  {
+    "finding": {
+      "check": "feature_category_ablation_check",
+      "status": "ok",
+      "evidence": {
+        "baseline_accuracy": 0.8264759516754046,
+        "drop_by_category": {
+          "ttl": 0.0026783679051742837
+        }
+      }
+    },
+    "intervention": {
+      "type": "feature_category_ablation_check",
+      "description": "removed one declared feature category and refit",
+      "performed": true
+    },
+    "consequence": {
+      "baseline_accuracy": 0.8264759516754046,
+      "drop_by_category": {
+        "ttl": 0.0026783679051742837
+      }
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  }
+]

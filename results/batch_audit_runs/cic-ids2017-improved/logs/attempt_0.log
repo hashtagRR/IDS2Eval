@@ -1,0 +1,11 @@
+[2026-10-11T09:31:19Z] stage setup: attempt 0 on ids2eval-cic17impr-a82519c1-a145-48100-group0-0-cnwz, 16 vCPU, 31 GB
+[2026-10-11T09:31:20Z] stage resume: pulling previous output from gs://ids2eval-batch-bc67afd1/results/cic17-improved-ids2eval/out
+[2026-10-11T09:31:20Z] no previous output, starting fresh
+[2026-10-11T09:31:20Z] stage fetch: code, config, wheels, data
+[2026-10-11T09:31:23Z] fetched 5 data files, 328M
+[2026-10-11T09:31:23Z] stage install
+[2026-10-11T09:31:35Z] Python 3.11.2, ids2eval 0.2.1
+[2026-10-11T09:31:35Z] stage run: ids2eval --config config.yaml --skip-benchmark && sed -e 's#out/main#out/initwin#' -e '/Init Win Bytes$/d' -e 's/repeated_seed_falsification_check: true/repeated_seed_falsification_check: false/' -e 's/name: cic-ids2017-improved$/name: cic-ids2017-improved-initwin/' config.yaml > config_initwin.yaml && cp config_initwin.yaml $OUT/config_initwin.yaml && ids2eval --config config_initwin.yaml --skip-benchmark
+[2026-10-11T10:14:06Z] stage run: exit 0 after 2551s
+[2026-10-11T10:14:06Z] stage upload
+[2026-10-11T10:14:07Z] done

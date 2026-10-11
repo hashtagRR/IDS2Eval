@@ -29,40 +29,45 @@ CIC18 = ["Wednesday-14-02-2018", "Thursday-15-02-2018", "Friday-16-02-2018", "Th
          "Thursday-01-03-2018", "Friday-02-03-2018"]
 
 DATASETS = [
-    {"dataset": "UNSW-NB15", "used_for": "Tables 5, 6; Section 4",
+    {"dataset": "UNSW-NB15", "used_for": "Tables 5, 9, 10; Section 4",
      "source": "GitHub mirror of the official training/testing partition: "
                "github.com/Nir-J/ML-Projects (UNSW-Network_Packet_Classification); "
                "official release at research.unsw.edu.au/projects/unsw-nb15-dataset; byte-identical to the copy "
                "Section 4 analyzed, whose file names are swapped (that copy's file named testing-set holds this "
                "training-set's bytes, Section 4.2)",
      "files": ["unsw-nb15/UNSW_NB15_training-set.csv.gz", "unsw-nb15/UNSW_NB15_testing-set.csv.gz"]},
-    {"dataset": "NSL-KDD", "used_for": "Tables 5, 6",
+    {"dataset": "NSL-KDD", "used_for": "Tables 9, 10",
      "source": "GitHub mirror github.com/defcom17/NSL_KDD (KDDTrain+.txt, KDDTest+.txt); the headerless files "
                "were given the standard KDD'99 column names at download, so the checksum covers the header line",
      "files": ["nsl-kdd/KDDTrain+.csv.gz", "nsl-kdd/KDDTest+.csv.gz"]},
-    {"dataset": "CIC-IDS2017 (MachineLearningCSV)", "used_for": "Tables 5, 6",
+    {"dataset": "CIC-IDS2017 (MachineLearningCSV)", "used_for": "Tables 6, 9, 10",
      "source": "Hugging Face mirror huggingface.co/datasets/c01dsnap/CIC-IDS2017 of the official "
                "MachineLearningCSV.zip (www.unb.ca/cic/datasets/ids-2017.html)",
      "files": [f"cic-ids2017/{f}.pcap_ISCX.csv.gz" for f in CIC17]},
-    {"dataset": "CIC-IDS2017 (GeneratedLabelledFlows)", "used_for": "Table 6a, Section 6.3",
+    {"dataset": "CIC-IDS2017 (GeneratedLabelledFlows)", "used_for": "Tables 6, 11, S4; Section 6.3",
      "source": "official GeneratedLabelledFlows.zip from UNB CIC (www.unb.ca/cic/datasets/ids-2017.html), "
                "extracted and gzipped",
      "files": [f"cic-ids2017/glf/{f}.pcap_ISCX.csv.gz" for f in CIC17]},
-    {"dataset": "CSE-CIC-IDS2018", "used_for": "Tables 5, 6, 6a, 6b",
+    {"dataset": "CSE-CIC-IDS2018", "used_for": "Tables 9, 10, 11, S4",
      "source": "official AWS S3 bucket cse-cic-ids2018, folder 'Processed Traffic Data for ML Algorithms'",
      "files": [f"cic-ids2018/{f}_TrafficForML_CICFlowMeter.csv.gz" for f in CIC18]},
-    {"dataset": "CICDDoS2019", "used_for": "Tables 5, 6, 6a, Section 6.3",
+    {"dataset": "CICDDoS2019", "used_for": "Tables 9, 10, 11; Section 6.3",
      "source": "official CSV-01-12.zip (training day) and CSV-03-11.zip (testing day) from UNB CIC "
                "(www.unb.ca/cic/datasets/ddos-2019.html); each day's CSVs merged into one file "
                "(a stray LibreOffice lock file in CSV-03-11 excluded)",
      "files": ["cic-ddos2019/train-full.csv.gz", "cic-ddos2019/test-full.csv.gz"]},
-    {"dataset": "ToN-IoT", "used_for": "Tables 5, 6, 6a, 6b",
+    {"dataset": "ToN-IoT", "used_for": "Tables 9, 10, 11, S4",
      "source": "official Train_Test_Network.csv from UNSW (research.unsw.edu.au/projects/toniot-datasets)",
      "files": ["ton-iot-official/train_test_network.csv.gz"]},
-    {"dataset": "BoT-IoT", "used_for": "Tables 5, 6, 6a, 6b",
+    {"dataset": "BoT-IoT", "used_for": "Tables 9, 10, 11, S4",
      "source": "OpenML dataset 42072 'bot-iot-all-features', deposited by the dataset's authors "
                "(the official 5%-reduced, all-features release), stored as parquet; checksum of the parquet file",
      "files": ["bot-iot-official/bot-iot-all-features.parquet"]},
+    {"dataset": "CIC-IDS2017, corrected release", "used_for": "Section 5; Tables 6, 7, 8",
+     "source": "CICIDS2017_improved.zip, the relabeled re-extraction distributed by the KU Leuven DistriNet group "
+               "with Liu et al. (2022), building on Engelen, Rimmer and Joosen (2021); archive SHA-256 "
+               "97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+     "files": [f"cic-ids2017-improved/{d}.csv.gz" for d in ("monday", "tuesday", "wednesday", "thursday", "friday")]},
 ]
 
 

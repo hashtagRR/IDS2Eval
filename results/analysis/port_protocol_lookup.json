@@ -28,5 +28,73 @@
         "seen_coverage": 0.9335198869810911
       }
     }
+  },
+  "cic-ids2018-fullscale": {
+    "before_dedup": {
+      "port_column": "Dst Port",
+      "protocol_column": "Protocol",
+      "frozen_status": "flag",
+      "frozen_auc": 0.9335969800215694,
+      "lookup_status": "flag",
+      "lookup": {
+        "standalone_auc": 0.9331283526393158,
+        "seen_only_auc": 0.9331279662195774,
+        "seen_coverage": 0.9998589288634934
+      }
+    },
+    "dedup_stats": {
+      "train_rows_raw": 12986354,
+      "train_duplicates_dropped": 3703769,
+      "test_rows_raw": 3246589,
+      "test_leakage_dropped": 1065936,
+      "test_duplicates_dropped": 16229
+    },
+    "dedup_matches_table6": true,
+    "after_dedup": {
+      "port_column": "Dst Port",
+      "protocol_column": "Protocol",
+      "frozen_status": "flag",
+      "frozen_auc": 0.9296840871911523,
+      "lookup_status": "flag",
+      "lookup": {
+        "standalone_auc": 0.9290992699350404,
+        "seen_only_auc": 0.9290994646507819,
+        "seen_coverage": 0.999789320391938
+      }
+    }
+  },
+  "cic-ddos2019-fullscale-main": {
+    "before_dedup": {
+      "port_column": "Source Port",
+      "protocol_column": "Protocol",
+      "frozen_status": "flag",
+      "frozen_auc": 0.841363171123213,
+      "lookup_status": "flag",
+      "lookup": {
+        "standalone_auc": 0.8612983777103855,
+        "seen_only_auc": 0.8613017887067003,
+        "seen_coverage": 0.9999948439750006
+      }
+    },
+    "dedup_stats": {
+      "train_rows_raw": 50063112,
+      "train_duplicates_dropped": 2184498,
+      "test_rows_raw": 20364525,
+      "test_leakage_dropped": 244,
+      "test_duplicates_dropped": 650949
+    },
+    "dedup_matches_table6": true,
+    "after_dedup": {
+      "port_column": "Source Port",
+      "protocol_column": "Protocol",
+      "frozen_status": "flag",
+      "frozen_auc": 0.839308818107997,
+      "lookup_status": "flag",
+      "lookup": {
+        "standalone_auc": 0.8584507420201293,
+        "seen_only_auc": 0.8584535186800426,
+        "seen_coverage": 0.9999952823804723
+      }
+    }
   }
 }

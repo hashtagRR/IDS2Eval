@@ -1,7 +1,7 @@
 [
   {
     "dataset": "UNSW-NB15",
-    "used_for": "Tables 5, 6; Section 4",
+    "used_for": "Tables 5, 9, 10; Section 4",
     "source": "GitHub mirror of the official training/testing partition: github.com/Nir-J/ML-Projects (UNSW-Network_Packet_Classification); official release at research.unsw.edu.au/projects/unsw-nb15-dataset; byte-identical to the copy Section 4 analyzed, whose file names are swapped (that copy's file named testing-set holds this training-set's bytes, Section 4.2)",
     "files": [
       {
@@ -22,7 +22,7 @@
   },
   {
     "dataset": "NSL-KDD",
-    "used_for": "Tables 5, 6",
+    "used_for": "Tables 9, 10",
     "source": "GitHub mirror github.com/defcom17/NSL_KDD (KDDTrain+.txt, KDDTest+.txt); the headerless files were given the standard KDD'99 column names at download, so the checksum covers the header line",
     "files": [
       {
@@ -43,7 +43,7 @@
   },
   {
     "dataset": "CIC-IDS2017 (MachineLearningCSV)",
-    "used_for": "Tables 5, 6",
+    "used_for": "Tables 6, 9, 10",
     "source": "Hugging Face mirror huggingface.co/datasets/c01dsnap/CIC-IDS2017 of the official MachineLearningCSV.zip (www.unb.ca/cic/datasets/ids-2017.html)",
     "files": [
       {
@@ -106,7 +106,7 @@
   },
   {
     "dataset": "CIC-IDS2017 (GeneratedLabelledFlows)",
-    "used_for": "Table 6a, Section 6.3",
+    "used_for": "Tables 6, 11, S4; Section 6.3",
     "source": "official GeneratedLabelledFlows.zip from UNB CIC (www.unb.ca/cic/datasets/ids-2017.html), extracted and gzipped",
     "files": [
       {
@@ -169,7 +169,7 @@
   },
   {
     "dataset": "CSE-CIC-IDS2018",
-    "used_for": "Tables 5, 6, 6a, 6b",
+    "used_for": "Tables 9, 10, 11, S4",
     "source": "official AWS S3 bucket cse-cic-ids2018, folder 'Processed Traffic Data for ML Algorithms'",
     "files": [
       {
@@ -246,7 +246,7 @@
   },
   {
     "dataset": "CICDDoS2019",
-    "used_for": "Tables 5, 6, 6a, Section 6.3",
+    "used_for": "Tables 9, 10, 11; Section 6.3",
     "source": "official CSV-01-12.zip (training day) and CSV-03-11.zip (testing day) from UNB CIC (www.unb.ca/cic/datasets/ddos-2019.html); each day's CSVs merged into one file (a stray LibreOffice lock file in CSV-03-11 excluded)",
     "files": [
       {
@@ -267,7 +267,7 @@
   },
   {
     "dataset": "ToN-IoT",
-    "used_for": "Tables 5, 6, 6a, 6b",
+    "used_for": "Tables 9, 10, 11, S4",
     "source": "official Train_Test_Network.csv from UNSW (research.unsw.edu.au/projects/toniot-datasets)",
     "files": [
       {
@@ -281,7 +281,7 @@
   },
   {
     "dataset": "BoT-IoT",
-    "used_for": "Tables 5, 6, 6a, 6b",
+    "used_for": "Tables 9, 10, 11, S4",
     "source": "OpenML dataset 42072 'bot-iot-all-features', deposited by the dataset's authors (the official 5%-reduced, all-features release), stored as parquet; checksum of the parquet file",
     "files": [
       {
@@ -290,6 +290,48 @@
         "stored_bytes": 103167892,
         "sha256_uncompressed": "eacece166ebe94dee4a2c51bb00cce62ab6c14bea9377f477aa40003ce5b52e1",
         "checksum": "recorded at download"
+      }
+    ]
+  },
+  {
+    "dataset": "CIC-IDS2017, corrected release",
+    "used_for": "Section 5; Tables 6, 7, 8",
+    "source": "CICIDS2017_improved.zip, the relabeled re-extraction distributed by the KU Leuven DistriNet group with Liu et al. (2022), building on Engelen, Rimmer and Joosen (2021); archive SHA-256 97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+    "files": [
+      {
+        "file": "monday.csv",
+        "stored_as": "cic-ids2017-improved/monday.csv.gz",
+        "stored_bytes": 66068303,
+        "sha256_uncompressed": "51fe5dc962626efb4ae70dce0303072fb780da0932822b651202ee9c2fbc1aff",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "tuesday.csv",
+        "stored_as": "cic-ids2017-improved/tuesday.csv.gz",
+        "stored_bytes": 56074933,
+        "sha256_uncompressed": "e2a0a5b631dfc6b455cc9f9a88b944110637d70a7f74171473925f76f38b6b0c",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "wednesday.csv",
+        "stored_as": "cic-ids2017-improved/wednesday.csv.gz",
+        "stored_bytes": 89163492,
+        "sha256_uncompressed": "bf46c5f3c792e8817381f724511229569606918eaf07ac986d7a2592b6341bc2",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "thursday.csv",
+        "stored_as": "cic-ids2017-improved/thursday.csv.gz",
+        "stored_bytes": 54809627,
+        "sha256_uncompressed": "78a4d11eaf473d099e30e71ddb01e0f38218e844c0a9cdd36602145d674af482",
+        "checksum": "computed from the stored copy"
+      },
+      {
+        "file": "friday.csv",
+        "stored_as": "cic-ids2017-improved/friday.csv.gz",
+        "stored_bytes": 77431895,
+        "sha256_uncompressed": "ebd499e6f23bd59f9cb81bec28178491b02b925fa5640a24215c9437d79482d0",
+        "checksum": "computed from the stored copy"
       }
     ]
   }

@@ -51,6 +51,9 @@ fi
 
 ( while true; do { date -u +%FT%TZ; echo "attempt $ATTEMPT"; free -m; echo; } >> "$LOGS/memlog.txt"; sleep 10; done ) &
 MEMLOG_PID=$!
+# Stop the background loops on every exit, early failures included: a loop left running keeps
+# the task alive, so Batch would never see the failure and the VM would idle until cancelled.
+trap 'kill $MEMLOG_PID ${SYNC_PID:-} 2>/dev/null' EXIT
 
 log "stage fetch: code, config, wheels, data"
 gcloud storage cp "$CODE_URI" code.tar.gz --quiet || { log "code fetch failed"; push_logs; exit 2; }

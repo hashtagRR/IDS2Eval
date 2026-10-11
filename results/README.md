@@ -2,7 +2,7 @@
 
 Every result behind the paper *IDS²Eval: A Falsification-Oriented Framework for Auditing
 Machine-Learning Intrusion Detection Benchmarks* (in preparation). Paper locations below refer
-to its current draft: Sections 1-9, Tables 1-15, and supplementary Tables S1-S7.
+to its current draft: Sections 1-9, Tables 1-12, and supplementary Tables S1-S15.
 
 | Folder or file | What it is | In git |
 |---|---|---|
@@ -34,27 +34,27 @@ Each file is written by one script in `../validation/`; re-running the script ov
 | File | Script | Paper | Headline result |
 |---|---|---|---|
 | `validation_results.json` | `run_validation.py` | Section 3.6, Table S1 | 36/36 development fixture evaluations correct |
-| `heldout_validation.json` | `heldout_validation.py` | Section 3.6, Supplement D.2 | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
-| `heldout_revalidation.json` | `heldout_revalidation.py` | Section 3.6, Supplement D.2 | after the fix, on fresh seeds: 3 of 30 clean datasets flagged, all by the two single-comparison checks |
-| `clean_flag_diagnosis.json` | `clean_flag_diagnosis.py` | Supplement D.2 | after the unseen-category fix, resplit and robustness flag none of 30 clean datasets |
+| `heldout_validation.json` | `heldout_validation.py` | Section 3.6, Supplement C.2 | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
+| `heldout_revalidation.json` | `heldout_revalidation.py` | Section 3.6, Supplement C.2 | after the fix, on fresh seeds: 3 of 30 clean datasets flagged, all by the two single-comparison checks |
+| `clean_flag_diagnosis.json` | `clean_flag_diagnosis.py` | Supplement C.2 | after the unseen-category fix, resplit and robustness flag none of 30 clean datasets |
 | `final_holdout.json` | `final_holdout.py` | Section 3.6, Table S1 | run once after the freeze: no flag on 30 clean corpora; two detection limits |
 | `homogeneity_sensitivity.json` | `homogeneity_sensitivity.py` | Sections 3.4, 6.2; Table S3 | per-class `homogeneity_test` intervals and the threshold grid |
 | `homogeneity_cluster.json` | `homogeneity_cluster.py` | Sections 3.9, 8 | cluster bootstrap by feature vector: no leakage verdict changes on six datasets |
-| `homogeneity_coverage.json` | `homogeneity_coverage.py` | Section 3.9, Table 6 | interval coverage at least 99.5% for the audited split, no wrong verdict in 6,000 intervals |
+| `homogeneity_coverage.json` | `homogeneity_coverage.py` | Section 3.9, Table S9 | interval coverage at least 99.5% for the audited split, no wrong verdict in 6,000 intervals |
 | `workflow_ablation.json` | `workflow_ablation.py` | Section 3.8 (earlier design) | first design of the workflow ablation, revised after review |
-| `workflow_ablation_v2.json` | `workflow_ablation_v2.py` | Section 3.8, Tables 3-5 | each stage detects its own condition; the interventions alone decide inflation (29/30) |
-| `identity_lookup.json` | `identity_rerun.py` | Section 3.7, Supplement D.3 | `identity_column_flag` re-scored with the training-only lookup: no flag changes, AUCs move by at most 0.04 |
+| `workflow_ablation_v2.json` | `workflow_ablation_v2.py` | Section 3.8, Tables 2-4 | each stage detects its own condition; the interventions alone decide inflation (29/30) |
+| `identity_lookup.json` | `identity_rerun.py` | Section 3.7, Supplement C.3 | `identity_column_flag` re-scored with the training-only lookup: no flag changes, AUCs move by at most 0.04 |
 | `port_protocol_lookup.json` | `port_protocol_lookup.py`, `port_protocol_lookup_stream.py` | Section 3.7, Table S7 | `port_protocol_shortcut_check` re-scored with the lookup: every flag stands |
 | `matched_vs_novel.json` | `matched_vs_novel.py` | Section 6.2 | raw accuracy on reused vs. novel test rows |
-| `reuse_stratified.json` | `reuse_stratified.py` | Section 6.2 | the reuse advantage is a class-mix effect: within classes -0.56 (UNSW-NB15) and -1.01 (NSL-KDD) points |
+| `reuse_stratified.json` | `reuse_stratified.py` | Section 6.2 | the raw reuse advantage reverses after class-mix standardization: -0.56 (UNSW-NB15) and -1.01 (NSL-KDD) points |
 | `class_sensitive_seeds.json` | `class_sensitive_seeds.py` | Section 6.3, Table S4 | random vs. grouped split with class-sensitive metrics (random forest) |
-| `model_sensitivity.json` | `model_sensitivity.py` | Section 6.3, Supplement C.4 | the same comparison with logistic regression and XGBoost |
+| `model_sensitivity.json` | `model_sensitivity.py` | Section 6.3, Supplement B.4 | the same comparison with logistic regression and XGBoost |
 | `host_holdout.json` | `host_holdout.py` | Section 6.3 | source- and destination-host-disjoint 5-fold cross-validation on ToN-IoT and BoT-IoT |
-| `host_holdout_diag.json` | `host_holdout_diag.py` | Section 6.3, Table 12 | per-fold class and host support, endpoint connectivity, host-clustered intervals, unseen-identifier confusion |
-| `split_class_composition.json` | `split_class_composition.py` | Section 6.4 | random and grouped test splits differ by at most 0.04 percentage points in any class share |
-| `flood_comparison.json` | `flood_comparison.py` | Section 6.5, Table 14 | Flood et al.'s released heuristics and IDS2Eval on the same ToN-IoT and UNSW-NB15 artifacts |
+| `host_holdout_diag.json` | `host_holdout_diag.py` | Section 6.3, Table S15 | per-fold class and host support, endpoint connectivity, host-clustered intervals, unseen-identifier confusion |
+| `split_class_composition.json` | `split_class_composition.py` | Supplement D.4 | random and grouped test splits differ by at most 0.04 percentage points in any class share |
+| `flood_comparison.json` | `flood_comparison.py` | Section 6.5, Table 12 | Flood et al.'s released heuristics and IDS2Eval on the same ToN-IoT and UNSW-NB15 artifacts |
 | `cap_sensitivity.json` | `cap_sensitivity.py` | Section 8 | accuracy drop unchanged at 200K, 1M and all training rows on CIC-IDS2017-GLF |
-| `ddos_unseen_ip.json` | `ddos_unseen_ip.py` | Supplement D.2 | about 0.0001 of CICDDoS2019 grouped-split test rows carry an unseen IP |
+| `ddos_unseen_ip.json` | `ddos_unseen_ip.py` | Supplement C.2 | about 0.0001 of CICDDoS2019 grouped-split test rows carry an unseen IP |
 | `class_sensitive_results.json` | `class_sensitive_metrics.py` | not cited | earlier single-seed version of `class_sensitive_seeds.json`, kept for the record |
 
 ### Synthetic validation
@@ -277,5 +277,4 @@ summaries merged into `analysis/`. Its cached dataset stayed in the bucket; to r
 header of `validation/batch_split_analysis.sh` (the job needs offline wheels and a VM without an
 external IP).
 
-The CIC-IDS2017 case study of Section 5 runs the separate detection pipeline the case study
-describes, not IDS2Eval; its outputs will be listed here when the run completes.
+The results behind the paper's Section 5 and the follow-up analyses of its later revisions are archived with the paper's research artifacts on Zenodo, together with everything listed here.

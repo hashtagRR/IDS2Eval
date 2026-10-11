@@ -287,3 +287,7 @@ iframe{width:100%;min-height:75vh;border:1px solid var(--line);border-radius:10p
 .wizard{flex-wrap:wrap}.wizard div{flex-basis:45%}
 }
 @media print{.sidebar,.top{display:none}.shell{display:block}}
+/* not_applicable: the check had no input to test; neutral, never a result color */
+.s-not_applicable.badge,.dot.s-not_applicable{color:var(--muted);background:var(--hover)}
+.sw.s-not_applicable,.hb-seg.s-not_applicable,.progress.s-not_applicable span{background:var(--line)}
+.counts .c-na{color:var(--muted)}

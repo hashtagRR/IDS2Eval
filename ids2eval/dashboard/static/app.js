@@ -33,11 +33,12 @@ const store = {get(k) { try { return localStorage.getItem(k); } catch { return n
 
 // ---------- vocabulary ----------
 
-const STATUS = {ok: {label: "OK", icon: "✓"}, warning: {label: "Warning", icon: "!"}, flag: {label: "Flag", icon: "✕"}};
+const STATUS = {ok: {label: "OK", icon: "✓"}, warning: {label: "Warning", icon: "!"}, flag: {label: "Flag", icon: "✕"},
+                not_applicable: {label: "Not applicable", icon: "○"}};
 const VERDICT = {passed: {label: "Passed", status: "ok"},
                  passed_with_warnings: {label: "Passed with warnings", status: "warning"},
                  review_required: {label: "Review Required", status: "flag"}};
-const RANK = {ok: 0, warning: 1, flag: 2};
+const RANK = {not_applicable: -1, ok: 0, warning: 1, flag: 2};
 // Display grouping only - the audit itself has no families. A check missing
 // here (a new one) lands in "Other" rather than disappearing.
 const FAMILIES = [
@@ -92,9 +93,11 @@ function runBadge(r) {
 }
 function counts(c) {
   if (!c) return el("span", {class: "hint", text: "n/a"});
-  return el("span", {class: "counts", title: `${c.flag || 0} flagged, ${c.warning || 0} warnings, ${c.ok || 0} ok`},
+  return el("span", {class: "counts",
+    title: `${c.flag || 0} flagged, ${c.warning || 0} warnings, ${c.ok || 0} ok, ${c.not_applicable || 0} not applicable`},
     el("span", {class: "c-flag", text: `✕ ${c.flag || 0}`}), el("span", {class: "c-warning", text: `! ${c.warning || 0}`}),
-    el("span", {class: "c-ok", text: `✓ ${c.ok || 0}`}));
+    el("span", {class: "c-ok", text: `✓ ${c.ok || 0}`}),
+    ...(c.not_applicable ? [el("span", {class: "c-na", text: `○ ${c.not_applicable}`})] : []));
 }
 const kpi = (label, value, status, note) => el("div", {class: "kpi" + (status ? " s-" + status : "")},
   label, el("b", {text: value}), note ? el("div", {class: "kpi-note", text: note}) : null);
@@ -258,26 +261,28 @@ function renderDashboard(main) {
 function checkStatusChart(latest) {
   const tally = new Map();
   for (const r of latest) for (const [c, s] of Object.entries(r.check_status || {})) {
-    if (!tally.has(c)) tally.set(c, {ok: 0, warning: 0, flag: 0});
+    if (!tally.has(c)) tally.set(c, {ok: 0, warning: 0, flag: 0, not_applicable: 0});
     if (s in RANK) tally.get(c)[s]++;
   }
   const rows = [...tally].sort((a, b) => b[1].flag - a[1].flag || b[1].warning - a[1].warning || a[0].localeCompare(b[0]));
   if (!rows.length) return empty("No audited runs yet.");
   const chart = el("div", {class: "hbars", role: "list", "aria-label": "Check status across datasets"},
     ...rows.map(([check, t]) => {
-      const total = t.ok + t.warning + t.flag || 1;
+      const total = t.ok + t.warning + t.flag + t.not_applicable || 1;
       return withTip(el("div", {class: "hb-row", role: "listitem"},
         el("span", {class: "hb-label", text: prettyCheck(check)}),
-        el("div", {class: "hb-track"}, ...["flag", "warning", "ok"].filter(s => t[s]).map(s =>
+        el("div", {class: "hb-track"}, ...["flag", "warning", "ok", "not_applicable"].filter(s => t[s]).map(s =>
           el("span", {class: "hb-seg s-" + s, style: {flexGrow: String(t[s] / total), flexBasis: "0"}}))),
         el("span", {class: "hb-val", text: t.flag ? `${t.flag} ✕` : ""})),
-        prettyCheck(check), [`${t.flag} flagged`, `${t.warning} warning`, `${t.ok} ok`, `of ${t.ok + t.warning + t.flag} datasets`]);
+        prettyCheck(check), [`${t.flag} flagged`, `${t.warning} warning`, `${t.ok} ok`, `${t.not_applicable} not applicable`,
+          `of ${t.ok + t.warning + t.flag + t.not_applicable} datasets`]);
     }));
   const table = dataTable([
     {key: "check", label: "Check", render: r => prettyCheck(r.check)},
     {key: "flag", label: "Flag", num: true}, {key: "warning", label: "Warning", num: true}, {key: "ok", label: "OK", num: true},
+    {key: "not_applicable", label: "N/A", num: true},
   ], rows.map(([check, t]) => ({check, ...t})));
-  return toggleView(el("div", {class: "legend"}, ...["flag", "warning", "ok"].map(s =>
+  return toggleView(el("div", {class: "legend"}, ...["flag", "warning", "ok", "not_applicable"].map(s =>
     el("span", {}, el("i", {class: "sw s-" + s}), STATUS[s].label))), chart, table);
 }
 
@@ -404,7 +409,7 @@ async function renderRun(main, id, tab, sel) {
     target: "_blank", rel: "noopener", text: "Open scorecard ↗"}));
 
   const c = d.counts || {};
-  const total = (c.ok || 0) + (c.warning || 0) + (c.flag || 0);
+  const total = (c.ok || 0) + (c.warning || 0) + (c.flag || 0) + (c.not_applicable || 0);
   const kids = [
     pageHead([el("h1", {text: d.dataset || "(unnamed)"}), runBadge(d)],
       [el("span", {class: "mono", text: d.name}), " · ", d.output_dir], ...actions),
@@ -415,6 +420,7 @@ async function renderRun(main, id, tab, sel) {
     kpi("Checks", String(total)), kpi("OK", String(c.ok || 0), "ok"),
     kpi("Warnings", String(c.warning || 0), c.warning ? "warning" : null),
     kpi("Flags", String(c.flag || 0), c.flag ? "flag" : null),
+    ...(c.not_applicable ? [kpi("Not applicable", String(c.not_applicable))] : []),
     kpi("Train rows", fmtInt(d.train_rows)), kpi("Test rows", fmtInt(d.test_rows)), kpi("Features", fmtInt(d.feature_count))));
   kids.push(el("nav", {class: "tabs", "aria-label": "Run sections"}, ...RUN_TABS.map(([k, t]) =>
     el("a", {href: runHref(id, k), class: tab === k ? "on" : null, "aria-current": tab === k ? "page" : null,
@@ -476,7 +482,7 @@ function renderOverview(body, d, id) {
         el("span", {style: {width: (100 * ok / cs.length) + "%"}})));
   }));
   // Top findings
-  const bad = checks.filter(c => c.status !== "ok").sort((a, b) => RANK[b.status] - RANK[a.status]);
+  const bad = checks.filter(c => RANK[c.status] > 0).sort((a, b) => RANK[b.status] - RANK[a.status]);
   const findCard = card("Findings", el("a", {class: "btn", href: runHref(id, "recommendations"), text: "Recommendations →"}),
     bad.length ? el("div", {}, ...bad.map(c => el("div", {class: "finding"}, dot(c.status),
       el("a", {href: runHref(id, "checks", c.check), text: prettyCheck(c.check)}), el("p", {text: c.summary || ""}))))
@@ -555,13 +561,14 @@ function renderChecks(body, d, id, sel) {
   const checks = checksOf(d);
   if (!checks.length) { body.append(card(null, null, empty("No audit in this run."))); return; }
   const details = Object.fromEntries((d.audit_report || []).map(r => [r.check, r]));
-  const bad = checks.filter(c => c.status !== "ok").sort((a, b) => RANK[b.status] - RANK[a.status]);
+  const bad = checks.filter(c => RANK[c.status] > 0).sort((a, b) => RANK[b.status] - RANK[a.status]);
   const current = checks.find(c => c.check === sel) || bad[0] || checks[0];
   let filter = store.get("ids2eval.checkFilter") || "all";
 
   const list = el("nav", {class: "card checklist", "aria-label": "Checks"});
   function drawList() {
-    const chips = el("div", {class: "chips"}, ...[["all", "All"], ["flag", "Flag"], ["warning", "Warning"], ["ok", "OK"]].map(
+    const chips = el("div", {class: "chips"}, ...[["all", "All"], ["flag", "Flag"], ["warning", "Warning"], ["ok", "OK"],
+      ["not_applicable", "N/A"]].map(
       ([k, t]) => el("button", {class: "chip" + (filter === k ? " on" : ""), "aria-pressed": String(filter === k),
         text: `${t} ${k === "all" ? checks.length : checks.filter(c => c.status === k).length}`,
         onclick: () => { filter = k; store.set("ids2eval.checkFilter", k); drawList(); }})));

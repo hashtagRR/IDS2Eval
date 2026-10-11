@@ -12,10 +12,15 @@ def test_build_manifest_ignores_findings_that_are_not_interventions():
 
 def test_build_manifest_excludes_a_no_op_intervention_check():
     # Reproduced live: scenario_holdout_falsification with no schema.scenario_column
-    # configured returns status "ok" with empty details - a no-op, not a performed
+    # configured returned status "ok" with empty details (now "not_applicable") - a no-op, not a performed
     # intervention. Every INTERVENTION_CHECKS check follows this same "details: {}"
     # no-op convention, so this must be excluded, not reported as performed: true.
     findings = [_finding("scenario_holdout_falsification", "ok", {})]
+    assert build_manifest(findings) == []
+
+
+def test_build_manifest_excludes_a_not_applicable_intervention_even_with_details():
+    findings = [_finding("result_robustness_check", "not_applicable", {"conditions": ["random_split"]})]
     assert build_manifest(findings) == []
 
 

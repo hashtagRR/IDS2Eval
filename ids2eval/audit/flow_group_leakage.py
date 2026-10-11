@@ -25,12 +25,14 @@ from __future__ import annotations
 
 import pandas as pd
 
+from ._status import NOT_APPLICABLE
+
 
 def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     flow_cols = [c for c in cfg["schema"]["flow_id_columns"] if c in train_df.columns]
     if not flow_cols:
         return {
-            "check": "flow_group_leakage_check", "status": "ok",
+            "check": "flow_group_leakage_check", "status": NOT_APPLICABLE,
             "summary": "no schema.flow_id_columns configured", "details": {},
         }
 

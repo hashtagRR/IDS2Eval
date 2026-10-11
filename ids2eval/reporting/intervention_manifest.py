@@ -66,12 +66,13 @@ def build_manifest(findings: list[dict]) -> list[dict]:
     candidate columns present) - confirmed real against a live run where
     scenario_holdout_falsification's no-op ("no schema.scenario_column configured")
     would otherwise have shown up as intervention.performed: true, a real bug this
-    empty-details check exists specifically to prevent from recurring.
+    empty-details check exists specifically to prevent from recurring. A
+    not_applicable finding is skipped the same way, whatever its details hold.
     """
     records = []
     for finding in findings:
         check = finding["check"]
-        if check not in INTERVENTION_CHECKS or not finding.get("details"):
+        if check not in INTERVENTION_CHECKS or finding["status"] == "not_applicable" or not finding.get("details"):
             continue
         records.append({
             "finding": {"check": check, "status": finding["status"], "evidence": finding.get("details", {})},

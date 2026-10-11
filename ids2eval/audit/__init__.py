@@ -5,8 +5,9 @@ cross_dataset_drift_check) need audit.reference_dataset, and known_issue_lookup
 is a curated per-dataset lookup table needing neither.
 
 Each check function returns a Finding dict: {check, status, summary, details}.
-status is one of "ok" (nothing notable), "warning" (worth a human look), or
-"flag" (a specific, checkable signature of a real data-quality problem).
+status is one of "ok" (nothing notable), "warning" (worth a human look),
+"flag" (a specific, checkable signature of a real data-quality problem), or
+"not_applicable" (the check had no input to test; see _status.py).
 
 STRUCTURAL_CHECKS are checks whose result cannot depend on
 preprocessing.dedup: known_issue_lookup looks only at dataset.name,

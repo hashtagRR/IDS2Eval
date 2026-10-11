@@ -21,6 +21,7 @@ from __future__ import annotations
 from ..data import dataset
 from . import _materiality
 from ._fit_score import fit_and_score
+from ._status import NOT_APPLICABLE
 
 MAX_SCENARIOS = 6
 MIN_SCENARIO_ROWS = 20
@@ -34,12 +35,12 @@ def check(cfg: dict) -> dict:
     scenario_col = cfg["schema"]["scenario_column"]
     if not scenario_col:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": "no schema.scenario_column configured", "details": {},
         }
     if not dataset_cfg["raw_files"]:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": "requires dataset.raw_files, not applicable to a pre-split train_file/test_file pair",
             "details": {},
         }
@@ -49,7 +50,7 @@ def check(cfg: dict) -> dict:
     combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
     if scenario_col not in combined.columns:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": f"'{scenario_col}' not found in the loaded data", "details": {},
         }
 
@@ -57,12 +58,12 @@ def check(cfg: dict) -> dict:
     eligible = counts[counts >= MIN_SCENARIO_ROWS].index.tolist()
     if len(eligible) < 2:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": "fewer than two scenarios with enough rows to build a matrix", "details": {},
         }
     if len(eligible) > MAX_SCENARIOS:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": f"skipped, {len(eligible)} eligible scenarios exceeds the {MAX_SCENARIOS}-scenario cap",
             "details": {},
         }
@@ -82,7 +83,7 @@ def check(cfg: dict) -> dict:
 
     if not matrix:
         return {
-            "check": "cross_capture_matrix_check", "status": "ok",
+            "check": "cross_capture_matrix_check", "status": NOT_APPLICABLE,
             "summary": "no scenario pair had enough distinct labels to test", "details": {},
         }
 

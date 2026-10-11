@@ -15,6 +15,11 @@ inside each side of a "checks" row; every earlier key is unchanged). 1.3
 renames the "flag" verdict from "failed" to "review_required": a flag means
 a named check crossed its threshold and the scorecard needs a human reading,
 not that the dataset is unusable. upgrade() converts older scorecards.
+1.4 adds the "not_applicable" status (the check could not produce a result on
+this input; see ids2eval.audit._status), a "not_applicable" entry in "counts",
+and "checks_not_run": the known checks this run's config left disabled. A
+not_applicable finding never raises the verdict. Earlier scorecards reported
+such findings as "ok"; their "summary" text still says why.
 "checks" has one entry per check: {check, category, before, after} - category is
 "audit" or "known_issue" (see ids2eval.audit.KNOWN_ISSUE_CHECKS) - each side
 {status, summary, evidence} or null - "after" is null throughout when dedup
@@ -32,7 +37,7 @@ from datetime import datetime, timezone
 from .. import version_info
 from ..audit import DEFAULT_EVIDENCE_LEVEL, EVIDENCE_LEVEL, KNOWN_ISSUE_CHECKS, STRUCTURAL_CHECKS
 
-SCHEMA_VERSION = "1.3"
+SCHEMA_VERSION = "1.4"
 
 EVIDENCE_LABEL = {
     "documented": "documented",
@@ -41,11 +46,11 @@ EVIDENCE_LABEL = {
     "statistical": "statistical",
 }
 
-_STATUS_RANK = {"ok": 0, "warning": 1, "flag": 2}
+_STATUS_RANK = {"not_applicable": -1, "ok": 0, "warning": 1, "flag": 2}
 _OVERALL_STATUS = {"ok": "passed", "warning": "passed_with_warnings", "flag": "review_required"}
 _LEGACY_VERDICTS = {"failed": "review_required"}
-_STATUS_EMOJI = {"ok": "✅", "warning": "⚠️", "flag": "🚩"}
-_STATUS_BADGE = {"ok": "pass", "warning": "warn", "flag": "flag"}
+_STATUS_EMOJI = {"ok": "✅", "warning": "⚠️", "flag": "🚩", "not_applicable": "⚪"}
+_STATUS_BADGE = {"ok": "pass", "warning": "warn", "flag": "flag", "not_applicable": "n/a"}
 _VERDICT_LABEL = {
     "passed": "✅ Passed",
     "passed_with_warnings": "⚠️ Passed with warnings",
@@ -102,33 +107,33 @@ CHECK_INFO = {
         "How well looking each id-like column's value (IP, port, MAC) up in the training data predicts the "
         "test label, as a ROC AUC over all test rows; values never seen in training get the class prior. "
         "Also reports the share of test rows with a seen value and the AUC on those rows alone.",
-        "Flag: all-test AUC above 0.8. Always ok when no schema.id_like_columns are configured.",
+        "Flag: all-test AUC above 0.8. Not applicable when no schema.id_like_columns are configured.",
     ),
     "port_protocol_shortcut_check": (
         "How well a declared port-like column combined with a proto-like column predicts the label, as a "
         "standalone ROC AUC - the same method as identity_column_flag, applied to the pair rather than "
         "either column alone.",
-        "Flag: AUC above 0.8. Always ok when no port-like and proto-like column pair is found.",
+        "Flag: AUC above 0.8. Not applicable when no port-like and proto-like column pair is found.",
     ),
     "temporal_leakage_check": (
         "How well schema.timestamp_column alone predicts the label, as a standalone ROC AUC - datasets "
         "collected as scenario-specific time windows (attack X launched 2-3pm, attack Y 3-4pm, ...) let "
         "a model win by learning 'when', not 'what' (Wu & Keogh 2021's 'run-to-failure bias', confirmed "
         "on this project's own CIC-IDS2018 run: Timestamp alone reached AUC 0.93).",
-        "Flag: AUC above 0.8. Always ok when no schema.timestamp_column is configured.",
+        "Flag: AUC above 0.8. Not applicable when no schema.timestamp_column is configured.",
     ),
     "temporal_realism_check": (
         "The narrowest attack class's own timestamp span, as a share of the full capture's time span - "
         "a class confined to a short burst window even when the aggregate timestamp AUC isn't dramatically "
         "high.",
-        "Flag: below 5% of the full span. Warning: below 15%. Always ok when no "
+        "Flag: below 5% of the full span. Warning: below 15%. Not applicable when no "
         "schema.timestamp_column is configured.",
     ),
     "flow_group_leakage_check": (
         "Hashes schema.flow_id_columns (typically a 5-tuple) for train and test and checks whether any "
         "flow identity appears on both sides of the split - a model can partly recognize the connection "
         "instead of the attack behavior on those rows.",
-        "Flag: any flow identity present in both train and test. Always ok when no "
+        "Flag: any flow identity present in both train and test. Not applicable when no "
         "schema.flow_id_columns is configured.",
     ),
     "row_order_leakage_check": (
@@ -156,7 +161,7 @@ CHECK_INFO = {
         "scenario, and compares accuracy against a random split. Rebuilds both splits from the raw data "
         "itself, so its result is the same whether or not preprocessing.dedup ran.",
         "Flag: accuracy drops more than 10 percentage points on the held-out scenario. Warning: more than "
-        "5. Always ok when no schema.scenario_column is configured.",
+        "5. Not applicable when no schema.scenario_column is configured.",
     ),
     "class_distribution_report": (
         "Class counts in train and test, the majority:minority ratio, and rare classes.",
@@ -191,27 +196,27 @@ CHECK_INFO = {
         "matrix rather than scenario_holdout_falsification's single held-out number. Capped at 6 "
         "scenarios and skipped past that, since each pair is a real extra model fit.",
         "Flag: best-to-worst scenario-pair accuracy spread exceeds 20 points. Warning: exceeds 10. "
-        "Always ok when no schema.scenario_column is configured.",
+        "Not applicable when no schema.scenario_column is configured.",
     ),
     "feature_category_ablation_check": (
         "Fits once on every feature, then once per schema.feature_categories group with that group's "
         "columns removed, and reports how much accuracy each group's removal costs.",
         "Flag: one category's removal costs more than 30 points of accuracy. Warning: more than 15. "
-        "Always ok when no schema.feature_categories is configured.",
+        "Not applicable when no schema.feature_categories is configured.",
     ),
     "artifact_sensitivity_check": (
         "Fits once on every feature, then reshuffles just one declared identity or timestamp column's "
         "own values across test rows and re-predicts with the same model, measuring what share of "
         "predictions flip.",
-        "Flag: reshuffling one column flips more than 30% of predictions. Warning: more than 15%. Always "
-        "ok when none of schema.id_like_columns or schema.timestamp_column are present as a feature.",
+        "Flag: reshuffling one column flips more than 30% of predictions. Warning: more than 15%. Not "
+        "applicable when none of schema.id_like_columns or schema.timestamp_column are present as a feature.",
     ),
     "result_robustness_check": (
         "Re-fits under each condition it can build from the config, random split, session-grouped "
         "split, deduplicated, identity columns dropped, and reports the full accuracy-by-condition "
         "vector rather than one collapsed score.",
         "Flag: the spread between the best and worst condition exceeds 15 points of accuracy even after "
-        "allowing for the test sets' sampling margin. Warning: more than 8 points. Always ok when fewer "
+        "allowing for the test sets' sampling margin. Warning: more than 8 points. Not applicable when fewer "
         "than two conditions can be built.",
     ),
     "known_issue_lookup": (
@@ -246,7 +251,13 @@ _KNOWN_ISSUES_NOTE = (
     "measured from this run's data, and nothing in this run's config can fix what they report."
 )
 
-_VERDICT_RULE = "any flag → review required · warnings only → passed with warnings · all ok → passed"
+_NOT_RUN_NOTE = (
+    "Disabled in this run's config, so they produced no result and say nothing about the dataset. "
+    "Checks marked n/a above ran but had no input to test."
+)
+
+_VERDICT_RULE = ("any flag → review required · warnings only → passed with warnings · all ok → passed; "
+                 "not applicable checks never change the verdict")
 _PRIOR_ART = (
     "Scorecard format inspired by structured dataset-documentation practices. Datasheets for "
     "Datasets (arXiv:1803.09010) and scorecards for synthetic data evaluation (arXiv:2406.11143)."
@@ -321,10 +332,13 @@ def build_scorecard(
     data this run shipped.
     """
     worst = max((f["status"] for f in findings), key=lambda s: _STATUS_RANK[s], default="ok")
+    if worst == "not_applicable":
+        worst = "ok"
     version = version_info.get_version_info()
-    counts = {"ok": 0, "warning": 0, "flag": 0}
+    counts = {"ok": 0, "warning": 0, "flag": 0, "not_applicable": 0}
     for f in findings:
         counts[f["status"]] += 1
+    ran = {f["check"] for f in findings} | {f["check"] for f in findings_before or []}
 
     if audit_stage == "after":
         rows = _check_rows(findings_before, findings)
@@ -340,6 +354,7 @@ def build_scorecard(
         "audit_stage": audit_stage,
         "overall_status": _OVERALL_STATUS[worst],
         "counts": counts,
+        "checks_not_run": [c for c in CHECK_INFO if c not in ran],
         "findings": [{"check": f["check"], "status": f["status"], "summary": f["summary"]} for f in findings],
         "checks": rows,
         # Only once dedup actually ran - before it, these are hypothetical counts.
@@ -357,11 +372,16 @@ def build_scorecard(
 def _counts(scorecard: dict) -> dict:
     # Scorecards written under schema 1.0 have no "counts" key.
     if "counts" in scorecard:
-        return scorecard["counts"]
-    counts = {"ok": 0, "warning": 0, "flag": 0}
+        return {"not_applicable": 0, **scorecard["counts"]}
+    counts = {"ok": 0, "warning": 0, "flag": 0, "not_applicable": 0}
     for f in scorecard["findings"]:
         counts[f["status"]] += 1
     return counts
+
+
+def _tally(counts: dict) -> str:
+    text = f"{counts['ok']} ok, {counts['warning']} warning(s), {counts['flag']} flag(s)"
+    return text + (f", {counts['not_applicable']} not applicable" if counts["not_applicable"] else "")
 
 
 def _rows(scorecard: dict) -> list[dict]:
@@ -409,7 +429,7 @@ def _split_rows(rows: list[dict]) -> tuple[list[dict], list[dict]]:
 
 
 def _md_status(result: dict | None) -> str:
-    return "n/a" if result is None else f"{_STATUS_EMOJI[result['status']]} {_STATUS_BADGE[result['status']]}"
+    return "not run" if result is None else f"{_STATUS_EMOJI[result['status']]} {_STATUS_BADGE[result['status']]}"
 
 
 def _md_evidence_note(r: dict) -> str:
@@ -465,7 +485,7 @@ def citation_text(scorecard: dict) -> str:
         f"v{scorecard['ids2eval_version']} (scorecard schema "
         f"{scorecard['scorecard_schema_version']}), which reported "
         f"{scorecard['overall_status'].replace('_', ' ')}, "
-        f"{counts['ok']} ok, {counts['warning']} warning(s), {counts['flag']} flag(s) "
+        f"{_tally(counts)} "
         f"across {len(scorecard['findings'])} checks. Full report: "
         f"audit_report_{scorecard['audit_stage']}.json."
     )
@@ -481,12 +501,13 @@ def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
         "",
         f"**Dataset:** {scorecard['dataset_name']}",
         f"**Overall status:** {_VERDICT_LABEL[scorecard['overall_status']]}"
-        f", {counts['ok']} ok, {counts['warning']} warning(s), {counts['flag']} flag(s)",
+        f", {_tally(counts)}",
         f"**Generated:** {scorecard['generated_at']}",
         f"**IDS2Eval version:** {scorecard['ids2eval_version']}"
         + (f" (git {scorecard['ids2eval_git_commit'][:7]})" if scorecard["ids2eval_git_commit"] else ""),
         f"**Scorecard schema version:** {scorecard['scorecard_schema_version']}",
         f"**Verdict judged on:** {'cleaned data (exact duplicates removed)' if _has_after(scorecard) else 'raw data'}",
+        *([f"**Status rule:** {scorecard['status_rule']}"] if scorecard.get("status_rule") else []),
         "",
         "A full, styled version of this scorecard is in `SCORECARD.html`.",
     ]
@@ -532,6 +553,10 @@ def render_markdown(scorecard: dict, has_plot: bool = False) -> str:
         ]
         for i, r in enumerate(known_rows, 1):
             lines.append(f"| {i} | `{r['check']}` | {_md_status(r['before'])} | {_md_evidence_note(r)}{r['summary']} |")
+
+    not_run = scorecard.get("checks_not_run")
+    if not_run:
+        lines += ["", "## Not run", "", f"{_NOT_RUN_NOTE} " + ", ".join(f"`{c}`" for c in not_run) + "."]
 
     effect = scorecard.get("dedup_effect")
     if effect:
@@ -623,7 +648,8 @@ td.status{white-space:nowrap}
 .badge{display:inline-block;font:700 .75rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 padding:5px 9px;border-radius:999px}
 .b-ok{color:var(--ok);background:var(--ok-bg)}.b-warning{color:var(--warn);background:var(--warn-bg)}
-.b-flag{color:var(--flag);background:var(--flag-bg)}.b-none{color:var(--muted);background:transparent}
+.b-flag{color:var(--flag);background:var(--flag-bg)}.b-not_applicable{color:var(--muted);background:var(--code)}
+.b-none{color:var(--muted);background:transparent}
 .evidence{display:inline-block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;
 margin-right:6px}
 tr.moved td{background:color-mix(in srgb,var(--accent) 4%,transparent)}
@@ -686,7 +712,7 @@ def render_html(scorecard: dict) -> str:
     moved = any(r["moved"] for r in rows)
 
     def badge(result: dict | None) -> str:
-        return '<span class="badge b-none">n/a</span>' if result is None else \
+        return '<span class="badge b-none">not run</span>' if result is None else \
             f'<span class="badge b-{result["status"]}">{_STATUS_BADGE[result["status"]]}</span>'
 
     def status_cells(r: dict) -> str:
@@ -745,7 +771,7 @@ def render_html(scorecard: dict) -> str:
 {known_body}
 </tbody></table>"""
 
-    tally = f"{counts['ok']} ok, {counts['warning']} warning(s), {counts['flag']} flag(s) across {n_checks} checks"
+    tally = f"{_tally(counts)} across {n_checks} checks"
     if has_after:
         lede = f"{_TWO_RUNS_NOTE} Verdict ({tally}) is judged on the cleaned data."
         if moved:
@@ -774,6 +800,14 @@ def render_html(scorecard: dict) -> str:
 ({e(str(drift['previous_generated_at']))}).</p>
 {fp_note}
 {changes}"""
+
+    not_run = scorecard.get("checks_not_run")
+    not_run_html = ""
+    if not_run:
+        not_run_html = (
+            f'<h2>Not run</h2><p class="section-note">{e(_NOT_RUN_NOTE)} '
+            + ", ".join(f"<code>{e(c)}</code>" for c in not_run) + ".</p>"
+        )
 
     effect = scorecard.get("dedup_effect")
     effect_html = ""
@@ -811,6 +845,7 @@ def render_html(scorecard: dict) -> str:
 <div><div class="k">Verdict</div><div class="v"><span class="badge b-{_VERDICT_STATUS[verdict]}">
 {_VERDICT_PLAIN[verdict].lower()}</span></div></div>
 </div>
+{f'<p class="section-note">Status rule: {e(scorecard["status_rule"])}</p>' if scorecard.get("status_rule") else ""}
 <h2 class="first">Checks</h2>
 <p class="section-note">Findings from this run's own data. Each one can, in principle, be reacted to - by
 dropping a column, resampling, switching split modes, or just noting the caveat.</p>
@@ -822,6 +857,7 @@ dropping a column, resampling, switching split modes, or just noting the caveat.
 </div></div>
 {known_issues_html}
 {drift_html}
+{not_run_html}
 {effect_html}
 <h2>Dataset fingerprint</h2>
 <p class="mono hash">train: {fp['train_rows']:,} rows · test: {fp['test_rows']:,} rows{features}<br>

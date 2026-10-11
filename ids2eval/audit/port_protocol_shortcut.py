@@ -25,6 +25,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
 from ._auc import robust_auc
+from ._status import NOT_APPLICABLE
 
 AUC_FLAG_THRESHOLD = 0.8
 
@@ -43,7 +44,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
 
     if not port_col or not proto_col:
         return {
-            "check": "port_protocol_shortcut_check", "status": "ok",
+            "check": "port_protocol_shortcut_check", "status": NOT_APPLICABLE,
             "summary": (
                 "no port-like entry in schema.id_like_columns and/or no proto-like "
                 "column found, this check needs both"

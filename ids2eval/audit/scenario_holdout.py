@@ -31,6 +31,7 @@ from __future__ import annotations
 from ..data import dataset
 from . import _materiality
 from ._fit_score import fit_and_score
+from ._status import NOT_APPLICABLE
 
 # Overridable via audit.materiality_thresholds.scenario_holdout_falsification
 # ({"warning": .., "flag": ..}).
@@ -44,12 +45,12 @@ def check(cfg: dict) -> dict:
     scenario_col = cfg["schema"]["scenario_column"]
     if not scenario_col:
         return {
-            "check": "scenario_holdout_falsification", "status": "ok",
+            "check": "scenario_holdout_falsification", "status": NOT_APPLICABLE,
             "summary": "no schema.scenario_column configured", "details": {},
         }
     if not dataset_cfg["raw_files"]:
         return {
-            "check": "scenario_holdout_falsification", "status": "ok",
+            "check": "scenario_holdout_falsification", "status": NOT_APPLICABLE,
             "summary": "requires dataset.raw_files, not applicable to a pre-split train_file/test_file pair",
             "details": {},
         }
@@ -59,14 +60,14 @@ def check(cfg: dict) -> dict:
     combined = dataset.load_raw_combined(dataset_cfg, seed=seed)
     if scenario_col not in combined.columns:
         return {
-            "check": "scenario_holdout_falsification", "status": "ok",
+            "check": "scenario_holdout_falsification", "status": NOT_APPLICABLE,
             "summary": f"'{scenario_col}' not found in the loaded data", "details": {},
         }
 
     scenario_counts = combined[scenario_col].value_counts()
     if len(scenario_counts) < 2:
         return {
-            "check": "scenario_holdout_falsification", "status": "ok",
+            "check": "scenario_holdout_falsification", "status": NOT_APPLICABLE,
             "summary": "fewer than two distinct scenarios to hold one out against", "details": {},
         }
 
@@ -76,7 +77,7 @@ def check(cfg: dict) -> dict:
     scenario_train = combined[~held_out_mask]
     if len(scenario_test) < MIN_HOLDOUT_ROWS or scenario_train[label_col].nunique() < 2:
         return {
-            "check": "scenario_holdout_falsification", "status": "ok",
+            "check": "scenario_holdout_falsification", "status": NOT_APPLICABLE,
             "summary": f"scenario '{held_out}' has too few rows or labels to test", "details": {},
         }
 

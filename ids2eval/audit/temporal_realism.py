@@ -16,6 +16,7 @@ from __future__ import annotations
 import pandas as pd
 
 from . import _by_class
+from ._status import NOT_APPLICABLE
 from ._time import to_numeric_time
 
 # Below this share of the full capture's time span, a class's own traffic is
@@ -29,7 +30,7 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     col = cfg["schema"]["timestamp_column"]
     if not col or col not in train_df.columns:
         return {
-            "check": "temporal_realism_check", "status": "ok",
+            "check": "temporal_realism_check", "status": NOT_APPLICABLE,
             "summary": "no schema.timestamp_column configured", "details": {},
         }
 
@@ -37,13 +38,13 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     valid = times.notna()
     if not valid.any():
         return {
-            "check": "temporal_realism_check", "status": "ok",
+            "check": "temporal_realism_check", "status": NOT_APPLICABLE,
             "summary": "no usable timestamp values to test", "details": {},
         }
     overall_span = times[valid].max() - times[valid].min()
     if not overall_span or overall_span <= 0:
         return {
-            "check": "temporal_realism_check", "status": "ok",
+            "check": "temporal_realism_check", "status": NOT_APPLICABLE,
             "summary": "timestamp column has no usable time span to test", "details": {},
         }
 
@@ -58,7 +59,7 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
 
     if not span_by_class:
         return {
-            "check": "temporal_realism_check", "status": "ok",
+            "check": "temporal_realism_check", "status": NOT_APPLICABLE,
             "summary": "not enough valid timestamps per class to test", "details": {},
         }
 

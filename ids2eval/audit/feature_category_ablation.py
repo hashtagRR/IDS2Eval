@@ -25,6 +25,7 @@ import pandas as pd
 from ..data import features
 from . import _materiality
 from ._fit_score import fit_and_score
+from ._status import NOT_APPLICABLE
 
 # Overridable via audit.materiality_thresholds.feature_category_ablation_check
 # ({"warning": .., "flag": ..}).
@@ -36,7 +37,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     categories_map = cfg["schema"]["feature_categories"]
     if not categories_map:
         return {
-            "check": "feature_category_ablation_check", "status": "ok",
+            "check": "feature_category_ablation_check", "status": NOT_APPLICABLE,
             "summary": "no schema.feature_categories configured", "details": {},
         }
 
@@ -49,7 +50,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
             by_category.setdefault(category, []).append(col)
     if not by_category:
         return {
-            "check": "feature_category_ablation_check", "status": "ok",
+            "check": "feature_category_ablation_check", "status": NOT_APPLICABLE,
             "summary": "none of schema.feature_categories's columns are present in the loaded data",
             "details": {},
         }
@@ -67,7 +68,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
 
     if not drop_by_category:
         return {
-            "check": "feature_category_ablation_check", "status": "ok",
+            "check": "feature_category_ablation_check", "status": NOT_APPLICABLE,
             "summary": "every declared category covers all features, nothing left to ablate against",
             "details": {"baseline_accuracy": baseline_acc},
         }

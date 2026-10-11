@@ -27,6 +27,7 @@ import pandas as pd
 from scipy.stats import rankdata
 
 from ..data import features
+from ._status import NOT_APPLICABLE
 
 AUC_FLAG_THRESHOLD = 0.95
 AUC_WARNING_THRESHOLD = 0.90
@@ -72,7 +73,7 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     numeric_cols = [c for c in cols if pd.api.types.is_numeric_dtype(train_df[c])]
     if not numeric_cols:
         return {
-            "check": "feature_auc_ranking_check", "status": "ok",
+            "check": "feature_auc_ranking_check", "status": NOT_APPLICABLE,
             "summary": "no numeric feature columns to rank", "details": {},
         }
 
@@ -102,7 +103,7 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
 
     if not best_per_feature:
         return {
-            "check": "feature_auc_ranking_check", "status": "ok",
+            "check": "feature_auc_ranking_check", "status": NOT_APPLICABLE,
             "summary": "no numeric feature had both classes present to rank", "details": {},
         }
 

@@ -146,10 +146,10 @@ def test_feature_auc_ranking_check_ok_when_no_feature_is_separable(base_cfg):
     assert result["status"] == "ok"
 
 
-def test_feature_auc_ranking_check_ok_with_only_categorical_features(base_cfg):
+def test_feature_auc_ranking_check_not_applicable_with_only_categorical_features(base_cfg):
     df = pd.DataFrame({"Category": ["x", "y", "z"] * 10, "Label": ["A", "B", "A"] * 10})
     result = feature_auc_ranking.check(df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no numeric feature columns" in result["summary"]
 
 
@@ -234,16 +234,16 @@ def test_low_cardinality_warning_on_two_unique_ips(base_cfg, synth_train_test):
     assert result["details"]["cardinalities"]["SrcIP"] == 2
 
 
-def test_identity_checks_ok_with_no_id_like_columns(base_cfg, synth_train_test):
+def test_identity_checks_not_applicable_with_no_id_like_columns(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
-    assert identity_columns.check_predictive_power(train_df, test_df, base_cfg)["status"] == "ok"
-    assert identity_columns.check_cardinality(train_df, base_cfg)["status"] == "ok"
+    assert identity_columns.check_predictive_power(train_df, test_df, base_cfg)["status"] == "not_applicable"
+    assert identity_columns.check_cardinality(train_df, base_cfg)["status"] == "not_applicable"
 
 
-def test_port_protocol_shortcut_check_ok_without_a_port_and_proto_pair(base_cfg, synth_train_test):
+def test_port_protocol_shortcut_check_not_applicable_without_a_port_and_proto_pair(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = port_protocol_shortcut.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert result["details"]["port_column"] is None
     assert result["details"]["protocol_column"] is None
 
@@ -270,6 +270,15 @@ def test_homogeneity_test_runs_and_returns_per_class_stats(base_cfg, synth_train
     result = homogeneity.check(train_df, test_df, base_cfg)
     assert result["check"] == "homogeneity_test"
     assert len(result["details"]["per_class"]) >= 1
+
+
+def test_homogeneity_test_is_not_applicable_when_no_class_is_large_enough(base_cfg):
+    rng = np.random.RandomState(0)
+    train = pd.DataFrame({"f1": rng.normal(size=5), "f2": rng.normal(size=5), "Label": "A"})
+    test = pd.DataFrame({"f1": rng.normal(size=5), "f2": rng.normal(size=5), "Label": "A"})
+    result = homogeneity.check(train, test, base_cfg)
+    assert result["status"] == "not_applicable"
+    assert result["details"]["per_class"] == {}
 
 
 def _homogeneity_frames(test_copies_train: bool, train_internal_dupes: bool):
@@ -397,7 +406,7 @@ def test_repeated_seed_falsification_prefers_checkpointing_over_parallel_when_bo
 
 def test_repeated_seed_falsification_below_minimum_seeds_is_a_no_op(base_cfg):
     result = repeated_seed_falsification.check(base_cfg, n_seeds=2)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "below the minimum" in result["summary"]
     assert result["details"] == {}
 
@@ -513,18 +522,18 @@ def test_repeated_seed_falsification_resume_truncates_to_a_smaller_n_seeds(
     assert result["details"]["drops_by_seed"] == [0.1, 0.2, 0.3]
 
 
-def test_scenario_holdout_falsification_ok_with_no_scenario_column_configured(base_cfg):
+def test_scenario_holdout_falsification_not_applicable_with_no_scenario_column_configured(base_cfg):
     result = scenario_holdout.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.scenario_column configured" in result["summary"]
 
 
-def test_scenario_holdout_falsification_ok_without_raw_files(base_cfg):
+def test_scenario_holdout_falsification_not_applicable_without_raw_files(base_cfg):
     base_cfg["schema"]["scenario_column"] = "CaptureDay"
     base_cfg["dataset"]["train_file"] = "train.csv"
     base_cfg["dataset"]["test_file"] = "test.csv"
     result = scenario_holdout.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "requires dataset.raw_files" in result["summary"]
 
 
@@ -541,7 +550,7 @@ def test_scenario_holdout_falsification_end_to_end(base_cfg, tmp_path, synth_dat
     assert 0.0 <= result["details"]["scenario_accuracy"] <= 1.0
 
 
-def test_scenario_holdout_falsification_ok_with_one_scenario(base_cfg, tmp_path, synth_data):
+def test_scenario_holdout_falsification_not_applicable_with_one_scenario(base_cfg, tmp_path, synth_data):
     csv_path = tmp_path / "raw.csv"
     df = synth_data.copy()
     df["CaptureDay"] = "OnlyDay"
@@ -549,13 +558,13 @@ def test_scenario_holdout_falsification_ok_with_one_scenario(base_cfg, tmp_path,
     base_cfg["dataset"]["raw_files"] = [str(csv_path)]
     base_cfg["schema"]["scenario_column"] = "CaptureDay"
     result = scenario_holdout.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "fewer than two distinct scenarios" in result["summary"]
 
 
-def test_cross_capture_matrix_check_ok_with_no_scenario_column_configured(base_cfg):
+def test_cross_capture_matrix_check_not_applicable_with_no_scenario_column_configured(base_cfg):
     result = cross_capture_matrix.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.scenario_column configured" in result["summary"]
 
 
@@ -581,22 +590,22 @@ def test_cross_capture_matrix_check_skips_past_the_scenario_cap(base_cfg, tmp_pa
     base_cfg["dataset"]["raw_files"] = [str(csv_path)]
     base_cfg["schema"]["scenario_column"] = "CaptureDay"
     result = cross_capture_matrix.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "skipped" in result["summary"]
 
 
-def test_feature_category_ablation_check_ok_with_no_categories_configured(base_cfg, synth_train_test):
+def test_feature_category_ablation_check_not_applicable_with_no_categories_configured(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = feature_category_ablation.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.feature_categories configured" in result["summary"]
 
 
-def test_feature_category_ablation_check_ok_when_no_declared_columns_are_present(base_cfg, synth_train_test):
+def test_feature_category_ablation_check_not_applicable_when_no_declared_columns_are_present(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     cfg = dict(base_cfg, schema={**base_cfg["schema"], "feature_categories": {"NotAColumn": "topology"}})
     result = feature_category_ablation.check(train_df, test_df, cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "none of schema.feature_categories's columns are present" in result["summary"]
 
 
@@ -622,19 +631,19 @@ def test_feature_category_ablation_check_flags_a_load_bearing_category(base_cfg)
     assert drops["identity"] > drops["behavioural"]
 
 
-def test_feature_category_ablation_check_ok_when_categories_cover_every_feature(base_cfg):
+def test_feature_category_ablation_check_not_applicable_when_categories_cover_every_feature(base_cfg):
     df = pd.DataFrame({"F1": range(30), "F2": range(30), "Label": ["A", "B"] * 15})
     train_df, test_df = df.iloc[:20].reset_index(drop=True), df.iloc[20:].reset_index(drop=True)
     cfg = dict(base_cfg, schema={**base_cfg["schema"], "feature_categories": {"F1": "only", "F2": "only"}})
     result = feature_category_ablation.check(train_df, test_df, cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "nothing left to ablate against" in result["summary"]
 
 
-def test_artifact_sensitivity_check_ok_with_no_suspicious_columns_configured(base_cfg, synth_train_test):
+def test_artifact_sensitivity_check_not_applicable_with_no_suspicious_columns_configured(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = artifact_sensitivity.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.id_like_columns or schema.timestamp_column present" in result["summary"]
 
 
@@ -670,11 +679,11 @@ def test_artifact_sensitivity_check_ok_when_the_model_ignores_the_column(base_cf
     assert result["status"] == "ok"
 
 
-def test_result_robustness_check_ok_without_raw_files(base_cfg):
+def test_result_robustness_check_not_applicable_without_raw_files(base_cfg):
     base_cfg["dataset"]["train_file"] = "train.csv"
     base_cfg["dataset"]["test_file"] = "test.csv"
     result = result_robustness.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "requires dataset.raw_files" in result["summary"]
 
 
@@ -720,7 +729,7 @@ def test_result_robustness_check_parallel_checks_matches_sequential(base_cfg, tm
     assert parallel["status"] == sequential["status"]
 
 
-def test_result_robustness_check_ok_with_fewer_than_two_conditions(base_cfg, tmp_path):
+def test_result_robustness_check_not_applicable_with_fewer_than_two_conditions(base_cfg, tmp_path):
     rng = np.random.RandomState(0)
     n = 300
     label = rng.choice(["A", "B"], n)
@@ -729,7 +738,7 @@ def test_result_robustness_check_ok_with_fewer_than_two_conditions(base_cfg, tmp
     df.to_csv(csv_path, index=False)
     base_cfg["dataset"]["raw_files"] = [str(csv_path)]
     result = result_robustness.check(base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "fewer than two conditions" in result["summary"]
 
 
@@ -1112,10 +1121,10 @@ def test_near_duplicate_class_check_flags_identical_features_across_labels(base_
     assert result["details"]["affected_rows"] > 0
 
 
-def test_near_duplicate_class_check_ok_with_fewer_than_two_eligible_classes(base_cfg):
+def test_near_duplicate_class_check_not_applicable_with_fewer_than_two_eligible_classes(base_cfg):
     df = pd.DataFrame({"F1": range(30), "Label": ["OnlyClass"] * 30})
     result = near_duplicate_class.check(df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "fewer than two classes" in result["summary"]
 
 
@@ -1173,10 +1182,10 @@ def test_one_rule_check_ok_on_imbalanced_data_with_no_signal(base_cfg):
 
 # -- temporal_leakage_check ---------------------------------------------------
 
-def test_temporal_leakage_check_ok_with_no_timestamp_column_configured(base_cfg, synth_train_test):
+def test_temporal_leakage_check_not_applicable_with_no_timestamp_column_configured(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = temporal_leakage.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.timestamp_column configured" in result["summary"]
 
 
@@ -1214,10 +1223,10 @@ def test_temporal_leakage_check_ok_when_timestamp_is_uninformative(base_cfg):
     assert result["status"] == "ok"
 
 
-def test_temporal_realism_check_ok_with_no_timestamp_column_configured(base_cfg, synth_train_test):
+def test_temporal_realism_check_not_applicable_with_no_timestamp_column_configured(base_cfg, synth_train_test):
     train_df, _ = synth_train_test
     result = temporal_realism.check(train_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.timestamp_column configured" in result["summary"]
 
 
@@ -1247,10 +1256,10 @@ def test_temporal_realism_check_ok_when_every_class_spans_the_full_capture(base_
     assert result["status"] == "ok"
 
 
-def test_flow_group_leakage_check_ok_with_no_flow_id_columns_configured(base_cfg, synth_train_test):
+def test_flow_group_leakage_check_not_applicable_with_no_flow_id_columns_configured(base_cfg, synth_train_test):
     train_df, test_df = synth_train_test
     result = flow_group_leakage.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "no schema.flow_id_columns configured" in result["summary"]
 
 
@@ -1302,11 +1311,11 @@ def test_row_order_leakage_check_ok_with_a_shuffled_ordering(base_cfg):
     assert result["status"] == "ok"
 
 
-def test_row_order_leakage_check_ok_with_a_single_class(base_cfg):
+def test_row_order_leakage_check_not_applicable_with_a_single_class(base_cfg):
     train_df = pd.DataFrame({"F1": range(50), "Label": ["Benign"] * 50})
     test_df = pd.DataFrame({"F1": range(20), "Label": ["Benign"] * 20})
     result = row_order_leakage.check(train_df, test_df, base_cfg)
-    assert result["status"] == "ok"
+    assert result["status"] == "not_applicable"
     assert "not enough rows or classes" in result["summary"]
 
 

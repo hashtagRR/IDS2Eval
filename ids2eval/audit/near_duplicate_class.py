@@ -23,6 +23,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 
 from ..data import features
+from ._status import NOT_APPLICABLE
 
 SAMPLE_SIZE = 500
 MIN_CLASS_SIZE = 20
@@ -38,7 +39,7 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     eligible = class_counts[class_counts >= MIN_CLASS_SIZE].index
     if len(eligible) < 2:
         return {
-            "check": "near_duplicate_class_check", "status": "ok",
+            "check": "near_duplicate_class_check", "status": NOT_APPLICABLE,
             "summary": "fewer than two classes have enough rows to compare", "details": {},
         }
 

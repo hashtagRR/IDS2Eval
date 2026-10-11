@@ -10,10 +10,18 @@ opt-in (v2, need a second dataset, a declared timestamp column, or
 heavier compute).
 
 Each check returns a finding: `{check, status, summary, details}`,
-where `status` is `ok`, `warning`, or `flag`, a specific, checkable
-signature of a real problem, not a vague heuristic score. Since
-schema 1.2, the scorecard also attaches an `evidence` field to every
-finding: see "Evidence levels" below.
+where `status` is `ok`, `warning`, `flag` or `not_applicable`. A flag
+is a specific, checkable signature of a real problem, not a vague
+heuristic score. `not_applicable` means the check could not produce a
+result on this input: the config gives it no column to test (no
+timestamp, no scenario column, no id-like columns), the dataset is a
+pre-split train/test pair where the check needs the raw files, or
+there are too few classes or rows to compare. It says nothing about
+the dataset either way, never changes the verdict, and is counted
+separately; the finding's summary says what was missing. Before
+v0.2.1 these findings were reported as `ok`. Since schema 1.2, the
+scorecard also attaches an `evidence` field to every finding: see
+"Evidence levels" below.
 
 ## What each check is actually testing for
 
@@ -513,7 +521,11 @@ is `"audit"` or `"known_issue"`, each side `{status, summary}` or `null`,
 `after` is `null` throughout when dedup didn't run) and `dedup_effect`,
 and leaves every 1.0 key unchanged. Schema 1.2 is additive over 1.1:
 each side of a `checks` row gains an `evidence` field, covered next.
-`findings` is still the final pass.
+Schema 1.3 renames the `failed` verdict to `review_required`. Schema 1.4
+adds the `not_applicable` status, a `not_applicable` entry in `counts`,
+and `checks_not_run`: the known checks this run's config left disabled,
+listed under "Not run" so that a reader can tell a check that passed
+from one that never ran. `findings` is still the final pass.
 
 **Evidence levels.** Each side of a `checks` row also carries an
 `evidence` value, a fixed classification of how that check's status

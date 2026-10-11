@@ -20,6 +20,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
 from ._auc import robust_auc
+from ._status import NOT_APPLICABLE
 from ._time import to_numeric_time
 
 AUC_FLAG_THRESHOLD = 0.8
@@ -31,7 +32,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     label_col = cfg["schema"]["label_column"]
     if not col or col not in train_df.columns:
         return {
-            "check": "temporal_leakage_check", "status": "ok",
+            "check": "temporal_leakage_check", "status": NOT_APPLICABLE,
             "summary": "no schema.timestamp_column configured", "details": {},
         }
 

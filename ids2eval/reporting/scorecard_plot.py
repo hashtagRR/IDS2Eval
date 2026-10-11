@@ -29,7 +29,7 @@ matplotlib.use("Agg")  # headless - never touches a display, safe in CI/servers
 
 import matplotlib.pyplot as plt
 
-_STATUS_COLOR = {"ok": "#1a7f4e", "warning": "#a15c00", "flag": "#b3261e"}
+_STATUS_COLOR = {"ok": "#1a7f4e", "warning": "#a15c00", "flag": "#b3261e", "not_applicable": "#8a8f99"}
 _VERDICT_TEXT = {"passed": "PASSED", "passed_with_warnings": "PASSED WITH WARNINGS", "review_required": "REVIEW REQUIRED"}
 _VERDICT_STATUS = {"passed": "ok", "passed_with_warnings": "warning", "review_required": "flag"}
 _INK = "#16181c"
@@ -86,12 +86,13 @@ def render(scorecard: dict, findings: list[dict], pdf_path: Path, png_path: Path
 def _draw_header(ax, scorecard: dict) -> None:
     ax.axis("off")
     verdict = scorecard["overall_status"]
-    counts = {"ok": 0, "warning": 0, "flag": 0}
+    counts = {"ok": 0, "warning": 0, "flag": 0, "not_applicable": 0}
     for f in scorecard["findings"]:
         counts[f["status"]] += 1
     counts_text = (
-        f"{counts['ok']} ok  ·  {counts['warning']} warning  ·  "
-        f"{counts['flag']} flag  ·  {sum(counts.values())} checks"
+        f"{counts['ok']} ok  ·  {counts['warning']} warning  ·  {counts['flag']} flag  ·  "
+        + (f"{counts['not_applicable']} n/a  ·  " if counts["not_applicable"] else "")
+        + f"{sum(counts.values())} checks"
     )
 
     ax.text(0, 0.8, "IDS2Eval Scorecard", fontsize=16, fontweight="bold", color=_INK, transform=ax.transAxes)
@@ -116,7 +117,8 @@ def _draw_checks_list(ax, wrapped: list[tuple[dict, list[str]]]) -> None:
         color = _STATUS_COLOR[f["status"]]
         ax.text(0.0, y, "●", color=color, fontsize=11, va="top")
         ax.text(0.028, y, f["check"], color=_INK, fontsize=9.3, fontweight="bold", family="monospace", va="top")
-        ax.text(0.99, y, f["status"], color=color, fontsize=8.8, fontweight="bold", va="top", ha="right")
+        label = "n/a" if f["status"] == "not_applicable" else f["status"]
+        ax.text(0.99, y, label, color=color, fontsize=8.8, fontweight="bold", va="top", ha="right")
         for line in lines:
             y -= 1
             ax.text(0.028, y, line, color=_MUTED, fontsize=8.3, va="top")

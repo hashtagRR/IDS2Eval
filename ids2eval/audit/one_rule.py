@@ -19,6 +19,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 
 from ..data import features
+from ._status import NOT_APPLICABLE
 
 # Wu & Keogh don't give a numeric cutoff (their test is "can a human write this in
 # one line"); a one-rule accuracy this high is the tabular-data equivalent - a
@@ -50,7 +51,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict, seed: int = 
 
     if root_feature < 0:  # -2: the root is already a leaf - e.g. a single-class split
         return {
-            "check": "one_rule_check", "status": "ok",
+            "check": "one_rule_check", "status": NOT_APPLICABLE,
             "summary": "no single-feature rule found (fewer than two classes in the fitted sample)",
             "details": {},
         }

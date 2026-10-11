@@ -31,6 +31,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
 from ..data import features
+from ._status import NOT_APPLICABLE
 
 MAX_FIT_ROWS = 200_000
 FLIP_RATE_FLAG_THRESHOLD = 0.30
@@ -47,7 +48,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     suspicious_cols = [c for c in dict.fromkeys(candidate_cols) if c in cols and c in test_df.columns]
     if not suspicious_cols:
         return {
-            "check": "artifact_sensitivity_check", "status": "ok",
+            "check": "artifact_sensitivity_check", "status": NOT_APPLICABLE,
             "summary": "no schema.id_like_columns or schema.timestamp_column present as a feature",
             "details": {},
         }

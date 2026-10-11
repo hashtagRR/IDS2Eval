@@ -42,6 +42,7 @@ import pandas as pd
 
 from . import _by_class
 from ._auc import robust_auc
+from ._status import NOT_APPLICABLE
 
 # Standalone AUC above this on an identity column alone is a specific,
 # checkable topology-shortcut signature, not just "IPs are informative."
@@ -92,7 +93,7 @@ def check_predictive_power(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: d
     label_col = cfg["schema"]["label_column"]
     if not id_cols:
         return {
-            "check": "identity_column_flag", "status": "ok",
+            "check": "identity_column_flag", "status": NOT_APPLICABLE,
             "summary": "no id_like_columns configured", "details": {},
         }
 
@@ -149,7 +150,7 @@ def check_cardinality(train_df: pd.DataFrame, cfg: dict) -> dict:
     id_cols = [c for c in cfg["schema"]["id_like_columns"] if c in train_df.columns]
     if not id_cols:
         return {
-            "check": "low_cardinality_warning", "status": "ok",
+            "check": "low_cardinality_warning", "status": NOT_APPLICABLE,
             "summary": "no id_like_columns configured", "details": {},
         }
 

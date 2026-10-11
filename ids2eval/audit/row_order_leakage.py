@@ -24,6 +24,8 @@ from __future__ import annotations
 
 import pandas as pd
 
+from ._status import NOT_APPLICABLE
+
 # Below this share of the shuffled-baseline transition rate, adjacent rows
 # share a label often enough to be a specific, checkable block-ordering
 # signature, not incidental clustering.
@@ -54,7 +56,7 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
     valid = {split: ratio for split, ratio in ratios.items() if ratio is not None}
     if not valid:
         return {
-            "check": "row_order_leakage_check", "status": "ok",
+            "check": "row_order_leakage_check", "status": NOT_APPLICABLE,
             "summary": "not enough rows or classes in either split to test row order",
             "details": {},
         }

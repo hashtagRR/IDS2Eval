@@ -68,6 +68,7 @@ from scipy import stats
 from ..data import dataset
 from . import _checkpoint, _materiality
 from ._fit_score import fit_and_score
+from ._status import NOT_APPLICABLE
 from .resplit import MATERIAL_DROP_THRESHOLD
 
 DEFAULT_N_SEEDS = 10
@@ -84,7 +85,7 @@ def check(
         n_seeds = cfg["audit"]["repeated_seed_count"]
     if n_seeds < MIN_N_SEEDS:
         return {
-            "check": _CHECK_NAME, "status": "ok",
+            "check": _CHECK_NAME, "status": NOT_APPLICABLE,
             "summary": f"audit.repeated_seed_count ({n_seeds}) is below the minimum of "
                        f"{MIN_N_SEEDS} needed for a meaningful confidence interval",
             "details": {},

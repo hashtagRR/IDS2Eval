@@ -31,6 +31,7 @@ from sklearn.preprocessing import StandardScaler
 
 from ..data import features
 from . import _materiality
+from ._status import NOT_APPLICABLE
 
 SAMPLE_SIZE = 500
 MIN_CLASS_SIZE = 20
@@ -135,7 +136,10 @@ def check(train_df: pd.DataFrame, test_df: pd.DataFrame, cfg: dict) -> dict:
         }
 
     status = "flag" if flagged_classes else ("warning" if inconclusive_classes else "ok")
-    if flagged_classes:
+    if not per_class:
+        status = NOT_APPLICABLE
+        detail = f"no class has {MIN_CLASS_SIZE} rows in train, test and the control sample, nothing to compare"
+    elif flagged_classes:
         detail = f"leakage signature (95% CI lower bound exceeds the {margin:+.2f} margin) in: {flagged_classes}"
     elif inconclusive_classes:
         detail = (

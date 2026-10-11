@@ -46,6 +46,7 @@ import pandas as pd
 from ..data import dataset, features
 from . import _materiality
 from ._fit_score import fit_and_score
+from ._status import NOT_APPLICABLE
 
 # Overridable via audit.materiality_thresholds.result_robustness_check ({"warning": .., "flag": ..}).
 SPREAD_FLAG_THRESHOLD = 0.15
@@ -56,7 +57,7 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
     dataset_cfg = cfg["dataset"]
     if not dataset_cfg["raw_files"]:
         return {
-            "check": "result_robustness_check", "status": "ok",
+            "check": "result_robustness_check", "status": NOT_APPLICABLE,
             "summary": "requires dataset.raw_files, not applicable to a pre-split train_file/test_file pair",
             "details": {},
         }
@@ -97,7 +98,7 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
 
     if len(pending) < 2:
         return {
-            "check": "result_robustness_check", "status": "ok",
+            "check": "result_robustness_check", "status": NOT_APPLICABLE,
             "summary": "fewer than two conditions could be built to compare", "details": {},
         }
 

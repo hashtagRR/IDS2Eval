@@ -56,7 +56,7 @@ def test_no_findings_defaults_to_passed(base_cfg):
 
 def test_scorecard_carries_version_and_fingerprint_info(base_cfg):
     sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "after", base_cfg, _fingerprint())
-    assert sc["scorecard_schema_version"] == "1.3"
+    assert sc["scorecard_schema_version"] == "1.4"
     assert sc["dataset_name"] == base_cfg["dataset"]["name"]
     assert sc["dataset_fingerprint"]["train_content_hash"] == "abc123"
     assert "ids2eval_version" in sc
@@ -137,7 +137,7 @@ def test_verdict_is_judged_on_final_findings_not_before(base_cfg):
     after = [_dedup_finding("ok", 0)]
     sc = scorecard.build_scorecard(after, "after", base_cfg, _fingerprint(), findings_before=before)
     assert sc["overall_status"] == "passed"
-    assert sc["counts"] == {"ok": 1, "warning": 0, "flag": 0}
+    assert sc["counts"] == {"ok": 1, "warning": 0, "flag": 0, "not_applicable": 0}
 
 
 def test_each_check_is_one_row_with_both_passes_side_by_side(base_cfg):
@@ -351,3 +351,45 @@ def test_render_notes_a_changed_dataset_fingerprint(base_cfg):
     assert "different content hash" in md
     page = scorecard.render_html(sc)
     assert "different content hash" in page
+
+
+def test_not_applicable_never_raises_the_verdict_and_is_counted_apart(base_cfg):
+    findings = [_finding("dedup_check", "ok"), _finding("temporal_leakage_check", "not_applicable")]
+    sc = scorecard.build_scorecard(findings, "before", base_cfg, _fingerprint())
+    assert sc["overall_status"] == "passed"
+    assert sc["counts"] == {"ok": 1, "warning": 0, "flag": 0, "not_applicable": 1}
+
+
+def test_only_not_applicable_findings_still_pass(base_cfg):
+    sc = scorecard.build_scorecard([_finding("temporal_leakage_check", "not_applicable")], "before",
+                                   base_cfg, _fingerprint())
+    assert sc["overall_status"] == "passed"
+
+
+def test_checks_not_run_lists_every_known_check_absent_from_both_passes(base_cfg):
+    before = [_finding("dedup_check", "ok"), _finding("known_issue_lookup", "ok")]
+    after = [_finding("dedup_check", "ok")]
+    sc = scorecard.build_scorecard(after, "after", base_cfg, _fingerprint(), findings_before=before)
+    assert "dedup_check" not in sc["checks_not_run"]
+    assert "known_issue_lookup" not in sc["checks_not_run"]
+    assert len(sc["checks_not_run"]) == len(scorecard.CHECK_INFO) - 2
+
+
+def test_not_applicable_renders_as_n_a_and_lists_checks_not_run(base_cfg):
+    findings = [_finding("dedup_check", "ok"), _finding("temporal_leakage_check", "not_applicable")]
+    sc = scorecard.build_scorecard(findings, "before", base_cfg, _fingerprint())
+    md = scorecard.render_markdown(sc)
+    assert "1 ok, 0 warning(s), 0 flag(s), 1 not applicable" in md
+    assert "⚪ n/a" in md
+    assert "## Not run" in md and "`leakage_screen`" in md
+    page = scorecard.render_html(sc)
+    assert 'class="badge b-not_applicable">n/a<' in page
+    assert "<h2>Not run</h2>" in page
+
+
+def test_a_scorecard_without_not_applicable_counts_still_renders(base_cfg):
+    sc = scorecard.build_scorecard([_finding("dedup_check", "ok")], "before", base_cfg, _fingerprint())
+    sc["counts"] = {"ok": 1, "warning": 0, "flag": 0}
+    del sc["checks_not_run"]
+    assert "1 ok, 0 warning(s), 0 flag(s)" in scorecard.render_markdown(sc)
+    assert "## Not run" not in scorecard.render_markdown(sc)

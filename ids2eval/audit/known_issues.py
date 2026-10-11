@@ -8,6 +8,10 @@ curation work, not a new algorithm. Needs no reference_dataset.
 Extend KNOWN_ISSUES as more curated, citable findings are gathered.
 Matching is substring-based against a lowercased dataset.name so
 "cic-ids2018", "CIC_IDS2018", and "cic2018" all resolve the same way.
+Matching by name cannot tell one release of a dataset from another (an original
+CSV release from a corrected re-extraction of the same traffic), so an entry that
+documents one release says which in its "release" field, and the summary prints
+it; whether the issue applies to the audited files is for the reader to check.
 """
 
 from __future__ import annotations
@@ -22,11 +26,13 @@ KNOWN_ISSUES = {
                      "and 151 (41.7%) are background traffic, 128 of them UDP (126 to port 500) "
                      "(a ground-truth labeling error, not an extraction or pipeline bug).",
             "citation": "Liu et al. 2022, IEEE CNS, companion documentation",
+            "release": "the original CSE-CIC-IDS2018 CSVs (UNB/AWS)",
         },
         {
             "issue": "A full re-labeling of the original release found 7.53% of labels wrong, "
                      "with the error rate above 75% for some attack classes.",
             "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
+            "release": "the original CSE-CIC-IDS2018 CSVs (UNB/AWS)",
         },
     ],
     "cic-ids2017": [
@@ -35,16 +41,19 @@ KNOWN_ISSUES = {
                      "attacks that were actually launched are not correctly labeled as "
                      "attack traffic in the released CSVs.",
             "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)",
+            "release": "the original CIC-IDS2017 CSVs (UNB)",
         },
         {
             "issue": "A full re-labeling of the original release found 6.67% of labels wrong, "
                      "with the error rate above 75% for some attack classes.",
             "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
+            "release": "the original CIC-IDS2017 CSVs (UNB)",
         },
         {
             "issue": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to "
                      "evaluate reliably regardless of labeling accuracy.",
             "citation": "Cantone et al. 2024, IEEE Access, Table 1",
+            "release": "the original CIC-IDS2017 CSVs and the corrected re-extraction alike",
         },
     ],
     "nsl-kdd": [
@@ -126,7 +135,10 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
     # The issue text itself, not just a count - a scorecard reader shouldn't have to
     # go open audit_report_*.json to find out what the curated problem actually is.
     summary = (
-        "; ".join(f"{m['issue']} ({m['citation']})" for m in matches) if matches
+        "; ".join(
+            f"{m['issue']} ({'applies to ' + m['release'] + '; ' if m.get('release') else ''}{m['citation']})"
+            for m in matches
+        ) if matches
         else f"no curated known issues for dataset '{name}'"
     )
     return {"check": "known_issue_lookup", "status": status, "summary": summary, "details": {"matches": matches}}

@@ -53,7 +53,7 @@ Windows and troubleshooting: [INSTALL.md](INSTALL.md).
 
 ## Versions
 
-- **`main`** (latest, v0.2.1): a check with no input to test now reports `not_applicable` instead of `ok`, and scorecards list the checks a config left disabled (schema 1.4); no statistic or threshold changed. Also adds the validation scripts and results of the paper's revision (host-disjoint splits, workflow ablation, interval coverage, class-adjusted reuse, a comparison with Flood et al.'s released heuristics). To be archived on Zenodo as v0.2.1.
+- **`v0.2.1`** ([10.5281/zenodo.23301210](https://doi.org/10.5281/zenodo.23301210)): a check with no input to test reports `not_applicable` instead of `ok`, an audit in which no check produced a result is `not_evaluated` instead of passed, scorecards list the checks a config left disabled (schema 1.4), and known-issue warnings name the release they document; no statistic or threshold changed. Also adds the validation scripts and results of the paper's revision (host-disjoint splits, workflow ablation, interval coverage, class-adjusted reuse, a comparison with Flood et al.'s released heuristics).
 - **`v0.2.0`** ([10.5281/zenodo.23217301](https://doi.org/10.5281/zenodo.23217301)): the code, configurations and results behind the accompanying paper on auditing NIDS benchmarks (in preparation).
 
 IDS<sup>2</sup>Eval grew out of the dataset-auditing code of research on
@@ -66,7 +66,11 @@ Cite the version you used. The concept DOI
 [10.5281/zenodo.23217300](https://doi.org/10.5281/zenodo.23217300)
 always resolves to the latest version.
 
-> Relapanawa, R. (2026). *IDS2Eval v0.2.0* (Version v0.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23217301
+> Relapanawa, R. (2026). *IDS2Eval 0.2.1* (Version v0.2.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23301210
+
+The results, configurations and analysis scripts behind the accompanying paper are archived separately:
+
+> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23301258
 
 ## License
 

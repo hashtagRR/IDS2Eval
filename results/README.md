@@ -248,9 +248,7 @@ the 13.15% duplication figure) and `cic-iot2023` (a 500K-row sample of a dataset
 Earlier runs' report files were re-rendered on 2026-10-04 to show the verdict "Review Required"
 instead of "Failed"; `archives/` keeps the originals.
 
-**`archives/` (not in git).** `hand_built_unsw_cic_results.zip` holds the results of the original
-hand-built UNSW-NB15 and CIC-IDS2018 analysis that predates IDS2Eval (behind Section 4 and the
-CIC-IDS2018 investigation the introduction mentions); `scorecards_backup_pre_review_required.tar.gz`
+**`archives/` (not in git).** `scorecards_backup_pre_review_required.tar.gz`
 holds the report files as they were before the re-render.
 
 ## batch_audit_runs

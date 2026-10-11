@@ -53,7 +53,7 @@ Windows and troubleshooting: [INSTALL.md](INSTALL.md).
 
 ## Versions
 
-- **`main`** (latest): adds the validation scripts and results of the paper's revision (host-disjoint splits, workflow ablation, interval coverage, a comparison with Flood et al.'s released heuristics); to be archived as v0.2.1.
+- **`main`** (latest, v0.2.1): a check with no input to test now reports `not_applicable` instead of `ok`, and scorecards list the checks a config left disabled (schema 1.4); no statistic or threshold changed. Also adds the validation scripts and results of the paper's revision (host-disjoint splits, workflow ablation, interval coverage, class-adjusted reuse, a comparison with Flood et al.'s released heuristics). To be archived on Zenodo as v0.2.1.
 - **`v0.2.0`** ([10.5281/zenodo.23217301](https://doi.org/10.5281/zenodo.23217301)): the code, configurations and results behind the accompanying paper on auditing NIDS benchmarks (in preparation).
 
 IDS<sup>2</sup>Eval grew out of the dataset-auditing code of research on

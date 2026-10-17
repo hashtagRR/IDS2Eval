@@ -1,0 +1,134 @@
+# Release IDS2Eval from the Actions tab: Run workflow on main, give the version.
+#
+#   1. test     lint and tests on main, Python 3.10 and 3.13
+#   2. prepare  set the version, date the changelog (scripts/release.py), build and check the
+#               packages, then commit "Release X.Y.Z", tag vX.Y.Z and push both
+#   3. pypi     upload to PyPI with Trusted Publishing (no token); waits for approval when the
+#               "pypi" environment requires it
+#   4. publish  the GitHub release with the changelog notes and the packages; Zenodo archives it
+#               and gives it a DOI
+#
+# One-time setup: on PyPI, Publishing, add a GitHub publisher for project ids2eval, owner
+# hashtagRR, repository IDS2Eval, workflow release.yml, environment pypi (before the first
+# release this is a "pending publisher"). On GitHub, Settings, Environments: create "pypi".
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, three numbers, for example 0.2.2"
+        required: true
+      title:
+        description: "Words after 'IDS2Eval X.Y.Z: ' in the release title (optional)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,plots]"
+      - name: Lint
+        run: ruff check ids2eval/ tests/ scripts/
+      - name: Test
+        run: pytest -q
+
+  prepare:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: The tag must be new
+        run: |
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo "tag v$VERSION exists already" >&2
+            exit 1
+          fi
+      - name: Set the version and date the changelog
+        run: python scripts/release.py "$VERSION" --notes release-notes.md
+      - name: Build and check the packages
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build
+          twine check --strict dist/*
+          test -f "dist/ids2eval-$VERSION-py3-none-any.whl"
+      - name: Commit, tag and push
+        run: |
+          git config user.name "hashtagRR"
+          git config user.email "52541122+hashtagRR@users.noreply.github.com"
+          git commit -am "Release $VERSION"
+          git tag -a "v$VERSION" -m "IDS2Eval $VERSION"
+          git push origin HEAD:main
+          git push origin "v$VERSION"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: |
+            dist/
+            release-notes.md
+          if-no-files-found: error
+
+  pypi:
+    needs: prepare
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/ids2eval/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+
+  publish:
+    needs: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+      TITLE: ${{ inputs.title }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release
+      - name: GitHub release
+        run: |
+          title="IDS2Eval $VERSION"
+          if [ -n "$TITLE" ]; then title="$title: $TITLE"; fi
+          gh release create "v$VERSION" dist/* --repo "$GITHUB_REPOSITORY" \
+            --title "$title" --notes-file release-notes.md --verify-tag

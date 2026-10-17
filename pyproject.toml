@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,8 +7,22 @@ name = "ids2eval"
 version = "0.2.1"
 description = "Config-driven data-quality-audit and benchmarking toolkit for NIDS datasets"
 readme = "README.md"
-license = { text = "AGPL-3.0-only" }
-requires-python = ">=3.10,<3.13"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+requires-python = ">=3.10,<3.14"
+keywords = ["intrusion detection", "NIDS", "dataset audit", "data quality", "benchmarking", "machine learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+]
 dependencies = [
     "pyyaml",
     "pandas",
@@ -19,6 +33,12 @@ dependencies = [
     "xgboost",
     "pyarrow",
 ]
+
+[project.urls]
+Homepage = "https://hashtagRR.github.io/IDS2Eval"
+Source = "https://github.com/hashtagRR/IDS2Eval"
+Issues = "https://github.com/hashtagRR/IDS2Eval/issues"
+Documentation = "https://github.com/hashtagRR/IDS2Eval/blob/main/guide/usage.md"
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]

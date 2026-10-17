@@ -7,7 +7,7 @@ ids2eval --config my_config.yaml
 ```
 
 (or `python -m ids2eval --config my_config.yaml` if you haven't
-installed the console script; see [the README](../README.md#installation).)
+installed the console script; see [INSTALL.md](../INSTALL.md).)
 
 Flags:
 

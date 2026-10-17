@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- The project site shows the `pip install ids2eval` command, and the usage guide links to the install guide.
+
 ## 0.2.2 (2026-10-17)
 
 - IDS<sup>2</sup>Eval is on PyPI: `pip install ids2eval`. The README and the install guide use it; installing from the source code is described separately.

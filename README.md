@@ -2,7 +2,7 @@
 
 **[hashtagRR.github.io/IDS2Eval](https://hashtagRR.github.io/IDS2Eval)**
 
-[![PyPI](https://img.shields.io/pypi/v/ids2eval.svg)](https://pypi.org/project/ids2eval/)
+[![PyPI](https://img.shields.io/pypi/v/ids2eval?label=PyPI)](https://pypi.org/project/ids2eval/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23217300.svg)](https://doi.org/10.5281/zenodo.23217300)
 
 <p align="center">

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.3 (2026-10-17)
+
 - The project site shows the `pip install ids2eval` command, and the usage guide links to the install guide.
 - The README badge shows the PyPI version.
 

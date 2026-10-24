@@ -89,7 +89,7 @@ jobs:
           git tag -a "v$VERSION" -m "IDS2Eval $VERSION"
           git push origin HEAD:main
           git push origin "v$VERSION"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release
           path: |

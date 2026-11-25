@@ -71,8 +71,13 @@ def load_cfg(name):
     return load_config(f.name)
 
 
+# The corrected-release config; set CIC17_CORRECTED_CONFIG=cic-ids2017-improved-benign.yaml for the
+# release with its Attempted flows relabelled as BENIGN, as its maintainers recommend.
+CORRECTED_CONFIG = os.environ.get("CIC17_CORRECTED_CONFIG", "cic-ids2017-improved.yaml")
+
+
 def corrected_cfg():
-    return load_cfg("cic-ids2017-improved.yaml")
+    return load_cfg(CORRECTED_CONFIG)
 
 
 def save(out, results):
@@ -169,7 +174,7 @@ def auc_by_class(values, labels):
 
 def part_initwin_auc():
     res = {}
-    for release, cfg_name in (("corrected", "cic-ids2017-improved.yaml"), ("original", "cic-ids2017.yaml")):
+    for release, cfg_name in (("corrected", CORRECTED_CONFIG), ("original", "cic-ids2017.yaml")):
         cfg = load_cfg(cfg_name)
         label = cfg["schema"]["label_column"]
         combined = dataset.load_raw_combined(cfg["dataset"], seed=cfg["random_seed"])

@@ -61,6 +61,11 @@ KEYS = {
         "coarse": ["Src IP", "Dst IP", "Dst Port", "Protocol"],
         "host": ["Src IP"],
     },
+    "cic-ids2017-improved-benign": {
+        "five_tuple": ["Src IP", "Src Port", "Dst IP", "Dst Port", "Protocol"],
+        "coarse": ["Src IP", "Dst IP", "Dst Port", "Protocol"],
+        "host": ["Src IP"],
+    },
     "cic-ddos2019-fullscale-resplit": {
         "five_tuple": ["Source IP", "Source Port", "Destination IP", "Destination Port", "Protocol"],
         "coarse": ["Source IP", "Destination IP", "Destination Port", "Protocol"],

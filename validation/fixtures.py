@@ -38,8 +38,17 @@ def base_cfg(**schema_overrides) -> dict:
         "random_seed": 0,
         "schema": schema,
         "dataset": {"group_columns": []},
-        "audit": {"materiality_thresholds": {}},
+        "audit": _audit_defaults(),
     }
+
+
+def _audit_defaults() -> dict:
+    """The package's audit defaults, so a fixture config carries every key a check reads."""
+    import copy
+
+    from ids2eval.config import DEFAULTS
+
+    return copy.deepcopy(DEFAULTS["audit"])
 
 
 def _noise_features(rng: np.random.RandomState, n: int, k: int = 6) -> pd.DataFrame:

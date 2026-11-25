@@ -71,6 +71,11 @@ KEYS = {
         "coarse": ["Source IP", "Destination IP", "Destination Port", "Protocol"],
         "host": ["Source IP"],
     },
+    "cic-ddos2019-sample": {
+        "five_tuple": ["Source IP", "Source Port", "Destination IP", "Destination Port", "Protocol"],
+        "coarse": ["Source IP", "Destination IP", "Destination Port", "Protocol"],
+        "host": ["Source IP"],
+    },
     "cic-ids2018-fullscale": {
         "proxy": ["Dst Port", "Protocol", "Timestamp"],
         "proxy_without_time": ["Dst Port", "Protocol"],

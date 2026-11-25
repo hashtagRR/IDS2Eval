@@ -1,0 +1,42 @@
+# CICDDoS2019, a group-preserving sample of the full release for the grouped resplit
+# under coarser keys (validation/large_group_stats.py --sample-key coarse --sample-frac 0.1):
+# every row whose (source address, destination address, destination port, protocol)
+# group hashes into the kept tenth, so each such group is kept whole. The full release
+# (70M rows) needed 384 GB for the grouped resplit.
+dataset:
+  name: cic-ddos2019-sample
+  raw_files:
+    - data/ddos_sample_coarse.csv.gz
+  split_ratio: 0.8
+  chunk_size: 200000
+  group_columns: [Source IP, Source Port, Destination IP, Destination Port, Protocol]
+schema:
+  label_column: Label
+  drop_columns: ["Unnamed: 0", Flow ID, Timestamp, SimillarHTTP]
+  id_like_columns: [Source IP, Destination IP, Source Port, Destination Port]
+audit:
+  dedup_check: false
+  label_conflict_check: false
+  near_duplicate_class_check: false
+  leakage_screen: false
+  one_rule_check: false
+  feature_auc_ranking_check: false
+  identity_column_flag: false
+  port_protocol_shortcut_check: false
+  temporal_leakage_check: false
+  temporal_realism_check: false
+  flow_group_leakage_check: false
+  row_order_leakage_check: false
+  homogeneity_test: false
+  class_distribution_report: false
+  low_cardinality_warning: false
+  schema_fingerprint_check: false
+  data_integrity_check: false
+  resplit_falsification: true
+  result_robustness_check: true
+  repeated_seed_falsification_check: true
+  known_issue_lookup: false
+output:
+  dir: out
+  save_preprocessed: false
+  write_scorecard_plot: false

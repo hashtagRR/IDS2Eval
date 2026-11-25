@@ -329,6 +329,18 @@ def test_resplit_falsification_end_to_end(base_cfg, tmp_path, synth_data):
     assert 0.0 <= result["details"]["grouped_accuracy"] <= 1.0
 
 
+def _scores(accuracy: float, n: int = 500):
+    """A two-class confusion matrix with this accuracy, errors split evenly over two
+    equal-sized classes, so balanced accuracy and macro-F1 equal the accuracy too."""
+    import numpy as np
+
+    from ids2eval.audit._metrics import Scores
+
+    half = n // 2
+    wrong = round((1 - accuracy) * half)
+    return Scores(("a", "b"), np.array([[half - wrong, wrong], [wrong, half - wrong]]))
+
+
 def test_resplit_falsification_materiality_threshold_is_overridable(base_cfg, tmp_path, synth_data, monkeypatch):
     # Fixed accuracies isolate the threshold-comparison logic from the real
     # model/data, which would otherwise make a tight-vs-loose threshold test
@@ -345,7 +357,7 @@ def test_resplit_falsification_materiality_threshold_is_overridable(base_cfg, tm
 
     def run(threshold):
         scores = iter([0.95, 0.80])  # drop = 0.15
-        monkeypatch.setattr(resplit, "fit_and_score", lambda *a, **k: next(scores))
+        monkeypatch.setattr(resplit, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
         base_cfg["audit"]["materiality_thresholds"] = {"resplit_falsification": threshold}
         return resplit.check(base_cfg)["status"]
 
@@ -436,11 +448,11 @@ def test_repeated_seed_falsification_classifies_material_when_ci_lower_bound_exc
 ):
     # Fixed, tightly-clustered drops isolate the three-way materiality classification
     # from the real model/data: a small spread around a mean well above the threshold
-    # should push even the CI's lower bound above it. Only fit_and_score is faked; the
+    # should push even the CI's lower bound above it. Only fit_and_evaluate is faked; the
     # real split functions still run against a real temp file, matching the other tests'
     # discipline of not mocking more than the one thing being isolated.
     scores = iter([0.90, 0.70, 0.90, 0.69, 0.90, 0.71])  # drops ~0.20, tight spread
-    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
     result = repeated_seed_falsification.check(cfg, n_seeds=3)
@@ -452,7 +464,7 @@ def test_repeated_seed_falsification_classifies_not_material_when_ci_upper_bound
     base_cfg, tmp_path, synth_data, monkeypatch
 ):
     scores = iter([0.90, 0.895, 0.90, 0.898, 0.90, 0.897])  # drops ~0.003-0.005, tiny
-    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
     result = repeated_seed_falsification.check(cfg, n_seeds=3)
@@ -465,7 +477,7 @@ def test_repeated_seed_falsification_classifies_inconclusive_when_ci_straddles_t
 ):
     # A wide spread of drops straddling the threshold: neither bound of the CI clears it.
     scores = iter([0.90, 0.40, 0.90, 0.89, 0.90, 0.60])  # drops: 0.50, 0.01, 0.30
-    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
     result = repeated_seed_falsification.check(cfg, n_seeds=3)
@@ -479,13 +491,16 @@ def test_repeated_seed_falsification_resumes_from_a_checkpointed_seed(
     from ids2eval.audit import _checkpoint
 
     checkpoint_path = str(tmp_path / "checkpoint.json")
-    _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", 0, 0.111)
+    _checkpoint.save_seed_progress(
+        checkpoint_path, "repeated_seed_falsification_check", 0,
+        {"accuracy": 0.111, "balanced_accuracy": 0.2, "macro_f1": 0.3},
+    )
 
     # Only 2 more scores queued (for seeds 1 and 2) - if the resume logic didn't skip
-    # seed 0, fit_and_score would be called a 3rd time (2 fits per seed) and this
+    # seed 0, fit_and_evaluate would be called a 3rd time (2 fits per seed) and this
     # iterator would raise StopIteration, failing the test.
     scores = iter([0.90, 0.80, 0.90, 0.85])
-    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     result = repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
 
@@ -500,7 +515,7 @@ def test_repeated_seed_falsification_checkpoints_each_seed_as_it_completes(
 
     checkpoint_path = str(tmp_path / "checkpoint.json")
     scores = iter([0.90, 0.70, 0.90, 0.80, 0.90, 0.85])
-    monkeypatch.setattr(repeated_seed_falsification, "fit_and_score", lambda *a, **k: next(scores))
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: _scores(next(scores)))
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
 
@@ -515,7 +530,8 @@ def test_repeated_seed_falsification_resume_truncates_to_a_smaller_n_seeds(
 
     checkpoint_path = str(tmp_path / "checkpoint.json")
     for seed, drop in enumerate([0.1, 0.2, 0.3, 0.4, 0.5]):
-        _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", seed, drop)
+        entry = {"accuracy": drop, "balanced_accuracy": drop, "macro_f1": drop}
+        _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", seed, entry)
     cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
     result = repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
 
@@ -1454,3 +1470,86 @@ def test_feature_auc_rank_formula_equals_roc_auc_score_including_ties():
         assert best == pytest.approx(top, abs=1e-12)
         assert cls == next(c for c in labels.unique() if expected[c] == pytest.approx(top, abs=1e-12))
     assert _best_auc(np.array([1.0, np.inf, 2.0, 3.0]), pd.Series(["a", "b", "a", "b"])) == (None, None)
+
+
+def _minority_scores(minority_correct: int):
+    """990 majority rows always right, 10 minority rows of which minority_correct are
+    right: losing the minority class costs 1 point of accuracy and up to 50 of
+    balanced accuracy."""
+    import numpy as np
+
+    from ids2eval.audit._metrics import Scores
+
+    return Scores(("a", "b"), np.array([[990, 0], [10 - minority_correct, minority_correct]]))
+
+
+def test_repeated_seed_falsification_flags_a_minority_class_effect_accuracy_hides(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    fits = iter([_minority_scores(10), _minority_scores(0)] * 3)
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: next(fits))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    by_metric = result["details"]["by_metric"]
+    assert by_metric["accuracy"]["verdict"] == "ok"
+    assert by_metric["balanced_accuracy"]["verdict"] == "flag"
+    assert result["status"] == "flag"
+
+
+def test_repeated_seed_falsification_accuracy_only_status_when_configured(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    fits = iter([_minority_scores(10), _minority_scores(0)] * 3)
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: next(fits))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {"repeated_seed_falsification_check": 0.05}
+    cfg["audit"]["materiality_metrics"] = ["accuracy"]
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    assert result["status"] == "ok"
+    assert result["details"]["by_metric"]["balanced_accuracy"]["verdict"] == "flag"  # still reported
+
+
+def test_repeated_seed_falsification_per_metric_threshold_and_sweep(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    fits = iter([_minority_scores(10), _minority_scores(0)] * 3)
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: next(fits))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    cfg["audit"]["materiality_thresholds"] = {
+        "repeated_seed_falsification_check": {"balanced_accuracy": 0.9, "macro_f1": 0.9},
+    }
+    result = repeated_seed_falsification.check(cfg, n_seeds=3)
+    by_metric = result["details"]["by_metric"]
+    assert by_metric["accuracy"]["threshold"] == 0.01  # left out, keeps the default
+    assert by_metric["balanced_accuracy"]["verdict"] == "ok"  # 0.5 drop is below 0.9
+    sweep = by_metric["accuracy"]["verdict_by_threshold"]  # every seed drops exactly 1 point
+    assert set(sweep) == {"0.005", "0.01", "0.02", "0.05"}
+    assert (sweep["0.005"], sweep["0.02"], sweep["0.05"]) == ("flag", "ok", "ok")
+
+
+def test_repeated_seed_falsification_refits_seeds_saved_before_per_metric_scoring(
+    base_cfg, tmp_path, synth_data, monkeypatch
+):
+    from ids2eval.audit import _checkpoint
+
+    checkpoint_path = str(tmp_path / "checkpoint.json")
+    _checkpoint.save_seed_progress(checkpoint_path, "repeated_seed_falsification_check", 0, 0.5)
+    fits = iter([_scores(0.9), _scores(0.8)] * 3)  # all three seeds refit
+    monkeypatch.setattr(repeated_seed_falsification, "fit_and_evaluate", lambda *a, **k: next(fits))
+    cfg = _repeated_seed_cfg(base_cfg, tmp_path, synth_data)
+    result = repeated_seed_falsification.check(cfg, n_seeds=3, checkpoint_path=checkpoint_path)
+    assert result["details"]["drops_by_seed"] == pytest.approx([0.1, 0.1, 0.1], abs=0.005)
+
+
+def test_resplit_falsification_reports_group_statistics(base_cfg, tmp_path, synth_data):
+    csv_path = tmp_path / "raw.csv"
+    synth_data.to_csv(csv_path, index=False)
+    base_cfg["dataset"]["raw_files"] = [str(csv_path)]
+    base_cfg["dataset"]["group_columns"] = ["SrcIP"]
+    base_cfg["dataset"]["split_ratio"] = 0.5
+    details = resplit.check(base_cfg)["details"]
+    stats = details["group_stats"]
+    assert stats["groups"] == synth_data["SrcIP"].nunique()
+    assert stats["rows"] == len(synth_data)
+    assert set(details["by_metric"]) == {"accuracy", "balanced_accuracy", "macro_f1"}

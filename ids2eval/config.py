@@ -33,6 +33,15 @@ MATERIALITY_TIERED_CHECKS = {
     "result_robustness_check", "cross_capture_matrix_check",
     "scenario_holdout_falsification", "feature_category_ablation_check",
 }
+# The intervention checks score accuracy, balanced accuracy and macro-F1 and give each
+# its own verdict (ids2eval.audit._metrics). Their threshold may also be given per
+# metric: {"accuracy": 0.01, "balanced_accuracy": 0.02}, or for a tiered check
+# {"accuracy": {"warning": .., "flag": ..}, ...}; a metric left out keeps the default.
+PER_METRIC_CHECKS = {
+    "resplit_falsification", "repeated_seed_falsification_check", "result_robustness_check",
+    "scenario_holdout_falsification", "feature_category_ablation_check",
+}
+METRIC_NAMES = ("accuracy", "balanced_accuracy", "macro_f1")
 
 DEFAULTS: dict[str, Any] = {
     "random_seed": 0,      # every random_state/seed in the pipeline (split, reservoir
@@ -113,6 +122,10 @@ DEFAULTS: dict[str, Any] = {
         # very different things (any session-leakage cost vs. expected ablation cost) and
         # were each calibrated to their own check's scale.
         "materiality_thresholds": {},
+        # Which metrics decide an intervention check's status: the most severe of their
+        # verdicts. Every metric's verdict is reported either way; ["accuracy"] restores
+        # the accuracy-only status of versions before 0.3.0.
+        "materiality_metrics": ["accuracy", "balanced_accuracy", "macro_f1"],
         # Off by default: running checks concurrently means several may hold their own
         # encoded feature matrix/RandomForest fit in memory at the same time instead of
         # one at a time, raising peak memory versus the sequential default - a real
@@ -305,25 +318,30 @@ def validate_config(cfg: dict[str, Any]) -> None:
             f"which don't support a threshold override; valid keys are {sorted(known_threshold_checks)}"
         )
     for check in MATERIALITY_SINGLE_CHECKS & set(thresholds):
-        if isinstance(thresholds[check], bool) or not isinstance(thresholds[check], (int, float)):
+        value = thresholds[check]
+        if check in PER_METRIC_CHECKS and isinstance(value, dict) and value and set(value) <= set(METRIC_NAMES):
+            for metric, metric_value in value.items():
+                if not _is_number(metric_value):
+                    errors.append(f"audit.materiality_thresholds.{check}.{metric} must be a number")
+        elif not _is_number(value):
             errors.append(
                 f"audit.materiality_thresholds.{check} must be a single number "
                 f"(this check has one flag/ok threshold, not separate warning/flag tiers)"
+                + (", or a mapping from metric name to a number" if check in PER_METRIC_CHECKS else "")
             )
     for check in MATERIALITY_TIERED_CHECKS & set(thresholds):
         value = thresholds[check]
-        if not isinstance(value, dict) or set(value) != {"warning", "flag"}:
-            errors.append(
-                f'audit.materiality_thresholds.{check} must be a dict with exactly the keys '
-                f'"warning" and "flag" (this check has a three-tier ok/warning/flag scale)'
-            )
-        elif not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in value.values()):
-            errors.append(f"audit.materiality_thresholds.{check}'s warning and flag values must be numbers")
-        elif value["warning"] >= value["flag"]:
-            errors.append(
-                f"audit.materiality_thresholds.{check}.warning ({value['warning']}) must be "
-                f"less than .flag ({value['flag']})"
-            )
+        if check in PER_METRIC_CHECKS and isinstance(value, dict) and value and set(value) <= set(METRIC_NAMES):
+            for metric, tiers in value.items():
+                errors.extend(_tier_errors(f"{check}.{metric}", tiers))
+        else:
+            errors.extend(_tier_errors(check, value))
+
+    metrics = audit["materiality_metrics"]
+    if not isinstance(metrics, list) or not metrics or not set(metrics) <= set(METRIC_NAMES):
+        errors.append(
+            f"audit.materiality_metrics must be a non-empty list drawn from {list(METRIC_NAMES)}"
+        )
 
     classifiers = cfg["classifiers"]
     clf_list = classifiers["list"]
@@ -360,3 +378,24 @@ def validate_config(cfg: dict[str, Any]) -> None:
 
     if errors:
         raise ValueError("Invalid config:\n" + "\n".join(f"  - {e}" for e in errors))
+
+
+def _is_number(value) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _tier_errors(name: str, value) -> list[str]:
+    if not isinstance(value, dict) or set(value) != {"warning", "flag"}:
+        return [
+            f'audit.materiality_thresholds.{name} must be a dict with exactly the keys '
+            f'"warning" and "flag" (this check has a three-tier ok/warning/flag scale)'
+        ]
+    if not all(_is_number(v) for v in value.values()):
+        return [f"audit.materiality_thresholds.{name}'s warning and flag values must be numbers"]
+    if value["warning"] >= value["flag"]:
+        return [
+            f"audit.materiality_thresholds.{name}.warning ({value['warning']}) must be "
+            f"less than .flag ({value['flag']})"
+        ]
+    return []
+

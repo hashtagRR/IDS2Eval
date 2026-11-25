@@ -29,8 +29,8 @@ automatically.
 from __future__ import annotations
 
 from ..data import dataset
-from . import _materiality
-from ._fit_score import fit_and_score
+from . import _metrics
+from ._fit_score import fit_and_evaluate
 from ._status import NOT_APPLICABLE
 
 # Overridable via audit.materiality_thresholds.scenario_holdout_falsification
@@ -82,27 +82,26 @@ def check(cfg: dict) -> dict:
         }
 
     random_train, random_test = dataset._random_split(combined, label_col, dataset_cfg, seed=seed)
-    random_acc = fit_and_score(random_train, random_test, label_col, cfg, seed=seed)
-    scenario_acc = fit_and_score(scenario_train, scenario_test, label_col, cfg, seed=seed)
-    drop = random_acc - scenario_acc
+    random_m = fit_and_evaluate(random_train, random_test, label_col, cfg, seed=seed).metrics
+    scenario_m = fit_and_evaluate(scenario_train, scenario_test, label_col, cfg, seed=seed).metrics
 
-    tiers = _materiality.threshold(
+    tiers = _metrics.thresholds(
         cfg, "scenario_holdout_falsification",
         {"warning": WARNING_DROP_THRESHOLD, "flag": MATERIAL_DROP_THRESHOLD},
     )
-    if drop > tiers["flag"]:
-        status = "flag"
-    elif drop > tiers["warning"]:
-        status = "warning"
-    else:
-        status = "ok"
+    drops = {m: random_m[m] - scenario_m[m] for m in _metrics.METRICS}
+    verdicts = {m: _metrics.tiered_verdict(drops[m], tiers[m]) for m in _metrics.METRICS}
+    status = _metrics.combined_status(verdicts, cfg)
+    random_acc, scenario_acc, drop = random_m["accuracy"], scenario_m["accuracy"], drops["accuracy"]
 
     summary = (
         f"random-split accuracy={random_acc:.4f}, holding out scenario '{held_out}' entirely: "
-        f"accuracy={scenario_acc:.4f} (drop={drop:+.4f})"
+        f"accuracy={scenario_acc:.4f} (drop={drop:+.4f}); balanced accuracy drop="
+        f"{drops['balanced_accuracy']:+.4f}, macro-F1 drop={drops['macro_f1']:+.4f} "
+        f"({_metrics.describe(verdicts)})"
     )
     if status == "flag":
-        summary += "; accuracy collapses on a scenario never seen in training"
+        summary += "; performance collapses on a scenario never seen in training"
     elif status == "warning":
         summary += "; a real but moderate drop under a novel scenario"
 
@@ -111,5 +110,11 @@ def check(cfg: dict) -> dict:
         "details": {
             "held_out_scenario": str(held_out), "random_accuracy": random_acc,
             "scenario_accuracy": scenario_acc, "drop": drop,
+            "by_metric": {
+                m: {"random": random_m[m], "scenario": scenario_m[m], "drop": drops[m],
+                    "thresholds": tiers[m], "verdict": verdicts[m]}
+                for m in _metrics.METRICS
+            },
+            "materiality_metrics": list(cfg["audit"]["materiality_metrics"]),
         },
     }

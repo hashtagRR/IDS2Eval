@@ -54,12 +54,12 @@ def save_check(path: str, check_name: str, finding: dict) -> None:
     _atomic_write(path, data)
 
 
-def get_seed_progress(path: str, check_name: str) -> dict[int, float]:
+def get_seed_progress(path: str, check_name: str) -> dict[int, float | dict]:
     raw = load(path).get("partial", {}).get(check_name, {}).get("drops_by_seed", {})
     return {int(k): v for k, v in raw.items()}
 
 
-def save_seed_progress(path: str, check_name: str, seed: int, drop: float) -> None:
+def save_seed_progress(path: str, check_name: str, seed: int, drop: float | dict) -> None:
     data = load(path)
     partial = data.setdefault("partial", {}).setdefault(check_name, {"drops_by_seed": {}})
     partial["drops_by_seed"][str(seed)] = drop

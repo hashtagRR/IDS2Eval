@@ -10,7 +10,12 @@ that barely moves across these conditions is robust to how it was
 produced; one that swings widely was measuring the methodology as much
 as the attack behavior.
 
-Deliberately reports the full accuracy-by-condition vector rather than
+Scores every condition on accuracy, balanced accuracy and macro-F1 (see
+_metrics) and judges each metric's spread separately; the status is the
+most severe among audit.materiality_metrics, and each condition's drop
+from the random split is reported per metric.
+
+Deliberately reports the full score-by-condition vector rather than
 collapsing it into one fragility score: which specific condition moved
 the result, and by how much, is the useful information, and a single
 number would hide exactly that (the same reasoning class_distribution_
@@ -44,8 +49,8 @@ import concurrent.futures
 import pandas as pd
 
 from ..data import dataset, features
-from . import _materiality
-from ._fit_score import fit_and_score
+from . import _metrics
+from ._fit_score import fit_and_evaluate
 from ._status import NOT_APPLICABLE
 
 # Overridable via audit.materiality_thresholds.result_robustness_check ({"warning": .., "flag": ..}).
@@ -102,44 +107,53 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
             "summary": "fewer than two conditions could be built to compare", "details": {},
         }
 
-    test_rows = {name: len(test_df) for name, (_, test_df, _) in pending.items()}
-
-    def run(name: str) -> tuple[str, float]:
+    def run(name: str) -> tuple[str, _metrics.Scores]:
         train_df, test_df, cols = pending[name]
-        return name, fit_and_score(train_df, test_df, label_col, cfg, cols=cols, seed=seed)
+        return name, fit_and_evaluate(train_df, test_df, label_col, cfg, cols=cols, seed=seed)
 
     if cfg["audit"]["parallel_checks"]:
         max_workers = min(cfg["audit"]["max_parallel_checks"], len(pending))
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
-            conditions = dict(pool.map(run, pending))
+            scores = dict(pool.map(run, pending))
     else:
-        conditions = dict(run(name) for name in pending)
+        scores = dict(run(name) for name in pending)
 
-    worst_condition, worst_acc = min(conditions.items(), key=lambda kv: kv[1])
-    best_condition, best_acc = max(conditions.items(), key=lambda kv: kv[1])
-    spread = best_acc - worst_acc
-
-    tiers = _materiality.threshold(
+    tiers = _metrics.thresholds(
         cfg, "result_robustness_check",
         {"warning": SPREAD_WARNING_THRESHOLD, "flag": SPREAD_FLAG_THRESHOLD},
     )
-    # Tiers are judged on the spread minus its sampling margin at these test sizes,
-    # so test-set noise alone can't flag; a spread that crosses a tier only within
-    # that margin is reported as a warning (inconclusive) instead.
-    margin = _materiality.accuracy_gap_margin(
-        best_acc, test_rows[best_condition], worst_acc, test_rows[worst_condition],
-    )
-    if spread - margin > tiers["flag"]:
-        status = "flag"
-    elif spread > tiers["warning"]:
-        status = "warning"
-    else:
-        status = "ok"
+    by_metric, verdicts = {}, {}
+    for m in _metrics.METRICS:
+        values = {name: s.metrics[m] for name, s in scores.items()}
+        worst_condition = min(values, key=values.get)
+        best_condition = max(values, key=values.get)
+        spread = values[best_condition] - values[worst_condition]
+        # Tiers are judged on the spread minus its sampling margin at these test sizes,
+        # so test-set noise alone can't flag; a spread that crosses a tier only within
+        # that margin is reported as a warning (inconclusive) instead.
+        margin = _metrics.gap_margins(scores[best_condition], scores[worst_condition])[m]
+        if spread - margin > tiers[m]["flag"]:
+            verdicts[m] = "flag"
+        elif spread > tiers[m]["warning"]:
+            verdicts[m] = "warning"
+        else:
+            verdicts[m] = "ok"
+        by_metric[m] = {
+            "by_condition": values, "spread": spread, "sampling_margin": margin,
+            "worst_condition": worst_condition, "best_condition": best_condition,
+            "drop_from_random_split": {n: values["random_split"] - v for n, v in values.items()},
+            "thresholds": tiers[m], "verdict": verdicts[m],
+        }
+    status = _metrics.combined_status(verdicts, cfg)
 
+    acc = by_metric["accuracy"]
+    conditions = acc["by_condition"]
     summary = (
-        f"accuracy ranges from {worst_acc:.4f} ({worst_condition}) to {best_acc:.4f} "
-        f"({best_condition}) across {len(conditions)} conditions, a spread of {spread:.4f} "
-        f"(sampling margin +/-{margin:.4f})"
+        f"accuracy ranges from {conditions[acc['worst_condition']]:.4f} ({acc['worst_condition']}) to "
+        f"{conditions[acc['best_condition']]:.4f} ({acc['best_condition']}) across {len(conditions)} "
+        f"conditions, a spread of {acc['spread']:.4f} (sampling margin +/-{acc['sampling_margin']:.4f}); "
+        f"balanced accuracy spread {by_metric['balanced_accuracy']['spread']:.4f}, macro-F1 spread "
+        f"{by_metric['macro_f1']['spread']:.4f}; {_metrics.describe(verdicts)}"
     )
     if status != "ok":
         summary += "; the headline result depends on methodology choices as much as the classifier"
@@ -147,8 +161,11 @@ def check(cfg: dict, combined: pd.DataFrame | None = None) -> dict:
     return {
         "check": "result_robustness_check", "status": status, "summary": summary,
         "details": {
-            "accuracy_by_condition": conditions, "spread": spread,
-            "worst_condition": worst_condition, "best_condition": best_condition,
-            "sampling_margin": margin,
+            # Accuracy fields kept under their pre-0.3.0 names for existing readers.
+            "accuracy_by_condition": conditions, "spread": acc["spread"],
+            "worst_condition": acc["worst_condition"], "best_condition": acc["best_condition"],
+            "sampling_margin": acc["sampling_margin"],
+            "by_metric": by_metric,
+            "materiality_metrics": list(cfg["audit"]["materiality_metrics"]),
         },
     }

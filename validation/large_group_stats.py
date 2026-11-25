@@ -30,9 +30,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from grouping_keys import KEYS, config_path
-
-from ids2eval.config import load_config
+from grouping_keys import KEYS, config_path, load_analysis_config
 
 CHUNK_ROWS = 1_000_000
 HASH_BUCKETS = 1_000_000
@@ -69,7 +67,7 @@ def main() -> None:
     ap.add_argument("--sample-out")
     args = ap.parse_args()
     path = config_path(args.config)
-    cfg = load_config(str(path))
+    cfg = load_analysis_config(path)
     keys = KEYS[path.stem]
     files = cfg["dataset"]["raw_files"]
     needed = sorted({c for cols in keys.values() for c in cols})

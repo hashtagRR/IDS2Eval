@@ -19,10 +19,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from grouping_keys import config_path
+from grouping_keys import config_path, load_analysis_config
 
 from ids2eval.audit import homogeneity
-from ids2eval.config import load_config
 from ids2eval.data import dataset
 
 HOST = {"ton-iot-official": "src_ip", "bot-iot-official": "saddr", "cic-ids2017-glf": "Source IP",
@@ -36,7 +35,7 @@ def main() -> None:
         path = config_path(name)
         if path.stem in results:
             continue
-        cfg = load_config(str(path))
+        cfg = load_analysis_config(path)
         cfg["audit"]["homogeneity_cluster_columns"] = [HOST[path.stem]]
         train, test = dataset.load_split(cfg)
         entry = {"cluster_column": HOST[path.stem]}

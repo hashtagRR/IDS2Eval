@@ -29,8 +29,11 @@ from __future__ import annotations
 import gc
 import json
 import sys
+import tempfile
 import time
 from pathlib import Path
+
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -83,6 +86,16 @@ KEYS = {
 }
 
 
+def load_analysis_config(path: Path) -> dict:
+    """A config loaded with output.write_scorecard_plot off: these analyses never plot, and
+    the plot needs matplotlib, which the Cloud Batch environment lacks."""
+    raw = yaml.safe_load(path.read_text())
+    raw.setdefault("output", {})["write_scorecard_plot"] = False
+    with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
+        yaml.safe_dump(raw, f)
+    return load_config(f.name)
+
+
 def config_path(name: str) -> Path:
     path = Path(name)
     return path if path.suffix in {".yaml", ".yml"} else CONFIGS / f"{name}.yaml"
@@ -93,7 +106,7 @@ def main() -> None:
     results = json.loads(out.read_text()) if out.exists() else {}
     for name in sys.argv[2:]:
         path = config_path(name)
-        cfg = load_config(str(path))
+        cfg = load_analysis_config(path)
         keys = KEYS[path.stem]
         combined = dataset.load_raw_combined(cfg["dataset"], seed=cfg["random_seed"])
         for key_name, columns in keys.items():

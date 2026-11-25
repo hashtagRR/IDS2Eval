@@ -1,0 +1,557 @@
+{
+  "nsl-kdd": {
+    "rf": {
+      "check": "reuse_removal_falsification",
+      "status": "ok",
+      "summary": "removing the 658 training rows that share a feature vector with a test row, against removing as many random rows of the same classes, over 10 seeds: score difference on the unchanged test set, mean [95% CI], accuracy -0.0003 [-0.0008, +0.0001], balanced accuracy -0.0069, macro-F1 -0.0074 (accuracy not material, balanced accuracy not material, macro f1 not material); on the 664 reused test rows alone, accuracy -0.0006",
+      "details": {
+        "training_rows_removed": 658,
+        "training_rows": 125973,
+        "reused_test_rows": 664,
+        "test_rows": 22544,
+        "n_seeds": 10,
+        "by_metric": {
+          "accuracy": {
+            "differences_by_seed": [
+              -0.00115330021291693,
+              0.00031050390347764356,
+              -0.0002217885024839994,
+              -0.0006653655074521092,
+              -0.0006653655074519982,
+              0.0,
+              -0.0008871540099361086,
+              -0.001064584811923397,
+              0.0004879347054649319,
+              0.0004879347054649319
+            ],
+            "mean_difference": -0.0003371185237757035,
+            "ci_95": [
+              -0.0007908789905940209,
+              0.0001166419430426139
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": -0.0006024096385542132,
+            "reused_rows_ci_95": [
+              -0.0018669837383995633,
+              0.0006621644612911369
+            ]
+          },
+          "balanced_accuracy": {
+            "differences_by_seed": [
+              -0.022010263646106643,
+              0.004470768211070286,
+              -0.013497330248465333,
+              -0.018627955948416985,
+              -0.002407504154962714,
+              -0.0009439990197984138,
+              -0.009544704910047885,
+              -0.0170812441347431,
+              -0.0001751479175327586,
+              0.010944392037380568
+            ],
+            "mean_difference": -0.006887298973162298,
+            "ci_95": [
+              -0.014682308615638273,
+              0.0009077106693136765
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": -0.014652014652014655,
+            "reused_rows_ci_95": [
+              -0.028126970501957824,
+              -0.0011770588020714873
+            ]
+          },
+          "macro_f1": {
+            "differences_by_seed": [
+              -0.021237038437784655,
+              0.00043690666898982267,
+              -0.016770900033721503,
+              -0.014402820556650042,
+              -0.006075183483511215,
+              0.004380898362632973,
+              -0.014632139259635912,
+              -0.01588138165777031,
+              0.00039963955019056696,
+              0.009907949404293848
+            ],
+            "mean_difference": -0.007387406944296643,
+            "ci_95": [
+              -0.014983953466562651,
+              0.00020913957796936476
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": -0.015154457857702364,
+            "reused_rows_ci_95": [
+              -0.029903897468826438,
+              -0.0004050182465782891
+            ]
+          }
+        },
+        "per_seed": [
+          {
+            "full_test": {
+              "accuracy": -0.00115330021291693,
+              "balanced_accuracy": -0.022010263646106643,
+              "macro_f1": -0.021237038437784655
+            },
+            "reused_test_rows": {
+              "accuracy": -0.001506024096385561,
+              "balanced_accuracy": -0.02564102564102566,
+              "macro_f1": -0.02334728657598606
+            },
+            "control_accuracy": 0.7220102909865153,
+            "reuse_removed_accuracy": 0.7231635911994322
+          },
+          {
+            "full_test": {
+              "accuracy": 0.00031050390347764356,
+              "balanced_accuracy": 0.004470768211070286,
+              "macro_f1": 0.00043690666898982267
+            },
+            "reused_test_rows": {
+              "accuracy": -0.001506024096385561,
+              "balanced_accuracy": -0.00366300366300365,
+              "macro_f1": -0.0020803182501941686
+            },
+            "control_accuracy": 0.7222764371894961,
+            "reuse_removed_accuracy": 0.7219659332860184
+          },
+          {
+            "full_test": {
+              "accuracy": -0.0002217885024839994,
+              "balanced_accuracy": -0.013497330248465333,
+              "macro_f1": -0.016770900033721503
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.001998954940131359
+            },
+            "control_accuracy": 0.7220546486870121,
+            "reuse_removed_accuracy": 0.7222764371894961
+          },
+          {
+            "full_test": {
+              "accuracy": -0.0006653655074521092,
+              "balanced_accuracy": -0.018627955948416985,
+              "macro_f1": -0.014402820556650042
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0,
+              "balanced_accuracy": 0.0,
+              "macro_f1": 0.0
+            },
+            "control_accuracy": 0.7217885024840313,
+            "reuse_removed_accuracy": 0.7224538679914834
+          },
+          {
+            "full_test": {
+              "accuracy": -0.0006653655074519982,
+              "balanced_accuracy": -0.002407504154962714,
+              "macro_f1": -0.006075183483511215
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0,
+              "balanced_accuracy": 0.0,
+              "macro_f1": -8.136331006280972e-05
+            },
+            "control_accuracy": 0.7218328601845281,
+            "reuse_removed_accuracy": 0.7224982256919801
+          },
+          {
+            "full_test": {
+              "accuracy": 0.0,
+              "balanced_accuracy": -0.0009439990197984138,
+              "macro_f1": 0.004380898362632973
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0,
+              "balanced_accuracy": -0.02197802197802201,
+              "macro_f1": -0.02126696832579189
+            },
+            "control_accuracy": 0.7228087295954577,
+            "reuse_removed_accuracy": 0.7228087295954577
+          },
+          {
+            "full_test": {
+              "accuracy": -0.0008871540099361086,
+              "balanced_accuracy": -0.009544704910047885,
+              "macro_f1": -0.014632139259635912
+            },
+            "reused_test_rows": {
+              "accuracy": -0.004518072289156572,
+              "balanced_accuracy": -0.05494505494505486,
+              "macro_f1": -0.06415229709347348
+            },
+            "control_accuracy": 0.7220546486870121,
+            "reuse_removed_accuracy": 0.7229418026969482
+          },
+          {
+            "full_test": {
+              "accuracy": -0.001064584811923397,
+              "balanced_accuracy": -0.0170812441347431,
+              "macro_f1": -0.01588138165777031
+            },
+            "reused_test_rows": {
+              "accuracy": -0.001506024096385561,
+              "balanced_accuracy": -0.02564102564102566,
+              "macro_f1": -0.02334728657598606
+            },
+            "control_accuracy": 0.7218772178850248,
+            "reuse_removed_accuracy": 0.7229418026969482
+          },
+          {
+            "full_test": {
+              "accuracy": 0.0004879347054649319,
+              "balanced_accuracy": -0.0001751479175327586,
+              "macro_f1": 0.00039963955019056696
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.001998954940131359
+            },
+            "control_accuracy": 0.7227200141944642,
+            "reuse_removed_accuracy": 0.7222320794889993
+          },
+          {
+            "full_test": {
+              "accuracy": 0.0004879347054649319,
+              "balanced_accuracy": 0.010944392037380568,
+              "macro_f1": 0.009907949404293848
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0,
+              "balanced_accuracy": -0.02197802197802201,
+              "macro_f1": -0.02126696832579189
+            },
+            "control_accuracy": 0.7223651525904897,
+            "reuse_removed_accuracy": 0.7218772178850248
+          }
+        ],
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ],
+        "model": "rf",
+        "seconds": 126
+      }
+    },
+    "knn1": {
+      "check": "reuse_removal_falsification",
+      "status": "ok",
+      "summary": "removing the 658 training rows that share a feature vector with a test row, against removing as many random rows of the same classes, over 5 seeds: score difference on the unchanged test set, mean [95% CI], accuracy +0.0000 [+0.0000, +0.0001], balanced accuracy -0.0006, macro-F1 -0.0004 (accuracy not material, balanced accuracy not material, macro f1 not material); on the 664 reused test rows alone, accuracy +0.0015",
+      "details": {
+        "training_rows_removed": 658,
+        "training_rows": 125973,
+        "reused_test_rows": 664,
+        "test_rows": 22544,
+        "n_seeds": 5,
+        "by_metric": {
+          "accuracy": {
+            "differences_by_seed": [
+              0.0,
+              4.435770049682208e-05,
+              4.435770049682208e-05,
+              8.871540099364417e-05,
+              4.435770049682208e-05
+            ],
+            "mean_difference": 4.435770049682208e-05,
+            "ci_95": [
+              5.41212592773949e-06,
+              8.330327506590468e-05
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.001506024096385561,
+            "reused_rows_ci_95": [
+              0.001506024096385561,
+              0.001506024096385561
+            ]
+          },
+          "balanced_accuracy": {
+            "differences_by_seed": [
+              -0.0035727616914627003,
+              0.00018663680477792877,
+              0.00018663680477792877,
+              0.0001893466996881754,
+              0.00018663680477792877
+            ],
+            "mean_difference": -0.0005647009154881478,
+            "ci_95": [
+              -0.0026526303282429064,
+              0.0015232284972666107
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.0007930214115781098,
+            "reused_rows_ci_95": [
+              0.0007930214115781098,
+              0.0007930214115781098
+            ]
+          },
+          "macro_f1": {
+            "differences_by_seed": [
+              -0.00308311769639924,
+              0.00018113807347916455,
+              0.00018113807347916455,
+              0.0005443250113534581,
+              0.00018113807347916455
+            ],
+            "mean_difference": -0.0003990756929216577,
+            "ci_95": [
+              -0.0022723049974517906,
+              0.001474153611608475
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.04265563084020241,
+            "reused_rows_ci_95": [
+              0.04265563084020241,
+              0.04265563084020241
+            ]
+          }
+        },
+        "per_seed": [
+          {
+            "full_test": {
+              "accuracy": 0.0,
+              "balanced_accuracy": -0.0035727616914627003,
+              "macro_f1": -0.00308311769639924
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.0007930214115781098,
+              "macro_f1": 0.04265563084020241
+            },
+            "control_accuracy": 0.7043559261887864,
+            "reuse_removed_accuracy": 0.7043559261887864
+          },
+          {
+            "full_test": {
+              "accuracy": 4.435770049682208e-05,
+              "balanced_accuracy": 0.00018663680477792877,
+              "macro_f1": 0.00018113807347916455
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.0007930214115781098,
+              "macro_f1": 0.04265563084020241
+            },
+            "control_accuracy": 0.7044002838892832,
+            "reuse_removed_accuracy": 0.7043559261887864
+          },
+          {
+            "full_test": {
+              "accuracy": 4.435770049682208e-05,
+              "balanced_accuracy": 0.00018663680477792877,
+              "macro_f1": 0.00018113807347916455
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.0007930214115781098,
+              "macro_f1": 0.04265563084020241
+            },
+            "control_accuracy": 0.7044002838892832,
+            "reuse_removed_accuracy": 0.7043559261887864
+          },
+          {
+            "full_test": {
+              "accuracy": 8.871540099364417e-05,
+              "balanced_accuracy": 0.0001893466996881754,
+              "macro_f1": 0.0005443250113534581
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.0007930214115781098,
+              "macro_f1": 0.04265563084020241
+            },
+            "control_accuracy": 0.70444464158978,
+            "reuse_removed_accuracy": 0.7043559261887864
+          },
+          {
+            "full_test": {
+              "accuracy": 4.435770049682208e-05,
+              "balanced_accuracy": 0.00018663680477792877,
+              "macro_f1": 0.00018113807347916455
+            },
+            "reused_test_rows": {
+              "accuracy": 0.001506024096385561,
+              "balanced_accuracy": 0.0007930214115781098,
+              "macro_f1": 0.04265563084020241
+            },
+            "control_accuracy": 0.7044002838892832,
+            "reuse_removed_accuracy": 0.7043559261887864
+          }
+        ],
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ],
+        "model": "knn1",
+        "seconds": 103
+      }
+    },
+    "xgb": {
+      "check": "reuse_removal_falsification",
+      "status": "ok",
+      "summary": "removing the 658 training rows that share a feature vector with a test row, against removing as many random rows of the same classes, over 5 seeds: score difference on the unchanged test set, mean [95% CI], accuracy +0.0003 [-0.0003, +0.0008], balanced accuracy -0.0059, macro-F1 -0.0058 (accuracy not material, balanced accuracy not material, macro f1 not material); on the 664 reused test rows alone, accuracy +0.0015",
+      "details": {
+        "training_rows_removed": 658,
+        "training_rows": 125973,
+        "reused_test_rows": 664,
+        "test_rows": 22544,
+        "n_seeds": 5,
+        "by_metric": {
+          "accuracy": {
+            "differences_by_seed": [
+              0.0006210078069552871,
+              4.435770049682208e-05,
+              0.0008427963094392865,
+              -0.0001774308019871773,
+              -4.435770049682208e-05
+            ],
+            "mean_difference": 0.00025727466288147924,
+            "ci_95": [
+              -0.00029816078084704176,
+              0.0008127101066100002
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.0015060240963854499,
+            "reused_rows_ci_95": [
+              0.0015060240963854499,
+              0.0015060240963854499
+            ]
+          },
+          "balanced_accuracy": {
+            "differences_by_seed": [
+              -0.0032969238993485472,
+              -0.01340810659234215,
+              0.000915893326860262,
+              -0.013449926470558649,
+              -0.00017851956451725437
+            ],
+            "mean_difference": -0.005883516639981268,
+            "ci_95": [
+              -0.014648895894805999,
+              0.0028818626148434633
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.00366300366300365,
+            "reused_rows_ci_95": [
+              0.00366300366300365,
+              0.00366300366300365
+            ]
+          },
+          "macro_f1": {
+            "differences_by_seed": [
+              -0.0045101367919225255,
+              -0.013177267278736166,
+              0.0010197139489591667,
+              -0.01320099371976316,
+              0.0008460266392517068
+            ],
+            "mean_difference": -0.005804531440442196,
+            "ci_95": [
+              -0.01461817250358859,
+              0.0030091096227041992
+            ],
+            "threshold": 0.01,
+            "verdict": "ok",
+            "reused_rows_mean_difference": 0.00199895494013147,
+            "reused_rows_ci_95": [
+              0.00199895494013147,
+              0.00199895494013147
+            ]
+          }
+        },
+        "per_seed": [
+          {
+            "full_test": {
+              "accuracy": 0.0006210078069552871,
+              "balanced_accuracy": -0.0032969238993485472,
+              "macro_f1": -0.0045101367919225255
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0015060240963854499,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.00199895494013147
+            },
+            "control_accuracy": 0.72138928317956,
+            "reuse_removed_accuracy": 0.7207682753726047
+          },
+          {
+            "full_test": {
+              "accuracy": 4.435770049682208e-05,
+              "balanced_accuracy": -0.01340810659234215,
+              "macro_f1": -0.013177267278736166
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0015060240963854499,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.00199895494013147
+            },
+            "control_accuracy": 0.7208126330731015,
+            "reuse_removed_accuracy": 0.7207682753726047
+          },
+          {
+            "full_test": {
+              "accuracy": 0.0008427963094392865,
+              "balanced_accuracy": 0.000915893326860262,
+              "macro_f1": 0.0010197139489591667
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0015060240963854499,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.00199895494013147
+            },
+            "control_accuracy": 0.721611071682044,
+            "reuse_removed_accuracy": 0.7207682753726047
+          },
+          {
+            "full_test": {
+              "accuracy": -0.0001774308019871773,
+              "balanced_accuracy": -0.013449926470558649,
+              "macro_f1": -0.01320099371976316
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0015060240963854499,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.00199895494013147
+            },
+            "control_accuracy": 0.7205908445706175,
+            "reuse_removed_accuracy": 0.7207682753726047
+          },
+          {
+            "full_test": {
+              "accuracy": -4.435770049682208e-05,
+              "balanced_accuracy": -0.00017851956451725437,
+              "macro_f1": 0.0008460266392517068
+            },
+            "reused_test_rows": {
+              "accuracy": 0.0015060240963854499,
+              "balanced_accuracy": 0.00366300366300365,
+              "macro_f1": 0.00199895494013147
+            },
+            "control_accuracy": 0.7207239176721079,
+            "reuse_removed_accuracy": 0.7207682753726047
+          }
+        ],
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ],
+        "model": "xgb",
+        "seconds": 184
+      }
+    }
+  }
+}

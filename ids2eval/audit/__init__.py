@@ -51,6 +51,7 @@ from . import (
     repeated_seed_falsification,
     resplit,
     result_robustness,
+    reuse_removal,
     row_order_leakage,
     scenario_holdout,
     schema_fingerprint,
@@ -96,6 +97,7 @@ EVIDENCE_LEVEL = {
     "artifact_sensitivity_check": "direct-experiment",
     "result_robustness_check": "direct-experiment",
     "repeated_seed_falsification_check": "direct-experiment",
+    "reuse_removal_falsification": "direct-experiment",
 }
 DEFAULT_EVIDENCE_LEVEL = "statistical"
 
@@ -196,6 +198,7 @@ def run_audit(
     add("feature_category_ablation_check", lambda: feature_category_ablation.check(train_df, test_df, cfg))
     add("artifact_sensitivity_check", lambda: artifact_sensitivity.check(train_df, test_df, cfg))
     add("result_robustness_check", lambda: result_robustness.check(cfg, combined=shared_combined))
+    add("reuse_removal_falsification", lambda: reuse_removal.check(train_df, test_df, cfg))
     add("known_issue_lookup", lambda: known_issues.check(train_df, cfg))
     add("seed_sensitivity_check", lambda: seed_sensitivity.check(train_df, test_df, cfg))
     add(

@@ -240,6 +240,14 @@ CHECK_INFO = {
         "(D'Amour et al. 2022's underspecification finding).",
         "Warning: either check's verdict changed across seeds.",
     ),
+    "reuse_removal_falsification": (
+        "Removes every training row whose feature vector also occurs in the test set, refits, and scores "
+        "the same test set; compares with removing as many random training rows of the same classes, over "
+        "audit.repeated_seed_count seeds, for accuracy, balanced accuracy and macro-F1, and also on the "
+        "reused test rows alone. Not applicable when no test row reuses a training vector (after dedup).",
+        "Per metric: flag when the whole 95% CI of the score difference (random removal minus reuse "
+        "removal) lies above the materiality threshold; ok when it lies below; warning when it straddles it.",
+    ),
     "repeated_seed_falsification_check": (
         "Re-runs resplit_falsification's random-vs-grouped comparison across "
         "audit.repeated_seed_count independent seeds (default 10) and reports, for accuracy, "

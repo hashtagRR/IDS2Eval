@@ -51,7 +51,8 @@ const FAMILIES = [
   ["Split & ordering leakage", ["temporal_leakage_check", "temporal_realism_check", "flow_group_leakage_check",
                                 "row_order_leakage_check", "homogeneity_test"]],
   ["Falsification experiments", ["resplit_falsification", "scenario_holdout_falsification",
-                                 "repeated_seed_falsification_check", "result_robustness_check"]],
+                                 "repeated_seed_falsification_check", "result_robustness_check",
+                                 "reuse_removal_falsification"]],
   ["Known issues", ["known_issue_lookup"]],
 ];
 const FAMILY_OF = Object.fromEntries(FAMILIES.flatMap(([f, cs]) => cs.map(c => [c, f])));

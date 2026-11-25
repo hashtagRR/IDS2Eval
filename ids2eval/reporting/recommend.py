@@ -112,6 +112,12 @@ _NOT_FIXABLE_NOTES = {
         "experiment is set up - disclose it as a caveat on the result, "
         "there's no config change that makes a model methodology-invariant."
     ),
+    "reuse_removal_falsification": (
+        "Measures whether training on the feature vectors the test set reuses "
+        "raises the score on that test set, against removing as many random "
+        "training rows. Evidence to report: a flag means the reported score "
+        "partly reflects seen vectors; report it after deduplication as well."
+    ),
     "feature_category_ablation_check": (
         "Reports how much accuracy a declared schema.feature_categories "
         "group costs when removed. Evidence to report, not a defect: which "

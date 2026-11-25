@@ -25,6 +25,7 @@ from ids2eval.audit import (
     repeated_seed_falsification,
     resplit,
     result_robustness,
+    reuse_removal,
     row_order_leakage,
     scenario_holdout,
     schema_fingerprint,
@@ -1600,3 +1601,45 @@ def test_homogeneity_without_cluster_columns_reports_no_cluster_interval(base_cf
     result = homogeneity.check(train_df, test_df, base_cfg)
     assert result["details"]["cluster_columns"] == []
     assert all("cluster_ci_95" not in v for v in result["details"]["per_class"].values())
+
+
+def _reuse_frames(signal: bool, seed: int = 0):
+    """400 training rows; the test set copies 200 of them (labels included) and adds
+    200 fresh rows. Without signal the labels are coin flips, so only a model that
+    saw a copied row can get it right; with signal the label is f1 > 0."""
+    rng = np.random.RandomState(seed)
+
+    def rows(n):
+        f = rng.normal(size=(n, 3))
+        label = (f[:, 0] > 0).astype(int) if signal else rng.randint(0, 2, n)
+        return pd.DataFrame({"f1": f[:, 0], "f2": f[:, 1], "f3": f[:, 2], "Label": label.astype(str)})
+
+    train = rows(400)
+    test = pd.concat([train.sample(n=200, random_state=seed), rows(200)], ignore_index=True)
+    return train, test
+
+
+def test_reuse_removal_not_applicable_without_reused_vectors(base_cfg):
+    train, _ = _reuse_frames(signal=True)
+    _, fresh = _reuse_frames(signal=True, seed=1)
+    result = reuse_removal.check(train, fresh, base_cfg)
+    assert result["status"] == "not_applicable"
+
+
+def test_reuse_removal_flags_when_only_seen_vectors_can_be_classified(base_cfg):
+    train, test = _reuse_frames(signal=False)
+    base_cfg["audit"]["repeated_seed_count"] = 3
+    result = reuse_removal.check(train, test, base_cfg)
+    assert result["details"]["training_rows_removed"] == 200
+    assert result["details"]["reused_test_rows"] == 200
+    assert result["status"] == "flag"
+    # the random-removal control also drops about half the copies, so about 0.25 is expected
+    assert result["details"]["by_metric"]["accuracy"]["reused_rows_mean_difference"] > 0.15
+
+
+def test_reuse_removal_not_material_when_the_label_follows_a_feature_rule(base_cfg):
+    train, test = _reuse_frames(signal=True)
+    base_cfg["audit"]["repeated_seed_count"] = 3
+    base_cfg["audit"]["materiality_thresholds"] = {"reuse_removal_falsification": 0.05}
+    result = reuse_removal.check(train, test, base_cfg)
+    assert result["details"]["by_metric"]["accuracy"]["verdict"] == "ok"

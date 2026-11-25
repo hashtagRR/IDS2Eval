@@ -43,6 +43,7 @@ INTERVENTION_CHECKS = {
     "cross_dataset_drift_check": "trained here, evaluated on an independent reference dataset",
     "result_robustness_check": "refit under each buildable condition (split, dedup, identity columns)",
     "artifact_sensitivity_check": "reshuffled one declared identity/timestamp column's values and re-predicted",
+    "reuse_removal_falsification": "removed training rows whose vector occurs in test, against a random removal",
 }
 
 _STATUS_TO_CONCLUSION = {"flag": "material", "warning": "inconclusive", "ok": "investigated_not_material"}

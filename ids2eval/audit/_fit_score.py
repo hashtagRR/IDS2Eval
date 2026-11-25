@@ -36,13 +36,23 @@ def fit_and_evaluate(
     caller that instead sweeps its own independent range of seeds, to get a
     distribution rather than one baseline point.
     """
+    predictions = fit_and_predict(train_df, test_df, label_col, cfg, cols=cols, seed=seed)
+    return scores_from_predictions(test_df[label_col].to_numpy(), predictions)
+
+
+def fit_and_predict(
+    train_df: pd.DataFrame, test_df: pd.DataFrame, label_col: str, cfg: dict,
+    cols: list[str] | None = None, seed: int = 0,
+):
+    """The reference model's test-set predictions, for callers that score
+    subsets of the test set separately."""
     if cols is None:
         cols = features.feature_columns(train_df, cfg)
     train_fit = train_df.sample(n=min(len(train_df), MAX_FIT_ROWS), random_state=seed)
     x_train, x_test = features.encode_aligned(train_fit, test_df, cols, unseen="missing")
     clf = RandomForestClassifier(n_estimators=100, random_state=seed, n_jobs=-1)
     clf.fit(x_train, train_fit[label_col])
-    return scores_from_predictions(test_df[label_col].to_numpy(), clf.predict(x_test))
+    return clf.predict(x_test)
 
 
 def fit_and_score(

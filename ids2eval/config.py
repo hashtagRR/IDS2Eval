@@ -27,7 +27,7 @@ VALID_OUTPUT_FORMAT = {"parquet", "csv"}
 # stay in sync with which checks actually call ids2eval.audit._materiality.threshold().
 MATERIALITY_SINGLE_CHECKS = {
     "resplit_falsification", "cross_dataset_drift_check", "repeated_seed_falsification_check",
-    "homogeneity_test",
+    "homogeneity_test", "reuse_removal_falsification",
 }
 MATERIALITY_TIERED_CHECKS = {
     "result_robustness_check", "cross_capture_matrix_check",
@@ -39,7 +39,7 @@ MATERIALITY_TIERED_CHECKS = {
 # {"accuracy": {"warning": .., "flag": ..}, ...}; a metric left out keeps the default.
 PER_METRIC_CHECKS = {
     "resplit_falsification", "repeated_seed_falsification_check", "result_robustness_check",
-    "scenario_holdout_falsification", "feature_category_ablation_check",
+    "scenario_holdout_falsification", "feature_category_ablation_check", "reuse_removal_falsification",
 }
 METRIC_NAMES = ("accuracy", "balanced_accuracy", "macro_f1")
 
@@ -107,6 +107,9 @@ DEFAULTS: dict[str, Any] = {
         "known_issue_lookup": False,
         "seed_sensitivity_check": False,
         "repeated_seed_falsification_check": False,
+        # Off by default: 2 x repeated_seed_count refits. Removes the training rows that
+        # share a feature vector with a test row, against a same-size random removal.
+        "reuse_removal_falsification": False,
         # Number of independent seeds repeated_seed_falsification_check refits under;
         # each additional seed is a full pair of RandomForest refits on the whole raw
         # dataset, real, non-negligible compute on a large dataset, hence opt-in above.

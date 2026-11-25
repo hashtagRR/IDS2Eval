@@ -120,6 +120,42 @@ column names for this across IDS datasets. Pick whatever columns
 identify a session in yours (source/destination IP and port are a
 common choice for flow-based datasets).
 
+The grouped checks report how many groups the key forms and how many rows
+sit in single-row groups. If most rows are alone in their group (a 5-tuple
+that includes an ephemeral source port often does this), the grouped split
+is close to a random one; use a coarser key, such as
+`[SrcIP, DstIP, DstPort, Protocol]` above, or the source address alone.
+
+## Judging materiality on more than accuracy
+
+```yaml
+audit:
+  materiality_metrics: [accuracy, balanced_accuracy, macro_f1]   # the default
+  materiality_thresholds:
+    repeated_seed_falsification_check: 0.01                       # every metric
+    result_robustness_check:
+      balanced_accuracy: {warning: 0.05, flag: 0.10}              # one metric only
+```
+
+The checks that refit and compare two conditions give accuracy, balanced
+accuracy and macro-F1 each a verdict. `materiality_metrics` lists the
+metrics whose verdicts decide the check's status (`[accuracy]` judges on
+accuracy alone, as versions before 0.3.0 did); every metric's verdict is
+reported either way. A threshold is either one value for every metric or a
+value per metric; a metric left out keeps the check's default. See the
+checks guide, "Metrics and materiality".
+
+## Dependent rows in the homogeneity control
+
+```yaml
+audit:
+  homogeneity_cluster_columns: [SrcIP]   # rows sharing a source host are dependent
+  homogeneity_interval: newcombe         # or "cluster" to let the cluster interval decide
+```
+
+With cluster columns set, `homogeneity_test` reports a cluster-bootstrap
+interval, which resamples whole clusters, next to its default interval.
+
 ## Collapsing attack categories
 
 ```yaml

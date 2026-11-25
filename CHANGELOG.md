@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Verdicts per metric: the checks that refit a model and compare two conditions (`resplit_falsification`, `repeated_seed_falsification_check`, `scenario_holdout_falsification`, `feature_category_ablation_check`, `result_robustness_check`) score accuracy, balanced accuracy and macro-F1 and give each its own verdict. `audit.materiality_thresholds` accepts a value per metric; `audit.materiality_metrics` (default: all three) sets which verdicts decide the status. Setting it to `[accuracy]` restores the earlier accuracy-only status.
+- `repeated_seed_falsification_check` also reports each metric's verdict at thresholds 0.005, 0.01, 0.02 and 0.05, and the ratio of grouped to random error rate.
+- The grouped checks report the grouping key's group count, share of single-row groups and group-size quantiles.
+- New opt-in check `reuse_removal_falsification`: removes the training rows whose feature vector occurs in the test set, refits, and scores the same test set against a same-size random removal with the same class mix, over seeds and per metric.
+- `homogeneity_test` reports its finding as `excess_matching` (test rows match training more often than training matches itself) instead of `leakage`. With `audit.homogeneity_cluster_columns` it also reports a cluster-bootstrap interval; `audit.homogeneity_interval: cluster` lets that interval decide.
+- Per-seed checkpoints of `repeated_seed_falsification_check` store every metric; seeds saved by an earlier version are refitted.
+
+Statistics and thresholds: the accuracy statistics, margins and default thresholds are unchanged. Statuses can change, because balanced accuracy and macro-F1 now count towards them by default with the same default thresholds.
+
 ## 0.2.3 (2026-10-17)
 
 - The project site shows the `pip install ids2eval` command, and the usage guide links to the install guide.

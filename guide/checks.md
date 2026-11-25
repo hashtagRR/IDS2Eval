@@ -2,7 +2,7 @@
 
 Most published NIDS results are evaluated on benchmark datasets whose
 quality is taken on faith, disclosed in a boilerplate limitations
-paragraph, or not tested at all. These 28 checks operationalize a
+paragraph, or not tested at all. These 29 checks operationalize a
 systematic audit methodology as reusable, config-driven software,
 rather than a one-off analysis notebook re-derived per dataset.
 Nineteen run by default (v1, no external data needed); nine are
@@ -31,7 +31,7 @@ does and does not cover:
 
 | Threat | Checks |
 |---|---|
-| Sample leakage (exact or near-exact duplicates across train/test) | `dedup_check`, `resplit_falsification` |
+| Sample leakage (exact or near-exact duplicates across train/test) | `dedup_check`, `homogeneity_test`, `resplit_falsification`, `reuse_removal_falsification` |
 | Label leakage (contradictory or confusable ground truth) | `label_conflict_check`, `near_duplicate_class_check` |
 | Identity leakage (IP/port/MAC/flow-tuple shortcuts) | `identity_column_flag`, `low_cardinality_warning`, `port_protocol_shortcut_check`, `flow_group_leakage_check` |
 | Temporal leakage (time or collection order standing in for the label) | `temporal_leakage_check`, `temporal_realism_check`, `row_order_leakage_check` |
@@ -49,6 +49,39 @@ does and does not cover:
 This is a map of what the tool checks, not a claim that every failure
 mode in NIDS evaluation has a check here yet; see the "scope" section
 on the docs site for what's deliberately left out.
+
+## Metrics and materiality
+
+The checks that refit a model and compare two conditions
+(`resplit_falsification`, `repeated_seed_falsification_check`,
+`scenario_holdout_falsification`, `feature_category_ablation_check`,
+`result_robustness_check`, `reuse_removal_falsification`) score three
+metrics, all proportions between 0 and 1:
+
+- **accuracy**, the share of test rows classified correctly;
+- **balanced accuracy**, the mean recall over the classes in the test labels;
+- **macro-F1**, the unweighted mean F1 over every class in the test labels
+  or the predictions (an undefined F1 counts as 0).
+
+Accuracy alone can hide a change that falls on a rare class: removing a
+column can cost half a point of accuracy and several points of balanced
+accuracy at once. Each metric therefore gets its own verdict against its
+own threshold. `audit.materiality_thresholds.<check>` takes either one
+value, used for every metric, or a value per metric, for example
+`{"accuracy": 0.01, "balanced_accuracy": 0.02}`; a metric left out keeps
+the check's default. The check's status is the most severe verdict among
+`audit.materiality_metrics` (all three by default); every metric's verdict
+is reported either way, so the scorecard shows which metric moved. Set
+`audit.materiality_metrics: [accuracy]` to judge on accuracy alone.
+
+The thresholds are a smallest effect of interest fixed before any data is
+seen, the same idea as an equivalence test: material when the whole 95%
+interval lies above it, not material when the whole interval lies below
+it, inconclusive otherwise. `repeated_seed_falsification_check` also
+reports each metric's verdict at 0.005, 0.01, 0.02 and 0.05, so a reader
+can apply their own standard without rerunning, and the ratio of grouped
+to random error rate, because near a ceiling an absolute drop of half a
+point can still mean the error rate multiplied.
 
 ## v1, always on
 
@@ -242,10 +275,24 @@ scaling counts as a match. The check takes a 95% Newcombe hybrid-score
 CI on the difference between the two match rates (test minus control),
 which stays well-behaved when a rate is near 0 or 1, and judges
 it one-sided against a +0.05 margin (`audit.materiality_thresholds.
-homogeneity_test`): leakage when the lower bound exceeds the margin,
-cleared when the upper bound is below it, inconclusive otherwise. A
-cleared class's repeated vectors are a property of the class population
-itself, present within each split independently.
+homogeneity_test`): excess cross-boundary matching (`excess_matching`)
+when the lower bound exceeds the margin, cleared when the upper bound is
+below it, inconclusive otherwise. A cleared class's repeated vectors are
+a property of the class population itself, present within each split
+independently. Excess matching says test rows match training more often
+than training matches itself; whether a model profits from that is what
+`resplit_falsification` and `reuse_removal_falsification` measure.
+
+The Newcombe interval treats the sampled rows as independent. For the
+quantity an audit is about, the match rates over the one split being
+audited, that holds: the only randomness is which rows are sampled, and
+they are drawn independently from the split. Flows that share a host or a
+capture are dependent, though, which matters for the wider question of
+what another capture of the same process would show. Setting
+`audit.homogeneity_cluster_columns` (for example `[Src IP]`) adds a
+percentile bootstrap that resamples whole clusters on each side, reported
+next to the Newcombe interval as a sensitivity analysis;
+`audit.homogeneity_interval: cluster` makes it decide the verdict.
 
 ### `resplit_falsification`
 The nearest-neighbor test's one blind spot: a random split can't
@@ -259,6 +306,15 @@ CIC-IDS2018 near-saturation-accuracy question: a grouped resplit
 reproduced the random split's accuracy to within 0.003 percentage
 points, settling the question by direct experiment rather than a
 disclosed-but-untested caveat.
+
+A grouped split only differs from a random one when groups hold several
+rows. A 5-tuple with an ephemeral source port, or a key that includes a
+timestamp, can make almost every row its own group, and then "no change
+under grouping" says little. The check reports the key's group count,
+the share of rows in single-row groups and the group-size quantiles next
+to its result; when most rows sit in single-row groups, use a coarser key
+such as source address, destination address, destination port and
+protocol.
 
 A single comparison on finite test sets is noisy: with about 1,200 test
 rows per side, the 95% sampling margin on an accuracy gap is about
@@ -279,9 +335,10 @@ test, and conclusions about split sensitivity should rest on it.
 `resplit_falsification`'s one blind spot: a single random-vs-grouped
 comparison is one draw from a distribution, not a settled answer. This
 check repeats that same comparison across multiple seeds
-(`audit.repeated_seed_count`, default 10) and reports a mean accuracy
+(`audit.repeated_seed_count`, default 10) and reports a mean
 drop with a 95% confidence interval (Student's t), rather than one
-point estimate. Classifies the result as material (the CI's lower
+point estimate, for each of accuracy, balanced accuracy and macro-F1.
+Classifies each metric's result as material (the CI's lower
 bound stays above the materiality threshold), not material (the CI's
 upper bound stays below it), or inconclusive (the CI straddles the
 threshold, meaning more seeds are needed before drawing a conclusion
@@ -403,6 +460,23 @@ behavior. Needs at least two conditions to report anything beyond
 `ok`; a minimal config with no `group_columns` or `id_like_columns`
 still gets the random-split-vs-deduplicated comparison. Deliberately
 opt-in: the heaviest check here, one RandomForest fit per condition.
+
+### `reuse_removal_falsification`
+`dedup_check` counts test rows whose feature vector also occurs in
+training, and comparing those rows' scores with the other test rows'
+is observational: reused rows tend to come from different classes than
+novel ones, so even a class-adjusted difference does not show that
+training exposure caused it. This check intervenes. It removes every
+training row whose feature vector occurs in the test set, refits, and
+scores the same, unchanged test set, against removing as many randomly
+chosen training rows with the same class mix (so training size and class
+support stay fixed). Repeated over `audit.repeated_seed_count` seeds,
+each metric gets a mean score difference (random removal minus reuse
+removal), a 95% Student-t interval and the three-way verdict of
+`repeated_seed_falsification_check`; the difference on the reused test
+rows alone is reported too. It needs the data before deduplication;
+after it, no test row matches training and the check is not applicable.
+Opt-in: two refits per seed.
 
 ### `known_issue_lookup`
 A curated table of documented per-dataset problems, matched on

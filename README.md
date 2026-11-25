@@ -11,7 +11,7 @@
 </p>
 
 A config-driven toolkit that audits network intrusion detection (NIDS)
-datasets before you trust a result on them. It runs 28 checks for
+datasets before you trust a result on them. It runs 29 checks for
 duplicated rows, label conflicts, one-column shortcuts and split
 problems, tests whether a suspected problem actually changes the
 accuracy, and records every verdict in a citable scorecard.
@@ -45,7 +45,7 @@ Windows, installing from the source code, and troubleshooting: [INSTALL.md](http
 | [Usage](https://github.com/hashtagRR/IDS2Eval/blob/main/guide/usage.md) | the CLI, the dashboard, output files, caching, reproducing a run, and the Python API |
 | [Config fields](https://github.com/hashtagRR/IDS2Eval/blob/main/configs/README.md) | every config field, with its default and an example |
 | [Configuration notes](https://github.com/hashtagRR/IDS2Eval/blob/main/guide/configuration.md) | the reasoning behind non-obvious fields, and larger worked examples |
-| [Checks](https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md) | what each of the 28 checks does, the research behind it, and the scorecard's verdict rule |
+| [Checks](https://github.com/hashtagRR/IDS2Eval/blob/main/guide/checks.md) | what each of the 29 checks does, the research behind it, and the scorecard's verdict rule |
 | [Example scorecards](https://github.com/hashtagRR/IDS2Eval/blob/main/examples/README.md) | the real audit runs behind the paper, on seven widely used NIDS benchmarks |
 | [Paper results](https://github.com/hashtagRR/IDS2Eval/blob/main/results/README.md) | configurations, scorecards and analysis outputs behind the accompanying paper |
 | [Known issues](https://github.com/hashtagRR/IDS2Eval/blob/main/guide/contributing-known-issues.md) | how to add a curated known issue or extractor fingerprint |

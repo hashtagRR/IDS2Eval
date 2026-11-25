@@ -54,7 +54,8 @@ def main() -> None:
     data_dir, out = Path(sys.argv[1]), Path(sys.argv[2])
     files = sorted(data_dir.glob("UNSW_NB15_*-set.csv"))
     hashes = {f.name: sha256(f) for f in files}
-    assert set(hashes.values()) == SHA256, f"unexpected input files: {hashes}"
+    if set(hashes.values()) != SHA256:
+        raise SystemExit(f"unexpected input files: {hashes}")
     frames = [pd.read_csv(f, encoding="utf-8-sig") for f in files]
     train = next(df for df in frames if len(df) == TRAIN_ROWS)
     test = next(df for df in frames if len(df) == TEST_ROWS)

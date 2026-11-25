@@ -126,6 +126,12 @@ DEFAULTS: dict[str, Any] = {
         # verdicts. Every metric's verdict is reported either way; ["accuracy"] restores
         # the accuracy-only status of versions before 0.3.0.
         "materiality_metrics": ["accuracy", "balanced_accuracy", "macro_f1"],
+        # homogeneity_test: columns whose values define clusters of dependent rows (a
+        # source host, a capture, a flow key). When set, a cluster-bootstrap interval is
+        # reported next to the default Newcombe interval; homogeneity_interval "cluster"
+        # makes it decide the verdict.
+        "homogeneity_cluster_columns": [],
+        "homogeneity_interval": "newcombe",
         # Off by default: running checks concurrently means several may hold their own
         # encoded feature matrix/RandomForest fit in memory at the same time instead of
         # one at a time, raising peak memory versus the sequential default - a real
@@ -336,6 +342,13 @@ def validate_config(cfg: dict[str, Any]) -> None:
                 errors.extend(_tier_errors(f"{check}.{metric}", tiers))
         else:
             errors.extend(_tier_errors(check, value))
+
+    if audit["homogeneity_interval"] not in {"newcombe", "cluster"}:
+        errors.append('audit.homogeneity_interval must be "newcombe" or "cluster"')
+    if not isinstance(audit["homogeneity_cluster_columns"], list):
+        errors.append("audit.homogeneity_cluster_columns must be a list of column names")
+    elif audit["homogeneity_interval"] == "cluster" and not audit["homogeneity_cluster_columns"]:
+        errors.append('audit.homogeneity_interval "cluster" needs audit.homogeneity_cluster_columns')
 
     metrics = audit["materiality_metrics"]
     if not isinstance(metrics, list) or not metrics or not set(metrics) <= set(METRIC_NAMES):

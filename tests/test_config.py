@@ -322,3 +322,31 @@ def test_materiality_threshold_rejects_an_unknown_check_name(base_cfg):
     base_cfg["audit"]["materiality_thresholds"] = {"dedup_check": 0.1}
     with pytest.raises(ValueError, match="don't support a threshold override"):
         validate_config(base_cfg)
+
+
+def test_homogeneity_interval_must_be_known(base_cfg):
+    base_cfg["audit"]["homogeneity_interval"] = "wald"
+    with pytest.raises(ValueError, match="homogeneity_interval"):
+        validate_config(base_cfg)
+
+
+def test_cluster_homogeneity_interval_needs_cluster_columns(base_cfg):
+    base_cfg["audit"]["homogeneity_interval"] = "cluster"
+    with pytest.raises(ValueError, match=r"needs audit\.homogeneity_cluster_columns"):
+        validate_config(base_cfg)
+
+
+def test_materiality_metrics_must_be_known(base_cfg):
+    base_cfg["audit"]["materiality_metrics"] = ["recall"]
+    with pytest.raises(ValueError, match="materiality_metrics"):
+        validate_config(base_cfg)
+
+
+def test_per_metric_threshold_accepted_for_intervention_checks(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["audit"]["resplit_falsification"] = False
+    base_cfg["audit"]["materiality_thresholds"] = {
+        "repeated_seed_falsification_check": {"balanced_accuracy": 0.02},
+        "result_robustness_check": {"macro_f1": {"warning": 0.05, "flag": 0.10}},
+    }
+    validate_config(base_cfg)  # should not raise

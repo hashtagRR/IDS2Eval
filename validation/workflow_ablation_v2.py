@@ -168,7 +168,7 @@ def run_one(name: str, seed: int, rep: int) -> dict:
             "true_gap": float(np.mean(gaps)),
             "reuse_share": d["details"]["test_leakage_dropped"] / max(len(test), 1),
             "dedup_status": d["status"], "homogeneity_classes": classes, "interventions": ivs,
-            "evidence": {"dedup": d["status"] == "flag", "homogeneity": "leakage" in classes,
+            "evidence": {"dedup": d["status"] == "flag", "homogeneity": "excess_matching" in classes or "leakage" in classes,
                          "intervention": d2},
             "D2": d2, "D3": d3, "D3_ran_interventions": bool(gate)}
 

@@ -158,17 +158,19 @@ CHECK_INFO = {
     ),
     "resplit_falsification": (
         "Retrains with a grouped split (no session from dataset.group_columns on both sides) and compares "
-        "accuracy against a random split. Rebuilds both splits from the raw data itself, so its result is "
+        "accuracy, balanced accuracy and macro-F1 against a random split, with the grouping key's group "
+        "count and size distribution. Rebuilds both splits from the raw data itself, so its result is "
         "the same whether or not preprocessing.dedup ran.",
-        "Flag: grouped-split accuracy is more than 1 percentage point lower even after allowing for the "
-        "test sets' sampling margin. Warning: more than 1 point lower, but within that margin.",
+        "Per metric (audit.materiality_metrics decides the status): flag when the grouped split scores more "
+        "than 1 percentage point lower even after allowing for the test sets' sampling margin; warning when "
+        "more than 1 point lower, but within that margin.",
     ),
     "scenario_holdout_falsification": (
         "Holds out the smallest schema.scenario_column value entirely as test, training on every other "
-        "scenario, and compares accuracy against a random split. Rebuilds both splits from the raw data "
-        "itself, so its result is the same whether or not preprocessing.dedup ran.",
-        "Flag: accuracy drops more than 10 percentage points on the held-out scenario. Warning: more than "
-        "5. Not applicable when no schema.scenario_column is configured.",
+        "scenario, and compares accuracy, balanced accuracy and macro-F1 against a random split. Rebuilds "
+        "both splits from the raw data itself, so its result is the same whether or not preprocessing.dedup ran.",
+        "Per metric: flag when the score drops more than 10 percentage points on the held-out scenario, "
+        "warning when more than 5. Not applicable when no schema.scenario_column is configured.",
     ),
     "class_distribution_report": (
         "Class counts in train and test, the majority:minority ratio, and rare classes.",
@@ -207,8 +209,9 @@ CHECK_INFO = {
     ),
     "feature_category_ablation_check": (
         "Fits once on every feature, then once per schema.feature_categories group with that group's "
-        "columns removed, and reports how much accuracy each group's removal costs.",
-        "Flag: one category's removal costs more than 30 points of accuracy. Warning: more than 15. "
+        "columns removed, and reports how much accuracy, balanced accuracy and macro-F1 each group's "
+        "removal costs.",
+        "Per metric: flag when one category's removal costs more than 30 points, warning when more than 15. "
         "Not applicable when no schema.feature_categories is configured.",
     ),
     "artifact_sensitivity_check": (
@@ -220,9 +223,9 @@ CHECK_INFO = {
     ),
     "result_robustness_check": (
         "Re-fits under each condition it can build from the config, random split, session-grouped "
-        "split, deduplicated, identity columns dropped, and reports the full accuracy-by-condition "
-        "vector rather than one collapsed score.",
-        "Flag: the spread between the best and worst condition exceeds 15 points of accuracy even after "
+        "split, deduplicated, identity columns dropped, and reports the full score-by-condition "
+        "vector for accuracy, balanced accuracy and macro-F1 rather than one collapsed score.",
+        "Per metric: flag when the spread between the best and worst condition exceeds 15 points even after "
         "allowing for the test sets' sampling margin. Warning: more than 8 points. Not applicable when fewer "
         "than two conditions can be built.",
     ),
@@ -238,11 +241,11 @@ CHECK_INFO = {
         "Warning: either check's verdict changed across seeds.",
     ),
     "repeated_seed_falsification_check": (
-        "Re-runs resplit_falsification's random-vs-grouped accuracy comparison across "
-        "audit.repeated_seed_count independent seeds (default 10) and reports a 95% "
-        "confidence interval on the mean accuracy drop, instead of a single seed's point "
-        "estimate.",
-        "Flag: even the CI's most conservative bound exceeds the materiality threshold. "
+        "Re-runs resplit_falsification's random-vs-grouped comparison across "
+        "audit.repeated_seed_count independent seeds (default 10) and reports, for accuracy, "
+        "balanced accuracy and macro-F1, a 95% confidence interval on the mean drop instead of "
+        "a single seed's point estimate, with each metric's verdict at thresholds from 0.005 to 0.05.",
+        "Per metric: flag when even the CI's most conservative bound exceeds the materiality threshold. "
         "Ok: even its most generous bound stays below it. Warning: the CI straddles the "
         "threshold, inconclusive at this many seeds, not evidence of no effect.",
     ),

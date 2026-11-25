@@ -76,7 +76,8 @@ _NOT_FIXABLE_NOTES = {
         "sit to each other. A property of the data, not a config problem."
     ),
     "resplit_falsification": (
-        "Tests whether a session-grouped split costs accuracy. A flag here "
+        "Tests whether a session-grouped split costs accuracy, balanced accuracy "
+        "or macro-F1 (the scorecard names which). A flag here "
         "means session-correlated leakage may be doing real work; report "
         "results under the grouped split, or investigate dataset.group_columns, "
         "rather than treating it as fixable."

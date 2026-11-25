@@ -295,7 +295,7 @@ def _homogeneity_frames(test_copies_train: bool, train_internal_dupes: bool):
 
 
 @pytest.mark.parametrize("test_copies_train,train_dupes,expected_cls,expected_status", [
-    (True, False, "leakage", "flag"),
+    (True, False, "excess_matching", "flag"),
     (False, True, "below_control", "ok"),
     (False, False, "equivalent", "ok"),
 ])
@@ -1553,3 +1553,50 @@ def test_resplit_falsification_reports_group_statistics(base_cfg, tmp_path, synt
     assert stats["groups"] == synth_data["SrcIP"].nunique()
     assert stats["rows"] == len(synth_data)
     assert set(details["by_metric"]) == {"accuracy", "balanced_accuracy", "macro_f1"}
+
+
+def _host_clustered_frames(seed: int = 0):
+    """Test rows copy training rows host by host: 20 hosts, each host's rows either
+    all copied or all fresh, so matches come in whole-host clusters."""
+    rng = np.random.RandomState(seed)
+    hosts = np.repeat(np.arange(20), 30)
+    train = pd.DataFrame({"f1": rng.normal(size=600), "f2": rng.normal(size=600),
+                          "host": hosts, "Label": "A"})
+    copied = train[train["host"] < 4]
+    fresh = pd.DataFrame({"f1": rng.normal(size=480), "f2": rng.normal(size=480),
+                          "host": np.repeat(np.arange(4, 20), 30), "Label": "A"})
+    test = pd.concat([copied, fresh], ignore_index=True)
+    return train, test
+
+
+def test_homogeneity_cluster_interval_is_reported_and_wider_for_host_clusters(base_cfg):
+    train, test = _host_clustered_frames()
+    base_cfg["schema"]["drop_columns"] = ["host"]
+    base_cfg["audit"]["homogeneity_cluster_columns"] = ["host"]
+    result = homogeneity.check(train, test, base_cfg)
+    row = result["details"]["per_class"]["A"]
+    assert result["details"]["interval"] == "newcombe"
+    assert result["details"]["cluster_columns"] == ["host"]
+    row_width = row["row_ci_95"][1] - row["row_ci_95"][0]
+    cluster_width = row["cluster_ci_95"][1] - row["cluster_ci_95"][0]
+    assert cluster_width > row_width
+    assert row["rate_diff_ci_95"] == row["row_ci_95"]  # Newcombe still decides by default
+
+
+def test_homogeneity_cluster_interval_decides_when_selected(base_cfg):
+    train, test = _host_clustered_frames()
+    base_cfg["schema"]["drop_columns"] = ["host"]
+    base_cfg["audit"]["homogeneity_cluster_columns"] = ["host"]
+    base_cfg["audit"]["homogeneity_interval"] = "cluster"
+    result = homogeneity.check(train, test, base_cfg)
+    row = result["details"]["per_class"]["A"]
+    assert result["details"]["interval"] == "cluster"
+    assert row["rate_diff_ci_95"] == row["cluster_ci_95"]
+    assert row["classification"] == row["cluster_classification"]
+
+
+def test_homogeneity_without_cluster_columns_reports_no_cluster_interval(base_cfg, synth_train_test):
+    train_df, test_df = synth_train_test
+    result = homogeneity.check(train_df, test_df, base_cfg)
+    assert result["details"]["cluster_columns"] == []
+    assert all("cluster_ci_95" not in v for v in result["details"]["per_class"].values())

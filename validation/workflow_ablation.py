@@ -231,7 +231,7 @@ def run_one(name: str, seed: int) -> dict:
     classes = [v["classification"] for v in h["details"]["per_class"].values()]
     if w1 == "not material":
         w2 = "not material"
-    elif "leakage" in classes:
+    elif "excess_matching" in classes or "leakage" in classes:
         w2 = "material"
     elif classes and all(c in ("equivalent", "below_control") for c in classes):
         w2 = "not material"

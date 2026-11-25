@@ -1,0 +1,465 @@
+{
+  "bot-iot-official": {
+    "five_tuple": {
+      "group_stats": {
+        "group_columns": [
+          "saddr",
+          "sport",
+          "daddr",
+          "dport",
+          "proto"
+        ],
+        "rows": 3668522,
+        "groups": 1011208,
+        "rows_per_group": 3.6278609346445045,
+        "singleton_group_share": 0.09152123005355971,
+        "rows_in_singleton_groups": 0.025227325882194517,
+        "size_median": 4.0,
+        "size_p90": 6.0,
+        "size_p99": 8.0,
+        "size_max": 15,
+        "largest_group_row_share": 4.088840137799364e-06
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0000], balanced accuracy +0.0164 [-0.0431, +0.0759], macro-F1 +0.0125 [-0.0311, +0.0561]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            2.4533020764438973e-05,
+            1.362945598049059e-06,
+            -1.77182927743047e-05,
+            9.54061918623239e-06,
+            4.770309593093991e-05,
+            2.044418397040282e-05,
+            2.4533020764438973e-05,
+            1.77182927743047e-05,
+            -1.362945598049059e-06,
+            -2.1807129568340855e-05
+          ],
+          "mean_drop": 1.0494681104811221e-05,
+          "ci_95": [
+            -4.575184191020159e-06,
+            2.55645464006426e-05
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                2.4533020764438973e-05,
+                1.362945598049059e-06,
+                -1.77182927743047e-05,
+                9.54061918623239e-06,
+                4.770309593093991e-05,
+                2.044418397040282e-05,
+                2.4533020764438973e-05,
+                1.77182927743047e-05,
+                -1.362945598049059e-06,
+                -2.1807129568340855e-05
+              ],
+              "mean_drop": 1.0494681104811221e-05,
+              "ci_95": [
+                -4.575184191020159e-06,
+                2.55645464006426e-05
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.11231358264740199,
+                -0.01868421052631586,
+                -0.09465033473725892,
+                -0.040252179138629884,
+                0.15811342912259874,
+                0.07106361033505437,
+                0.07058112650705106,
+                0.01500060596512054,
+                -0.06447368421052635,
+                -0.044624163156853025
+              ],
+              "mean_drop": 0.016438778280764267,
+              "ci_95": [
+                -0.04305247083807403,
+                0.07593002739960256
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.07369695720586766,
+                -0.010572758656801517,
+                -0.06951647834672625,
+                -0.021677847274085615,
+                0.1298178969165632,
+                0.04309760280961883,
+                0.04690554649069678,
+                0.011417781359196355,
+                -0.04669797641112827,
+                -0.03145416924086586
+              ],
+              "mean_drop": 0.01250165548523353,
+              "ci_95": [
+                -0.03113787298654747,
+                0.056141183957014534
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.6683519858512688,
+          "group_stats": {
+            "group_columns": [
+              "saddr",
+              "sport",
+              "daddr",
+              "dport",
+              "proto"
+            ],
+            "rows": 3668522,
+            "groups": 1011208,
+            "rows_per_group": 3.6278609346445045,
+            "singleton_group_share": 0.09152123005355971,
+            "rows_in_singleton_groups": 0.025227325882194517,
+            "size_median": 4.0,
+            "size_p90": 6.0,
+            "size_p99": 8.0,
+            "size_max": 15,
+            "largest_group_row_share": 4.088840137799364e-06
+          }
+        }
+      },
+      "seconds": 1191
+    },
+    "coarse": {
+      "group_stats": {
+        "group_columns": [
+          "saddr",
+          "daddr",
+          "dport",
+          "proto"
+        ],
+        "rows": 3668522,
+        "groups": 39981,
+        "rows_per_group": 91.75663440134063,
+        "singleton_group_share": 0.60063530176834,
+        "rows_in_singleton_groups": 0.006545960471274263,
+        "size_median": 1.0,
+        "size_p90": 5.0,
+        "size_p99": 7.0,
+        "size_max": 493567,
+        "largest_group_row_share": 0.1345411040195479
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0000], balanced accuracy -0.0024 [-0.0893, +0.0844], macro-F1 +0.0133 [-0.0638, +0.0903]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            2.1566558747965203e-05,
+            1.2149020162111057e-06,
+            -3.008658311909329e-05,
+            -3.012359401455278e-05,
+            -1.3865342074481646e-07,
+            1.6142576674593734e-05,
+            5.941444288115605e-05,
+            5.12460220168931e-05,
+            -9.716420939720471e-06,
+            -3.287724338219e-05
+          ],
+          "mean_drop": 4.6642007460517835e-06,
+          "ci_95": [
+            -1.8764672817811453e-05,
+            2.8093074309915023e-05
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                2.1566558747965203e-05,
+                1.2149020162111057e-06,
+                -3.008658311909329e-05,
+                -3.012359401455278e-05,
+                -1.3865342074481646e-07,
+                1.6142576674593734e-05,
+                5.941444288115605e-05,
+                5.12460220168931e-05,
+                -9.716420939720471e-06,
+                -3.287724338219e-05
+              ],
+              "mean_drop": 4.6642007460517835e-06,
+              "ci_95": [
+                -1.8764672817811453e-05,
+                2.8093074309915023e-05
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.023279256623943256,
+                -0.029078947368421093,
+                -0.13565910666708347,
+                -0.11078871198837081,
+                -0.039474290175646964,
+                0.02736781508751085,
+                0.2026206001912615,
+                0.2065797090642606,
+                -0.09789473684210515,
+                -0.07131578947368422
+              ],
+              "mean_drop": -0.0024364201548335517,
+              "ci_95": [
+                -0.08930394298154552,
+                0.08443110267187841
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.014108708116981505,
+                -0.015760829737922588,
+                -0.09223507469301595,
+                -0.06932735695394909,
+                -0.02251907723416724,
+                0.016499314117348618,
+                0.20495877408498464,
+                0.20812700256839511,
+                -0.06537126362318801,
+                -0.0458575220377857
+              ],
+              "mean_drop": 0.01326226746076813,
+              "ci_95": [
+                -0.06381456582056509,
+                0.09033910074210134
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.5111896152054538,
+          "group_stats": {
+            "group_columns": [
+              "saddr",
+              "daddr",
+              "dport",
+              "proto"
+            ],
+            "rows": 3668522,
+            "groups": 39981,
+            "rows_per_group": 91.75663440134063,
+            "singleton_group_share": 0.60063530176834,
+            "rows_in_singleton_groups": 0.006545960471274263,
+            "size_median": 1.0,
+            "size_p90": 5.0,
+            "size_p99": 7.0,
+            "size_max": 493567,
+            "largest_group_row_share": 0.1345411040195479
+          }
+        }
+      },
+      "seconds": 228
+    },
+    "host": {
+      "group_stats": {
+        "group_columns": [
+          "saddr"
+        ],
+        "rows": 3668522,
+        "groups": 21,
+        "rows_per_group": 174691.52380952382,
+        "singleton_group_share": 0.0,
+        "rows_in_singleton_groups": 0.0,
+        "size_median": 15.0,
+        "size_p90": 890262.0,
+        "size_p99": 945430.8,
+        "size_max": 950966,
+        "largest_group_row_share": 0.25922319669883404
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy -0.0000 [-0.0000, +0.0000], balanced accuracy -0.0192 [-0.0516, +0.0133], macro-F1 -0.0112 [-0.0332, +0.0108]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            9.113938958749124e-06,
+            1.2046380228225573e-05,
+            -2.5482866215620348e-05,
+            -2.227049815473059e-05,
+            7.714305001793598e-06,
+            1.3166087393878811e-05,
+            -4.4788286625019325e-06,
+            6.196502202460152e-07,
+            1.0050204329425938e-05,
+            -3.450032017804361e-05
+          ],
+          "mean_drop": -3.4021947078577417e-06,
+          "ci_95": [
+            -1.6025221677183767e-05,
+            9.220832261468282e-06
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                9.113938958749124e-06,
+                1.2046380228225573e-05,
+                -2.5482866215620348e-05,
+                -2.227049815473059e-05,
+                7.714305001793598e-06,
+                1.3166087393878811e-05,
+                -4.4788286625019325e-06,
+                6.196502202460152e-07,
+                1.0050204329425938e-05,
+                -3.450032017804361e-05
+              ],
+              "mean_drop": -3.4021947078577417e-06,
+              "ci_95": [
+                -1.6025221677183767e-05,
+                9.220832261468282e-06
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.03162313878695322,
+                0.0012667498002502109,
+                -0.10393895262343766,
+                -0.06099486521180997,
+                -0.013122116924931593,
+                0.055166887701174616,
+                -0.03353288800112397,
+                -0.0070682663307432,
+                -0.01594229122966906,
+                -0.04518613607188704
+              ],
+              "mean_drop": -0.019172874010522443,
+              "ci_95": [
+                -0.05163677786267606,
+                0.01329102984163117
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.018511170642530272,
+                0.0026450584379177355,
+                -0.0736560417466261,
+                -0.03809018331671965,
+                -0.0010195255190610375,
+                0.03392006369576728,
+                -0.02035156373862268,
+                0.003070703618480941,
+                -0.006800138327135441,
+                -0.03004725850969847
+              ],
+              "mean_drop": -0.011181771476316715,
+              "ci_95": [
+                -0.03316562451315054,
+                0.010802081560517107
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.1002436937984168,
+          "group_stats": {
+            "group_columns": [
+              "saddr"
+            ],
+            "rows": 3668522,
+            "groups": 21,
+            "rows_per_group": 174691.52380952382,
+            "singleton_group_share": 0.0,
+            "rows_in_singleton_groups": 0.0,
+            "size_median": 15.0,
+            "size_p90": 890262.0,
+            "size_p99": 945430.8,
+            "size_max": 950966,
+            "largest_group_row_share": 0.25922319669883404
+          }
+        }
+      },
+      "seconds": 193
+    }
+  }
+}

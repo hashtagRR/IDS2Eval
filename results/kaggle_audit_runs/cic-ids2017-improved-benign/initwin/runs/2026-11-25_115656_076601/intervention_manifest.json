@@ -1,0 +1,324 @@
+[
+  {
+    "finding": {
+      "check": "resplit_falsification",
+      "status": "warning",
+      "evidence": {
+        "random_accuracy": 0.9997928551700492,
+        "grouped_accuracy": 0.999755014473174,
+        "drop": 3.784069687517988e-05,
+        "sampling_margin": 6.428143788218062e-05,
+        "random_test_rows": 419996,
+        "grouped_test_rows": 420433,
+        "by_metric": {
+          "accuracy": {
+            "random": 0.9997928551700492,
+            "grouped": 0.999755014473174,
+            "drop": 3.784069687517988e-05,
+            "sampling_margin": 6.428143788218062e-05,
+            "threshold": 0.01,
+            "verdict": "ok"
+          },
+          "balanced_accuracy": {
+            "random": 0.9114388228408203,
+            "grouped": 0.847427241946216,
+            "drop": 0.06401158089460435,
+            "sampling_margin": 0.06836647500554113,
+            "threshold": 0.01,
+            "verdict": "warning"
+          },
+          "macro_f1": {
+            "random": 0.9224207413764455,
+            "grouped": 0.8553745214074681,
+            "drop": 0.06704621996897742,
+            "sampling_margin": 0.06683021596803997,
+            "threshold": 0.01,
+            "verdict": "warning"
+          }
+        },
+        "error_ratio": 1.1826774864918115,
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ],
+        "group_stats": {
+          "group_columns": [
+            "Src IP",
+            "Src Port",
+            "Dst IP",
+            "Dst Port",
+            "Protocol"
+          ],
+          "rows": 2099976,
+          "groups": 1084821,
+          "rows_per_group": 1.9357811104320437,
+          "singleton_group_share": 0.7880286240771519,
+          "rows_in_singleton_groups": 0.40708560478786426,
+          "size_median": 1.0,
+          "size_p90": 3.0,
+          "size_p99": 14.0,
+          "size_max": 1184,
+          "largest_group_row_share": 0.00056381596742058
+        }
+      }
+    },
+    "intervention": {
+      "type": "resplit_falsification",
+      "description": "session/time-grouped resplit",
+      "performed": true
+    },
+    "consequence": {
+      "random_accuracy": 0.9997928551700492,
+      "grouped_accuracy": 0.999755014473174,
+      "drop": 3.784069687517988e-05,
+      "sampling_margin": 6.428143788218062e-05,
+      "random_test_rows": 419996,
+      "grouped_test_rows": 420433,
+      "by_metric": {
+        "accuracy": {
+          "random": 0.9997928551700492,
+          "grouped": 0.999755014473174,
+          "drop": 3.784069687517988e-05,
+          "sampling_margin": 6.428143788218062e-05,
+          "threshold": 0.01,
+          "verdict": "ok"
+        },
+        "balanced_accuracy": {
+          "random": 0.9114388228408203,
+          "grouped": 0.847427241946216,
+          "drop": 0.06401158089460435,
+          "sampling_margin": 0.06836647500554113,
+          "threshold": 0.01,
+          "verdict": "warning"
+        },
+        "macro_f1": {
+          "random": 0.9224207413764455,
+          "grouped": 0.8553745214074681,
+          "drop": 0.06704621996897742,
+          "sampling_margin": 0.06683021596803997,
+          "threshold": 0.01,
+          "verdict": "warning"
+        }
+      },
+      "error_ratio": 1.1826774864918115,
+      "materiality_metrics": [
+        "accuracy",
+        "balanced_accuracy",
+        "macro_f1"
+      ],
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Src Port",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 1084821,
+        "rows_per_group": 1.9357811104320437,
+        "singleton_group_share": 0.7880286240771519,
+        "rows_in_singleton_groups": 0.40708560478786426,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 14.0,
+        "size_max": 1184,
+        "largest_group_row_share": 0.00056381596742058
+      }
+    },
+    "conclusion": {
+      "status": "inconclusive"
+    }
+  },
+  {
+    "finding": {
+      "check": "result_robustness_check",
+      "status": "ok",
+      "evidence": {
+        "accuracy_by_condition": {
+          "random_split": 0.9997928551700492,
+          "grouped_split": 0.999755014473174,
+          "deduplicated": 0.9998225479240506,
+          "identity_columns_dropped": 0.9947332831741255
+        },
+        "spread": 0.005089264749925104,
+        "worst_condition": "identity_columns_dropped",
+        "best_condition": "deduplicated",
+        "sampling_margin": 0.00022260335396939666,
+        "by_metric": {
+          "accuracy": {
+            "by_condition": {
+              "random_split": 0.9997928551700492,
+              "grouped_split": 0.999755014473174,
+              "deduplicated": 0.9998225479240506,
+              "identity_columns_dropped": 0.9947332831741255
+            },
+            "spread": 0.005089264749925104,
+            "sampling_margin": 0.00022260335396939666,
+            "worst_condition": "identity_columns_dropped",
+            "best_condition": "deduplicated",
+            "drop_from_random_split": {
+              "random_split": 0.0,
+              "grouped_split": 3.784069687517988e-05,
+              "deduplicated": -2.9692754001331423e-05,
+              "identity_columns_dropped": 0.005059571995923773
+            },
+            "thresholds": {
+              "warning": 0.08,
+              "flag": 0.15
+            },
+            "verdict": "ok"
+          },
+          "balanced_accuracy": {
+            "by_condition": {
+              "random_split": 0.9114388228408203,
+              "grouped_split": 0.847427241946216,
+              "deduplicated": 0.8779675150952982,
+              "identity_columns_dropped": 0.8942029110282375
+            },
+            "spread": 0.06401158089460435,
+            "sampling_margin": 0.06836647500554113,
+            "worst_condition": "grouped_split",
+            "best_condition": "random_split",
+            "drop_from_random_split": {
+              "random_split": 0.0,
+              "grouped_split": 0.06401158089460435,
+              "deduplicated": 0.033471307745522094,
+              "identity_columns_dropped": 0.017235911812582883
+            },
+            "thresholds": {
+              "warning": 0.08,
+              "flag": 0.15
+            },
+            "verdict": "ok"
+          },
+          "macro_f1": {
+            "by_condition": {
+              "random_split": 0.9224207413764455,
+              "grouped_split": 0.8553745214074681,
+              "deduplicated": 0.8872786256588663,
+              "identity_columns_dropped": 0.9087774664885948
+            },
+            "spread": 0.06704621996897742,
+            "sampling_margin": 0.06683021596803997,
+            "worst_condition": "grouped_split",
+            "best_condition": "random_split",
+            "drop_from_random_split": {
+              "random_split": 0.0,
+              "grouped_split": 0.06704621996897742,
+              "deduplicated": 0.03514211571757919,
+              "identity_columns_dropped": 0.013643274887850665
+            },
+            "thresholds": {
+              "warning": 0.08,
+              "flag": 0.15
+            },
+            "verdict": "ok"
+          }
+        },
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ]
+      }
+    },
+    "intervention": {
+      "type": "result_robustness_check",
+      "description": "refit under each buildable condition (split, dedup, identity columns)",
+      "performed": true
+    },
+    "consequence": {
+      "accuracy_by_condition": {
+        "random_split": 0.9997928551700492,
+        "grouped_split": 0.999755014473174,
+        "deduplicated": 0.9998225479240506,
+        "identity_columns_dropped": 0.9947332831741255
+      },
+      "spread": 0.005089264749925104,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "deduplicated",
+      "sampling_margin": 0.00022260335396939666,
+      "by_metric": {
+        "accuracy": {
+          "by_condition": {
+            "random_split": 0.9997928551700492,
+            "grouped_split": 0.999755014473174,
+            "deduplicated": 0.9998225479240506,
+            "identity_columns_dropped": 0.9947332831741255
+          },
+          "spread": 0.005089264749925104,
+          "sampling_margin": 0.00022260335396939666,
+          "worst_condition": "identity_columns_dropped",
+          "best_condition": "deduplicated",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 3.784069687517988e-05,
+            "deduplicated": -2.9692754001331423e-05,
+            "identity_columns_dropped": 0.005059571995923773
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        },
+        "balanced_accuracy": {
+          "by_condition": {
+            "random_split": 0.9114388228408203,
+            "grouped_split": 0.847427241946216,
+            "deduplicated": 0.8779675150952982,
+            "identity_columns_dropped": 0.8942029110282375
+          },
+          "spread": 0.06401158089460435,
+          "sampling_margin": 0.06836647500554113,
+          "worst_condition": "grouped_split",
+          "best_condition": "random_split",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 0.06401158089460435,
+            "deduplicated": 0.033471307745522094,
+            "identity_columns_dropped": 0.017235911812582883
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        },
+        "macro_f1": {
+          "by_condition": {
+            "random_split": 0.9224207413764455,
+            "grouped_split": 0.8553745214074681,
+            "deduplicated": 0.8872786256588663,
+            "identity_columns_dropped": 0.9087774664885948
+          },
+          "spread": 0.06704621996897742,
+          "sampling_margin": 0.06683021596803997,
+          "worst_condition": "grouped_split",
+          "best_condition": "random_split",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 0.06704621996897742,
+            "deduplicated": 0.03514211571757919,
+            "identity_columns_dropped": 0.013643274887850665
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        }
+      },
+      "materiality_metrics": [
+        "accuracy",
+        "balanced_accuracy",
+        "macro_f1"
+      ]
+    },
+    "conclusion": {
+      "status": "investigated_not_material"
+    }
+  }
+]

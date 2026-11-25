@@ -1,0 +1,298 @@
+[{"stream_name":"stdout","time":80.662903132,"data":"cic17-benign/friday.csv ok\n"}
+,{"stream_name":"stdout","time":110.82395385,"data":"cic17-benign/monday.csv ok\n"}
+,{"stream_name":"stdout","time":138.954282354,"data":"cic17-benign/thursday.csv ok\n"}
+,{"stream_name":"stdout","time":165.346693621,"data":"cic17-benign/tuesday.csv ok\n"}
+,{"stream_name":"stdout","time":203.061864593,"data":"cic17-benign/wednesday.csv ok\n"}
+,{"stream_name":"stdout","time":232.680700046,"data":"Monday-WorkingHours.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":259.278221703,"data":"Tuesday-WorkingHours.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":297.228615131,"data":"Wednesday-workingHours.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":309.195896698,"data":"Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":324.768745432,"data":"Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":337.936123511,"data":"Friday-WorkingHours-Morning.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":350.257890218,"data":"Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":363.646817606,"data":"Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv ok\n"}
+,{"stream_name":"stdout","time":363.647252589,"data":"cpus 4\n"}
+,{"stream_name":"stderr","time":369.759549875,"data":"INFO ids2eval.cli: Loading dataset 'cic-ids2017-improved'\n"}
+,{"stream_name":"stderr","time":539.001795884,"data":"INFO ids2eval.data.cache: Cached load+split+label-grouping result to out/.cache\n"}
+,{"stream_name":"stderr","time":539.001831837,"data":"INFO ids2eval.cli: Split: train=1679980 rows, test=419996 rows\n"}
+,{"stream_name":"stderr","time":548.183823011,"data":"INFO ids2eval.cli: Run artifacts: out/runs/2026-11-25_095914_419928\n"}
+,{"stream_name":"stderr","time":548.183858909,"data":"INFO ids2eval.cli: Stage: audit (before dedup)\n"}
+,{"stream_name":"stderr","time":693.531512194,"data":"INFO ids2eval.audit: Audit check 1/22: dedup_check ...\n"}
+,{"stream_name":"stderr","time":789.385490985,"data":"INFO ids2eval.audit: Audit check 1/22 done: dedup_check -\u003e flag (95.9s)\n"}
+,{"stream_name":"stderr","time":789.385578595,"data":"INFO ids2eval.audit: Audit check 2/22: label_conflict_check ...\n"}
+,{"stream_name":"stderr","time":794.026841037,"data":"INFO ids2eval.audit: Audit check 2/22 done: label_conflict_check -\u003e ok (4.6s)\n"}
+,{"stream_name":"stderr","time":794.027566449,"data":"INFO ids2eval.audit: Audit check 3/22: near_duplicate_class_check ...\n"}
+,{"stream_name":"stderr","time":795.970017066,"data":"INFO ids2eval.audit: Audit check 3/22 done: near_duplicate_class_check -\u003e ok (1.9s)\n"}
+,{"stream_name":"stderr","time":795.970195696,"data":"INFO ids2eval.audit: Audit check 4/22: leakage_screen ...\n"}
+,{"stream_name":"stderr","time":841.551493923,"data":"INFO ids2eval.audit: Audit check 4/22 done: leakage_screen -\u003e ok (45.6s)\n"}
+,{"stream_name":"stderr","time":841.551655371,"data":"INFO ids2eval.audit: Audit check 5/22: one_rule_check ...\n"}
+,{"stream_name":"stderr","time":845.14931744,"data":"INFO ids2eval.audit: Audit check 5/22 done: one_rule_check -\u003e ok (3.6s)\n"}
+,{"stream_name":"stderr","time":845.149438049,"data":"INFO ids2eval.audit: Audit check 6/22: feature_auc_ranking_check ...\n"}
+,{"stream_name":"stderr","time":987.215135836,"data":"INFO ids2eval.audit: Audit check 6/22 done: feature_auc_ranking_check -\u003e flag (142.1s)\n"}
+,{"stream_name":"stderr","time":987.215350136,"data":"INFO ids2eval.audit: Audit check 7/22: identity_column_flag ...\n"}
+,{"stream_name":"stderr","time":1019.964469304,"data":"INFO ids2eval.audit: Audit check 7/22 done: identity_column_flag -\u003e flag (32.7s)\n"}
+,{"stream_name":"stderr","time":1019.964713497,"data":"INFO ids2eval.audit: Audit check 8/22: port_protocol_shortcut_check ...\n"}
+,{"stream_name":"stderr","time":1154.616470542,"data":"INFO ids2eval.audit: Audit check 8/22 done: port_protocol_shortcut_check -\u003e flag (134.7s)\n"}
+,{"stream_name":"stderr","time":1154.616785116,"data":"INFO ids2eval.audit: Audit check 9/22: temporal_leakage_check ...\n"}
+,{"stream_name":"stderr","time":1154.617446215,"data":"INFO ids2eval.audit: Audit check 9/22 done: temporal_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":1154.617734073,"data":"INFO ids2eval.audit: Audit check 10/22: temporal_realism_check ...\n"}
+,{"stream_name":"stderr","time":1154.621648024,"data":"INFO ids2eval.audit: Audit check 10/22 done: temporal_realism_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":1154.621911521,"data":"INFO ids2eval.audit: Audit check 11/22: flow_group_leakage_check ...\n"}
+,{"stream_name":"stderr","time":1154.631079675,"data":"INFO ids2eval.audit: Audit check 11/22 done: flow_group_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":1154.631558594,"data":"INFO ids2eval.audit: Audit check 12/22: row_order_leakage_check ...\n"}
+,{"stream_name":"stderr","time":1154.838458236,"data":"INFO ids2eval.audit: Audit check 12/22 done: row_order_leakage_check -\u003e ok (0.2s)\n"}
+,{"stream_name":"stderr","time":1154.83882181,"data":"INFO ids2eval.audit: Audit check 13/22: homogeneity_test ...\n"}
+,{"stream_name":"stderr","time":1165.448738004,"data":"INFO ids2eval.audit: Audit check 13/22 done: homogeneity_test -\u003e ok (10.6s)\n"}
+,{"stream_name":"stderr","time":1165.449021846,"data":"INFO ids2eval.audit: Audit check 14/22: resplit_falsification ...\n"}
+,{"stream_name":"stderr","time":1566.982090417,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":1612.266326605,"data":"INFO ids2eval.audit: Audit check 14/22 done: resplit_falsification -\u003e warning (446.8s)\n"}
+,{"stream_name":"stderr","time":1612.266711396,"data":"INFO ids2eval.audit: Audit check 15/22: scenario_holdout_falsification ...\n"}
+,{"stream_name":"stderr","time":1612.267611627,"data":"INFO ids2eval.audit: Audit check 15/22 done: scenario_holdout_falsification -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":1612.267989543,"data":"INFO ids2eval.audit: Audit check 16/22: class_distribution_report ...\n"}
+,{"stream_name":"stderr","time":1612.429354313,"data":"INFO ids2eval.audit: Audit check 16/22 done: class_distribution_report -\u003e warning (0.2s)\n"}
+,{"stream_name":"stderr","time":1612.429802832,"data":"INFO ids2eval.audit: Audit check 17/22: low_cardinality_warning ...\n"}
+,{"stream_name":"stderr","time":1612.709532104,"data":"INFO ids2eval.audit: Audit check 17/22 done: low_cardinality_warning -\u003e ok (0.3s)\n"}
+,{"stream_name":"stderr","time":1612.709940149,"data":"INFO ids2eval.audit: Audit check 18/22: schema_fingerprint_check ...\n"}
+,{"stream_name":"stderr","time":1612.71111915,"data":"INFO ids2eval.audit: Audit check 18/22 done: schema_fingerprint_check -\u003e warning (0.0s)\n"}
+,{"stream_name":"stderr","time":1612.711607313,"data":"INFO ids2eval.audit: Audit check 19/22: data_integrity_check ...\n"}
+,{"stream_name":"stderr","time":1616.281798956,"data":"INFO ids2eval.audit: Audit check 19/22 done: data_integrity_check -\u003e warning (3.6s)\n"}
+,{"stream_name":"stderr","time":1616.282225387,"data":"INFO ids2eval.audit: Audit check 20/22: result_robustness_check ...\n"}
+,{"stream_name":"stderr","time":1971.931905026,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":2232.861995067,"data":"INFO ids2eval.audit: Audit check 20/22 done: result_robustness_check -\u003e ok (616.6s)\n"}
+,{"stream_name":"stderr","time":2232.862551935,"data":"INFO ids2eval.audit: Audit check 21/22: known_issue_lookup ...\n"}
+,{"stream_name":"stderr","time":2232.864161005,"data":"INFO ids2eval.audit: Audit check 21/22 done: known_issue_lookup -\u003e warning (0.0s)\n"}
+,{"stream_name":"stderr","time":2232.8648086,"data":"INFO ids2eval.audit: Audit check 22/22: repeated_seed_falsification_check ...\n"}
+,{"stream_name":"stderr","time":2658.10268155,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":3127.145840354,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867861 train / 216960 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":3579.01314841,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867860 train / 216961 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":4035.924902859,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867854 train / 216967 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":4508.911743025,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867857 train / 216964 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":4967.137781552,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867857 train / 216964 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":5436.512284069,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867853 train / 216968 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":5896.440551267,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":6357.373806296,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":6821.149252577,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867853 train / 216968 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":6870.608879495,"data":"INFO ids2eval.audit: Audit check 22/22 done: repeated_seed_falsification_check -\u003e warning (4637.7s)\n"}
+,{"stream_name":"stderr","time":6870.714606644,"data":"INFO ids2eval.cli: Audit report written to out/runs/2026-11-25_095914_419928/audit_report_before.json\n"}
+,{"stream_name":"stderr","time":6870.714639204,"data":"INFO ids2eval.cli: [FLAG] dedup_check: train duplicates: 7,332 (0.44%); test rows leaking a train feature-match: 2,799 (0.67%); test-internal duplicates: 183\n"}
+,{"stream_name":"stderr","time":6870.714646168,"data":"INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label\n"}
+,{"stream_name":"stderr","time":6870.714651475,"data":"INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested\n"}
+,{"stream_name":"stderr","time":6870.714656835,"data":"INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=6.5%, top2=11.2%)\n"}
+,{"stream_name":"stderr","time":6870.71466243,"data":"INFO ids2eval.cli: [OK] one_rule_check: single rule 'RST Flag Count \u003c= 0.5' reaches 76.4% test accuracy (76.5% train), vs. 75.9% from always predicting the majority class\n"}
+,{"stream_name":"stderr","time":6870.714668321,"data":"INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact\n"}
+,{"stream_name":"stderr","time":6870.714730079,"data":"INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Src IP: 0.976 (100.0%, 0.976), Dst IP: 0.978 (99.8%, 0.978), Src Port: 0.827 (99.9%, 0.828), Dst Port: 0.963 (99.8%, 0.962). Suggest dropping: ['Src IP', 'Dst IP', 'Src Port', 'Dst Port']\n"}
+,{"stream_name":"stderr","time":6870.71473752,"data":"INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Src Port' + 'Protocol' combined: 0.905. Port and protocol together may predict the label without attack behavior\n"}
+,{"stream_name":"stderr","time":6870.714751436,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_leakage_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":6870.714756065,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_realism_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":6870.714759906,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] flow_group_leakage_check: no schema.flow_id_columns configured\n"}
+,{"stream_name":"stderr","time":6870.714763982,"data":"INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce\n"}
+,{"stream_name":"stderr","time":6870.714768254,"data":"INFO ids2eval.cli: [OK] homogeneity_test: 11 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching\n"}
+,{"stream_name":"stderr","time":6870.714850571,"data":"INFO ids2eval.cli: [WARNING] resplit_falsification: random-split accuracy=0.9998, grouped-split accuracy=0.9997 (drop=+0.0001); balanced accuracy drop=+0.0562, macro-F1 drop=+0.0610 (accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive); grouping key: 1,084,821 groups over 2,099,976 rows (1.94 rows per group, 40.7% of rows in single-row groups); inconclusive: a drop exceeds its threshold only within its sampling margin at this test size, see repeated_seed_falsification_check\n"}
+,{"stream_name":"stderr","time":6870.714896918,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] scenario_holdout_falsification: no schema.scenario_column configured\n"}
+,{"stream_name":"stderr","time":6870.71490583,"data":"INFO ids2eval.cli: [WARNING] class_distribution_report: 16 classes, train imbalance ratio (majority:minority) = 141737:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS Slowloris', 'SSH-Patator', 'DoS Slowhttptest', 'Botnet', 'Web Attack - Brute Force', 'Infiltration', 'Web Attack - XSS', 'Web Attack - SQL Injection', 'Heartbleed']\n"}
+,{"stream_name":"stderr","time":6870.715535803,"data":"INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Src IP': 146, 'Dst IP': 18519, 'Src Port': 64497, 'Dst Port': 4372}\n"}
+,{"stream_name":"stderr","time":6870.71555913,"data":"INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']\n"}
+,{"stream_name":"stderr","time":6870.715563937,"data":"INFO ids2eval.cli: [WARNING] data_integrity_check: +-inf values in 2 feature column(s)\n"}
+,{"stream_name":"stderr","time":6870.715567499,"data":"INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9947 (identity_columns_dropped) to 0.9998 (deduplicated) across 4 conditions, a spread of 0.0051 (sampling margin +/-0.0002); balanced accuracy spread 0.0562, macro-F1 spread 0.0610; accuracy not material, balanced accuracy not material, macro f1 not material\n"}
+,{"stream_name":"stderr","time":6870.715590215,"data":"INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S\u0026P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)\n"}
+,{"stream_name":"stderr","time":6870.715609141,"data":"INFO ids2eval.cli: [WARNING] repeated_seed_falsification_check: grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0001], balanced accuracy +0.0020 [-0.0389, +0.0429], macro-F1 +0.0123 [-0.0261, +0.0507]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1\n"}
+,{"stream_name":"stderr","time":6870.715613835,"data":"INFO ids2eval.cli: Stage: dedup\n"}
+,{"stream_name":"stderr","time":6926.544524783,"data":"INFO ids2eval.cli: Dedup: {'train_rows_raw': 1679980, 'train_rows_deduped': 1672648, 'train_duplicates_dropped': 7332, 'test_rows_raw': 419996, 'test_rows_deduped': 417014, 'test_leakage_dropped': 2799, 'test_duplicates_dropped': 183}\n"}
+,{"stream_name":"stderr","time":6926.544597681,"data":"INFO ids2eval.cli: Stage: audit (after dedup)\n"}
+,{"stream_name":"stderr","time":6926.545049233,"data":"INFO ids2eval.audit: Audit check 1/16: dedup_check ...\n"}
+,{"stream_name":"stderr","time":7026.257985861,"data":"INFO ids2eval.audit: Audit check 1/16 done: dedup_check -\u003e ok (99.7s)\n"}
+,{"stream_name":"stderr","time":7026.25816461,"data":"INFO ids2eval.audit: Audit check 2/16: label_conflict_check ...\n"}
+,{"stream_name":"stderr","time":7030.830086535,"data":"INFO ids2eval.audit: Audit check 2/16 done: label_conflict_check -\u003e ok (4.6s)\n"}
+,{"stream_name":"stderr","time":7030.830275154,"data":"INFO ids2eval.audit: Audit check 3/16: near_duplicate_class_check ...\n"}
+,{"stream_name":"stderr","time":7032.776771045,"data":"INFO ids2eval.audit: Audit check 3/16 done: near_duplicate_class_check -\u003e ok (1.9s)\n"}
+,{"stream_name":"stderr","time":7032.776952033,"data":"INFO ids2eval.audit: Audit check 4/16: leakage_screen ...\n"}
+,{"stream_name":"stderr","time":7074.677542059,"data":"INFO ids2eval.audit: Audit check 4/16 done: leakage_screen -\u003e ok (41.9s)\n"}
+,{"stream_name":"stderr","time":7074.677739477,"data":"INFO ids2eval.audit: Audit check 5/16: one_rule_check ...\n"}
+,{"stream_name":"stderr","time":7078.251236487,"data":"INFO ids2eval.audit: Audit check 5/16 done: one_rule_check -\u003e ok (3.6s)\n"}
+,{"stream_name":"stderr","time":7078.251365556,"data":"INFO ids2eval.audit: Audit check 6/16: feature_auc_ranking_check ...\n"}
+,{"stream_name":"stderr","time":7223.024790229,"data":"INFO ids2eval.audit: Audit check 6/16 done: feature_auc_ranking_check -\u003e flag (144.8s)\n"}
+,{"stream_name":"stderr","time":7223.025063106,"data":"INFO ids2eval.audit: Audit check 7/16: identity_column_flag ...\n"}
+,{"stream_name":"stderr","time":7256.311837993,"data":"INFO ids2eval.audit: Audit check 7/16 done: identity_column_flag -\u003e flag (33.3s)\n"}
+,{"stream_name":"stderr","time":7256.312148068,"data":"INFO ids2eval.audit: Audit check 8/16: port_protocol_shortcut_check ...\n"}
+,{"stream_name":"stderr","time":7400.895133817,"data":"INFO ids2eval.audit: Audit check 8/16 done: port_protocol_shortcut_check -\u003e flag (144.6s)\n"}
+,{"stream_name":"stderr","time":7400.895415429,"data":"INFO ids2eval.audit: Audit check 9/16: temporal_leakage_check ...\n"}
+,{"stream_name":"stderr","time":7400.896211559,"data":"INFO ids2eval.audit: Audit check 9/16 done: temporal_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":7400.896507257,"data":"INFO ids2eval.audit: Audit check 10/16: temporal_realism_check ...\n"}
+,{"stream_name":"stderr","time":7400.897346559,"data":"INFO ids2eval.audit: Audit check 10/16 done: temporal_realism_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":7400.897685094,"data":"INFO ids2eval.audit: Audit check 11/16: flow_group_leakage_check ...\n"}
+,{"stream_name":"stderr","time":7400.898566741,"data":"INFO ids2eval.audit: Audit check 11/16 done: flow_group_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":7400.898896057,"data":"INFO ids2eval.audit: Audit check 12/16: row_order_leakage_check ...\n"}
+,{"stream_name":"stderr","time":7401.133678663,"data":"INFO ids2eval.audit: Audit check 12/16 done: row_order_leakage_check -\u003e ok (0.2s)\n"}
+,{"stream_name":"stderr","time":7401.133929206,"data":"INFO ids2eval.audit: Audit check 13/16: homogeneity_test ...\n"}
+,{"stream_name":"stderr","time":7411.868524388,"data":"INFO ids2eval.audit: Audit check 13/16 done: homogeneity_test -\u003e ok (10.7s)\n"}
+,{"stream_name":"stderr","time":7411.868866106,"data":"INFO ids2eval.audit: Audit check 14/16: class_distribution_report ...\n"}
+,{"stream_name":"stderr","time":7412.029504251,"data":"INFO ids2eval.audit: Audit check 14/16 done: class_distribution_report -\u003e warning (0.2s)\n"}
+,{"stream_name":"stderr","time":7412.029908185,"data":"INFO ids2eval.audit: Audit check 15/16: low_cardinality_warning ...\n"}
+,{"stream_name":"stderr","time":7412.333084409,"data":"INFO ids2eval.audit: Audit check 15/16 done: low_cardinality_warning -\u003e ok (0.3s)\n"}
+,{"stream_name":"stderr","time":7412.333564432,"data":"INFO ids2eval.audit: Audit check 16/16: data_integrity_check ...\n"}
+,{"stream_name":"stderr","time":7416.019078191,"data":"INFO ids2eval.audit: Audit check 16/16 done: data_integrity_check -\u003e warning (3.7s)\n"}
+,{"stream_name":"stderr","time":7416.020132566,"data":"INFO ids2eval.cli: Audit report written to out/runs/2026-11-25_095914_419928/audit_report_after.json\n"}
+,{"stream_name":"stderr","time":7416.020163357,"data":"INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0\n"}
+,{"stream_name":"stderr","time":7416.020169114,"data":"INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label\n"}
+,{"stream_name":"stderr","time":7416.020173465,"data":"INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested\n"}
+,{"stream_name":"stderr","time":7416.020178005,"data":"INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=7.7%, top2=12.3%)\n"}
+,{"stream_name":"stderr","time":7416.020208924,"data":"INFO ids2eval.cli: [OK] one_rule_check: single rule 'Src IP \u003c= 1.5' reaches 78.5% test accuracy (78.4% train), vs. 76.0% from always predicting the majority class\n"}
+,{"stream_name":"stderr","time":7416.020219478,"data":"INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact\n"}
+,{"stream_name":"stderr","time":7416.02022685,"data":"INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Src IP: 0.976 (100.0%, 0.976), Dst IP: 0.978 (99.8%, 0.978), Src Port: 0.824 (99.9%, 0.825), Dst Port: 0.962 (99.8%, 0.962). Suggest dropping: ['Src IP', 'Dst IP', 'Src Port', 'Dst Port']\n"}
+,{"stream_name":"stderr","time":7416.020231381,"data":"INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Src Port' + 'Protocol' combined: 0.904. Port and protocol together may predict the label without attack behavior\n"}
+,{"stream_name":"stderr","time":7416.02024987,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_leakage_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":7416.020353224,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_realism_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":7416.020361199,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] flow_group_leakage_check: no schema.flow_id_columns configured\n"}
+,{"stream_name":"stderr","time":7416.020365312,"data":"INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce\n"}
+,{"stream_name":"stderr","time":7416.020369373,"data":"INFO ids2eval.cli: [OK] homogeneity_test: 11 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching\n"}
+,{"stream_name":"stderr","time":7416.020373694,"data":"INFO ids2eval.cli: [WARNING] resplit_falsification: random-split accuracy=0.9998, grouped-split accuracy=0.9997 (drop=+0.0001); balanced accuracy drop=+0.0562, macro-F1 drop=+0.0610 (accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive); grouping key: 1,084,821 groups over 2,099,976 rows (1.94 rows per group, 40.7% of rows in single-row groups); inconclusive: a drop exceeds its threshold only within its sampling margin at this test size, see repeated_seed_falsification_check\n"}
+,{"stream_name":"stderr","time":7416.020380946,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] scenario_holdout_falsification: no schema.scenario_column configured\n"}
+,{"stream_name":"stderr","time":7416.020447634,"data":"INFO ids2eval.cli: [WARNING] class_distribution_report: 16 classes, train imbalance ratio (majority:minority) = 141148:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS Slowloris', 'SSH-Patator', 'DoS Slowhttptest', 'Botnet', 'Web Attack - Brute Force', 'Infiltration', 'Web Attack - XSS', 'Web Attack - SQL Injection', 'Heartbleed']\n"}
+,{"stream_name":"stderr","time":7416.020456,"data":"INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Src IP': 146, 'Dst IP': 18519, 'Src Port': 64497, 'Dst Port': 4372}\n"}
+,{"stream_name":"stderr","time":7416.020460493,"data":"INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']\n"}
+,{"stream_name":"stderr","time":7416.02050721,"data":"INFO ids2eval.cli: [WARNING] data_integrity_check: +-inf values in 2 feature column(s)\n"}
+,{"stream_name":"stderr","time":7416.020515274,"data":"INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9947 (identity_columns_dropped) to 0.9998 (deduplicated) across 4 conditions, a spread of 0.0051 (sampling margin +/-0.0002); balanced accuracy spread 0.0562, macro-F1 spread 0.0610; accuracy not material, balanced accuracy not material, macro f1 not material\n"}
+,{"stream_name":"stderr","time":7416.020586518,"data":"INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S\u0026P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)\n"}
+,{"stream_name":"stderr","time":7416.020683442,"data":"INFO ids2eval.cli: [WARNING] repeated_seed_falsification_check: grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0001], balanced accuracy +0.0020 [-0.0389, +0.0429], macro-F1 +0.0123 [-0.0261, +0.0507]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1\n"}
+,{"stream_name":"stderr","time":7416.021730229,"data":"INFO ids2eval.cli: Intervention manifest written to out/runs/2026-11-25_095914_419928/intervention_manifest.json (3 intervention(s))\n"}
+,{"stream_name":"stderr","time":7416.044013911,"data":"INFO ids2eval.cli: Scorecard: review_required -\u003e out/runs/2026-11-25_095914_419928/scorecard.json\n"}
+,{"stream_name":"stdout","time":7417.255740554,"data":"exit 0 after 7054 s: ['-m', 'ids2eval']\n"}
+,{"stream_name":"stdout","time":7417.457944072,"data":"exit 0 after 0 s: ['-c', \"import re; from pathlib import Path; t = Path(r'/tmp/run/src/results/configs/cic-ids2017-improved-benign.yaml').read_text(); t = re.sub(r'\\\\n    - (FWD|Bwd) Init Win Bytes', '', t); t = t.replace('repeated_seed_falsification_check: true', 'repeated_seed_falsification_check: false'); t = t.replace('name: cic-ids2017-improved', 'name: cic-ids2017-improved-initwin'); t = t.replace('dir: out', 'dir: out/initwin'); Path('config_initwin.yaml').write_text(t)\"]\n"}
+,{"stream_name":"stderr","time":7419.6367708,"data":"INFO ids2eval.cli: Loading dataset 'cic-ids2017-improved-initwin'\n"}
+,{"stream_name":"stderr","time":7600.658471087,"data":"INFO ids2eval.data.cache: Cached load+split+label-grouping result to out/initwin/.cache\n"}
+,{"stream_name":"stderr","time":7600.658520564,"data":"INFO ids2eval.cli: Split: train=1679980 rows, test=419996 rows\n"}
+,{"stream_name":"stderr","time":7612.205850986,"data":"INFO ids2eval.cli: Run artifacts: out/initwin/runs/2026-11-25_115656_076601\n"}
+,{"stream_name":"stderr","time":7612.205900737,"data":"INFO ids2eval.cli: Stage: audit (before dedup)\n"}
+,{"stream_name":"stderr","time":7762.990775447,"data":"INFO ids2eval.audit: Audit check 1/21: dedup_check ...\n"}
+,{"stream_name":"stderr","time":7873.33503125,"data":"INFO ids2eval.audit: Audit check 1/21 done: dedup_check -\u003e flag (110.3s)\n"}
+,{"stream_name":"stderr","time":7873.335523198,"data":"INFO ids2eval.audit: Audit check 2/21: label_conflict_check ...\n"}
+,{"stream_name":"stderr","time":7878.292009919,"data":"INFO ids2eval.audit: Audit check 2/21 done: label_conflict_check -\u003e ok (5.0s)\n"}
+,{"stream_name":"stderr","time":7878.292170007,"data":"INFO ids2eval.audit: Audit check 3/21: near_duplicate_class_check ...\n"}
+,{"stream_name":"stderr","time":7880.254054074,"data":"INFO ids2eval.audit: Audit check 3/21 done: near_duplicate_class_check -\u003e ok (2.0s)\n"}
+,{"stream_name":"stderr","time":7880.254319997,"data":"INFO ids2eval.audit: Audit check 4/21: leakage_screen ...\n"}
+,{"stream_name":"stderr","time":7928.73909163,"data":"INFO ids2eval.audit: Audit check 4/21 done: leakage_screen -\u003e ok (48.5s)\n"}
+,{"stream_name":"stderr","time":7928.739366009,"data":"INFO ids2eval.audit: Audit check 5/21: one_rule_check ...\n"}
+,{"stream_name":"stderr","time":7932.598670353,"data":"INFO ids2eval.audit: Audit check 5/21 done: one_rule_check -\u003e ok (3.9s)\n"}
+,{"stream_name":"stderr","time":7932.599214885,"data":"INFO ids2eval.audit: Audit check 6/21: feature_auc_ranking_check ...\n"}
+,{"stream_name":"stderr","time":8081.292140581,"data":"INFO ids2eval.audit: Audit check 6/21 done: feature_auc_ranking_check -\u003e flag (148.7s)\n"}
+,{"stream_name":"stderr","time":8081.29234182,"data":"INFO ids2eval.audit: Audit check 7/21: identity_column_flag ...\n"}
+,{"stream_name":"stderr","time":8115.034033315,"data":"INFO ids2eval.audit: Audit check 7/21 done: identity_column_flag -\u003e flag (33.7s)\n"}
+,{"stream_name":"stderr","time":8115.034319794,"data":"INFO ids2eval.audit: Audit check 8/21: port_protocol_shortcut_check ...\n"}
+,{"stream_name":"stderr","time":8256.733817326,"data":"INFO ids2eval.audit: Audit check 8/21 done: port_protocol_shortcut_check -\u003e flag (141.7s)\n"}
+,{"stream_name":"stderr","time":8256.734065924,"data":"INFO ids2eval.audit: Audit check 9/21: temporal_leakage_check ...\n"}
+,{"stream_name":"stderr","time":8256.734890093,"data":"INFO ids2eval.audit: Audit check 9/21 done: temporal_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":8256.735210971,"data":"INFO ids2eval.audit: Audit check 10/21: temporal_realism_check ...\n"}
+,{"stream_name":"stderr","time":8256.735935223,"data":"INFO ids2eval.audit: Audit check 10/21 done: temporal_realism_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":8256.736265305,"data":"INFO ids2eval.audit: Audit check 11/21: flow_group_leakage_check ...\n"}
+,{"stream_name":"stderr","time":8256.740077451,"data":"INFO ids2eval.audit: Audit check 11/21 done: flow_group_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":8256.740499184,"data":"INFO ids2eval.audit: Audit check 12/21: row_order_leakage_check ...\n"}
+,{"stream_name":"stderr","time":8256.95346712,"data":"INFO ids2eval.audit: Audit check 12/21 done: row_order_leakage_check -\u003e ok (0.2s)\n"}
+,{"stream_name":"stderr","time":8256.953828338,"data":"INFO ids2eval.audit: Audit check 13/21: homogeneity_test ...\n"}
+,{"stream_name":"stderr","time":8268.158257961,"data":"INFO ids2eval.audit: Audit check 13/21 done: homogeneity_test -\u003e ok (11.2s)\n"}
+,{"stream_name":"stderr","time":8268.158688955,"data":"INFO ids2eval.audit: Audit check 14/21: resplit_falsification ...\n"}
+,{"stream_name":"stderr","time":8718.221843644,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":8765.49052398,"data":"INFO ids2eval.audit: Audit check 14/21 done: resplit_falsification -\u003e warning (497.3s)\n"}
+,{"stream_name":"stderr","time":8765.490938782,"data":"INFO ids2eval.audit: Audit check 15/21: scenario_holdout_falsification ...\n"}
+,{"stream_name":"stderr","time":8765.492027157,"data":"INFO ids2eval.audit: Audit check 15/21 done: scenario_holdout_falsification -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":8765.492360416,"data":"INFO ids2eval.audit: Audit check 16/21: class_distribution_report ...\n"}
+,{"stream_name":"stderr","time":8765.657558137,"data":"INFO ids2eval.audit: Audit check 16/21 done: class_distribution_report -\u003e warning (0.2s)\n"}
+,{"stream_name":"stderr","time":8765.658018542,"data":"INFO ids2eval.audit: Audit check 17/21: low_cardinality_warning ...\n"}
+,{"stream_name":"stderr","time":8765.955377186,"data":"INFO ids2eval.audit: Audit check 17/21 done: low_cardinality_warning -\u003e ok (0.3s)\n"}
+,{"stream_name":"stderr","time":8765.955919972,"data":"INFO ids2eval.audit: Audit check 18/21: schema_fingerprint_check ...\n"}
+,{"stream_name":"stderr","time":8765.95720455,"data":"INFO ids2eval.audit: Audit check 18/21 done: schema_fingerprint_check -\u003e warning (0.0s)\n"}
+,{"stream_name":"stderr","time":8765.957681635,"data":"INFO ids2eval.audit: Audit check 19/21: data_integrity_check ...\n"}
+,{"stream_name":"stderr","time":8769.781486499,"data":"INFO ids2eval.audit: Audit check 19/21 done: data_integrity_check -\u003e warning (3.8s)\n"}
+,{"stream_name":"stderr","time":8769.782323358,"data":"INFO ids2eval.audit: Audit check 20/21: result_robustness_check ...\n"}
+,{"stream_name":"stderr","time":9156.568362703,"data":"INFO ids2eval.data.dataset: Grouped split: 1084821 groups total, 867855 train / 216966 test, zero overlap confirmed.\n"}
+,{"stream_name":"stderr","time":9409.452355837,"data":"INFO ids2eval.audit: Audit check 20/21 done: result_robustness_check -\u003e ok (639.7s)\n"}
+,{"stream_name":"stderr","time":9409.453210966,"data":"INFO ids2eval.audit: Audit check 21/21: known_issue_lookup ...\n"}
+,{"stream_name":"stderr","time":9409.45513695,"data":"INFO ids2eval.audit: Audit check 21/21 done: known_issue_lookup -\u003e warning (0.0s)\n"}
+,{"stream_name":"stderr","time":9409.560341465,"data":"INFO ids2eval.cli: Audit report written to out/initwin/runs/2026-11-25_115656_076601/audit_report_before.json\n"}
+,{"stream_name":"stderr","time":9409.560374126,"data":"INFO ids2eval.cli: [FLAG] dedup_check: train duplicates: 7,332 (0.44%); test rows leaking a train feature-match: 2,799 (0.67%); test-internal duplicates: 183\n"}
+,{"stream_name":"stderr","time":9409.560381683,"data":"INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label\n"}
+,{"stream_name":"stderr","time":9409.560386436,"data":"INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested\n"}
+,{"stream_name":"stderr","time":9409.560391337,"data":"INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=6.2%, top2=11.7%)\n"}
+,{"stream_name":"stderr","time":9409.560422701,"data":"INFO ids2eval.cli: [OK] one_rule_check: single rule 'RST Flag Count \u003c= 0.5' reaches 76.4% test accuracy (76.5% train), vs. 75.9% from always predicting the majority class\n"}
+,{"stream_name":"stderr","time":9409.560429886,"data":"INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact\n"}
+,{"stream_name":"stderr","time":9409.56043842,"data":"INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Src IP: 0.976 (100.0%, 0.976), Dst IP: 0.978 (99.8%, 0.978), Src Port: 0.827 (99.9%, 0.828), Dst Port: 0.963 (99.8%, 0.962). Suggest dropping: ['Src IP', 'Dst IP', 'Src Port', 'Dst Port']\n"}
+,{"stream_name":"stderr","time":9409.560443454,"data":"INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Src Port' + 'Protocol' combined: 0.905. Port and protocol together may predict the label without attack behavior\n"}
+,{"stream_name":"stderr","time":9409.560448062,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_leakage_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":9409.560458066,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_realism_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":9409.560462297,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] flow_group_leakage_check: no schema.flow_id_columns configured\n"}
+,{"stream_name":"stderr","time":9409.560830516,"data":"INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce\n"}
+,{"stream_name":"stderr","time":9409.560845022,"data":"INFO ids2eval.cli: [OK] homogeneity_test: 11 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching\n"}
+,{"stream_name":"stderr","time":9409.560979948,"data":"INFO ids2eval.cli: [WARNING] resplit_falsification: random-split accuracy=0.9998, grouped-split accuracy=0.9998 (drop=+0.0000); balanced accuracy drop=+0.0640, macro-F1 drop=+0.0670 (accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive); grouping key: 1,084,821 groups over 2,099,976 rows (1.94 rows per group, 40.7% of rows in single-row groups); inconclusive: a drop exceeds its threshold only within its sampling margin at this test size, see repeated_seed_falsification_check\n"}
+,{"stream_name":"stderr","time":9409.561013058,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] scenario_holdout_falsification: no schema.scenario_column configured\n"}
+,{"stream_name":"stderr","time":9409.561017748,"data":"INFO ids2eval.cli: [WARNING] class_distribution_report: 16 classes, train imbalance ratio (majority:minority) = 141737:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS Slowloris', 'SSH-Patator', 'DoS Slowhttptest', 'Botnet', 'Web Attack - Brute Force', 'Infiltration', 'Web Attack - XSS', 'Web Attack - SQL Injection', 'Heartbleed']\n"}
+,{"stream_name":"stderr","time":9409.561022484,"data":"INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Src IP': 146, 'Dst IP': 18519, 'Src Port': 64497, 'Dst Port': 4372}\n"}
+,{"stream_name":"stderr","time":9409.561026928,"data":"INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']\n"}
+,{"stream_name":"stderr","time":9409.561031869,"data":"INFO ids2eval.cli: [WARNING] data_integrity_check: +-inf values in 2 feature column(s)\n"}
+,{"stream_name":"stderr","time":9409.561036086,"data":"INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9947 (identity_columns_dropped) to 0.9998 (deduplicated) across 4 conditions, a spread of 0.0051 (sampling margin +/-0.0002); balanced accuracy spread 0.0640, macro-F1 spread 0.0670; accuracy not material, balanced accuracy not material, macro f1 not material\n"}
+,{"stream_name":"stderr","time":9409.561075746,"data":"INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S\u0026P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)\n"}
+,{"stream_name":"stderr","time":9409.56108393,"data":"INFO ids2eval.cli: Stage: dedup\n"}
+,{"stream_name":"stderr","time":9464.440547757,"data":"INFO ids2eval.cli: Dedup: {'train_rows_raw': 1679980, 'train_rows_deduped': 1672648, 'train_duplicates_dropped': 7332, 'test_rows_raw': 419996, 'test_rows_deduped': 417014, 'test_leakage_dropped': 2799, 'test_duplicates_dropped': 183}\n"}
+,{"stream_name":"stderr","time":9464.440603848,"data":"INFO ids2eval.cli: Stage: audit (after dedup)\n"}
+,{"stream_name":"stderr","time":9464.441092574,"data":"INFO ids2eval.audit: Audit check 1/16: dedup_check ...\n"}
+,{"stream_name":"stderr","time":9569.629234842,"data":"INFO ids2eval.audit: Audit check 1/16 done: dedup_check -\u003e ok (105.2s)\n"}
+,{"stream_name":"stderr","time":9569.629301136,"data":"INFO ids2eval.audit: Audit check 2/16: label_conflict_check ...\n"}
+,{"stream_name":"stderr","time":9574.31607184,"data":"INFO ids2eval.audit: Audit check 2/16 done: label_conflict_check -\u003e ok (4.7s)\n"}
+,{"stream_name":"stderr","time":9574.316204824,"data":"INFO ids2eval.audit: Audit check 3/16: near_duplicate_class_check ...\n"}
+,{"stream_name":"stderr","time":9576.241365368,"data":"INFO ids2eval.audit: Audit check 3/16 done: near_duplicate_class_check -\u003e ok (1.9s)\n"}
+,{"stream_name":"stderr","time":9576.241558826,"data":"INFO ids2eval.audit: Audit check 4/16: leakage_screen ...\n"}
+,{"stream_name":"stderr","time":9617.304170655,"data":"INFO ids2eval.audit: Audit check 4/16 done: leakage_screen -\u003e ok (41.1s)\n"}
+,{"stream_name":"stderr","time":9617.304349712,"data":"INFO ids2eval.audit: Audit check 5/16: one_rule_check ...\n"}
+,{"stream_name":"stderr","time":9620.89231538,"data":"INFO ids2eval.audit: Audit check 5/16 done: one_rule_check -\u003e ok (3.6s)\n"}
+,{"stream_name":"stderr","time":9620.892359817,"data":"INFO ids2eval.audit: Audit check 6/16: feature_auc_ranking_check ...\n"}
+,{"stream_name":"stderr","time":9769.958049403,"data":"INFO ids2eval.audit: Audit check 6/16 done: feature_auc_ranking_check -\u003e flag (149.1s)\n"}
+,{"stream_name":"stderr","time":9769.958262222,"data":"INFO ids2eval.audit: Audit check 7/16: identity_column_flag ...\n"}
+,{"stream_name":"stderr","time":9803.310756478,"data":"INFO ids2eval.audit: Audit check 7/16 done: identity_column_flag -\u003e flag (33.4s)\n"}
+,{"stream_name":"stderr","time":9803.311228488,"data":"INFO ids2eval.audit: Audit check 8/16: port_protocol_shortcut_check ...\n"}
+,{"stream_name":"stderr","time":9953.735929843,"data":"INFO ids2eval.audit: Audit check 8/16 done: port_protocol_shortcut_check -\u003e flag (150.4s)\n"}
+,{"stream_name":"stderr","time":9953.736215897,"data":"INFO ids2eval.audit: Audit check 9/16: temporal_leakage_check ...\n"}
+,{"stream_name":"stderr","time":9953.737312,"data":"INFO ids2eval.audit: Audit check 9/16 done: temporal_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":9953.737661545,"data":"INFO ids2eval.audit: Audit check 10/16: temporal_realism_check ...\n"}
+,{"stream_name":"stderr","time":9953.738611213,"data":"INFO ids2eval.audit: Audit check 10/16 done: temporal_realism_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":9953.738861142,"data":"INFO ids2eval.audit: Audit check 11/16: flow_group_leakage_check ...\n"}
+,{"stream_name":"stderr","time":9953.739650463,"data":"INFO ids2eval.audit: Audit check 11/16 done: flow_group_leakage_check -\u003e not_applicable (0.0s)\n"}
+,{"stream_name":"stderr","time":9953.739924485,"data":"INFO ids2eval.audit: Audit check 12/16: row_order_leakage_check ...\n"}
+,{"stream_name":"stderr","time":9953.947185418,"data":"INFO ids2eval.audit: Audit check 12/16 done: row_order_leakage_check -\u003e ok (0.2s)\n"}
+,{"stream_name":"stderr","time":9953.947429014,"data":"INFO ids2eval.audit: Audit check 13/16: homogeneity_test ...\n"}
+,{"stream_name":"stderr","time":9964.757178985,"data":"INFO ids2eval.audit: Audit check 13/16 done: homogeneity_test -\u003e ok (10.8s)\n"}
+,{"stream_name":"stderr","time":9964.757629762,"data":"INFO ids2eval.audit: Audit check 14/16: class_distribution_report ...\n"}
+,{"stream_name":"stderr","time":9964.919210982,"data":"INFO ids2eval.audit: Audit check 14/16 done: class_distribution_report -\u003e warning (0.2s)\n"}
+,{"stream_name":"stderr","time":9964.91990062,"data":"INFO ids2eval.audit: Audit check 15/16: low_cardinality_warning ...\n"}
+,{"stream_name":"stderr","time":9965.201930412,"data":"INFO ids2eval.audit: Audit check 15/16 done: low_cardinality_warning -\u003e ok (0.3s)\n"}
+,{"stream_name":"stderr","time":9965.202438009,"data":"INFO ids2eval.audit: Audit check 16/16: data_integrity_check ...\n"}
+,{"stream_name":"stderr","time":9968.943307757,"data":"INFO ids2eval.audit: Audit check 16/16 done: data_integrity_check -\u003e warning (3.7s)\n"}
+,{"stream_name":"stderr","time":9968.944560479,"data":"INFO ids2eval.cli: Audit report written to out/initwin/runs/2026-11-25_115656_076601/audit_report_after.json\n"}
+,{"stream_name":"stderr","time":9968.94459027,"data":"INFO ids2eval.cli: [OK] dedup_check: train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0\n"}
+,{"stream_name":"stderr","time":9968.944612958,"data":"INFO ids2eval.cli: [OK] label_conflict_check: no feature vector maps to more than one label\n"}
+,{"stream_name":"stderr","time":9968.94461791,"data":"INFO ids2eval.cli: [OK] near_duplicate_class_check: no near-zero-distance feature vectors found across 13 classes tested\n"}
+,{"stream_name":"stderr","time":9968.944631075,"data":"INFO ids2eval.cli: [OK] leakage_screen: no single feature or pair dominates importance (top1=5.7%, top2=10.9%)\n"}
+,{"stream_name":"stderr","time":9968.944655205,"data":"INFO ids2eval.cli: [OK] one_rule_check: single rule 'Src IP \u003c= 1.5' reaches 78.5% test accuracy (78.4% train), vs. 76.0% from always predicting the majority class\n"}
+,{"stream_name":"stderr","time":9968.944659417,"data":"INFO ids2eval.cli: [FLAG] feature_auc_ranking_check: 'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact\n"}
+,{"stream_name":"stderr","time":9968.94558637,"data":"INFO ids2eval.cli: [FLAG] identity_column_flag: standalone AUC by column (seen-value coverage, AUC on seen values): Src IP: 0.976 (100.0%, 0.976), Dst IP: 0.978 (99.8%, 0.978), Src Port: 0.824 (99.9%, 0.825), Dst Port: 0.962 (99.8%, 0.962). Suggest dropping: ['Src IP', 'Dst IP', 'Src Port', 'Dst Port']\n"}
+,{"stream_name":"stderr","time":9968.945613523,"data":"INFO ids2eval.cli: [FLAG] port_protocol_shortcut_check: standalone AUC of 'Src Port' + 'Protocol' combined: 0.904. Port and protocol together may predict the label without attack behavior\n"}
+,{"stream_name":"stderr","time":9968.945619522,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_leakage_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":9968.945623972,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] temporal_realism_check: no schema.timestamp_column configured\n"}
+,{"stream_name":"stderr","time":9968.945628299,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] flow_group_leakage_check: no schema.flow_id_columns configured\n"}
+,{"stream_name":"stderr","time":9968.945631977,"data":"INFO ids2eval.cli: [OK] row_order_leakage_check: adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce\n"}
+,{"stream_name":"stderr","time":9968.945636595,"data":"INFO ids2eval.cli: [OK] homogeneity_test: 11 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching\n"}
+,{"stream_name":"stderr","time":9968.945640958,"data":"INFO ids2eval.cli: [WARNING] resplit_falsification: random-split accuracy=0.9998, grouped-split accuracy=0.9998 (drop=+0.0000); balanced accuracy drop=+0.0640, macro-F1 drop=+0.0670 (accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive); grouping key: 1,084,821 groups over 2,099,976 rows (1.94 rows per group, 40.7% of rows in single-row groups); inconclusive: a drop exceeds its threshold only within its sampling margin at this test size, see repeated_seed_falsification_check\n"}
+,{"stream_name":"stderr","time":9968.945647669,"data":"INFO ids2eval.cli: [NOT_APPLICABLE] scenario_holdout_falsification: no schema.scenario_column configured\n"}
+,{"stream_name":"stderr","time":9968.945653371,"data":"INFO ids2eval.cli: [WARNING] class_distribution_report: 16 classes, train imbalance ratio (majority:minority) = 141148:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS Slowloris', 'SSH-Patator', 'DoS Slowhttptest', 'Botnet', 'Web Attack - Brute Force', 'Infiltration', 'Web Attack - XSS', 'Web Attack - SQL Injection', 'Heartbleed']\n"}
+,{"stream_name":"stderr","time":9968.945658447,"data":"INFO ids2eval.cli: [OK] low_cardinality_warning: unique values by column: {'Src IP': 146, 'Dst IP': 18519, 'Src Port': 64497, 'Dst Port': 4372}\n"}
+,{"stream_name":"stderr","time":9968.945683264,"data":"INFO ids2eval.cli: [WARNING] schema_fingerprint_check: matched extractor signature(s): ['CICFlowMeter']\n"}
+,{"stream_name":"stderr","time":9968.945687763,"data":"INFO ids2eval.cli: [WARNING] data_integrity_check: +-inf values in 2 feature column(s)\n"}
+,{"stream_name":"stderr","time":9968.945695963,"data":"INFO ids2eval.cli: [OK] result_robustness_check: accuracy ranges from 0.9947 (identity_columns_dropped) to 0.9998 (deduplicated) across 4 conditions, a spread of 0.0051 (sampling margin +/-0.0002); balanced accuracy spread 0.0640, macro-F1 spread 0.0670; accuracy not material, balanced accuracy not material, macro f1 not material\n"}
+,{"stream_name":"stderr","time":9968.94570402,"data":"INFO ids2eval.cli: [WARNING] known_issue_lookup: The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S\u0026P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)\n"}
+,{"stream_name":"stderr","time":9968.946182899,"data":"INFO ids2eval.cli: Intervention manifest written to out/initwin/runs/2026-11-25_115656_076601/intervention_manifest.json (2 intervention(s))\n"}
+,{"stream_name":"stderr","time":9968.962845151,"data":"INFO ids2eval.cli: Scorecard: review_required -\u003e out/initwin/runs/2026-11-25_115656_076601/scorecard.json\n"}
+,{"stream_name":"stdout","time":9970.22410042,"data":"exit 0 after 2553 s: ['-m', 'ids2eval']\n"}
+,{"stream_name":"stderr","time":10028.981036818,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":10028.981087041,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10029.395369814,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10029.395427026,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":10030.884644767,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":10032.488784155,"data":"[NbConvertApp] Writing 292152 bytes to __results__.html\n"}
+]

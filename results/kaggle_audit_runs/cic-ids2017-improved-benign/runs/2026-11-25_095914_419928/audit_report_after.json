@@ -1,0 +1,841 @@
+[
+  {
+    "check": "dedup_check",
+    "status": "ok",
+    "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+    "details": {
+      "train_rows_raw": 1672648,
+      "train_rows_deduped": 1672648,
+      "train_duplicates_dropped": 0,
+      "test_rows_raw": 417014,
+      "test_rows_deduped": 417014,
+      "test_leakage_dropped": 0,
+      "test_duplicates_dropped": 0,
+      "by_class": {
+        "BENIGN": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Portscan": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS Hulk": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DDoS": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Infiltration - Portscan": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS GoldenEye": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "FTP-Patator": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS Slowloris": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "SSH-Patator": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "DoS Slowhttptest": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Botnet": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Web Attack - Brute Force": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        },
+        "Infiltration": {
+          "train_duplicate_rate": 0.0,
+          "test_leak_rate": 0.0
+        }
+      }
+    }
+  },
+  {
+    "check": "label_conflict_check",
+    "status": "ok",
+    "summary": "no feature vector maps to more than one label",
+    "details": {}
+  },
+  {
+    "check": "near_duplicate_class_check",
+    "status": "ok",
+    "summary": "no near-zero-distance feature vectors found across 13 classes tested",
+    "details": {
+      "classes_tested": 13
+    }
+  },
+  {
+    "check": "leakage_screen",
+    "status": "ok",
+    "summary": "no single feature or pair dominates importance (top1=7.7%, top2=12.3%)",
+    "details": {
+      "top_features": {
+        "Src IP": 0.07710068251935594,
+        "Flow Duration": 0.046153892073125174,
+        "Packet Length Std": 0.04614840890337417,
+        "Fwd Packet Length Max": 0.04153167624473136,
+        "Bwd Packet Length Mean": 0.04127067039362531
+      },
+      "top1_share": 0.07710068251935594,
+      "top2_share": 0.12325457459248111
+    }
+  },
+  {
+    "check": "one_rule_check",
+    "status": "ok",
+    "summary": "single rule 'Src IP <= 1.5' reaches 78.5% test accuracy (78.4% train), vs. 76.0% from always predicting the majority class",
+    "details": {
+      "rule": "Src IP <= 1.5",
+      "train_accuracy": 0.784265,
+      "test_accuracy": 0.7849880339748786,
+      "majority_baseline_accuracy": 0.7603030114096889,
+      "error_reduction_vs_baseline": 0.10298428324179405
+    }
+  },
+  {
+    "check": "feature_auc_ranking_check",
+    "status": "flag",
+    "summary": "'Bwd Packet Length Max' alone reaches AUC 1.000 identifying 'Heartbleed'; a single feature this separable is worth checking for a leakage artifact",
+    "details": {
+      "top_features": {
+        "Bwd Packet Length Max": 0.9999979074982707,
+        "Subflow Bwd Bytes": 0.9999790085540806,
+        "Packet Length Mean": 0.9999705721185371,
+        "Average Packet Size": 0.9999705721185371,
+        "Packet Length Max": 0.9999383210204553
+      },
+      "best_feature": "Bwd Packet Length Max",
+      "best_class": "Heartbleed"
+    }
+  },
+  {
+    "check": "identity_column_flag",
+    "status": "flag",
+    "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): Src IP: 0.976 (100.0%, 0.976), Dst IP: 0.978 (99.8%, 0.978), Src Port: 0.824 (99.9%, 0.825), Dst Port: 0.962 (99.8%, 0.962). Suggest dropping: ['Src IP', 'Dst IP', 'Src Port', 'Dst Port']",
+    "details": {
+      "standalone_auc": {
+        "Src IP": 0.9759985706889833,
+        "Dst IP": 0.9783973436323022,
+        "Src Port": 0.8244451756132644,
+        "Dst Port": 0.9621540333359196
+      },
+      "seen_only_auc": {
+        "Src IP": 0.9759956329706233,
+        "Dst IP": 0.978341046692681,
+        "Src Port": 0.8245838628149014,
+        "Dst Port": 0.962089122671743
+      },
+      "seen_coverage": {
+        "Src IP": 0.9999280599692096,
+        "Dst IP": 0.9984556873390342,
+        "Src Port": 0.9993213657095446,
+        "Dst Port": 0.9983213992815589
+      },
+      "suggested_drop": [
+        "Src IP",
+        "Dst IP",
+        "Src Port",
+        "Dst Port"
+      ],
+      "method": "training-only value lookup, unseen values scored with the prior",
+      "by_class": {
+        "Src IP": {
+          "BENIGN": 0.9912759499898021,
+          "Portscan": 0.9265272427077601,
+          "DoS Hulk": 0.9263988373300114,
+          "DDoS": 0.9128296292573841,
+          "Infiltration - Portscan": 0.9646625146621682,
+          "DoS GoldenEye": 0.8954262444615055,
+          "FTP-Patator": 0.894743164672529,
+          "DoS Slowloris": 0.8947223009691477,
+          "SSH-Patator": 0.8945516807469346,
+          "DoS Slowhttptest": 0.8943206309130095,
+          "Botnet": 0.8523481909897721,
+          "Web Attack - Brute Force": 0.8940057410209616,
+          "Infiltration": 0.9522358137872986
+        },
+        "Dst IP": {
+          "BENIGN": 0.9941867299118804,
+          "Portscan": 0.9228979969055356,
+          "DoS Hulk": 0.9227706841067165,
+          "DDoS": 0.9093169340553036,
+          "Infiltration - Portscan": 0.9923489404323134,
+          "DoS GoldenEye": 0.8920616316206219,
+          "FTP-Patator": 0.891384364038249,
+          "DoS Slowloris": 0.8913636778604754,
+          "SSH-Patator": 0.891194509415929,
+          "DoS Slowhttptest": 0.8909654255446808,
+          "Botnet": 0.998974493063735,
+          "Web Attack - Brute Force": 0.8906532149957194,
+          "Infiltration": 0.9988069744632584
+        },
+        "Src Port": {
+          "BENIGN": 0.8285979897807768,
+          "Portscan": 0.9194318355051108,
+          "DoS Hulk": 0.8605322408658249,
+          "DDoS": 0.47203782280681256,
+          "Infiltration - Portscan": 0.9929902782212907,
+          "DoS GoldenEye": 0.6223702820302875,
+          "FTP-Patator": 0.338223414291052,
+          "DoS Slowloris": 0.701518234534897,
+          "SSH-Patator": 0.5172144353434607,
+          "DoS Slowhttptest": 0.810111806523718,
+          "Botnet": 0.6371781345488272,
+          "Web Attack - Brute Force": 0.6115606991863289,
+          "Infiltration": 0.8936431008866244
+        },
+        "Dst Port": {
+          "BENIGN": 0.967575080819953,
+          "Portscan": 0.9798066374680736,
+          "DoS Hulk": 0.9264351707671545,
+          "DDoS": 0.9128648064625551,
+          "Infiltration - Portscan": 0.9554114829996402,
+          "DoS GoldenEye": 0.8954599387245759,
+          "FTP-Patator": 0.9993669213396761,
+          "DoS Slowloris": 0.894755935249206,
+          "SSH-Patator": 0.9986684180951055,
+          "DoS Slowhttptest": 0.8943542309667696,
+          "Botnet": 0.9989133224745542,
+          "Web Attack - Brute Force": 0.8940393142429598,
+          "Infiltration": 0.9999160685552041
+        }
+      }
+    }
+  },
+  {
+    "check": "port_protocol_shortcut_check",
+    "status": "flag",
+    "summary": "standalone AUC of 'Src Port' + 'Protocol' combined: 0.904. Port and protocol together may predict the label without attack behavior",
+    "details": {
+      "port_column": "Src Port",
+      "protocol_column": "Protocol",
+      "standalone_auc": 0.9040441924963066
+    }
+  },
+  {
+    "check": "temporal_leakage_check",
+    "status": "not_applicable",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "temporal_realism_check",
+    "status": "not_applicable",
+    "summary": "no schema.timestamp_column configured",
+    "details": {}
+  },
+  {
+    "check": "flow_group_leakage_check",
+    "status": "not_applicable",
+    "summary": "no schema.flow_id_columns configured",
+    "details": {}
+  },
+  {
+    "check": "row_order_leakage_check",
+    "status": "ok",
+    "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+    "details": {
+      "contiguity_ratio": {
+        "train": 1.0002701572984514,
+        "test": 0.9973947320124077
+      }
+    }
+  },
+  {
+    "check": "homogeneity_test",
+    "status": "ok",
+    "summary": "11 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching",
+    "details": {
+      "per_class": {
+        "BENIGN": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "Portscan": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DoS Hulk": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DDoS": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "Infiltration - Portscan": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.002,
+          "rate_diff_ci_95": [
+            -0.011240706827931778,
+            0.005800174936599509
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DoS GoldenEye": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.007624340580914839,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "FTP-Patator": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.009607455144956449,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DoS Slowloris": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.011611177433098835,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "SSH-Patator": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.014615117788669986,
+            0.007624340580914839
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "DoS Slowhttptest": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.02112531930247909,
+            0.010918153004225772
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        },
+        "Botnet": {
+          "test_near_zero_rate": 0.0,
+          "control_near_zero_rate": 0.0,
+          "rate_diff_ci_95": [
+            -0.04373172907438993,
+            0.025466863750761112
+          ],
+          "equivalence_margin": 0.05,
+          "classification": "equivalent"
+        }
+      },
+      "equivalence_margin": 0.05,
+      "interval": "newcombe",
+      "cluster_columns": []
+    }
+  },
+  {
+    "check": "resplit_falsification",
+    "status": "warning",
+    "summary": "random-split accuracy=0.9998, grouped-split accuracy=0.9997 (drop=+0.0001); balanced accuracy drop=+0.0562, macro-F1 drop=+0.0610 (accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive); grouping key: 1,084,821 groups over 2,099,976 rows (1.94 rows per group, 40.7% of rows in single-row groups); inconclusive: a drop exceeds its threshold only within its sampling margin at this test size, see repeated_seed_falsification_check",
+    "details": {
+      "random_accuracy": 0.9998071410203907,
+      "grouped_accuracy": 0.9997359864710905,
+      "drop": 7.115454930017862e-05,
+      "sampling_margin": 6.461625054390769e-05,
+      "random_test_rows": 419996,
+      "grouped_test_rows": 420433,
+      "by_metric": {
+        "accuracy": {
+          "random": 0.9998071410203907,
+          "grouped": 0.9997359864710905,
+          "drop": 7.115454930017862e-05,
+          "sampling_margin": 6.461625054390769e-05,
+          "threshold": 0.01,
+          "verdict": "ok"
+        },
+        "balanced_accuracy": {
+          "random": 0.9031698223706534,
+          "grouped": 0.8470014974460213,
+          "drop": 0.056168324924632085,
+          "sampling_margin": 0.07056355554708707,
+          "threshold": 0.01,
+          "verdict": "warning"
+        },
+        "macro_f1": {
+          "random": 0.9162204114286246,
+          "grouped": 0.855239939713476,
+          "drop": 0.06098047171514864,
+          "sampling_margin": 0.06605087216350482,
+          "threshold": 0.01,
+          "verdict": "warning"
+        }
+      },
+      "error_ratio": 1.368946001084967,
+      "materiality_metrics": [
+        "accuracy",
+        "balanced_accuracy",
+        "macro_f1"
+      ],
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Src Port",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 1084821,
+        "rows_per_group": 1.9357811104320437,
+        "singleton_group_share": 0.7880286240771519,
+        "rows_in_singleton_groups": 0.40708560478786426,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 14.0,
+        "size_max": 1184,
+        "largest_group_row_share": 0.00056381596742058
+      }
+    }
+  },
+  {
+    "check": "scenario_holdout_falsification",
+    "status": "not_applicable",
+    "summary": "no schema.scenario_column configured",
+    "details": {}
+  },
+  {
+    "check": "class_distribution_report",
+    "status": "warning",
+    "summary": "16 classes, train imbalance ratio (majority:minority) = 141148:1; classes below 1% of train: ['DoS GoldenEye', 'FTP-Patator', 'DoS Slowloris', 'SSH-Patator', 'DoS Slowhttptest', 'Botnet', 'Web Attack - Brute Force', 'Infiltration', 'Web Attack - XSS', 'Web Attack - SQL Injection', 'Heartbleed']",
+    "details": {
+      "train": {
+        "counts": {
+          "BENIGN": 1270328,
+          "Portscan": 127249,
+          "DoS Hulk": 126774,
+          "DDoS": 76115,
+          "Infiltration - Portscan": 55393,
+          "DoS GoldenEye": 6054,
+          "FTP-Patator": 3178,
+          "DoS Slowloris": 3087,
+          "SSH-Patator": 2369,
+          "DoS Slowhttptest": 1392,
+          "Botnet": 589,
+          "Web Attack - Brute Force": 58,
+          "Infiltration": 29,
+          "Web Attack - XSS": 14,
+          "Web Attack - SQL Injection": 10,
+          "Heartbleed": 9
+        },
+        "shares": {
+          "BENIGN": 0.7594712097225477,
+          "Portscan": 0.07607637709787116,
+          "DoS Hulk": 0.07579239624834394,
+          "DDoS": 0.04550568918266126,
+          "Infiltration - Portscan": 0.03311694989023393,
+          "DoS GoldenEye": 0.0036194106590268843,
+          "FTP-Patator": 0.0018999813469420942,
+          "DoS Slowloris": 0.0018455765947168802,
+          "SSH-Patator": 0.0014163171211157399,
+          "DoS Slowhttptest": 0.0008322133527197594,
+          "Botnet": 0.0003521362534137487,
+          "Web Attack - Brute Force": 3.467555636332331e-05,
+          "Infiltration": 1.7337778181661654e-05,
+          "Web Attack - XSS": 8.369961880802177e-06,
+          "Web Attack - SQL Injection": 5.978544200572984e-06,
+          "Heartbleed": 5.380689780515685e-06
+        }
+      },
+      "test": {
+        "counts": {
+          "BENIGN": 317057,
+          "Portscan": 31810,
+          "DoS Hulk": 31694,
+          "DDoS": 19029,
+          "Infiltration - Portscan": 13227,
+          "DoS GoldenEye": 1513,
+          "FTP-Patator": 794,
+          "DoS Slowloris": 772,
+          "SSH-Patator": 592,
+          "DoS Slowhttptest": 348,
+          "Botnet": 147,
+          "Web Attack - Brute Force": 15,
+          "Infiltration": 7,
+          "Web Attack - XSS": 4,
+          "Web Attack - SQL Injection": 3,
+          "Heartbleed": 2
+        },
+        "shares": {
+          "BENIGN": 0.7603030114096889,
+          "Portscan": 0.07628041264801662,
+          "DoS Hulk": 0.07600224452896066,
+          "DDoS": 0.04563156153030833,
+          "Infiltration - Portscan": 0.0317183595754579,
+          "DoS GoldenEye": 0.0036281755528591365,
+          "FTP-Patator": 0.0019040128149174847,
+          "DoS Slowloris": 0.0018512567923379072,
+          "SSH-Patator": 0.0014196166075959081,
+          "DoS Slowhttptest": 0.0008345043571678649,
+          "Botnet": 0.00035250615087263257,
+          "Web Attack - Brute Force": 3.597001539516659e-05,
+          "Infiltration": 1.6786007184411074e-05,
+          "Web Attack - XSS": 9.592004105377758e-06,
+          "Web Attack - SQL Injection": 7.194003079033318e-06,
+          "Heartbleed": 4.796002052688879e-06
+        }
+      },
+      "imbalance_ratio": 141147.55555555556,
+      "rare_classes": [
+        "DoS GoldenEye",
+        "FTP-Patator",
+        "DoS Slowloris",
+        "SSH-Patator",
+        "DoS Slowhttptest",
+        "Botnet",
+        "Web Attack - Brute Force",
+        "Infiltration",
+        "Web Attack - XSS",
+        "Web Attack - SQL Injection",
+        "Heartbleed"
+      ]
+    }
+  },
+  {
+    "check": "low_cardinality_warning",
+    "status": "ok",
+    "summary": "unique values by column: {'Src IP': 146, 'Dst IP': 18519, 'Src Port': 64497, 'Dst Port': 4372}",
+    "details": {
+      "cardinalities": {
+        "Src IP": 146,
+        "Dst IP": 18519,
+        "Src Port": 64497,
+        "Dst Port": 4372
+      },
+      "flagged": []
+    }
+  },
+  {
+    "check": "schema_fingerprint_check",
+    "status": "warning",
+    "summary": "matched extractor signature(s): ['CICFlowMeter']",
+    "details": {
+      "CICFlowMeter": {
+        "match_share": 0.7777777777777778,
+        "warning": "CICFlowMeter is known to have miscalculated ~34 features in early releases (Rosay et al. 2021), motivating the corrected LYCOS-IDS2017 release. Verify which extractor version produced this data before trusting derived-rate/duration features."
+      }
+    }
+  },
+  {
+    "check": "data_integrity_check",
+    "status": "warning",
+    "summary": "+-inf values in 2 feature column(s)",
+    "details": {
+      "missing_label_count": 0,
+      "missing_by_feature": {},
+      "inf_by_feature": {
+        "Flow Bytes/s": 4,
+        "Flow Packets/s": 4
+      },
+      "constant_features": []
+    }
+  },
+  {
+    "check": "result_robustness_check",
+    "status": "ok",
+    "summary": "accuracy ranges from 0.9947 (identity_columns_dropped) to 0.9998 (deduplicated) across 4 conditions, a spread of 0.0051 (sampling margin +/-0.0002); balanced accuracy spread 0.0562, macro-F1 spread 0.0610; accuracy not material, balanced accuracy not material, macro f1 not material",
+    "details": {
+      "accuracy_by_condition": {
+        "random_split": 0.9998071410203907,
+        "grouped_split": 0.9997359864710905,
+        "deduplicated": 0.9998177519219978,
+        "identity_columns_dropped": 0.9947285212240117
+      },
+      "spread": 0.005089230697986169,
+      "worst_condition": "identity_columns_dropped",
+      "best_condition": "deduplicated",
+      "sampling_margin": 0.00022279926620635053,
+      "by_metric": {
+        "accuracy": {
+          "by_condition": {
+            "random_split": 0.9998071410203907,
+            "grouped_split": 0.9997359864710905,
+            "deduplicated": 0.9998177519219978,
+            "identity_columns_dropped": 0.9947285212240117
+          },
+          "spread": 0.005089230697986169,
+          "sampling_margin": 0.00022279926620635053,
+          "worst_condition": "identity_columns_dropped",
+          "best_condition": "deduplicated",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 7.115454930017862e-05,
+            "deduplicated": -1.0610901607144285e-05,
+            "identity_columns_dropped": 0.005078619796379025
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        },
+        "balanced_accuracy": {
+          "by_condition": {
+            "random_split": 0.9031698223706534,
+            "grouped_split": 0.8470014974460213,
+            "deduplicated": 0.877013002290497,
+            "identity_columns_dropped": 0.8935051152241699
+          },
+          "spread": 0.056168324924632085,
+          "sampling_margin": 0.07056355554708707,
+          "worst_condition": "grouped_split",
+          "best_condition": "random_split",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 0.056168324924632085,
+            "deduplicated": 0.026156820080156407,
+            "identity_columns_dropped": 0.009664707146483487
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        },
+        "macro_f1": {
+          "by_condition": {
+            "random_split": 0.9162204114286246,
+            "grouped_split": 0.855239939713476,
+            "deduplicated": 0.8867056558980022,
+            "identity_columns_dropped": 0.908423574363678
+          },
+          "spread": 0.06098047171514864,
+          "sampling_margin": 0.06605087216350482,
+          "worst_condition": "grouped_split",
+          "best_condition": "random_split",
+          "drop_from_random_split": {
+            "random_split": 0.0,
+            "grouped_split": 0.06098047171514864,
+            "deduplicated": 0.02951475553062244,
+            "identity_columns_dropped": 0.0077968370649466046
+          },
+          "thresholds": {
+            "warning": 0.08,
+            "flag": 0.15
+          },
+          "verdict": "ok"
+        }
+      },
+      "materiality_metrics": [
+        "accuracy",
+        "balanced_accuracy",
+        "macro_f1"
+      ]
+    }
+  },
+  {
+    "check": "known_issue_lookup",
+    "status": "warning",
+    "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S&P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)",
+    "details": {
+      "matches": [
+        {
+          "issue": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs.",
+          "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)",
+          "release": "the original CIC-IDS2017 CSVs (UNB)"
+        },
+        {
+          "issue": "A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes.",
+          "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
+          "release": "the original CIC-IDS2017 CSVs (UNB)"
+        },
+        {
+          "issue": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy.",
+          "citation": "Cantone et al. 2024, IEEE Access, Table 1",
+          "release": "the original CIC-IDS2017 CSVs and the corrected re-extraction alike"
+        }
+      ]
+    }
+  },
+  {
+    "check": "repeated_seed_falsification_check",
+    "status": "warning",
+    "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0001], balanced accuracy +0.0020 [-0.0389, +0.0429], macro-F1 +0.0123 [-0.0261, +0.0507]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+    "details": {
+      "n_seeds": 10,
+      "drops_by_seed": [
+        7.115454930017862e-05,
+        -2.1239412224316467e-05,
+        -2.267315734383324e-06,
+        6.182515922181775e-05,
+        -5.014437331340993e-05,
+        5.281494795927877e-05,
+        -1.738838093034989e-05,
+        2.1496280363852982e-05,
+        0.00012142179150753662,
+        5.175621440400846e-05
+      ],
+      "mean_drop": 2.894294605542136e-05,
+      "ci_95": [
+        -8.346383385477182e-06,
+        6.62322754963199e-05
+      ],
+      "materiality_threshold": 0.01,
+      "material": null,
+      "by_metric": {
+        "accuracy": {
+          "drops_by_seed": [
+            7.115454930017862e-05,
+            -2.1239412224316467e-05,
+            -2.267315734383324e-06,
+            6.182515922181775e-05,
+            -5.014437331340993e-05,
+            5.281494795927877e-05,
+            -1.738838093034989e-05,
+            2.1496280363852982e-05,
+            0.00012142179150753662,
+            5.175621440400846e-05
+          ],
+          "mean_drop": 2.894294605542136e-05,
+          "ci_95": [
+            -8.346383385477182e-06,
+            6.62322754963199e-05
+          ],
+          "threshold": 0.01,
+          "verdict": "ok",
+          "verdict_by_threshold": {
+            "0.005": "ok",
+            "0.01": "ok",
+            "0.02": "ok",
+            "0.05": "ok"
+          }
+        },
+        "balanced_accuracy": {
+          "drops_by_seed": [
+            0.056168324924632085,
+            -0.0778820986991825,
+            0.03757697986289388,
+            -0.10113340501331614,
+            -0.048027860314465154,
+            0.05880711018460549,
+            0.024843775006142876,
+            0.010464474805884194,
+            0.04284454857328446,
+            0.01655851834518529
+          ],
+          "mean_drop": 0.0020220367675664484,
+          "ci_95": [
+            -0.038878699337767914,
+            0.042922772872900805
+          ],
+          "threshold": 0.01,
+          "verdict": "warning",
+          "verdict_by_threshold": {
+            "0.005": "warning",
+            "0.01": "warning",
+            "0.02": "warning",
+            "0.05": "ok"
+          }
+        },
+        "macro_f1": {
+          "drops_by_seed": [
+            0.06098047171514864,
+            -0.05751940106457554,
+            0.046176025221414174,
+            -0.09005035154388918,
+            -0.03931042084596592,
+            0.05286923831639212,
+            0.035670064339416996,
+            0.02837218444538958,
+            0.05111216490883552,
+            0.034732606987017856
+          ],
+          "mean_drop": 0.012303258247918425,
+          "ci_95": [
+            -0.026139583923490965,
+            0.05074610041932782
+          ],
+          "threshold": 0.01,
+          "verdict": "warning",
+          "verdict_by_threshold": {
+            "0.005": "warning",
+            "0.01": "warning",
+            "0.02": "warning",
+            "0.05": "warning"
+          }
+        }
+      },
+      "materiality_metrics": [
+        "accuracy",
+        "balanced_accuracy",
+        "macro_f1"
+      ],
+      "mean_error_ratio": 1.2017419928876765,
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Src Port",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 1084821,
+        "rows_per_group": 1.9357811104320437,
+        "singleton_group_share": 0.7880286240771519,
+        "rows_in_singleton_groups": 0.40708560478786426,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 14.0,
+        "size_max": 1184,
+        "largest_group_row_share": 0.00056381596742058
+      }
+    }
+  }
+]

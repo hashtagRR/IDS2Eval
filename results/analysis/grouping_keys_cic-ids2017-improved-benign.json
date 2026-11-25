@@ -1,0 +1,465 @@
+{
+  "cic-ids2017-improved-benign": {
+    "five_tuple": {
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Src Port",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 1084821,
+        "rows_per_group": 1.9357811104320437,
+        "singleton_group_share": 0.7880286240771519,
+        "rows_in_singleton_groups": 0.40708560478786426,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 14.0,
+        "size_max": 1184,
+        "largest_group_row_share": 0.00056381596742058
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0001], balanced accuracy +0.0020 [-0.0389, +0.0429], macro-F1 +0.0123 [-0.0261, +0.0507]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            7.115454930017862e-05,
+            -2.1239412224316467e-05,
+            -2.267315734383324e-06,
+            6.182515922181775e-05,
+            -5.014437331340993e-05,
+            5.281494795927877e-05,
+            -1.738838093034989e-05,
+            2.1496280363852982e-05,
+            0.00012142179150753662,
+            5.175621440400846e-05
+          ],
+          "mean_drop": 2.894294605542136e-05,
+          "ci_95": [
+            -8.346383385477182e-06,
+            6.62322754963199e-05
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                7.115454930017862e-05,
+                -2.1239412224316467e-05,
+                -2.267315734383324e-06,
+                6.182515922181775e-05,
+                -5.014437331340993e-05,
+                5.281494795927877e-05,
+                -1.738838093034989e-05,
+                2.1496280363852982e-05,
+                0.00012142179150753662,
+                5.175621440400846e-05
+              ],
+              "mean_drop": 2.894294605542136e-05,
+              "ci_95": [
+                -8.346383385477182e-06,
+                6.62322754963199e-05
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.056168324924632085,
+                -0.0778820986991825,
+                0.03757697986289388,
+                -0.10113340501331614,
+                -0.048027860314465154,
+                0.05880711018460549,
+                0.024843775006142876,
+                0.010464474805884194,
+                0.04284454857328446,
+                0.01655851834518529
+              ],
+              "mean_drop": 0.0020220367675664484,
+              "ci_95": [
+                -0.038878699337767914,
+                0.042922772872900805
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "ok"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.06098047171514864,
+                -0.05751940106457554,
+                0.046176025221414174,
+                -0.09005035154388918,
+                -0.03931042084596592,
+                0.05286923831639212,
+                0.035670064339416996,
+                0.02837218444538958,
+                0.05111216490883552,
+                0.034732606987017856
+              ],
+              "mean_drop": 0.012303258247918425,
+              "ci_95": [
+                -0.026139583923490965,
+                0.05074610041932782
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.2017419928876765,
+          "group_stats": {
+            "group_columns": [
+              "Src IP",
+              "Src Port",
+              "Dst IP",
+              "Dst Port",
+              "Protocol"
+            ],
+            "rows": 2099976,
+            "groups": 1084821,
+            "rows_per_group": 1.9357811104320437,
+            "singleton_group_share": 0.7880286240771519,
+            "rows_in_singleton_groups": 0.40708560478786426,
+            "size_median": 1.0,
+            "size_p90": 3.0,
+            "size_p99": 14.0,
+            "size_max": 1184,
+            "largest_group_row_share": 0.00056381596742058
+          }
+        }
+      },
+      "seconds": 5250
+    },
+    "coarse": {
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 90761,
+        "rows_per_group": 23.13742686836857,
+        "singleton_group_share": 0.25794118619230727,
+        "rows_in_singleton_groups": 0.011148222646354053,
+        "size_median": 3.0,
+        "size_p90": 13.0,
+        "size_p99": 159.0,
+        "size_max": 294063,
+        "largest_group_row_share": 0.14003160036114698
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0946 [-0.1191, +0.3083], balanced accuracy -0.0712 [-0.2444, +0.1020], macro-F1 -0.0234 [-0.2187, +0.1719]; accuracy inconclusive, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            -0.00019285897960930054,
+            0.0007810115980708687,
+            0.0009580168362304242,
+            -0.00015000142858501153,
+            -0.0002238116553491265,
+            -0.00019762092972308576,
+            -0.00011284899412555838,
+            0.0005408074294175336,
+            -0.00011666777778840398,
+            0.944806806967179
+          ],
+          "mean_drop": 0.09460928330657173,
+          "ci_95": [
+            -0.1190887819341109,
+            0.3083073485472544
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                -0.00019285897960930054,
+                0.0007810115980708687,
+                0.0009580168362304242,
+                -0.00015000142858501153,
+                -0.0002238116553491265,
+                -0.00019762092972308576,
+                -0.00011284899412555838,
+                0.0005408074294175336,
+                -0.00011666777778840398,
+                0.944806806967179
+              ],
+              "mean_drop": 0.09460928330657173,
+              "ci_95": [
+                -0.1190887819341109,
+                0.3083073485472544
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                -0.09683017762934665,
+                -0.14957530039533518,
+                -0.10515830815891569,
+                -0.23740200574343617,
+                -0.15796474117847537,
+                -0.11900132794839025,
+                -0.11894994532854564,
+                -0.18769756153331008,
+                -0.14708775966152798,
+                0.60763435187321
+              ],
+              "mean_drop": -0.0712032775704073,
+              "ci_95": [
+                -0.24444108597437075,
+                0.10203453083355617
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                -0.08377958857137535,
+                0.12220508203319547,
+                -0.0968726336016471,
+                -0.22529261560699754,
+                -0.136210895211602,
+                -0.1109927880325734,
+                -0.10349874077065058,
+                -0.1707565193406112,
+                -0.13845833127414653,
+                0.710075775364905
+              ],
+              "mean_drop": -0.02335812550115033,
+              "ci_95": [
+                -0.21865027733110368,
+                0.17193402632880303
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 517.0842540477361,
+          "group_stats": {
+            "group_columns": [
+              "Src IP",
+              "Dst IP",
+              "Dst Port",
+              "Protocol"
+            ],
+            "rows": 2099976,
+            "groups": 90761,
+            "rows_per_group": 23.13742686836857,
+            "singleton_group_share": 0.25794118619230727,
+            "rows_in_singleton_groups": 0.011148222646354053,
+            "size_median": 3.0,
+            "size_p90": 13.0,
+            "size_p99": 159.0,
+            "size_max": 294063,
+            "largest_group_row_share": 0.14003160036114698
+          }
+        }
+      },
+      "seconds": 1499
+    },
+    "host": {
+      "group_stats": {
+        "group_columns": [
+          "Src IP"
+        ],
+        "rows": 2099976,
+        "groups": 174,
+        "rows_per_group": 12068.827586206897,
+        "singleton_group_share": 0.6494252873563219,
+        "rows_in_singleton_groups": 5.381013878253847e-05,
+        "size_median": 1.0,
+        "size_p90": 6.700000000000017,
+        "size_p99": 229233.24000000092,
+        "size_max": 441961,
+        "largest_group_row_share": 0.21046002430503968
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "ok",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy -0.0002 [-0.0002, -0.0002], balanced accuracy -0.1452 [-0.1756, -0.1148], macro-F1 -0.1303 [-0.1603, -0.1002]; accuracy not material, balanced accuracy not material, macro f1 not material; overall not material on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            -0.00019285897960930054,
+            -0.0001404775283574411,
+            -0.00020714482995076722,
+            -0.00015000142858501153,
+            -0.0002238116553491265,
+            -0.00019762092972308576,
+            -0.00023095458051980433,
+            -0.0002000019047800894,
+            -0.00011666777778840398,
+            -0.0001833350793817301
+          ],
+          "mean_drop": -0.00018428746940447606,
+          "ci_95": [
+            -0.00021087122049453884,
+            -0.00015770371831441327
+          ],
+          "materiality_threshold": 0.01,
+          "material": false,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                -0.00019285897960930054,
+                -0.0001404775283574411,
+                -0.00020714482995076722,
+                -0.00015000142858501153,
+                -0.0002238116553491265,
+                -0.00019762092972308576,
+                -0.00023095458051980433,
+                -0.0002000019047800894,
+                -0.00011666777778840398,
+                -0.0001833350793817301
+              ],
+              "mean_drop": -0.00018428746940447606,
+              "ci_95": [
+                -0.00021087122049453884,
+                -0.00015770371831441327
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                -0.09683017762934665,
+                -0.149974454189292,
+                -0.10906265174115104,
+                -0.23740200574343617,
+                -0.15796474117847537,
+                -0.11900132794839025,
+                -0.11939203197752879,
+                -0.19137572245285028,
+                -0.14708775966152798,
+                -0.12427109550154691
+              ],
+              "mean_drop": -0.14523619680235456,
+              "ci_95": [
+                -0.1756411376268782,
+                -0.11483125597783092
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                -0.08377958857137535,
+                -0.12942398025366697,
+                -0.09911683024937834,
+                -0.22529261560699754,
+                -0.136210895211602,
+                -0.1109927880325734,
+                -0.10374787388069495,
+                -0.17276592443577898,
+                -0.13845833127414653,
+                -0.10289914555967505
+              ],
+              "mean_drop": -0.13026879730758892,
+              "ci_95": [
+                -0.16033113250011158,
+                -0.10020646211506626
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 0.0,
+          "group_stats": {
+            "group_columns": [
+              "Src IP"
+            ],
+            "rows": 2099976,
+            "groups": 174,
+            "rows_per_group": 12068.827586206897,
+            "singleton_group_share": 0.6494252873563219,
+            "rows_in_singleton_groups": 5.381013878253847e-05,
+            "size_median": 1.0,
+            "size_p90": 6.700000000000017,
+            "size_p99": 229233.24000000092,
+            "size_max": 441961,
+            "largest_group_row_share": 0.21046002430503968
+          }
+        }
+      },
+      "seconds": 1206
+    }
+  }
+}

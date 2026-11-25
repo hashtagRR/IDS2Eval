@@ -1,0 +1,465 @@
+{
+  "cic-ddos2019-sample": {
+    "five_tuple": {
+      "group_stats": {
+        "group_columns": [
+          "Source IP",
+          "Source Port",
+          "Destination IP",
+          "Destination Port",
+          "Protocol"
+        ],
+        "rows": 7034500,
+        "groups": 4610328,
+        "rows_per_group": 1.525813347770484,
+        "singleton_group_share": 0.8153304927545285,
+        "rows_in_singleton_groups": 0.5343579501030635,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 9.0,
+        "size_max": 87,
+        "largest_group_row_share": 1.2367616746037388e-05
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "ok",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0001 [-0.0001, +0.0003], balanced accuracy -0.0006 [-0.0093, +0.0082], macro-F1 -0.0027 [-0.0110, +0.0056]; accuracy not material, balanced accuracy not material, macro f1 not material; overall not material on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            0.00010448503802684694,
+            -0.0003113227663658069,
+            0.00011222913064889983,
+            -0.0005323761461368814,
+            8.529390859335351e-05,
+            0.0006183808373018129,
+            0.0004648518018337544,
+            0.000110096820319594,
+            5.1887127727634486e-05,
+            0.00032980311322761136
+          ],
+          "mean_drop": 0.00010333288651768192,
+          "ci_95": [
+            -0.00013824914813810759,
+            0.0003449149211734714
+          ],
+          "materiality_threshold": 0.01,
+          "material": false,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                0.00010448503802684694,
+                -0.0003113227663658069,
+                0.00011222913064889983,
+                -0.0005323761461368814,
+                8.529390859335351e-05,
+                0.0006183808373018129,
+                0.0004648518018337544,
+                0.000110096820319594,
+                5.1887127727634486e-05,
+                0.00032980311322761136
+              ],
+              "mean_drop": 0.00010333288651768192,
+              "ci_95": [
+                -0.00013824914813810759,
+                0.0003449149211734714
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                -0.0070085824550221165,
+                0.013564265797598285,
+                0.009058467377546009,
+                -0.0028527121946493317,
+                -0.002742988278270464,
+                0.008032331260632408,
+                -0.0033106590041780404,
+                -0.007629152714326515,
+                0.013597562496407645,
+                -0.026412508309274663
+              ],
+              "mean_drop": -0.0005703976023536783,
+              "ci_95": [
+                -0.009311458171381218,
+                0.008170662966673863
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                -0.012533800778359638,
+                0.009372897331545338,
+                0.012703045841482852,
+                -0.006900256804251992,
+                -0.0049112115284080105,
+                0.0030750947932417505,
+                -0.005315906218120614,
+                -0.013860768156228942,
+                0.012326252542340321,
+                -0.02084879849115162
+              ],
+              "mean_drop": -0.0026893451467910555,
+              "ci_95": [
+                -0.011025520888654562,
+                0.00564683059507245
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.000988693118849,
+          "group_stats": {
+            "group_columns": [
+              "Source IP",
+              "Source Port",
+              "Destination IP",
+              "Destination Port",
+              "Protocol"
+            ],
+            "rows": 7034500,
+            "groups": 4610328,
+            "rows_per_group": 1.525813347770484,
+            "singleton_group_share": 0.8153304927545285,
+            "rows_in_singleton_groups": 0.5343579501030635,
+            "size_median": 1.0,
+            "size_p90": 3.0,
+            "size_p99": 9.0,
+            "size_max": 87,
+            "largest_group_row_share": 1.2367616746037388e-05
+          }
+        }
+      },
+      "seconds": 4730
+    },
+    "coarse": {
+      "group_stats": {
+        "group_columns": [
+          "Source IP",
+          "Destination IP",
+          "Destination Port",
+          "Protocol"
+        ],
+        "rows": 7034500,
+        "groups": 29800,
+        "rows_per_group": 236.05704697986576,
+        "singleton_group_share": 0.08630872483221476,
+        "rows_in_singleton_groups": 0.0003656265548368754,
+        "size_median": 87.0,
+        "size_p90": 741.0,
+        "size_p99": 1081.0,
+        "size_max": 10305,
+        "largest_group_row_share": 0.0014649228800909801
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "flag",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0054 [+0.0037, +0.0072], balanced accuracy +0.0396 [+0.0251, +0.0540], macro-F1 +0.0346 [+0.0185, +0.0506]; accuracy not material, balanced accuracy material, macro f1 material; overall material on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            0.006637835867031705,
+            0.0067596154926200525,
+            0.0006787087570500061,
+            0.006612876283224489,
+            0.007124915968721668,
+            0.006241011857714973,
+            0.00674654916252182,
+            0.006514451850240799,
+            0.006343983254302077,
+            0.00081967246660275
+          ],
+          "mean_drop": 0.005447962096003034,
+          "ci_95": [
+            0.0036678907227240803,
+            0.007228033469281988
+          ],
+          "materiality_threshold": 0.01,
+          "material": true,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                0.006637835867031705,
+                0.0067596154926200525,
+                0.0006787087570500061,
+                0.006612876283224489,
+                0.007124915968721668,
+                0.006241011857714973,
+                0.00674654916252182,
+                0.006514451850240799,
+                0.006343983254302077,
+                0.00081967246660275
+              ],
+              "mean_drop": 0.005447962096003034,
+              "ci_95": [
+                0.0036678907227240803,
+                0.007228033469281988
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.046673568815320365,
+                0.057205081195305096,
+                -0.003080952545369775,
+                0.0489682587419602,
+                0.052659587756771264,
+                0.06127014983386658,
+                0.03490326427796586,
+                0.03471866761436648,
+                0.04815188062913989,
+                0.014309898210315919
+              ],
+              "mean_drop": 0.039577940452964186,
+              "ci_95": [
+                0.025136003907206793,
+                0.05401987699872158
+              ],
+              "threshold": 0.01,
+              "verdict": "flag",
+              "verdict_by_threshold": {
+                "0.005": "flag",
+                "0.01": "flag",
+                "0.02": "flag",
+                "0.05": "warning"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.043584792577393894,
+                0.050361717112746174,
+                -0.010822506567649048,
+                0.046761734261870136,
+                0.053789605367997595,
+                0.057646141142831286,
+                0.029181315256645357,
+                0.02817675835615885,
+                0.04337242628629234,
+                0.0036958102931928805
+              ],
+              "mean_drop": 0.034574779408747945,
+              "ci_95": [
+                0.018503954149235155,
+                0.050645604668260735
+              ],
+              "threshold": 0.01,
+              "verdict": "flag",
+              "verdict_by_threshold": {
+                "0.005": "flag",
+                "0.01": "flag",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.0521129052069385,
+          "group_stats": {
+            "group_columns": [
+              "Source IP",
+              "Destination IP",
+              "Destination Port",
+              "Protocol"
+            ],
+            "rows": 7034500,
+            "groups": 29800,
+            "rows_per_group": 236.05704697986576,
+            "singleton_group_share": 0.08630872483221476,
+            "rows_in_singleton_groups": 0.0003656265548368754,
+            "size_median": 87.0,
+            "size_p90": 741.0,
+            "size_p99": 1081.0,
+            "size_max": 10305,
+            "largest_group_row_share": 0.0014649228800909801
+          }
+        }
+      },
+      "seconds": 560
+    },
+    "host": {
+      "group_stats": {
+        "group_columns": [
+          "Source IP"
+        ],
+        "rows": 7034500,
+        "groups": 507,
+        "rows_per_group": 13874.753451676528,
+        "singleton_group_share": 0.3431952662721893,
+        "rows_in_singleton_groups": 2.4735233492074775e-05,
+        "size_median": 2.0,
+        "size_p90": 8.0,
+        "size_p99": 702.2199999999993,
+        "size_max": 7015266,
+        "largest_group_row_share": 0.9972657616035255
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "flag",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.4013 [+0.3812, +0.4213], balanced accuracy +0.3324 [+0.3140, +0.3507], macro-F1 +0.4439 [+0.4369, +0.4509]; accuracy material, balanced accuracy material, macro f1 material; overall material on accuracy, balanced_accuracy, macro_f1",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            0.39961392700540427,
+            0.3920688755083551,
+            0.38821627058635577,
+            0.39632522953897326,
+            0.4802813660057507,
+            0.3912005300508953,
+            0.3939297765982973,
+            0.3925556684116345,
+            0.3903219871401701,
+            0.38804402098420354
+          ],
+          "mean_drop": 0.401255765183004,
+          "ci_95": [
+            0.3812328045629339,
+            0.42127872580307407
+          ],
+          "materiality_threshold": 0.01,
+          "material": true,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                0.39961392700540427,
+                0.3920688755083551,
+                0.38821627058635577,
+                0.39632522953897326,
+                0.4802813660057507,
+                0.3912005300508953,
+                0.3939297765982973,
+                0.3925556684116345,
+                0.3903219871401701,
+                0.38804402098420354
+              ],
+              "mean_drop": 0.401255765183004,
+              "ci_95": [
+                0.3812328045629339,
+                0.42127872580307407
+              ],
+              "threshold": 0.01,
+              "verdict": "flag",
+              "verdict_by_threshold": {
+                "0.005": "flag",
+                "0.01": "flag",
+                "0.02": "flag",
+                "0.05": "flag"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.3353907331056723,
+                0.33240952178713057,
+                0.31758552594303324,
+                0.32670424942685256,
+                0.4031930227849953,
+                0.3252304887191887,
+                0.32515084797863514,
+                0.31506314686780457,
+                0.3229524516912913,
+                0.3201176554116137
+              ],
+              "mean_drop": 0.33237976437162176,
+              "ci_95": [
+                0.3140373203054462,
+                0.35072220843779733
+              ],
+              "threshold": 0.01,
+              "verdict": "flag",
+              "verdict_by_threshold": {
+                "0.005": "flag",
+                "0.01": "flag",
+                "0.02": "flag",
+                "0.05": "flag"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.4377588349593652,
+                0.4511215401726058,
+                0.4366195887598983,
+                0.44685757205031984,
+                0.4627807679468132,
+                0.4483333331670712,
+                0.45123477808468426,
+                0.4306172576147523,
+                0.43606341376367785,
+                0.4372236537886318
+              ],
+              "mean_drop": 0.44386107403078195,
+              "ci_95": [
+                0.4368522199310396,
+                0.4508699281305243
+              ],
+              "threshold": 0.01,
+              "verdict": "flag",
+              "verdict_by_threshold": {
+                "0.005": "flag",
+                "0.01": "flag",
+                "0.02": "flag",
+                "0.05": "flag"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 4.837771511485674,
+          "group_stats": {
+            "group_columns": [
+              "Source IP"
+            ],
+            "rows": 7034500,
+            "groups": 507,
+            "rows_per_group": 13874.753451676528,
+            "singleton_group_share": 0.3431952662721893,
+            "rows_in_singleton_groups": 2.4735233492074775e-05,
+            "size_median": 2.0,
+            "size_p90": 8.0,
+            "size_p99": 702.2199999999993,
+            "size_max": 7015266,
+            "largest_group_row_share": 0.9972657616035255
+          }
+        }
+      },
+      "seconds": 555
+    }
+  }
+}

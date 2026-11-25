@@ -1,0 +1,63 @@
+{
+  "config": "cic-ddos2019-fullscale-resplit",
+  "keys": {
+    "five_tuple": {
+      "group_columns": [
+        "Source IP",
+        "Source Port",
+        "Destination IP",
+        "Destination Port",
+        "Protocol"
+      ],
+      "rows": 70427637,
+      "groups": 46127849,
+      "rows_per_group": 1.526792133749831,
+      "singleton_group_share": 0.8147809146704412,
+      "rows_in_singleton_groups": 0.533655431318816,
+      "size_median": 1.0,
+      "size_p90": 3.0,
+      "size_p99": 9.0,
+      "size_max": 1029,
+      "largest_group_row_share": 1.4610741518986361e-05
+    },
+    "coarse": {
+      "group_columns": [
+        "Source IP",
+        "Destination IP",
+        "Destination Port",
+        "Protocol"
+      ],
+      "rows": 70427637,
+      "groups": 298812,
+      "rows_per_group": 235.69213083811894,
+      "singleton_group_share": 0.08856404695929213,
+      "rows_in_singleton_groups": 0.00037576157780219146,
+      "size_median": 87.0,
+      "size_p90": 744.0,
+      "size_p99": 1077.0,
+      "size_max": 12309,
+      "largest_group_row_share": 0.00017477513834519254
+    },
+    "host": {
+      "group_columns": [
+        "Source IP"
+      ],
+      "rows": 70427637,
+      "groups": 1577,
+      "rows_per_group": 44659.249841471144,
+      "singleton_group_share": 0.22447685478757134,
+      "rows_in_singleton_groups": 5.026435857843704e-06,
+      "size_median": 3.0,
+      "size_p90": 26.0,
+      "size_p99": 270.9200000000001,
+      "size_max": 70289460,
+      "largest_group_row_share": 0.9980380287357931
+    }
+  },
+  "sample": {
+    "key": "coarse",
+    "fraction": 0.1,
+    "rows": 7034500,
+    "path": "ddos_sample_coarse.csv.gz"
+  }
+}

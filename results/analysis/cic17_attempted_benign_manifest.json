@@ -1,0 +1,45 @@
+{
+  "rule": "Label := \"BENIGN\" where \"Attempted Category\" != -1",
+  "days": {
+    "monday": {
+      "input_sha256_compressed": "7fc76e01238cc679edc213e627ed4be38ca0e2eaebba369b6ae188a656c9302e",
+      "rows": 371624,
+      "relabelled_to_benign": {}
+    },
+    "tuesday": {
+      "input_sha256_compressed": "b5bbe23ac3087d36a00d59b3025de13281157395e0ce603500f7ddbaf63c6f01",
+      "rows": 322078,
+      "relabelled_to_benign": {
+        "SSH-Patator - Attempted": 27,
+        "FTP-Patator - Attempted": 12
+      }
+    },
+    "wednesday": {
+      "input_sha256_compressed": "87d5c87d6e14360a785e57e094f82e25c4a659d8e3704560c81253b74cfefd22",
+      "rows": 496641,
+      "relabelled_to_benign": {
+        "DoS Slowhttptest - Attempted": 3368,
+        "DoS Slowloris - Attempted": 1847,
+        "DoS Hulk - Attempted": 581,
+        "DoS GoldenEye - Attempted": 80
+      }
+    },
+    "thursday": {
+      "input_sha256_compressed": "d758de482246d762b6e39fa0b4dcd3cfdef0104e92da58a882e56862138c60d2",
+      "rows": 362076,
+      "relabelled_to_benign": {
+        "Web Attack - Brute Force - Attempted": 1292,
+        "Web Attack - XSS - Attempted": 655,
+        "Infiltration - Attempted": 45,
+        "Web Attack - SQL Injection - Attempted": 5
+      }
+    },
+    "friday": {
+      "input_sha256_compressed": "9cd6fb2d31225c140087418c1bfad1271dcb86e9497e8dff9fc8ab7fe8f2b1c0",
+      "rows": 547557,
+      "relabelled_to_benign": {
+        "Botnet - Attempted": 4067
+      }
+    }
+  }
+}

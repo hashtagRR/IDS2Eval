@@ -17,7 +17,9 @@ replacing only the function that fits the model and predicts:
 
 Run from the directory that holds data/ (the files the configs name).
 
-Usage: python3 validation/reuse_removal_models.py OUT_JSON [DATASET ...]
+Usage: python3 validation/reuse_removal_models.py OUT_JSON [DATASET[:MODEL,MODEL] ...]
+  e.g. cic-ids2018-fullscale:rf runs the reference forest only (the 1-NN model does not
+  scale to millions of training rows). Configs with raw_files use the audit's random split.
 """
 from __future__ import annotations
 
@@ -34,8 +36,9 @@ from xgboost import XGBClassifier
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from grouping_keys import load_analysis_config
+
 from ids2eval.audit import _fit_score, reuse_removal
-from ids2eval.config import load_config
 from ids2eval.data import dataset, features
 
 CONFIGS = Path(__file__).resolve().parent.parent / "results" / "configs"
@@ -72,10 +75,13 @@ def main() -> None:
     out = Path(sys.argv[1])
     names = sys.argv[2:] or DATASETS
     results = json.loads(out.read_text()) if out.exists() else {}
-    for name in names:
-        cfg = load_config(str(CONFIGS / f"{name}.yaml"))
+    for arg in names:
+        name, _, only = arg.partition(":")
+        cfg = load_analysis_config(CONFIGS / f"{name}.yaml")
         train_df, test_df = dataset.load_split(cfg)
         for model, predict in PREDICTORS.items():
+            if only and model not in only.split(","):
+                continue
             if model in results.get(name, {}):
                 continue
             run_cfg = copy.deepcopy(cfg)

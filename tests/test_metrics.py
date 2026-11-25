@@ -59,3 +59,12 @@ def test_group_stats_on_a_near_unique_key():
     assert stats["singleton_group_share"] == pytest.approx(0.8)
     assert stats["rows_in_singleton_groups"] == pytest.approx(4 / 6)
     assert stats["size_max"] == 2
+
+
+def test_class_support_lists_classes_a_split_leaves_out():
+    train = pd.Series(["a", "a", "b"])
+    test = pd.Series(["a", "c"])
+    missing = _groups.class_support(train, test)
+    assert missing == {"missing_from_train": ["c"], "missing_from_test": ["b"]}
+    assert "no training rows: ['c']" in _groups.describe_class_loss(missing)
+    assert _groups.describe_class_loss({"missing_from_train": [], "missing_from_test": []}) == ""

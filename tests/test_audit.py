@@ -1643,3 +1643,35 @@ def test_reuse_removal_not_material_when_the_label_follows_a_feature_rule(base_c
     base_cfg["audit"]["materiality_thresholds"] = {"reuse_removal_falsification": 0.05}
     result = reuse_removal.check(train, test, base_cfg)
     assert result["details"]["by_metric"]["accuracy"]["verdict"] == "ok"
+
+
+def _one_host_class_csv(tmp_path):
+    """Class 'b' comes from a single host, so any host-grouped split puts all of it on one side."""
+    rng = np.random.RandomState(0)
+    hosts = np.repeat([f"h{i}" for i in range(10)], 60)
+    label = np.where(hosts == "h0", "b", "a")
+    df = pd.DataFrame({"f1": rng.normal(size=600), "f2": rng.normal(size=600), "host": hosts, "Label": label})
+    path = tmp_path / "raw.csv"
+    df.to_csv(path, index=False)
+    return str(path)
+
+
+def test_resplit_falsification_reports_a_class_the_grouped_split_loses(base_cfg, tmp_path):
+    base_cfg["dataset"]["raw_files"] = [_one_host_class_csv(tmp_path)]
+    base_cfg["dataset"]["group_columns"] = ["host"]
+    base_cfg["schema"]["drop_columns"] = ["host"]
+    result = resplit.check(base_cfg)
+    details = result["details"]
+    assert details["grouped_class_loss"] is True
+    lost = details["grouped_class_support"]
+    assert "b" in lost["missing_from_train"] + lost["missing_from_test"]
+    assert "CAUTION" in result["summary"]
+
+
+def test_repeated_seed_falsification_lists_seeds_with_class_loss(base_cfg, tmp_path):
+    base_cfg["dataset"]["raw_files"] = [_one_host_class_csv(tmp_path)]
+    base_cfg["dataset"]["group_columns"] = ["host"]
+    base_cfg["schema"]["drop_columns"] = ["host"]
+    result = repeated_seed_falsification.check(base_cfg, n_seeds=3)
+    assert result["details"]["seeds_with_grouped_class_loss"] == [0, 1, 2]
+    assert "CAUTION" in result["summary"]

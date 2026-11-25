@@ -316,6 +316,15 @@ to its result; when most rows sit in single-row groups, use a coarser key
 such as source address, destination address, destination port and
 protocol.
 
+A key that is too coarse fails the other way. When one host sends most of
+the attack traffic (a testbed firewall that NATs the attacker network, or a
+single DDoS source), a grouped split by host puts nearly all attacks on one
+side, and the grouped score then says nothing about those classes. Both
+grouped checks report which classes the grouped split leaves without
+training rows or without test rows, per seed for
+`repeated_seed_falsification_check`, and say so in the summary; the
+verdicts are not changed, so read a grouped result together with this list.
+
 A single comparison on finite test sets is noisy: with about 1,200 test
 rows per side, the 95% sampling margin on an accuracy gap is about
 +/-0.04, four times the 0.01 threshold. The check therefore flags only

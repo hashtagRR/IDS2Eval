@@ -47,3 +47,23 @@ def describe(stats: dict) -> str:
         f"({stats['rows_per_group']:.2f} rows per group, "
         f"{stats['rows_in_singleton_groups']:.1%} of rows in single-row groups)"
     )
+
+
+def class_support(train_labels, test_labels) -> dict:
+    """Classes a split leaves without training rows or without test rows. A grouped
+    split on a coarse key can put a whole class (e.g. every flow from one attacking
+    host) on one side, and then its score says nothing about that class."""
+    train_classes, test_classes = set(train_labels.unique()), set(test_labels.unique())
+    return {
+        "missing_from_train": sorted(map(str, test_classes - train_classes)),
+        "missing_from_test": sorted(map(str, train_classes - test_classes)),
+    }
+
+
+def describe_class_loss(missing: dict) -> str:
+    parts = []
+    if missing["missing_from_train"]:
+        parts.append(f"classes with no training rows: {missing['missing_from_train']}")
+    if missing["missing_from_test"]:
+        parts.append(f"classes with no test rows: {missing['missing_from_test']}")
+    return "; ".join(parts)

@@ -14,7 +14,10 @@ verdict (see _metrics); the status is the most severe verdict among
 audit.materiality_metrics. Reports the grouping key's group statistics,
 since a key that is nearly unique per row leaves the grouped split close
 to a random one, and the grouped/random error ratio, since near a ceiling
-an absolute drop can be small while the error rate multiplies.
+an absolute drop can be small while the error rate multiplies. When the
+grouped split leaves a class without training or test rows (a coarse key
+can put a whole attacking host on one side), the summary says so and the
+details flag it; the verdicts are not changed.
 
 Independent of whichever split_mode is configured for the main run:
 always builds both splits from the raw data to compare them directly.
@@ -73,6 +76,7 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
 
     grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
     grouped_scores = fit_and_evaluate(grouped_train, grouped_test, label_col, cfg, seed=seed)
+    class_loss = _groups.class_support(grouped_train[label_col], grouped_test[label_col])
     del grouped_train, grouped_test
 
     random_m, grouped_m = random_scores.metrics, grouped_scores.metrics
@@ -96,6 +100,9 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
         f"{by_metric['macro_f1']['drop']:+.4f} ({_metrics.describe(verdicts)}); "
         f"grouping key: {_groups.describe(groups)}; {_VERDICTS[status]}"
     )
+    lost = _groups.describe_class_loss(class_loss)
+    if lost:
+        summary += f"; CAUTION, the grouped split leaves {lost}, so its score does not measure those classes"
     return {
         "check": "resplit_falsification", "status": status, "summary": summary,
         "details": {
@@ -105,5 +112,7 @@ def check(cfg: dict, seed: int = 0, combined: pd.DataFrame | None = None) -> dic
             "by_metric": by_metric, "error_ratio": error_ratio,
             "materiality_metrics": list(cfg["audit"]["materiality_metrics"]),
             "group_stats": groups,
+            "grouped_class_support": class_loss,
+            "grouped_class_loss": bool(lost),
         },
     }

@@ -20,7 +20,9 @@ Each seed is scored on accuracy, balanced accuracy and macro-F1 (see
 _metrics), and each metric gets its own interval and verdict; the status is
 the most severe verdict among audit.materiality_metrics. The details also
 carry each metric's verdict at a range of thresholds (THRESHOLD_SWEEP), the
-grouped/random error ratio, and the grouping key's group statistics.
+grouped/random error ratio, and the grouping key's group statistics. Seeds
+whose grouped split leaves a class without training or test rows are listed
+and called out in the summary; the verdicts are not changed.
 
 Materiality classification compares each CI against the SAME frozen
 threshold resplit_falsification itself uses (audit.materiality_thresholds.
@@ -140,8 +142,10 @@ def check(
 
         grouped_train, grouped_test = dataset._grouped_split(combined, label_col, dataset_cfg, seed=seed)
         grouped_m = fit_and_evaluate(grouped_train, grouped_test, label_col, cfg, seed=seed).metrics
+        class_loss = _groups.class_support(grouped_train[label_col], grouped_test[label_col])
         del grouped_train, grouped_test
         entry = {m: random_m[m] - grouped_m[m] for m in _metrics.METRICS}
+        entry["grouped_class_support"] = class_loss
         entry["random_accuracy"] = random_m["accuracy"]
         entry["grouped_accuracy"] = grouped_m["accuracy"]
         return entry
@@ -204,4 +208,17 @@ def check(
     }
     if combined is not None:
         details["group_stats"] = _groups.group_stats(combined, dataset_cfg["group_columns"])
+    lossy = [s for s, e in enumerate(per_seed)
+             if _groups.describe_class_loss(e.get("grouped_class_support", {"missing_from_train": [],
+                                                                             "missing_from_test": []}))]
+    details["seeds_with_grouped_class_loss"] = lossy
+    if lossy:
+        details["grouped_class_support_by_seed"] = {
+            s: per_seed[s]["grouped_class_support"] for s in lossy
+        }
+        summary += (
+            f"; CAUTION, in {len(lossy)} of {n_seeds} seeds the grouped split leaves a class without "
+            "training or test rows (see grouped_class_support_by_seed), so those seeds' scores do not "
+            "measure that class"
+        )
     return {"check": _CHECK_NAME, "status": status, "summary": summary, "details": details}

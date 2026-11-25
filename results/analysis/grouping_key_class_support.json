@@ -1,0 +1,1692 @@
+{
+  "ton-iot-official": {
+    "five_tuple": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              835,
+              208
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              834,
+              209
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              835,
+              208
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              834,
+              209
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              834,
+              209
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              835,
+              208
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              835,
+              208
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              835,
+              208
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              834,
+              209
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "backdoor": [
+              16000,
+              4000
+            ],
+            "ddos": [
+              16000,
+              4000
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              16000,
+              4000
+            ],
+            "mitm": [
+              834,
+              209
+            ],
+            "normal": [
+              40000,
+              10000
+            ],
+            "password": [
+              16000,
+              4000
+            ],
+            "ransomware": [
+              16000,
+              4000
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16000,
+              4000
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        }
+      ],
+      "by_class": {
+        "backdoor": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ddos": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "dos": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "injection": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "mitm": {
+          "train_share_min": 0.7996164908916586,
+          "train_share_max": 0.800575263662512,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "normal": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "password": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ransomware": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "scanning": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "xss": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "coarse": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15940,
+              4060
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15940,
+              4060
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "backdoor": [
+              10039,
+              9961
+            ],
+            "ddos": [
+              18437,
+              1563
+            ],
+            "dos": [
+              16000,
+              4000
+            ],
+            "injection": [
+              15959,
+              4041
+            ],
+            "mitm": [
+              725,
+              318
+            ],
+            "normal": [
+              41523,
+              8477
+            ],
+            "password": [
+              15941,
+              4059
+            ],
+            "ransomware": [
+              17787,
+              2213
+            ],
+            "scanning": [
+              16000,
+              4000
+            ],
+            "xss": [
+              16474,
+              3526
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        }
+      ],
+      "by_class": {
+        "backdoor": {
+          "train_share_min": 0.50195,
+          "train_share_max": 0.50195,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ddos": {
+          "train_share_min": 0.92185,
+          "train_share_max": 0.92185,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "dos": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "injection": {
+          "train_share_min": 0.79795,
+          "train_share_max": 0.79795,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "mitm": {
+          "train_share_min": 0.6951102588686481,
+          "train_share_max": 0.6951102588686481,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "normal": {
+          "train_share_min": 0.83046,
+          "train_share_max": 0.83046,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "password": {
+          "train_share_min": 0.797,
+          "train_share_max": 0.79705,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ransomware": {
+          "train_share_min": 0.88935,
+          "train_share_max": 0.88935,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "scanning": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "xss": {
+          "train_share_min": 0.8237,
+          "train_share_max": 0.8237,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "host": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "backdoor": [
+              20000,
+              0
+            ],
+            "ddos": [
+              3334,
+              16666
+            ],
+            "dos": [
+              1313,
+              18687
+            ],
+            "injection": [
+              12148,
+              7852
+            ],
+            "mitm": [
+              1043,
+              0
+            ],
+            "normal": [
+              43287,
+              6713
+            ],
+            "password": [
+              10270,
+              9730
+            ],
+            "ransomware": [
+              20000,
+              0
+            ],
+            "scanning": [
+              11349,
+              8651
+            ],
+            "xss": [
+              20000,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "backdoor",
+            "mitm",
+            "ransomware",
+            "xss"
+          ]
+        }
+      ],
+      "by_class": {
+        "backdoor": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ddos": {
+          "train_share_min": 0.1667,
+          "train_share_max": 0.1667,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "dos": {
+          "train_share_min": 0.06565,
+          "train_share_max": 0.06565,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "injection": {
+          "train_share_min": 0.6074,
+          "train_share_max": 0.6074,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "mitm": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "normal": {
+          "train_share_min": 0.86574,
+          "train_share_max": 0.86574,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "password": {
+          "train_share_min": 0.5135,
+          "train_share_max": 0.5135,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "ransomware": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "scanning": {
+          "train_share_min": 0.56745,
+          "train_share_max": 0.56745,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "xss": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    }
+  }
+}

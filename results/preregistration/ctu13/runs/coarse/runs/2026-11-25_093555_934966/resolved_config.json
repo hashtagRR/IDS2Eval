@@ -1,0 +1,112 @@
+{
+  "random_seed": 0,
+  "dataset": {
+    "name": "ctu-13",
+    "raw_files": [
+      "data/ctu13/ctu13_labelled.csv.gz"
+    ],
+    "train_file": null,
+    "test_file": null,
+    "column_names": [],
+    "split_ratio": 0.8,
+    "split_mode": "random",
+    "group_columns": [
+      "SrcAddr",
+      "DstAddr",
+      "Dport",
+      "Proto"
+    ],
+    "chunk_size": null,
+    "max_rows": null
+  },
+  "schema": {
+    "label_column": "label",
+    "attack_category_column": "family",
+    "drop_columns": [
+      "StartTime",
+      "scenario",
+      "original_label"
+    ],
+    "id_like_columns": [
+      "SrcAddr",
+      "DstAddr",
+      "Sport",
+      "Dport"
+    ],
+    "timestamp_column": "StartTime",
+    "flow_id_columns": [],
+    "scenario_column": "scenario",
+    "feature_categories": {}
+  },
+  "label_grouping": {
+    "attack_type_mapping": {}
+  },
+  "preprocessing": {
+    "dedup": true,
+    "scaling": "standard",
+    "sampling": {
+      "binary": "none",
+      "type": "none"
+    }
+  },
+  "audit": {
+    "dedup_check": true,
+    "label_conflict_check": true,
+    "near_duplicate_class_check": true,
+    "leakage_screen": true,
+    "one_rule_check": true,
+    "feature_auc_ranking_check": true,
+    "identity_column_flag": true,
+    "port_protocol_shortcut_check": true,
+    "temporal_leakage_check": true,
+    "temporal_realism_check": true,
+    "flow_group_leakage_check": true,
+    "row_order_leakage_check": true,
+    "homogeneity_test": true,
+    "resplit_falsification": true,
+    "scenario_holdout_falsification": true,
+    "class_distribution_report": true,
+    "low_cardinality_warning": true,
+    "schema_fingerprint_check": true,
+    "data_integrity_check": true,
+    "synthetic_realism_check": false,
+    "cross_dataset_drift_check": false,
+    "cross_capture_matrix_check": true,
+    "feature_category_ablation_check": false,
+    "artifact_sensitivity_check": false,
+    "result_robustness_check": true,
+    "known_issue_lookup": true,
+    "seed_sensitivity_check": false,
+    "repeated_seed_falsification_check": true,
+    "reuse_removal_falsification": true,
+    "repeated_seed_count": 10,
+    "reference_dataset": null,
+    "materiality_thresholds": {},
+    "materiality_metrics": [
+      "accuracy",
+      "balanced_accuracy",
+      "macro_f1"
+    ],
+    "homogeneity_cluster_columns": [
+      "SrcAddr"
+    ],
+    "homogeneity_interval": "newcombe",
+    "parallel_checks": false,
+    "max_parallel_checks": 4,
+    "checkpoint": false
+  },
+  "classifiers": {
+    "list": "all",
+    "tuning": false,
+    "calibration": "none",
+    "hyperparameters": {},
+    "search_space": {}
+  },
+  "output": {
+    "dir": "out",
+    "format": "parquet",
+    "save_preprocessed": false,
+    "keep_runs": 10,
+    "write_scorecard_plot": false
+  }
+}

@@ -1,0 +1,498 @@
+{
+  "scorecard_schema_version": "1.4",
+  "generated_at": "2026-11-25T09:52:11.775699+00:00",
+  "dataset_name": "ctu-13",
+  "ids2eval_version": "0.2.3",
+  "ids2eval_git_commit": null,
+  "audit_stage": "after",
+  "overall_status": "review_required",
+  "counts": {
+    "ok": 11,
+    "warning": 1,
+    "flag": 9,
+    "not_applicable": 3
+  },
+  "checks_not_run": [
+    "synthetic_realism_check",
+    "cross_dataset_drift_check",
+    "feature_category_ablation_check",
+    "artifact_sensitivity_check",
+    "seed_sensitivity_check"
+  ],
+  "findings": [
+    {
+      "check": "dedup_check",
+      "status": "ok",
+      "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0"
+    },
+    {
+      "check": "label_conflict_check",
+      "status": "ok",
+      "summary": "no feature vector maps to more than one label"
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "status": "flag",
+      "summary": "2 of 3,550 sampled rows (0.06%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NSIS.ay / Sogou': 2}"
+    },
+    {
+      "check": "leakage_screen",
+      "status": "flag",
+      "summary": "'SrcAddr' carries 56.3% of total split importance (standalone AUC=1.000). Check whether it's a leakage artifact rather than attack-behavior signal"
+    },
+    {
+      "check": "one_rule_check",
+      "status": "ok",
+      "summary": "single rule 'SrcAddr <= 1.5' reaches 94.7% test accuracy (94.6% train), vs. 55.0% from always predicting the majority class"
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "status": "ok",
+      "summary": "'TotPkts' alone reaches AUC 0.635 identifying 'normal'"
+    },
+    {
+      "check": "identity_column_flag",
+      "status": "flag",
+      "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): SrcAddr: 1.0 (100.0%, 1.0), DstAddr: 0.904 (94.3%, 0.896), Sport: 0.999 (94.2%, 1.0), Dport: 0.823 (99.7%, 0.823). Suggest dropping: ['SrcAddr', 'DstAddr', 'Sport', 'Dport']"
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "status": "flag",
+      "summary": "standalone AUC of 'Sport' + 'Proto' combined: 0.976. Port and protocol together may predict the label without attack behavior"
+    },
+    {
+      "check": "temporal_leakage_check",
+      "status": "flag",
+      "summary": "standalone AUC of 'StartTime' alone: 0.945. Timestamp alone may predict the label without learning attack behavior"
+    },
+    {
+      "check": "temporal_realism_check",
+      "status": "flag",
+      "summary": "narrowest class's own time span: 'Sogou' covers 0.1% of the full capture window; timestamp alone may act as a proxy for this class rather than its actual traffic behavior"
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "status": "not_applicable",
+      "summary": "no schema.flow_id_columns configured"
+    },
+    {
+      "check": "row_order_leakage_check",
+      "status": "ok",
+      "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce"
+    },
+    {
+      "check": "homogeneity_test",
+      "status": "ok",
+      "summary": "7 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching"
+    },
+    {
+      "check": "resplit_falsification",
+      "status": "flag",
+      "summary": "random-split accuracy=0.9999, grouped-split accuracy=0.4011 (drop=+0.5988); balanced accuracy drop=+0.4905, macro-F1 drop=+0.6436 (accuracy material, balanced accuracy material, macro f1 material); grouping key: 74,076 groups over 801,132 rows (10.82 rows per group, 7.3% of rows in single-row groups); the grouped split costs measurable performance beyond test-set sampling noise; information tied to the grouping key may be doing real work in the random split"
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "status": "ok",
+      "summary": "random-split accuracy=0.9999, holding out scenario '7.0' entirely: accuracy=0.9971 (drop=+0.0028); balanced accuracy drop=+0.0014, macro-F1 drop=+0.0197 (accuracy not material, balanced accuracy not material, macro f1 not material)"
+    },
+    {
+      "check": "class_distribution_report",
+      "status": "ok",
+      "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1"
+    },
+    {
+      "check": "low_cardinality_warning",
+      "status": "ok",
+      "summary": "unique values by column: {'SrcAddr': 58, 'DstAddr': 43886, 'Sport': 94865, 'Dport': 2524}"
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "status": "ok",
+      "summary": "no known extractor signature matched"
+    },
+    {
+      "check": "data_integrity_check",
+      "status": "warning",
+      "summary": "missing values in 5 feature column(s); 1 constant/near-constant feature(s)"
+    },
+    {
+      "check": "cross_capture_matrix_check",
+      "status": "not_applicable",
+      "summary": "skipped, 13 eligible scenarios exceeds the 6-scenario cap"
+    },
+    {
+      "check": "result_robustness_check",
+      "status": "flag",
+      "summary": "accuracy ranges from 0.4011 (grouped_split) to 0.9999 (deduplicated) across 4 conditions, a spread of 0.5988 (sampling margin +/-0.0018); balanced accuracy spread 0.4906, macro-F1 spread 0.6436; accuracy material, balanced accuracy material, macro f1 material; the headline result depends on methodology choices as much as the classifier"
+    },
+    {
+      "check": "reuse_removal_falsification",
+      "status": "not_applicable",
+      "summary": "no training row shares a feature vector with a test row, nothing to remove"
+    },
+    {
+      "check": "known_issue_lookup",
+      "status": "ok",
+      "summary": "no curated known issues for dataset 'ctu-13'"
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "status": "flag",
+      "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.2629 [+0.0489, +0.4770], balanced accuracy +0.1934 [+0.0384, +0.3485], macro-F1 +0.2773 [+0.0566, +0.4980]; accuracy material, balanced accuracy material, macro f1 material; overall material on accuracy, balanced_accuracy, macro_f1"
+    }
+  ],
+  "checks": [
+    {
+      "check": "dedup_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "train duplicates: 6,508 (1.02%); test rows leaking a train feature-match: 2,675 (1.67%); test-internal duplicates: 256",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "train duplicates: 0 (0.00%); test rows leaking a train feature-match: 0 (0.00%); test-internal duplicates: 0",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "label_conflict_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no feature vector maps to more than one label",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "near_duplicate_class_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no near-zero-distance feature vectors found across 8 classes tested",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "2 of 3,550 sampled rows (0.06%) have a near-zero-distance neighbor under a different label. Most affected pairs: {'NSIS.ay / Sogou': 2}",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "leakage_screen",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "no single feature or pair dominates importance (top1=44.0%, top2=55.6%)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "'SrcAddr' carries 56.3% of total split importance (standalone AUC=1.000). Check whether it's a leakage artifact rather than attack-behavior signal",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "one_rule_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "single rule 'SrcAddr <= 0.5' reaches 88.3% test accuracy (88.4% train), vs. 55.5% from always predicting the majority class",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "single rule 'SrcAddr <= 1.5' reaches 94.7% test accuracy (94.6% train), vs. 55.0% from always predicting the majority class",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "feature_auc_ranking_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "'TotPkts' alone reaches AUC 0.638 identifying 'normal'",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "'TotPkts' alone reaches AUC 0.635 identifying 'normal'",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "identity_column_flag",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): SrcAddr: 1.0 (100.0%, 1.0), DstAddr: 0.904 (94.4%, 0.896), Sport: 0.999 (94.3%, 1.0), Dport: 0.825 (99.7%, 0.825). Suggest dropping: ['SrcAddr', 'DstAddr', 'Sport', 'Dport']",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC by column (seen-value coverage, AUC on seen values): SrcAddr: 1.0 (100.0%, 1.0), DstAddr: 0.904 (94.3%, 0.896), Sport: 0.999 (94.2%, 1.0), Dport: 0.823 (99.7%, 0.823). Suggest dropping: ['SrcAddr', 'DstAddr', 'Sport', 'Dport']",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "port_protocol_shortcut_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC of 'Sport' + 'Proto' combined: 0.977. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC of 'Sport' + 'Proto' combined: 0.976. Port and protocol together may predict the label without attack behavior",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "standalone AUC of 'StartTime' alone: 0.945. Timestamp alone may predict the label without learning attack behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "standalone AUC of 'StartTime' alone: 0.945. Timestamp alone may predict the label without learning attack behavior",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "temporal_realism_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "narrowest class's own time span: 'Sogou' covers 0.1% of the full capture window; timestamp alone may act as a proxy for this class rather than its actual traffic behavior",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "narrowest class's own time span: 'Sogou' covers 0.1% of the full capture window; timestamp alone may act as a proxy for this class rather than its actual traffic behavior",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "flow_group_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "not_applicable",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "not_applicable",
+        "summary": "no schema.flow_id_columns configured",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "row_order_leakage_check",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "adjacent-row label-transition rate (train=1.00, test=1.00) as a share of what a randomly shuffled ordering would produce",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "homogeneity_test",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "7 classes tested; inconclusive (95% CI straddles the +/-0.05 equivalence margin) for: ['normal']; sample size isn't enough to tell for these classes",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "7 classes tested; for every class the 95% CI upper bound on (test-to-train minus train-internal) near-duplicate rate is below the +0.05 margin, so no class shows excess cross-boundary matching",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "resplit_falsification",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "random-split accuracy=0.9999, grouped-split accuracy=0.4011 (drop=+0.5988); balanced accuracy drop=+0.4905, macro-F1 drop=+0.6436 (accuracy material, balanced accuracy material, macro f1 material); grouping key: 74,076 groups over 801,132 rows (10.82 rows per group, 7.3% of rows in single-row groups); the grouped split costs measurable performance beyond test-set sampling noise; information tied to the grouping key may be doing real work in the random split",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "random-split accuracy=0.9999, grouped-split accuracy=0.4011 (drop=+0.5988); balanced accuracy drop=+0.4905, macro-F1 drop=+0.6436 (accuracy material, balanced accuracy material, macro f1 material); grouping key: 74,076 groups over 801,132 rows (10.82 rows per group, 7.3% of rows in single-row groups); the grouped split costs measurable performance beyond test-set sampling noise; information tied to the grouping key may be doing real work in the random split",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "scenario_holdout_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9999, holding out scenario '7.0' entirely: accuracy=0.9971 (drop=+0.0028); balanced accuracy drop=+0.0014, macro-F1 drop=+0.0197 (accuracy not material, balanced accuracy not material, macro f1 not material)",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "random-split accuracy=0.9999, holding out scenario '7.0' entirely: accuracy=0.9971 (drop=+0.0028); balanced accuracy drop=+0.0014, macro-F1 drop=+0.0197 (accuracy not material, balanced accuracy not material, macro f1 not material)",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "class_distribution_report",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "2 classes, train imbalance ratio (majority:minority) = 1:1",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "low_cardinality_warning",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "unique values by column: {'SrcAddr': 58, 'DstAddr': 43886, 'Sport': 94865, 'Dport': 2524}",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "unique values by column: {'SrcAddr': 58, 'DstAddr': 43886, 'Sport': 94865, 'Dport': 2524}",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "schema_fingerprint_check",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no known extractor signature matched",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "data_integrity_check",
+      "category": "audit",
+      "before": {
+        "status": "warning",
+        "summary": "missing values in 5 feature column(s); 1 constant/near-constant feature(s)",
+        "evidence": "statistical"
+      },
+      "after": {
+        "status": "warning",
+        "summary": "missing values in 5 feature column(s); 1 constant/near-constant feature(s)",
+        "evidence": "statistical"
+      }
+    },
+    {
+      "check": "cross_capture_matrix_check",
+      "category": "audit",
+      "before": {
+        "status": "not_applicable",
+        "summary": "skipped, 13 eligible scenarios exceeds the 6-scenario cap",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "not_applicable",
+        "summary": "skipped, 13 eligible scenarios exceeds the 6-scenario cap",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "result_robustness_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "accuracy ranges from 0.4011 (grouped_split) to 0.9999 (deduplicated) across 4 conditions, a spread of 0.5988 (sampling margin +/-0.0018); balanced accuracy spread 0.4906, macro-F1 spread 0.6436; accuracy material, balanced accuracy material, macro f1 material; the headline result depends on methodology choices as much as the classifier",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "accuracy ranges from 0.4011 (grouped_split) to 0.9999 (deduplicated) across 4 conditions, a spread of 0.5988 (sampling margin +/-0.0018); balanced accuracy spread 0.4906, macro-F1 spread 0.6436; accuracy material, balanced accuracy material, macro f1 material; the headline result depends on methodology choices as much as the classifier",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "reuse_removal_falsification",
+      "category": "audit",
+      "before": {
+        "status": "ok",
+        "summary": "removing the 4,585 training rows that share a feature vector with a test row, against removing as many random rows of the same classes, over 10 seeds: score difference on the unchanged test set, mean [95% CI], accuracy -0.0000 [-0.0002, +0.0002], balanced accuracy -0.0000, macro-F1 -0.0000 (accuracy not material, balanced accuracy not material, macro f1 not material); on the 2,675 reused test rows alone, accuracy +0.0000",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "not_applicable",
+        "summary": "no training row shares a feature vector with a test row, nothing to remove",
+        "evidence": "direct-experiment"
+      }
+    },
+    {
+      "check": "known_issue_lookup",
+      "category": "known_issue",
+      "before": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'ctu-13'",
+        "evidence": "documented"
+      },
+      "after": {
+        "status": "ok",
+        "summary": "no curated known issues for dataset 'ctu-13'",
+        "evidence": "documented"
+      }
+    },
+    {
+      "check": "repeated_seed_falsification_check",
+      "category": "audit",
+      "before": {
+        "status": "flag",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.2629 [+0.0489, +0.4770], balanced accuracy +0.1934 [+0.0384, +0.3485], macro-F1 +0.2773 [+0.0566, +0.4980]; accuracy material, balanced accuracy material, macro f1 material; overall material on accuracy, balanced_accuracy, macro_f1",
+        "evidence": "direct-experiment"
+      },
+      "after": {
+        "status": "flag",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.2629 [+0.0489, +0.4770], balanced accuracy +0.1934 [+0.0384, +0.3485], macro-F1 +0.2773 [+0.0566, +0.4980]; accuracy material, balanced accuracy material, macro f1 material; overall material on accuracy, balanced_accuracy, macro_f1",
+        "evidence": "direct-experiment"
+      }
+    }
+  ],
+  "dedup_effect": {
+    "train_rows_raw": 640905,
+    "train_rows_deduped": 634397,
+    "train_duplicates_dropped": 6508,
+    "test_rows_raw": 160227,
+    "test_rows_deduped": 157296,
+    "test_leakage_dropped": 2675,
+    "test_duplicates_dropped": 256
+  },
+  "dataset_fingerprint": {
+    "train_rows": 640905,
+    "test_rows": 160227,
+    "feature_count": 13,
+    "train_content_hash": "a39961d28d0b1148dccf990a3aae4d204f2deefa292e519975daba4c4d2d85e8",
+    "test_content_hash": "230576ae3b01d508d46cd1b95ce3fc83111d8ade9bf057c960edd7b449ad7d06"
+  }
+}

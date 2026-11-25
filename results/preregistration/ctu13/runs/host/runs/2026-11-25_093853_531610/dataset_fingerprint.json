@@ -1,0 +1,42 @@
+{
+  "train_rows": 640905,
+  "test_rows": 160227,
+  "feature_count": 13,
+  "train_class_distribution": {
+    "botnet": 355759,
+    "normal": 285146
+  },
+  "test_class_distribution": {
+    "botnet": 88940,
+    "normal": 71287
+  },
+  "train_content_hash": "a39961d28d0b1148dccf990a3aae4d204f2deefa292e519975daba4c4d2d85e8",
+  "test_content_hash": "230576ae3b01d508d46cd1b95ce3fc83111d8ade9bf057c960edd7b449ad7d06",
+  "columns": [
+    "StartTime",
+    "Dur",
+    "Proto",
+    "SrcAddr",
+    "Sport",
+    "Dir",
+    "DstAddr",
+    "Dport",
+    "State",
+    "sTos",
+    "dTos",
+    "TotPkts",
+    "TotBytes",
+    "SrcBytes",
+    "original_label",
+    "label",
+    "family",
+    "scenario"
+  ],
+  "source_files": [
+    {
+      "path": "data/ctu13/ctu13_labelled.csv.gz",
+      "size_bytes": 13456050,
+      "sha256": "7a4ecdbf20f2b13aabac326070b998cac8ef0a666a9e7d8f708ebca0c82e26ff"
+    }
+  ]
+}

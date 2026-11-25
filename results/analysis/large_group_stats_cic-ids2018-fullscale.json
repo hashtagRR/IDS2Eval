@@ -1,0 +1,38 @@
+{
+  "config": "cic-ids2018-fullscale",
+  "keys": {
+    "proxy": {
+      "group_columns": [
+        "Dst Port",
+        "Protocol",
+        "Timestamp"
+      ],
+      "rows": 16233002,
+      "groups": 3888706,
+      "rows_per_group": 4.174396830205215,
+      "singleton_group_share": 0.7362173946809042,
+      "rows_in_singleton_groups": 0.17636497549867855,
+      "size_median": 1.0,
+      "size_p90": 6.0,
+      "size_p99": 58.0,
+      "size_max": 5630,
+      "largest_group_row_share": 0.0003468243273794952
+    },
+    "proxy_without_time": {
+      "group_columns": [
+        "Dst Port",
+        "Protocol"
+      ],
+      "rows": 16233002,
+      "groups": 65536,
+      "rows_per_group": 247.69595336914062,
+      "singleton_group_share": 0.015289306640625,
+      "rows_in_singleton_groups": 6.172610586754071e-05,
+      "size_median": 9.0,
+      "size_p90": 98.0,
+      "size_p99": 415.0,
+      "size_max": 4071446,
+      "largest_group_row_share": 0.25081288106783944
+    }
+  }
+}

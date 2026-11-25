@@ -31,7 +31,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent / "results"
 METRICS = ["accuracy", "balanced_accuracy", "macro_f1"]
 VERDICT = {"flag": "M", "ok": "N", "warning": "I"}
-KEY_LABEL = {"five_tuple": "5-tuple", "coarse": "coarse key", "host": "source host", "proxy": "proxy key"}
+KEY_LABEL = {"five_tuple": "5-tuple", "coarse": "coarse key", "host": "source host", "proxy": "proxy key",
+             "proxy_without_time": "port and protocol"}
 DATASET_LABEL = {
     "ton-iot-official": "ToN-IoT",
     "bot-iot-official": "BoT-IoT",
@@ -48,7 +49,7 @@ DATASET_LABEL = {
 CAUTION = {
     ("ton-iot-official", "host"), ("cic-ddos2019-sample", "host"),
     ("cic-ids2017-improved-benign", "coarse"), ("cic-ids2017-improved-benign", "host"),
-    ("ctu13", "host"), ("ctu13", "coarse"),
+    ("ctu13", "host"), ("ctu13", "coarse"), ("cic-ids2017-glf", "host"), ("cic-ids2017-glf", "coarse"),
 }
 T975 = {4: 2.776, 9: 2.262}
 

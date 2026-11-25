@@ -17,6 +17,15 @@ CICDDoS2019,coarse key,macro_f1,3.457,1.85,5.065,M,0
 CICDDoS2019,source host,accuracy,40.126,38.123,42.128,M,1
 CICDDoS2019,source host,balanced_accuracy,33.238,31.404,35.072,M,1
 CICDDoS2019,source host,macro_f1,44.386,43.685,45.087,M,1
+CIC-IDS2017 (original),5-tuple,accuracy,0.003,-0.002,0.008,N,0
+CIC-IDS2017 (original),5-tuple,balanced_accuracy,-1.335,-5.807,3.137,I,0
+CIC-IDS2017 (original),5-tuple,macro_f1,-1.321,-5.787,3.145,I,0
+CIC-IDS2017 (original),coarse key,accuracy,0.129,-0.231,0.49,N,1
+CIC-IDS2017 (original),coarse key,balanced_accuracy,-6.952,-18.016,4.111,I,1
+CIC-IDS2017 (original),coarse key,macro_f1,11.125,-4.045,26.295,I,1
+CIC-IDS2017 (original),source host,accuracy,-0.057,-0.061,-0.054,N,1
+CIC-IDS2017 (original),source host,balanced_accuracy,-21.971,-24.559,-19.384,N,1
+CIC-IDS2017 (original),source host,macro_f1,-21.099,-23.868,-18.331,N,1
 CIC-IDS2017 (corrected),5-tuple,accuracy,0.003,-0.001,0.007,N,0
 CIC-IDS2017 (corrected),5-tuple,balanced_accuracy,0.202,-3.888,4.292,I,0
 CIC-IDS2017 (corrected),5-tuple,macro_f1,1.23,-2.614,5.075,I,0
@@ -26,6 +35,12 @@ CIC-IDS2017 (corrected),coarse key,macro_f1,-2.336,-21.865,17.193,I,1
 CIC-IDS2017 (corrected),source host,accuracy,-0.018,-0.021,-0.016,N,1
 CIC-IDS2017 (corrected),source host,balanced_accuracy,-14.524,-17.564,-11.483,N,1
 CIC-IDS2017 (corrected),source host,macro_f1,-13.027,-16.033,-10.021,N,1
+CSE-CIC-IDS2018,proxy key,accuracy,0.005,-0.007,0.016,N,0
+CSE-CIC-IDS2018,proxy key,balanced_accuracy,0.676,-0.539,1.891,I,0
+CSE-CIC-IDS2018,proxy key,macro_f1,0.679,-1.179,2.537,I,0
+CSE-CIC-IDS2018,port and protocol,accuracy,0.037,-0.809,0.882,N,0
+CSE-CIC-IDS2018,port and protocol,balanced_accuracy,23.289,22.568,24.01,M,0
+CSE-CIC-IDS2018,port and protocol,macro_f1,25.407,24.201,26.613,M,0
 ToN-IoT,5-tuple,accuracy,0.033,0.007,0.06,N,0
 ToN-IoT,5-tuple,balanced_accuracy,0.087,-0.099,0.273,N,0
 ToN-IoT,5-tuple,macro_f1,0.104,-0.037,0.246,N,0

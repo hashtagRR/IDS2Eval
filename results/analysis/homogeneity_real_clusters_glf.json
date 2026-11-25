@@ -1,0 +1,321 @@
+{
+  "cic-ids2017-glf": {
+    "cluster_column": "Source IP",
+    "before_dedup": {
+      "BENIGN": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS Hulk": {
+        "row_ci": [
+          -0.017773849474943468,
+          0.00883583085644747
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.004,
+          -0.004
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "PortScan": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DDoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS GoldenEye": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "FTP-Patator": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "SSH-Patator": {
+        "row_ci": [
+          -0.008916177406117236,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS slowloris": {
+        "row_ci": [
+          -0.009373036324293918,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS Slowhttptest": {
+        "row_ci": [
+          -0.010140017126530126,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Bot": {
+        "row_ci": [
+          -0.026339964717595556,
+          0.00968008456607621
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Web Attack \u2013 Brute Force": {
+        "row_ci": [
+          -0.033743935812536804,
+          0.012601497497726672
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Web Attack \u2013 XSS": {
+        "row_ci": [
+          -0.09641862996887933,
+          0.028701561634224194
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": false
+      }
+    },
+    "after_dedup": {
+      "BENIGN": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS Hulk": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "PortScan": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DDoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS GoldenEye": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "FTP-Patator": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "SSH-Patator": {
+        "row_ci": [
+          -0.009442151967154413,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS slowloris": {
+        "row_ci": [
+          -0.009260065017742614,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS Slowhttptest": {
+        "row_ci": [
+          -0.010795422470930965,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Bot": {
+        "row_ci": [
+          -0.029136956719772594,
+          0.00968008456607621
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Web Attack \u2013 Brute Force": {
+        "row_ci": [
+          -0.03497275910589831,
+          0.012601497497726672
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Web Attack \u2013 XSS": {
+        "row_ci": [
+          -0.08029560492349135,
+          0.028701561634224194
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": false
+      }
+    }
+  }
+}

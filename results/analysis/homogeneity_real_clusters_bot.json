@@ -1,0 +1,113 @@
+{
+  "bot-iot-official": {
+    "cluster_column": "saddr",
+    "before_dedup": {
+      "DDoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Reconnaissance": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Normal": {
+        "row_ci": [
+          -0.11696980012918376,
+          0.038864854128766085
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": false
+      }
+    },
+    "after_dedup": {
+      "DDoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "DoS": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Reconnaissance": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "Normal": {
+        "row_ci": [
+          -0.11696980012918376,
+          0.038864854128766085
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": false
+      }
+    }
+  }
+}

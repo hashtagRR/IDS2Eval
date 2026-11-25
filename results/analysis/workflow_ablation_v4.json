@@ -1,0 +1,4212 @@
+{
+  "threshold": 0.01,
+  "runs": [
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 0,
+      "seed": 3000,
+      "truth": "not material",
+      "true_gap": 0.004579999999999962,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 1,
+      "seed": 3001,
+      "truth": "not material",
+      "true_gap": -0.006679999999999986,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 2,
+      "seed": 3002,
+      "truth": "not material",
+      "true_gap": -0.012209999999999988,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 3,
+      "seed": 3003,
+      "truth": "not material",
+      "true_gap": -0.0035099999999999797,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 4,
+      "seed": 3004,
+      "truth": "not material",
+      "true_gap": -0.005959999999999998,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 5,
+      "seed": 3005,
+      "truth": "not material",
+      "true_gap": -0.0009100000000000108,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 6,
+      "seed": 3006,
+      "truth": "not material",
+      "true_gap": 0.0035399999999999763,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 7,
+      "seed": 3007,
+      "truth": "not material",
+      "true_gap": -0.018609999999999995,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 8,
+      "seed": 3008,
+      "truth": "not material",
+      "true_gap": -0.004519999999999991,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "clean",
+      "rep": 9,
+      "seed": 3009,
+      "truth": "not material",
+      "true_gap": 0.02075,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 0,
+      "seed": 3100,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 1,
+      "seed": 3101,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 2,
+      "seed": 3102,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 3,
+      "seed": 3103,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 4,
+      "seed": 3104,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 5,
+      "seed": 3105,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 6,
+      "seed": 3106,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 7,
+      "seed": 3107,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 8,
+      "seed": 3108,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "repetitive",
+      "rep": 9,
+      "seed": 3109,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 8000
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 0,
+      "seed": 3200,
+      "truth": "material",
+      "true_gap": 0.46284000000000003,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 1,
+      "seed": 3201,
+      "truth": "material",
+      "true_gap": 0.43779,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 2,
+      "seed": 3202,
+      "truth": "material",
+      "true_gap": 0.48762999999999995,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 3,
+      "seed": 3203,
+      "truth": "material",
+      "true_gap": 0.49272,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 4,
+      "seed": 3204,
+      "truth": "material",
+      "true_gap": 0.47974000000000006,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 5,
+      "seed": 3205,
+      "truth": "material",
+      "true_gap": 0.4787800000000001,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 6,
+      "seed": 3206,
+      "truth": "material",
+      "true_gap": 0.45036000000000004,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 7,
+      "seed": 3207,
+      "truth": "material",
+      "true_gap": 0.4396,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 8,
+      "seed": 3208,
+      "truth": "material",
+      "true_gap": 0.44795000000000007,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_noisy",
+      "rep": 9,
+      "seed": 3209,
+      "truth": "material",
+      "true_gap": 0.45708000000000004,
+      "D1": "not material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "material",
+      "D3": "not material",
+      "D4": "material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 0,
+      "seed": 3300,
+      "truth": "material",
+      "true_gap": 0.46799999999999997,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.23325000000000004,
+        "ci": [
+          0.22232762209414975,
+          0.24417237790585034
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7656
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 1,
+      "seed": 3301,
+      "truth": "material",
+      "true_gap": 0.4952,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.18230000000000002,
+        "ci": [
+          0.16818169045751788,
+          0.19641830954248216
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7728
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 2,
+      "seed": 3302,
+      "truth": "material",
+      "true_gap": 0.4368,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.19690000000000002,
+        "ci": [
+          0.18687819270924236,
+          0.20692180729075768
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7741
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 3,
+      "seed": 3303,
+      "truth": "material",
+      "true_gap": 0.43520000000000003,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.20020000000000002,
+        "ci": [
+          0.19178091138516518,
+          0.20861908861483486
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7762
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 4,
+      "seed": 3304,
+      "truth": "material",
+      "true_gap": 0.46020000000000005,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.10324999999999998,
+        "ci": [
+          0.09722170603363975,
+          0.10927829396636021
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7796
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 5,
+      "seed": 3305,
+      "truth": "material",
+      "true_gap": 0.48339999999999994,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.16485,
+        "ci": [
+          0.1537907863441667,
+          0.17590921365583329
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7677
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 6,
+      "seed": 3306,
+      "truth": "material",
+      "true_gap": 0.48019999999999996,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.20839999999999997,
+        "ci": [
+          0.19620414960329982,
+          0.22059585039670013
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7728
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 7,
+      "seed": 3307,
+      "truth": "material",
+      "true_gap": 0.4431999999999999,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.19490000000000002,
+        "ci": [
+          0.17741492501318745,
+          0.21238507498681258
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7758
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 8,
+      "seed": 3308,
+      "truth": "material",
+      "true_gap": 0.4798,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.16945,
+        "ci": [
+          0.1557348980878447,
+          0.1831651019121553
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7779
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "group_exact",
+      "rep": 9,
+      "seed": 3309,
+      "truth": "material",
+      "true_gap": 0.40800000000000003,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.16225,
+        "ci": [
+          0.1342817456139858,
+          0.19021825438601422
+        ],
+        "reused_test_rows": 2000,
+        "test_rows": 2000,
+        "training_rows_removed": 7898
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 1.0
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 0,
+      "seed": 3400,
+      "truth": "not material",
+      "true_gap": 0.0004099999999999882,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 9.999999999998899e-05,
+        "ci": [
+          -5.08104775198747e-05,
+          0.00025081047751985267
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 1,
+      "seed": 3401,
+      "truth": "not material",
+      "true_gap": -0.0010299999999999864,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0014000000000000013,
+        "ci": [
+          0.0008208013709320693,
+          0.0019791986290679333
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 2,
+      "seed": 3402,
+      "truth": "not material",
+      "true_gap": -0.0006799999999999695,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00023845230199024824,
+          0.00023845230199024824
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 3,
+      "seed": 3403,
+      "truth": "not material",
+      "true_gap": 4.999999999999449e-05,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 4.999999999999449e-05,
+        "ci": [
+          -6.310785813990328e-05,
+          0.00016310785813989227
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 4,
+      "seed": 3404,
+      "truth": "not material",
+      "true_gap": 0.00037999999999995817,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00039999999999995595,
+        "ci": [
+          0.00024918952248009226,
+          0.0005508104775198196
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 5,
+      "seed": 3405,
+      "truth": "not material",
+      "true_gap": 0.003870000000000029,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0039000000000000033,
+        "ci": [
+          0.0029491761176965855,
+          0.004850823882303421
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 6,
+      "seed": 3406,
+      "truth": "not material",
+      "true_gap": 0.0006800000000000472,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00010000000000001119,
+        "ci": [
+          -0.0001262157162798346,
+          0.00032621571627985697
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 7,
+      "seed": 3407,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 8,
+      "seed": 3408,
+      "truth": "not material",
+      "true_gap": -4.999999999999449e-05,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": -4.999999999999449e-05,
+        "ci": [
+          -0.00016310785813989227,
+          6.310785813990328e-05
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_easy",
+      "rep": 9,
+      "seed": 3409,
+      "truth": "not material",
+      "true_gap": -0.00034999999999996145,
+      "D1": "material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00029204323393401004,
+          0.00029204323393401004
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 0,
+      "seed": 3500,
+      "truth": "material",
+      "true_gap": 0.08005000000000002,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07129999999999999,
+        "ci": [
+          0.06730921736486756,
+          0.07529078263513242
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 1,
+      "seed": 3501,
+      "truth": "material",
+      "true_gap": 0.06848999999999997,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07714999999999997,
+        "ci": [
+          0.07389772563459762,
+          0.08040227436540232
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 2,
+      "seed": 3502,
+      "truth": "material",
+      "true_gap": 0.08634999999999998,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.0763,
+        "ci": [
+          0.06973887755825038,
+          0.08286112244174963
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 3,
+      "seed": 3503,
+      "truth": "material",
+      "true_gap": 0.07490999999999998,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06175000000000001,
+        "ci": [
+          0.05692686377237439,
+          0.06657313622762563
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 4,
+      "seed": 3504,
+      "truth": "material",
+      "true_gap": 0.07380000000000002,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07805000000000001,
+        "ci": [
+          0.07410129179648985,
+          0.08199870820351017
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 5,
+      "seed": 3505,
+      "truth": "material",
+      "true_gap": 0.05639999999999999,
+      "D1": "material",
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.04824999999999998,
+        "ci": [
+          0.04474446730044934,
+          0.05175553269955062
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 6,
+      "seed": 3506,
+      "truth": "material",
+      "true_gap": 0.058629999999999995,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06965,
+        "ci": [
+          0.06666672440289498,
+          0.07263327559710503
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 7,
+      "seed": 3507,
+      "truth": "material",
+      "true_gap": 0.07581999999999998,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07099999999999998,
+        "ci": [
+          0.06712194148628293,
+          0.07487805851371702
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 8,
+      "seed": 3508,
+      "truth": "material",
+      "true_gap": 0.06428000000000003,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06359999999999999,
+        "ci": [
+          0.0601742444823129,
+          0.06702575551768708
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "presplit_hard",
+      "rep": 9,
+      "seed": 3509,
+      "truth": "material",
+      "true_gap": 0.0857,
+      "D1": "material",
+      "grouped_resplit": "material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07354999999999998,
+        "ci": [
+          0.06667725612240519,
+          0.08042274387759477
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "material",
+      "D5": "material",
+      "reuse_share": 0.2
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 0,
+      "seed": 3600,
+      "truth": "material",
+      "true_gap": 0.5122,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 1,
+      "seed": 3601,
+      "truth": "material",
+      "true_gap": 0.47386999999999996,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 2,
+      "seed": 3602,
+      "truth": "material",
+      "true_gap": 0.5508,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 3,
+      "seed": 3603,
+      "truth": "material",
+      "true_gap": 0.5047200000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 4,
+      "seed": 3604,
+      "truth": "material",
+      "true_gap": 0.4600200000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 5,
+      "seed": 3605,
+      "truth": "material",
+      "true_gap": 0.63304,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 6,
+      "seed": 3606,
+      "truth": "material",
+      "true_gap": 0.64688,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 7,
+      "seed": 3607,
+      "truth": "material",
+      "true_gap": 0.55982,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 8,
+      "seed": 3608,
+      "truth": "material",
+      "true_gap": 0.6170000000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "host_memo",
+      "rep": 9,
+      "seed": 3609,
+      "truth": "material",
+      "true_gap": 0.6252200000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 0,
+      "seed": 3700,
+      "truth": "material",
+      "true_gap": 0.15753000000000003,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 1,
+      "seed": 3701,
+      "truth": "material",
+      "true_gap": 0.013430000000000008,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 2,
+      "seed": 3702,
+      "truth": "material",
+      "true_gap": 0.16898,
+      "D1": "not material",
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 3,
+      "seed": 3703,
+      "truth": "material",
+      "true_gap": 0.010890000000000021,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 4,
+      "seed": 3704,
+      "truth": "material",
+      "true_gap": 0.06109000000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 5,
+      "seed": 3705,
+      "truth": "material",
+      "true_gap": -0.03713000000000003,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 6,
+      "seed": 3706,
+      "truth": "material",
+      "true_gap": -0.011160000000000014,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 7,
+      "seed": 3707,
+      "truth": "material",
+      "true_gap": 0.08531000000000001,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 8,
+      "seed": 3708,
+      "truth": "material",
+      "true_gap": 0.06971,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "drift",
+      "rep": 9,
+      "seed": 3709,
+      "truth": "material",
+      "true_gap": 0.04735999999999997,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 0,
+      "seed": 3800,
+      "truth": "material",
+      "true_gap": 0.06721000000000003,
+      "D1": "not material",
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 1,
+      "seed": 3801,
+      "truth": "material",
+      "true_gap": 0.09132,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 2,
+      "seed": 3802,
+      "truth": "material",
+      "true_gap": 0.016890000000000006,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 3,
+      "seed": 3803,
+      "truth": "material",
+      "true_gap": 0.07068999999999998,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 4,
+      "seed": 3804,
+      "truth": "material",
+      "true_gap": 0.06356,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 5,
+      "seed": 3805,
+      "truth": "material",
+      "true_gap": 0.02252999999999996,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 6,
+      "seed": 3806,
+      "truth": "material",
+      "true_gap": 0.07793,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 7,
+      "seed": 3807,
+      "truth": "material",
+      "true_gap": 0.11074000000000002,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 8,
+      "seed": 3808,
+      "truth": "material",
+      "true_gap": 0.10976,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v2",
+      "scenario": "prior_shift",
+      "rep": 9,
+      "seed": 3809,
+      "truth": "material",
+      "true_gap": 0.03750000000000002,
+      "D1": "not material",
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive",
+      "reuse_share": 0.0
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 0,
+      "seed": 3500,
+      "truth": "material",
+      "true_gap": 0.08005000000000002,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07129999999999999,
+        "ci": [
+          0.06730921736486756,
+          0.07529078263513242
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 1,
+      "seed": 3501,
+      "truth": "material",
+      "true_gap": 0.06819999999999998,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07714999999999997,
+        "ci": [
+          0.07389772563459762,
+          0.08040227436540232
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 2,
+      "seed": 3502,
+      "truth": "material",
+      "true_gap": 0.08634999999999998,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.0763,
+        "ci": [
+          0.06973887755825038,
+          0.08286112244174963
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 3,
+      "seed": 3503,
+      "truth": "material",
+      "true_gap": 0.07490999999999998,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06175000000000001,
+        "ci": [
+          0.05692686377237439,
+          0.06657313622762563
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 4,
+      "seed": 3504,
+      "truth": "material",
+      "true_gap": 0.07398000000000002,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07805000000000001,
+        "ci": [
+          0.07410129179648985,
+          0.08199870820351017
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 5,
+      "seed": 3505,
+      "truth": "material",
+      "true_gap": 0.05639999999999999,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.04824999999999998,
+        "ci": [
+          0.04474446730044934,
+          0.05175553269955062
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 6,
+      "seed": 3506,
+      "truth": "material",
+      "true_gap": 0.05808,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06965,
+        "ci": [
+          0.06666672440289498,
+          0.07263327559710503
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 7,
+      "seed": 3507,
+      "truth": "material",
+      "true_gap": 0.07581999999999998,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07099999999999998,
+        "ci": [
+          0.06712194148628293,
+          0.07487805851371702
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 8,
+      "seed": 3508,
+      "truth": "material",
+      "true_gap": 0.06428000000000003,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06359999999999999,
+        "ci": [
+          0.0601742444823129,
+          0.06702575551768708
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_nokey",
+      "rep": 9,
+      "seed": 3509,
+      "truth": "material",
+      "true_gap": 0.08577,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07354999999999998,
+        "ci": [
+          0.06667725612240519,
+          0.08042274387759477
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 0,
+      "seed": 3500,
+      "truth": "material",
+      "true_gap": 0.08005000000000002,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07129999999999999,
+        "ci": [
+          0.06730921736486756,
+          0.07529078263513242
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 1,
+      "seed": 3501,
+      "truth": "material",
+      "true_gap": 0.06819999999999998,
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07714999999999997,
+        "ci": [
+          0.07389772563459762,
+          0.08040227436540232
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 2,
+      "seed": 3502,
+      "truth": "material",
+      "true_gap": 0.08634999999999998,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.0763,
+        "ci": [
+          0.06973887755825038,
+          0.08286112244174963
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 3,
+      "seed": 3503,
+      "truth": "material",
+      "true_gap": 0.07490999999999998,
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06175000000000001,
+        "ci": [
+          0.05692686377237439,
+          0.06657313622762563
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 4,
+      "seed": 3504,
+      "truth": "material",
+      "true_gap": 0.07398000000000002,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07805000000000001,
+        "ci": [
+          0.07410129179648985,
+          0.08199870820351017
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 5,
+      "seed": 3505,
+      "truth": "material",
+      "true_gap": 0.05639999999999999,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.04824999999999998,
+        "ci": [
+          0.04474446730044934,
+          0.05175553269955062
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 6,
+      "seed": 3506,
+      "truth": "material",
+      "true_gap": 0.05808,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06965,
+        "ci": [
+          0.06666672440289498,
+          0.07263327559710503
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 7,
+      "seed": 3507,
+      "truth": "material",
+      "true_gap": 0.07581999999999998,
+      "grouped_resplit": "inconclusive",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07099999999999998,
+        "ci": [
+          0.06712194148628293,
+          0.07487805851371702
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "inconclusive",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 8,
+      "seed": 3508,
+      "truth": "material",
+      "true_gap": 0.06428000000000003,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.06359999999999999,
+        "ci": [
+          0.0601742444823129,
+          0.06702575551768708
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_hard_randkey",
+      "rep": 9,
+      "seed": 3509,
+      "truth": "material",
+      "true_gap": 0.08577,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "flag",
+        "verdict": "material",
+        "mean": 0.07354999999999998,
+        "ci": [
+          0.06667725612240519,
+          0.08042274387759477
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "material",
+      "D3": "material",
+      "D4": "not material",
+      "D5": "material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 0,
+      "seed": 3400,
+      "truth": "not material",
+      "true_gap": 0.0004099999999999882,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 9.999999999998899e-05,
+        "ci": [
+          -5.08104775198747e-05,
+          0.00025081047751985267
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 1,
+      "seed": 3401,
+      "truth": "not material",
+      "true_gap": -0.0010299999999999864,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0014000000000000013,
+        "ci": [
+          0.0008208013709320693,
+          0.0019791986290679333
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 2,
+      "seed": 3402,
+      "truth": "not material",
+      "true_gap": -0.0006799999999999695,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00023845230199024824,
+          0.00023845230199024824
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 3,
+      "seed": 3403,
+      "truth": "not material",
+      "true_gap": 4.999999999999449e-05,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 4.999999999999449e-05,
+        "ci": [
+          -6.310785813990328e-05,
+          0.00016310785813989227
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 4,
+      "seed": 3404,
+      "truth": "not material",
+      "true_gap": 0.00037999999999995817,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00039999999999995595,
+        "ci": [
+          0.00024918952248009226,
+          0.0005508104775198196
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 5,
+      "seed": 3405,
+      "truth": "not material",
+      "true_gap": 0.003870000000000029,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0039000000000000033,
+        "ci": [
+          0.0029491761176965855,
+          0.004850823882303421
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 6,
+      "seed": 3406,
+      "truth": "not material",
+      "true_gap": 0.0006800000000000472,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00010000000000001119,
+        "ci": [
+          -0.0001262157162798346,
+          0.00032621571627985697
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 7,
+      "seed": 3407,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 8,
+      "seed": 3408,
+      "truth": "not material",
+      "true_gap": -4.999999999999449e-05,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": -4.999999999999449e-05,
+        "ci": [
+          -0.00016310785813989227,
+          6.310785813990328e-05
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_nokey",
+      "rep": 9,
+      "seed": 3409,
+      "truth": "not material",
+      "true_gap": -0.00034999999999996145,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00029204323393401004,
+          0.00029204323393401004
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 0,
+      "seed": 3400,
+      "truth": "not material",
+      "true_gap": 0.0004099999999999882,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 9.999999999998899e-05,
+        "ci": [
+          -5.08104775198747e-05,
+          0.00025081047751985267
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 1,
+      "seed": 3401,
+      "truth": "not material",
+      "true_gap": -0.0010299999999999864,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0014000000000000013,
+        "ci": [
+          0.0008208013709320693,
+          0.0019791986290679333
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 2,
+      "seed": 3402,
+      "truth": "not material",
+      "true_gap": -0.0006799999999999695,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00023845230199024824,
+          0.00023845230199024824
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 3,
+      "seed": 3403,
+      "truth": "not material",
+      "true_gap": 4.999999999999449e-05,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 4.999999999999449e-05,
+        "ci": [
+          -6.310785813990328e-05,
+          0.00016310785813989227
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 4,
+      "seed": 3404,
+      "truth": "not material",
+      "true_gap": 0.00037999999999995817,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00039999999999995595,
+        "ci": [
+          0.00024918952248009226,
+          0.0005508104775198196
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 5,
+      "seed": 3405,
+      "truth": "not material",
+      "true_gap": 0.003870000000000029,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0039000000000000033,
+        "ci": [
+          0.0029491761176965855,
+          0.004850823882303421
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 6,
+      "seed": 3406,
+      "truth": "not material",
+      "true_gap": 0.0006800000000000472,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.00010000000000001119,
+        "ci": [
+          -0.0001262157162798346,
+          0.00032621571627985697
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 7,
+      "seed": 3407,
+      "truth": "not material",
+      "true_gap": 0.0,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 8,
+      "seed": 3408,
+      "truth": "not material",
+      "true_gap": -4.999999999999449e-05,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": -4.999999999999449e-05,
+        "ci": [
+          -0.00016310785813989227,
+          6.310785813990328e-05
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "presplit_easy_randkey",
+      "rep": 9,
+      "seed": 3409,
+      "truth": "not material",
+      "true_gap": -0.00034999999999996145,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "ok",
+        "verdict": "not material",
+        "mean": 0.0,
+        "ci": [
+          -0.00029204323393401004,
+          0.00029204323393401004
+        ],
+        "reused_test_rows": 400,
+        "test_rows": 2000,
+        "training_rows_removed": 400
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "not material"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 0,
+      "seed": 3200,
+      "truth": "material",
+      "true_gap": 0.46284000000000003,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 1,
+      "seed": 3201,
+      "truth": "material",
+      "true_gap": 0.43779,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 2,
+      "seed": 3202,
+      "truth": "material",
+      "true_gap": 0.48762999999999995,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 3,
+      "seed": 3203,
+      "truth": "material",
+      "true_gap": 0.49276,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 4,
+      "seed": 3204,
+      "truth": "material",
+      "true_gap": 0.47957,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 5,
+      "seed": 3205,
+      "truth": "material",
+      "true_gap": 0.4787800000000001,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 6,
+      "seed": 3206,
+      "truth": "material",
+      "true_gap": 0.45036000000000004,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 7,
+      "seed": 3207,
+      "truth": "material",
+      "true_gap": 0.4396,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 8,
+      "seed": 3208,
+      "truth": "material",
+      "true_gap": 0.44795000000000007,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_nokey",
+      "rep": 9,
+      "seed": 3209,
+      "truth": "material",
+      "true_gap": 0.45708000000000004,
+      "grouped_resplit": "not applicable",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "inconclusive",
+      "D3": "not material",
+      "D4": "inconclusive",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 0,
+      "seed": 3200,
+      "truth": "material",
+      "true_gap": 0.46284000000000003,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 1,
+      "seed": 3201,
+      "truth": "material",
+      "true_gap": 0.43779,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 2,
+      "seed": 3202,
+      "truth": "material",
+      "true_gap": 0.48762999999999995,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 3,
+      "seed": 3203,
+      "truth": "material",
+      "true_gap": 0.49276,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 4,
+      "seed": 3204,
+      "truth": "material",
+      "true_gap": 0.47957,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 5,
+      "seed": 3205,
+      "truth": "material",
+      "true_gap": 0.4787800000000001,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 6,
+      "seed": 3206,
+      "truth": "material",
+      "true_gap": 0.45036000000000004,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 7,
+      "seed": 3207,
+      "truth": "material",
+      "true_gap": 0.4396,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 8,
+      "seed": 3208,
+      "truth": "material",
+      "true_gap": 0.44795000000000007,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    },
+    {
+      "design": "v3",
+      "scenario": "group_noisy_randkey",
+      "rep": 9,
+      "seed": 3209,
+      "truth": "material",
+      "true_gap": 0.45708000000000004,
+      "grouped_resplit": "not material",
+      "reuse_removal": {
+        "status": "not_applicable",
+        "verdict": "not applicable",
+        "mean": null,
+        "ci": null,
+        "reused_test_rows": 0,
+        "test_rows": 2000,
+        "training_rows_removed": 0
+      },
+      "D2": "not material",
+      "D3": "not material",
+      "D4": "not material",
+      "D5": "inconclusive"
+    }
+  ],
+  "summary": {
+    "d1_cutoff": 0.0,
+    "corpus_mismatches": [],
+    "variant_mismatches": [],
+    "scenarios": {
+      "clean": {
+        "truth": "not material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "repetitive": {
+        "truth": "not material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "group_noisy": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "group_exact": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "presplit_easy": {
+        "truth": "not material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "presplit_hard": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D1": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 4,
+            "wrong": 0,
+            "inconclusive": 1
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "host_memo": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "drift": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "prior_shift": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D1": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "presplit_hard_nokey": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "presplit_hard_randkey": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 4,
+            "inconclusive": 1
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "presplit_easy_nokey": {
+        "truth": "not material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "presplit_easy_randkey": {
+        "truth": "not material",
+        "reuse_removal_all": {
+          "correct": 10,
+          "wrong": 0,
+          "inconclusive": 0
+        },
+        "reuse_removal_not_applicable": 0,
+        "decision_heldout": {
+          "D2": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 5,
+            "wrong": 0,
+            "inconclusive": 0
+          }
+        }
+      },
+      "group_noisy_nokey": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D2": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      },
+      "group_noisy_randkey": {
+        "truth": "material",
+        "reuse_removal_all": {
+          "correct": 0,
+          "wrong": 0,
+          "inconclusive": 10
+        },
+        "reuse_removal_not_applicable": 10,
+        "decision_heldout": {
+          "D2": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D3": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D4": {
+            "correct": 0,
+            "wrong": 5,
+            "inconclusive": 0
+          },
+          "D5": {
+            "correct": 0,
+            "wrong": 0,
+            "inconclusive": 5
+          }
+        }
+      }
+    }
+  }
+}

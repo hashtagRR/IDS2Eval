@@ -1,0 +1,269 @@
+{
+  "ton-iot-official": {
+    "cluster_column": "src_ip",
+    "before_dedup": {
+      "normal": {
+        "row_ci": [
+          -0.036434089933854684,
+          0.0643597544559655
+        ],
+        "row": "inconclusive",
+        "cluster_ci": [
+          -0.19062474919988714,
+          0.2229170348931806
+        ],
+        "cluster": "inconclusive",
+        "agree": true
+      },
+      "ransomware": {
+        "row_ci": [
+          -0.07145617010786677,
+          0.04358389726393676
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          -0.2922860196249878,
+          0.4340407823553891
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      },
+      "injection": {
+        "row_ci": [
+          -0.01215265159880199,
+          0.01215265159880199
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.009708737864077669,
+          0.009966777408637873
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "scanning": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "ddos": {
+        "row_ci": [
+          -0.005800174936599509,
+          0.011240706827931778
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.002325581395348837
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "backdoor": {
+        "row_ci": [
+          -0.04494429485210759,
+          0.01247345758231657
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.959758551307847,
+          0.9474747474747475
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      },
+      "xss": {
+        "row_ci": [
+          -0.10575481942027115,
+          0.014222110913862718
+        ],
+        "row": "below_control",
+        "cluster_ci": [
+          -0.3430044182621502,
+          0.23497942386831275
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      },
+      "password": {
+        "row_ci": [
+          -0.0012914944418465565,
+          0.024027370556435466
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.00018870513964180328,
+          0.019762845849802372
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "dos": {
+        "row_ci": [
+          -0.038704018600532,
+          0.06661036050925317
+        ],
+        "row": "inconclusive",
+        "cluster_ci": [
+          -0.7883211678832117,
+          0.8113804004214963
+        ],
+        "cluster": "inconclusive",
+        "agree": true
+      },
+      "mitm": {
+        "row_ci": [
+          -0.02951929126116698,
+          0.01921460483642827
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.017615260065017648,
+          0.3091671762457442
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      }
+    },
+    "after_dedup": {
+      "normal": {
+        "row_ci": [
+          -0.03666872920746175,
+          0.03264246035069353
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.07865031431906754,
+          0.08455612104187689
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      },
+      "scanning": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "ddos": {
+        "row_ci": [
+          -0.011240706827931778,
+          0.005800174936599509
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.002336448598130841,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "injection": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "password": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "dos": {
+        "row_ci": [
+          -0.04269407551655678,
+          0.06262716779991748
+        ],
+        "row": "inconclusive",
+        "cluster_ci": [
+          -0.8004223864836325,
+          0.8126984126984127
+        ],
+        "cluster": "inconclusive",
+        "agree": true
+      },
+      "backdoor": {
+        "row_ci": [
+          -0.022870678939818208,
+          0.035041426640945623
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.9438877755511023,
+          0.9585439838220424
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      },
+      "xss": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "ransomware": {
+        "row_ci": [
+          -0.007624340580914839,
+          0.007624340580914839
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          0.0,
+          0.0
+        ],
+        "cluster": "equivalent",
+        "agree": true
+      },
+      "mitm": {
+        "row_ci": [
+          -0.00923251328635464,
+          0.03378341731811936
+        ],
+        "row": "equivalent",
+        "cluster_ci": [
+          -0.002702398378560974,
+          0.3253333333333333
+        ],
+        "cluster": "inconclusive",
+        "agree": false
+      }
+    }
+  }
+}

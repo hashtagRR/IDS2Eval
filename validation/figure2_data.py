@@ -39,6 +39,7 @@ DATASET_LABEL = {
     "cic-ddos2019-sample": "CICDDoS2019",
     "cic-ids2017-improved-benign": "CIC-IDS2017 (corrected)",
     "cic-ids2017-glf": "CIC-IDS2017 (original)",
+    "cic-ids2017": "CIC-IDS2017 (MachineLearningCSV)",
     "cic-ids2018-fullscale": "CSE-CIC-IDS2018",
     "unsw-nb15": "UNSW-NB15",
     "nsl-kdd": "NSL-KDD",
@@ -99,8 +100,10 @@ def ctu13(rows):
 
 
 def reuse_removal(rows):
-    for dataset in ("unsw-nb15", "nsl-kdd"):
+    for dataset in ("unsw-nb15", "nsl-kdd", "ton-iot-official", "cic-ids2017", "cic-ids2018-fullscale"):
         path = ROOT / "analysis" / f"reuse_removal_models_{dataset}.json"
+        if not path.exists():
+            continue
         rf = json.loads(path.read_text())[dataset]["rf"]
         for m in METRICS:
             x = rf["details"]["by_metric"][m]

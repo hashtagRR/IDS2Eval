@@ -68,6 +68,12 @@ UNSW-NB15,reuse removal,macro_f1,0.152,0.097,0.208,N,0
 NSL-KDD,reuse removal,accuracy,-0.034,-0.079,0.012,N,0
 NSL-KDD,reuse removal,balanced_accuracy,-0.689,-1.468,0.091,N,0
 NSL-KDD,reuse removal,macro_f1,-0.739,-1.498,0.021,N,0
+ToN-IoT,reuse removal,accuracy,0.103,0.083,0.123,N,0
+ToN-IoT,reuse removal,balanced_accuracy,0.119,0.02,0.217,N,0
+ToN-IoT,reuse removal,macro_f1,0.091,-0.008,0.189,N,0
+CIC-IDS2017 (MachineLearningCSV),reuse removal,accuracy,1.865,1.829,1.9,M,0
+CIC-IDS2017 (MachineLearningCSV),reuse removal,balanced_accuracy,3.749,0.601,6.897,I,0
+CIC-IDS2017 (MachineLearningCSV),reuse removal,macro_f1,3.412,0.447,6.378,I,0
 CIC-IDS2017 (corrected),identifier removal,accuracy,0.502,0.494,0.51,N,0
 CIC-IDS2017 (corrected),identifier removal,balanced_accuracy,2.197,0.017,4.378,I,0
 CIC-IDS2017 (corrected),identifier removal,macro_f1,2.019,-0.232,4.271,I,0

@@ -1,0 +1,2788 @@
+{
+  "cic-ids2017-improved-benign": {
+    "five_tuple": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              589,
+              147
+            ],
+            "DDoS": [
+              76122,
+              19022
+            ],
+            "DoS GoldenEye": [
+              6053,
+              1514
+            ],
+            "DoS Hulk": [
+              126778,
+              31690
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              0,
+              11
+            ],
+            "Infiltration": [
+              32,
+              4
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127254,
+              31812
+            ],
+            "SSH-Patator": [
+              2369,
+              592
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [
+            "Heartbleed"
+          ],
+          "missing_from_test": []
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              1275647,
+              318898
+            ],
+            "Botnet": [
+              589,
+              147
+            ],
+            "DDoS": [
+              76122,
+              19022
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126770,
+              31698
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              0,
+              11
+            ],
+            "Infiltration": [
+              32,
+              4
+            ],
+            "Infiltration - Portscan": [
+              57414,
+              14353
+            ],
+            "Portscan": [
+              127255,
+              31811
+            ],
+            "SSH-Patator": [
+              2369,
+              592
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [
+            "Heartbleed"
+          ],
+          "missing_from_test": []
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              588,
+              148
+            ],
+            "DDoS": [
+              76115,
+              19029
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126780,
+              31688
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3088,
+              771
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              29,
+              7
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127257,
+              31809
+            ],
+            "SSH-Patator": [
+              2368,
+              593
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              588,
+              148
+            ],
+            "DDoS": [
+              76115,
+              19029
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126774,
+              31694
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              29,
+              7
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127259,
+              31807
+            ],
+            "SSH-Patator": [
+              2368,
+              593
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              11,
+              2
+            ],
+            "Web Attack - XSS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              1275640,
+              318905
+            ],
+            "Botnet": [
+              589,
+              147
+            ],
+            "DDoS": [
+              76121,
+              19023
+            ],
+            "DoS GoldenEye": [
+              6053,
+              1514
+            ],
+            "DoS Hulk": [
+              126763,
+              31705
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              31,
+              5
+            ],
+            "Infiltration - Portscan": [
+              57415,
+              14352
+            ],
+            "Portscan": [
+              127253,
+              31813
+            ],
+            "SSH-Patator": [
+              2369,
+              592
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              589,
+              147
+            ],
+            "DDoS": [
+              76121,
+              19023
+            ],
+            "DoS GoldenEye": [
+              6053,
+              1514
+            ],
+            "DoS Hulk": [
+              126771,
+              31697
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              31,
+              5
+            ],
+            "Infiltration - Portscan": [
+              57414,
+              14353
+            ],
+            "Portscan": [
+              127253,
+              31813
+            ],
+            "SSH-Patator": [
+              2368,
+              593
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              11,
+              2
+            ],
+            "Web Attack - XSS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              589,
+              147
+            ],
+            "DDoS": [
+              76115,
+              19029
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126770,
+              31698
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              31,
+              5
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127253,
+              31813
+            ],
+            "SSH-Patator": [
+              2369,
+              592
+            ],
+            "Web Attack - Brute Force": [
+              59,
+              14
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              1275639,
+              318906
+            ],
+            "Botnet": [
+              588,
+              148
+            ],
+            "DDoS": [
+              76115,
+              19029
+            ],
+            "DoS GoldenEye": [
+              6053,
+              1514
+            ],
+            "DoS Hulk": [
+              126778,
+              31690
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              29,
+              7
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127252,
+              31814
+            ],
+            "SSH-Patator": [
+              2369,
+              592
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              11,
+              2
+            ],
+            "Web Attack - XSS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              588,
+              148
+            ],
+            "DDoS": [
+              76115,
+              19029
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126779,
+              31689
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3088,
+              771
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              29,
+              7
+            ],
+            "Infiltration - Portscan": [
+              57414,
+              14353
+            ],
+            "Portscan": [
+              127252,
+              31814
+            ],
+            "SSH-Patator": [
+              2368,
+              593
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              1275636,
+              318909
+            ],
+            "Botnet": [
+              588,
+              148
+            ],
+            "DDoS": [
+              76117,
+              19027
+            ],
+            "DoS GoldenEye": [
+              6054,
+              1513
+            ],
+            "DoS Hulk": [
+              126779,
+              31689
+            ],
+            "DoS Slowhttptest": [
+              1392,
+              348
+            ],
+            "DoS Slowloris": [
+              3087,
+              772
+            ],
+            "FTP-Patator": [
+              3177,
+              795
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              29,
+              7
+            ],
+            "Infiltration - Portscan": [
+              57413,
+              14354
+            ],
+            "Portscan": [
+              127252,
+              31814
+            ],
+            "SSH-Patator": [
+              2368,
+              593
+            ],
+            "Web Attack - Brute Force": [
+              58,
+              15
+            ],
+            "Web Attack - SQL Injection": [
+              10,
+              3
+            ],
+            "Web Attack - XSS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "Heartbleed"
+          ]
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8000068985196404,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Botnet": {
+          "train_share_min": 0.7989130434782609,
+          "train_share_max": 0.8002717391304348,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DDoS": {
+          "train_share_min": 0.799997897923148,
+          "train_share_max": 0.8000714706129656,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS GoldenEye": {
+          "train_share_min": 0.7999207083388397,
+          "train_share_max": 0.8000528611074402,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Hulk": {
+          "train_share_min": 0.7999280611858546,
+          "train_share_max": 0.8000353383648434,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowhttptest": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowloris": {
+          "train_share_min": 0.7999481731018399,
+          "train_share_max": 0.8002073075926406,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "FTP-Patator": {
+          "train_share_min": 0.7998489425981873,
+          "train_share_max": 0.7998489425981873,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Heartbleed": {
+          "train_share_min": 0.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 2,
+          "seeds_without_test_rows": 8,
+          "seeds_train_share_below_0.2": 2
+        },
+        "Infiltration": {
+          "train_share_min": 0.8055555555555556,
+          "train_share_max": 0.8888888888888888,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Infiltration - Portscan": {
+          "train_share_min": 0.7999916396115206,
+          "train_share_max": 0.8000195075731186,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Portscan": {
+          "train_share_min": 0.7999949706411176,
+          "train_share_max": 0.8000389775313392,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "SSH-Patator": {
+          "train_share_min": 0.7997298210064168,
+          "train_share_max": 0.8000675447483958,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - Brute Force": {
+          "train_share_min": 0.7945205479452054,
+          "train_share_max": 0.8082191780821918,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - SQL Injection": {
+          "train_share_min": 0.7692307692307693,
+          "train_share_max": 0.8461538461538461,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - XSS": {
+          "train_share_min": 0.7777777777777778,
+          "train_share_max": 0.8333333333333334,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "coarse": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              64999,
+              6768
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65186,
+              6581
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65062,
+              6705
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65083,
+              6684
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65098,
+              6669
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65185,
+              6582
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65083,
+              6684
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65082,
+              6685
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              65090,
+              6677
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              1299900,
+              294645
+            ],
+            "Botnet": [
+              627,
+              109
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              64936,
+              6831
+            ],
+            "Portscan": [
+              127322,
+              31744
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.8152168800504219,
+          "train_share_max": 0.8152168800504219,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Botnet": {
+          "train_share_min": 0.8519021739130435,
+          "train_share_max": 0.8519021739130435,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DDoS": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS GoldenEye": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Hulk": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowhttptest": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowloris": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "FTP-Patator": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Heartbleed": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Infiltration": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Infiltration - Portscan": {
+          "train_share_min": 0.9048169771622054,
+          "train_share_max": 0.9083004723619491,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Portscan": {
+          "train_share_min": 0.8004350395433342,
+          "train_share_max": 0.8004350395433342,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "SSH-Patator": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - Brute Force": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - SQL Injection": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - XSS": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "host": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              1173430,
+              421115
+            ],
+            "Botnet": [
+              597,
+              139
+            ],
+            "DDoS": [
+              95144,
+              0
+            ],
+            "DoS GoldenEye": [
+              7567,
+              0
+            ],
+            "DoS Hulk": [
+              158468,
+              0
+            ],
+            "DoS Slowhttptest": [
+              1740,
+              0
+            ],
+            "DoS Slowloris": [
+              3859,
+              0
+            ],
+            "FTP-Patator": [
+              3972,
+              0
+            ],
+            "Heartbleed": [
+              11,
+              0
+            ],
+            "Infiltration": [
+              36,
+              0
+            ],
+            "Infiltration - Portscan": [
+              71767,
+              0
+            ],
+            "Portscan": [
+              159066,
+              0
+            ],
+            "SSH-Patator": [
+              2961,
+              0
+            ],
+            "Web Attack - Brute Force": [
+              73,
+              0
+            ],
+            "Web Attack - SQL Injection": [
+              13,
+              0
+            ],
+            "Web Attack - XSS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "DDoS",
+            "DoS GoldenEye",
+            "DoS Hulk",
+            "DoS Slowhttptest",
+            "DoS Slowloris",
+            "FTP-Patator",
+            "Heartbleed",
+            "Infiltration",
+            "Infiltration - Portscan",
+            "Portscan",
+            "SSH-Patator",
+            "Web Attack - Brute Force",
+            "Web Attack - SQL Injection",
+            "Web Attack - XSS"
+          ]
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.7359027183303074,
+          "train_share_max": 0.7359027183303074,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Botnet": {
+          "train_share_min": 0.811141304347826,
+          "train_share_max": 0.811141304347826,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DDoS": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS GoldenEye": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Hulk": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowhttptest": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DoS Slowloris": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "FTP-Patator": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Heartbleed": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Infiltration": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Infiltration - Portscan": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Portscan": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "SSH-Patator": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - Brute Force": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - SQL Injection": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Web Attack - XSS": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    }
+  }
+}

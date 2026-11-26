@@ -73,6 +73,8 @@ def _checks(report_path):
 
 def grouping_keys(rows):
     for path in sorted(glob.glob(str(ROOT / "analysis" / "grouping_keys_*.json"))):
+        if "uncapped" in path:  # sensitivity rerun without the training cap, reported in the text
+            continue
         for dataset, keys in json.loads(Path(path).read_text()).items():
             for key, result in keys.items():
                 by_metric = result.get("repeated_seed", {}).get("details", {}).get("by_metric", {})

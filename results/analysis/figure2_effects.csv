@@ -50,12 +50,6 @@ ToN-IoT,coarse key,macro_f1,8.175,3.6,12.751,M,0
 ToN-IoT,source host,accuracy,22.932,2.143,43.721,M,1
 ToN-IoT,source host,balanced_accuracy,25.165,12.801,37.529,M,1
 ToN-IoT,source host,macro_f1,52.972,32.259,73.686,M,1
-CIC-IDS2017 (corrected),5-tuple,accuracy,0.0,-0.001,0.002,N,0
-CIC-IDS2017 (corrected),5-tuple,balanced_accuracy,0.921,-3.199,5.04,I,0
-CIC-IDS2017 (corrected),5-tuple,macro_f1,1.678,-2.376,5.732,I,0
-CIC-IDS2017 (corrected),coarse key,accuracy,0.009,0.007,0.011,N,1
-CIC-IDS2017 (corrected),coarse key,balanced_accuracy,-5.453,-7.098,-3.808,N,1
-CIC-IDS2017 (corrected),coarse key,macro_f1,-3.746,-5.28,-2.212,N,1
 CTU-13,5-tuple,accuracy,0.092,-0.044,0.229,N,0
 CTU-13,5-tuple,balanced_accuracy,0.079,-0.039,0.198,N,0
 CTU-13,5-tuple,macro_f1,0.094,-0.046,0.234,N,0

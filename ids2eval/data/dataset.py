@@ -67,6 +67,15 @@ def _random_split(
     return train.reset_index(drop=True), test.reset_index(drop=True)
 
 
+def _key_part(col: pd.Series) -> pd.Series:
+    """One grouping column as strings, a missing value as "nan". With pandas 3,
+    astype(str) keeps missing values as NaN, which would make the joined key NaN
+    and break StratifiedGroupKFold's sort of the keys; pandas 2 gave "nan"."""
+    if col.isna().any():
+        col = col.astype(object).where(col.notna(), "nan")
+    return col.astype(str)
+
+
 def _grouped_split(
     df: pd.DataFrame, label_col: str, dataset_cfg: dict, seed: int = 0
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -88,9 +97,9 @@ def _grouped_split(
     # full scale (hundreds of millions of rows) becomes the dominant memory cost
     # in the whole audit - a real failure this was built to avoid, not a
     # theoretical one.
-    groups = df[group_cols[0]].astype(str)
+    groups = _key_part(df[group_cols[0]])
     for col in group_cols[1:]:
-        groups = groups + "|" + df[col].astype(str)
+        groups = groups + "|" + _key_part(df[col])
 
     n_splits = round(1.0 / (1.0 - dataset_cfg["split_ratio"]))
     sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)

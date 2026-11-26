@@ -55,6 +55,20 @@ def test_grouped_split_has_zero_group_overlap(base_cfg, synth_data):
     assert set(train["SrcIP"]) & set(test["SrcIP"]) == set()
 
 
+def test_grouped_split_handles_missing_group_values(base_cfg, synth_data):
+    # A port column with missing values (as in CTU-13's Dport) must not break the
+    # grouped split; missing values form their own group, as "nan" did before pandas 3.
+    df = synth_data.copy()
+    df["Port"] = [None if i % 7 == 0 else f"p{i % 13}" for i in range(len(df))]
+    dataset_cfg = base_cfg["dataset"]
+    dataset_cfg["group_columns"] = ["SrcIP", "Port"]
+    dataset_cfg["split_ratio"] = 0.5
+    train, test = dataset._grouped_split(df, "Label", dataset_cfg)
+    key = lambda d: set(d["SrcIP"].astype(str) + "|" + d["Port"].fillna("nan").astype(str))  # noqa: E731
+    assert len(train) + len(test) == len(df)
+    assert key(train) & key(test) == set()
+
+
 def test_grouped_split_raises_if_group_columns_missing(base_cfg, synth_data):
     dataset_cfg = base_cfg["dataset"]
     dataset_cfg["group_columns"] = ["NoSuchColumn"]

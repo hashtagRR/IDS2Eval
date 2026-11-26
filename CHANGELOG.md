@@ -9,6 +9,8 @@
 - New opt-in check `reuse_removal_falsification`: removes the training rows whose feature vector occurs in the test set, refits, and scores the same test set against a same-size random removal with the same class mix, over seeds and per metric.
 - `homogeneity_test` reports its finding as `excess_matching` (test rows match training more often than training matches itself) instead of `leakage`. With `audit.homogeneity_cluster_columns` it also reports a cluster-bootstrap interval; `audit.homogeneity_interval: cluster` lets that interval decide.
 - Per-seed checkpoints of `repeated_seed_falsification_check` store every metric; seeds saved by an earlier version are refitted.
+- Fix: a grouping column with missing values broke the grouped split under pandas 3, whose `astype(str)` keeps missing values as NaN. Missing values now form one group, `nan`, as they did under pandas 2.
+- Known behavior: the grouped split uses scikit-learn's `StratifiedGroupKFold(shuffle=True)`, which reshuffles only groups with equally uneven class counts. A key with few large groups, such as a source host, can give the same split for every seed, and the seed then varies only the model. `validation/split_identity.py` counts the distinct splits.
 
 Statistics and thresholds: the accuracy statistics, margins and default thresholds are unchanged. Statuses can change, because balanced accuracy and macro-F1 now count towards them by default with the same default thresholds.
 

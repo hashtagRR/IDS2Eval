@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0 (2026-11-26)
+
 - Verdicts per metric: the checks that refit a model and compare two conditions (`resplit_falsification`, `repeated_seed_falsification_check`, `scenario_holdout_falsification`, `feature_category_ablation_check`, `result_robustness_check`) score accuracy, balanced accuracy and macro-F1 and give each its own verdict. `audit.materiality_thresholds` accepts a value per metric; `audit.materiality_metrics` (default: all three) sets which verdicts decide the status. Setting it to `[accuracy]` restores the earlier accuracy-only status.
 - `repeated_seed_falsification_check` also reports each metric's verdict at thresholds 0.005, 0.01, 0.02 and 0.05, and the ratio of grouped to random error rate.
 - The grouped checks report the grouping key's group count, share of single-row groups and group-size quantiles.

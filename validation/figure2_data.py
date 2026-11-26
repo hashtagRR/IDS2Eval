@@ -51,6 +51,7 @@ CAUTION = {
     ("ton-iot-official", "host"), ("cic-ddos2019-sample", "host"),
     ("cic-ids2017-improved-benign", "coarse"), ("cic-ids2017-improved-benign", "host"),
     ("ctu13", "host"), ("ctu13", "coarse"), ("cic-ids2017-glf", "host"), ("cic-ids2017-glf", "coarse"),
+    ("cic-ids2018-fullscale", "proxy_without_time"),
 }
 T975 = {4: 2.776, 9: 2.262}
 

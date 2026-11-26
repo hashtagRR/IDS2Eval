@@ -1,0 +1,574 @@
+{
+  "cic-ids2017-improved-benign": {
+    "five_tuple": {
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Src Port",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 1084821,
+        "rows_per_group": 1.9357811104320437,
+        "singleton_group_share": 0.7880286240771519,
+        "rows_in_singleton_groups": 0.40708560478786426,
+        "size_median": 1.0,
+        "size_p90": 3.0,
+        "size_p99": 14.0,
+        "size_max": 1184,
+        "largest_group_row_share": 0.00056381596742058
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "warning",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0000 [-0.0000, +0.0000], balanced accuracy +0.0092 [-0.0320, +0.0504], macro-F1 +0.0168 [-0.0238, +0.0573]; accuracy not material, balanced accuracy inconclusive, macro f1 inconclusive; overall inconclusive on accuracy, balanced_accuracy, macro_f1; CAUTION, in 10 of 10 seeds the grouped split leaves a class without training or test rows (see grouped_class_support_by_seed), so those seeds' scores do not measure that class",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            3.333439911734626e-05,
+            2.3811371957616068e-05,
+            -7.14224486952908e-06,
+            -1.666641722142259e-05,
+            -4.761383204154868e-06,
+            2.1429523836435926e-05,
+            -4.761893423244068e-06,
+            -2.857122447541549e-05,
+            1.1905351490870686e-05,
+            -7.1425566785521255e-06
+          ],
+          "mean_drop": 2.1434926529950714e-06,
+          "ci_95": [
+            -1.1912331847482179e-05,
+            1.619931715347232e-05
+          ],
+          "materiality_threshold": 0.01,
+          "material": null,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                3.333439911734626e-05,
+                2.3811371957616068e-05,
+                -7.14224486952908e-06,
+                -1.666641722142259e-05,
+                -4.761383204154868e-06,
+                2.1429523836435926e-05,
+                -4.761893423244068e-06,
+                -2.857122447541549e-05,
+                1.1905351490870686e-05,
+                -7.1425566785521255e-06
+              ],
+              "mean_drop": 2.1434926529950714e-06,
+              "ci_95": [
+                -1.1912331847482179e-05,
+                1.619931715347232e-05
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                0.10726438878207933,
+                0.11588332695844517,
+                0.028617639392789496,
+                -0.013120850311128196,
+                -0.036846966663057534,
+                -0.034178694405155086,
+                -0.020059474325336946,
+                -0.03833991615459942,
+                0.0020088812438597836,
+                -0.01913102804780986
+              ],
+              "mean_drop": 0.009209730647008673,
+              "ci_95": [
+                -0.031985121483035,
+                0.05040458277705235
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                0.11475015464738991,
+                0.12003036722737315,
+                0.042138050978352215,
+                -0.0077120762390718856,
+                -0.021936199879823648,
+                -0.02012393302887283,
+                -0.011199458696142917,
+                -0.03099301206573013,
+                0.0012459477269656238,
+                -0.01837611668973027
+              ],
+              "mean_drop": 0.01678237239807092,
+              "ci_95": [
+                -0.02375795288912535,
+                0.05732269768526719
+              ],
+              "threshold": 0.01,
+              "verdict": "warning",
+              "verdict_by_threshold": {
+                "0.005": "warning",
+                "0.01": "warning",
+                "0.02": "warning",
+                "0.05": "warning"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 1.1113205941683175,
+          "group_stats": {
+            "group_columns": [
+              "Src IP",
+              "Src Port",
+              "Dst IP",
+              "Dst Port",
+              "Protocol"
+            ],
+            "rows": 2099976,
+            "groups": 1084821,
+            "rows_per_group": 1.9357811104320437,
+            "singleton_group_share": 0.7880286240771519,
+            "rows_in_singleton_groups": 0.40708560478786426,
+            "size_median": 1.0,
+            "size_p90": 3.0,
+            "size_p99": 14.0,
+            "size_max": 1184,
+            "largest_group_row_share": 0.00056381596742058
+          },
+          "seeds_with_grouped_class_loss": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "grouped_class_support_by_seed": {
+            "0": {
+              "missing_from_train": [
+                "Heartbleed"
+              ],
+              "missing_from_test": []
+            },
+            "1": {
+              "missing_from_train": [
+                "Heartbleed"
+              ],
+              "missing_from_test": []
+            },
+            "2": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "3": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "4": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "5": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "6": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "7": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "8": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            },
+            "9": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "Heartbleed"
+              ]
+            }
+          }
+        }
+      },
+      "seconds": 3993
+    },
+    "coarse": {
+      "group_stats": {
+        "group_columns": [
+          "Src IP",
+          "Dst IP",
+          "Dst Port",
+          "Protocol"
+        ],
+        "rows": 2099976,
+        "groups": 90761,
+        "rows_per_group": 23.13742686836857,
+        "singleton_group_share": 0.25794118619230727,
+        "rows_in_singleton_groups": 0.011148222646354053,
+        "size_median": 3.0,
+        "size_p90": 13.0,
+        "size_p99": 159.0,
+        "size_max": 294063,
+        "largest_group_row_share": 0.14003160036114698
+      },
+      "repeated_seed": {
+        "check": "repeated_seed_falsification_check",
+        "status": "ok",
+        "summary": "grouped-split drop across 10 seeds, mean [95% CI]: accuracy +0.0001 [+0.0001, +0.0001], balanced accuracy -0.0545 [-0.0710, -0.0381], macro-F1 -0.0375 [-0.0528, -0.0221]; accuracy not material, balanced accuracy not material, macro f1 not material; overall not material on accuracy, balanced_accuracy, macro_f1; CAUTION, in 10 of 10 seeds the grouped split leaves a class without training or test rows (see grouped_class_support_by_seed), so those seeds' scores do not measure that class",
+        "details": {
+          "n_seeds": 10,
+          "drops_by_seed": [
+            7.778632493871118e-05,
+            7.5991447507473e-05,
+            9.333583287574054e-05,
+            0.00010783096746891374,
+            8.879005857975741e-05,
+            0.00011315684749790833,
+            8.848144144368852e-05,
+            9.592563276861199e-05,
+            0.00012564108267054674,
+            4.2905452103170205e-05
+          ],
+          "mean_drop": 9.098450878545217e-05,
+          "ci_95": [
+            7.45882505315604e-05,
+            0.00010738076703934395
+          ],
+          "materiality_threshold": 0.01,
+          "material": false,
+          "by_metric": {
+            "accuracy": {
+              "drops_by_seed": [
+                7.778632493871118e-05,
+                7.5991447507473e-05,
+                9.333583287574054e-05,
+                0.00010783096746891374,
+                8.879005857975741e-05,
+                0.00011315684749790833,
+                8.848144144368852e-05,
+                9.592563276861199e-05,
+                0.00012564108267054674,
+                4.2905452103170205e-05
+              ],
+              "mean_drop": 9.098450878545217e-05,
+              "ci_95": [
+                7.45882505315604e-05,
+                0.00010738076703934395
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "balanced_accuracy": {
+              "drops_by_seed": [
+                -0.04328041426654228,
+                -0.029744645186043916,
+                -0.0474470416144398,
+                -0.09328442782676594,
+                -0.08073100363728336,
+                -0.03820330907370806,
+                -0.04264064970209269,
+                -0.0810987997912429,
+                -0.02920522983679874,
+                -0.059666153887042106
+              ],
+              "mean_drop": -0.05453016748219598,
+              "ci_95": [
+                -0.07098333524596878,
+                -0.03807699971842318
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            },
+            "macro_f1": {
+              "drops_by_seed": [
+                -0.025295008005578046,
+                -0.017504731186285816,
+                -0.02973454256418917,
+                -0.08168721549482161,
+                -0.05548276141254094,
+                -0.0226985063718651,
+                -0.02495265152783188,
+                -0.05847273824565313,
+                -0.01705064252881472,
+                -0.04172880543329738
+              ],
+              "mean_drop": -0.03746076027708778,
+              "ci_95": [
+                -0.0527986088134758,
+                -0.02212291174069976
+              ],
+              "threshold": 0.01,
+              "verdict": "ok",
+              "verdict_by_threshold": {
+                "0.005": "ok",
+                "0.01": "ok",
+                "0.02": "ok",
+                "0.05": "ok"
+              }
+            }
+          },
+          "materiality_metrics": [
+            "accuracy",
+            "balanced_accuracy",
+            "macro_f1"
+          ],
+          "mean_error_ratio": 3.55131378951504,
+          "group_stats": {
+            "group_columns": [
+              "Src IP",
+              "Dst IP",
+              "Dst Port",
+              "Protocol"
+            ],
+            "rows": 2099976,
+            "groups": 90761,
+            "rows_per_group": 23.13742686836857,
+            "singleton_group_share": 0.25794118619230727,
+            "rows_in_singleton_groups": 0.011148222646354053,
+            "size_median": 3.0,
+            "size_p90": 13.0,
+            "size_p99": 159.0,
+            "size_max": 294063,
+            "largest_group_row_share": 0.14003160036114698
+          },
+          "seeds_with_grouped_class_loss": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "grouped_class_support_by_seed": {
+            "0": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "1": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "2": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "3": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "4": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "5": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "6": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "7": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "8": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            },
+            "9": {
+              "missing_from_train": [],
+              "missing_from_test": [
+                "DDoS",
+                "DoS GoldenEye",
+                "DoS Hulk",
+                "DoS Slowhttptest",
+                "DoS Slowloris",
+                "FTP-Patator",
+                "Heartbleed",
+                "Infiltration",
+                "SSH-Patator",
+                "Web Attack - Brute Force",
+                "Web Attack - SQL Injection",
+                "Web Attack - XSS"
+              ]
+            }
+          }
+        }
+      },
+      "seconds": 3234
+    }
+  }
+}

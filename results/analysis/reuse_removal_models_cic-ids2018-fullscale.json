@@ -1,0 +1,245 @@
+{
+  "cic-ids2018-fullscale": {
+    "rf": {
+      "check": "reuse_removal_falsification",
+      "status": "flag",
+      "summary": "removing the 3,500,397 training rows that share a feature vector with a test row, against removing as many random rows of the same classes, over 10 seeds: score difference on the unchanged test set, mean [95% CI], accuracy +0.0351 [+0.0317, +0.0386], balanced accuracy +0.1193, macro-F1 +0.0805 (accuracy material, balanced accuracy material, macro f1 material); on the 1,065,936 reused test rows alone, accuracy +0.1074",
+      "details": {
+        "training_rows_removed": 3500397,
+        "training_rows": 12986354,
+        "reused_test_rows": 1065936,
+        "test_rows": 3246589,
+        "n_seeds": 10,
+        "by_metric": {
+          "accuracy": {
+            "differences_by_seed": [
+              0.032676449036203814,
+              0.036496458282831545,
+              0.04334456871504211,
+              0.03703271341090608,
+              0.03403048553420218,
+              0.028594626544967694,
+              0.037170704391593756,
+              0.036868849121339364,
+              0.038162206549704925,
+              0.027014814625442307
+            ],
+            "mean_difference": 0.03513918762122338,
+            "ci_95": [
+              0.031723868395732074,
+              0.03855450684671469
+            ],
+            "threshold": 0.01,
+            "verdict": "flag",
+            "reused_rows_mean_difference": 0.10744519370768976,
+            "reused_rows_ci_95": [
+              0.09701354447742368,
+              0.11787684293795585
+            ]
+          },
+          "balanced_accuracy": {
+            "differences_by_seed": [
+              0.157667949486063,
+              0.11527074500538426,
+              0.1353149400441408,
+              0.16751981588348897,
+              0.07996121296896563,
+              0.10306583560375238,
+              0.1132149651486033,
+              0.1214676078499306,
+              0.11390331202485415,
+              0.08596863994591675
+            ],
+            "mean_difference": 0.11933550239610999,
+            "ci_95": [
+              0.099295761790479,
+              0.13937524300174098
+            ],
+            "threshold": 0.01,
+            "verdict": "flag",
+            "reused_rows_mean_difference": 0.23113386463914098,
+            "reused_rows_ci_95": [
+              0.214308441666211,
+              0.24795928761207098
+            ]
+          },
+          "macro_f1": {
+            "differences_by_seed": [
+              0.14053191562318967,
+              0.06600790918293176,
+              0.07693492703662486,
+              0.10298979391952567,
+              0.041232140803205475,
+              0.08792336982375859,
+              0.06018981159706893,
+              0.08425537208565359,
+              0.08863380984858882,
+              0.05670549518597401
+            ],
+            "mean_difference": 0.08054045451065214,
+            "ci_95": [
+              0.06060671078027394,
+              0.10047419824103035
+            ],
+            "threshold": 0.01,
+            "verdict": "flag",
+            "reused_rows_mean_difference": 0.20415748675763137,
+            "reused_rows_ci_95": [
+              0.18508957685595356,
+              0.22322539665930918
+            ]
+          }
+        },
+        "per_seed": [
+          {
+            "full_test": {
+              "accuracy": 0.032676449036203814,
+              "balanced_accuracy": 0.157667949486063,
+              "macro_f1": 0.14053191562318967
+            },
+            "reused_test_rows": {
+              "accuracy": 0.10017580792843095,
+              "balanced_accuracy": 0.2624353829148486,
+              "macro_f1": 0.24389246034187212
+            },
+            "control_accuracy": 0.9675265332322631,
+            "reuse_removed_accuracy": 0.9348500841960593
+          },
+          {
+            "full_test": {
+              "accuracy": 0.036496458282831545,
+              "balanced_accuracy": 0.11527074500538426,
+              "macro_f1": 0.06600790918293176
+            },
+            "reused_test_rows": {
+              "accuracy": 0.11122431365485363,
+              "balanced_accuracy": 0.2327452794901605,
+              "macro_f1": 0.20690005664059768
+            },
+            "control_accuracy": 0.9743632470879436,
+            "reuse_removed_accuracy": 0.9378667888051121
+          },
+          {
+            "full_test": {
+              "accuracy": 0.04334456871504211,
+              "balanced_accuracy": 0.1353149400441408,
+              "macro_f1": 0.07693492703662486
+            },
+            "reused_test_rows": {
+              "accuracy": 0.1325558007234956,
+              "balanced_accuracy": 0.24566818979230848,
+              "macro_f1": 0.206044296851412
+            },
+            "control_accuracy": 0.9740453750074308,
+            "reuse_removed_accuracy": 0.9307008062923887
+          },
+          {
+            "full_test": {
+              "accuracy": 0.03703271341090608,
+              "balanced_accuracy": 0.16751981588348897,
+              "macro_f1": 0.10298979391952567
+            },
+            "reused_test_rows": {
+              "accuracy": 0.11327790786688874,
+              "balanced_accuracy": 0.21788601537949998,
+              "macro_f1": 0.17878526508341003
+            },
+            "control_accuracy": 0.9751098768584505,
+            "reuse_removed_accuracy": 0.9380771634475444
+          },
+          {
+            "full_test": {
+              "accuracy": 0.03403048553420218,
+              "balanced_accuracy": 0.07996121296896563,
+              "macro_f1": 0.041232140803205475
+            },
+            "reused_test_rows": {
+              "accuracy": 0.10383456417646086,
+              "balanced_accuracy": 0.2258244256704472,
+              "macro_f1": 0.210936540518524
+            },
+            "control_accuracy": 0.9676977898957952,
+            "reuse_removed_accuracy": 0.9336673043615931
+          },
+          {
+            "full_test": {
+              "accuracy": 0.028594626544967694,
+              "balanced_accuracy": 0.10306583560375238,
+              "macro_f1": 0.08792336982375859
+            },
+            "reused_test_rows": {
+              "accuracy": 0.08730542921901496,
+              "balanced_accuracy": 0.2093834766165309,
+              "macro_f1": 0.1812364097938725
+            },
+            "control_accuracy": 0.9675058961882764,
+            "reuse_removed_accuracy": 0.9389112696433087
+          },
+          {
+            "full_test": {
+              "accuracy": 0.037170704391593756,
+              "balanced_accuracy": 0.1132149651486033,
+              "macro_f1": 0.06018981159706893
+            },
+            "reused_test_rows": {
+              "accuracy": 0.11400309211810089,
+              "balanced_accuracy": 0.2628372450916065,
+              "macro_f1": 0.2273326128809401
+            },
+            "control_accuracy": 0.9774190696758968,
+            "reuse_removed_accuracy": 0.940248365284303
+          },
+          {
+            "full_test": {
+              "accuracy": 0.036868849121339364,
+              "balanced_accuracy": 0.1214676078499306,
+              "macro_f1": 0.08425537208565359
+            },
+            "reused_test_rows": {
+              "accuracy": 0.11278163041683553,
+              "balanced_accuracy": 0.25079892579245544,
+              "macro_f1": 0.23710219314726771
+            },
+            "control_accuracy": 0.9712735427859824,
+            "reuse_removed_accuracy": 0.9344046936646431
+          },
+          {
+            "full_test": {
+              "accuracy": 0.038162206549704925,
+              "balanced_accuracy": 0.11390331202485415,
+              "macro_f1": 0.08863380984858882
+            },
+            "reused_test_rows": {
+              "accuracy": 0.11653420092763545,
+              "balanced_accuracy": 0.2034660648304102,
+              "macro_f1": 0.1853554758949853
+            },
+            "control_accuracy": 0.9674199598409284,
+            "reuse_removed_accuracy": 0.9292577532912235
+          },
+          {
+            "full_test": {
+              "accuracy": 0.027014814625442307,
+              "balanced_accuracy": 0.08596863994591675,
+              "macro_f1": 0.05670549518597401
+            },
+            "reused_test_rows": {
+              "accuracy": 0.08275919004518095,
+              "balanced_accuracy": 0.20029364081314194,
+              "macro_f1": 0.16398955642343227
+            },
+            "control_accuracy": 0.9675314614815734,
+            "reuse_removed_accuracy": 0.9405166468561311
+          }
+        ],
+        "materiality_metrics": [
+          "accuracy",
+          "balanced_accuracy",
+          "macro_f1"
+        ],
+        "model": "rf",
+        "seconds": 519
+      }
+    }
+  }
+}

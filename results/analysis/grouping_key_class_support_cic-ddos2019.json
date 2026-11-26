@@ -1,0 +1,2931 @@
+{
+  "cic-ddos2019-sample": {
+    "five_tuple": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              13574,
+              3393
+            ],
+            "DrDoS_DNS": [
+              403713,
+              100929
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326555,
+              81638
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207734,
+              51934
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512305,
+              128077
+            ],
+            "TFTP": [
+              1602403,
+              400599
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              13573,
+              3394
+            ],
+            "DrDoS_DNS": [
+              403714,
+              100928
+            ],
+            "DrDoS_LDAP": [
+              173451,
+              43362
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96020,
+              24006
+            ],
+            "DrDoS_NetBIOS": [
+              326554,
+              81639
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512305,
+              128077
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              136,
+              35
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              13574,
+              3393
+            ],
+            "DrDoS_DNS": [
+              403714,
+              100928
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96020,
+              24006
+            ],
+            "DrDoS_NetBIOS": [
+              326555,
+              81638
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207734,
+              51934
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512306,
+              128076
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              13574,
+              3393
+            ],
+            "DrDoS_DNS": [
+              403714,
+              100928
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326555,
+              81638
+            ],
+            "DrDoS_SNMP": [
+              411128,
+              102783
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512306,
+              128076
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              13573,
+              3394
+            ],
+            "DrDoS_DNS": [
+              403713,
+              100929
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361839,
+              90459
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326554,
+              81639
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512306,
+              128076
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              13574,
+              3393
+            ],
+            "DrDoS_DNS": [
+              403714,
+              100928
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96020,
+              24006
+            ],
+            "DrDoS_NetBIOS": [
+              326555,
+              81638
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207734,
+              51934
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293639,
+              73409
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512305,
+              128077
+            ],
+            "TFTP": [
+              1602403,
+              400599
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              136,
+              35
+            ],
+            "WebDDoS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              13574,
+              3393
+            ],
+            "DrDoS_DNS": [
+              403713,
+              100929
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96020,
+              24006
+            ],
+            "DrDoS_NetBIOS": [
+              326555,
+              81638
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293639,
+              73409
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512306,
+              128076
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              136,
+              35
+            ],
+            "WebDDoS": [
+              14,
+              4
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              13573,
+              3394
+            ],
+            "DrDoS_DNS": [
+              403713,
+              100929
+            ],
+            "DrDoS_LDAP": [
+              173451,
+              43362
+            ],
+            "DrDoS_MSSQL": [
+              361838,
+              90460
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326554,
+              81639
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207734,
+              51934
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293639,
+              73409
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512305,
+              128077
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              13573,
+              3394
+            ],
+            "DrDoS_DNS": [
+              403714,
+              100928
+            ],
+            "DrDoS_LDAP": [
+              173450,
+              43363
+            ],
+            "DrDoS_MSSQL": [
+              361839,
+              90459
+            ],
+            "DrDoS_NTP": [
+              96020,
+              24006
+            ],
+            "DrDoS_NetBIOS": [
+              326554,
+              81639
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512305,
+              128077
+            ],
+            "TFTP": [
+              1602402,
+              400600
+            ],
+            "UDP": [
+              311656,
+              77915
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              13573,
+              3394
+            ],
+            "DrDoS_DNS": [
+              403713,
+              100929
+            ],
+            "DrDoS_LDAP": [
+              173451,
+              43362
+            ],
+            "DrDoS_MSSQL": [
+              361839,
+              90459
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326554,
+              81639
+            ],
+            "DrDoS_SNMP": [
+              411129,
+              102782
+            ],
+            "DrDoS_SSDP": [
+              207734,
+              51934
+            ],
+            "DrDoS_UDP": [
+              249264,
+              62316
+            ],
+            "LDAP": [
+              153947,
+              38487
+            ],
+            "MSSQL": [
+              465715,
+              116429
+            ],
+            "NetBIOS": [
+              293638,
+              73410
+            ],
+            "Portmap": [
+              14985,
+              3747
+            ],
+            "Syn": [
+              512306,
+              128076
+            ],
+            "TFTP": [
+              1602403,
+              400599
+            ],
+            "UDP": [
+              311657,
+              77914
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              136,
+              35
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.7999646372369894,
+          "train_share_max": 0.8000235751753404,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_DNS": {
+          "train_share_min": 0.7999988110383203,
+          "train_share_max": 0.8000007926411199,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_LDAP": {
+          "train_share_min": 0.7999981550921762,
+          "train_share_max": 0.8000027673617357,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_MSSQL": {
+          "train_share_min": 0.7999991156273076,
+          "train_share_max": 0.8000013265590386,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_NTP": {
+          "train_share_min": 0.7999933347774649,
+          "train_share_max": 0.8000016663056337,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_NetBIOS": {
+          "train_share_min": 0.7999990200713878,
+          "train_share_max": 0.8000014698929183,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_SNMP": {
+          "train_share_min": 0.799998443310223,
+          "train_share_max": 0.8000003891724442,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_SSDP": {
+          "train_share_min": 0.7999984595714528,
+          "train_share_max": 0.8000023106428208,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_UDP": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "LDAP": {
+          "train_share_min": 0.7999989606826237,
+          "train_share_max": 0.8000041572695054,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "MSSQL": {
+          "train_share_min": 0.7999996564423922,
+          "train_share_max": 0.7999996564423922,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "NetBIOS": {
+          "train_share_min": 0.7999989102242758,
+          "train_share_max": 0.8000016346635862,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Portmap": {
+          "train_share_min": 0.7999679692504804,
+          "train_share_max": 0.800021353833013,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Syn": {
+          "train_share_min": 0.7999990630592365,
+          "train_share_max": 0.8000006246271757,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "TFTP": {
+          "train_share_min": 0.8000001997002499,
+          "train_share_max": 0.8000006989508748,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDP": {
+          "train_share_min": 0.7999979464590536,
+          "train_share_max": 0.8000005133852366,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDP-lag": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDPLag": {
+          "train_share_min": 0.7953216374269005,
+          "train_share_max": 0.8011695906432749,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "WebDDoS": {
+          "train_share_min": 0.7777777777777778,
+          "train_share_max": 0.8333333333333334,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "coarse": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403720,
+              100922
+            ],
+            "DrDoS_LDAP": [
+              173461,
+              43352
+            ],
+            "DrDoS_MSSQL": [
+              361871,
+              90427
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326592,
+              81601
+            ],
+            "DrDoS_SNMP": [
+              411101,
+              102810
+            ],
+            "DrDoS_SSDP": [
+              207735,
+              51933
+            ],
+            "DrDoS_UDP": [
+              249306,
+              62274
+            ],
+            "LDAP": [
+              153960,
+              38474
+            ],
+            "MSSQL": [
+              465749,
+              116395
+            ],
+            "NetBIOS": [
+              293643,
+              73405
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512390,
+              127992
+            ],
+            "TFTP": [
+              1602742,
+              400260
+            ],
+            "UDP": [
+              311690,
+              77881
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403830,
+              100812
+            ],
+            "DrDoS_LDAP": [
+              173487,
+              43326
+            ],
+            "DrDoS_MSSQL": [
+              361884,
+              90414
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326532,
+              81661
+            ],
+            "DrDoS_SNMP": [
+              411137,
+              102774
+            ],
+            "DrDoS_SSDP": [
+              207753,
+              51915
+            ],
+            "DrDoS_UDP": [
+              249306,
+              62274
+            ],
+            "LDAP": [
+              153953,
+              38481
+            ],
+            "MSSQL": [
+              465714,
+              116430
+            ],
+            "NetBIOS": [
+              293673,
+              73375
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512392,
+              127990
+            ],
+            "TFTP": [
+              1602295,
+              400707
+            ],
+            "UDP": [
+              311666,
+              77905
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403745,
+              100897
+            ],
+            "DrDoS_LDAP": [
+              173471,
+              43342
+            ],
+            "DrDoS_MSSQL": [
+              361828,
+              90470
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326611,
+              81582
+            ],
+            "DrDoS_SNMP": [
+              411141,
+              102770
+            ],
+            "DrDoS_SSDP": [
+              207744,
+              51924
+            ],
+            "DrDoS_UDP": [
+              249298,
+              62282
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465733,
+              116411
+            ],
+            "NetBIOS": [
+              293643,
+              73405
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512392,
+              127990
+            ],
+            "TFTP": [
+              1602474,
+              400528
+            ],
+            "UDP": [
+              311674,
+              77897
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403812,
+              100830
+            ],
+            "DrDoS_LDAP": [
+              173464,
+              43349
+            ],
+            "DrDoS_MSSQL": [
+              361868,
+              90430
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326548,
+              81645
+            ],
+            "DrDoS_SNMP": [
+              411156,
+              102755
+            ],
+            "DrDoS_SSDP": [
+              207753,
+              51915
+            ],
+            "DrDoS_UDP": [
+              249268,
+              62312
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465747,
+              116397
+            ],
+            "NetBIOS": [
+              293650,
+              73398
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512387,
+              127995
+            ],
+            "TFTP": [
+              1602582,
+              400420
+            ],
+            "UDP": [
+              311670,
+              77901
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403786,
+              100856
+            ],
+            "DrDoS_LDAP": [
+              173452,
+              43361
+            ],
+            "DrDoS_MSSQL": [
+              361822,
+              90476
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326572,
+              81621
+            ],
+            "DrDoS_SNMP": [
+              411175,
+              102736
+            ],
+            "DrDoS_SSDP": [
+              207765,
+              51903
+            ],
+            "DrDoS_UDP": [
+              249294,
+              62286
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465698,
+              116446
+            ],
+            "NetBIOS": [
+              293655,
+              73393
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512402,
+              127980
+            ],
+            "TFTP": [
+              1602171,
+              400831
+            ],
+            "UDP": [
+              311686,
+              77885
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403764,
+              100878
+            ],
+            "DrDoS_LDAP": [
+              173451,
+              43362
+            ],
+            "DrDoS_MSSQL": [
+              361894,
+              90404
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326535,
+              81658
+            ],
+            "DrDoS_SNMP": [
+              411146,
+              102765
+            ],
+            "DrDoS_SSDP": [
+              207741,
+              51927
+            ],
+            "DrDoS_UDP": [
+              249300,
+              62280
+            ],
+            "LDAP": [
+              153954,
+              38480
+            ],
+            "MSSQL": [
+              465685,
+              116459
+            ],
+            "NetBIOS": [
+              293643,
+              73405
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512375,
+              128007
+            ],
+            "TFTP": [
+              1602311,
+              400691
+            ],
+            "UDP": [
+              311687,
+              77884
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403708,
+              100934
+            ],
+            "DrDoS_LDAP": [
+              173457,
+              43356
+            ],
+            "DrDoS_MSSQL": [
+              361882,
+              90416
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326567,
+              81626
+            ],
+            "DrDoS_SNMP": [
+              411140,
+              102771
+            ],
+            "DrDoS_SSDP": [
+              207751,
+              51917
+            ],
+            "DrDoS_UDP": [
+              249289,
+              62291
+            ],
+            "LDAP": [
+              153967,
+              38467
+            ],
+            "MSSQL": [
+              465710,
+              116434
+            ],
+            "NetBIOS": [
+              293641,
+              73407
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512379,
+              128003
+            ],
+            "TFTP": [
+              1602430,
+              400572
+            ],
+            "UDP": [
+              311682,
+              77889
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403791,
+              100851
+            ],
+            "DrDoS_LDAP": [
+              173483,
+              43330
+            ],
+            "DrDoS_MSSQL": [
+              361890,
+              90408
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326584,
+              81609
+            ],
+            "DrDoS_SNMP": [
+              411101,
+              102810
+            ],
+            "DrDoS_SSDP": [
+              207736,
+              51932
+            ],
+            "DrDoS_UDP": [
+              249299,
+              62281
+            ],
+            "LDAP": [
+              153948,
+              38486
+            ],
+            "MSSQL": [
+              465741,
+              116403
+            ],
+            "NetBIOS": [
+              293618,
+              73430
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512376,
+              128006
+            ],
+            "TFTP": [
+              1602710,
+              400292
+            ],
+            "UDP": [
+              311670,
+              77901
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403799,
+              100843
+            ],
+            "DrDoS_LDAP": [
+              173489,
+              43324
+            ],
+            "DrDoS_MSSQL": [
+              361861,
+              90437
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326553,
+              81640
+            ],
+            "DrDoS_SNMP": [
+              411146,
+              102765
+            ],
+            "DrDoS_SSDP": [
+              207754,
+              51914
+            ],
+            "DrDoS_UDP": [
+              249288,
+              62292
+            ],
+            "LDAP": [
+              153949,
+              38485
+            ],
+            "MSSQL": [
+              465688,
+              116456
+            ],
+            "NetBIOS": [
+              293654,
+              73394
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512383,
+              127999
+            ],
+            "TFTP": [
+              1602788,
+              400214
+            ],
+            "UDP": [
+              311679,
+              77892
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              6662,
+              10305
+            ],
+            "DrDoS_DNS": [
+              403815,
+              100827
+            ],
+            "DrDoS_LDAP": [
+              173477,
+              43336
+            ],
+            "DrDoS_MSSQL": [
+              361836,
+              90462
+            ],
+            "DrDoS_NTP": [
+              96021,
+              24005
+            ],
+            "DrDoS_NetBIOS": [
+              326578,
+              81615
+            ],
+            "DrDoS_SNMP": [
+              411160,
+              102751
+            ],
+            "DrDoS_SSDP": [
+              207731,
+              51937
+            ],
+            "DrDoS_UDP": [
+              249319,
+              62261
+            ],
+            "LDAP": [
+              153957,
+              38477
+            ],
+            "MSSQL": [
+              465730,
+              116414
+            ],
+            "NetBIOS": [
+              293629,
+              73419
+            ],
+            "Portmap": [
+              14986,
+              3746
+            ],
+            "Syn": [
+              512393,
+              127989
+            ],
+            "TFTP": [
+              1602537,
+              400465
+            ],
+            "UDP": [
+              311683,
+              77888
+            ],
+            "UDP-lag": [
+              29520,
+              7380
+            ],
+            "UDPLag": [
+              137,
+              34
+            ],
+            "WebDDoS": [
+              15,
+              3
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": []
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.3926445452938056,
+          "train_share_max": 0.3926445452938056,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_DNS": {
+          "train_share_min": 0.7999889030243222,
+          "train_share_max": 0.8002306585658744,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_LDAP": {
+          "train_share_min": 0.8000027673617357,
+          "train_share_max": 0.8001780336049961,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_MSSQL": {
+          "train_share_min": 0.7999637407196141,
+          "train_share_max": 0.8001229278042352,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_NTP": {
+          "train_share_min": 0.8000016663056337,
+          "train_share_max": 0.8000016663056337,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_NetBIOS": {
+          "train_share_min": 0.7999451239977168,
+          "train_share_max": 0.8001386598986264,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_SNMP": {
+          "train_share_min": 0.7999459050302484,
+          "train_share_max": 0.8000898988346231,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_SSDP": {
+          "train_share_min": 0.7999869063573486,
+          "train_share_max": 0.8001178427838624,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_UDP": {
+          "train_share_min": 0.8000128377944669,
+          "train_share_max": 0.80017651967392,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "LDAP": {
+          "train_share_min": 0.8000041572695054,
+          "train_share_max": 0.8001028924202583,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "MSSQL": {
+          "train_share_min": 0.7999481228012313,
+          "train_share_max": 0.800058061235708,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "NetBIOS": {
+          "train_share_min": 0.7999444214380681,
+          "train_share_max": 0.8000942656001395,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Portmap": {
+          "train_share_min": 0.800021353833013,
+          "train_share_max": 0.800021353833013,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "Syn": {
+          "train_share_min": 0.800108372814976,
+          "train_share_max": 0.8001505351493328,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "TFTP": {
+          "train_share_min": 0.7998848728059184,
+          "train_share_max": 0.8001929104414274,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDP": {
+          "train_share_min": 0.8000236157208828,
+          "train_share_max": 0.8000852219492725,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDP-lag": {
+          "train_share_min": 0.8,
+          "train_share_max": 0.8,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "UDPLag": {
+          "train_share_min": 0.8011695906432749,
+          "train_share_max": 0.8011695906432749,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "WebDDoS": {
+          "train_share_min": 0.8333333333333334,
+          "train_share_max": 0.8333333333333334,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    },
+    "host": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 1,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 2,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 3,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 4,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 5,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 6,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 7,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 8,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        },
+        {
+          "seed": 9,
+          "train_test_rows": {
+            "BENIGN": [
+              16734,
+              233
+            ],
+            "DrDoS_DNS": [
+              214,
+              504428
+            ],
+            "DrDoS_LDAP": [
+              73,
+              216740
+            ],
+            "DrDoS_MSSQL": [
+              77,
+              452221
+            ],
+            "DrDoS_NTP": [
+              196,
+              119830
+            ],
+            "DrDoS_NetBIOS": [
+              100,
+              408093
+            ],
+            "DrDoS_SNMP": [
+              130,
+              513781
+            ],
+            "DrDoS_SSDP": [
+              80,
+              259588
+            ],
+            "DrDoS_UDP": [
+              164,
+              311416
+            ],
+            "LDAP": [
+              58,
+              192376
+            ],
+            "MSSQL": [
+              95,
+              582049
+            ],
+            "NetBIOS": [
+              48,
+              367000
+            ],
+            "Portmap": [
+              34,
+              18698
+            ],
+            "Syn": [
+              347,
+              640035
+            ],
+            "TFTP": [
+              431,
+              2002571
+            ],
+            "UDP": [
+              84,
+              389487
+            ],
+            "UDP-lag": [
+              63,
+              36837
+            ],
+            "UDPLag": [
+              55,
+              116
+            ],
+            "WebDDoS": [
+              18,
+              0
+            ]
+          },
+          "missing_from_train": [],
+          "missing_from_test": [
+            "WebDDoS"
+          ]
+        }
+      ],
+      "by_class": {
+        "BENIGN": {
+          "train_share_min": 0.9862674603642364,
+          "train_share_max": 0.9862674603642364,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "DrDoS_DNS": {
+          "train_share_min": 0.00042406299911620514,
+          "train_share_max": 0.00042406299911620514,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_LDAP": {
+          "train_share_min": 0.0003366956778421958,
+          "train_share_max": 0.0003366956778421958,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_MSSQL": {
+          "train_share_min": 0.00017024174327545113,
+          "train_share_max": 0.00017024174327545113,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_NTP": {
+          "train_share_min": 0.001632979521103761,
+          "train_share_max": 0.001632979521103761,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_NetBIOS": {
+          "train_share_min": 0.0002449821530501503,
+          "train_share_max": 0.0002449821530501503,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_SNMP": {
+          "train_share_min": 0.0002529620887663428,
+          "train_share_max": 0.0002529620887663428,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_SSDP": {
+          "train_share_min": 0.00030808570944436744,
+          "train_share_max": 0.00030808570944436744,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "DrDoS_UDP": {
+          "train_share_min": 0.000526349573143334,
+          "train_share_max": 0.000526349573143334,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "LDAP": {
+          "train_share_min": 0.0003014020391406924,
+          "train_share_max": 0.0003014020391406924,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "MSSQL": {
+          "train_share_min": 0.00016318986367634125,
+          "train_share_max": 0.00016318986367634125,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "NetBIOS": {
+          "train_share_min": 0.00013077308689871624,
+          "train_share_max": 0.00013077308689871624,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "Portmap": {
+          "train_share_min": 0.0018150758061071962,
+          "train_share_max": 0.0018150758061071962,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "Syn": {
+          "train_share_min": 0.0005418640748803058,
+          "train_share_max": 0.0005418640748803058,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "TFTP": {
+          "train_share_min": 0.00021517701929403964,
+          "train_share_max": 0.00021517701929403964,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "UDP": {
+          "train_share_min": 0.0002156217993639157,
+          "train_share_max": 0.0002156217993639157,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "UDP-lag": {
+          "train_share_min": 0.0017073170731707317,
+          "train_share_max": 0.0017073170731707317,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 10
+        },
+        "UDPLag": {
+          "train_share_min": 0.3216374269005848,
+          "train_share_max": 0.3216374269005848,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 0,
+          "seeds_train_share_below_0.2": 0
+        },
+        "WebDDoS": {
+          "train_share_min": 1.0,
+          "train_share_max": 1.0,
+          "seeds_without_training_rows": 0,
+          "seeds_without_test_rows": 10,
+          "seeds_train_share_below_0.2": 0
+        }
+      }
+    }
+  }
+}

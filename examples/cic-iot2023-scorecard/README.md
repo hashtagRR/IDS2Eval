@@ -55,7 +55,7 @@ Three things worth pointing out about what's actually in here:
 - **`homogeneity_test` and `near_duplicate_class_check` run on the 8
   coarse categories** (`schema.attack_category_column`), not the 34
   fine-grained labels, and both come back clean: no statistically
-  significant leakage signature, and only 2 of 3,340 sampled rows with
+  significant excess cross-boundary matching, and only 2 of 3,340 sampled rows with
   a near-zero-distance neighbor under a different coarse category.
 
 Files: `config.yaml` (input), `audit_report_before.json` /

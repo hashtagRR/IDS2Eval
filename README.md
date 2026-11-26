@@ -7,7 +7,7 @@
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/hashtagRR/IDS2Eval/main/docs/img/ids2eval-overview.svg" width="100%"
-       alt="IDS2Eval overview: a NIDS dataset and a YAML config go through four kinds of check (diagnose, 18 checks; control, 1; intervene, 8; look up known issues, 1), run on the raw data and again after removing duplicates, and every verdict lands in one scorecard. ids2eval recommend suggests config fixes for flagged checks.">
+       alt="IDS2Eval overview: a NIDS dataset and a YAML config go through four kinds of check (diagnose, 18 checks; control, 1; intervene, 9; look up known issues, 1), run on the raw data and again after removing duplicates, and every verdict lands in one scorecard. ids2eval recommend suggests config fixes for flagged checks.">
 </p>
 
 A config-driven toolkit that audits network intrusion detection (NIDS)
@@ -57,8 +57,11 @@ Windows, installing from the source code, and troubleshooting: [INSTALL.md](http
 
 Every release and its changes are in the [changelog](https://github.com/hashtagRR/IDS2Eval/blob/main/CHANGELOG.md); each one is archived on Zenodo under the concept DOI above.
 
-- **`v0.2.1`** ([10.5281/zenodo.23301210](https://doi.org/10.5281/zenodo.23301210)): a check with no input to test reports `not_applicable` instead of `ok`, an audit in which no check produced a result is `not_evaluated` instead of passed, scorecards list the checks a config left disabled (schema 1.4), and known-issue warnings name the release they document; no statistic or threshold changed. Also adds the validation scripts and results of the paper's revision (host-disjoint splits, workflow ablation, interval coverage, class-adjusted reuse, a comparison with Flood et al.'s released heuristics).
-- **`v0.2.0`** ([10.5281/zenodo.23217301](https://doi.org/10.5281/zenodo.23217301)): the code, configurations and results behind the accompanying paper on auditing NIDS benchmarks (in preparation).
+- **`v0.3.0`** ([10.5281/zenodo.24554057](https://doi.org/10.5281/zenodo.24554057)): verdicts per metric (accuracy, balanced accuracy and macro-F1) with per-metric thresholds; grouping-key statistics and class support in the grouped checks; the opt-in `reuse_removal_falsification` check; `homogeneity_test` reports `excess_matching` and an optional cluster-bootstrap interval. Accuracy statistics and default thresholds are unchanged.
+- **`v0.2.3`** ([10.5281/zenodo.23437827](https://doi.org/10.5281/zenodo.23437827)): documentation; the project site shows the `pip install` command.
+- **`v0.2.2`** ([10.5281/zenodo.23436993](https://doi.org/10.5281/zenodo.23436993)): first release on PyPI; Python 3.13 supported.
+- **`v0.2.1`** ([10.5281/zenodo.23301210](https://doi.org/10.5281/zenodo.23301210)): a check with no input to test reports `not_applicable` instead of `ok`, an audit in which no check produced a result is `not_evaluated` instead of passed, scorecards list the checks a config left disabled (schema 1.4), and known-issue warnings name the release they document; no statistic or threshold changed. Also adds validation scripts and results (host-disjoint splits, workflow ablation, interval coverage, class-adjusted reuse, a comparison with Flood et al.'s released heuristics).
+- **`v0.2.0`** ([10.5281/zenodo.23217301](https://doi.org/10.5281/zenodo.23217301)): the code, configurations and results behind the accompanying paper on auditing NIDS benchmarks.
 
 IDS<sup>2</sup>Eval grew out of the dataset-auditing code of research on
 machine-learning-based network intrusion detection, generalized into a
@@ -70,11 +73,11 @@ Cite the version you used. The concept DOI
 [10.5281/zenodo.23217300](https://doi.org/10.5281/zenodo.23217300)
 always resolves to the latest version.
 
-> Relapanawa, R. (2026). *IDS2Eval 0.2.1* (Version v0.2.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23301210
+> Relapanawa, R. (2026). *IDS2Eval 0.3.0* (Version v0.3.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24554057
 
-The results, configurations and analysis scripts behind the accompanying paper are archived separately:
+The results, configurations and analysis scripts behind the accompanying paper are archived separately (concept DOI [10.5281/zenodo.23301257](https://doi.org/10.5281/zenodo.23301257) for every version):
 
-> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23301258
+> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* (Version 2.0) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.24557729
 
 ## License
 

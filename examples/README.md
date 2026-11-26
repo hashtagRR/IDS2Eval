@@ -1,6 +1,6 @@
 # Example scorecards
 
-Real IDS<sup>2</sup>Eval runs on seven widely used NIDS benchmarks: the frozen-code runs behind the paper's Tables 9 and 10. Each folder holds the configuration, the full audit reports and the scorecard. Counts are after deduplication; "n/a" counts checks with no input to test (status `not_applicable`, rescored from the archived reports under the v0.2.1 rule).
+Real IDS<sup>2</sup>Eval runs on seven widely used NIDS benchmarks: the runs behind the paper's Table 12 and Supplement Table S14, made with version 0.2.0 (tag `paper-method-freeze`). Their wording is that version's: `homogeneity_test`'s excess matching was then called leakage, and verdicts were accuracy-only. Each folder holds the configuration, the full audit reports and the scorecard. Counts are after deduplication; "n/a" counts checks with no input to test (status `not_applicable`, rescored from the archived reports under the v0.2.1 rule).
 
 | Dataset | Rows | ok | n/a | warning | flag | Flagged checks |
 |---|---|---|---|---|---|---|

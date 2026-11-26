@@ -3,7 +3,7 @@
 <rect width="1280" height="640" rx="12" fill="#ffffff"/>
 <text x="48" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#0969da" text-anchor="start" letter-spacing="1.5">IDS²EVAL</text>
 <text x="48" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2328" text-anchor="start">Does a problem in the dataset change the result?</text>
-<text x="48" y="128" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="16" font-weight="400" fill="#59636e" text-anchor="start">28 automated checks, run on the raw data and again after removing duplicates. Every verdict lands in one citable scorecard.</text>
+<text x="48" y="128" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="16" font-weight="400" fill="#59636e" text-anchor="start">29 automated checks, run on the raw data and again after removing duplicates. Every verdict lands in one citable scorecard.</text>
 <rect x="48" y="168" width="232" height="372" rx="10" fill="#f6f8fa" stroke="#d0d7de"/>
 <text x="70" y="204" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#59636e" text-anchor="start" letter-spacing="1.2">INPUT</text>
 <text x="70" y="242" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#1f2328" text-anchor="start">NIDS dataset</text>
@@ -33,7 +33,7 @@
 <text x="364" y="389.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#1b7c83" text-anchor="start">Intervene</text>
 <text x="364" y="412.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2328" text-anchor="start">Change the setup and retrain: does the score move?</text>
 <text x="364" y="431.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#59636e" text-anchor="start">split by connection, not at random · drop IP addresses or duplicates</text>
-<text x="860" y="389.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#1b7c83" text-anchor="end">8 checks</text>
+<text x="860" y="389.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#1b7c83" text-anchor="end">9 checks</text>
 <rect x="336" y="456.0" width="548" height="84.0" rx="10" fill="#f6f8fa" stroke="#d0d7de"/>
 <rect x="336" y="456.0" width="6" height="84.0" rx="3" fill="#9a6700"/>
 <text x="364" y="485.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#9a6700" text-anchor="start">Look up</text>

@@ -148,7 +148,7 @@ for why that matters.
 
 ## `audit`
 
-Which of the 28 checks run. See [../guide/checks.md](../guide/checks.md)
+Which of the 29 checks run. See [../guide/checks.md](../guide/checks.md)
 for what each one tests and the research behind it.
 
 **v1, on by default, no extra setup needed:**
@@ -187,10 +187,14 @@ for what each one tests and the research behind it.
 | `result_robustness_check` | `false` | Accuracy spread across split/dedup/identity-column conditions |
 | `known_issue_lookup` | `false` | Curated per-dataset published problems, matched on `dataset.name` |
 | `seed_sensitivity_check` | `false` | Re-fits `leakage_screen`/`one_rule_check` across a few seeds |
-| `repeated_seed_falsification_check` | `false` | Repeats `resplit_falsification` across `audit.repeated_seed_count` seeds, reports a 95% CI |
+| `repeated_seed_falsification_check` | `false` | Repeats `resplit_falsification` across `audit.repeated_seed_count` seeds, reports a 95% CI per metric |
+| `reuse_removal_falsification` | `false` | Removes the training rows whose feature vector occurs in the test set, refits, and compares against a same-size random removal with the same class mix; needs the data before deduplication |
 | `reference_dataset` | `null` | Required if `synthetic_realism_check` or `cross_dataset_drift_check` is on |
 | `repeated_seed_count` | `10` | Seeds `repeated_seed_falsification_check` refits under |
-| `materiality_thresholds` | `{}` | Per-check overrides of the hardcoded "material drop" thresholds; see [../guide/checks.md](../guide/checks.md) |
+| `materiality_thresholds` | `{}` | Per-check overrides of the "material drop" thresholds, as one number or, for the intervention checks, per metric (`{accuracy: 0.01, balanced_accuracy: 0.02}`); see [../guide/checks.md](../guide/checks.md) |
+| `materiality_metrics` | `[accuracy, balanced_accuracy, macro_f1]` | Which metrics' verdicts decide an intervention check's status; every metric's verdict is reported either way |
+| `homogeneity_cluster_columns` | `[]` | Columns defining clusters of dependent rows (for example a source host); `homogeneity_test` then also reports a cluster-bootstrap interval |
+| `homogeneity_interval` | `newcombe` | `newcombe` or `cluster`: which interval decides `homogeneity_test`'s verdict (`cluster` needs `homogeneity_cluster_columns`) |
 | `parallel_checks` | `false` | Run enabled checks concurrently instead of one at a time. Off by default: several checks running at once means several may hold their own encoded feature matrix/model fit in memory simultaneously, raising peak memory versus the sequential default |
 | `max_parallel_checks` | `4` | Caps how many checks run at once when `parallel_checks` is on |
 | `checkpoint` | `false` | Persist each check's result (and `repeated_seed_falsification_check`'s per-seed progress) to `output.dir/.checkpoint/` as it completes, so a crash partway through a long run resumes instead of restarting. Cleared on a successful run. Cannot be combined with `parallel_checks` |

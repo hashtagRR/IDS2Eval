@@ -67,7 +67,19 @@ audit:
   result_robustness_check: false
   known_issue_lookup: false
   seed_sensitivity_check: false
+  repeated_seed_falsification_check: false
+  reuse_removal_falsification: false
   reference_dataset: null      # required if synthetic_realism_check or cross_dataset_drift_check is true
+
+  # settings
+  repeated_seed_count: 10
+  materiality_thresholds: {}   # per check; a number, or per metric for the intervention checks
+  materiality_metrics: [accuracy, balanced_accuracy, macro_f1]
+  homogeneity_cluster_columns: []
+  homogeneity_interval: newcombe   # or cluster
+  parallel_checks: false
+  max_parallel_checks: 4
+  checkpoint: false
 
 classifiers:
   list: all

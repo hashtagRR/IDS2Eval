@@ -1,8 +1,9 @@
 # IDS2Eval results
 
 Every result behind the paper *IDS²Eval: A Falsification-Oriented Framework for Auditing
-Machine-Learning Intrusion Detection Benchmarks* (in preparation). Paper locations below refer
-to its current draft: Sections 1-9, Tables 1-12, and supplementary Tables S1-S15.
+Machine-Learning Intrusion Detection Benchmarks*. Paper locations below refer to its current
+version: Sections 1-11, Tables 1-14, Figures 1-2, and supplementary Tables S1-S17. The results
+were produced with IDS2Eval 0.2.x and 0.3.0; each run records its tool version and git commit.
 
 | Folder or file | What it is | In git |
 |---|---|---|
@@ -10,6 +11,8 @@ to its current draft: Sections 1-9, Tables 1-12, and supplementary Tables S1-S15
 | [`logs/`](#logs) | console logs of those scripts, and the queue scripts that ran them | yes |
 | [`local_audit_runs/`](#local_audit_runs) | full IDS2Eval audit runs on a local VM, one folder per dataset | yes, except `archives/` |
 | [`batch_audit_runs/`](#batch_audit_runs) | full-scale audit runs on Google Cloud Batch | yes |
+| [`kaggle_audit_runs/`](#kaggle_audit_runs) | audit runs on Kaggle CPU sessions | yes |
+| [`preregistration/`](#preregistration) | the pre-registered external audit of CTU-13: plan, configurations, runs and results | yes |
 | `configs/` | the dataset configuration behind every run the paper uses, with data paths reduced to `data/<file>` | yes |
 | `dataset_manifest.md`, `.json` | source, file name, size and SHA-256 of the uncompressed content of every dataset file the audits read | yes |
 
@@ -33,30 +36,42 @@ Each file is written by one script in `../validation/`; re-running the script ov
 
 | File | Script | Paper | Headline result |
 |---|---|---|---|
-| `validation_results.json` | `run_validation.py` | Section 3.6, Table S1 | 36/36 development fixture evaluations correct |
-| `heldout_validation.json` | `heldout_validation.py` | Section 3.6, Supplement C.2 | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
-| `heldout_revalidation.json` | `heldout_revalidation.py` | Section 3.6, Supplement C.2 | after the fix, on fresh seeds: 3 of 30 clean datasets flagged, all by the two single-comparison checks |
+| `validation_results.json` | `run_validation.py` | Section 4.1, Table S1 | 36/36 development fixture evaluations correct |
+| `heldout_validation.json` | `heldout_validation.py` | Section 4.1, Supplement C.2 | 11 checks perfect on held-out fixtures; 9 of 30 clean datasets flagged before the sampling-margin fix |
+| `heldout_revalidation.json` | `heldout_revalidation.py` | Section 4.1, Supplement C.2 | after the fix, on fresh seeds: 3 of 30 clean datasets flagged, all by the two single-comparison checks |
 | `clean_flag_diagnosis.json` | `clean_flag_diagnosis.py` | Supplement C.2 | after the unseen-category fix, resplit and robustness flag none of 30 clean datasets |
-| `final_holdout.json` | `final_holdout.py` | Section 3.6, Table S1 | run once after the freeze: no flag on 30 clean corpora; two detection limits |
-| `homogeneity_sensitivity.json` | `homogeneity_sensitivity.py` | Sections 3.4, 6.2; Table S3 | per-class `homogeneity_test` intervals and the threshold grid |
-| `homogeneity_cluster.json` | `homogeneity_cluster.py` | Sections 3.9, 8 | cluster bootstrap by feature vector: no leakage verdict changes on six datasets |
-| `homogeneity_coverage.json` | `homogeneity_coverage.py` | Section 3.9, Table S9 | interval coverage at least 99.5% for the audited split, no wrong verdict in 6,000 intervals |
-| `workflow_ablation.json` | `workflow_ablation.py` | Section 3.8 (earlier design) | first design of the workflow ablation, revised after review |
-| `workflow_ablation_v2.json` | `workflow_ablation_v2.py` | Section 3.8, Tables 2-4 | each stage detects its own condition; the interventions alone decide inflation (29/30) |
-| `identity_lookup.json` | `identity_rerun.py` | Section 3.7, Supplement C.3 | `identity_column_flag` re-scored with the training-only lookup: no flag changes, AUCs move by at most 0.04 |
-| `port_protocol_lookup.json` | `port_protocol_lookup.py`, `port_protocol_lookup_stream.py` | Section 3.7, Table S7 | `port_protocol_shortcut_check` re-scored with the lookup: every flag stands |
-| `unsw_dedup_comparison.json` | `unsw_dedup_comparison.py` | Section 4.5, Table 5 | UNSW-NB15 duplicate rates under the original (all columns) and features-only comparison: training 38.55% / 42.38%, within the testing partition 32.05% / 34.48% |
-| `matched_vs_novel.json` | `matched_vs_novel.py` | Section 6.2 | raw accuracy on reused vs. novel test rows |
-| `reuse_stratified.json` | `reuse_stratified.py` | Section 6.2 | the raw reuse advantage reverses after class-mix standardization: -0.56 (UNSW-NB15) and -1.01 (NSL-KDD) points |
-| `class_sensitive_seeds.json` | `class_sensitive_seeds.py` | Section 6.3, Table S4 | random vs. grouped split with class-sensitive metrics (random forest) |
-| `model_sensitivity.json` | `model_sensitivity.py` | Section 6.3, Supplement B.4 | the same comparison with logistic regression and XGBoost |
-| `host_holdout.json` | `host_holdout.py` | Section 6.3 | source- and destination-host-disjoint 5-fold cross-validation on ToN-IoT and BoT-IoT |
-| `host_holdout_diag.json` | `host_holdout_diag.py` | Section 6.3, Table S15 | per-fold class and host support, endpoint connectivity, host-clustered intervals, unseen-identifier confusion |
+| `final_holdout.json` | `final_holdout.py` | Section 4.1, Table S1 | run once after the freeze: no flag on 30 clean corpora; two detection limits |
+| `homogeneity_sensitivity.json` | `homogeneity_sensitivity.py` | Sections 3.2, 7.2; Table S3 | per-class `homogeneity_test` intervals and the threshold grid |
+| `homogeneity_cluster.json` | `homogeneity_cluster.py` | Section 4.4, Supplement D.2 | cluster bootstrap by feature vector: no excess-matching verdict changes on six datasets |
+| `homogeneity_coverage.json` | `homogeneity_coverage.py` | Section 4.4, Table S9 | interval coverage at least 99.5% for the audited split, no wrong verdict in 6,000 intervals |
+| `workflow_ablation.json` | `workflow_ablation.py` | not cited | first design of the workflow ablation; its generators are reused by the later designs |
+| `workflow_ablation_v2.json` | `workflow_ablation_v2.py` | Section 4.2, Tables 2, 3, 5 | nine scenarios; the corpora, deployment gaps, `dedup_check`, `homogeneity_test` and grouped-resplit results that v4 reuses; Table 5 |
+| `identity_lookup.json` | `identity_rerun.py` | Supplement C.3 | `identity_column_flag` re-scored with the training-only lookup: no flag changes, AUCs move by at most 0.04 |
+| `port_protocol_lookup.json` | `port_protocol_lookup.py`, `port_protocol_lookup_stream.py` | Table S7 | `port_protocol_shortcut_check` re-scored with the lookup: every flag stands |
+| `unsw_dedup_comparison.json` | `unsw_dedup_comparison.py` | Section 5.2, Table 7 | UNSW-NB15 duplicate rates under the original (all columns) and features-only comparison: training 38.55% / 42.38%, within the testing partition 32.05% / 34.48% |
+| `matched_vs_novel.json` | `matched_vs_novel.py` | Sections 5.3, 7.2 | raw accuracy on reused vs. novel test rows |
+| `reuse_stratified.json` | `reuse_stratified.py` | Section 7.2, Table S10 | the raw reuse advantage reverses after class-mix standardization: -0.56 (UNSW-NB15) and -1.01 (NSL-KDD) points |
+| `class_sensitive_seeds.json` | `class_sensitive_seeds.py` | Table S4 | random vs. grouped split with class-sensitive metrics (random forest) |
+| `model_sensitivity.json` | `model_sensitivity.py` | Section 7.3, Supplement B.4 | the same comparison with logistic regression and XGBoost |
+| `host_holdout.json` | `host_holdout.py` | Section 7.3, Supplement D.8 | source- and destination-host-disjoint 5-fold cross-validation on ToN-IoT and BoT-IoT |
+| `host_holdout_diag.json` | `host_holdout_diag.py` | Section 7.3, Table S15 | per-fold class and host support, endpoint connectivity, host-clustered intervals, unseen-identifier confusion |
 | `split_class_composition.json` | `split_class_composition.py` | Supplement D.4 | random and grouped test splits differ by at most 0.04 percentage points in any class share |
-| `flood_comparison.json` | `flood_comparison.py` | Section 6.5, Table 12 | Flood et al.'s released heuristics and IDS2Eval on the same ToN-IoT and UNSW-NB15 artifacts |
-| `cap_sensitivity.json` | `cap_sensitivity.py` | Section 8 | accuracy drop unchanged at 200K, 1M and all training rows on CIC-IDS2017-GLF |
+| `flood_comparison.json` | `flood_comparison.py` | Section 7.5, Table S16 | Flood et al.'s released heuristics and IDS2Eval on the same ToN-IoT and UNSW-NB15 artifacts |
+| `cap_sensitivity.json` | `cap_sensitivity.py` | Section 10 | accuracy drop unchanged at 200K, 1M and all training rows on CIC-IDS2017-GLF; balanced accuracy itself is lower at the cap |
 | `ddos_unseen_ip.json` | `ddos_unseen_ip.py` | Supplement C.2 | about 0.0001 of CICDDoS2019 grouped-split test rows carry an unseen IP |
-| `cic17_followup.json` | `cic17_followup.py` | Section 5; Tables 6, 7, 8; Supplement D.9 | corrected CIC-IDS2017: duplication with and without address columns, 10-seed class-sensitive random vs. grouped comparison, identifier ablation, initial-window standalone AUCs on the corrected and original releases |
+| `cic17_followup.json` | `cic17_followup.py` | Section 6.3 | corrected CIC-IDS2017 with the Attempted flows kept as separate classes: the identifier-removal comparison (6.0 points of balanced accuracy) |
+| `cic17_followup_benign.json` | `cic17_followup.py` (with `CIC17_CORRECTED_CONFIG`) | Section 6; Tables 9, 10, 11; Supplement D.9 | corrected CIC-IDS2017 with Attempted flows relabelled as benign: duplication with and without address columns, 10-seed random vs. grouped comparison, identifier removal, initial-window AUCs |
+| `cic17_attempted_benign_manifest.json` | `cic17_attempted_benign.py` | Section 6.1 | the relabelling rule and per-day counts: 11,979 Attempted flows relabelled as BENIGN |
+| `workflow_ablation_v3.json` | `workflow_ablation_v3.py` | Section 4.2, Table 4 | the same corpora with the grouping key removed or replaced by an unrelated one |
+| `workflow_ablation_v4.json` | `workflow_ablation_v4.py` | Section 4.2, Tables 2-4 | the reuse intervention scored with `reuse_removal_falsification`; together the two interventions decide 50 of 60 held-out corpora (rule labels: see the script header) |
+| `homogeneity_host_coverage.json` | `homogeneity_host_coverage.py` | Section 4.4, Table 6; Supplement D.2 | coverage of the Newcombe and host-cluster intervals with rows clustered by host, at split ratios 70/30 to 90/10 |
+| `homogeneity_real_clusters.json`, `_bot.json`, `_glf.json` | `homogeneity_real_clusters.py` | Section 7.2 | the control with source-host clusters on ToN-IoT, both CIC-IDS2017 releases and BoT-IoT: no excess-matching verdict changes |
+| `reuse_removal_models_<dataset>.json` | `reuse_removal_models.py` | Sections 5.3, 7.2, 8.2; Table 8; Figure 2 | `reuse_removal_falsification` on UNSW-NB15, NSL-KDD, ToN-IoT, CIC-IDS2017 MachineLearningCSV and CSE-CIC-IDS2018, with a random forest, 1-nearest neighbor and gradient-boosted trees where feasible |
+| `grouping_keys_<dataset>.json`, `large_group_stats_<dataset>.json` | `grouping_keys.py`, `large_group_stats.py` | Section 7.3, Table 13, Figure 2 | group statistics and the 10-seed grouped resplit under the 5-tuple, a coarse key and the source host |
+| `grouping_keys_uncapped_cic-ids2017-improved-benign.json` | `uncapped_keys.py` | Section 10 | the corrected CIC-IDS2017 resplits without the 200,000-row training cap |
+| `grouping_key_class_support*.json` | `grouping_key_class_support.py` | Section 7.3, Supplement D.11, Table S17 | each class's training and test rows under every key and seed |
+| `split_identity.json` | `split_identity.py` | Sections 3.4, 8.2, 10 | distinct grouped test sets over 10 seeds: 10 under the 5-tuple and coarse keys, 1 under the source host (ToN-IoT, CTU-13) |
+| `figure2_effects.csv` | `figure2_data.py` | Figure 2 | every intervention effect plotted in Figure 2 |
 | `class_sensitive_results.json` | `class_sensitive_metrics.py` | not cited | earlier single-seed version of `class_sensitive_seeds.json`, kept for the record |
 
 ### Synthetic validation
@@ -105,25 +120,27 @@ minutes).
 
 **`homogeneity_cluster.json`** (*cached*). The same samples with a percentile bootstrap that
 resamples whole encoded feature vectors, next to the Newcombe interval. Before deduplication it
-moves CIC-IDS2017 `DoS Hulk` and `DoS Slowhttptest` from cleared to inconclusive; no leakage
-verdict changes. Reproduce: `validation/homogeneity_cluster.py` (about 30 minutes).
+moves CIC-IDS2017 `DoS Hulk` and `DoS Slowhttptest` from cleared to inconclusive; no
+excess-matching verdict changes. Reproduce: `validation/homogeneity_cluster.py` (about 30 minutes).
 
 **`homogeneity_coverage.json`.** Simulated populations with a known answer (500 datasets each),
 scored with the check's interval and the vector bootstrap. `summary.<population>` holds coverage,
 widths and verdict rates; `rows[]` holds every interval with its own split's full difference
-(`full_diff`), which is the estimand Section 3.9 judges against. Reproduce:
+(`full_diff`), which is estimand A of Section 4.4. Reproduce:
 `validation/homogeneity_coverage.py --jobs 8` (a few minutes on 8 vCPU).
 
 ### The workflow ablation
 
-**`workflow_ablation_v2.json`** (current) and **`workflow_ablation.json`** (first design). Nine
-synthetic scenarios, 10 generator seeds each, scored with the frozen checks. `runs[]` holds per
+**`workflow_ablation_v2.json`**, **`_v3.json`**, **`_v4.json`** and **`workflow_ablation.json`** (first
+design). Nine synthetic scenarios, 10 generator seeds each. v3 removes or replaces the grouping key
+on three of them; v4 rebuilds the corpora of v2 and v3 from their seeds, checks them against the
+stored reuse counts, and scores the reuse intervention with `reuse_removal_falsification`. `runs[]` holds per
 corpus the deployment gap, the reuse share, each stage's output, both interventions' intervals and
 the decision rules' verdicts; `summary.scenarios.<name>` holds the evidence-quality and held-out
 decision-quality tallies and `summary.d1_cutoff` the fitted reuse-share cutoff. The first design
 read a `dedup_check` flag as a claim of material inflation and scored truth per corpus from one
-noisy deployment sample; it is kept for the record. Reproduce:
-`validation/workflow_ablation_v2.py --jobs 8` (about 8 minutes on 8 vCPU).
+deployment sample. Reproduce: `validation/workflow_ablation_v2.py --jobs 8` (about 8 minutes on
+8 vCPU), then `workflow_ablation_v3.py` and `workflow_ablation_v4.py`.
 
 ### Identifier and port checks
 
@@ -131,7 +148,7 @@ noisy deployment sample; it is kept for the record. Reproduce:
 smoothed toward the class prior, unseen values scored with the prior) on CIC-IDS2017,
 CIC-IDS2017-GLF, ToN-IoT, BoT-IoT and the full CSE-CIC-IDS2018 split, before and after
 deduplication, with `standalone_auc`, `seen_only_auc` and `seen_coverage`. Deduplication
-reproduces Table 10's counts exactly. Reproduce: `validation/identity_rerun.py <dataset> ...`.
+reproduces Table 12's counts exactly. Reproduce: `validation/identity_rerun.py <dataset> ...`.
 
 **`port_protocol_lookup.json`.** `port_protocol_shortcut_check`'s frozen AUC next to the lookup
 AUC on the (port, protocol) pair, before and after deduplication, on ToN-IoT, CSE-CIC-IDS2018 and
@@ -234,7 +251,7 @@ Full audit runs made with `ids2eval run --config <config>` on a local VM (4 vCPU
 
 Folders without `scorecard.json` are runs stopped before finishing.
 
-**Which runs the paper uses.** Tables 9 and 10 and the dataset paragraphs of Section 6 use runs
+**Which runs the paper uses.** Table S14, Table 12 and the dataset paragraphs of Section 7 use runs
 made with the frozen code (tag `paper-method-freeze`, plus commit `f452cab`, which only speeds up
 `feature_auc_ranking_check`):
 
@@ -247,13 +264,13 @@ made with the frozen code (tag `paper-method-freeze`, plus commit `f452cab`, whi
 | CICDDoS2019 | `batch_audit_runs/cic-ddos2019-fullscale-main/out/runs/2026-10-07_101104_616996` | 70,427,637 | official release, official day split |
 | ToN-IoT | `local_audit_runs/ton-iot-official/runs/2026-10-07_105328_897471` | 211,043 | official `Train_Test_Network.csv` |
 | BoT-IoT | `batch_audit_runs/bot-iot-official-rerun/out/runs/2026-10-07_131115_277703` | 3,668,522 | official 5%-reduced release |
-| CIC-IDS2017-GLF | `batch_audit_runs/cic-ids2017-glf-rerun/out/runs/2026-10-07_131149_314813` | 2,830,743 | GeneratedLabelledFlows release, 10-seed falsification (Section 6.3) |
+| CIC-IDS2017-GLF | `batch_audit_runs/cic-ids2017-glf-rerun/out/runs/2026-10-07_131149_314813` | 2,830,743 | GeneratedLabelledFlows release, 10-seed falsification (Section 7.3) |
 
 The other folders are history: earlier runs of each dataset from before the freeze,
 `cic-ddos2019` (a cleaned Kaggle subset), `bot-iot` and `ton-iot` (500K-row samples of the
 NetFlow-V2 conversions), `cic-ids2018` (a 500K-row sample of the official release, the source of
 the 13.15% duplication figure) and `cic-iot2023` (a 500K-row sample of a dataset later excluded).
-`unsw-nb15-ttl-ablation/` is the Section 4.4 run: UNSW-NB15 with the opt-in
+`unsw-nb15-ttl-ablation/` is the Section 5.4 run: UNSW-NB15 with the opt-in
 `feature_category_ablation_check` enabled for the three TTL columns.
 Earlier runs' report files were re-rendered on 2026-10-04 to show the verdict "Review Required"
 instead of "Failed"; `archives/` keeps the originals.
@@ -271,15 +288,15 @@ attempt, `memlog.txt`); `out/.checkpoint/` holds the per-check checkpoint a resu
 
 | Folder | What it is | Machine | Runtime | Paper |
 |---|---|---|---|---|
-| `cic-ids2018-fullscale/` | full audit with 10-seed falsification on all 16,232,943 rows of the official AWS release | n2-highmem-16 (16 vCPU, 128 GB) | 9.5 h for the successful attempt | Tables 9-11 |
-| `cic-ddos2019-fullscale-resplit/` | falsification checks only (5 seeds) on all 70,427,637 rows | n2-custom-16 (16 vCPU, 384 GB) | 18.6 h | Table 11, Section 6.3 |
-| `cic-ddos2019-fullscale-main/` | full default audit on the official release with its own day split, frozen code | n2-custom-30 (30 vCPU, 384 GB) | 3.7 h | Tables 9, 10; Table S6 |
-| `cic-ids2017-glf/`, `cic-ids2017-glf-rerun/` | full audit with 10-seed falsification on the GeneratedLabelledFlows release (real 5-tuple); the rerun is at the frozen code | n2-standard-4 / n2-standard-16 | 3.7 h / 1.3 h | Table 11, Section 6.3 |
-| `bot-iot-official/`, `bot-iot-official-rerun/` | BoT-IoT full audit with 10-seed falsification; the rerun is at the frozen code | n2-standard-4 / n2-highmem-8 | 2.4 h / 1.0 h | Tables 9, 11 |
-| `cic-ids2017-improved/` | IDS2Eval v0.2.1 audits of the corrected CIC-IDS2017 release (Liu et al., 2022): `out/main/` with the initial-window columns excluded, `out/initwin/` with them kept | n4d-highcpu-16 spot | 42 min | Section 5 |
-| `iot23/` | IoT-23 attempt: a checkpoint and a memory trace only | n2-custom-16 (384 GB) | did not complete (out of memory) | Section 6.1 |
-| `cap-sensitivity-glf/` | `validation/cap_sensitivity.py` | n2-standard-16 | 0.8 h | Section 8 |
-| `cic-ids2018-split-analysis/` | `validation/batch_split_analysis.py` on all 16,232,943 rows: `homogeneity_test` before and after deduplication, and 10 paired seeds scoring random forest, logistic regression and XGBoost | n2-highmem-16 (16 vCPU, 128 GB) | 3.6 h including one spot preemption | Tables 9, S4, S6; Sections 6.3, 8 |
+| `cic-ids2018-fullscale/` | full audit with 10-seed falsification on all 16,232,943 rows of the official AWS release | n2-highmem-16 (16 vCPU, 128 GB) | 9.5 h for the successful attempt | Tables 12, 13; Table S14 |
+| `cic-ddos2019-fullscale-resplit/` | falsification checks only (5 seeds) on all 70,427,637 rows | n2-custom-16 (16 vCPU, 384 GB) | 18.6 h | Table 13 caption, Section 10 |
+| `cic-ddos2019-fullscale-main/` | full default audit on the official release with its own day split, frozen code | n2-custom-30 (30 vCPU, 384 GB) | 3.7 h | Table 12; Tables S6, S14 |
+| `cic-ids2017-glf/`, `cic-ids2017-glf-rerun/` | full audit with 10-seed falsification on the GeneratedLabelledFlows release (real 5-tuple); the rerun is at the frozen code | n2-standard-4 / n2-standard-16 | 3.7 h / 1.3 h | Section 7.3; Table S4 |
+| `bot-iot-official/`, `bot-iot-official-rerun/` | BoT-IoT full audit with 10-seed falsification; the rerun is at the frozen code | n2-standard-4 / n2-highmem-8 | 2.4 h / 1.0 h | Table S14; Section 7.3 |
+| `cic-ids2017-improved/` | IDS2Eval v0.2.1 audits of the corrected CIC-IDS2017 release (Liu et al., 2022): `out/main/` with the initial-window columns excluded, `out/initwin/` with them kept | n4d-highcpu-16 spot | 42 min | Section 6 (released labels; see `kaggle_audit_runs/` for the owners' labelling) |
+| `iot23/` | IoT-23 attempt: a checkpoint and a memory trace only | n2-custom-16 (384 GB) | did not complete (out of memory) | Section 7.1 |
+| `cap-sensitivity-glf/` | `validation/cap_sensitivity.py` | n2-standard-16 | 0.8 h | Section 10 |
+| `cic-ids2018-split-analysis/` | `validation/batch_split_analysis.py` on all 16,232,943 rows: `homogeneity_test` before and after deduplication, and 10 paired seeds scoring random forest, logistic regression and XGBoost | n2-highmem-16 (16 vCPU, 128 GB) | 3.6 h including one spot preemption | Tables S4, S6, S14; Section 7.3 |
 
 `cic-ids2018-split-analysis/` is a staged analysis, not an `ids2eval` run: `out/state.json` records
 each stage, `out/homogeneity.json` the check's output and threshold grid, `out/seeds/seed_<n>.json`
@@ -287,5 +304,20 @@ one paired seed each, and `out/class_sensitive_seeds.json` and `out/model_sensit
 summaries merged into `analysis/`. Its cached dataset stayed in the bucket; to rerun, see the
 header of `validation/batch_split_analysis.sh` (the job needs offline wheels and a VM without an
 external IP).
+
+## kaggle_audit_runs
+
+Audit runs made on Kaggle CPU sessions (4 vCPU, 30 GB). `cic-ids2017-improved-benign/` holds the
+corrected CIC-IDS2017 audits of Section 6 with the Attempted flows relabelled as benign
+(`results/configs/cic-ids2017-improved-benign.yaml`): `runs/` with the initial-window columns
+excluded and `initwin/runs/` with them kept, and the session log.
+
+## preregistration
+
+`ctu13/` is the external audit of Section 8. `analysis_plan.md`, the three configurations
+(`ctu13-5tuple.yaml`, `ctu13-coarse.yaml`, `ctu13-host.yaml`), `validation/ctu13_prepare.py` and
+`validation/ctu13_independent_check.py` were committed and pushed before any CTU-13 file was
+downloaded. `ctu13_labelled.manifest.json` and the SHA-256 files record the prepared data;
+`runs/<key>/` hold the three audits; `results.md` reports them against the plan.
 
 Everything listed here is also archived with the paper's research artifacts on Zenodo.

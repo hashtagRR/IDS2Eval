@@ -29,6 +29,10 @@ inconclusive), D3 = D2 when dedup_check flags or homogeneity_test does not
 clear every class, else not material. D1 is v2's reuse-share rule, unchanged.
 Decision rules are scored on held-out replicates 5 to 9.
 
+Rule labels in the output follow v2 and v3. The paper numbers the rules in
+reading order: paper D1 = D1 (reuse share), paper D2 = D4 (grouped resplit),
+paper D3 = D5 (reuse removal), paper D4 = D2 (both), paper D5 = D3 (gated).
+
 Usage: python3 validation/workflow_ablation_v4.py [--jobs N]
 """
 from __future__ import annotations

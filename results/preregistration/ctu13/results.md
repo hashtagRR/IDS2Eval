@@ -33,3 +33,7 @@ Prepared data: 801,132 flows, 444,699 botnet and 356,433 normal; 19,175,568 back
 - `reuse_removal_falsification`: removing the 4,585 training rows that share a vector with a test row changes no metric materially.
 - `homogeneity_test`: inconclusive for the normal class in every run; no class shows excess matching.
 - `temporal_realism_check` flags: the Sogou family covers 0.1% of the capture window.
+
+## Addendum (written after the audit)
+
+E3 predicted both a material host-grouped drop and its cause, the loss of a family's training rows when its hosts fall in test. The drop was met. The cause was not measured: the frozen code predates the class-support reporting added later, so E3 is reported in the paper as partly met. Nothing in the audit, its configuration or its outputs changed.

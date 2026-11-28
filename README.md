@@ -78,7 +78,7 @@ always resolves to the latest version.
 
 The results, configurations and analysis scripts behind the accompanying paper are archived separately (concept DOI [10.5281/zenodo.23301257](https://doi.org/10.5281/zenodo.23301257) for every version):
 
-> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* (Version 2.1) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.24623532
+> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* (Version 2.2) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.24625074
 
 ## License
 

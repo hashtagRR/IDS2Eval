@@ -1675,3 +1675,98 @@ def test_repeated_seed_falsification_lists_seeds_with_class_loss(base_cfg, tmp_p
     result = repeated_seed_falsification.check(base_cfg, n_seeds=3)
     assert result["details"]["seeds_with_grouped_class_loss"] == [0, 1, 2]
     assert "CAUTION" in result["summary"]
+
+
+# -- value-specific single-feature statistic (0.3.1) ----------------------------
+
+def _value_marked_frame(n_benign=2000, n_attack=400, marked=True, seed=0):
+    """Benign byte counts spread over 0..999; the attack class sits on one value
+    in the middle of that range (500) when marked, or on random values when not."""
+    rng = np.random.RandomState(seed)
+    benign = rng.randint(0, 1000, n_benign)
+    attack = np.full(n_attack, 500) if marked else rng.randint(0, 1000, n_attack)
+    df = pd.DataFrame({
+        "Bytes": np.concatenate([benign, attack]).astype(float),
+        "Noise": rng.normal(size=n_benign + n_attack),
+        "Label": ["Benign"] * n_benign + ["Attack"] * n_attack,
+    })
+    return df.sample(frac=1, random_state=seed).reset_index(drop=True)
+
+
+def test_feature_auc_ranking_value_rule_flags_a_feature_marking_a_class_by_one_value(base_cfg):
+    df = _value_marked_frame(marked=True)
+    result = feature_auc_ranking.check(df, base_cfg)
+    details = result["details"]
+    # the raw-value AUC cannot see a value in the middle of the benign range
+    assert details["auc_status"] == "ok"
+    assert details["value_rule_status"] == "flag"
+    assert result["status"] == "flag"
+    rule = details["value_rules"]["by_class"]["Attack"]
+    assert rule["feature"] == "Bytes" and rule["f1"] > 0.95
+    assert details["value_rules"]["reference_class"] == "Benign"
+    assert "held-out F1" in result["summary"]
+
+
+def test_feature_auc_ranking_value_rule_stays_quiet_on_unmarked_values(base_cfg):
+    df = _value_marked_frame(marked=False)
+    result = feature_auc_ranking.check(df, base_cfg)
+    assert result["details"]["value_rule_status"] == "ok"
+    assert result["status"] == "ok"
+
+
+def test_value_rule_f1_matches_a_hand_count():
+    # half A (True): value 1 is mostly class 1, value 2 is reference -> 1 marks class 1
+    # half B (False): class 1 rows on values 1, 1, 2 -> TP 2, FN 1; reference rows on 1, 2 -> FP 1
+    values = np.array([1, 1, 1, 2, 2, 1, 1, 2, 1, 2], dtype=float)
+    codes = np.array([1, 1, 0, 0, 0, 1, 1, 1, 0, 0])
+    half = np.array([True] * 5 + [False] * 5)
+    f1 = feature_auc_ranking._value_rule_f1(values, codes, 0, half, 2)
+    assert np.isnan(f1[0])
+    assert f1[1] == pytest.approx(2 * 2 / (2 + 1 + 3))
+
+
+def test_value_rule_reference_class_order(base_cfg):
+    labels = pd.Series(["dos"] * 50 + ["normal"] * 10 + ["scan"] * 5)
+    assert feature_auc_ranking._reference_class(labels, base_cfg)[0] == "normal"
+    base_cfg["schema"]["benign_label"] = "scan"
+    assert feature_auc_ranking._reference_class(labels, base_cfg)[0] == "scan"
+    base_cfg["schema"]["benign_label"] = None
+    no_benign_name = pd.Series(["dos"] * 50 + ["scan"] * 5)
+    assert feature_auc_ranking._reference_class(no_benign_name, base_cfg)[0] == "dos"
+
+
+def test_value_rule_ignores_classes_under_the_minimum_size(base_cfg):
+    df = _value_marked_frame(n_attack=10, marked=True)
+    result = feature_auc_ranking.check(df, base_cfg)
+    assert result["details"]["value_rules"]["by_class"] == {}
+    assert result["details"]["value_rule_status"] == "ok"
+
+
+# -- release-aware known-issue lookup (0.3.1) ------------------------------------
+
+def test_known_issue_lookup_corrected_release_keeps_only_issues_documented_for_it(base_cfg):
+    base_cfg["dataset"]["name"] = "cic-ids2017"
+    base_cfg["dataset"]["release"] = "corrected"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert len(result["details"]["matches"]) == 1
+    assert "Heartbleed" in result["details"]["matches"][0]["issue"]
+    assert len(result["details"]["other_releases"]) == 2
+    assert result["status"] == "warning"
+    assert "do not apply to the audited release ('corrected')" in result["summary"]
+
+
+def test_known_issue_lookup_corrected_release_without_applicable_issues_is_ok(base_cfg):
+    base_cfg["dataset"]["name"] = "cic-ids2018"
+    base_cfg["dataset"]["release"] = "corrected"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert result["status"] == "ok"
+    assert result["details"]["matches"] == []
+    assert len(result["details"]["other_releases"]) == 2
+
+
+def test_known_issue_lookup_original_release_keeps_every_issue(base_cfg):
+    base_cfg["dataset"]["name"] = "cic-ids2017"
+    base_cfg["dataset"]["release"] = "original"
+    result = known_issues.check(pd.DataFrame(), base_cfg)
+    assert len(result["details"]["matches"]) == 3
+    assert result["details"]["other_releases"] == []

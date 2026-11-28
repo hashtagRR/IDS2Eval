@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- `feature_auc_ranking_check` also reports a value-specific statistic: for each numeric feature and each class with at least 20 training rows, a one-feature lookup learns on one half of the training rows which values mark the class rather than the reference class, and its F1 is scored on the other half. The raw-value AUC misses a feature that marks a class by one specific value in the middle of the benign range; the lookup finds it. The check's status is the more severe of the two statistics' tiers (0.95 flag, 0.90 warning). The reference class is `schema.benign_label` if set, else the one class named benign or normal, else the training majority class.
+- New `schema.benign_label` (default `null`) names the benign class for that comparison.
+- `known_issue_lookup` can tell releases apart: curated entries list the release kinds they document, and the new `dataset.release` (`original`, `corrected` or `null`) names the audited one. Entries documented only for another release are reported under `other_releases` and raise no warning. With `dataset.release` unset the lookup behaves as before.
+- `validation/feature_value_rule.py` reruns both on the artifacts where version 0.3.0 showed the gaps (ToN-IoT, UNSW-NB15 and the corrected CIC-IDS2017 release).
+
+Statistics and thresholds: no existing statistic or threshold changed. `feature_auc_ranking_check` can now reach `warning` or `flag` through the new statistic where the AUC alone stayed below its tiers.
+
 ## 0.3.0 (2026-11-26)
 
 - Verdicts per metric: the checks that refit a model and compare two conditions (`resplit_falsification`, `repeated_seed_falsification_check`, `scenario_holdout_falsification`, `feature_category_ablation_check`, `result_robustness_check`) score accuracy, balanced accuracy and macro-F1 and give each its own verdict. `audit.materiality_thresholds` accepts a value per metric; `audit.materiality_metrics` (default: all three) sets which verdicts decide the status. Setting it to `[accuracy]` restores the earlier accuracy-only status.

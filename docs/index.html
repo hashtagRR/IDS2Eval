@@ -236,7 +236,7 @@ footer{position:relative;z-index:2;padding:27px 0;border-top:1px solid #1a334a;c
   <div class="sec-head" data-reveal><div class="sec-index">01 / Why audit first</div><div><h2>A high score can still come from a weak benchmark.</h2><p class="sec-lede">A classifier score can reflect attack behaviour, dataset construction, or both. IDS²Eval checks the dataset and split conditions before benchmarking.</p></div></div>
   <div class="problem-grid" data-reveal>
     <article class="problem"><div class="num">01 / CONTAMINATION</div><h3>Did train and test really stay separate?</h3><p>Exact duplicates and repeated flow identities can place effectively familiar traffic on both sides of a split; separate near-duplicate checks expose confusable samples.</p><div class="signal">Checks include duplicate overlap, flow-group leakage and grouped resplit falsification.</div></article>
-    <article class="problem"><div class="num">02 / SHORTCUTS</div><h3>Did the model learn a shortcut?</h3><p>Ports, addresses, timestamps, collection order and a single dominant feature can become class proxies even when the model appears accurate.</p><div class="signal">Checks include identity columns, temporal leakage, one-rule challenge and feature-AUC ranking.</div></article>
+    <article class="problem"><div class="num">02 / SHORTCUTS</div><h3>Did the model learn a shortcut?</h3><p>Ports, addresses, timestamps, collection order and a single dominant feature can become class proxies even when the model appears accurate.</p><div class="signal">Checks include identity columns, temporal leakage, one-rule challenge, feature-AUC ranking and a held-out value lookup for features that mark a class by one specific value.</div></article>
     <article class="problem"><div class="num">03 / FRAGILITY</div><h3>Would the conclusion survive a stronger setup?</h3><p>Some results move when the split, seed, feature set, scenario or deduplication policy changes. IDS²Eval can measure that sensitivity directly.</p><div class="signal">Opt-in stress tests include scenario holdout, repeated seeds, cross-capture and result robustness.</div></article>
   </div>
 </div></section>
@@ -284,7 +284,7 @@ footer{position:relative;z-index:2;padding:27px 0;border-top:1px solid #1a334a;c
       <article class="check-card" data-kind="split"><div class="code">C09</div><h3>Scenario holdout</h3><p>When a scenario column is declared, tests generalization with one collection scenario held out.</p></article>
       <article class="check-card" data-kind="split"><div class="code">C10</div><h3>Result robustness</h3><p>Compares performance across available split, dedup and feature-set conditions.</p></article>
       <article class="check-card" data-kind="integrity"><div class="code">C11</div><h3>Data integrity</h3><p>Missing labels or feature values, constant or near-constant features, and infinite values.</p></article>
-      <article class="check-card" data-kind="integrity"><div class="code">C12</div><h3>Known issues & fingerprints</h3><p>Curated dataset facts and feature-extractor signatures with documented defects.</p></article>
+      <article class="check-card" data-kind="integrity"><div class="code">C12</div><h3>Known issues & fingerprints</h3><p>Curated dataset facts, matched to the audited release, and feature-extractor signatures with documented defects.</p></article>
     </div>
   </div>
 </div></section>

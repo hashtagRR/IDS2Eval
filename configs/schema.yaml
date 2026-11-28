@@ -6,6 +6,7 @@ random_seed: 0
 
 dataset:
   name: null                   # required
+  release: null                # original or corrected; used by known_issue_lookup
   raw_files: []                # required, unless train_file + test_file are set
   train_file: null             # required, unless raw_files is set (use with test_file)
   test_file: null              # required, unless raw_files is set (use with train_file)
@@ -19,6 +20,7 @@ dataset:
 schema:
   label_column: null           # required
   attack_category_column: null
+  benign_label: null            # benign class for feature_auc_ranking_check's value lookup
   drop_columns: []
   id_like_columns: []
   timestamp_column: null

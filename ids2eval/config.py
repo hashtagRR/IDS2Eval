@@ -18,6 +18,7 @@ NO_TUNE_CLASSIFIERS = {"NaiveBayes", "Stacking", "Voting"}
 VALID_SAMPLING = {"none", "smote", "smoteenn", "enn", "random_undersample"}
 VALID_SCALING = {"none", "standard", "minmax", "robust"}
 VALID_SPLIT_MODE = {"random", "grouped"}
+VALID_RELEASE = {"original", "corrected"}  # release kinds known_issue_lookup distinguishes
 VALID_CALIBRATION = {"none", "platt", "isotonic"}
 VALID_OUTPUT_FORMAT = {"parquet", "csv"}
 
@@ -50,6 +51,7 @@ DEFAULTS: dict[str, Any] = {
                             # resolved_config.json alone rather than 6 scattered constants
     "dataset": {
         "name": None,
+        "release": None,
         "raw_files": [],
         "train_file": None,
         "test_file": None,
@@ -63,6 +65,7 @@ DEFAULTS: dict[str, Any] = {
     "schema": {
         "label_column": None,
         "attack_category_column": None,
+        "benign_label": None,
         "drop_columns": [],
         "id_like_columns": [],
         "timestamp_column": None,
@@ -213,6 +216,8 @@ def validate_config(cfg: dict[str, Any]) -> None:
     has_presplit = bool(dataset["train_file"] and dataset["test_file"])
     if not dataset["name"]:
         errors.append("dataset.name is required")
+    if dataset.get("release") is not None and dataset["release"] not in VALID_RELEASE:
+        errors.append(f"dataset.release must be one of {sorted(VALID_RELEASE)} or null")
     if has_raw == has_presplit:
         errors.append(
             "dataset must specify exactly one of raw_files, or train_file+test_file together"

@@ -350,3 +350,10 @@ def test_per_metric_threshold_accepted_for_intervention_checks(base_cfg):
         "result_robustness_check": {"macro_f1": {"warning": 0.05, "flag": 0.10}},
     }
     validate_config(base_cfg)  # should not raise
+
+
+def test_rejects_an_unknown_dataset_release(base_cfg):
+    base_cfg["dataset"]["raw_files"] = ["a.csv"]
+    base_cfg["dataset"]["release"] = "fixed"
+    with pytest.raises(ValueError, match=re.escape("dataset.release must be one of ['corrected', 'original'] or null")):
+        validate_config(base_cfg)

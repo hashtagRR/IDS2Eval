@@ -11,7 +11,11 @@ Matching is substring-based against a lowercased dataset.name so
 Matching by name cannot tell one release of a dataset from another (an original
 CSV release from a corrected re-extraction of the same traffic), so an entry that
 documents one release says which in its "release" field, and the summary prints
-it; whether the issue applies to the audited files is for the reader to check.
+it. Since version 0.3.1 an entry can also list, in "applies_to", the release
+kinds it documents ("original", "corrected"), and dataset.release names the
+kind being audited: an entry documented only for another release is then
+reported under details["other_releases"] and raises no warning. With
+dataset.release unset, every matching entry warns, as before.
 """
 
 from __future__ import annotations
@@ -27,12 +31,14 @@ KNOWN_ISSUES = {
                      "(a ground-truth labeling error, not an extraction or pipeline bug).",
             "citation": "Liu et al. 2022, IEEE CNS, companion documentation",
             "release": "the original CSE-CIC-IDS2018 CSVs (UNB/AWS)",
+            "applies_to": ["original"],
         },
         {
             "issue": "A full re-labeling of the original release found 7.53% of labels wrong, "
                      "with the error rate above 75% for some attack classes.",
             "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
             "release": "the original CSE-CIC-IDS2018 CSVs (UNB/AWS)",
+            "applies_to": ["original"],
         },
     ],
     "cic-ids2017": [
@@ -42,18 +48,21 @@ KNOWN_ISSUES = {
                      "attack traffic in the released CSVs.",
             "citation": "Engelen et al. 2021, IEEE S&P Workshops (WTMC)",
             "release": "the original CIC-IDS2017 CSVs (UNB)",
+            "applies_to": ["original"],
         },
         {
             "issue": "A full re-labeling of the original release found 6.67% of labels wrong, "
                      "with the error rate above 75% for some attack classes.",
             "citation": "Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)",
             "release": "the original CIC-IDS2017 CSVs (UNB)",
+            "applies_to": ["original"],
         },
         {
             "issue": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to "
                      "evaluate reliably regardless of labeling accuracy.",
             "citation": "Cantone et al. 2024, IEEE Access, Table 1",
             "release": "the original CIC-IDS2017 CSVs and the corrected re-extraction alike",
+            "applies_to": ["original", "corrected"],
         },
     ],
     "nsl-kdd": [
@@ -130,6 +139,11 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
         if not any(key != other and key in other for other in matched_keys)
     ]
     matches = [issue for key in matched_keys for issue in KNOWN_ISSUES[key]]
+    release = cfg["dataset"].get("release")
+    other_releases = []
+    if release:
+        other_releases = [m for m in matches if "applies_to" in m and release not in m["applies_to"]]
+        matches = [m for m in matches if m not in other_releases]
 
     status = "warning" if matches else "ok"
     # The issue text itself, not just a count - a scorecard reader shouldn't have to
@@ -141,4 +155,11 @@ def check(train_df: pd.DataFrame, cfg: dict) -> dict:
         ) if matches
         else f"no curated known issues for dataset '{name}'"
     )
-    return {"check": "known_issue_lookup", "status": status, "summary": summary, "details": {"matches": matches}}
+    if other_releases:
+        summary += (f"; {len(other_releases)} documented issue(s) for another release of this dataset "
+                    f"do not apply to the audited release ('{release}')")
+    details = {"matches": matches}
+    if release:
+        details["release"] = release
+        details["other_releases"] = other_releases
+    return {"check": "known_issue_lookup", "status": status, "summary": summary, "details": details}

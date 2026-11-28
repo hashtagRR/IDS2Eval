@@ -57,6 +57,7 @@ Each file is written by one script in `../validation/`; re-running the script ov
 | `host_holdout_diag.json` | `host_holdout_diag.py` | Section 7.3, Table S15 | per-fold class and host support, endpoint connectivity, host-clustered intervals, unseen-identifier confusion |
 | `split_class_composition.json` | `split_class_composition.py` | Supplement D.4 | random and grouped test splits differ by at most 0.04 percentage points in any class share |
 | `flood_comparison.json` | `flood_comparison.py` | Section 7.5, Table S16 | Flood et al.'s released heuristics and IDS2Eval on the same ToN-IoT and UNSW-NB15 artifacts |
+| `feature_value_rule.json` | `feature_value_rule.py` | Sections 7.5 and 10 | version 0.3.1 on the same artifacts: the value-lookup statistic of `feature_auc_ranking_check` per class next to Flood et al.'s F1, and `known_issue_lookup` on the corrected CIC-IDS2017 release with and without `dataset.release` |
 | `cap_sensitivity.json` | `cap_sensitivity.py` | Section 10 | accuracy drop unchanged at 200K, 1M and all training rows on CIC-IDS2017-GLF; balanced accuracy itself is lower at the cap |
 | `ddos_unseen_ip.json` | `ddos_unseen_ip.py` | Supplement C.2 | about 0.0001 of CICDDoS2019 grouped-split test rows carry an unseen IP |
 | `cic17_followup.json` | `cic17_followup.py` | not cited | corrected CIC-IDS2017 run with the release's labels, in which Attempted flows form separate classes; the paper follows the owners' labelling instead (`cic17_followup_benign.json`) |

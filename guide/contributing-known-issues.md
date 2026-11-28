@@ -17,8 +17,16 @@ entries per dataset, matched by a case-insensitive substring against
              "wrong, where, and how big the effect is (a percentage, a "
              "row count, a named file or class), not a vague caveat.",
     "citation": "Author et al. year, venue",
+    # optional: which release the issue documents, in words and as release kinds
+    "release": "the original CIC-IDS2017 CSVs (UNB)",
+    "applies_to": ["original"],
 }
 ```
+
+Set `applies_to` when the issue belongs to one release of the dataset
+(`original`, `corrected`, or both). An audit whose `dataset.release`
+is a kind the entry does not list reports the entry under
+`other_releases` instead of warning about it.
 
 Requirements for a new entry:
 

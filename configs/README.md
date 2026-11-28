@@ -28,6 +28,7 @@ Where the data comes from, and how it's split.
 | Field | Default | Description |
 |---|---|---|
 | `name` | *(required)* | Short id for your dataset, e.g. `"cic-ids2018"`. Also the key `known_issue_lookup`/`schema_fingerprint_check` match against. |
+| `release` | `null` | `original` or `corrected`: which release of the dataset the files are. `known_issue_lookup` then warns only about issues documented for that release. |
 | `raw_files` | *(required, or use `train_file`+`test_file`)* | Your data file(s); IDS<sup>2</sup>Eval splits them into train/test itself. |
 | `train_file` / `test_file` | *(required, or use `raw_files`)* | An already-split pair, used together instead of `raw_files`. |
 | `column_names` | `[]` | Set this if the CSV has no header row at all: every row is treated as data, and these names are assigned positionally, in order. Leave empty for a normal CSV with a header row. Ignored for `.parquet`, which already carries its own column names. |
@@ -96,6 +97,7 @@ Which columns mean what.
 |---|---|---|
 | `label_column` | *(required)* | The binary/attack label column. |
 | `attack_category_column` | `null` | Optional multi-class attack-type column. |
+| `benign_label` | `null` | The benign class in the label (or attack-category) column. `feature_auc_ranking_check` compares every other class with it; unset, the check uses the one class named benign or normal, else the training majority class. |
 | `drop_columns` | `[]` | Columns to drop before training. |
 | `id_like_columns` | `[]` | IP/port/MAC-like columns, checked for leakage but not auto-dropped. |
 | `timestamp_column` | `null` | Used only by `temporal_leakage_check`/`temporal_realism_check`. |
@@ -160,7 +162,7 @@ for what each one tests and the research behind it.
 | `near_duplicate_class_check` | `true` | Near (not exact) duplicate features across two classes |
 | `leakage_screen` | `true` | Does one feature/pair dominate a fitted model's importance? |
 | `one_rule_check` | `true` | Is a single feature+threshold rule almost as good as any model? |
-| `feature_auc_ranking_check` | `true` | Standalone AUC of every numeric feature, no model fit |
+| `feature_auc_ranking_check` | `true` | Standalone AUC of every numeric feature, and the held-out F1 of a one-feature value lookup against the benign class; no model fit |
 | `identity_column_flag` | `true` | Standalone predictive power of `schema.id_like_columns` |
 | `port_protocol_shortcut_check` | `true` | No-ops unless a port + a proto-like column are both found |
 | `temporal_leakage_check` | `true` | No-ops unless `schema.timestamp_column` is set |
@@ -185,7 +187,7 @@ for what each one tests and the research behind it.
 | `feature_category_ablation_check` | `false` | Accuracy cost of removing each `schema.feature_categories` group |
 | `artifact_sensitivity_check` | `false` | Prediction-flip rate from reshuffling one id_like/timestamp column |
 | `result_robustness_check` | `false` | Accuracy spread across split/dedup/identity-column conditions |
-| `known_issue_lookup` | `false` | Curated per-dataset published problems, matched on `dataset.name` |
+| `known_issue_lookup` | `false` | Curated per-dataset published problems, matched on `dataset.name` and, if set, `dataset.release` |
 | `seed_sensitivity_check` | `false` | Re-fits `leakage_screen`/`one_rule_check` across a few seeds |
 | `repeated_seed_falsification_check` | `false` | Repeats `resplit_falsification` across `audit.repeated_seed_count` seeds, reports a 95% CI per metric |
 | `reuse_removal_falsification` | `false` | Removes the training rows whose feature vector occurs in the test set, refits, and compares against a same-size random removal with the same class mix; needs the data before deduplication |

@@ -173,6 +173,24 @@ too, ones expected to correlate with the label to some degree on their
 own, so only a near-perfect single feature is a specific, checkable
 oddity.
 
+A raw-value AUC only sees a feature whose values rank the classes. A
+feature that marks an attack class by one specific value (a fixed byte
+count from an attack tool, say) sits in the middle of the benign range
+and escapes it. Since 0.3.1 the check therefore also reports a
+value-lookup statistic: for each numeric feature and each class with at
+least 20 training rows, a one-feature lookup learns on one half of the
+training rows which values mark the class rather than the benign class,
+and its F1 is scored on the other half. Holding out half means a value
+seen once cannot score. The benign class is `schema.benign_label` if
+set, else the one class named benign or normal, else the training
+majority class. The check's status is the more severe of the two
+statistics, with the same tiers (0.95 flag, 0.90 warning), and the
+details report `auc_status`, `value_rule_status` and the best feature
+per class under `value_rules`. On ToN-IoT and UNSW-NB15 it finds the
+five classes that Flood et al.'s single-feature test separates from
+benign traffic with F1 of at least 0.99 and the AUC misses
+(`validation/feature_value_rule.py`).
+
 ### `identity_column_flag` / `low_cardinality_warning`
 Standalone predictive power and cardinality of IP/port/MAC-pattern
 columns you declare via `schema.id_like_columns`. Per Sarhan, Layeghy
@@ -500,6 +518,15 @@ contributors to help, including judgment calls like whether an older,
 largely superseded dataset (KDD99 being the obvious case: still widely
 cited, but generally considered deprecated by the research community)
 is worth an entry at all.
+
+Matching on the name cannot tell one release of a dataset from another,
+such as an original CSV release and a corrected re-extraction of the
+same traffic. Since 0.3.1 an entry can list the release kinds it
+documents (`applies_to`: `original`, `corrected`), and
+`dataset.release` names the kind being audited. An entry documented
+only for another release is then listed under `other_releases` and
+raises no warning; with `dataset.release` unset, every matching entry
+warns, as before.
 
 ### `seed_sensitivity_check`
 Re-fits `leakage_screen` and `one_rule_check` across 5 seeds (0-4) and

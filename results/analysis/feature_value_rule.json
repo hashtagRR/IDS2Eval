@@ -1,0 +1,151 @@
+{
+  "value_rule": {
+    "ton-iot-official": {
+      "training_rows": 168834,
+      "seconds": 4.1,
+      "status": "flag",
+      "auc_status": "flag",
+      "value_rule_status": "flag",
+      "reference_class": "normal",
+      "reference_source": "class named normal",
+      "flood_separable_classes": [
+        "backdoor",
+        "injection",
+        "password",
+        "scanning"
+      ],
+      "flood_separable_found": {
+        "backdoor": 0.9978,
+        "injection": 0.9893,
+        "password": 0.9889,
+        "scanning": 0.9893
+      },
+      "by_class": {
+        "backdoor": {
+          "feature": "dst_ip_bytes",
+          "value_rule_f1": 0.9978,
+          "flood_f1": 0.9987
+        },
+        "ddos": {
+          "feature": "dst_ip_bytes",
+          "value_rule_f1": 0.972,
+          "flood_f1": 0.9802
+        },
+        "dos": {
+          "feature": "dst_ip_bytes",
+          "value_rule_f1": 0.9645,
+          "flood_f1": 0.9741
+        },
+        "injection": {
+          "feature": "dst_ip_bytes",
+          "value_rule_f1": 0.9893,
+          "flood_f1": 0.9922
+        },
+        "mitm": {
+          "feature": "dst_bytes",
+          "value_rule_f1": 0.6099,
+          "flood_f1": 0.8542
+        },
+        "password": {
+          "feature": "dst_port",
+          "value_rule_f1": 0.9889,
+          "flood_f1": 0.9908
+        },
+        "ransomware": {
+          "feature": "dst_port",
+          "value_rule_f1": 0.9934,
+          "flood_f1": 0.9487
+        },
+        "scanning": {
+          "feature": "src_ip_bytes",
+          "value_rule_f1": 0.9893,
+          "flood_f1": 0.9907
+        },
+        "xss": {
+          "feature": "dst_port",
+          "value_rule_f1": 0.9605,
+          "flood_f1": 0.9573
+        }
+      },
+      "summary": "'src_port' alone reaches AUC 0.952 identifying 'dos'; values of 'dst_ip_bytes' alone mark 'backdoor' against 'normal' with held-out F1 0.998; a single feature this separable is worth checking for a leakage artifact"
+    },
+    "unsw-nb15": {
+      "training_rows": 175341,
+      "seconds": 1.6,
+      "status": "flag",
+      "auc_status": "ok",
+      "value_rule_status": "flag",
+      "reference_class": "Normal",
+      "reference_source": "class named Normal",
+      "flood_separable_classes": [
+        "Generic"
+      ],
+      "flood_separable_found": {
+        "Generic": 0.9919
+      },
+      "by_class": {
+        "Analysis": {
+          "feature": "sload",
+          "value_rule_f1": 0.8624,
+          "flood_f1": 0.9275
+        },
+        "Backdoor": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.8791,
+          "flood_f1": 0.9524
+        },
+        "DoS": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.8793,
+          "flood_f1": 0.928
+        },
+        "Exploits": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.8491,
+          "flood_f1": 0.902
+        },
+        "Fuzzers": {
+          "feature": "sttl",
+          "value_rule_f1": 0.7588,
+          "flood_f1": 0.7766
+        },
+        "Generic": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.9919,
+          "flood_f1": 0.9922
+        },
+        "Reconnaissance": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.909,
+          "flood_f1": 0.943
+        },
+        "Shellcode": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.5797,
+          "flood_f1": 0.7791
+        },
+        "Worms": {
+          "feature": "sbytes",
+          "value_rule_f1": 0.5047,
+          "flood_f1": 0.8074
+        }
+      },
+      "summary": "'sttl' alone reaches AUC 0.881 identifying '0.0'; values of 'sbytes' alone mark 'Generic' against 'Normal' with held-out F1 0.992; a single feature this separable is worth checking for a leakage artifact"
+    }
+  },
+  "known_issue_lookup": {
+    "dataset_name": "cic-ids2017-improved",
+    "None": {
+      "status": "warning",
+      "applicable": 3,
+      "other_releases": 0,
+      "summary": "The traffic capture has packet misorder and duplication, and some attacks that were actually launched are not correctly labeled as attack traffic in the released CSVs. (applies to the original CIC-IDS2017 CSVs (UNB); Engelen et al. 2021, IEEE S&P Workshops (WTMC)); A full re-labeling of the original release found 6.67% of labels wrong, with the error rate above 75% for some attack classes. (applies to the original CIC-IDS2017 CSVs (UNB); Liu et al. 2022, IEEE CNS (rates as summarized by Cantone et al. 2024)); Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1)"
+    },
+    "corrected": {
+      "status": "warning",
+      "applicable": 1,
+      "other_releases": 2,
+      "summary": "Heartbleed has only 11 rows (about 0.0004% of the dataset), too few to evaluate reliably regardless of labeling accuracy. (applies to the original CIC-IDS2017 CSVs and the corrected re-extraction alike; Cantone et al. 2024, IEEE Access, Table 1); 2 documented issue(s) for another release of this dataset do not apply to the audited release ('corrected')"
+    }
+  }
+}

@@ -231,10 +231,30 @@ audit:
 Only two of the eight v2 checks need `reference_dataset`: a real-traffic
 sample for `synthetic_realism_check`, or an independent dataset for
 `cross_dataset_drift_check`, both in the same schema. `known_issue_lookup`
-needs neither, just a `dataset.name` match, and `seed_sensitivity_check`
+needs neither, just a `dataset.name` match (plus `dataset.release`, see
+below, to tell releases apart), and `seed_sensitivity_check`
 needs neither either, just re-fitting `leakage_screen`/`one_rule_check`
 across a few seeds. See [checks.md](checks.md) for what
 each check does.
+
+## Naming the release and the benign class
+
+```yaml
+dataset:
+  name: cic-ids2017
+  release: corrected        # or original; null (the default) keeps every known issue
+schema:
+  label_column: Label
+  benign_label: BENIGN      # null (the default): a class named benign or normal, else the majority class
+```
+
+`dataset.release` tells `known_issue_lookup` which release of the
+dataset the files are, so it warns only about issues documented for
+that release and lists the others under `other_releases`.
+`schema.benign_label` is the class `feature_auc_ranking_check`'s
+value lookup compares every other class with; set it when the benign
+class is neither named benign or normal nor the largest class (as on
+BoT-IoT, where attack traffic is the majority).
 
 ## Catching timestamp-driven shortcuts
 

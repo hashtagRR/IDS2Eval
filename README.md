@@ -57,6 +57,7 @@ Windows, installing from the source code, and troubleshooting: [INSTALL.md](http
 
 Every release and its changes are in the [changelog](https://github.com/hashtagRR/IDS2Eval/blob/main/CHANGELOG.md); each one is archived on Zenodo under the concept DOI above.
 
+- **`v0.3.1`** ([10.5281/zenodo.24624773](https://doi.org/10.5281/zenodo.24624773)): `feature_auc_ranking_check` also reports the held-out F1 of a one-feature value lookup against the benign class (new `schema.benign_label`), which finds features that mark a class by one specific value; `known_issue_lookup` tells releases apart through the new `dataset.release`. No existing statistic or threshold changed.
 - **`v0.3.0`** ([10.5281/zenodo.24554057](https://doi.org/10.5281/zenodo.24554057)): verdicts per metric (accuracy, balanced accuracy and macro-F1) with per-metric thresholds; grouping-key statistics and class support in the grouped checks; the opt-in `reuse_removal_falsification` check; `homogeneity_test` reports `excess_matching` and an optional cluster-bootstrap interval. Accuracy statistics and default thresholds are unchanged.
 - **`v0.2.3`** ([10.5281/zenodo.23437827](https://doi.org/10.5281/zenodo.23437827)): documentation; the project site shows the `pip install` command.
 - **`v0.2.2`** ([10.5281/zenodo.23436993](https://doi.org/10.5281/zenodo.23436993)): first release on PyPI; Python 3.13 supported.
@@ -73,11 +74,11 @@ Cite the version you used. The concept DOI
 [10.5281/zenodo.23217300](https://doi.org/10.5281/zenodo.23217300)
 always resolves to the latest version.
 
-> Relapanawa, R. (2026). *IDS2Eval 0.3.0* (Version v0.3.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24554057
+> Relapanawa, R. (2026). *IDS2Eval 0.3.1* (Version v0.3.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24624773
 
 The results, configurations and analysis scripts behind the accompanying paper are archived separately (concept DOI [10.5281/zenodo.23301257](https://doi.org/10.5281/zenodo.23301257) for every version):
 
-> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* (Version 2.0) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.24557729
+> Relapanawa, R. (2026). *IDS2Eval paper: research artifacts (results, configurations and analysis scripts)* (Version 2.1) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.24623532
 
 ## License
 
